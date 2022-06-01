@@ -2,6 +2,8 @@
 Can just copy all of these to your home directory (assuming you have the program installed) </br>
 
 # Includes: </br>
+ - Lightdm
+   - Modified from https://github.com/allacee/lightdm-webkit2-theme-minimal
  - Xinitrc
  - Bspwm
  - Sxhkd
