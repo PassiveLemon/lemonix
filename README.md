@@ -15,7 +15,7 @@ Can just copy all of these to your home directory (assuming you have the program
  - Bashtop
    - https://github.com/catppuccin/btop
  - Fonts
-   - https://github.com/ryanoasis/nerd-fonts/tree/master/patched-fonts/Iosevka
+   - https://github.com/ryanoasis/nerd-fonts
  - My autostart script(s)
 
 # Gallery </br>
