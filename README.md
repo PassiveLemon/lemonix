@@ -9,10 +9,13 @@ Can just copy all of these to your home directory (assuming you have the program
  - Sxhkd
  - Polybar
  - Kitty
+   - https://github.com/catppuccin/kitty
  - Rofi
  - Neofetch
  - Bashtop
+   - https://github.com/catppuccin/btop
  - Fonts
+   - https://github.com/ryanoasis/nerd-fonts/tree/master/patched-fonts/Iosevka
  - My autostart script(s)
 
 # Gallery </br>
