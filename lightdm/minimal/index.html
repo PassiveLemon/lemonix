@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<title>lightdm login</title>
+	<script type="text/javascript" src="js/main.js"></script>
+	<link rel="stylesheet" type="text/css" href="css/main.css">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta charset="utf-8"/>
+</head>
+<body id="body">
+	<nav id="main_nav">
+		<ul>
+			<li id="time"></li>
+			<li class="right"><a href="javascript:lightdm.shutdown();">shutdown</a></li>
+			<li class="right"><a href="javascript:lightdm.restart();">reboot</a></li>
+			<li class="right"><a href="javascript:lightdm.suspend();">suspend</a></li>
+			<li class="right">
+				<div class="custom-select" id="custom-select-div">
+					<select id="session-menu" >
+					</select>
+				  </div>
+			</li>
+
+
+		</ul>
+	</nav>
+	<div id="main_content">
+		<h1 id="pagetitle">Log in</h1>
+		<form id="login" onsubmit="handle_input()">
+			<input  type="text"
+			id="username"
+			placeholder="username"
+			class="form-field"
+			required
+			autofocus/>
+
+			<input type="password"
+			id="password"
+			placeholder="password"
+			required
+			class="form-field"
+			/>
+
+			<button type="submit" value="login">log in</button>
+		</form>
+
+		<ul class="flat-list" id="messages">
+
+		</ul>
+	</div>
+	<script>
+		document.getElementById("login").addEventListener("submit", handle_input);
+	</script>
+</body>
+</html>
