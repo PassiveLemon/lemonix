@@ -1,0 +1,46 @@
+configuration {
+  modi: "drun,run";
+  font: "Iosevka Nerd Font Medium 12";
+  display-drun: "[Drun]";
+  display-run: "[Run]";
+}
+
+* {
+  bg: #1B1923;
+  bg-alt: #23212B;
+  tc: #FFFFFF;
+  bc: #F5C2E7;
+  background-color: @bg;
+  text-color: @tc;
+}
+
+window {
+  height: 455px;
+  width: 300px;
+  border: 3px;
+}
+
+mainbox {
+  border: 2px;
+  border-color: @bc;
+}
+
+inputbar {
+  children: [prompt, entry];
+}
+
+entry {
+  padding: 10px 0px;
+}
+
+prompt {
+  padding: 10px;
+}
+
+listview {
+  padding: 10px 5px;
+}
+
+element selected {
+  background-color: @bg-alt;
+}
