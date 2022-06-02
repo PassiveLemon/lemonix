@@ -1,0 +1,197 @@
+@font-face {
+    font-family: 'Iosevka Nerd Font';
+    src: url(../assets/Iosevka_Medium_Nerd_Font_Complete.tff);
+    font-weight: normal;
+}
+
+* {
+  font-family: 'Iosevka Nerd Font';
+}
+
+body {
+    padding: 0;
+    margin: 0;
+    background: #1B1923;
+}
+
+#main_content {
+    padding: 1em 2em;
+}
+
+#pagetitle {
+    font-size: 24pt;
+    color: #ECF3F7;
+}
+
+#main_nav {
+    margin: 0;
+    padding: 0.5em 0 0.5em 0;
+    font-size: 10pt;
+    color: #ECF3F7;
+    border: 1px solid;
+    border-color: #F5C2E7;
+}
+
+#main_nav a:hover {
+    color: #ECF3F7;
+    cursor: pointer;
+}
+
+#main_nav ul {
+    display: inline;
+    padding: 0;
+}
+
+#main_nav ul li {
+    padding-left: 0.5em;
+    padding-right: 0.5em;
+    display: inherit;
+}
+
+#main_nav ul li:first-child {
+    padding-left: 1em;
+}
+
+.right {
+   float: right;
+}
+
+.right button:hover, .right button:focus {
+    color: gray;
+    cursor: pointer;
+}
+
+
+#main_nav a {
+    color: inherit;
+    text-decoration: none;
+}
+
+#main_nav a:hover {
+    text-decoration: inherit;
+}
+
+#main_footer {
+    margin: 1em;
+    position: fixed;
+    bottom: 0;
+    right: 0;
+}
+
+#main_footer a {
+    color: inherit;
+    text-decoration: inherit;
+}
+
+a {
+    color: #ECF3F7;
+    cursor: pointer;
+    cursor: hand;
+    text-decoration: none;
+}
+
+a:hover {
+    color: black;
+    text-decoration: none;
+}
+
+.text-muted {
+    color: #ECF3F7;
+}
+
+ul {
+    padding-left: 40px;
+    list-style: none;
+}
+
+ol {
+    padding-left: 40px;
+}
+
+.flat-list {
+    padding-left: 0;
+}
+
+.form-field {
+    background-color: #1B1923;
+    border: none;
+    border-bottom: 1px solid #F5C2E7;
+    font-size: 100%;
+    padding: 0;
+    margin-bottom: 1em;
+    color: #ABABAB;
+}
+
+#main_content li a:hover {
+    color: #ECF3F7;
+    text-decoration: inherit;
+}
+
+button {
+    padding: 0.3em 1em;
+    border: none;
+    background: none;
+    color: #ECF3F7;
+    font-weight: bold;
+    font-size: 100%;
+    cursor: pointer;
+}
+
+.breakdown-sum {
+    padding-top: 0.5em;
+    padding-left: 1em;
+    border-top: 1px solid lightgray;
+    display: inline-block;
+}
+
+h1 {
+    color: #ECF3F7;
+}
+
+p {
+    max-width: 50%;
+}
+
+.custom-select {
+    position: relative;
+    text-align: right;
+}
+
+.custom-select select {
+    display: none;
+}
+
+.select-items div,.select-selected {
+    color: #FFFFFF;
+    cursor: pointer;
+    user-select: none;
+}
+
+.select-selected {
+    color: #F5C2E7;
+}
+
+.select-selected :hover {
+    color: #F5C2E7;
+}
+
+.select-items {
+    position: absolute;
+    background-color: black;
+    top: 100%;
+    left: 0;
+    right: 0;
+    z-index: 99;
+}
+
+.select-hide {
+    display: none;
+}
+
+.same-as-selected {
+    display: none;
+}
+
+.select-items div:hover {
+    background-color: rgba(146, 145, 145, 0.1);
+}
