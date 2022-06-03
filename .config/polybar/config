@@ -15,8 +15,8 @@ foreground = ${colors.fg}
 border-bottom-size = 2
 border-bottom-color = ${colors.pink}
 
-scroll-up = bspwm-desknext
-scroll-down = bspwm-deskprev
+scroll-up = #bspwm.next
+scroll-down = #bspwm.prev
 
 font-0 = "Iosevka Nerd Font:style=Medium:size=10;2"
 
