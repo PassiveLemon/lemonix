@@ -1,6 +1,6 @@
 # lemondots
 Can just copy all of these to your home directory (assuming you have the program installed) </br>
-I accidentally forgot to aapply the Bashtop theme when scrotting but im lazy and dont feel like redoing it. Deal with it. </br>
+I accidentally forgot to aaply the Bashtop theme when scrotting but im lazy and dont feel like redoing it. Deal with it. </br>
 
 # Includes: </br>
  - Lightdm
