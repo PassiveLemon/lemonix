@@ -6,7 +6,7 @@ bspc monitor -d I II III IV V
 
 sh ~/.config/autostart/resolution.sh
 sh ~/.config/polybar/launch.sh
-feh --bg-fill ~/Pictures/wallpapers/"wallpaper (16).jpg"
+feh --bg-fill ~/Pictures/wallpapers/"wallpaper (7).jpg"
 picom -b
 
 bspc config border_width         2
