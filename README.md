@@ -2,7 +2,7 @@
 Can just copy all of these to your home directory (assuming you have the program installed) </br>
 
 # Includes: </br>
- - Ly DM
+ - Ly DM (soon)
  - Xinitrc
  - Bspwm
  - Sxhkd
