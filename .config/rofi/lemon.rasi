@@ -10,7 +10,7 @@ configuration {
   bg-alt: #222222;
   wh: #FFFFFF;
   background-color: @bg;
-  text-color: @tc;
+  text-color: @wh;
 }
 
 window {
