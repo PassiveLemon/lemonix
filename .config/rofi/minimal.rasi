@@ -6,10 +6,9 @@ configuration {
 }
 
 * {
-  bg: #1B1923;
-  bg-alt: #23212B;
-  tc: #FFFFFF;
-  bc: #F5C2E7;
+  bg: #121212;
+  bg-alt: #222222;
+  wh: #FFFFFF;
   background-color: @bg;
   text-color: @tc;
 }
@@ -22,7 +21,7 @@ window {
 
 mainbox {
   border: 2px;
-  border-color: @bc;
+  border-color: @wh;
 }
 
 inputbar {
