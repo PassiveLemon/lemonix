@@ -11,15 +11,15 @@ enable-ipc = true
 
 top = true
 background = ${colors.bg}
-foreground = ${colors.fg}
+foreground = ${colors.wh}
 border-bottom-size = 2
-border-bottom-color = ${colors.pink}
+border-bottom-color = ${colors.wh}
 
 scroll-up = #bspwm.next
 scroll-down = #bspwm.prev
 
 font-0 = "Iosevka Nerd Font:style=Medium:size=10;2"
 
-modules-left = sep bspwm sep sep title
-modules-center = date
-modules-right = cpu sep sep memory sep sep volume sep sep eth wlan sep sep powermenu sep
+modules-left = cpu sep bar sep memory sep bar sep volume sep bar sep title sep
+modules-center = bspwm
+modules-right = sep date sep bar sep eth wlan sep sep powermenu sep
