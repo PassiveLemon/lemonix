@@ -9,7 +9,6 @@ Can just copy all of these to your home directory (assuming you have the program
  - Sxhkd
  - Polybar
  - Kitty
-   - https://github.com/catppuccin/kitty
  - Rofi
  - Neofetch
  - Bashtop
