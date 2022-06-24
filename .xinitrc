@@ -6,5 +6,8 @@
 
 # invoke global X session script
 . /etc/X11/Xsession
+xsetroots -cursor_name left_ptr &
+xrdb -merge ~/.Xresources
 sxhkd &
 exec bspwm
+
