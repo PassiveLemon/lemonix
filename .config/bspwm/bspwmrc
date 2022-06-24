@@ -5,7 +5,7 @@ pgrep -x sxhkd > /dev/null || sxhkd &
 bspc monitor -d I II III IV V
 
 sh ~/.config/polybar/launch.sh
-feh --bg-fill ~/Pictures/wallpapers/"wallpaper (6).png"
+feh --bg-fill ~/.wallpapers/"wallpaper (6).png"
 picom -b
 
 bspc config border_width         2
