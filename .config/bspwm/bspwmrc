@@ -4,9 +4,8 @@ pgrep -x sxhkd > /dev/null || sxhkd &
 
 bspc monitor -d I II III IV V
 
-sh ~/.config/autostart/resolution.sh
 sh ~/.config/polybar/launch.sh
-feh --bg-fill ~/Pictures/wallpapers/"wallpaper (7).png"
+feh --bg-fill ~/Pictures/wallpapers/"wallpaper (6).png"
 picom -b
 
 bspc config border_width         2
