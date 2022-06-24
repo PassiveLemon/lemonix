@@ -1,5 +1,5 @@
 # lemondots
-Can just copy all of these to your home directory (assuming you have the program installed) </br>
+Intended for use with https://github.com/PassiveLemon/lemon-debian </br>
 
 # Includes: </br>
  - Polybar
