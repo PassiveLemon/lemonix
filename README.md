@@ -2,14 +2,16 @@
 Can just copy all of these to your home directory (assuming you have the program installed) </br>
 
 # Includes: </br>
- - Xinitrc
+ - Polybar
+ - Rofi
  - Bspwm
  - Sxhkd
- - Polybar
  - Kitty
- - Rofi
  - Neofetch
  - Htop
+ - Icons
+   - Volantes Cursors
  - Fonts
-   - https://github.com/ryanoasis/nerd-fonts/tree/master/patched-fonts/Iosevka
- - My autostart script(s)
+   - Iosevka Nerd Font
+ - .xinitrc
+ - .Xresources
