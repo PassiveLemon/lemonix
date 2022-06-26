@@ -6,6 +6,7 @@ Intended for use with https://github.com/PassiveLemon/lemon-debian </br>
  - Rofi
  - Bspwm
  - Sxhkd
+ - Picom
  - Kitty
  - Neofetch
  - Htop
