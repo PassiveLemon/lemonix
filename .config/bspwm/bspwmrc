@@ -8,12 +8,9 @@ sh ~/.config/polybar/launch.sh
 feh --bg-fill ~/.wallpapers/"Wallpaper (6).png"
 picom -b
 
-bspc config border_width         2
+bspc config border_width         0
 bspc config window_gap          12
 bspc config split_ratio          0.50
-
-bspc config normal_border_color "#454545"
-bspc config focused_border_color "#FFFFFF"
 
 bspc config borderless_monocle   true
 bspc config gapless_monocle      true
