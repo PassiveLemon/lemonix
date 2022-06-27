@@ -11,9 +11,9 @@ Intended for use with https://github.com/PassiveLemon/lemon-debian </br>
  - Neofetch
  - Htop
  - Icons
-   - Volantes Cursors
+   - [Volantes Cursors](https://github.com/varlesh/volantes-cursors)
  - Fonts
-   - Iosevka Nerd Font
+   - [Iosevka Nerd Font](https://github.com/ryanoasis/nerd-fonts/tree/master/patched-fonts/Iosevka)
  - .xinitrc
  - .Xresources
  - Wallpapers
