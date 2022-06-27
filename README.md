@@ -1,5 +1,5 @@
 # lemondots
-Intended for use with https://github.com/PassiveLemon/lemon-debian </br>
+Intended for use with [lemon-debian](https://github.com/PassiveLemon/lemon-debian) </br>
 
 # Includes: </br>
  - Polybar
