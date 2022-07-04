@@ -10,6 +10,8 @@ Intended for use with [lemon-debian](https://github.com/PassiveLemon/lemon-debia
  - Kitty
  - Neofetch
  - Htop
+ - Themes (Not fully implemented yet)
+   - [Nordic](https://github.com/EliverLara/Nordic)
  - Icons
    - [Volantes Cursors](https://github.com/varlesh/volantes-cursors)
  - Fonts
