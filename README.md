@@ -10,7 +10,7 @@ Intended for use with [lemon-debian](https://github.com/PassiveLemon/lemon-debia
  - Kitty
  - Neofetch
  - Htop
- - Themes (Not fully implemented yet)
+ - Themes
    - [Nordic](https://github.com/EliverLara/Nordic)
  - Icons
    - [Kora](https://github.com/bikass/kora)
