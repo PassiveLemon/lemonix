@@ -22,4 +22,4 @@ font-0 = "Iosevka Nerd Font:style=Medium:size=10;2"
 
 modules-left = sep cpu sep bar sep memory sep bar sep volume sep bar sep title sep
 modules-center = bspwm
-modules-right = sep date sep bar sep eth wlan sep sep powermenu sep
+modules-right = sep date sep bar sep eth wlan sep bar sep powermenu sep
