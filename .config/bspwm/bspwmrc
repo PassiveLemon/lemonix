@@ -9,9 +9,10 @@ feh --bg-fill ~/.wallpapers/"Wallpaper (6).png" &
 xsetroot -cursor_name left_ptr &
 picom -b
 
-bspc config border_width         0
-bspc config window_gap          12
-bspc config split_ratio          0.50
+bspc config pointer_motion_interval 40
+bspc config border_width            0
+bspc config window_gap              12
+bspc config split_ratio             0.50
 
-bspc config borderless_monocle   true
-bspc config gapless_monocle      true
+bspc config borderless_monocle  true
+bspc config gapless_monocle     true
