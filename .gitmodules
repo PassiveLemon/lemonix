@@ -1,0 +1,3 @@
+[submodule "Iosevka Nerd"]
+	path = .icons
+	url = https://github.com/tModLoader/FNA.git
