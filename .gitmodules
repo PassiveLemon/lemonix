@@ -1,3 +1,3 @@
 [submodule ".fonts/Iosevka/Medium"]
 	path = .fonts/Iosevka/Medium
-	url = https://github.com/ryanoasis/nerd-fonts.git
+	url = https://github.com/ryanoasis/nerd-fonts/tree/master/patched-fonts/Iosevka/Medium/complete
