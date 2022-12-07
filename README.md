@@ -10,14 +10,13 @@ Intended for use with [lemon-debian](https://github.com/PassiveLemon/lemon-debia
  - Kitty
  - Neofetch
  - Htop
- - Themes
-   - [Nordic](https://github.com/EliverLara/Nordic)
- - Icons
-   - [Kora](https://github.com/bikass/kora)
-   - [Volantes Cursors](https://github.com/varlesh/volantes-cursors)
- - Fonts
-   - [Iosevka Nerd Font](https://github.com/ryanoasis/nerd-fonts/tree/master/patched-fonts/Iosevka)
+ - Scripts for:
+   - Themes
+     - [Nordic](https://github.com/EliverLara/Nordic)
+   - Icons
+     - [Kora Icons](https://github.com/bikass/kora)
+     - [Volantes Cursors](https://github.com/varlesh/volantes-cursors)
+   - Fonts
+     - [Iosevka Nerd Font](https://github.com/ryanoasis/nerd-fonts/tree/master/patched-fonts/Iosevka)
  - .xinitrc
  - .Xresources
- - Wallpapers
-   - `I do not claim ownership of any of these wallpapers. I found them somewhere, liked it, and saved it. If you own a wallpaper and don't want it posted here, ask me.`
