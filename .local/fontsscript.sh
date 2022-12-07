@@ -15,7 +15,8 @@ sudo apt install -y curl unzip
 mkdir -p $HOME/.local/share/fonts/
 
 curl -LO https://github.com/ryanoasis/nerd-fonts/releases/latest/download/Iosevka.zip
-unzip Iosevka.zip -d $HOME/.local/share/fonts/
+mkdir -p $HOME/.local/share/fonts/Iosevka/
+unzip Iosevka.zip -d $HOME/.local/share/fonts/Iosevka/
 
 sudo rm -r $HOME/lemontemp/
 popd
