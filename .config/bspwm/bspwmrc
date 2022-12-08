@@ -5,7 +5,7 @@ pgrep -x sxhkd > /dev/null || sxhkd &
 bspc monitor -d I II III IV V
 
 sh ~/.config/polybar/launch.sh &
-feh --bg-fill ~/.wallpapers/reds/"Wallpaper (6).png" &
+feh --bg-fill ~/.wallpapers/Reds/"Wallpaper (6).png" &
 xsetroot -cursor_name left_ptr &
 picom -b
 
