@@ -16,7 +16,7 @@ mkdir -p $HOME/.local/share/themes/
 
 curl -LO https://github.com/EliverLara/Nordic/releases/latest/download/Nordic-Polar-standard-buttons.tar.xz
 sudo tar -xf Nordic-Polar-standard-buttons.tar.xz
-cp -r ./Nordic-Polar-standard-buttons/ $HOME/.local/share/themes/
+cp -r $HOME/Nordic-Polar-standard-buttons/ $HOME/.local/share/themes/
 
 sudo rm -r $HOME/lemontemp/
 popd

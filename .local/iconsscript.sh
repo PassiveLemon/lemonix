@@ -22,8 +22,10 @@ cd ..
 
 sudo git clone https://github.com/bikass/kora.git
 cd kora
-cp -r ./kora/ $HOME/.local/share/icons/
+cp -r $HOME/kora/ $HOME/.local/share/icons/
 cd ..
+
+cp -r $HOME/.local/default/ $HOME/.local/share/icons/
 
 sudo rm -r $HOME/lemontemp/
 popd
