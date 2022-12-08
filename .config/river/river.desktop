@@ -1,5 +1,0 @@
-[Desktop Entry]
-Name=River
-Comment=A dynamic tiling Wayland compositor
-Exec=river
-Type=Application
