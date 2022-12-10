@@ -1,7 +1,4 @@
 # lemondots
-Intended for use with [lemon-debian](https://github.com/PassiveLemon/lemon-debian) </br>
-
-# Includes: </br>
  - Polybar
  - Rofi
  - Bspwm
@@ -20,3 +17,5 @@ Intended for use with [lemon-debian](https://github.com/PassiveLemon/lemon-debia
      - [Nordic](https://github.com/EliverLara/Nordic)
  - .xinitrc
  - Wallpapers
+ - configuration.nix once I get that mostly sorted out
+
