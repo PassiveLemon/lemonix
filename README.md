@@ -17,5 +17,5 @@
      - [Nordic](https://github.com/EliverLara/Nordic)
  - .xinitrc
  - Wallpapers
- - configuration.nix once I get that mostly sorted out
+ - configuration.nix (VERY WIP)
 
