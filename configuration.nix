@@ -46,11 +46,11 @@
   nixpkgs.config.allowUnfree = true;
   environment.systemPackages = with pkgs; [
     # System
-    xorg.xrandr bspwm sxhkd bash nano kitty gnome.gdm polybar picom-jonaburg
+    dunst xorg.xrandr bspwm sxhkd bash nano kitty gnome.gdm polybar picom-jonaburg
     # Programs
-    gimp obs-studio github-desktop spotify betterdiscordctl steam vscode firefox gparted vlc mpv vlc
+    gimp obs-studio github-desktop spotify betterdiscordctl steam vscode firefox gparted vlc mpv
     # Utilies
-    docker webtorrent_desktop protonvpn-gui p7zip megasync psmisc wget unzip git curl gnumake scrot htop neofetch feh rofi networkmanager
+    lxappearance pavucontrol docker webtorrent_desktop protonvpn-gui p7zip megasync psmisc wget unzip git curl gnumake scrot htop neofetch feh rofi networkmanager
     # Customizations
     kora-icon-theme
     # Other
@@ -82,7 +82,7 @@
     #polybar = {
       #enable = true;
       #script = "/home/lemon/.config/polybar/launch.sh";
-    };
+    #};
     autorandr = {
       enable = true;
       profiles = {
