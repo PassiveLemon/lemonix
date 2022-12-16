@@ -1,40 +1,40 @@
 #!/usr/bin/env bash
 
 if [ $EUID = 0 ]; then
-  echo "====================================="
-  echo "Please do not run this script as Sudo"
-  echo "====================================="
-  exit
+    echo "====================================="
+    echo "Please do not run this script as Sudo"
+    echo "====================================="
+    exit
 fi
 
-sudo mkdir $HOME/lemontemp/
-sudo chmod 777 $HOME/lemontemp/
-pushd $HOME/lemontemp/
+sudo mkdir -p /home/lemon/lemontemp/
+sudo chmod 777 /home/lemon/lemontemp/
+pushd /home/lemon/lemontemp/
 
 echo "|| Getting dotfiles ||"
 sudo git clone https://github.com/PassiveLemon/lemondots/
 
-cp -r $HOME/lemondots/.nix/ $HOME/
-cp -r $HOME/lemondots/.config/ $HOME/
-cp -r $HOME/lemondots/.local/ $HOME/
-cp -r $HOME/lemondots/.wallpapers/ $HOME/
-cp $HOME/lemondots/.gtkrc-2.0 $HOME/
-#cp $HOME/lemondots/.xinitrc $HOME/
+cp -r /home/lemon/lemondots/.nix/ /home/lemon/
+cp -r /home/lemon/lemondots/.config/ /home/lemon/
+cp -r /home/lemon/lemondots/.local/ /home/lemon/
+cp -r /home/lemon/lemondots/.wallpapers/ /home/lemon/
+cp /home/lemon/lemondots/.gtkrc-2.0 /home/lemon/
+#cp /home/lemon/lemondots/.xinitrc /home/lemon/
 sudo mv /etc/nixos/configuration.nix /etc/nixos/configuration.nix.old
-sudo cp $HOME/.nix/configuration.nix /etc/nixos/configuration.nix
+sudo cp /home/lemon/.nix/configuration.nix /etc/nixos/configuration.nix
 
-sudo cp $HOME/.wallpapers/Reds/Wallpaper\ \(6).png $HOME/.background-image
+sudo cp /home/lemon/.wallpapers/Reds/Wallpaper\ \(6\).png /home/lemon/.background-image
 
 echo "|| Running sub-scripts ||"
 
-bash $HOME/.local/fontsscript.sh
-bash $HOME/.local/iconsscript.sh
-bash $HOME/.local/themesscript.sh
+bash /home/lemon/.local/fontsscript.sh
+bash /home/lemon/.local/iconsscript.sh
+bash /home/lemon/.local/themesscript.sh
 
 echo "|| Changing permissions ||"
-sudo chmod u+x $HOME/.xinitrc
-sudo chmod u+x $HOME/.config/bspwm/bspwmrc
-sudo chmod u+x $HOME/.config/sxhkd/sxhkdrc
+sudo chmod u+x /home/lemon/.xinitrc
+sudo chmod u+x /home/lemon/.config/bspwm/bspwmrc
+sudo chmod u+x /home/lemon/.config/sxhkd/sxhkdrc
 
-sudo rm -r $HOME/lemontemp/
+sudo rm -r /home/lemon/lemontemp/
 popd

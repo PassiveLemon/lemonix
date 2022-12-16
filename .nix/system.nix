@@ -18,7 +18,7 @@
 
     # Networking
     networking = {
-        hostName = "lemontree";
+        hostName = "lemon-tree";
 #        wireless = {
 #            enable = true;
 #            networks = {
