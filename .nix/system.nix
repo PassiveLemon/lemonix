@@ -4,9 +4,13 @@
     # Specific Use Case
 #    virtualisation.vmware.guest.enable = true;
 
-    # Bootloader
-    boot.loader.systemd-boot.enable = true;
-    boot.loader.efi.canTouchEfiVariables = true;
+    # Boot
+    boot = {
+        loader.systemd-boot.enable = true;
+        loader.efi.canTouchEfiVariables = true;
+#        extraModulePackages = [ config.boot.kernelPackages.rtl8821ce ];
+#        kernelModules = [ "iwlwifi" "iwlmvm "]; 
+    }
 
     # Locale
     time.timeZone = "America/New_York";
