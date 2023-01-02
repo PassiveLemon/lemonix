@@ -10,7 +10,7 @@
         loader.efi.canTouchEfiVariables = true;
 #        extraModulePackages = [ config.boot.kernelPackages.rtl8821ce ];
 #        kernelModules = [ "iwlwifi" "iwlmvm "]; 
-    }
+    };
 
     # Locale
     time.timeZone = "America/New_York";
