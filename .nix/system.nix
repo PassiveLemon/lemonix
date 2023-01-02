@@ -23,14 +23,15 @@
     # Networking
     networking = {
         hostName = "lemon-tree";
+        networkmanager.enable = true;
 #        wireless = {
 #            enable = true;
 #            networks = {
-#        Geek = {
-#            psk = "omgwtf42";
-#            pskRaw = "";
+#                Geek = {
+#                psk = "omgwtf42";
+#                pskRaw = "";
+#                };
 #            };
-#        };
 #        };
 #    interfaces.eth0.ipv4.addresses = [ {
 #        address = "192.168.1.178";
