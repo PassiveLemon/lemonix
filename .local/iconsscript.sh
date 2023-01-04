@@ -18,3 +18,6 @@ cd volantes-cursors
 sudo make build
 sudo make install
 cd ..
+
+popd
+sudo rm -r /home/lemon/lemontemp/
