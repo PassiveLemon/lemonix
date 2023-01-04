@@ -70,26 +70,27 @@
       };
       videoDrivers = [ "nvidia" ];
     };
-  picom.enable = true;
-  autorandr = {
-    enable = true;
-    profiles = {
-      "Lemon" = {
-        fingerprint.DP1 = "<EDID>";
-        config.DP1 = {
-          enable = true;
-          primary = true;
-          mode = "1920x1080";
-          rate = "144.00";
+    picom.enable = true;
+    autorandr = {
+      enable = true;
+      profiles = {
+        "Lemon" = {
+          fingerprint.DP1 = "<EDID>";
+          config.DP1 = {
+            enable = true;
+            primary = true;
+            mode = "1920x1080";
+            rate = "144.00";
+          };
         };
-      };
-      "Lime" = {
-        fingerprint.DP2 = "<EDID>";
-        config.DP2 = {
-          enable = false;
-          primary = true;
-          mode = "1920x1080";
-          rate = "60.00";
+        "Lime" = {
+          fingerprint.DP2 = "<EDID>";
+          config.DP2 = {
+            enable = false;
+            primary = true;
+            mode = "1920x1080";
+            rate = "60.00";
+          };
         };
       };
     };

@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-if [ ! -d ../LICENSE ] && [ ! -d ../.git ]; then
+if [ ! -d ./LICENSE ] && [ ! -d ./.git ]; then
   echo "|| No clone detected. Cloning...  ||"
   sudo mkdir -p /home/lemon/lemontemp/
   sudo chmod 777 /home/lemon/lemontemp/
@@ -36,6 +36,6 @@ sudo chmod u+x /home/lemon/.config/bspwm/bspwmrc
 sudo chmod u+x /home/lemon/.config/sxhkd/sxhkdrc
 
 if [ -d /home/lemon/lemontemp ]; then
-  popd
   sudo rm -r /home/lemon/lemontemp/
+  popd
 fi
