@@ -69,10 +69,9 @@
         configFile = "/home/lemon/.config/bspwm/bspwmrc";
         sxhkd.configFile = "/home/lemon/.config/sxhkd/sxhkdrc";
       };
-#      videoDrivers = [ "nvidia" ];
+      videoDrivers = [ "nvidia" ];
       };
       picom.enable = true;
-
     autorandr = {
       enable = true;
       profiles = {
@@ -83,8 +82,8 @@
             primary = true;
             mode = "1920x1080";
             rate = "144.00";
-          };
         };
+      };
         "Lime" = {
           fingerprint.DP2 = "<EDID>";
           config.DP2 = {
@@ -92,7 +91,6 @@
             primary = true;
             mode = "1920x1080";
             rate = "60.00";
-          };
         };
       };
     };
