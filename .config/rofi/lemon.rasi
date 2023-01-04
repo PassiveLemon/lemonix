@@ -1,6 +1,6 @@
 configuration {
   modi: "drun,run";
-  font: "Iosevka Nerd Font Medium 12";
+  font: "Fira Code Medium Nerd Font 12";
   display-drun: "[Drun]";
   display-run: "[Run]";
 }

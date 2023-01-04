@@ -15,10 +15,10 @@
   # Locale
   time.timeZone = "America/New_York";
   i18n.defaultLocale = "en_US.UTF-8";
-  console = {
-    font = "Fira Code";
-    keyMap = "us";
-  };
+#  console = {
+#    font = "Fira Code";
+#    keyMap = "us";
+#  };
 
   # Audio
   sound.enable = true;
@@ -61,8 +61,11 @@
   services = {
     xserver = {
       enable = true;
+      displayManager = {
+        defaultSession = "xfce+bspwm";
+        gdm.enable = true;
+        };
       desktopManager = {
-        default = "xfce";
         xterm.enable = false;
         xfce = {
           enable = true;
@@ -70,10 +73,6 @@
           enableXfwm = false;
         };
       };
-      displayManager = {
-        defaultSession = "xfce+bspwm";
-        gdm.enable = true;
-        };
       windowManager.bspwm = {
         enable = true;
         configFile = "/home/lemon/.config/bspwm/bspwmrc";
