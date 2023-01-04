@@ -61,8 +61,17 @@
   services = {
     xserver = {
       enable = true;
+      desktopManager = {
+        default = "xfce";
+        xterm.enable = false;
+        xfce = {
+          enable = true;
+          noDesktop = true;
+          enableXfwm = false;
+        };
+      };
       displayManager = {
-        defaultSession = "none+bspwm";
+        defaultSession = "xfce+bspwm";
         gdm.enable = true;
         };
       windowManager.bspwm = {
