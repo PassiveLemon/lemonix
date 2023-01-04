@@ -11,7 +11,7 @@ if [ ! -d ./LICENSE ] && [ ! -d ./.git ]; then
   cd lemondots
   path=${pwd}
 else
-  path=".."
+  path="."
 fi
 
 cp -r ${path}/.nix/ /home/lemon/
