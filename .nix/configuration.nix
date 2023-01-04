@@ -1,18 +1,17 @@
 { config, pkgs, ... }:
 
 {
-    imports = [
-        ./hardware-configuration.nix
-        /home/lemon/.nix/system.nix
-        /home/lemon/.nix/utility.nix
-        /home/lemon/.nix/program.nix
-        /home/lemon/.nix/customization.nix
-    ];
+  imports = [
+    ./hardware-configuration.nix
+    /home/lemon/.nix/system/
+    /home/lemon/.nix/utility/
+    /home/lemon/.nix/program/
+    /home/lemon/.nix/customization/
+    /home/lemon/.nix/custom/
+  ];
 
-    nixpkgs.config.allowUnfree = true;
+  nixpkgs.config.allowUnfree = true;
 
-    sound.enable = true;
-    hardware.pulseaudio.enable = true;
 
-    system.stateVersion = "22.11";
+  system.stateVersion = "22.11";
 }

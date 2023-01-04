@@ -1,0 +1,15 @@
+{ stdenv, lib, fetchFromGitHub, ... }:
+
+stdenv.mkDerivation rec {
+  pname = "volantes_cursors";
+
+  src =  fetchFromGitHub {
+    owner = "varlesh";
+    repo = "volantes-cursors";
+    rev = "b13a4bbf6bd1d7e85fadf7f2ecc44acc198f8d01";
+    sha256 = "0000000000000000000000000000000000000000000000000000";
+  };
+
+  installPhase = ''
+    mkdir -p $out/share/icons/volantes_cursors
+    volantes_cursors
