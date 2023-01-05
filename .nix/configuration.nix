@@ -3,11 +3,8 @@
 {
   imports = [
     ./hardware-configuration.nix
-    /home/lemon/.nix/system
-    /home/lemon/.nix/utility
-    /home/lemon/.nix/program
-    /home/lemon/.nix/customization
-#    /home/lemon/.nix/custom
+    /home/lemon/.nix/modules
+    /home/lemon/.nix/pkgs
   ];
 
   nixpkgs.config.allowUnfree = true;
