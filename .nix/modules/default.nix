@@ -2,9 +2,8 @@
 
 {
   imports = [
-    ./customize
-    ./program
+    ./custom
+    ./home
     ./system
-    ./utility
   ];
 }

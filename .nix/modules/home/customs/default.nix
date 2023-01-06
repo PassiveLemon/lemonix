@@ -1,11 +1,8 @@
 { config, pkgs, ... }:
 
 {
-  imports = [
-    ./fonts
-  ];
   environment.systemPackages = with pkgs; [
-    kora-icon-theme
+    kora-icon-theme nordic
   ];
 
   qt5 = {
