@@ -18,12 +18,15 @@ cp -r ${path}/.nix/ /home/lemon/
 cp -r ${path}/.config/ /home/lemon/
 cp -r ${path}/.local/ /home/lemon/
 cp -r ${path}/.wallpapers/ /home/lemon/
+cp ${path}/.xorg.conf /home/lemon/
 sudo mv /etc/nixos/configuration.nix /etc/nixos/configuration.nix.old
 sudo cp /home/lemon/.nix/configuration.nix /etc/nixos/configuration.nix
 
 sudo cp /home/lemon/.wallpapers/Reds/Wallpaper\ \(6\).png /home/lemon/.background-image
 
+bash /home/lemon/.local/fontsscript.sh
 bash /home/lemon/.local/iconsscript.sh
+bash /home/lemon/.local/themesscript.sh
 
 echo "|| Change permissions ||"
 sudo chmod -R 777 /home/lemon/.config
