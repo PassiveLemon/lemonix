@@ -2,7 +2,6 @@
 
 {
   imports = [
-#    ./custom
     ./home
     ./system
   ];
