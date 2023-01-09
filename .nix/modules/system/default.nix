@@ -7,7 +7,7 @@
   # Packages
   environment.systemPackages = with pkgs; [
     bash nano unzip curl wget cmake git
-    docker psmisc networkmanager p7zip
+    docker psmisc networkmanager p7zip wireless-tools
 #    pkgs.linuxKernel.packages.linux_zen.rtl8821ce
   ];
 
@@ -16,7 +16,7 @@
     loader.systemd-boot.enable = true;
     loader.efi.canTouchEfiVariables = true;
 #    extraModulePackages = [ config.boot.kernelPackages.rtl8821ce ];
-#    kernelModules = [ "iwlwifi" "iwlmvm "]; 
+    kernelModules = [ "iwlwifi" "iwlmvm "]; 
   };
 
   # Locale
@@ -34,12 +34,12 @@
   # Networking
   networking = {
     hostName = "lemon-tree";
-#    networkmanager.enable = true;
+    networkmanager.enable = true;
 #    wireless = {
 #      enable = true;
 #      networks = {
 #        Geek = {
-#          psk = "omgwtf42";
+#          psk = "censored";
 #          pskRaw = "";
 #        };
 #      };
