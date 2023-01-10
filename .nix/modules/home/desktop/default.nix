@@ -3,7 +3,7 @@
 {
   # Packages
   environment.systemPackages = with pkgs; [
-    xorg.xrandr
+    xorg.xrandr libsecret gnome.seahorse gnome.gnome-keyring
     lightdm
     bspwm sxhkd picom-jonaburg feh
     polybar dunst

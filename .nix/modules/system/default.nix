@@ -8,8 +8,8 @@
 
   # Packages
   environment.systemPackages = with pkgs; [
-    bash nano unzip curl wget cmake git
-    docker virt-manager psmisc networkmanager p7zip wirelesstools headsetcontrol ckb-next ldmtool
+    bash nano unzip p7zip curl wget git cmake gnumake
+    docker virt-manager psmisc networkmanager
 #    pkgs.linuxKernel.packages.linux_zen.rtl8821ce
   ];
 
@@ -24,10 +24,6 @@
   # Locale
   time.timeZone = "America/New_York";
   i18n.defaultLocale = "en_US.UTF-8";
-#  console = {
-#    font = "Fira Code";
-#    keyMap = "us";
-#  };
 
   # Audio
   sound.enable = true;
@@ -37,19 +33,14 @@
   networking = {
     hostName = "lemon-tree";
     networkmanager.enable = true;
-#    wireless = {
-#      enable = true;
-#      networks = {
-#        Geek = {
-#          psk = "omgwtf42";
-#          pskRaw = "";
-#        };
-#      };
-#    };
-#    interfaces.eth0.ipv4.addresses = [ {
-#      address = "192.168.1.178";
-#      prefixLength = 24;
-#    } ];
+    firewall = {
+      enable = true;
+      allowedTCPPortRanges = [
+        { from = 21000; to = 23000; }
+        { from = 31000; to = 33000; }
+        { from = 41000; to = 43000; }
+      ];
+    };
   };
 
   # Users
@@ -57,6 +48,6 @@
     isNormalUser = true;
     home = "/home/lemon";
     description = "Lemon";
-    extraGroups = [ "wheel" "networkmanager" "libvertd" ];
+    extraGroups = [ "wheel" "networkmanager" "docker" "libvertd" ];
   };
 }

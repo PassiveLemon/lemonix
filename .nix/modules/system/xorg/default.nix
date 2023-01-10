@@ -24,6 +24,5 @@
       videoDrivers = [ "nvidia" ];
     };
     picom.enable = true;
-    gnome.gnome-keyring.enable = true;
   };
 }
