@@ -5,7 +5,7 @@ pgrep -x sxhkd > /dev/null || sxhkd &
 xrandr --output DP-2 --primary --mode 1920x1080 --rotate normal --output DP-0 --mode 1920x1080 --rotate normal --left-of DP-2
 
 bspc monitor DP-2 -d I II III IV V
-bspc monitor DP-0 -d VI VII VIII IX X
+bspc monitor DP-0 -d VI VII VIII IX X 
 
 sh $HOME/.config/polybar/launch.sh &
 feh --bg-fill $HOME/.wallpapers/Reds/"Wallpaper (6).png" &
