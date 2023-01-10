@@ -1,13 +1,15 @@
 { config, pkgs, ... }:
 
 {
-  # Specific Use Case
-#  virtualisation.vmware.guest.enable = true;
+  imports = [
+    ./xorg
+    ./virtualization
+  ];
 
   # Packages
   environment.systemPackages = with pkgs; [
     bash nano unzip curl wget cmake git
-    docker psmisc networkmanager p7zip wireless-tools
+    docker virt-manager psmisc networkmanager p7zip wirelesstools headsetcontrol ckb-next
 #    pkgs.linuxKernel.packages.linux_zen.rtl8821ce
   ];
 
@@ -39,7 +41,7 @@
 #      enable = true;
 #      networks = {
 #        Geek = {
-#          psk = "censored";
+#          psk = "omgwtf42";
 #          pskRaw = "";
 #        };
 #      };
@@ -55,6 +57,6 @@
     isNormalUser = true;
     home = "/home/lemon";
     description = "Lemon";
-    extraGroups = [ "wheel" "networkmanager" ];
+    extraGroups = [ "wheel" "networkmanager" "libvertd" ];
   };
 }

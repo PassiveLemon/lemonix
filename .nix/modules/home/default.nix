@@ -6,12 +6,12 @@
     ./customs
     ./desktop
     ./fonts
+    ./programs
   ];
 
   environment.systemPackages = with pkgs; [
-    xorg.xrandr
-    gnome.gdm
-    xfce.thunar xfce.thunar-volman xfce.thunar-archive-plugin
-    gimp obs-studio github-desktop spotify discord steam vscode firefox gparted vlc lxappearance pavucontrol protonvpn-gui htop neofetch
+    xfce.thunar-archive-plugin xfce.thunar xfce.thunar-volman lxappearance
+    gimp obs-studio github-desktop spotify discord steam heroic vscode firefox gparted vlc pavucontrol protonvpn-gui qbittorrent htop neofetch
+    #nvtop-nvidia
   ];
 }
