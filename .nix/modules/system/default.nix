@@ -9,7 +9,7 @@
   # Packages
   environment.systemPackages = with pkgs; [
     bash nano unzip curl wget cmake git
-    docker virt-manager psmisc networkmanager p7zip wirelesstools headsetcontrol ckb-next
+    docker virt-manager psmisc networkmanager p7zip wirelesstools headsetcontrol ckb-next ldmtool
 #    pkgs.linuxKernel.packages.linux_zen.rtl8821ce
   ];
 

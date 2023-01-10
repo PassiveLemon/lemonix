@@ -10,8 +10,8 @@
   ];
 
   environment.systemPackages = with pkgs; [
-    xfce.thunar-archive-plugin xfce.thunar xfce.thunar-volman lxappearance
-    gimp obs-studio github-desktop spotify discord steam heroic vscode firefox gparted vlc pavucontrol protonvpn-gui qbittorrent htop neofetch
+    xfce.thunar-archive-plugin xfce.thunar xfce.thunar-volman lxappearance archiver
+    gimp obs-studio github-desktop spotify discord steam heroic vscode firefox gparted vlc pavucontrol protonvpn-gui qbittorrent htop neofetch megasync
     #nvtop-nvidia
   ];
 }
