@@ -2,6 +2,6 @@
 
 {
   fonts.fonts = with pkgs; [
-    fira (nerdfonts.override { fonts = [ "FiraCode" "Iosevka" ]; })
+    material-design-icons fira (nerdfonts.override { fonts = [ "FiraCode" "Iosevka" ]; })
   ];
 }

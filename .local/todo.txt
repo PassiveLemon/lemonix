@@ -1,4 +1,0 @@
-finish download/extract/install scripts for the items
-set paths for "default" for cursor and shit
-
-Might have to go back into linux boot to see the themes and stuff i have

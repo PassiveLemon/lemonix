@@ -7,7 +7,7 @@ configuration {
 
 * {
   bg: #121212;
-  bg-alt: #222222;
+  bg-alt: #282828;
   wh: #FFFFFF;
   background-color: @bg;
   text-color: @wh;
@@ -16,12 +16,6 @@ configuration {
 window {
   height: 455px;
   width: 300px;
-  border: 3px;
-}
-
-mainbox {
-  border: 2px;
-  border-color: @wh;
 }
 
 inputbar {
@@ -29,17 +23,35 @@ inputbar {
 }
 
 entry {
-  padding: 10px 0px;
+  padding: 10px 10px 0px 0px;
 }
 
 prompt {
   padding: 10px;
 }
 
+mainbox { 
+  children: [ inputbar, listview ];
+  border: 2px;
+  border-radius: 5px;
+  border-color: @wh;
+}
+
 listview {
-  padding: 10px 5px;
+  columns: 1;
+  layout: vertical;
+  padding: 0px 10px 5px 10px;
+}
+
+element-text {
+	expand:                         true;
+	vertical-align:                 0.5;
+	margin:                         0.1% 0.5% 0% 0.5%;
+	background-color: 		inherit;
+	text-color:       		inherit;
 }
 
 element selected {
   background-color: @bg-alt;
+  border-radius: 8px;
 }
