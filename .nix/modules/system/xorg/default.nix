@@ -25,4 +25,5 @@
     };
     picom.enable = true;
   };
+  hardware.opengl.enable = true;
 }

@@ -50,4 +50,6 @@
     description = "Lemon";
     extraGroups = [ "wheel" "networkmanager" "docker" "libvertd" ];
   };
+
+  services.openssh.enable = true;
 }
