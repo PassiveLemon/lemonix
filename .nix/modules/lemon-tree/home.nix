@@ -1,4 +1,12 @@
-{ config, pkgs, ... }: {
+{ config, pkgs, ... }: 
+let
+  spicePkgs = spicetify-nix.packages.${pkgs.system}.default;
+in
+{
+  imports = [
+    spicetify-nix.homeManagerModule
+  ];
+
   # Packages
   environment.systemPackages = with pkgs; [
     # Desktop
@@ -23,19 +31,7 @@
     platformTheme = "gtk2";
     style = "gtk2";
   };
-}
 
-{ config, pkgs, lib, spicetify-nix, ... }:
-# Home Manager
-let
-  spicePkgs = spicetify-nix.packages.${pkgs.system}.default;
-in
-{
-  imports = [
-    spicetify-nix.homeManagerModule
-  ];
-
-  # Home Manager Configs
   programs.spicetify = {
     enable = true;
     #theme = spicePkgs.themes.catppuccin-mocha;
