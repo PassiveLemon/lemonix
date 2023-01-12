@@ -10,7 +10,7 @@
   outputs = {self, nixpkgs, ...}: {
     nixosConfigurations.lemon-tree = nixpkgs.lib.nixosSystem {
       system = "x86_64-linux";
-      modules = [ ./hosts/lemon-tree ];
+      modules = [ ./.nix/hosts/lemon-tree ];
     };
   };
 }
