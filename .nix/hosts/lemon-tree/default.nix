@@ -3,7 +3,6 @@
     ./hardware-configuration.nix
     ../modules
 #    /home/lemon/.nix/pkgs
-    home-manager.nixosModule
   ];
 
   # Hard Drive
