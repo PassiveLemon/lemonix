@@ -1,7 +1,7 @@
 { config, lib, nixpkgs, home-manager, ... }: {
   imports = [
     ./hardware-configuration.nix
-    /home/lemon/.nix/modules
+    ../modules
 #    /home/lemon/.nix/pkgs
     home-manager.nixosModule
   ];
