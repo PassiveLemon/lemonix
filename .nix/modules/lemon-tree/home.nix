@@ -1,11 +1,6 @@
-{ config, pkgs, spicetify-nix, ... }: 
-let
-  spicePkgs = spicetify-nix.packages.${pkgs.system}.default;
-in
-{
+{ config, pkgs, ... }: {
   imports = [
-    home-manager.nixosModules.home-manager
-    spicetify-nix.homeManagerModule
+    ../../home-manager
   ];
 
   # Packages
