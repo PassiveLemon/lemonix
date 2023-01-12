@@ -25,7 +25,7 @@
   };
 }
 
-{ configs, pkgs, lib, spicetify-nix, ... }:
+{ config, pkgs, lib, spicetify-nix, ... }:
 # Home Manager
 let
   spicePkgs = spicetify-nix.packages.${pkgs.system}.default;
