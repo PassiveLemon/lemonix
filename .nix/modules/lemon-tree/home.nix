@@ -4,6 +4,7 @@ let
 in
 {
   imports = [
+    home-manager.nixosModules.home-manager
     spicetify-nix.homeManagerModule
   ];
 
@@ -40,7 +41,6 @@ in
 
   home-manager.users.lemon = {
     home.packages = [
-      pkgs.foo 
     ];
   };
 }
