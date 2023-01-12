@@ -1,9 +1,10 @@
 { config, pkgs, ... }:
 
 {
+  # Systems. Uncomment the one to use. Only one at a time for ideal results.
   imports = [
-#    ./custom
-    ./home
-    ./system
+    ./lemon-tree
+#    ./lime-tree
+#    ./server
   ];
 }
