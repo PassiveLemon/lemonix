@@ -1,7 +1,14 @@
 { config, pkgs, ... }: {
   imports = [
-    ../../home-manager
+    #../home-manager
+    #../home-manager/spicetify
   ];
+
+  # Home Manager
+  home.username = "lemon";
+    home.homeDirectory = "/home/lemon";
+    home.stateVersion = "22.11";
+    programs.home-manager.enable = true;
 
   # Packages
   environment.systemPackages = with pkgs; [
@@ -34,8 +41,8 @@
     #colorScheme = "flamingo";
   };
 
-  home-manager.users.lemon = {
-    home.packages = [
-    ];
-  };
+  #home-manager.users.lemon = {
+  #  home.packages = [
+  #  ];
+  #};
 }

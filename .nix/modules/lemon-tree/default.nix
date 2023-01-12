@@ -72,13 +72,13 @@
     };
     picom.enable = true;
     gnome.gnome-keyring.enable = true;
+    openssh.enable = true;
   };
-  openssh.enable = true;
   hardware.opengl.enable = true;
 
   # Programs
   programs = {
-    conf.enable = true;
+    dconf.enable = true;
     steam.enable = true;
     seahorse.enable = true;
     thunar.plugins = with pkgs.xfce; [
