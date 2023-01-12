@@ -32,7 +32,6 @@ let
 in
 {
   imports = [
-    (import "${home-manager}/nixos")
     spicetify-nix.homeManagerModule
   ];
 
