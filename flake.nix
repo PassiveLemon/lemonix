@@ -11,7 +11,7 @@
     spicetify-nix.url = "github:the-argus/spicetify-nix";
   };
 
-  outputs = { self, nixpkgs, home-manager, ... }: {
+  outputs = { self, pkgs, ... }: {
     nixosConfigurations.lemon-tree = nixpkgs.lib.nixosSystem {
       system = "x86_64-linux";
       modules = [ ./.nix/hosts/lemon-tree ];
