@@ -21,14 +21,16 @@
       lib = nixpkgs.lib;
 
     in {
-      nixosConfigurations = {
-        lemon-tree = lib.nixosSystem {
-          inherit system;
-          modules = [
-            ./.nix/hosts/lemon-tree/default.nix
-            ./.nix/modules/home-manager/home.nix
-          ];
-        };
+      homeManagerConfigurations.lemon = home-manager.lib.homeManagerConfiguration {
+        modules = [
+          ./.nix/home-manager/home.nix
+        ];
+      };
+      nixosConfigurations.lemon-tree = nixpkgs.lib.nixosSystem {
+        modules = [
+          ./.nix/hosts/lemon-tree/default.nix
+          #./.nix/modules/home-manager/home.nix
+        ];
       };
     };
 }

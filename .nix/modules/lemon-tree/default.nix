@@ -1,6 +1,6 @@
-{ config, pkgs, ... }: {
+{ config, pkgs, home-manager, spicetify, ... }: {
   imports = [
-    ./home.nix
+    ./lemon.nix
   ];
 
   # Boot

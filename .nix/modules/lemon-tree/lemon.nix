@@ -1,16 +1,8 @@
-{ config, pkgs, home-manager ... }: {
+{ config, pkgs, home-manager, ... }: {
   imports = [
-    #../home-manager
-    #home-manager.nixosModules.home-manager
     ../home-manager/spicetify.nix
   ];
-
-  # Home Manager
-  home.username = "lemon";
-    home.homeDirectory = "/home/lemon";
-    home.stateVersion = "22.11";
-    programs.home-manager.enable = true;
-
+  
   # Packages
   environment.systemPackages = with pkgs; [
     # Desktop
