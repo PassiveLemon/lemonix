@@ -25,6 +25,7 @@
     firewall = {
       enable = true;
       allowedTCPPortRanges = [
+        { from = 22; to = 22;}
         { from = 21000; to = 23000; }
         { from = 31000; to = 33000; }
         { from = 41000; to = 43000; }

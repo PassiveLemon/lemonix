@@ -3,10 +3,11 @@
   environment.systemPackages = with pkgs; [
     # Desktop
     xorg.xrandr libsecret gnome.seahorse gnome.gnome-keyring
-    lightdm bspwm sxhkd picom feh polybar dunst
+    lightdm bspwm sxhkd picom feh polybar
     kora-icon-theme nordic
 
     # Apps & Programs
+    xfce.thunar
     kitty rofi firefox gparted pavucontrol
     gimp obs-studio github-desktop discord steam heroic vscode jellyfin-media-player vlc qbittorrent megasync
     wine winetricks lxappearance htop neofetch
@@ -38,7 +39,6 @@
         configFile = "/home/lemon/.config/bspwm/bspwmrc";
         sxhkd.configFile = "/home/lemon/.config/sxhkd/sxhkdrc";
       };
-      excludePackages = [ pkgs.xterm pkgs.xfce.xfce4-terminal pkgs.xfce.xfwm4 pkgs.xfce.mousepad ];
       videoDrivers = [ "nvidia" ];
     };
     picom.enable = true;
@@ -51,7 +51,7 @@
     steam.enable = true;
     seahorse.enable = true;
   };
-  qt = {
+  qt5 = {
     enable = true;
     platformTheme = "gtk2";
     style = "gtk2";
