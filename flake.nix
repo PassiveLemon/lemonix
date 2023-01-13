@@ -18,12 +18,11 @@
         inherit system;
         config.allowUnfree = true;
       };
-
     in {
       homeManagerConfigurations.lemon = home-manager.lib.homeManagerConfiguration {
         modules = [
           ./.nix/home-manager/home.nix
-          spicetify-nix.homeManagerModule
+          ./.nix/home-manager/spicetify.nix
         ];
       };
       nixosConfigurations.lemon-tree = nixpkgs.lib.nixosSystem {
