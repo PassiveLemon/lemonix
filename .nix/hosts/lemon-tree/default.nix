@@ -1,4 +1,4 @@
-{ config, lib, nixpkgs, home-manager, ... }: {
+{ config, lib, nixpkgs, ... }: {
   imports = [
     ./hardware-configuration.nix
     ../../modules/lemon-tree

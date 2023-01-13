@@ -11,7 +11,7 @@
     spicetify-nix.url = "github:the-argus/spicetify-nix";
   };
 
-  outputs = { self, nixpkgs, home-manager, ... }@inputs:
+  outputs = { self, nixpkgs, home-manager, spicetify-nix, ... }@inputs:
     let
       system = "x86_64-linux";
       pkgs = import nixpkgs {
@@ -22,10 +22,10 @@
 
     in {
       nixosConfigurations = {
-        nixos = lib.nixosSystem {
+        lemon-tree = lib.nixosSystem {
           inherit system;
           modules = [
-            ./.nix/hosts/lemon-tree 
+            ./.nix/hosts/lemon-tree/default.nix
             ./.nix/modules/home-manager/home.nix
           ];
         };
