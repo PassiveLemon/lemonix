@@ -1,9 +1,11 @@
 { config, pkgs, ... }: {
+  imports = [ ../../modules/home-manager.nix ];
+
   # Packages
   environment.systemPackages = with pkgs; [
     # Desktop
     xorg.xrandr libsecret gnome.seahorse gnome.gnome-keyring
-    lightdm bspwm sxhkd picom feh polybar
+    lightdm bspwm sxhkd picom-jonaburg feh polybar
     kora-icon-theme nordic
 
     # Apps & Programs
@@ -27,11 +29,9 @@
         lightdm.enable = true;
         };
       desktopManager = {
-        xterm.enable = false;
         xfce = {
           enable = true;
           noDesktop = true;
-          enableXfwm = false;
         };
       };
       windowManager.bspwm = {
@@ -58,5 +58,10 @@
   };
 
   security.pam.services.lemon.enableGnomeKeyring = true;
-  hardware.opengl.enable = true;
+
+    # Home-Manager
+  home-manager.users.lemon = { pkgs, ... }: {
+    home.stateVersion = "22.11";
+    programs.bash.enable = true;
+  };
 }

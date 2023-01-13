@@ -1,8 +1,4 @@
-{ config, pkgs, home-manager, spicetify, ... }: {
-  imports = [
-    ./lemon.nix
-  ];
-
+{ config, pkgs, ... }: {
   # Boot
   boot = {
     loader.systemd-boot.enable = true;
@@ -52,4 +48,11 @@
     docker.enable = true;
     libvirtd.enable = true;
   };
+  hardware = {
+    nvidia.open = true;
+    opengl.enable = true;
+  };
+
+  nix.settings.experimental-features = [ "nix-command" "flakes" ];
+  nixpkgs.config.allowUnfree = true;
 }

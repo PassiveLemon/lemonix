@@ -1,8 +1,7 @@
 { config, lib, nixpkgs, ... }: {
   imports = [
-    ./hardware-configuration.nix
-    ../../modules/lemon-tree
-#    /home/lemon/.nix/pkgs
+    ./system.nix
+    ./lemon.nix
   ];
 
   # Hard Drive
@@ -10,9 +9,6 @@
     device = "/dev/disk/by-uuid/F05212295211F4D6";
     fsType = "ntfs";
   };
-
-  nix.settings.experimental-features = [ "nix-command" "flakes" ];
-  nixpkgs.config.allowUnfree = true;
 
   system.stateVersion = "22.11";
 }

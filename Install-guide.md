@@ -1,7 +1,7 @@
 # Root </br>
 `sudo -i` </br>
 
-# Wifi </br>
+# Wifi (if needed) </br>
 `sudo systemctl start wpa_supplicant` </br>
 
 `wpa_cli` </br>
@@ -44,7 +44,7 @@ OK -> Should see a connection success line </br>
 
 # Settings </br>
 `boot.loader.systemd-boot.enable = true` </br>
-`networking.networkmanager.enable = true` </br>
+`networking.networkmanager.enable = true` (if wifi is needed) </br>
 
 # Install </br>
 `nixos-install` </br>

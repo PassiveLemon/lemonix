@@ -1,3 +1,6 @@
 { config, pkgs, ... }: {
-  imports = [ /home/lemon/.nix ];
+  imports = [
+    ./hardware-configuration.nix
+    /home/lemon/.nix
+  ];
 }

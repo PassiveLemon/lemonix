@@ -1,0 +1,20 @@
+{ pkgs, lib, ... }:
+#let
+#  spicetify = builtins.fetchGit {
+#    url = "https://github.com/the-argus/spicetify-nix";
+#    rev = "f97658eb60cb29a1a35eb6af2ec85d590f1b4a49";
+#  };
+#in
+let
+  spicetify = (builtins.getFlake "github:the-argus/spicetify-nix").f97658eb60cb29a1a35eb6af2ec85d590f1b4a49;
+in
+{
+  imports = [
+    #(import "${spicetify}/flake.nix")
+    "${spicetify}"
+  ];
+  # allow spotify to be installed if you don't have unfree enabled already
+  #nixpkgs.config.allowUnfreePredicate = pkg: builtins.elem (lib.getName pkg) [
+  #  "spotify"
+  #];
+}
