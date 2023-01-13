@@ -24,6 +24,7 @@
       homeManagerConfigurations.lemon = home-manager.lib.homeManagerConfiguration {
         modules = [
           ./.nix/home-manager/home.nix
+          spicetify-nix.homeManagerModule
         ];
       };
       nixosConfigurations.lemon-tree = nixpkgs.lib.nixosSystem {
