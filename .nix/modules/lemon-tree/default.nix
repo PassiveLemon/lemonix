@@ -45,4 +45,10 @@
     bash nano unzip p7zip curl wget git cmake gnumake
     docker virt-manager psmisc networkmanager
   ];
+
+  # Configs
+  virtualisation = {
+    docker.enable = true;
+    libvirtd.enable = true;
+  };
 }
