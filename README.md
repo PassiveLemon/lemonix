@@ -13,5 +13,7 @@ The modules are configs for other things that would complicate the host configs.
 
 Pkgs are just my custom packages. </br>
 
+The Installer.sh script clones this repository and installs the dotfiles if they aren't present. It also downloads fonts, icons, and themes and puts them into their ~ directories because some programs still need those directories.
+
 <img src="desktop.png"> </br>
 I will update the image every so often. </br>
