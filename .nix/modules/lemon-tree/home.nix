@@ -1,7 +1,7 @@
 { config, pkgs, ... }: {
   imports = [
     #../home-manager
-    #../home-manager/spicetify
+    ../home-manager/spicetify
   ];
 
   # Home Manager
