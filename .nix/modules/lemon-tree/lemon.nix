@@ -7,7 +7,7 @@
     kora-icon-theme nordic
 
     # Apps & Programs
-    xfce.thunar
+    xfce.thunar xfce.xfce4-settings
     kitty rofi firefox gparted pavucontrol
     gimp obs-studio github-desktop discord steam heroic vscode jellyfin-media-player vlc qbittorrent megasync
     wine winetricks lxappearance htop neofetch
