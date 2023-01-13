@@ -1,8 +1,8 @@
 { config, pkgs, ... }: {
   imports = [
     #../home-manager
-    home-manager.nixosModule
-    ../home-manager/spicetify
+    #home-manager.nixosModules.home-manager
+    ../home-manager/spicetify.nix
   ];
 
   # Home Manager
