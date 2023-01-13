@@ -18,7 +18,6 @@
         inherit system;
         config.allowUnfree = true;
       };
-      lib = nixpkgs.lib;
 
     in {
       homeManagerConfigurations.lemon = home-manager.lib.homeManagerConfiguration {
@@ -30,7 +29,6 @@
       nixosConfigurations.lemon-tree = nixpkgs.lib.nixosSystem {
         modules = [
           ./.nix/hosts/lemon-tree/default.nix
-          #./.nix/modules/home-manager/home.nix
         ];
       };
     };
