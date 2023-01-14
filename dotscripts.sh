@@ -55,6 +55,7 @@ for directory in "$HOME/.local/share/themes/" "$HOME/.themes/"; do
 done
 
 # Manual
-for directory in "fonts/ icons/ themes/"; do
-  sudo cp -r ./${directory} $HOME
-done 
+sudo cp -rf ./.local/ $HOME/
+#sudo cp -rf ./.fonts/ $HOME/
+sudo cp -rf ./.icons/ $HOME/
+#sudo cp -rf ./.themes/ $HOME/

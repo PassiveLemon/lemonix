@@ -26,8 +26,7 @@ sudo cp ${path}/configuration.nix /etc/nixos/configuration.nix
 
 sudo cp /home/lemon/.wallpapers/Reds/Wallpaper\ \(6\).png /home/lemon/.background-image
 
-bash /home/lemon/.local/dotscripts.sh
-h
+bash ${path}/dotscripts.sh
 
 echo "|| Changing permissions... ||"
 sudo chmod -R 777 /home/lemon/.config
