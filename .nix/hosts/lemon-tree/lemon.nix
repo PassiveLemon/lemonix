@@ -43,6 +43,8 @@
         sxhkd.configFile = "/home/lemon/.config/sxhkd/sxhkdrc";
       };
       videoDrivers = [ "nvidia" ];
+      libinput.mouse.middleEmulation = false;
+      libinput.touchpad.middleEmulation = false;
     };
     picom.enable = true;
     gnome.gnome-keyring.enable = true;
