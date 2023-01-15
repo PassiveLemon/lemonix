@@ -1,5 +1,8 @@
 { config, pkgs, ... }: {
-  imports = [ ../../modules/home-manager.nix ];
+  imports = [
+    ../../modules/home-manager.nix
+    ./configs
+  ];
 
   # Packages
   environment.systemPackages = with pkgs; [
@@ -62,6 +65,8 @@
     # Home-Manager
   home-manager.users.lemon = { pkgs, ... }: {
     home.stateVersion = "22.11";
+    imports = [
+    ];
     programs.bash.enable = true;
   };
 }

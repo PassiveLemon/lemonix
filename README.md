@@ -7,6 +7,8 @@ Next up is system.nix which contains the more root part of the system. It contai
 
 Last is the (user/s).nix. They simply just contain the options that manage most of the visual functionalities that a specific user may need. </br>
 
+Big user configs are stored in a separate .nix for organization. It gets annoying have to scroll through like 10 lines of config for one program. </br>
+
 I'll try to use flakes to manage the hosts and users automatically in the future but I am waiting until they reach stable before I do that. For now, unused files are marked with .dis (short for discontinued.). They were created when I was testing stuff but stopped using. </br>
 
 The modules are configs for other things that would complicate the host configs. Mainly just for modules that are imported and not from the flake. </br>
