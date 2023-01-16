@@ -14,9 +14,9 @@ super + @space
 # bspwm hotkeys
 #
 
-# quit/restart bspwm & sxhkd
-super + alt + {q,r}
-	bspc {quit,wm -r}
+# restart bspwm & sxhkd
+super + alt + r
+	bspc wm -r
 	pkill -USR1 -x sxhkd
 
 super + alt + r

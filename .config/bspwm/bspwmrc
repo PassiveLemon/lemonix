@@ -25,4 +25,6 @@ done
 killall -w polybar 2>/dev/null
 sh $HOME/.config/polybar/launch.sh &
 
+feh --bg-fill $HOME/.background-image &
+
 xsetroot -cursor_name left_ptr &
