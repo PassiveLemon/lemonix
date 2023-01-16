@@ -11,6 +11,7 @@ configuration {
   wh: #FFFFFF;
   background-color: @bg;
   text-color: @wh;
+  border-radius: 8px;
 }
 
 window {
@@ -39,16 +40,18 @@ mainbox {
 
 listview {
   columns: 1;
+  cycle: true;
+  dynamic: true;
   layout: vertical;
-  padding: 0px 10px 5px 10px;
+  padding: 0px 10px 10px 10px;
 }
 
 element-text {
 	expand:                         true;
 	vertical-align:                 0.5;
 	margin:                         0.1% 0.5% 0% 0.5%;
-	background-color: 		inherit;
-	text-color:       		inherit;
+	background-color: inherit;
+	text-color: inherit;
 }
 
 element selected {

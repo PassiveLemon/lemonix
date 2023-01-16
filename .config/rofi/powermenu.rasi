@@ -1,55 +1,55 @@
 configuration {
-	modi:				"drun";
-	font:				"Fira Code Medium Nerd Font 12";
-	display-drun: 			"";
-	drun-display-format:            "{name}";
-	sidebar-mode: 			false;
+	modi:	"drun";
+	font:	"Fira Code Medium Nerd Font 16";
+	display-drun: "";
+	drun-display-format: "{name}";
+	sidebar-mode: false;
 }
 
-@theme "/dev/null"
-
 * {
-	bg:				#1d1f21;
-	fg:				#c5c8c6;
-	button:				#282a2e;
-
-	background-color:		@bg;
-	text-color:			@fg;
-	border-radius:			8px;
+	bg:	#121212;
+	bg-alt:	#282828;
+	wh: #FFFFFF;
+	background-color: @bg;
+	text-color:	@wh;
+	border-radius: 8px;
 }
 
 window {
-	transparency:                   "real";
-	width:			    	20%;
+	width: 300px;
+}
+
+mainbox {
+	children: [ listview ];
+	border: 2px;
+	border-radius: 5px;
+  border-color: @wh;
 }
 
 listview {
-	columns:                        1;
-	lines:	                        5;
-	cycle:                          false;
-	dynamic:                        true;
-	layout:                         vertical;
-	padding:			30px 30px 30px 30px;
+	columns: 1;
+	lines: 4;
+	cycle: false;
+	dynamic: true;
+	layout: vertical;
+	padding: 30px 30px 30px 30px;
 }
 
-mainbox { children: [ listview ]; }
-
 element {
-	orientation:                    vertical;
-	padding:                        1.5% 0% 1.5% 0%;
-	border-radius:			8px;
+	orientation: vertical;
+	padding: 1.5% 0% 1.5% 0%;
+	border-radius: 8px;
 }
 
 element-text {
-	expand:                         true;
-	vertical-align:                 0.5;
-	margin:                         0.5% 3% 0% 3%;
-	background-color: 		inherit;
-	text-color:       		inherit;
+	expand: true;
+	vertical-align: 0.5;
+	margin: 0.5% 3% 0% 3%;
+	background-color: inherit;
+	text-color: inherit;
 }
 
 element selected {
-	text-color: #cc6666;
-	background-color:               @button;
-	border-radius:                  8px;
+	background-color: @bg-alt;
+	border-radius: 8px;
 }
