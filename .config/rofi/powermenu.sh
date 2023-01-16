@@ -16,7 +16,7 @@ case $chosen in
     xflock4
     ;; 
   $log_out)
-    xfce4-session-logout --logout
+    #xfce4-session-logout --logout
     ;;   
   $power_off)
     systemctl poweroff
