@@ -9,11 +9,10 @@
     # Desktop
     xorg.xrandr libsecret gnome.seahorse gnome.gnome-keyring
     lightdm bspwm sxhkd picom-jonaburg feh polybar
-    kora-icon-theme nordic
+    kora-icon-theme
 
     # Apps & Programs
-    xfce.thunar xfce.xfce4-settings
-    kitty rofi firefox gparted pavucontrol
+    kitty rofi firefox gparted pavucontrol appimage-run
     gimp obs-studio github-desktop discord steam heroic vscode jellyfin-media-player vlc qbittorrent megasync
     wine winetricks lxappearance htop neofetch
   ];
@@ -67,8 +66,7 @@
     # Home-Manager
   home-manager.users.lemon = { pkgs, ... }: {
     home.stateVersion = "22.11";
-    imports = [
-    ];
+    imports = [];
     programs.bash.enable = true;
   };
 }

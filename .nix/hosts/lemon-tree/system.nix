@@ -3,7 +3,8 @@
   boot = {
     loader.systemd-boot.enable = true;
     loader.efi.canTouchEfiVariables = true;
-    kernelModules = [ "iwlwifi" "iwlmvm "]; 
+    kernelModules = [ "iwlwifi" "iwlmvm "];
+    supportedFilesystems = ["ntfs"];
   };
 
   # Locale
@@ -39,8 +40,8 @@
 
   # Packages
   environment.systemPackages = with pkgs; [
-    bash nano unzip p7zip curl wget git cmake gnumake
-    docker virt-manager psmisc networkmanager
+    bash nano unzip unrar p7zip curl wget git cmake gnumake
+    docker virt-manager OVMF pciutils virtiofsd psmisc networkmanager
   ];
 
   # Configs

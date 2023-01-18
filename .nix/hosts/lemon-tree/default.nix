@@ -5,9 +5,14 @@
   ];
 
   # Hard Drive
-  fileSystems."/home/lemon/HDD2TB" = {
-    device = "/dev/disk/by-uuid/F05212295211F4D6";
-    fsType = "ntfs";
+  fileSystems."/home/lemon/HDD2TBEXT4" = {
+    device = "/dev/disk/by-uuid/c532ca53-130a-46c6-9e06-3aee4fd8b6e2";
+    fsType = "ext4";
+  };
+
+  fileSystems."/home/lemon/HDD1TBEXT4" = {
+    device = "/dev/disk/by-uuid/76946991-d872-4936-82f2-298225ea010b";
+    fsType = "ext4";
   };
 
   swapDevices = [

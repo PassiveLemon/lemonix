@@ -6,9 +6,6 @@
     shadow-opacity = 0.75;
     shadow-offset-x = -4;
     shadow-offset-y = -4;
-    shadow-exclude = [
-      "class_g = 'Polybar'"
-    ];
     # Fading
     fading = true;
     fade-in-step = 0.1;
