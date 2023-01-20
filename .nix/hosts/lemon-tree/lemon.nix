@@ -7,12 +7,12 @@
   # Packages
   environment.systemPackages = with pkgs; [
     # Desktop
-    xorg.xrandr libsecret gnome.seahorse gnome.gnome-keyring
-    lightdm bspwm sxhkd picom-jonaburg feh polybar
+    xorg.xrandr xorg.xhost libsecret gnome.seahorse gnome.gnome-keyring
+    lightdm bspwm sxhkd picom feh polybar
     kora-icon-theme
 
     # Apps & Programs
-    kitty rofi firefox gparted pavucontrol appimage-run
+    kitty rofi firefox gparted pavucontrol appimage-run distrobox lutris
     gimp obs-studio github-desktop discord steam heroic vscode jellyfin-media-player vlc qbittorrent megasync
     wine winetricks lxappearance htop neofetch
   ];

@@ -35,18 +35,21 @@
     isNormalUser = true;
     home = "/home/lemon";
     description = "Lemon";
-    extraGroups = [ "wheel" "networkmanager" "docker" "libvertd" ];
+    extraGroups = [ "wheel" "networkmanager" "docker" "libvertd" "video" ];
   };
 
   # Packages
   environment.systemPackages = with pkgs; [
     bash nano unzip unrar p7zip curl wget git cmake gnumake
-    docker virt-manager OVMF pciutils virtiofsd psmisc networkmanager
+    docker nvidia-docker virt-manager OVMF pciutils virtiofsd psmisc networkmanager
   ];
 
   # Configs
   virtualisation = {
-    docker.enable = true;
+    docker = { 
+      enable = true;
+      enableNvidia = true;
+    };
     libvirtd.enable = true;
   };
   hardware = {
