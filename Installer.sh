@@ -15,8 +15,6 @@ else
 fi
 
 echo "|| Copying dots to home... ||"
-
-cp -r ${path}/.nix/ /home/lemon/
 cp -r ${path}/.config/ /home/lemon/
 cp -r ${path}/.local/ /home/lemon/
 cp -r ${path}/.wallpapers/ /home/lemon/

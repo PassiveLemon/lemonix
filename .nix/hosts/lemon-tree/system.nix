@@ -4,7 +4,6 @@
     loader.systemd-boot.enable = true;
     loader.efi.canTouchEfiVariables = true;
     kernelModules = [ "iwlwifi" "iwlmvm "];
-    supportedFilesystems = ["ntfs"];
   };
 
   # Locale
@@ -41,7 +40,7 @@
   # Packages
   environment.systemPackages = with pkgs; [
     bash nano unzip unrar p7zip curl wget git cmake gnumake
-    docker nvidia-docker virt-manager OVMF pciutils virtiofsd psmisc networkmanager
+    docker nvidia-docker virt-manager OVMF pciutils virtiofsd psmisc networkmanager tigervnc
   ];
 
   # Configs

@@ -2,6 +2,7 @@
   imports = [
     ../../modules/home-manager.nix
     ./configs
+    #../../modules/real-vnc-viewer
   ];
 
   # Packages
