@@ -2,10 +2,13 @@
   services.picom.settings = {
     # Shadows
     shadow = true;
-    shadow-radius = 10;
+    shadow-radius = 11;
     shadow-opacity = 0.75;
-    shadow-offset-x = -4;
-    shadow-offset-y = -4;
+    shadow-offset-x = -7;
+    shadow-offset-y = -7;
+    shadow-exlude = [
+      "class_g = 'Polybar'"
+    ];
     # Fading
     fading = true;
     fade-in-step = 0.1;
@@ -42,7 +45,11 @@
     detect-transient = true;
     wintypes = {
       tooltip = { fade = true; };
-      dock = {shadow = false; };
+      dock = { 
+        shadow = true;
+        shadow-offset-x = 0;
+        shadow-offset-y = -7;
+      };
       dnd = { shadow = false; };
       popup_menu = { opacity = 0.8; };
       dropdown_menu = { opacity = 0.8; };

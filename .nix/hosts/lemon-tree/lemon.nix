@@ -12,7 +12,7 @@
     kora-icon-theme
 
     # Apps & Programs
-    kitty rofi firefox gparted pavucontrol appimage-run distrobox lutris
+    kitty rofi firefox gparted pavucontrol pulseeffects-legacy appimage-run distrobox lutris
     gimp obs-studio github-desktop discord steam heroic vscode jellyfin-media-player vlc qbittorrent megasync
     wine winetricks lxappearance htop neofetch
   ];
