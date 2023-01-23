@@ -40,7 +40,7 @@
   # Packages
   environment.systemPackages = with pkgs; [
     bash nano unzip unrar p7zip curl wget git cmake gnumake
-    docker nvidia-docker virt-manager OVMF pciutils virtiofsd psmisc networkmanager tigervnc
+    docker nvidia-docker virt-manager OVMF pciutils virtiofsd psmisc networkmanager home-manager
   ];
 
   # Configs
@@ -55,6 +55,8 @@
     nvidia.open = true;
     opengl.enable = true;
   };
+
+  services.openssh.enable = true;
 
   nix.settings.experimental-features = [ "nix-command" "flakes" ];
   nixpkgs.config.allowUnfree = true;

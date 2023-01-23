@@ -1,8 +1,6 @@
 { config, pkgs, ... }: {
   imports = [
     ../../modules/home-manager.nix
-    ./configs
-    #../../modules/real-vnc-viewer
   ];
 
   # Packages
@@ -13,9 +11,9 @@
     kora-icon-theme
 
     # Apps & Programs
-    kitty rofi firefox gparted pavucontrol pulseeffects-legacy appimage-run distrobox lutris spotify
+    kitty rofi firefox gparted pavucontrol appimage-run distrobox lutris spotify filezilla
     gimp obs-studio github-desktop discord steam vscode jellyfin-media-player vlc qbittorrent megasync
-    wine winetricks lxappearance htop neofetch
+    wine winetricks lxappearance htop neofetch authy
   ];
 
   # Fonts
@@ -48,7 +46,6 @@
     };
     picom.enable = true;
     gnome.gnome-keyring.enable = true;
-    openssh.enable = true;
   };
 
   programs = {
@@ -65,9 +62,9 @@
   security.pam.services.lemon.enableGnomeKeyring = true;
 
     # Home-Manager
-  home-manager.users.lemon = { pkgs, ... }: {
+  home-manager.users.lemon = { config, pkgs, ... }: {
     home.stateVersion = "22.11";
-    imports = [];
+    imports = [ ./configs ];
     programs.bash.enable = true;
   };
 }
