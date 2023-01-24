@@ -13,7 +13,7 @@
     # Apps & Programs
     kitty rofi firefox gparted pavucontrol appimage-run distrobox lutris spotify filezilla
     gimp obs-studio github-desktop discord steam vscode jellyfin-media-player vlc qbittorrent megasync
-    wine winetricks lxappearance htop neofetch authy
+    wine winetricks lxappearance htop neofetch authy spotify spicetify-cli
   ];
 
   # Fonts
@@ -67,4 +67,13 @@
     imports = [ ./configs ];
     programs.bash.enable = true;
   };
+
+  # Overlays
+  nixpkgs.overlays =
+  let
+    myOverlay = self: super: {
+      discord = super.discord.override { withOpenASAR = true; };
+    };
+  in
+  [ myOverlay ];
 }
