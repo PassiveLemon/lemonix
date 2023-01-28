@@ -33,6 +33,9 @@ sudo chmod -R 777 /home/lemon/.nix
 sudo chmod u+x /home/lemon/.config/bspwm/bspwmrc
 sudo chmod u+x /home/lemon/.config/sxhkd/sxhkdrc
 
+echo "|| Other ||"
+flatpak remote-add --if-not-exists flathub https://flathub.org/repo/flathub.flatpakrepo
+
 echo "|| Dots installed. ||"
 
 if [ -d /home/lemon/lemontemp ]; then

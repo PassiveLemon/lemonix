@@ -57,6 +57,8 @@
   };
 
   services.openssh.enable = true;
+  services.flatpak.enable = true;
+  xdg.portal.enable = true;
 
   nix.settings.experimental-features = [ "nix-command" "flakes" ];
   nixpkgs.config.allowUnfree = true;

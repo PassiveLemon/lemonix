@@ -1,6 +1,7 @@
 { config, pkgs, ... }: {
   imports = [
     ../../modules/home-manager.nix
+    #../../modules/gdlauncher.nix
   ];
 
   # Packages
@@ -13,7 +14,7 @@
     # Apps & Programs
     kitty rofi firefox gparted pavucontrol appimage-run distrobox lutris spotify filezilla
     gimp obs-studio github-desktop discord steam vscode jellyfin-media-player vlc qbittorrent megasync
-    wine winetricks lxappearance htop neofetch authy spotify spicetify-cli
+    wine winetricks lxappearance htop neofetch authy grapejuice
   ];
 
   # Fonts
@@ -47,7 +48,6 @@
     picom.enable = true;
     gnome.gnome-keyring.enable = true;
   };
-
   programs = {
     dconf.enable = true;
     steam.enable = true;
@@ -58,15 +58,7 @@
     platformTheme = "gtk2";
     style = "gtk2";
   };
-
   security.pam.services.lemon.enableGnomeKeyring = true;
-
-    # Home-Manager
-  home-manager.users.lemon = { config, pkgs, ... }: {
-    home.stateVersion = "22.11";
-    imports = [ ./configs ];
-    programs.bash.enable = true;
-  };
 
   # Overlays
   nixpkgs.overlays =

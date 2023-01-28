@@ -1,0 +1,6 @@
+[Desktop Entry]
+Name=GDLauncher
+Exec=appimage-run /home/lemon/Standalone/GDLauncher-linux-setup.AppImage --disable-gpu-sandbox
+Terminal=false
+Type=Application
+Categories=Modding
