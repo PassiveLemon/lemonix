@@ -50,7 +50,7 @@
         shadow-offset-x = 0;
         shadow-offset-y = -7;
       };
-      dnd = { shadow = false; };
+      dnd = { shadow = true; };
       popup_menu = { opacity = 0.8; };
       dropdown_menu = { opacity = 0.8; };
     };

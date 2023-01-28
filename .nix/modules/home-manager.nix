@@ -15,6 +15,7 @@ in
         ./spicetify.nix
       ];
     programs.bash.enable = true;
+    services.picom.enable = true;
     };
   };
 }

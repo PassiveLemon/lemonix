@@ -8,12 +8,12 @@
   environment.systemPackages = with pkgs; [
     # Desktop
     xorg.xrandr xorg.xhost libsecret gnome.seahorse gnome.gnome-keyring
-    lightdm bspwm sxhkd picom feh polybar
+    lightdm bspwm sxhkd picom-jonaburg feh polybar
     kora-icon-theme
 
     # Apps & Programs
     kitty rofi firefox gparted pavucontrol appimage-run distrobox lutris spotify filezilla
-    gimp obs-studio github-desktop discord steam vscode jellyfin-media-player vlc qbittorrent megasync
+    gimp obs-studio github-desktop discord steam vscode jellyfin-media-player vlc megasync
     wine winetricks lxappearance htop neofetch authy grapejuice
   ];
 
@@ -45,7 +45,6 @@
       libinput.mouse.middleEmulation = false;
       libinput.touchpad.middleEmulation = false;
     };
-    picom.enable = true;
     gnome.gnome-keyring.enable = true;
   };
   programs = {
