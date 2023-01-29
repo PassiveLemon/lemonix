@@ -1,9 +1,5 @@
 configuration {
-	modi:	"drun";
 	font:	"Fira Code Medium Nerd Font 16";
-	display-drun: "";
-	drun-display-format: "{name}";
-	sidebar-mode: false;
 }
 
 * {

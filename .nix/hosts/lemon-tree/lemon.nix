@@ -5,7 +5,7 @@
   ];
 
   # Packages
-  environment.systemPackages = with pkgs; [
+  environment.systemPackages = with pkgs; [ 
     # Desktop
     xorg.xrandr xorg.xhost libsecret gnome.seahorse gnome.gnome-keyring
     lightdm bspwm sxhkd picom-jonaburg feh polybar

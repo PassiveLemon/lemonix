@@ -41,6 +41,7 @@
   environment.systemPackages = with pkgs; [
     bash nano unzip unrar p7zip curl wget git cmake gnumake
     docker nvidia-docker virt-manager OVMF pciutils virtiofsd psmisc networkmanager home-manager
+    gcc glibc glibc_multi libstdcxx5
   ];
 
   # Configs

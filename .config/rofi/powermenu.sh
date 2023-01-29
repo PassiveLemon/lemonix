@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-rofi_command="rofi -theme $HOME/.config/rofi/powermenu.rasi -p "power""
+rofi_command="rofi -show drun -theme $HOME/.config/rofi/powermenu.rasi"
 
 lock=" Lock"
 log_out="﫼 Logout"
@@ -9,7 +9,7 @@ reboot="勒 Reboot"
 
 options="$lock\n$log_out\n$power_off\n$reboot"
 
-chosen="$(echo -e "$options" | $rofi_command -dmenu -selected-row 1)"
+chosen="$(echo -e "$options" | $rofi_command -dmenu)"
 case $chosen in
   $lock)
     xflock4

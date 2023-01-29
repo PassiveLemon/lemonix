@@ -5,7 +5,7 @@ pgrep -x sxhkd > /dev/null || sxhkd &
 xrandr --output DP-2 --primary --mode 1920x1080 --rate 143.9 --rotate normal --output DP-0 --mode 1920x1080 --rate 143.9 --rotate normal --left-of DP-2
 
 bspc monitor DP-2 -d 1 2 3 4 5
-bspc monitor DP-0 -d 6 7 8 9 0
+bspc monitor DP-0 -d 6 7 8 9 10
 
 bspc config pointer_motion_interval 40
 bspc config border_width 0
@@ -15,16 +15,22 @@ bspc config split_ratio 0.50
 bspc config borderless_monocle  true
 bspc config gapless_monocle     true
 
-steamlib=/home/lemon/HDD2TB/SteamLibrary    # path to your steamlibrary
-steamgames=$(ls $steamlib/steamapps/appmanifest_*.acf | sed 's/[^0-9]*//g')    # this sed command removes everything but the digits
+steamlibraryssd=/home/lemon/.steam/steam/
+steamlibraryhdd=/home/lemon/HDD2TBEXT4/SteamLibrary/
+steamgamesssd=$(ls ${steamlibssd}/steamapps/appmanifest_*.acf | sed 's/[^0-9]*//g')
+steamgameshhd=$(ls ${steamlibhdd}/steamapps/appmanifest_*.acf | sed 's/[^0-9]*//g')
 
-for game in $steamgames; do
-    bspc rule -a steam_app_$game desktop=^10 state=fullscreen
+for gamessd in ${steamgamesssd}; do
+    bspc rule -a steam_app_${gamessd} desktop=^10 state=fullscreen
 done
 
-killall -w polybar 2>/dev/null
-sh $HOME/.config/polybar/launch.sh &
+for gamehdd in ${steamgameshdd}; do
+    bspc rule -a steam_app_${gamehdd} desktop=^10 state=fullscreen
+done
 
-feh --bg-fill $HOME/.background-image &
+killall polybar
+sh ${HOME}/.config/polybar/launch.sh &
+
+feh --bg-fill ${HOME}/.background-image &
 
 xsetroot -cursor_name left_ptr &
