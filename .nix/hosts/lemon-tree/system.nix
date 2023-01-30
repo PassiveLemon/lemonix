@@ -11,8 +11,14 @@
   i18n.defaultLocale = "en_US.UTF-8";
 
   # Audio
-  sound.enable = true;
-  hardware.pulseaudio.enable = true;
+  #sound.enable = true;
+  security.rtkit.enable = true;
+  services.pipewire = {
+    enable = true;
+    alsa.enable = true;
+    alsa.support32Bit = true;
+    pulse.enable = true;
+  };
 
   # Networking
   networking = {
@@ -39,9 +45,8 @@
 
   # Packages
   environment.systemPackages = with pkgs; [
-    bash nano unzip unrar p7zip curl wget git cmake gnumake
+    bash nano unzip unrar p7zip curl wget git
     docker nvidia-docker virt-manager OVMF pciutils virtiofsd psmisc networkmanager home-manager
-    gcc glibc glibc_multi libstdcxx5
   ];
 
   # Configs

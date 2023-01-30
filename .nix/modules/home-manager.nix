@@ -14,8 +14,11 @@ in
         ../hosts/lemon-tree/configs
         ./spicetify.nix
       ];
-    programs.bash.enable = true;
-    services.picom.enable = true;
+      programs.bash.enable = true;
+      services = {
+        picom.enable = true;
+        dunst.enable = true;
+      };
     };
   };
 }

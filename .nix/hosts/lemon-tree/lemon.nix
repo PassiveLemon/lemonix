@@ -8,13 +8,14 @@
   environment.systemPackages = with pkgs; [ 
     # Desktop
     xorg.xrandr xorg.xhost libsecret gnome.seahorse gnome.gnome-keyring
-    lightdm bspwm sxhkd picom-jonaburg feh polybar
+    lightdm bspwm sxhkd picom-jonaburg feh polybar dunst
     kora-icon-theme
 
     # Apps & Programs
-    kitty rofi firefox gparted pavucontrol appimage-run distrobox lutris spotify filezilla
+    pcmanfm gparted pavucontrol lxappearance
+    kitty rofi firefox appimage-run distrobox lutris spotify filezilla
     gimp obs-studio github-desktop discord steam vscode jellyfin-media-player vlc megasync
-    wine winetricks lxappearance htop neofetch authy grapejuice
+    wine winetricks htop neofetch authy grapejuice easyeffects
   ];
 
   # Fonts
@@ -27,23 +28,25 @@
     xserver = {
       enable = true;
       displayManager = {
-        defaultSession = "xfce+bspwm";
+        defaultSession = "none+bspwm";
         lightdm.enable = true;
         };
-      desktopManager = {
-        xfce = {
-          enable = true;
-          noDesktop = true;
-        };
-      };
       windowManager.bspwm = {
         enable = true;
         configFile = "/home/lemon/.config/bspwm/bspwmrc";
         sxhkd.configFile = "/home/lemon/.config/sxhkd/sxhkdrc";
       };
       videoDrivers = [ "nvidia" ];
-      libinput.mouse.middleEmulation = false;
-      libinput.touchpad.middleEmulation = false;
+      libinput = {
+        mouse = {
+          middleEmulation = false;
+          accelSpeed = "-0.5";
+        };
+        touchpad = {
+          middleEmulation = false;
+          accelSpeed = "-0.5";
+        };
+      };
     };
     gnome.gnome-keyring.enable = true;
   };
