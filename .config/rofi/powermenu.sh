@@ -12,7 +12,7 @@ options="$lock\n$log_out\n$power_off\n$reboot"
 chosen="$(echo -e "$options" | $rofi_command -dmenu)"
 case $chosen in
   $lock)
-    xflock4
+    dm-tool switch-to-greeter
     ;; 
   $log_out)
     #xfce4-session-logout --logout
