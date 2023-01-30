@@ -14,13 +14,13 @@
     fade-in-step = 0.1;
     fade-out-step = 0.1;
     # Corners
-    corner-radius = 7;
-    round-borders = 1;
-    rounded-corners-exclude = [
-      "window_type = 'dock'"
-      "window_type = 'Desktop'"
-      "class_g = 'Polybar'"
-    ];
+    #corner-radius = 7;
+    #round-borders = 1;
+    #rounded-corners-exclude = [
+    #  "window_type = 'dock'"
+    #  "window_type = 'Desktop'"
+    #  "class_g = 'Polybar'"
+    #];
     # Blur
     blur = {
       method = "dual_kawase";

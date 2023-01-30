@@ -1,32 +1,35 @@
 { config, pkgs, ... }: {
   imports = [
-    ../../modules/home-manager.nix
+    ./home-manager.nix
     #../../modules/gdlauncher.nix
   ];
 
   # Packages
   environment.systemPackages = with pkgs; [ 
-    # Desktop
+    # Desktop functionality
     xorg.xrandr xorg.xhost libsecret gnome.seahorse gnome.gnome-keyring
-    lightdm bspwm sxhkd picom-jonaburg feh polybar dunst
+    pcmanfm gparted pavucontrol lxappearance
+    lightdm bspwm sxhkd picom-jonaburg feh polybar dunst rofi
     kora-icon-theme
 
-    # Apps & Programs
-    pcmanfm gparted pavucontrol lxappearance
-    kitty rofi firefox appimage-run distrobox lutris spotify filezilla
-    gimp obs-studio github-desktop discord steam vscode jellyfin-media-player vlc megasync
-    wine winetricks htop neofetch authy grapejuice easyeffects
+    # Apps and programs
+    lutris steam grapejuice
+    firefox spotify jellyfin-media-player vlc discord
+    kitty appimage-run distrobox filezilla
+    gimp flameshot obs-studio github-desktop vscode megasync
+    wine winetricks htop neofetch authy easyeffects helvum
   ];
 
   # Fonts
   fonts.fonts = with pkgs; [
-    material-design-icons fira (nerdfonts.override { fonts = [ "FiraCode" "Iosevka" ]; })
+    material-design-icons fira (nerdfonts.override { fonts = [ "FiraCode" ]; })
   ];
 
   # Configs
   services = {
     xserver = {
       enable = true;
+      excludePackages = [ pkgs.xterm ];
       displayManager = {
         defaultSession = "none+bspwm";
         lightdm.enable = true;
@@ -34,16 +37,19 @@
       windowManager.bspwm = {
         enable = true;
         configFile = "/home/lemon/.config/bspwm/bspwmrc";
-        sxhkd.configFile = "/home/lemon/.config/sxhkd/sxhkdrc";
+        #sxhkd.configFile = "/home/lemon/.config/sxhkd/sxhkdrc";
       };
       videoDrivers = [ "nvidia" ];
       libinput = {
+        enable = true;
         mouse = {
           middleEmulation = false;
+          accelProfile = "flat";
           accelSpeed = "-0.5";
         };
         touchpad = {
           middleEmulation = false;
+          accelProfile = "flat";
           accelSpeed = "-0.5";
         };
       };

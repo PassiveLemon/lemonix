@@ -9,16 +9,17 @@ in
   home-manager = {
     useGlobalPkgs = true;
     users.lemon = { config, pkgs, ... }: {
-      home.stateVersion = "22.11";
       imports = [
-        ../hosts/lemon-tree/configs
-        ./spicetify.nix
+        ./configs
+        ../../modules/spicetify.nix
       ];
       programs.bash.enable = true;
       services = {
         picom.enable = true;
         dunst.enable = true;
+        sxhkd.enable = true;
       };
+      home.stateVersion = "22.11";
     };
   };
 }

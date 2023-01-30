@@ -11,7 +11,6 @@
   i18n.defaultLocale = "en_US.UTF-8";
 
   # Audio
-  #sound.enable = true;
   security.rtkit.enable = true;
   services.pipewire = {
     enable = true;
@@ -61,9 +60,7 @@
     nvidia.open = true;
     opengl.enable = true;
   };
-
   services.openssh.enable = true;
-  services.flatpak.enable = true;
   xdg.portal.enable = true;
 
   nix.settings.experimental-features = [ "nix-command" "flakes" ];

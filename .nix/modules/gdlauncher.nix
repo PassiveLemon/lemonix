@@ -10,7 +10,6 @@ in appimageTools.wrapType2 {
   inherit name src;
 
   extraInstallCommands = ''
-    
     # Installs .desktop files
     install -Dm444 ${appimageContents}/${name}.desktop -t $out/share/applications
     install -Dm444 ${appimageContents}/${name}.png -t $out/share/pixmaps

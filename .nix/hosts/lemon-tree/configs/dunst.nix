@@ -5,6 +5,7 @@
       width = 300;
       height = 180;
       offset = "12x12";
+      foreground = "#abb2bf";
       background = "#282c34";
       transparency = 20;
       frame_color = "#d7dae0";
