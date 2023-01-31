@@ -58,7 +58,10 @@
   };
   hardware = {
     nvidia.open = true;
-    opengl.enable = true;
+    opengl = {
+      enable = true;
+      driSupport = true;
+    };
   };
   services.openssh.enable = true;
   xdg.portal.enable = true;

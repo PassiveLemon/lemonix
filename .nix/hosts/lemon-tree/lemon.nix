@@ -8,16 +8,16 @@
   environment.systemPackages = with pkgs; [ 
     # Desktop functionality
     xorg.xrandr xorg.xhost libsecret gnome.seahorse gnome.gnome-keyring
-    pcmanfm gparted pavucontrol lxappearance
+    pcmanfm gparted pavucontrol
     lightdm bspwm sxhkd picom-jonaburg feh polybar dunst rofi
-    kora-icon-theme
+    kora-icon-theme lxappearance
 
     # Apps and programs
     lutris steam grapejuice
     firefox spotify jellyfin-media-player vlc discord
     kitty appimage-run distrobox filezilla
     gimp flameshot obs-studio github-desktop vscode megasync
-    wine winetricks htop neofetch authy easyeffects helvum
+    wine winetricks htop neofetch authy easyeffects qpwgraph
   ];
 
   # Fonts
@@ -33,11 +33,10 @@
       displayManager = {
         defaultSession = "none+bspwm";
         lightdm.enable = true;
-        };
+      };
       windowManager.bspwm = {
         enable = true;
         configFile = "/home/lemon/.config/bspwm/bspwmrc";
-        #sxhkd.configFile = "/home/lemon/.config/sxhkd/sxhkdrc";
       };
       videoDrivers = [ "nvidia" ];
       libinput = {
