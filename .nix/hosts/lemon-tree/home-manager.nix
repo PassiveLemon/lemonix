@@ -13,7 +13,13 @@ in
         ./configs
         ../../modules/spicetify.nix
       ];
-      programs.bash.enable = true;
+      programs = {
+        bash.enable = true;
+        #eww = {
+        #  enable = true;
+        #  configDir = ../../../.config/eww;
+        #};
+      };
       services = {
         picom.enable = true;
         dunst.enable = true;

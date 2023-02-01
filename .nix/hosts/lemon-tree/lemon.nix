@@ -9,11 +9,11 @@
     # Desktop functionality
     xorg.xrandr xorg.xhost libsecret gnome.seahorse gnome.gnome-keyring
     pcmanfm gparted pavucontrol
-    lightdm bspwm sxhkd picom-jonaburg feh polybar dunst rofi
+    picom-jonaburg feh polybar dunst rofi
     kora-icon-theme lxappearance
 
     # Apps and programs
-    lutris steam grapejuice
+    lutris grapejuice
     firefox spotify jellyfin-media-player vlc discord
     kitty appimage-run distrobox filezilla
     gimp flameshot obs-studio github-desktop vscode megasync

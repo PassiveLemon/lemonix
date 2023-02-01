@@ -28,6 +28,10 @@ for gamehdd in ${steamgameshdd}; do
     bspc rule -a steam_app_${gamehdd} desktop=^X state=fullscreen
 done
 
+#killall eww
+#eww daemon &
+#eww open lemon &
+
 killall polybar
 sh ${HOME}/.config/polybar/launch.sh &
 
