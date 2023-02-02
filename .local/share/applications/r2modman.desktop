@@ -1,6 +1,0 @@
-[Desktop Entry]
-Name=r2modman
-Exec=appimage-run /home/lemon/Standalone/r2modman.AppImage --disable-gpu-sandbox
-Terminal=false
-Type=Application
-Categories=Modding

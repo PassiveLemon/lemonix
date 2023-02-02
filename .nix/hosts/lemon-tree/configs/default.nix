@@ -1,7 +1,12 @@
 { config, pkgs, ... }: {
   imports = [
-    ./picom.nix
+    ./bspwm.nix
+    ./desktop.nix
     ./dunst.nix
+    ./gtk.nix
+    ./kitty.nix
+    ./picom.nix
+    ./polybar
     ./sxhkd.nix
   ];
 }

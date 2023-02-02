@@ -1,6 +1,6 @@
 { config, pkgs, ... }: {
   imports = [
-    ./home-manager.nix
+    ../../modules/home-manager.nix
     #../../modules/gdlauncher.nix
   ];
 
@@ -8,14 +8,12 @@
   environment.systemPackages = with pkgs; [ 
     # Desktop functionality
     xorg.xrandr xorg.xhost libsecret gnome.seahorse gnome.gnome-keyring
-    pcmanfm gparted pavucontrol
-    picom-jonaburg feh polybar dunst rofi
-    kora-icon-theme lxappearance
+    pcmanfm gparted pavucontrol feh polybar rofi lxappearance
 
     # Apps and programs
     lutris grapejuice
-    firefox spotify jellyfin-media-player vlc discord
-    kitty appimage-run distrobox filezilla r2mod_cli
+    firefox jellyfin-media-player vlc discord
+    appimage-run distrobox filezilla r2mod_cli
     gimp flameshot obs-studio github-desktop vscode megasync
     wine winetricks htop neofetch authy easyeffects qpwgraph
   ];
@@ -66,6 +64,25 @@
     style = "gtk2";
   };
   security.pam.services.lemon.enableGnomeKeyring = true;
+
+  # Home Manager
+  home-manager = {
+    useGlobalPkgs = true;
+    users.lemon = { config, pkgs, ... }: {
+      imports = [
+        ./configs
+        ../../modules/spicetify.nix
+      ];
+      programs = {
+        bash.enable = true;
+        #eww = {
+        #  enable = true;
+        #  configDir = ../../../.config/eww;
+        #};
+      };
+      home.stateVersion = "22.11";
+    };
+  };
 
   # Overlays
   nixpkgs.overlays =
