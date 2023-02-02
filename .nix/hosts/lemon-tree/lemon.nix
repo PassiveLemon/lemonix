@@ -15,7 +15,7 @@
     # Apps and programs
     lutris grapejuice
     firefox spotify jellyfin-media-player vlc discord
-    kitty appimage-run distrobox filezilla
+    kitty appimage-run distrobox filezilla r2mod_cli
     gimp flameshot obs-studio github-desktop vscode megasync
     wine winetricks htop neofetch authy easyeffects qpwgraph
   ];

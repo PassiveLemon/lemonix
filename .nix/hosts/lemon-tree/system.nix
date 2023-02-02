@@ -44,7 +44,7 @@
 
   # Packages
   environment.systemPackages = with pkgs; [
-    bash nano unzip unrar p7zip curl wget git
+    bash nano unzip unrar p7zip curl wget git gnumake
     docker nvidia-docker virt-manager OVMF pciutils virtiofsd psmisc networkmanager home-manager
   ];
 
@@ -64,6 +64,7 @@
     };
   };
   services.openssh.enable = true;
+  services.flatpak.enable = true;
   xdg.portal.enable = true;
 
   nix.settings.experimental-features = [ "nix-command" "flakes" ];

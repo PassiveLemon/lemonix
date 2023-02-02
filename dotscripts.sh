@@ -8,54 +8,51 @@ if [ $EUID = 0 ]; then
 fi
 
 # Fonts
-for directory in "$HOME/.local/share/fonts/" "$HOME/.fonts/"; do
-  mkdir -p ${directory}
-  pushd ${directory}
-
-  for font in FiraCode FiraMono; do
-    curl -LO https://github.com/ryanoasis/nerd-fonts/releases/latest/download/${font}.zip
-    sudo unzip -o ./${font}.zip
-    sudo rm -r ./${font}.zip
-  done
-
-  popd
+homelocalfonts="$HOME/.local/share/fonts"
+homedotfonts="$HOME/.fonts"
+mkdir -p ${homelocalfonts}
+mkdir -p ${homedotfonts}
+pushd ${homelocalfonts}
+for font in FiraCode FiraMono; do
+  curl -LO https://github.com/ryanoasis/nerd-fonts/releases/latest/download/${font}.zip
+  sudo unzip -o ./${font}.zip
+  sudo rm -r ./${font}.zip
 done
+sudo cp -r ${homelocalfonts}/* ${homedotfonts}/
+popd
 
 # Icons
-for directory in "$HOME/.local/share/icons/" "$HOME/.icons/"; do
-  mkdir -p ${directory}
-  pushd ${directory}
-
-  # Kora
-  if [ -e ./kora/ ]; then
-    sudo rm -r ./kora/
-  fi
-  git clone https://github.com/bikass/kora.git
-  sudo mv ./kora/ ./koradl/
-  sudo cp -r ./koradl/kora/ ./
-  sudo rm -r ./koradl/
-
-  popd
-done
+homelocalicons="$HOME/.local/share/icons"
+homedoticons="$HOME/.icons"
+mkdir -p ${homelocalicons}
+mkdir -p ${homedoticons}
+pushd ${homelocalicons}
+# Kora
+if [ -e ./kora/ ]; then
+  sudo rm -r ./kora/
+fi
+git clone https://github.com/bikass/kora.git
+sudo mv ./kora/ ./koradl/
+sudo cp -r ./koradl/kora/ ./
+sudo rm -r ./koradl/
+sudo cp -r ${homelocalicons}/* ${homedoticons}/
+popd
 
 # Themes
-for directory in "$HOME/.local/share/themes/" "$HOME/.themes/"; do
-  mkdir -p ${directory}
-  pushd ${directory}
-
-  # Mono
-  if [ -e ./MonoThemeDark/ ]; then
-    sudo rm -r ./MonoThemeDark/
-  fi
-  curl -LO https://github.com/witalihirsch/Mono-gtk-theme/releases/latest/download/MonoThemeDark.zip
-  unzip -o ./MonoThemeDark.zip
-  sudo rm -r ./MonoThemeDark.zip
-
-  popd
-done
+homelocalthemes="$HOME/.local/share/themes"
+homedotthemes="$HOME/.themes"
+mkdir -p ${homelocalthemes}
+mkdir -p ${homedotthemes}
+pushd ${homelocalthemes}
+# MonoDark
+if [ -e ./MonoThemeDark/ ]; then
+  sudo rm -r ./MonoThemeDark/
+fi
+curl -LO https://github.com/witalihirsch/Mono-gtk-theme/releases/latest/download/MonoThemeDark.zip
+unzip -o ./MonoThemeDark.zip
+sudo rm -r ./MonoThemeDark.zip
+sudo cp -r ${homelocalthemes}/* ${homedotthemes}/
+popd
 
 # Manual
 sudo cp -rf ./.local/ $HOME/
-#sudo cp -rf ./.fonts/ $HOME/
-sudo cp -rf ./.icons/ $HOME/
-#sudo cp -rf ./.themes/ $HOME/
