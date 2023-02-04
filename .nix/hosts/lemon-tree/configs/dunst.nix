@@ -12,6 +12,7 @@
         transparency = 20;
         frame_color = "#d7dae0";
         frame_width = 2;
+        corner_radius = 7;
         font = "Fira Code Nerd Font 12";
       };
       urgency_critical = {

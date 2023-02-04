@@ -22,6 +22,7 @@
         "window_type = 'dock'"
         "window_type = 'Desktop'"
         "class_g = 'Polybar'"
+        "class_g = 'dunst'"
       ];
       # Blur
       blur = {

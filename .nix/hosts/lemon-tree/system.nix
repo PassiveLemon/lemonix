@@ -3,6 +3,7 @@
   boot = {
     loader.systemd-boot.enable = true;
     loader.efi.canTouchEfiVariables = true;
+    kernelPackages = pkgs.linuxKernel.packages.linux_zen;
     kernelModules = [ "iwlwifi" "iwlmvm "];
   };
 
@@ -30,6 +31,9 @@
         { from = 21000; to = 23000; }
         { from = 31000; to = 33000; }
         { from = 41000; to = 43000; }
+      ];
+      allowedUDPPortRanges = [
+        { from = 989; to = 989; }
       ];
     };
   };
@@ -63,6 +67,9 @@
       driSupport = true;
     };
   };
+  services.printing.enable = true;
+  services.avahi.enable = true;
+  services.avahi.openFirewall = true;
   services.openssh.enable = true;
   services.flatpak.enable = true;
   xdg.portal.enable = true;

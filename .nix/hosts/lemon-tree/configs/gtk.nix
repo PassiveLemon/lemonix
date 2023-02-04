@@ -4,7 +4,7 @@
     gtk3 = {
       extraConfig = {
         gtk-cursor-theme-name = "volantes_cursors";
-        gtk-theme-name = "Adwaita-dark";
+        gtk-theme-name = "Matcha-dark-aliz";
         gtk-icon-theme-name = "kora";
         gtk-font-name = "Fira Sans Medium 10";
         gtk-cursor-theme-size = 0;
