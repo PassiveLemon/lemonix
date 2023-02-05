@@ -1,7 +1,6 @@
 { config, pkgs, ... }: {
   imports = [
     ../../modules/home-manager.nix
-    #../../modules/gdlauncher.nix
   ];
 
   # Packages
@@ -71,7 +70,7 @@
     useGlobalPkgs = true;
     users.lemon = { config, pkgs, ... }: {
       imports = [
-        ./configs
+        ./config
         ../../modules/spicetify.nix
       ];
       programs = {

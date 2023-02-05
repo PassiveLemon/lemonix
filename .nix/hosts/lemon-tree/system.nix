@@ -11,15 +11,6 @@
   time.timeZone = "America/New_York";
   i18n.defaultLocale = "en_US.UTF-8";
 
-  # Audio
-  security.rtkit.enable = true;
-  services.pipewire = {
-    enable = true;
-    alsa.enable = true;
-    alsa.support32Bit = true;
-    pulse.enable = true;
-  };
-
   # Networking
   networking = {
     hostName = "lemon-tree";
@@ -53,6 +44,23 @@
   ];
 
   # Configs
+  services = {
+    pipewire = {
+      enable = true;
+      alsa = {
+        enable = true;
+        support32Bit = true;
+      };
+    };
+    pulse.enable = true;
+    printing.enable = true;
+    avahi = {
+      enable = true;
+      openFirewall = true;
+    };
+    openssh.enable = true;
+    flatpak.enable = true;
+  };
   virtualisation = {
     docker = { 
       enable = true;
@@ -67,11 +75,7 @@
       driSupport = true;
     };
   };
-  services.printing.enable = true;
-  services.avahi.enable = true;
-  services.avahi.openFirewall = true;
-  services.openssh.enable = true;
-  services.flatpak.enable = true;
+  security.rtkit.enable = true;
   xdg.portal.enable = true;
 
   nix.settings.experimental-features = [ "nix-command" "flakes" ];
