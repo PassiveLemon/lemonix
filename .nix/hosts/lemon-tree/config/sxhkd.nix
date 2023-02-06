@@ -7,6 +7,12 @@
       "super + @space" = "rofi -show drun -theme $HOME/.config/rofi/lemon.rasi";
       "super + p" = "sh /home/lemon/.config/rofi/powermenu.sh";
       "Print" = "flameshot gui";
+      "XF86AudioRaiseVolume" = "pamixer -i 2";
+      "XF86AudioLowerVolume" = "pamixer -d 2";
+      "XF86AudioMute" = "pamixer -t";
+      "XF86AudioPlay" = "playerctl play-pause";
+      "XF86AudioNext" = "playerctl next";
+      "XF86AudioPrev" = "playerctl previous";
       # Bspwm
       "super + alt + r" = "bspc wm -r";
       "super + alt + t" = "pkill -USR1 -x sxhkd";

@@ -40,19 +40,20 @@
   # Packages
   environment.systemPackages = with pkgs; [
     bash nano unzip unrar p7zip curl wget git gnumake
-    docker nvidia-docker virt-manager OVMF pciutils virtiofsd psmisc networkmanager home-manager
+    docker nvidia-docker virt-manager OVMF pciutils virtiofsd psmisc
+    pamixer playerctl networkmanager
   ];
 
   # Configs
   services = {
     pipewire = {
       enable = true;
+      pulse.enable = true;
       alsa = {
         enable = true;
         support32Bit = true;
       };
     };
-    pulse.enable = true;
     printing.enable = true;
     avahi = {
       enable = true;
