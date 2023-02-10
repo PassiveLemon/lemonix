@@ -15,7 +15,7 @@
     firefox jellyfin-media-player vlc armcord
     appimage-run distrobox filezilla r2mod_cli gamemode protonup-ng dxvk
     gimp flameshot obs-studio github-desktop vscode megasync
-    wine winetricks htop neofetch authy easyeffects qpwgraph
+    wine winetricks htop neofetch authy easyeffects qpwgraph ventoy-bin
   ];
 
   # Fonts

@@ -2,10 +2,10 @@
   xsession.windowManager.bspwm = {
     enable = true;
     extraConfigEarly = ''
-      xrandr --output DP-2 --primary --mode 1920x1080 --rate 143.9 --rotate normal --output DP-0 --mode 1920x1080 --rate 143.9 --rotate normal --left-of DP-2
+      xrandr --output DP-0 --primary --mode 1920x1080 --rate 143.9 --rotate normal --output DP-2 --mode 1920x1080 --rate 143.9 --rotate normal --left-of DP-0
 
-      bspc monitor DP-0 -d I II III IV V
-      bspc monitor DP-2 -d VI VII VIII IX X
+      bspc monitor DP-2 -d I II III IV V
+      bspc monitor DP-0 -d VI VII VIII IX X
 
       bspc config pointer_motion_interval 40
       bspc config border_width 0

@@ -12,7 +12,7 @@
     '';
     config = {
       "bar/lemon-left" = {
-        monitor = "DP-0";
+        monitor = "DP-2";
         width = "100%";
         height = 25;
         fixed-center = true;
@@ -37,7 +37,7 @@
         tray-position = "right";
       };
       "bar/lemon-right" = {
-        monitor = "DP-2";
+        monitor = "DP-0";
         width = "100%";
         height = 25;
         fixed-center = true;

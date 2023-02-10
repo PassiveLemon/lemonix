@@ -1,10 +1,22 @@
 { config, pkgs, ... }: {
   # Boot
   boot = {
-    loader.systemd-boot.enable = true;
-    loader.efi.canTouchEfiVariables = true;
+    loader = {
+      systemd-boot.enable = false;
+      efi.canTouchEfiVariables = true;
+      timeout = 3;
+      grub = {
+        enable = true;
+        version = 2;
+        useOSProber = true;
+        efiSupport = true;
+        device = "nodev";
+        gfxmodeEfi = "1920x1080";
+      };
+    };
     kernelPackages = pkgs.linuxKernel.packages.linux_zen;
-    kernelModules = [ "iwlwifi" "iwlmvm "];
+    kernelModules = [ "iwlwifi" "iwlmvm" ];
+    #kernelParams = [ "amd_iommu=on" ];
   };
 
   # Locale
@@ -26,6 +38,12 @@
       allowedUDPPortRanges = [
         { from = 989; to = 989; }
       ];
+    };
+    wlanInterfaces = {
+      Ethernet = {
+        device = "enp6s0";
+        mac = "f0:2f:74:d4:67:e3";
+      };
     };
   };
 
@@ -66,6 +84,7 @@
     docker = { 
       enable = true;
       enableNvidia = true;
+      liveRestore = false;
     };
     libvirtd.enable = true;
   };
