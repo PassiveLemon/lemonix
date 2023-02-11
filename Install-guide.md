@@ -58,7 +58,7 @@ login: root </br>
 > password </br>
 
 # Customizations </br>
-`git clone --recurse-submodules https://github.com/PassiveLemon/lemondots` </br>
+`git clone --recurse-submodules https://github.com/PassiveLemon/lemonix` </br>
 `sudo cp -r lemondots/.* /home/lemon/` </br>
 
 `sudo cp /home/lemon/.wallpapers/Reds/Wallpaper\ \(6\).png /home/lemon/.background-image` </br>

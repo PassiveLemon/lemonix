@@ -7,7 +7,7 @@ if [ ! -d ./LICENSE ] && [ ! -d ./.git ]; then
   pushd /home/lemon/lemontemp/
 
   echo "|| Get dotfiles ||"
-  sudo git clone --recurse-submodules https://github.com/PassiveLemon/lemondots/
+  sudo git clone --recurse-submodules https://github.com/PassiveLemon/lemonix/
   cd lemondots
   path=${pwd}
 else
