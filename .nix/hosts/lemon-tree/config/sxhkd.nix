@@ -4,7 +4,7 @@
     keybindings = {
       # Custom
       "super + Return" = "kitty";
-      "super + @space" = "rofi -show drun -theme $HOME/.config/rofi/lemon.rasi";
+      "super + @space" = "rofi -show drun -theme $HOME/.config/rofi/lemon.rasi -show-icons";
       "super + p" = "sh /home/lemon/.config/rofi/powermenu.sh";
       "Print" = "flameshot gui";
       "XF86AudioRaiseVolume" = "pamixer -i 2";
