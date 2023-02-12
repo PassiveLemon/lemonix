@@ -7,3 +7,5 @@ Use the Installer.sh script to install. I will not guarantee that it works. The 
 
 <img src="desktop.png"> </br>
 I will update the image every so often. </br>
+
+[Volantes Cursors](https://github.com/varlesh/volantes-cursors) </br>

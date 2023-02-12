@@ -13,8 +13,8 @@
       ];
       # Fading
       fading = true;
-      fade-in-step = 0.1;
-      fade-out-step = 0.1;
+      fade-in-step = 0.08;
+      fade-out-step = 0.08;
       # Corners
       corner-radius = 7;
       round-borders = 1;
