@@ -14,7 +14,7 @@
     lutris grapejuice
     firefox jellyfin-media-player vlc armcord
     appimage-run distrobox filezilla r2mod_cli gamemode protonup-ng dxvk
-    gimp flameshot obs-studio github-desktop vscode megasync
+    gimp flameshot obs-studio github-desktop vscodium megasync
     wine winetricks htop neofetch authy easyeffects qpwgraph ventoy-bin
   ];
 
@@ -83,3 +83,4 @@
       home.stateVersion = "22.11";
     };
   };
+}
