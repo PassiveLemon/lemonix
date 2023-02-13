@@ -30,7 +30,9 @@
       excludePackages = [ pkgs.xterm ];
       displayManager = {
         defaultSession = "none+bspwm";
-        lightdm.enable = true;
+        lightdm = {
+          enable = true;           
+        };
       };
       windowManager.bspwm = {
         enable = true;

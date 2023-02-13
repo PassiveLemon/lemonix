@@ -2,20 +2,21 @@
   # Boot
   boot = {
     loader = {
-      systemd-boot.enable = false;
       efi.canTouchEfiVariables = true;
       timeout = 3;
+      systemd-boot.enable = false;
       grub = {
         enable = true;
         version = 2;
-        useOSProber = true;
         efiSupport = true;
+        useOSProber = true;
         device = "nodev";
         gfxmodeEfi = "1920x1080";
+        configurationLimit = 100;
       };
     };
     kernelPackages = pkgs.linuxKernel.packages.linux_zen;
-    kernelModules = [ "iwlwifi" "iwlmvm" ];
+    kernelModules = [ "iwlwifi" ];
     #kernelParams = [ "amd_iommu=on" ];
   };
 
@@ -28,7 +29,7 @@
 
   # Networking
   networking = {
-    hostName = "lemon-tree";
+    hostName = "citrus-tree";
     networkmanager.enable = true;
     firewall = {
       enable = true;
@@ -41,12 +42,6 @@
       allowedUDPPortRanges = [
         { from = 989; to = 989; }
       ];
-    };
-    wlanInterfaces = {
-      Ethernet = {
-        device = "enp6s0";
-        mac = "f0:2f:74:d4:67:e3";
-      };
     };
   };
 
@@ -62,7 +57,7 @@
   environment.systemPackages = with pkgs; [
     bash nano unzip unrar p7zip curl wget git gnumake
     docker nvidia-docker virt-manager OVMF pciutils virtiofsd psmisc
-    pamixer playerctl networkmanager
+    pamixer playerctl networkmanager ethtool
   ];
 
   # Configs

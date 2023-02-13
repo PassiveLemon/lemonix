@@ -2,43 +2,46 @@
 
 if [ ! -d ./LICENSE ] && [ ! -d ./.git ]; then
   echo "|| No clone detected. Cloning...  ||"
-  sudo mkdir -p /home/lemon/lemontemp/
-  sudo chmod 777 /home/lemon/lemontemp/
-  pushd /home/lemon/lemontemp/
+  sudo mkdir -p ${HOME}/lemontemp/
+  sudo chmod 777 ${HOME}/lemontemp/
+  pushd ${HOME}/lemontemp/
 
   echo "|| Get dotfiles ||"
-  sudo git clone --recurse-submodules https://github.com/PassiveLemon/lemonix/
-  cd lemondots
-  path=${pwd}
+  sudo git clone https://github.com/PassiveLemon/lemonix/
+  cd lemonix
+  path=$(echo ${PWD})
 else
   path="."
 fi
 
 echo "|| Copying dots to home... ||"
-cp -r ${path}/.config/ /home/lemon/
-cp -r ${path}/.local/ /home/lemon/
-cp -r ${path}/.wallpapers/ /home/lemon/
-cp ${path}/xorg.conf /home/lemon/
+sudo git clone https://github.com/PassiveLemon/lemonwalls/
+mv ${path}/lemonwalls/ ${path}/.wallpapers
+
+cp -r ${path}/.config/ ${HOME}/
+cp -r ${path}/.local/ ${HOME}/
+cp -r ${path}/.wallpapers/ ${HOME}/
+cp ${path}/xorg.conf ${HOME}/
 sudo mv /etc/nixos/configuration.nix /etc/nixos/configuration.nix.old
 sudo cp ${path}/configuration.nix /etc/nixos/configuration.nix
 
-sudo cp /home/lemon/.wallpapers/Reds/Wallpaper\ \(6\).png /home/lemon/.background-image
+sudo cp ${HOME}/.wallpapers/Reds/Wallpaper\ \(6\).png ${HOME}/.background-image
 
 bash ${path}/dotscripts.sh
 
 echo "|| Changing permissions... ||"
-sudo chmod -R 777 /home/lemon/.config
-sudo chmod -R 777 /home/lemon/.local
-sudo chmod -R 777 /home/lemon/.nix
-sudo chmod u+x /home/lemon/.config/bspwm/bspwmrc
-sudo chmod u+x /home/lemon/.config/sxhkd/sxhkdrc
+sudo chmod -R 777 ${HOME}/.config
+sudo chmod -R 777 ${HOME}/.local
+sudo chmod -R 777 ${HOME}/.nix
+sudo chmod u+x ${HOME}/.config/bspwm/bspwmrc
+sudo chmod u+x ${HOME}/.config/sxhkd/sxhkdrc
 
 echo "|| Other ||"
 flatpak remote-add --if-not-exists flathub https://flathub.org/repo/flathub.flatpakrepo
 
 echo "|| Dots installed. ||"
 
-if [ -d /home/lemon/lemontemp ]; then
-  sudo rm -r /home/lemon/lemontemp/
+if [ -d ${HOME}/lemontemp ]; then
+  sudo rm -r ${HOME}/lemontemp/
   popd
 fi

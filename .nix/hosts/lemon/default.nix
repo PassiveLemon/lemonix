@@ -1,7 +1,7 @@
 { config, lib, nixpkgs, ... }: {
   imports = [
     ./system.nix
-    ./lemon.nix
+    ./user.nix
   ];
 
   swapDevices = [
