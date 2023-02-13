@@ -48,11 +48,7 @@
       detect-transient = true;
       wintypes = {
         tooltip = { fade = true; };
-        dock = { 
-          shadow = true;
-          shadow-offset-x = 0;
-          shadow-offset-y = -7;
-        };
+        dock = { shadow = false; };
         dnd = { shadow = true; };
         popup_menu = { opacity = 0.8; };
         dropdown_menu = { opacity = 0.8; };
