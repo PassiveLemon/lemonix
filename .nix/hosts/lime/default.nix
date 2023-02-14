@@ -4,7 +4,7 @@
     ./user.nix
   ];
 
-# Set to 4 gigs
+  # 4 Gb
 #  swapDevices = [
 #    { device = "/dev/disk/by-uuid/########"; }
 #  ];

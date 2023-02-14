@@ -24,11 +24,13 @@
       polybar lemon-left &
       polybar lemon-right &
 
-      feh --bg-fill /home/lemon/.background-image &
+      feh --bg-fill $HOME/.background-image &
 
       xsetroot -cursor_name left_ptr &
 
       xinput set-prop "Glorious Model O" "Device Accel Constant Deceleration" 1.6
+
+      ethtool -s enp6s0 autoneg off speed 100 duplex full
     '';
   };
 }

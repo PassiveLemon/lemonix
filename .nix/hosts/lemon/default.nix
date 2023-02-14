@@ -4,6 +4,7 @@
     ./user.nix
   ];
 
+  # 2 Gb
   swapDevices = [
     { device = "/dev/disk/by-uuid/c99f7496-c915-4dc4-89e5-a6690a3d93f1"; }
   ];

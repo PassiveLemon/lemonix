@@ -5,7 +5,7 @@
       # Custom
       "super + Return" = "kitty";
       "super + @space" = "rofi -show drun -theme $HOME/.config/rofi/lemon.rasi -show-icons";
-      "super + p" = "sh /home/lemon/.config/rofi/powermenu.sh";
+      "super + p" = "sh $HOME/.config/rofi/powermenu.sh";
       "Print" = "flameshot gui";
       "XF86AudioRaiseVolume" = "pamixer -i 2";
       "XF86AudioLowerVolume" = "pamixer -d 2";

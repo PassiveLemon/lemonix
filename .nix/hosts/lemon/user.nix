@@ -15,7 +15,7 @@
     firefox jellyfin-media-player vlc armcord
     appimage-run distrobox filezilla r2mod_cli gamemode protonup-ng dxvk
     gimp flameshot obs-studio github-desktop vscodium megasync
-    wine winetricks htop neofetch authy easyeffects qpwgraph ventoy-bin
+    wine winetricks htop neofetch authy qpwgraph ventoy-bin
   ];
 
   # Fonts
@@ -36,7 +36,6 @@
       };
       windowManager.bspwm = {
         enable = true;
-        configFile = "/home/lemon/.config/bspwm/bspwmrc";
       };
       videoDrivers = [ "nvidia" ];
       libinput = {
@@ -81,6 +80,10 @@
         #  enable = true;
         #  configDir = ../../../.config/eww;
         #};
+      };
+      services.easyeffects = {
+        enable = true;
+        preset = "Lemon";
       };
       home.stateVersion = "22.11";
     };

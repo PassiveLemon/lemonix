@@ -32,7 +32,6 @@
       };
       windowManager.bspwm = {
         enable = true;
-        configFile = "/home/lemon/.config/bspwm/bspwmrc";
       };
       videoDrivers = [ "intel" ];
       libinput = {

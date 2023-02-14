@@ -22,7 +22,7 @@
       killall polybar
       polybar lemon-right &
 
-      feh --bg-fill /home/lemon/.background-image &
+      feh --bg-fill $HOME/.background-image &
 
       xsetroot -cursor_name left_ptr &
     '';
