@@ -6,6 +6,7 @@
       "super + Return" = "kitty";
       "super + @space" = "rofi -show drun -theme $HOME/.config/rofi/lemon.rasi -show-icons";
       "super + p" = "sh $HOME/.config/rofi/powermenu.sh";
+      "ctrl + super + alt + u" = "kitty sudo nixos-rebuild switch";
       "Print" = "flameshot gui";
       "XF86AudioRaiseVolume" = "pamixer -i 2";
       "XF86AudioLowerVolume" = "pamixer -d 2";
