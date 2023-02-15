@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
 
+# Toggle mouse input on and off
+
 DEVICE='Glorious Model O'
 enabled=$(xinput list-props "$DEVICE" | awk '/^\tDevice Enabled \([0-9]+\):\t[01]/ {print $NF}')
 if [ $enabled == "1" ]; then

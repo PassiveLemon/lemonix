@@ -17,7 +17,6 @@
     };
     kernelPackages = pkgs.linuxKernel.packages.linux_zen;
     kernelModules = [ "iwlwifi" ];
-    #kernelParams = [ "amd_iommu=on" ];
   };
 
   # Locale
@@ -76,7 +75,6 @@
       openFirewall = true;
     };
     openssh.enable = true;
-    flatpak.enable = true;
   };
   virtualisation = {
     docker = { 

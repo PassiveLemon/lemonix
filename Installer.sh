@@ -9,25 +9,27 @@ if [ ! -d ./LICENSE ] && [ ! -d ./.git ]; then
   echo "|| Get dotfiles ||"
   sudo git clone https://github.com/PassiveLemon/lemonix/
   cd lemonix
-  path=$(echo ${PWD})
+  installpath=${PWD}
 else
   path="."
 fi
 
 echo "|| Copying dots to home... ||"
-sudo git clone https://github.com/PassiveLemon/lemonwalls/
-mv ${path}/lemonwalls/ ${path}/.wallpapers
+if [ ! -d ./.wallpapers/ ]; then
+  sudo git clone https://github.com/PassiveLemon/lemonwalls/
+fi
+mv ${installpath}/lemonwalls/ ${installpath}/.wallpapers
 
-cp -r ${path}/.config/ ${HOME}/
-cp -r ${path}/.local/ ${HOME}/
-cp -r ${path}/.wallpapers/ ${HOME}/
-cp ${path}/xorg.conf ${HOME}/
+cp -r ${installpath}/.config/ ${HOME}/
+cp -r ${installpath}/.local/ ${HOME}/
+cp -r ${installpath}/.wallpapers/ ${HOME}/
+cp ${installpath}/xorg.conf ${HOME}/
 sudo mv /etc/nixos/configuration.nix /etc/nixos/configuration.nix.old
-sudo cp ${path}/configuration.nix /etc/nixos/configuration.nix
+sudo cp ${installpath}/configuration.nix /etc/nixos/configuration.nix
 
 sudo cp ${HOME}/.wallpapers/Reds/Wallpaper\ \(6\).png ${HOME}/.background-image
 
-bash ${path}/dotscripts.sh
+bash ${installpath}/dotscripts.sh
 
 echo "|| Changing permissions... ||"
 sudo chmod -R 777 ${HOME}/.config
@@ -35,9 +37,6 @@ sudo chmod -R 777 ${HOME}/.local
 sudo chmod -R 777 ${HOME}/.nix
 sudo chmod u+x ${HOME}/.config/bspwm/bspwmrc
 sudo chmod u+x ${HOME}/.config/sxhkd/sxhkdrc
-
-echo "|| Other ||"
-flatpak remote-add --if-not-exists flathub https://flathub.org/repo/flathub.flatpakrepo
 
 echo "|| Dots installed. ||"
 
