@@ -20,6 +20,7 @@
       bspc rule -a easyeffects desktop='^5' state=tiled follow=off focus=off -o
       bspc rule -a Pcmanfm state=floating follow=on focus=on
       bspc rule -a Lxappearance state=floating follow=on focus=on
+      bspc rule -a dotnet state=fullscreen follow=on focus=on
     '';
     extraConfig = ''
       killall polybar eww easyeffects
