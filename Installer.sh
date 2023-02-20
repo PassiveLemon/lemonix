@@ -11,11 +11,11 @@ if [ ! -d ./LICENSE ] && [ ! -d ./.git ]; then
   cd lemonix
   installpath=${PWD}
 else
-  path="."
+  installpath="."
 fi
 
 echo "|| Copying dots to home... ||"
-if [ ! -d ./.wallpapers/ ]; then
+if [ ! -d "${installpath}/.wallpapers/" ]; then
   sudo git clone https://github.com/PassiveLemon/lemonwalls/
 fi
 mv ${installpath}/lemonwalls/ ${installpath}/.wallpapers
@@ -35,8 +35,6 @@ echo "|| Changing permissions... ||"
 sudo chmod -R 777 ${HOME}/.config
 sudo chmod -R 777 ${HOME}/.local
 sudo chmod -R 777 ${HOME}/.nix
-sudo chmod u+x ${HOME}/.config/bspwm/bspwmrc
-sudo chmod u+x ${HOME}/.config/sxhkd/sxhkdrc
 
 echo "|| Dots installed. ||"
 

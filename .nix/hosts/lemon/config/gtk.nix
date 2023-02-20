@@ -20,7 +20,9 @@
         gtk-xft-rgba = "rgb";
       };
       bookmarks = [
-        "file:///home/lemon/HDD2TBEXT4/Downloads"
+        "file:///home/HDD2TBEXT4"
+        "file:///home/BACKUPDRIVE"
+        "file:///home/HDD2TBEXT4/Downloads"
         "file:///home/lemon/Documents/GitHub"
         "file:///home/lemon/.steam/steam/steamapps/common"
       ];

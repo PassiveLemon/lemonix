@@ -54,7 +54,7 @@
 
   # Packages
   environment.systemPackages = with pkgs; [
-    bash nano unzip unrar p7zip curl wget git gnumake
+    bash nano unzip unrar p7zip curl wget git git-lfs gnumake dash
     docker nvidia-docker virt-manager OVMF pciutils virtiofsd psmisc
     pamixer playerctl networkmanager ethtool
   ];
@@ -91,6 +91,9 @@
       driSupport = true;
     };
   };
+  environment.binsh = "${pkgs.dash}/bin/dash";
+  environment.shells = with pkgs; [ bash ];
+
   security.rtkit.enable = true;
   xdg.portal.enable = true;
 

@@ -11,10 +11,10 @@
     matcha-gtk-theme kora-icon-theme
 
     # Apps and programs
-    gamemode protonup-ng dxvk lutris grapejuice
+    gamemode protonup-ng dxvk lutris grapejuice easytag
     firefox jellyfin-media-player vlc discord
     appimage-run distrobox filezilla r2mod_cli
-    gimp obs-studio github-desktop
+    gimp obs-studio github-desktop qbittorrent
     wine winetricks htop neofetch authy qpwgraph ventoy-bin
   ];
 
@@ -113,7 +113,13 @@
         };
         megasync.enable = true;
       };
-      home.stateVersion = "22.11";
+      home = {
+        sessionVariables = {
+        EDITOR = "codium";
+        BROWSER = "firefox";
+        };
+        stateVersion = "22.11";
+      };
     };
   };
 
