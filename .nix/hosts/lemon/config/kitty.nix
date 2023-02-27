@@ -8,8 +8,8 @@
       font_size = 10;
       enable_audio_bell = "no";
       url_color = "#4892cb";
-      foreground = "#abb2bf";
-      background = "#282c34";
+      foreground = "#b5b5b5";
+      background = "#242424";
 
       #: black
       color0 = "#3f4451";

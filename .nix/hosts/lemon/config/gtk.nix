@@ -20,6 +20,7 @@
         gtk-xft-rgba = "rgb";
       };
       bookmarks = [
+        "file:///home/lemon/.local/share/Trash"
         "file:///home/HDD2TBEXT4"
         "file:///home/BACKUPDRIVE"
         "file:///home/HDD2TBEXT4/Downloads"

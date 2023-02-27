@@ -4,7 +4,8 @@ if [ ! -d ./LICENSE ] && [ ! -d ./.git ]; then
   echo "|| No clone detected. Cloning...  ||"
   sudo mkdir -p ${HOME}/lemontemp/
   sudo chmod 777 ${HOME}/lemontemp/
-  pushd ${HOME}/lemontemp/
+  pushdir=${PWD}
+  cd ${HOME}/lemontemp/
 
   echo "|| Get dotfiles ||"
   sudo git clone https://github.com/PassiveLemon/lemonix/
@@ -23,11 +24,13 @@ mv ${installpath}/lemonwalls/ ${installpath}/.wallpapers
 cp -r ${installpath}/.config/ ${HOME}/
 cp -r ${installpath}/.local/ ${HOME}/
 cp -r ${installpath}/.wallpapers/ ${HOME}/
-cp ${installpath}/xorg.conf ${HOME}/
-sudo mv /etc/nixos/configuration.nix /etc/nixos/configuration.nix.old
+if [ ! -f "/etc/nixos/configuration.nix.old" ]; then
+  sudo mv /etc/nixos/configuration.nix /etc/nixos/configuration.nix.old
+fi
+sudo rm /etc/nixos/configuration.nix
 sudo cp ${installpath}/configuration.nix /etc/nixos/configuration.nix
 
-sudo cp ${HOME}/.wallpapers/Reds/Wallpaper\ \(6\).png ${HOME}/.background-image
+sudo cp ${HOME}/.wallpapers/AI/00005-1568076343.png ${HOME}/.background-image
 
 bash ${installpath}/dotscripts.sh
 
@@ -40,5 +43,5 @@ echo "|| Dots installed. ||"
 
 if [ -d ${HOME}/lemontemp ]; then
   sudo rm -r ${HOME}/lemontemp/
-  popd
+  cd ${pushdir}
 fi

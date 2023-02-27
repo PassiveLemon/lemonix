@@ -16,20 +16,18 @@
       bspc config gapless_monocle true
       #bspc config ignore_ewmh_focus true
 
-      # Rules (states don't seem to work)
+      # Rules (Don't seem to work)
       bspc rule -a easyeffects desktop='^5' state=tiled follow=off focus=off -o
       bspc rule -a Pcmanfm state=floating follow=on focus=on
       bspc rule -a Lxappearance state=floating follow=on focus=on
-      bspc rule -a dotnet state=fullscreen follow=on focus=on
     '';
     extraConfig = ''
-      killall polybar eww easyeffects
+      killall polybar eww easyeffects &
 
       # Startup
       feh --bg-fill $HOME/.background-image &
-      ethtool -s enp6s0 autoneg off speed 100 duplex full
-      pamixer --set-limit 100
-      xsetroot -cursor_name left_ptr
+      pamixer --set-limit 100 &
+      xsetroot -cursor_name left_ptr &
       xinput set-prop "Glorious Model O" "Device Accel Constant Deceleration" 1.6
       easyeffects &
       polybar lemon-left &

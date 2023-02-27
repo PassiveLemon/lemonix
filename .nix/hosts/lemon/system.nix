@@ -49,14 +49,15 @@
     isNormalUser = true;
     home = "/home/lemon";
     description = "Lemon";
-    extraGroups = [ "wheel" "networkmanager" "docker" "libvertd" "video" ];
+    extraGroups = [ "wheel" "networkmanager" "docker" "video" ];
   };
 
   # Packages
   environment.systemPackages = with pkgs; [
-    bash nano unzip unrar p7zip curl wget git git-lfs gnumake dash
+    bash nano unzip unrar p7zip curl wget git gnumake dash
     docker nvidia-docker virt-manager OVMF pciutils virtiofsd psmisc
-    pamixer playerctl networkmanager ethtool
+    networkmanager ethtool gvfs trashy
+    pamixer playerctl htop neofetch 
   ];
 
   # Configs
@@ -75,6 +76,7 @@
       openFirewall = true;
     };
     openssh.enable = true;
+    flatpak.enable = true;
   };
   virtualisation = {
     docker = { 
@@ -82,7 +84,6 @@
       enableNvidia = true;
       liveRestore = false;
     };
-    libvirtd.enable = true;
   };
   hardware = {
     nvidia.open = true;
@@ -91,8 +92,18 @@
       driSupport = true;
     };
   };
+  systemd.services.ethernet = {
+    preStart = "/run/current-system/sw/bin/sleep 10";
+    serviceConfig = {
+      User = "root";
+      ExecStart = "/run/current-system/sw/bin/ethtool -s enp6s0 autoneg off speed 100 duplex full";
+    };
+    wantedBy = [ "multi-user.target" ];
+  };
+
+  users.defaultUserShell = pkgs.fish;
   environment.binsh = "${pkgs.dash}/bin/dash";
-  environment.shells = with pkgs; [ bash ];
+  environment.shells = with pkgs; [ bash fish ];
 
   security.rtkit.enable = true;
   xdg.portal.enable = true;

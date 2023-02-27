@@ -8,8 +8,8 @@
       "super + p" = "sh $HOME/.config/rofi/powermenu.sh";
       "ctrl + super + alt + u" = "kitty sudo nixos-rebuild switch";
       "Print" = "flameshot gui";
-      "XF86AudioRaiseVolume" = "pamixer -i 2";
-      "XF86AudioLowerVolume" = "pamixer -d 2";
+      "XF86AudioRaiseVolume" = "pamixer -i 1";
+      "XF86AudioLowerVolume" = "pamixer -d 1";
       "XF86AudioMute" = "pamixer -t";
       "XF86AudioPlay" = "playerctl play-pause";
       "XF86AudioNext" = "playerctl next";

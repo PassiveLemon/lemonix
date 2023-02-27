@@ -7,7 +7,7 @@
   environment.systemPackages = with pkgs; [ 
     # Desktop functionality
     xorg.xrandr xorg.xhost libsecret gnome.seahorse gnome.gnome-keyring
-    pcmanfm gparted pavucontrol feh rofi lxappearance
+    awesome pcmanfm gparted pavucontrol feh rofi lxappearance
     matcha-gtk-theme kora-icon-theme
 
     # Apps and programs
@@ -15,7 +15,7 @@
     firefox jellyfin-media-player vlc discord
     appimage-run distrobox filezilla r2mod_cli
     gimp obs-studio github-desktop qbittorrent
-    wine winetricks htop neofetch authy qpwgraph ventoy-bin
+    wineWowPackages.stable winetricks authy qpwgraph ventoy-bin
   ];
 
   # Fonts
@@ -30,6 +30,7 @@
       excludePackages = [ pkgs.xterm ];
       displayManager = {
         defaultSession = "none+bspwm";
+        #defaultSession = "none+awesome";
         lightdm = {
           enable = true;           
         };
@@ -37,6 +38,12 @@
       windowManager.bspwm = {
         enable = true;
       };
+      #windowManager.awesome = {
+        # enable = true;
+	#luaModules = with pkgs.luaPackages; [
+    # luarocks
+	#];
+      #};
       videoDrivers = [ "nvidia" ];
       libinput = {
         enable = true;
@@ -75,7 +82,7 @@
         ../../modules/spicetify.nix
       ];
       programs = {
-        bash.enable = true;
+        fish.enable = true;
         vscode = {
           enable = true;
           package = pkgs.vscodium;
@@ -83,7 +90,6 @@
           userSettings = {
             "workbench.colorTheme" = "One Dark Pro";
             "workbench.iconTheme" = "material-icon-theme";
-            "glassit.alpha" = 80;
             "editor.minimap.enabled" = false;
             "editor.tabSize" = 2;
             "workbench.welcomePage.extraAnnouncements" = false;
@@ -119,6 +125,15 @@
         BROWSER = "firefox";
         };
         stateVersion = "22.11";
+        file = {
+          ".config/awesome/rc.lua".source = config/awesome/rc.lua;
+          ".config/awesome/default/theme.lua".source = config/awesome/default/theme.lua;
+          ".config/htop/htoprc".source = config/htop/htoprc;
+          ".config/neofetch/config.conf".source = config/neofetch/config.conf;
+          ".config/rofi/lemon.rasi".source = config/rofi/lemon.rasi;
+          ".config/rofi/powermenu.rasi".source = config/rofi/powermenu.rasi;
+          ".config/rofi/powermenu.sh".source = config/rofi/powermenu.sh;
+        };
       };
     };
   };

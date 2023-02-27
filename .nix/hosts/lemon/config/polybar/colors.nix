@@ -2,8 +2,8 @@
   services.polybar.config = {
     "colors" = {
       # One Dark Pro
-      odFor = "#abb2bf";
-      odBac = "#282c34";
+      odFor = "#b5b5b5";
+      odBac = "#2e2e2e";
 
       #: black
       dBla = "#3f4451";
