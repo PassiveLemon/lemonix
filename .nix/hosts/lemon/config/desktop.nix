@@ -12,7 +12,7 @@
     };
     stablediff = {
       name = "stable-diff";
-      exec = "/home/lemon/STABDIF.sh";
+      exec = "/home/lemon/Standalone/stable-diffusion-webui-docker/STABDIF.sh";
       terminal = true;
     };
   };

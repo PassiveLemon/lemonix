@@ -88,6 +88,7 @@
     useGlobalPkgs = true;
     users.lemon = { config, pkgs, ... }: {
       imports = [
+        ./config/desktop.nix
         ./config/polybar.nix
         ../../modules/bspwm.nix
         ../../modules/dunst.nix
