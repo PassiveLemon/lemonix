@@ -10,5 +10,10 @@
       exec = "appimage-run /home/lemon/Standalone/r2modman.AppImage --no-sandbox";
       terminal = false;
     };
+    stablediff = {
+      name = "stable-diff";
+      exec = "/home/lemon/STABDIF.sh";
+      terminal = true;
+    };
   };
 }
