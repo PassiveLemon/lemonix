@@ -8,7 +8,7 @@
       bspc monitor DP-2 -d 1 2 3 4 5
       bspc monitor DP-0 -d 6 7 8 9 10
 
-      bspc config pointer_motion_interval 40
+      bspc config pointer_motion_interval 7
       bspc config border_width 0
       bspc config window_gap 12
       bspc config split_ratio 0.50

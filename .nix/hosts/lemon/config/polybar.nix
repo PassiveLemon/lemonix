@@ -1,7 +1,7 @@
 { config, pkgs, ... }: {
   imports = [
-    ./colors.nix
-    ./modules.nix
+    ../../../modules/polybar/colors.nix
+    ../../../modules/polybar/modules.nix
   ];
   services.polybar = {
     enable = true;

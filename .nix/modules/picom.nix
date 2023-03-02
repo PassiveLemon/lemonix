@@ -1,6 +1,7 @@
 { config, pkgs, ... }: {
   services.picom = {
     enable = true;
+    package = pkgs.unstable.picom-next;
     settings = {
       # Shadows
       shadow = true;
@@ -38,9 +39,11 @@
       # Other
       daemon = true;
       backend = "glx";
-      vsync = true;
+      vsync = false;
       use-damage = true;
+      refresh-rate = 144;
       log-level = "warn";
+      xrender-sync-fence = true;
       mark-wmwin-focused = true;
       mark-ovredir-focused = false;
       detect-rounded-corners = true;
@@ -52,6 +55,13 @@
         dnd = { shadow = true; };
         popup_menu = { opacity = 0.8; };
         dropdown_menu = { opacity = 0.8; };
+      };
+    };
+  };
+  nixpkgs.config = {
+    packageOverrides = pkgs: {
+      unstable = import (fetchTarball https://github.com/NixOS/nixpkgs/archive/nixos-unstable.tar.gz) {
+        config = config.nixpkgs.config;
       };
     };
   };

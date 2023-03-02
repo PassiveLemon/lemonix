@@ -1,21 +1,16 @@
 { config, pkgs, ... }: {
   imports = [
     ../../modules/home-manager.nix
+    ../../modules/xorg.nix
+    ../../modules/gaming.nix
   ];
 
-  # Packages
-  environment.systemPackages = with pkgs; [ 
-    # Desktop functionality
-    xorg.xrandr xorg.xhost libsecret gnome.seahorse gnome.gnome-keyring
-    awesome pcmanfm gparted pavucontrol feh rofi lxappearance
-    matcha-gtk-theme kora-icon-theme
-
-    # Apps and programs
-    gamemode protonup-ng dxvk lutris grapejuice easytag
-    firefox jellyfin-media-player vlc discord
-    appimage-run distrobox filezilla r2mod_cli
-    gimp obs-studio github-desktop qbittorrent
-    wineWowPackages.stable winetricks authy qpwgraph ventoy-bin
+  environment.systemPackages = with pkgs; [
+    unstable.firefox (unstable.discord.override { withOpenASAR = true; })
+    vlc gimp unstable.obs-studio authy htop neofetch
+    unstable.jellyfin-media-player appimage-run filezilla easytag
+    unstable.github-desktop qbittorrent unstable.qpwgraph ventoy-bin
+    pamixer playerctl
   ];
 
   # Fonts
@@ -28,6 +23,7 @@
     xserver = {
       enable = true;
       excludePackages = [ pkgs.xterm ];
+      videoDrivers = [ "nvidia" ];
       displayManager = {
         defaultSession = "none+bspwm";
         #defaultSession = "none+awesome";
@@ -39,12 +35,12 @@
         enable = true;
       };
       #windowManager.awesome = {
-        # enable = true;
-	#luaModules = with pkgs.luaPackages; [
-    # luarocks
-	#];
+      #  enable = true;
+      #  package = (builtins.getFlake "github:fortuneteller2k/nixpkgs-f2k").packages.x86_64-linux.awesome-git
+      #  luaModules = with pkgs.luaPackages; [
+      #    luarocks
+      #  ];
       #};
-      videoDrivers = [ "nvidia" ];
       libinput = {
         enable = true;
         mouse = {
@@ -59,11 +55,23 @@
         };
       };
     };
+    pipewire = {
+      enable = true;
+      pulse.enable = true;
+      alsa = {
+        enable = true;
+        support32Bit = true;
+      };
+    };
+    printing.enable = true;
+    avahi = {
+      enable = true;
+      openFirewall = true;
+    };
     gnome.gnome-keyring.enable = true;
   };
   programs = {
     dconf.enable = true;
-    steam.enable = true;
     seahorse.enable = true;
   };
   qt5 = {
@@ -72,41 +80,36 @@
     style = "gtk2";
   };
   security.pam.services.lemon.enableGnomeKeyring = true;
+  security.rtkit.enable = true;
+  xdg.portal.enable = true;
 
   # Home Manager
   home-manager = {
     useGlobalPkgs = true;
     users.lemon = { config, pkgs, ... }: {
       imports = [
-        ./config
+        ./config/polybar.nix
+        ../../modules/bspwm.nix
+        ../../modules/dunst.nix
+        ../../modules/gtk.nix
+        ../../modules/kitty.nix
+        ../../modules/picom.nix
         ../../modules/spicetify.nix
+        ../../modules/sxhkd.nix
+        ../../modules/vscode.nix
       ];
       programs = {
         fish.enable = true;
-        vscode = {
-          enable = true;
-          package = pkgs.vscodium;
-          enableUpdateCheck = false;
-          userSettings = {
-            "workbench.colorTheme" = "One Dark Pro";
-            "workbench.iconTheme" = "material-icon-theme";
-            "editor.minimap.enabled" = false;
-            "editor.tabSize" = 2;
-            "workbench.welcomePage.extraAnnouncements" = false;
-            "workbench.startupEditor" = "none";
-            "security.workspace.trust.untrustedFiles" = "open";
-            "editor.bracketPairColorization.enabled" = false;
-          };
-        };
         # Disabled until I actually set it up
         #eww = {
         #  enable = true;
-        #  configDir = ../../../.config/eww;
+        #  configDir = ../../modules/eww;
         #};
       };
       services = {
         easyeffects = {
           enable = true;
+          package = pkgs.unstable.easyeffects;
           preset = "Lemon";
         };
         flameshot = {
@@ -126,24 +129,27 @@
         };
         stateVersion = "22.11";
         file = {
-          ".config/awesome/rc.lua".source = config/awesome/rc.lua;
-          ".config/awesome/default/theme.lua".source = config/awesome/default/theme.lua;
-          ".config/htop/htoprc".source = config/htop/htoprc;
-          ".config/neofetch/config.conf".source = config/neofetch/config.conf;
-          ".config/rofi/lemon.rasi".source = config/rofi/lemon.rasi;
-          ".config/rofi/powermenu.rasi".source = config/rofi/powermenu.rasi;
-          ".config/rofi/powermenu.sh".source = config/rofi/powermenu.sh;
+          ".config/awesome/rc.lua".source = ../../modules/awesome/rc.lua;
+          ".config/awesome/default/theme.lua".source = ../../modules/awesome/default/theme.lua;
+          ".config/htop/htoprc".source = ../../modules/htop/htoprc;
+          ".config/neofetch/config.conf".source = ../../modules/neofetch/config.conf;
+          ".config/rofi/lemon.rasi".source = ../../modules/rofi/lemon.rasi;
+          ".config/rofi/powermenu.rasi".source = ../../modules/rofi/powermenu.rasi;
+          ".config/rofi/powermenu.sh".source = ../../modules/rofi/powermenu.sh;
         };
       };
     };
   };
 
-  # Overlays
-  nixpkgs.overlays =
-  let
-    myOverlay = self: super: {
-      discord = super.discord.override { withOpenASAR = true; };
+
+  # Unstable + Overlay
+  nixpkgs = {
+    config = {
+      packageOverrides = pkgs: {
+        unstable = import (fetchTarball https://github.com/NixOS/nixpkgs/archive/nixos-unstable.tar.gz) {
+          config = config.nixpkgs.config;
+        };
+      };
     };
-  in
-  [ myOverlay ];
+  };
 }
