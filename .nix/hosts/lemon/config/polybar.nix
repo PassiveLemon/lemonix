@@ -57,7 +57,7 @@
 
         modules-left = "sep cpu sep bar sep memory sep bar sep title sep";
         modules-center = "bspwm";
-        modules-right = "sep date sep bar sep time sep bar sep volume sep bar sep powermenu sep";
+        modules-right = "sep date sep bar sep time sep bar sep volume sep bar sep powermenu sep sep";
       };
     };
   };

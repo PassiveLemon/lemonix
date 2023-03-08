@@ -39,7 +39,7 @@
       # Other
       daemon = true;
       backend = "glx";
-      vsync = false;
+      vsync = true;
       use-damage = true;
       refresh-rate = 144;
       log-level = "warn";

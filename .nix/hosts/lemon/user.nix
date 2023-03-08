@@ -7,16 +7,29 @@
 
   environment.systemPackages = with pkgs; [
     unstable.firefox (unstable.discord.override { withOpenASAR = true; })
-    vlc gimp unstable.obs-studio authy htop neofetch
+    vlc gimp unstable.obs-studio authy htop neofetch xarchiver
     unstable.jellyfin-media-player appimage-run filezilla easytag
     unstable.github-desktop qbittorrent unstable.qpwgraph ventoy-bin
     pamixer playerctl
+    networkmanagerapplet
   ];
 
   # Fonts
-  fonts.fonts = with pkgs; [
-    material-design-icons fira (nerdfonts.override { fonts = [ "FiraCode" ]; })
-  ];
+  fonts = {
+    fonts = with pkgs; [
+      material-design-icons fira (nerdfonts.override { fonts = [ "FiraCode" ]; })
+    ];
+    fontconfig = {
+      enable = true;
+      antialias = true;
+      hinting = {
+        enable = true;
+        autohint = true;
+        style = "hintfull";
+      };
+      subpixel.lcdfilter = "default";
+    };
+  };
 
   # Configs
   services = {
@@ -73,6 +86,7 @@
   programs = {
     dconf.enable = true;
     seahorse.enable = true;
+    nm-applet.enable = true;
   };
   qt5 = {
     enable = true;
@@ -101,7 +115,6 @@
       ];
       programs = {
         fish.enable = true;
-        # Disabled until I actually set it up
         #eww = {
         #  enable = true;
         #  configDir = ../../modules/eww;

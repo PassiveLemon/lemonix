@@ -2,8 +2,8 @@
   environment.systemPackages = with pkgs; [
     unstable.wineWowPackages.stable winetricks
     gamemode protonup-ng dxvk
-    unstable.bottles lutris
-    unstable.lunar-client
+    unstable.bottles
+    unstable.lunar-client yuzu-early-access
   ];
   programs = {
     steam = {
@@ -11,6 +11,10 @@
       package = pkgs.unstable.steam;
     };
   };
+  #services.archisteamfarm = {
+  #  enable = true;
+  #  web-ui.enable = true;
+  #};
   nixpkgs = {
     config = {
       packageOverrides = pkgs: {

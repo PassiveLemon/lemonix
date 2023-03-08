@@ -16,11 +16,11 @@
         useOSProber = true;
         device = "nodev";
         gfxmodeEfi = "1920x1080";
-        configurationLimit = 100;
+        configurationLimit = 50;
       };
     };
     kernelPackages = pkgs.linuxKernel.packages.linux_zen;
-    kernelModules = [ "iwlwifi" ];
+    kernelModules = [ "iwlwifi" "r8169" ];
   };
 
   # Locale
@@ -90,13 +90,23 @@
       driSupport = true;
     };
   };
-  systemd.services.ethernet = {
-    preStart = "/run/current-system/sw/bin/sleep 10";
-    serviceConfig = {
-      User = "root";
-      ExecStart = "/run/current-system/sw/bin/ethtool -s enp6s0 autoneg off speed 100 duplex full";
+  systemd.services = {
+    Ethernet1 = {
+      preStart = "/run/current-system/sw/bin/sleep 10";
+      serviceConfig = {
+        User = "root";
+        ExecStart = "/run/current-system/sw/bin/ethtool -s enp6s0 autoneg off speed 100 duplex full";
+      };
+      wantedBy = [ "multi-user.target" ];
     };
-    wantedBy = [ "multi-user.target" ];
+    Ethernet2 = {
+      preStart = "/run/current-system/sw/bin/sleep 10";
+      serviceConfig = {
+        User = "root";
+        ExecStart = "/run/current-system/sw/bin/ethtool -A enp6s0 tx on rx on";
+      };
+      wantedBy = [ "multi-user.target" ];
+    };
   };
   nix.settings.experimental-features = [ "nix-command" "flakes" ];
   nixpkgs.config.allowUnfree = true;

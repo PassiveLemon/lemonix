@@ -14,12 +14,11 @@
       bspc config split_ratio 0.50
       bspc config borderless_monocle true
       bspc config gapless_monocle true
-      #bspc config ignore_ewmh_focus true
+      # bspc config ignore_ewmh_focus true
 
       # Rules (Don't seem to work)
-      bspc rule -a easyeffects desktop='^5' state=tiled follow=off focus=off -o
-      bspc rule -a Pcmanfm state=floating follow=on focus=on
-      bspc rule -a Lxappearance state=floating follow=on focus=on
+      bspc rule -a '*' desktop=^10 follow=off focus=off; easyeffects
+
     '';
     extraConfig = ''
       killall polybar eww easyeffects &
@@ -29,7 +28,6 @@
       pamixer --set-limit 100 &
       xsetroot -cursor_name left_ptr &
       xinput set-prop "Glorious Model O" "Device Accel Constant Deceleration" 1.6
-      easyeffects &
       polybar lemon-left &
       polybar lemon-right &
 
