@@ -6,13 +6,12 @@
   ];
 
   environment.systemPackages = with pkgs; [
+    unstable.hilbish networkmanagerapplet
     unstable.firefox (unstable.discord.override { withOpenASAR = true; })
     vlc gimp unstable.obs-studio authy htop neofetch xarchiver
     unstable.jellyfin-media-player appimage-run filezilla easytag
     unstable.github-desktop qbittorrent unstable.qpwgraph ventoy-bin
     pamixer playerctl
-    networkmanagerapplet
-    unstable.hilbish
   ];
 
   # Fonts
@@ -115,13 +114,6 @@
         ../../modules/sxhkd.nix
         ../../modules/vscode.nix
       ];
-      programs = {
-        fish.enable = true;
-        #eww = {
-        #  enable = true;
-        #  configDir = ../../modules/eww;
-        #};
-      };
       services = {
         easyeffects = {
           enable = true;
@@ -138,8 +130,14 @@
         };
         megasync.enable = true;
       };
+      programs = {
+        fish.enable = true;
+        #eww = {
+        #  enable = true;
+        #  configDir = ../../modules/eww;
+        #};
+      };
       home = {
-        stateVersion = "22.11";
         file = {
           ".config/awesome/rc.lua".source = ../../modules/awesome/rc.lua;
           ".config/awesome/default/theme.lua".source = ../../modules/awesome/default/theme.lua;
@@ -150,6 +148,7 @@
           ".config/rofi/powermenu.rasi".source = ../../modules/rofi/powermenu.rasi;
           ".config/rofi/powermenu.sh".source = ../../modules/rofi/powermenu.sh;
         };
+        stateVersion = "22.11";
       };
     };
   };

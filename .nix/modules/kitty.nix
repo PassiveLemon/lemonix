@@ -18,12 +18,12 @@
       color8 = "#40454f";
       # red
       color1 = "#f35252";
-      color9 = "#f35279";
+      color9 = "#f35252";
       # green
       color2 = "#81cc52";
       color10 = "#81cc52";
       # yellow
-      color3 = "#f38c52";
+      color3 = "#f3d052";
       color11 = "#f3d052";
       # blue
       color4 = "#47a6dc";
