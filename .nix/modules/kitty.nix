@@ -1,4 +1,4 @@
-{ config, pkgs, ... }: {
+{ config, pkgs, colors, ... }: {
   programs.kitty = {
     enable = true;
     settings = {
@@ -8,32 +8,34 @@
       font_size = 10;
       enable_audio_bell = "no";
       url_color = "#4892cb";
-      foreground = "#b5b5b5";
-      background = "#242424";
+      shell = "hilbish";
 
-      #: black
-      color0 = "#3f4451";
-      color8 = "#4f5666";
-      #: red
-      color1 = "#e05561";
-      color9 = "#ff616e";
-      #: green
-      color2 = "#8cc265";
-      color10 = "#a5e075";
-      #: yellow
-      color3 = "#d18f52";
-      color11 = "#f0a45d";
-      #: blue
-      color4 = "#4aa5f0";
-      color12 = "#4dc4ff";
-      #: magenta
-      color5 = "#c162de";
-      color13 = "#de73ff";
-      #: cyan
-      color6 = "#42b3c2";
-      color14 = "#4cd1e0";
-      #: white
-      color7 = "#d7dae0";
+      foreground = "#b5b5b5";
+      background = "#232426";
+
+      # black
+      color0 = "#31343a";
+      color8 = "#40454f";
+      # red
+      color1 = "#f35252";
+      color9 = "#f35279";
+      # green
+      color2 = "#81cc52";
+      color10 = "#81cc52";
+      # yellow
+      color3 = "#f38c52";
+      color11 = "#f3d052";
+      # blue
+      color4 = "#47a6dc";
+      color12 = "#47a6dc";
+      # magenta
+      color5 = "#926ae5";
+      color13 = "#926ae5";
+      # cyan
+      color6 = "#75dad4";
+      color14 = "#75dad4";
+      # white
+      color7 = "#bdc4d3";
       color15 = "#e6e6e6";
     };
   };

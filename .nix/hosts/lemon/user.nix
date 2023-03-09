@@ -12,6 +12,7 @@
     unstable.github-desktop qbittorrent unstable.qpwgraph ventoy-bin
     pamixer playerctl
     networkmanagerapplet
+    unstable.hilbish
   ];
 
   # Fonts
@@ -70,6 +71,7 @@
     };
     pipewire = {
       enable = true;
+      jack.enable = true;
       pulse.enable = true;
       alsa = {
         enable = true;
@@ -108,7 +110,7 @@
         ../../modules/dunst.nix
         ../../modules/gtk.nix
         ../../modules/kitty.nix
-        ../../modules/picom.nix
+        ../../modules/picom.nix     
         ../../modules/spicetify.nix
         ../../modules/sxhkd.nix
         ../../modules/vscode.nix
@@ -137,15 +139,12 @@
         megasync.enable = true;
       };
       home = {
-        sessionVariables = {
-        EDITOR = "codium";
-        BROWSER = "firefox";
-        };
         stateVersion = "22.11";
         file = {
           ".config/awesome/rc.lua".source = ../../modules/awesome/rc.lua;
           ".config/awesome/default/theme.lua".source = ../../modules/awesome/default/theme.lua;
           ".config/htop/htoprc".source = ../../modules/htop/htoprc;
+          ".config/hilbish/init.lua".source = ../../modules/hilbish/init.lua;
           ".config/neofetch/config.conf".source = ../../modules/neofetch/config.conf;
           ".config/rofi/lemon.rasi".source = ../../modules/rofi/lemon.rasi;
           ".config/rofi/powermenu.rasi".source = ../../modules/rofi/powermenu.rasi;
@@ -155,8 +154,7 @@
     };
   };
 
-
-  # Unstable + Overlay
+  # Unstable
   nixpkgs = {
     config = {
       packageOverrides = pkgs: {

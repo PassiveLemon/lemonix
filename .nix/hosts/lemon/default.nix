@@ -56,21 +56,20 @@
       description = "Lemon";
       extraGroups = [ "wheel" "networkmanager" "docker" "video" ];
     };
-    defaultUserShell = pkgs.fish;
-  };
-
-  environment = {
-    binsh = "${pkgs.dash}/bin/dash";
-    shells = with pkgs; [ fish bash ];
+    #defaultUserShell = pkgs.fish;
   };
 
   # Packages
-  environment.systemPackages = with pkgs; [
-    dash bash nano unzip unrar p7zip curl wget git gnumake psmisc
-    networkmanager ethtool gvfs trashy
-    docker nvidia-docker virt-manager OVMF pciutils virtiofsd
-    distrobox
-  ];
+  environment = {
+    systemPackages = with pkgs; [
+      dash bash nano unzip unrar p7zip curl wget git gvfs psmisc
+      networkmanager ethtool
+      exa trashy
+      docker nvidia-docker distrobox virt-manager OVMF pciutils virtiofsd
+    ];
+    binsh = "${pkgs.dash}/bin/dash";
+    shells = with pkgs; [ bash ];
+  };
 
   # Configs
   services = {

@@ -8,14 +8,14 @@
       type = "internal/bspwm";
       pin-workspaces = true;
       label-font = 0;
+      label-empty = "%{T2}%{T-}";
+      label-empty-padding = 1;
       label-focused = "%{T2}%{T-}";
       label-focused-padding = 1;
       label-occupied = "%{T2}%{T-}";
       label-occupied-padding = 1;
       label-urgent = "%{T2}%{T-}";
       label-urgent-padding = 1;
-      label-empty = "%{T2}%{T-}";
-      label-empty-padding = 1;
     };
     "module/cpu" = {
       type = "internal/cpu";

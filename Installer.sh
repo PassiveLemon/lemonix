@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-if [ ! -d ./LICENSE ] && [ ! -d ./.git ]; then
+if git rev-parse --git-dir > /dev/null 2>&1; then
   echo "|| No clone detected. Cloning...  ||"
   sudo mkdir -p ${HOME}/lemontemp/
   sudo chmod 777 ${HOME}/lemontemp/
