@@ -11,7 +11,7 @@
     vlc gimp unstable.obs-studio authy htop neofetch xarchiver
     unstable.jellyfin-media-player appimage-run filezilla easytag
     unstable.github-desktop qbittorrent unstable.qpwgraph ventoy-bin
-    pamixer playerctl
+    pamixer playerctl pulseaudioFull
   ];
 
   # Fonts
@@ -38,22 +38,22 @@
       excludePackages = [ pkgs.xterm ];
       videoDrivers = [ "nvidia" ];
       displayManager = {
-        defaultSession = "none+bspwm";
-        #defaultSession = "none+awesome";
+        #defaultSession = "none+bspwm";
+        defaultSession = "none+awesome";
         lightdm = {
           enable = true;           
         };
       };
-      windowManager.bspwm = {
-        enable = true;
-      };
-      #windowManager.awesome = {
+      #windowManager.bspwm = {
       #  enable = true;
-      #  package = (builtins.getFlake "github:fortuneteller2k/nixpkgs-f2k").packages.x86_64-linux.awesome-git
-      #  luaModules = with pkgs.luaPackages; [
-      #    luarocks
-      #  ];
       #};
+      windowManager.awesome = {
+        enable = true;
+        package = (builtins.getFlake "github:fortuneteller2k/nixpkgs-f2k").packages.x86_64-linux.awesome-git;
+        luaModules = with pkgs.luaPackages; [
+          luarocks
+        ];
+      };
       libinput = {
         enable = true;
         mouse = {
@@ -96,7 +96,15 @@
   };
   security.pam.services.lemon.enableGnomeKeyring = true;
   security.rtkit.enable = true;
-  xdg.portal.enable = true;
+  xdg = {
+    portal.enable = true;
+    mime = {
+      enable = true;
+      defaultApplications = {
+        "inode/directory" = "pcmanfm.desktop";
+      };
+    };
+  };
 
   # Home Manager
   home-manager = {
@@ -139,14 +147,17 @@
       };
       home = {
         file = {
-          ".config/awesome/rc.lua".source = ../../modules/awesome/rc.lua;
-          ".config/awesome/default/theme.lua".source = ../../modules/awesome/default/theme.lua;
+          ".config/awesome/" = {
+            source = ../../modules/awesome;
+            recursive = true;
+          };
           ".config/htop/htoprc".source = ../../modules/htop/htoprc;
           ".config/hilbish/init.lua".source = ../../modules/hilbish/init.lua;
           ".config/neofetch/config.conf".source = ../../modules/neofetch/config.conf;
-          ".config/rofi/lemon.rasi".source = ../../modules/rofi/lemon.rasi;
-          ".config/rofi/powermenu.rasi".source = ../../modules/rofi/powermenu.rasi;
-          ".config/rofi/powermenu.sh".source = ../../modules/rofi/powermenu.sh;
+          ".config/rofi/" = {
+            source = ../../modules/rofi;
+            recursive = true;
+          };
         };
         stateVersion = "22.11";
       };
