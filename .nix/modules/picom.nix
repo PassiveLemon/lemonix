@@ -14,10 +14,10 @@
       ];
       # Fading
       fading = true;
-      fade-in-step = 0.08;
-      fade-out-step = 0.08;
+      fade-in-step = 0.1;
+      fade-out-step = 0.1;
       # Corners
-      corner-radius = 7;
+      corner-radius = 0;
       round-borders = 1;
       rounded-corners-exclude = [
         "window_type = 'dock'"

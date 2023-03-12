@@ -83,7 +83,6 @@ local function create_kill_process_button()
     return wibox.widget{
         {
             id = "icon",
-            image = WIDGET_DIR .. '/window-close-symbolic.svg',
             resize = false,
             opacity = 0.1,
             widget = wibox.widget.imagebox
@@ -112,7 +111,7 @@ local function worker(user_args)
         step_width = step_width,
         step_spacing = step_spacing,
         widget = wibox.widget.graph,
-        color = "linear:0,0:0,20:0,#FF0000:0.3,#FFFF00:0.6," .. color
+        color = "linear:0,0:0,20:0,#FF0000:0.3,#f35252:0.6," .. color
     }
 
     -- This timer periodically executes the heavy command while the popup is open.
@@ -127,8 +126,8 @@ local function worker(user_args)
         ontop = true,
         visible = false,
         shape = gears.shape.rounded_rect,
-        border_width = 1,
-        border_color = beautiful.bg_normal,
+        border_width = 2,
+        border_color = beautiful.border_color_active,
         maximum_width = 300,
         offset = { y = 5 },
         widget = {}
@@ -163,7 +162,7 @@ local function worker(user_args)
             reflection = {horizontal = true},
             layout = wibox.container.mirror
         },
-        bottom = 2,
+        bottom = 6,
         color = background_color,
         widget = wibox.container.margin
     }

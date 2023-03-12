@@ -11,7 +11,7 @@
     vlc gimp unstable.obs-studio authy htop neofetch xarchiver
     unstable.jellyfin-media-player appimage-run filezilla easytag
     unstable.github-desktop qbittorrent unstable.qpwgraph ventoy-bin
-    pamixer playerctl pulseaudioFull
+    pamixer playerctl stress 
   ];
 
   # Fonts
@@ -38,21 +38,14 @@
       excludePackages = [ pkgs.xterm ];
       videoDrivers = [ "nvidia" ];
       displayManager = {
-        #defaultSession = "none+bspwm";
         defaultSession = "none+awesome";
         lightdm = {
           enable = true;           
         };
       };
-      #windowManager.bspwm = {
-      #  enable = true;
-      #};
       windowManager.awesome = {
         enable = true;
         package = (builtins.getFlake "github:fortuneteller2k/nixpkgs-f2k").packages.x86_64-linux.awesome-git;
-        luaModules = with pkgs.luaPackages; [
-          luarocks
-        ];
       };
       libinput = {
         enable = true;
@@ -112,9 +105,9 @@
     users.lemon = { config, pkgs, ... }: {
       imports = [
         ./config/desktop.nix
-        ./config/polybar.nix
-        ../../modules/bspwm.nix
-        ../../modules/dunst.nix
+        #./config/polybar.nix
+        #../../modules/bspwm.nix
+        #../../modules/dunst.nix
         ../../modules/gtk.nix
         ../../modules/kitty.nix
         ../../modules/picom.nix     
@@ -140,10 +133,6 @@
       };
       programs = {
         fish.enable = true;
-        #eww = {
-        #  enable = true;
-        #  configDir = ../../modules/eww;
-        #};
       };
       home = {
         file = {

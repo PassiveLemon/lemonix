@@ -3,13 +3,15 @@ pcall(require, "luarocks.loader")
 local gears = require("gears")
 local awful = require("awful")
 require("awful.autofocus")
-require("awful.hotkeys_popup.keys")
 local wibox = require("wibox")
 local beautiful = require("beautiful")
 local naughty = require("naughty")
 local ruled = require("ruled")
 local menubar = require("menubar")
 local hotkeys_popup = require("awful.hotkeys_popup")
+require("awful.hotkeys_popup.keys")
+
+local dpi = beautiful.xresources.apply_dpi
 
 ---- Error handling
 -- Check if awesome encountered an error during startup and fell back to
@@ -30,31 +32,10 @@ editor_cmd = terminal .. " -e " .. editor
 
 menubar.utils.terminal = terminal
 
-modkey = "Mod4"
-
-mymainmenu = awful.menu({items = {
-  { "awesome", myawesomemenu, beautiful.awesome_icon },
-  { "open terminal", terminal }
-}})
-mylauncher = awful.widget.launcher({image = beautiful.awesome_icon, menu = mymainmenu })
-
-
 ---- Tag layout
 tag.connect_signal("request::default_layouts", function()
   awful.layout.append_default_layouts({
---        awful.layout.suit.floating,
---        awful.layout.suit.tile,
---        awful.layout.suit.tile.left,
---        awful.layout.suit.tile.bottom,
---        awful.layout.suit.tile.top,
---        awful.layout.suit.fair,
---        awful.layout.suit.fair.horizontal,
---        awful.layout.suit.spiral,
     awful.layout.suit.spiral.dwindle,
---        awful.layout.suit.max,
---        awful.layout.suit.max.fullscreen,
---        awful.layout.suit.magnifier,
---        awful.layout.suit.corner.nw,
   })
 end)
 
@@ -93,49 +74,88 @@ screen.connect_signal("request::desktop_decoration", function(s)
   awful.tag({ " 1 ", " 2 ", " 3 ", " 4 ", " 5 " }, s, awful.layout.layouts[1])
 
   -- Create a layoutbox widget
-  s.mylayoutbox = awful.widget.layoutbox {
+  s.lemonlayoutbox = awful.widget.layoutbox {
     screen  = s,
   }
 
   -- Create a taglist widget
-  s.mytaglist = awful.widget.taglist {
+  s.lemontaglist = awful.widget.taglist {
     screen  = s,
     filter  = awful.widget.taglist.filter.all,
+    style = {
+      shape = gears.shape.circle,
+    },
+    buttons = {
+      awful.button({ }, 1, function(t) t:view_only() end),
+      awful.button({ }, 3, awful.tag.viewtoggle),
+      awful.button({ }, 4, function(t) awful.tag.viewnext(t.screen) end),
+      awful.button({ }, 5, function(t) awful.tag.viewprev(t.screen) end),
+    }
   }
 
+  beautiful.tasklist_disable_task_name = false
+  beautiful.tasklist_plain_task_name = true
+
+  s.lemonbar = wibox.widget{
+    markup = '|',
+    align  = 'center',
+    valign = 'center',
+    widget = wibox.widget.textbox
+  }
+
+  s.lemonsep = wibox.widget{
+    markup = ' ',
+    align  = 'center',
+    valign = 'center',
+    widget = wibox.widget.textbox
+}
+
   -- Create a tasklist widget
-  s.mytasklist = awful.widget.tasklist {
+  s.lemontasklist = awful.widget.tasklist {
     screen  = s,
     filter  = awful.widget.tasklist.filter.currenttags,
+    buttons = {
+      awful.button({ }, 1, function (c)
+        c:activate { context = "tasklist", action = "toggle_minimization" }
+      end),
+      awful.button({ }, 4, function() awful.client.focus.byidx( 1) end),
+      awful.button({ }, 5, function() awful.client.focus.byidx(-1) end),
+    }
   }
 
   -- Create the wibox
-  s.mywibox = awful.wibar({
+  s.lemonwibar = awful.wibar({
     position = "top",
     screen   = s,
-    height   = 22
+    height   = 23
   })
 
-  s.mywibox:setup {
+  s.lemonwibar:setup {
     layout = wibox.layout.align.horizontal,
     { -- Left
       layout = wibox.layout.fixed.horizontal,
-      s.mytaglist,
+      s.lemontaglist,
+      s.lemonbar,
+      s.lemonsep,
       cpu_widget({
         width = 20,
+        color = "#ffff00",
       }),
+      s.lemonsep,
+      s.lemonbar,
       ram_widget({
         color_used = "#f35252",
         color_buf = "#f3d052",
       }),
-      --volume_widget(),
+      s.lemonbar,
     },
-    s.mytasklist, -- Middle
+    s.lemontasklist, -- Center
     { -- Right
       layout = wibox.layout.fixed.horizontal,
       wibox.widget.systray,
+      s.lemonbar,
       mytextclock,
-      s.mylayoutbox,
+      s.lemonlayoutbox,
     },
   }
 end)
@@ -143,6 +163,7 @@ end)
 --
 -- Keybindings
 --
+modkey = "Mod4"
 
 awful.keyboard.append_global_keybindings({
   awful.key({ modkey, "Control" }, "r", awesome.restart,
@@ -160,7 +181,7 @@ awful.keyboard.append_global_keybindings({
   awful.key({ modkey, }, "s", hotkeys_popup.show_help,
   {description="show help", group="utility"}),
 
-  awful.key({ modkey, }, "Print", function () awful.spawn( "flameshot gui" ) end,
+  awful.key({ }, "Print", function () awful.spawn( "flameshot gui" ) end,
   {description="flameshot", group="utility"}),
 
   awful.key({ }, "XF86AudioRaiseVolume", function () awful.spawn( "pamixer -i 1" ) end,
@@ -301,21 +322,12 @@ client.connect_signal("request::default_keybindings", function()
     awful.key({ modkey, "Control" }, "space",  awful.client.floating.toggle,
     {description = "toggle floating", group = "client"}),
 
-    awful.key({ modkey, "Control" }, "Return", function (c) c:swap(awful.client.getmaster()) end,
-    {description = "move to master", group = "client"}),
-
-    awful.key({ modkey, }, "o", function (c) c:move_to_screen() end,
-    {description = "move to screen", group = "client"}),
-
-    awful.key({ modkey, }, "t", function (c) c.ontop = not c.ontop end,
-    {description = "toggle keep on top", group = "client"}),
-
     awful.key({ modkey, }, "n",
       function (c)
         -- The client currently has the input focus, so it cannot be
         -- minimized, since minimized clients can't have the focus.
         c.minimized = true
-      end ,
+    end ,
     {description = "minimize", group = "client"}),
 
     awful.key({ modkey, }, "m",
@@ -324,29 +336,8 @@ client.connect_signal("request::default_keybindings", function()
         c:raise()
       end ,
     {description = "(un)maximize", group = "client"}),
-
-    awful.key({ modkey, "Control" }, "m",
-      function (c)
-        c.maximized_vertical = not c.maximized_vertical
-        c:raise()
-      end ,
-    {description = "(un)maximize vertically", group = "client"}),
-
-    awful.key({ modkey, "Shift"   }, "m",
-      function (c)
-        c.maximized_horizontal = not c.maximized_horizontal
-        c:raise()
-      end ,
-    {description = "(un)maximize horizontally", group = "client"}),
   })
 end)
-
----- Mouse bindings
-awful.mouse.append_global_mousebindings({
-awful.button({ }, 3, function () mymainmenu:toggle() end),
-awful.button({ }, 4, awful.tag.viewprev),
-awful.button({ }, 5, awful.tag.viewnext),
-})
 
 --
 -- Rules
@@ -367,43 +358,55 @@ ruled.client.connect_signal("request::rules", function()
   }
 end)
 
-  -- Floating clients.
-  ruled.client.append_rule {
-    id       = "floating",
-    rule_any = {
-      instance = { "copyq", "pinentry" },
-      class    = {
-        "Arandr", "Blueman-manager", "Gpick", "Kruler", "Sxiv",
-        "Tor Browser", "Wpa_gui", "veromix", "xtightvncviewer"
-      },
-      -- Note that the name property shown in xprop might be set slightly after creation of the client
-      -- and the name shown there might not match defined rules here.
-      name    = {
-        "Event Tester",  -- xev.
-      },
-      role    = {
-        "AlarmWindow",    -- Thunderbird's calendar.
-        "ConfigManager",  -- Thunderbird's about:config.
-        "pop-up",         -- e.g. Google Chrome's (detached) Developer Tools.
-      }
+-- Floating clients.
+ruled.client.append_rule {
+  id       = "floating",
+  rule_any = {
+    instance = { "copyq", "pinentry" },
+    class    = {
+      "Arandr", "Blueman-manager", "Gpick", "Kruler", "Sxiv",
+      "Tor Browser", "Wpa_gui", "veromix", "xtightvncviewer"
     },
-    properties = { floating = true }
-  }
-
----- Notifications
-ruled.notification.connect_signal('request::rules', function()
-  -- All notifications will match this rule.
-  ruled.notification.append_rule {
-    rule       = { },
-    properties = {
-      screen           = awful.screen.preferred,
-      implicit_timeout = 5,
+    -- Note that the name property shown in xprop might be set slightly after creation of the client
+    -- and the name shown there might not match defined rules here.
+    name    = {
+      "Event Tester",  -- xev.
+    },
+    role    = {
+      "pop-up",         -- e.g. Google Chrome's (detached) Developer Tools.
     }
-  }
-end)
+  },
+  properties = { floating = true }
+}
 
 naughty.connect_signal("request::display", function(n)
   naughty.layout.box { notification = n }
+end)
+
+naughty.config.defaults.padding = 2
+naughty.config.defaults.ontop = true
+naughty.config.defaults.timeout = 3
+naughty.config.defaults.icon_size = dpi(32)
+naughty.config.defaults.screen = awful.screen.focused()
+naughty.config.defaults.border_width = dpi(2)
+naughty.config.defaults.border_color = "#535d6c"
+naughty.config.defaults.position = "bottom_right"
+naughty.config.defaults.margin = dpi(5)
+
+---- Notifications
+ruled.notification.connect_signal('request::rules', function()
+  ruled.notification.append_rule {
+    rule       = { urgency = "critical" },
+    properties = { bg = "#f3d052", fg = "#abb2bf", implicit_timeout = 0, timeout = 0 }
+  }
+  ruled.notification.append_rule {
+    rule       = { urgency = "normal" },
+    properties = { bg = "#282c34", fg = "#abb2bf", implicit_timeout = 3, timeout = 3 }
+  }
+  ruled.notification.append_rule {
+    rule       = { urgency = "low" },
+    properties = { bg = "#282c34", fg = "#abb2bf", implicit_timeout = 3, timeout = 3 }
+  }
 end)
 
 -- Enable sloppy focus, so that focus follows mouse.

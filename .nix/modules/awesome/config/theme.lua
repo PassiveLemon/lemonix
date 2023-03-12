@@ -1,7 +1,3 @@
----------------------------
--- Default awesome theme --
----------------------------
-
 local theme_assets = require("beautiful.theme_assets")
 local xresources = require("beautiful.xresources")
 local rnotification = require("ruled.notification")
@@ -12,7 +8,9 @@ local themes_path = gfs.get_themes_dir()
 
 local theme = {}
 
-theme.font          = "Fira Code Medium Nerd Font Complete 10"
+theme.font          = "Fira Code Nerd Font 10"
+theme.taglist_font  = "Fira Code Nerd Font 10"
+theme.tasklist_font = "Fira Code Nerd Font 10"
 
 theme.bg_normal     = "#222222"
 theme.bg_focus      = "#535d6c"
@@ -25,8 +23,8 @@ theme.fg_focus      = "#ffffff"
 theme.fg_urgent     = "#ffffff"
 theme.fg_minimize   = "#ffffff"
 
-theme.useless_gap         = dpi(0)
-theme.border_width        = dpi(1)
+theme.useless_gap         = 6
+theme.border_width        = dpi(2)
 theme.border_color_normal = "#000000"
 theme.border_color_active = "#535d6c"
 theme.border_color_marked = "#91231c"
@@ -46,17 +44,11 @@ theme.border_color_marked = "#91231c"
 -- Generate taglist squares:
 local taglist_square_size = dpi(4)
 theme.taglist_squares_sel = theme_assets.taglist_squares_sel(
-    taglist_square_size, theme.fg_normal
+  taglist_square_size, theme.fg_normal
 )
 theme.taglist_squares_unsel = theme_assets.taglist_squares_unsel(
-    taglist_square_size, theme.fg_normal
+  taglist_square_size, theme.fg_normal
 )
-
--- Variables set for theming notifications:
--- notification_font
--- notification_[bg|fg]
--- notification_[width|height|margin]
--- notification_[border_color|border_width|shape|opacity]
 
 -- Variables set for theming the menu:
 -- menu_[bg|fg]_[normal|focus]
@@ -69,8 +61,6 @@ theme.menu_width  = dpi(100)
 -- you wish and access them by using
 -- beautiful.variable in your rc.lua
 --theme.bg_widget = "#cc0000"
-
-theme.useless_gap = "6"
 
 -- Define the image to load
 theme.titlebar_close_button_normal = themes_path.."default/titlebar/close_normal.png"
@@ -127,13 +117,5 @@ theme.awesome_icon = theme_assets.awesome_icon(
 -- Define the icon theme for application icons. If not set then the icons
 -- from /usr/share/icons and /usr/share/icons/hicolor will be used.
 theme.icon_theme = nil
-
--- Set different colors for urgent notifications.
-rnotification.connect_signal('request::rules', function()
-  rnotification.append_rule {
-    rule       = { urgency = 'critical' },
-    properties = { bg = '#ff0000', fg = '#ffffff' }
-  }
-end)
 
 return theme

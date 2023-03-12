@@ -3,7 +3,7 @@
     enable = true;
     settings = {
       background_opacity = "0.8";
-      window_padding_width = "6 6";
+      window_padding_width = "5 6 5 6";
       font_family = "Fira Code Medium Nerd Font Complete";
       font_size = 10;
       enable_audio_bell = "no";
