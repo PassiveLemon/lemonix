@@ -127,6 +127,9 @@ awful.keyboard.append_client_keybindings({
 
   awful.key({ modkey, }, "f",  awful.client.floating.toggle,
   {description = "toggle floating", group = "client"}),
+
+  awful.key({ modkey, }, "n", function (c) c.minimized = true end,
+  {description = "minimize", group = "client"}),
 })
 
 --

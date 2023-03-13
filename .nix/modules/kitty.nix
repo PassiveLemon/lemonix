@@ -7,6 +7,7 @@
       font_family = "Fira Code Medium Nerd Font Complete";
       font_size = 10;
       enable_audio_bell = "no";
+      update_check_interval = 0;
       url_color = "#4892cb";
       shell = "hilbish";
 

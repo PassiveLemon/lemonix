@@ -29,7 +29,7 @@ homelocalicons="${HOME}/.local/share/icons"
 homedoticons="${HOME}/.icons"
 mkdir -p ${homelocalicons}
 mkdir -p ${homedoticons}
-cd ${homelocalfonts}
+cd ${homelocalicons}
 # Kora
   if [ -e ./kora/ ]; then
     sudo rm -r ./kora/

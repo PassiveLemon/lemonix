@@ -6,11 +6,13 @@ configuration {
 }
 
 * {
-  bg: #121212;
-  bg-alt: #282828;
+  bg: #222222;
+  bd: #535d6c;
   wh: #FFFFFF;
+	tc-n: #aaaaaa;
+	tc-f: #ffffff;
   background-color: @bg;
-  text-color: @wh;
+  text-color: @tc-n;
   border-radius: 8px;
 }
 
@@ -36,7 +38,7 @@ mainbox {
   children: [ inputbar, listview ];
   border: 2px;
   border-radius: 0px;
-  border-color: @wh;
+  border-color: @bd;
 }
 
 listview {
@@ -56,6 +58,7 @@ element-text {
 }
 
 element selected {
-  background-color: @bg-alt;
+  background-color: @bd;
   margin: 0.1% 0.5% 0% 0.5%;
+  text-color: @tc-f;
 }

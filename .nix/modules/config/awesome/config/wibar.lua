@@ -102,6 +102,7 @@ screen.connect_signal("request::desktop_decoration", function(s)
     lemontasklist, -- Center
     { -- Right
       layout = wibox.layout.fixed.horizontal,
+      lemonsep,
       wibox.widget.systray,
       lemonbar,
       lemonclock,

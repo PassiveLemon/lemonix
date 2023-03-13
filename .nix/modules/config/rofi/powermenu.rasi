@@ -3,12 +3,14 @@ configuration {
 }
 
 * {
-	bg:	#121212;
-	bg-alt:	#282828;
-	wh: #FFFFFF;
-	background-color: @bg;
-	text-color:	@wh;
-	border-radius: 8px;
+  bg: #222222;
+  bd: #535d6c;
+  wh: #FFFFFF;
+	tc-n: #aaaaaa;
+	tc-f: #ffffff;
+  background-color: @bg;
+  text-color: @tc-n;
+  border-radius: 8px;
 }
 
 window {
@@ -20,7 +22,7 @@ mainbox {
 	children: [ listview ];
 	border: 2px;
 	border-radius: 0px;
-  border-color: @wh;
+  border-color: @bd;
 }
 
 listview {
@@ -46,5 +48,6 @@ element-text {
 }
 
 element selected {
-	background-color: @bg-alt;
+	background-color: @bd;
+	text-color: @tc-f;
 }

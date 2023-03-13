@@ -6,9 +6,9 @@
   ];
 
   environment.systemPackages = with pkgs; [
-    unstable.hilbish pkgs.unstable.vscodium
+    unstable.hilbish pkgs.unstable.vscodium emacs
     unstable.firefox (unstable.discord.override { withOpenASAR = true; })
-    vlc gimp unstable.obs-studio authy htop neofetch xarchiver
+    vlc gimp unstable.obs-studio authy htop neofetch xarchiver flameshot
     unstable.jellyfin-media-player appimage-run filezilla easytag
     unstable.github-desktop qbittorrent unstable.qpwgraph ventoy-bin
     pkgs.unstable.easyeffects pamixer playerctl
@@ -113,14 +113,6 @@
         ## ../../modules/vscode.nix
       ];
       services = {
-        flameshot = {
-          enable = true;
-          settings = {
-            General = {
-              disabledTrayIcon = true;
-            };
-          };
-        };
         megasync.enable = true;
       };
       home = {
