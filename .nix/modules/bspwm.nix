@@ -30,10 +30,6 @@
       xinput set-prop "Glorious Model O" "Device Accel Constant Deceleration" 1.6
       polybar lemon-left &
       polybar lemon-right &
-
-      # Disabled until I actually set it up
-      # eww daemon &
-      # eww open lemon &
     '';
   };
 }

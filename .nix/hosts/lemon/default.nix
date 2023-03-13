@@ -56,7 +56,6 @@
       description = "Lemon";
       extraGroups = [ "wheel" "networkmanager" "docker" "video" ];
     };
-    #defaultUserShell = pkgs.fish;
   };
 
   # Packages
@@ -95,14 +94,6 @@
       serviceConfig = {
         User = "root";
         ExecStart = "/run/current-system/sw/bin/ethtool -s enp6s0 autoneg off speed 100 duplex full";
-      };
-      wantedBy = [ "multi-user.target" ];
-    };
-    Ethernet2 = {
-      preStart = "/run/current-system/sw/bin/sleep 10";
-      serviceConfig = {
-        User = "root";
-        ExecStart = "/run/current-system/sw/bin/ethtool -A enp6s0 tx on rx on";
       };
       wantedBy = [ "multi-user.target" ];
     };

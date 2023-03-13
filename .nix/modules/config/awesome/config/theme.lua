@@ -1,6 +1,8 @@
 local theme_assets = require("beautiful.theme_assets")
 local xresources = require("beautiful.xresources")
 local rnotification = require("ruled.notification")
+local awful = require("awful")
+local wibox = require("wibox")
 local dpi = xresources.apply_dpi
 
 local gfs = require("gears.filesystem")
@@ -49,6 +51,9 @@ theme.taglist_squares_sel = theme_assets.taglist_squares_sel(
 theme.taglist_squares_unsel = theme_assets.taglist_squares_unsel(
   taglist_square_size, theme.fg_normal
 )
+
+theme.tasklist_disable_task_name = false
+theme.tasklist_plain_task_name = true
 
 -- Variables set for theming the menu:
 -- menu_[bg|fg]_[normal|focus]
@@ -117,5 +122,27 @@ theme.awesome_icon = theme_assets.awesome_icon(
 -- Define the icon theme for application icons. If not set then the icons
 -- from /usr/share/icons and /usr/share/icons/hicolor will be used.
 theme.icon_theme = nil
+
+--
+-- Wallpaper
+--
+
+screen.connect_signal("request::wallpaper", function(s)
+  awful.wallpaper {
+    screen = s,
+    widget = {
+      {
+        image     = theme.wallpaper,
+        upscale   = true,
+        downscale = true,
+        widget    = wibox.widget.imagebox,
+      },
+      valign = "center",
+      halign = "center",
+      tiled  = false,
+      widget = wibox.container.tile,
+    }
+  }
+end)
 
 return theme

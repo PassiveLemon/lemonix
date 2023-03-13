@@ -6,12 +6,13 @@
   ];
 
   environment.systemPackages = with pkgs; [
+    pkgs.unstable.vscodium
     unstable.hilbish networkmanagerapplet
     unstable.firefox (unstable.discord.override { withOpenASAR = true; })
-    vlc gimp unstable.obs-studio authy htop neofetch xarchiver
+    vlc gimp unstable.obs-studio authy htop neofetch xarchiver flameshot
     unstable.jellyfin-media-player appimage-run filezilla easytag
     unstable.github-desktop qbittorrent unstable.qpwgraph ventoy-bin
-    pamixer playerctl stress 
+    pkgs.unstable.easyeffects pamixer playerctl
   ];
 
   # Fonts
@@ -105,46 +106,20 @@
     users.lemon = { config, pkgs, ... }: {
       imports = [
         ./config/desktop.nix
-        #./config/polybar.nix
-        #../../modules/bspwm.nix
-        #../../modules/dunst.nix
         ../../modules/gtk.nix
         ../../modules/kitty.nix
         ../../modules/picom.nix     
         ../../modules/spicetify.nix
         ../../modules/sxhkd.nix
-        ../../modules/vscode.nix
+        ## ../../modules/vscode.nix
       ];
       services = {
-        easyeffects = {
-          enable = true;
-          package = pkgs.unstable.easyeffects;
-          preset = "Lemon";
-        };
-        flameshot = {
-          enable = true;
-          settings = {
-            General = {
-              disabledTrayIcon = true;
-            };
-          };
-        };
         megasync.enable = true;
-      };
-      programs = {
-        fish.enable = true;
       };
       home = {
         file = {
-          ".config/awesome/" = {
-            source = ../../modules/awesome;
-            recursive = true;
-          };
-          ".config/htop/htoprc".source = ../../modules/htop/htoprc;
-          ".config/hilbish/init.lua".source = ../../modules/hilbish/init.lua;
-          ".config/neofetch/config.conf".source = ../../modules/neofetch/config.conf;
-          ".config/rofi/" = {
-            source = ../../modules/rofi;
+          ".config/" = {
+            source = ../../modules/config;
             recursive = true;
           };
         };

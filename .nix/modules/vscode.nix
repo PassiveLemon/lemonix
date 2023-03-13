@@ -1,7 +1,5 @@
 { config, pkgs, ... }: {
   programs.vscode = {
-    enable = true;
-    package = pkgs.unstable.vscodium;
     #enableUpdateCheck = false;
     #userSettings = {
     #  "workbench.colorTheme" = "One Dark Pro";

@@ -13,18 +13,19 @@ configuration {
 
 window {
 	width: 300px;
+	border-radius: 0px;
 }
 
 mainbox {
 	children: [ listview ];
 	border: 2px;
-	border-radius: 5px;
+	border-radius: 0px;
   border-color: @wh;
 }
 
 listview {
 	columns: 1;
-	lines: 4;
+	lines: 3;
 	cycle: false;
 	dynamic: true;
 	layout: vertical;
@@ -34,7 +35,6 @@ listview {
 element {
 	orientation: vertical;
 	padding: 1.5% 0% 1.5% 0%; 
-	border-radius: 8px;
 }
 
 element-text {
@@ -47,5 +47,4 @@ element-text {
 
 element selected {
 	background-color: @bg-alt;
-	border-radius: 8px;
 }

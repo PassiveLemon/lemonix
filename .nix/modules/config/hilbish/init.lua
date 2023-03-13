@@ -49,6 +49,7 @@ promptua.init()
 
 -- Aliases
 hilbish.alias("ls", "exa -l")
+hilbish.alias("rm", "trash")
 
 -- Misc
 hilbish.opts.greeting = false

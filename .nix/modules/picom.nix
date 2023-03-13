@@ -10,7 +10,10 @@
       shadow-offset-x = -7;
       shadow-offset-y = -7;
       shadow-exlude = [
+        "window_type = 'desktop'"
+        "window_type = 'dock'"
         "class_g = 'Polybar'"
+        "class_g = 'firefox' && argb"
       ];
       # Fading
       fading = true;
@@ -20,10 +23,11 @@
       corner-radius = 0;
       round-borders = 1;
       rounded-corners-exclude = [
+        "window_type = 'desktop'"
         "window_type = 'dock'"
-        "window_type = 'Desktop'"
         "class_g = 'Polybar'"
         "class_g = 'dunst'"
+        "class_g = 'firefox' && argb"
       ];
       # Blur
       blur = {
@@ -32,8 +36,8 @@
       };
       blur-kern = "3x3box";
       blur-background-exclude = [
-        "window_type = 'dock'"
-        "window_type = 'Desktop'"
+        "window_type = 'desktop'"
+        "class_g = 'firefox' && argb"
         "_GTK_FRAME_EXTENTS@:c"
       ];
       # Other
@@ -51,9 +55,9 @@
       detect-transient = true;
       wintypes = {
         tooltip = { fade = true; };
-        dock = { shadow = false; };
+        dock = { shadow = true; };
         dnd = { shadow = true; };
-        popup_menu = { opacity = 0.8; };
+        popup_menu = { opacity = 1; };
         dropdown_menu = { opacity = 0.8; };
       };
     };

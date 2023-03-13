@@ -17,6 +17,7 @@ configuration {
 window {
   height: 455px;
   width: 300px;
+  border-radius: 0px;
 }
 
 inputbar {
@@ -34,7 +35,7 @@ prompt {
 mainbox { 
   children: [ inputbar, listview ];
   border: 2px;
-  border-radius: 5px;
+  border-radius: 0px;
   border-color: @wh;
 }
 
@@ -47,14 +48,14 @@ listview {
 }
 
 element-text {
-	expand:                         true;
-	vertical-align:                 0.5;
-	margin:                         0.1% 0.5% 0% 0.5%;
+	expand: true;
+	vertical-align: 0.5;
+	margin: 0.1% 0.5% 0% 0.5%;
 	background-color: inherit;
 	text-color: inherit;
 }
 
 element selected {
   background-color: @bg-alt;
-  border-radius: 8px;
+  margin: 0.1% 0.5% 0% 0.5%;
 }
