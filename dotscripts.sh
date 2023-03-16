@@ -46,7 +46,7 @@ homelocalthemes="${HOME}/.local/share/themes"
 homedotthemes="${HOME}/.themes"
 mkdir -p ${homelocalthemes}
 mkdir -p ${homedotthemes}
-cd ${homelocalfonts}
+cd ${homelocalthemes}
 #sudo cp -r ${homelocalthemes}/* ${homedotthemes}/
 cd ${pushdir}
 
