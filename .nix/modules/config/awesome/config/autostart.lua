@@ -1,9 +1,4 @@
 local awful = require("awful")
-local gears = require("gears")
-local wibox = require("wibox")
-local beautiful = require("beautiful")
-local ruled = require("ruled")
-local naughty = require("naughty")
 
 awful.spawn("xrandr --output DP-0 --primary --mode 1920x1080 --rate 143.9 --rotate normal --output DP-2 --mode 1920x1080 --rate 143.9 --rotate normal --left-of DP-0")
 awful.spawn("pamixer --set-limit 100")

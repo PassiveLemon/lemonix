@@ -8,7 +8,7 @@ if git rev-parse --git-dir > /dev/null 2>&1; then
   cd ${HOME}/lemontemp/
 
   echo "|| Get dotfiles ||"
-  sudo git clone https://github.com/PassiveLemon/lemonix/
+  sudo git clone --depth 1 https://github.com/PassiveLemon/lemonix/
   cd lemonix
   installpath=${PWD}
 else
@@ -17,7 +17,7 @@ fi
 
 echo "|| Copying dots to home... ||"
 if [ ! -d "${installpath}/.wallpapers/" ]; then
-  sudo git clone https://github.com/PassiveLemon/lemonwalls/
+  sudo git clone --depth 1 https://github.com/PassiveLemon/lemonwalls/
 fi
 mv ${installpath}/lemonwalls/ ${installpath}/.wallpapers
 
@@ -32,7 +32,22 @@ sudo cp ${installpath}/configuration.nix /etc/nixos/configuration.nix
 
 sudo cp ${HOME}/.wallpapers/AI/00005-1568076343.png ${HOME}/.background-image
 
-bash ${installpath}/dotscripts.sh
+sh ${installpath}/dotscripts.sh
+
+echo "|| Awesome Modules ||"
+mkdir -p ${HOME}/.config/awesome/
+cd ${HOME}/.config/awesome/
+if [ ! -d "./lain/" ]; then
+  git clone --depth 1 https://github.com/lcpz/lain.git
+fi
+if [ ! -d "./awesome-wm-widgets/" ]; then
+  git clone --depth 1 https://github.com/streetturtle/awesome-wm-widgets.git
+fi
+for module in lain awesome-wm-widgets; do
+  cd ${module}/
+  git pull
+  cd ..
+done
 
 echo "|| Changing permissions... ||"
 sudo chmod -R 777 ${HOME}/.config

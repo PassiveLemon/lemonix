@@ -1,15 +1,9 @@
 local awful = require("awful")
 local gears = require("gears")
-local wibox = require("wibox")
 local beautiful = require("beautiful")
-local ruled = require("ruled")
-local naughty = require("naughty")
+local hotkeys_popup = require("awful.hotkeys_popup")
 
 beautiful.init("/home/lemon/.config/awesome/config/theme.lua")
-local dpi = beautiful.xresources.apply_dpi
-
-local hotkeys_popup = require("awful.hotkeys_popup")
-require("awful.hotkeys_popup.keys")
 
 --
 -- Keyboard keybindings
