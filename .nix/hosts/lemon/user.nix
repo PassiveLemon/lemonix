@@ -12,7 +12,7 @@
     unstable.jellyfin-media-player appimage-run filezilla easytag
     unstable.github-desktop qbittorrent unstable.qpwgraph ventoy-bin
     pkgs.unstable.easyeffects pamixer playerctl
-    stress pulseaudioFull alsa-utils
+    stress
   ];
 
   # Fonts
