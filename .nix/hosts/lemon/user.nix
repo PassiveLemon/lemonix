@@ -7,7 +7,7 @@
 
   environment.systemPackages = with pkgs; [
     unstable.hilbish pkgs.unstable.vscodium
-    unstable.firefox (unstable.discord.override { withOpenASAR = true; })
+    unstable.firefox betterdiscordctl (unstable.discord.override { withOpenASAR = true; })
     vlc gimp unstable.obs-studio authy htop neofetch xarchiver
     unstable.jellyfin-media-player appimage-run filezilla easytag
     unstable.github-desktop qbittorrent unstable.qpwgraph ventoy-bin

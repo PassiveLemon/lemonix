@@ -27,7 +27,8 @@ ruled.client.append_rule {
   rule_any = {
     instance = { "feh", "lxappearance", "authy desktop", "xarchiver" },
     class    = { "feh", "Lxappearance", "Authy Desktop", "Xarchiver" },
-    name = { "Customize Look and Feel", "Twilio Authy" }
+    name = { "Customize Look and Feel", "Twilio Authy" },
+    role = { "pop-up", "GtkFileChooserDialog" },
   },
   properties = { floating = true }
 }
@@ -38,13 +39,11 @@ ruled.client.append_rule {
 
 ruled.client.append_rule {
   rule = {
-    instance = "easyeffects",
-    class = "easyeffects",
-    name = "Easy Effects"
+    class = "easyeffects"
   },
   properties = { 
     screen = "DP-0",
-    tag = root.tags()[5],
+    tag = " 5 ",
     minimized = true,
     urgent = false
   }
