@@ -1,9 +1,9 @@
 { config, pkgs, ... }: {
   environment.systemPackages = with pkgs; [
-    unstable.wineWowPackages.stable winetricks
     gamemode protonup-ng dxvk
     unstable.bottles
-    unstable.lunar-client yuzu-early-access
+    unstable.lunar-client
+    yuzu-mainline
   ];
   programs = {
     steam = {

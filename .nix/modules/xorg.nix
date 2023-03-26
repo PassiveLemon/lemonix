@@ -3,6 +3,17 @@
     # Desktop functionality
     xorg.xrandr xorg.xhost libsecret gnome.seahorse gnome.gnome-keyring
     pcmanfm gparted pavucontrol feh rofi
-    lxappearance matcha-gtk-theme kora-icon-theme
+    lxappearance matcha-gtk-theme kora-icon-theme unstable.volantes-cursors
   ];
+
+  # Unstable
+  nixpkgs = {
+    config = {
+      packageOverrides = pkgs: {
+        unstable = import (fetchTarball https://github.com/NixOS/nixpkgs/archive/nixos-unstable.tar.gz) {
+          config = config.nixpkgs.config;
+        };
+      };
+    };
+  };
 }

@@ -1,4 +1,4 @@
-{ config, pkgs, ... }: {
+{ config, pkgs, lib, ... }: {
   imports = [
     ../../modules/home-manager.nix
     ../../modules/xorg.nix
@@ -6,13 +6,12 @@
   ];
 
   environment.systemPackages = with pkgs; [
-    unstable.hilbish pkgs.unstable.vscodium
+    unstable.hilbish unstable.vscodium
     unstable.firefox betterdiscordctl (unstable.discord.override { withOpenASAR = true; })
     vlc gimp unstable.obs-studio authy htop neofetch xarchiver
     unstable.jellyfin-media-player appimage-run filezilla easytag
     unstable.github-desktop qbittorrent unstable.qpwgraph ventoy-bin
-    pkgs.unstable.easyeffects pamixer playerctl
-    stress
+    pkgs.unstable.easyeffects pamixer playerctl stress
   ];
 
   # Fonts
@@ -76,6 +75,7 @@
       enable = true;
       openFirewall = true;
     };
+    flatpak.enable = true;
     gnome.gnome-keyring.enable = true;
   };
   programs = {
@@ -83,7 +83,7 @@
     seahorse.enable = true;
     nm-applet.enable = true;
   };
-  qt5 = {
+  qt = {
     enable = true;
     platformTheme = "gtk2";
     style = "gtk2";
