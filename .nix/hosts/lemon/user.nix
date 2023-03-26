@@ -1,8 +1,12 @@
-{ config, pkgs, lib, ... }: {
+{ config, pkgs, ... }:
+#let pkgs = import <nixpkgs> {}; in
+#pkgs.callPackage ../../pkgs/lemonwalls.nix
+{
   imports = [
     ../../modules/home-manager.nix
     ../../modules/xorg.nix
     ../../modules/gaming.nix
+    #../../pkgs/lemonwalls.nix
   ];
 
   environment.systemPackages = with pkgs; [
@@ -11,7 +15,7 @@
     vlc gimp unstable.obs-studio authy htop neofetch xarchiver
     unstable.jellyfin-media-player appimage-run filezilla easytag
     unstable.github-desktop qbittorrent unstable.qpwgraph ventoy-bin
-    pkgs.unstable.easyeffects pamixer playerctl stress
+    unstable.easyeffects pamixer playerctl stress
   ];
 
   # Fonts
@@ -111,7 +115,7 @@
         ../../modules/picom.nix     
         ../../modules/spicetify.nix
         ../../modules/sxhkd.nix
-        ## ../../modules/vscode.nix
+        ../../modules/vscode.nix
       ];
       services = {
         flameshot = {

@@ -1,5 +1,6 @@
 pcall(require, "luarocks.loader")
 
+local awful = require("awful")
 local beautiful = require("beautiful")
 
 local dpi = beautiful.xresources.apply_dpi

@@ -8,7 +8,7 @@ local dpi = xresources.apply_dpi
 local gfs = require("gears.filesystem")
 local themes_path = gfs.get_themes_dir()
 
-local theme = {}
+local theme = { }
 
 theme.font          = "Fira Code Nerd Font 10"
 theme.taglist_font  = "Fira Code Nerd Font 10"

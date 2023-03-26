@@ -90,7 +90,7 @@
   };
   systemd.services = {
     Ethernet1 = {
-      preStart = "/run/current-system/sw/bin/sleep 10";
+      preStart = "/run/current-system/sw/bin/sleep 5";
       serviceConfig = {
         User = "root";
         ExecStart = "/run/current-system/sw/bin/ethtool -s enp6s0 autoneg off speed 100 duplex full";
@@ -98,7 +98,17 @@
       wantedBy = [ "multi-user.target" ];
     };
   };
-  nix.settings.experimental-features = [ "nix-command" "flakes" ];
+  nix = {
+    settings = {
+      experimental-features = [ "nix-command" "flakes" ];
+      auto-optimise-store = true;
+    };
+    gc = {
+      automatic = true;
+      dates = "weekly";
+      options = "--delete-older-than 14d";
+    };
+  };
   nixpkgs.config.allowUnfree = true;
 
   # Drives

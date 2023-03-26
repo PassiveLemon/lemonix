@@ -1,9 +1,11 @@
 #!/usr/bin/env bash
 
-if git rev-parse --git-dir > /dev/null 2>&1; then
+# If the current directory isn't a clone, make a temporary directory, clone, and install. This will clean up later so you won't carry these files.
+if [ ! -d "./.git" ]; then
   echo "|| No clone detected. Cloning...  ||"
   sudo mkdir -p ${HOME}/lemontemp/
   sudo chmod 777 ${HOME}/lemontemp/
+  # Mark current directory to return later.
   pushdir=${PWD}
   cd ${HOME}/lemontemp/
 
@@ -19,20 +21,20 @@ echo "|| Copying dots to home... ||"
 if [ ! -d "${installpath}/.wallpapers/" ]; then
   sudo git clone --depth 1 https://github.com/PassiveLemon/lemonwalls/
 fi
-mv ${installpath}/lemonwalls/ ${installpath}/.wallpapers
+mkdir -p ${HOME}/.wallpapers/
+sudo cp -r ${installpath}/lemonwalls/* ${HOME}/.wallpapers/
+sudo rm -r ${installpath}/lemonwalls/
+sudo cp ${HOME}/.wallpapers/AI/00005-1568076343.png ${HOME}/.background-image
+sudo cp -r ${installpath}/.local/ ${HOME}/
 
-cp -r ${installpath}/.config/ ${HOME}/
-cp -r ${installpath}/.local/ ${HOME}/
-cp -r ${installpath}/.wallpapers/ ${HOME}/
+# Backs up system config before running. Subsequential runs won't remove original backup.
 if [ ! -f "/etc/nixos/configuration.nix.old" ]; then
   sudo mv /etc/nixos/configuration.nix /etc/nixos/configuration.nix.old
 fi
 sudo rm /etc/nixos/configuration.nix
 sudo cp ${installpath}/configuration.nix /etc/nixos/configuration.nix
 
-sudo cp ${HOME}/.wallpapers/AI/00005-1568076343.png ${HOME}/.background-image
-
-sh ${installpath}/dotscripts.sh
+. ${installpath}/dotscripts.sh
 
 echo "|| Awesome Modules ||"
 mkdir -p ${HOME}/.config/awesome/
@@ -52,11 +54,10 @@ done
 echo "|| Changing permissions... ||"
 sudo chmod -R 777 ${HOME}/.config
 sudo chmod -R 777 ${HOME}/.local
-sudo chmod -R 777 ${HOME}/.nix
 
 echo "|| Dots installed. ||"
 
 if [ -d ${HOME}/lemontemp ]; then
-  sudo rm -r ${HOME}/lemontemp/
   cd ${pushdir}
+  sudo rm -r ${HOME}/lemontemp/
 fi
