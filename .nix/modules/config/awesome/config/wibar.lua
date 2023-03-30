@@ -42,6 +42,7 @@ screen.connect_signal("request::desktop_decoration", function(s)
     widget = wibox.widget.textbox
   }
 
+  -- Percent
   perc = wibox.widget{
     markup = '%',
     align  = 'center',

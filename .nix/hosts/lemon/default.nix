@@ -50,11 +50,26 @@
 
   # Users
   users = {
-    users.lemon = {
-      isNormalUser = true;
-      home = "/home/lemon";
-      description = "Lemon";
-      extraGroups = [ "wheel" "networkmanager" "docker" "video" ];
+    users = {
+      lemon = {
+        description = "Lemon";
+        home = "/home/lemon";
+        uid = 1777;
+        extraGroups = [ "wheel" "networkmanager" ];
+        isNormalUser = true;
+      };
+      docker = {
+        description = "Docker";
+        home = "/home/docker";
+        group = "docker";
+        extraGroups = [ "docker" "video" ];
+        isSystemUser = true;
+      };
+      monitor = {
+        description = "Monitor";
+        uid = 1044;
+        isNormalUser = true;
+      };
     };
   };
 
@@ -64,7 +79,7 @@
       dash bash nano unzip unrar p7zip curl wget git gvfs psmisc
       networkmanager ethtool
       exa trashy
-      docker nvidia-docker distrobox virt-manager OVMF pciutils virtiofsd
+      distrobox virt-manager OVMF pciutils virtiofsd
     ];
     binsh = "${pkgs.dash}/bin/dash";
     shells = with pkgs; [ bash ];
@@ -88,16 +103,16 @@
       driSupport = true;
     };
   };
-  systemd.services = {
-    Ethernet1 = {
-      preStart = "/run/current-system/sw/bin/sleep 5";
-      serviceConfig = {
-        User = "root";
-        ExecStart = "/run/current-system/sw/bin/ethtool -s enp6s0 autoneg off speed 100 duplex full";
-      };
-      wantedBy = [ "multi-user.target" ];
-    };
-  };
+  #systemd.services = {
+  #  Ethernet1 = {
+  #    preStart = "/run/current-system/sw/bin/sleep 5";
+  #    serviceConfig = {
+  #      User = "root";
+  #      ExecStart = "/run/current-system/sw/bin/ethtool -s enp9s0 autoneg off speed 100 duplex full";
+  #    };
+  #    wantedBy = [ "multi-user.target" ];
+  #  };
+  #};
   nix = {
     settings = {
       experimental-features = [ "nix-command" "flakes" ];
