@@ -24,6 +24,12 @@ awful.keyboard.append_global_keybindings({
   awful.key({ modkey, }, "p", function () awful.spawn( "sh /home/lemon/.config/rofi/powermenu.sh" ) end,
   { description = "run powermenu", group = "launcher" }),
 
+  awful.key({ modkey, }, "v", function () awful.spawn( "sh /home/lemon/.config/rofi/volumemenu.sh" ) end,
+  { description = "run volumemenu", group = "launcher" }),
+
+  awful.key({ modkey, }, "c", function () awful.spawn( "sh /home/lemon/.config/rofi/playermenu.sh" ) end,
+  { description = "run playermenu", group = "launcher" }),
+
   awful.key({ modkey, }, "s", hotkeys_popup.show_help,
   { description="show help", group="utility" }),
 

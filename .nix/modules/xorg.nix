@@ -2,7 +2,7 @@
   environment.systemPackages = with pkgs; [
     # Desktop functionality
     xorg.xrandr xorg.xhost libsecret gnome.seahorse gnome.gnome-keyring
-    pcmanfm gparted pavucontrol feh rofi
+    pcmanfm gparted pavucontrol feh rofi networkmanagerapplet
     lxappearance matcha-gtk-theme kora-icon-theme unstable.volantes-cursors
   ];
 

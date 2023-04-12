@@ -22,18 +22,27 @@ window {
 }
 
 mainbox {
-	children: [ listview ];
+	children: [ inputbar, listview ];
 	border-radius: 0px;
 }
 
+inputbar {
+	children: [ prompt ];
+	spacing: 0px;
+}
+
+prompt {
+	padding: 10px 10px 0px 10px;
+}
+
 listview {
+	spacing: 10px;
+	padding: 10px;
+	layout: vertical;
 	columns: 3;
 	lines: 1;
 	cycle: false;
 	dynamic: true;
-	layout: vertical;
-	spacing: 10px;
-	padding: 10px;
 }
 
 element {
@@ -41,7 +50,8 @@ element {
 }
 
 element-text {
-	font:	"Fira Code Nerd Font 24";
+	font:	"Fira Code Nerd Font 28";
+	margin: 0px 6px 0px 0px;
 	vertical-align: 0.5;
 	horizontal-align: 0.5;
 	background-color: inherit;

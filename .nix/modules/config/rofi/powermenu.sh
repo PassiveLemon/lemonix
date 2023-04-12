@@ -2,9 +2,9 @@
 
 rofi_command="rofi -show drun -theme $HOME/.config/rofi/powermenu.rasi"
 
-lock=" Lock"
-power_off="襤 Power off"
-reboot="勒 Reboot"
+lock="󰌾"
+power_off="󰐥"
+reboot="󰑓"
 
 options="$lock\n$power_off\n$reboot"
 
