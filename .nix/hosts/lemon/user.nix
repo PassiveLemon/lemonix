@@ -16,6 +16,7 @@
     unstable.jellyfin-media-player appimage-run filezilla easytag
     unstable.github-desktop qbittorrent unstable.qpwgraph ventoy-bin
     unstable.easyeffects pamixer playerctl stress
+    libsForQt5.kruler
   ];
 
   # Fonts
@@ -44,7 +45,7 @@
       displayManager = {
         defaultSession = "none+awesome";
         lightdm = {
-          enable = true;          
+          enable = true;      
         };
       };
       windowManager.awesome = {

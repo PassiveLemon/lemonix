@@ -122,6 +122,10 @@ screen.connect_signal("request::desktop_decoration", function(s)
       sep,
       bar,
       sep,
+      awful.widget.watch([[sh -c " echo -n 'GPU ' && nvidia-smi | grep 'Default' | cut -d '|' -f 4 | tr -d 'Default' | tr -d '[:space:]'"]], 1),
+      sep,
+      bar,
+      sep,
       mem,
       ram_widget({
         color_used = "#f35252",

@@ -1,14 +1,13 @@
 { config, pkgs, ... }: {
   environment.systemPackages = with pkgs; [
     gamemode protonup-ng dxvk
-    unstable.bottles
+    bottles
     unstable.lunar-client
     yuzu-mainline
   ];
   programs = {
     steam = {
       enable = true;
-      package = pkgs.unstable.steam;
     };
   };
   #services.archisteamfarm = {

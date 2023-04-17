@@ -1,10 +1,9 @@
 -- Imports
-----------
 local lunacolors = require('lunacolors')
 local bait       = require('bait')
 local promptua   = require('promptua')
+
 -- Prompt
----------
 promptua.setConfig {
   prompt = {
     icon    = "",

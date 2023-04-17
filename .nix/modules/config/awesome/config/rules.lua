@@ -10,27 +10,31 @@ local menubar = require("menubar")
 -- Rules to apply to new clients.
 ruled.client.connect_signal("request::rules", function()
   ruled.client.append_rule {
-    id         = "global",
-    rule       = { },
+    id = "global",
+    rule = { },
     properties = {
-      focus     = awful.client.focus.filter,
-      raise     = true,
-      screen    = awful.screen.preferred,
-      placement = awful.placement.no_overlap+awful.placement.no_offscreen
+      focus = awful.client.focus.filter,
+      raise = true,
+      screen = awful.screen.preferred,
+      placement = awful.placement.no_offscreen
     }
   }
 end)
 
 -- Floating clients.
 ruled.client.append_rule {
-  id       = "floating",
+  id = "floating",
   rule_any = {
-    instance = { "feh", "lxappearance", "authy desktop", "xarchiver" },
-    class    = { "feh", "Lxappearance", "Authy Desktop", "Xarchiver" },
-    name = { "Customize Look and Feel", "Twilio Authy" },
-    role = { "pop-up", "GtkFileChooserDialog" },
+    instance = { "feh", "lxappearance", "authy desktop", "xarchiver", "kruler" },
+    class    = { "feh", "Lxappearance", "Authy Desktop", "Xarchiver", "kruler" },
+    name     = { "Customize Look and Feel", "Twilio Authy", "KRuler" },
+    role     = { "pop-up", "GtkFileChooserDialog" },
   },
-  properties = { floating = true }
+  properties = {
+    floating = true,
+    ontop = true,
+    placement = awful.placement.centered
+  }
 }
 
 --
@@ -39,13 +43,28 @@ ruled.client.append_rule {
 
 ruled.client.append_rule {
   rule = {
-    class = "easyeffects"
+    instance = "easyeffects",
+    class    = "easyeffects",
+    name     = "Easy Effects"
   },
   properties = { 
     screen = "DP-0",
     tag = " 5 ",
     minimized = true,
     urgent = false
+  }
+}
+
+ruled.client.append_rule {
+  rule = {
+    instance = "kruler",
+    class    = "kruler",
+    name     = "KRuler"
+  },
+  properties = {
+    width = 1920,
+    height = 75,
+    border_width = 0
   }
 }
 
