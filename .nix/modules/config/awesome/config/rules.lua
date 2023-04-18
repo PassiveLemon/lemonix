@@ -79,11 +79,15 @@ visual_editor = "codium"
 editor_cmd = terminal .. " -e " .. editor
 menubar.utils.terminal = terminal
 
--- Tag layout
+-- Layout
 tag.connect_signal("request::default_layouts", function()
   awful.layout.append_default_layouts({
     awful.layout.suit.spiral.dwindle,
   })
+end)
+
+client.connect_signal("manage", function(c)
+  if not awesome.startup then awful.client.setslave(c) end
 end)
 
 -- Enable sloppy focus, so that focus follows mouse.
