@@ -2,6 +2,7 @@ local awful = require("awful")
 local gears = require("gears")
 local beautiful = require("beautiful")
 local hotkeys_popup = require("awful.hotkeys_popup")
+local taskman = require("config.widgets.taskmanager")
 
 beautiful.init("/home/lemon/.config/awesome/config/theme.lua")
 
@@ -15,7 +16,10 @@ awful.keyboard.append_global_keybindings({
   awful.key({ modkey, "Control" }, "r", awesome.restart,
   { description = "reload awesome", group = "awesome" }),
 
-  awful.key({ modkey, }, "Return", function () awful.spawn(terminal) end,
+  awful.key({ modkey, "Shift" }, "Escape", function() awesome.emit_signal( "signal::taskman" ) end,
+  { description = "menu", group = "utility" }),
+
+  awful.key({ modkey, }, "Return", function () awful.spawn( terminal ) end,
   { description = "open a terminal", group = "launcher" }),
 
   awful.key({ modkey, }, "space", function () awful.spawn( "rofi -show drun -theme /home/lemon/.config/rofi/lemon.rasi -show-icons" ) end,
@@ -31,28 +35,28 @@ awful.keyboard.append_global_keybindings({
   { description = "run playermenu", group = "launcher" }),
 
   awful.key({ modkey, }, "s", hotkeys_popup.show_help,
-  { description="show help", group="utility" }),
+  { description = "show help", group = "utility" }),
 
   awful.key({ }, "Print", function () awful.spawn( "flameshot gui" ) end,
-  { description="flameshot", group="utility" }),
+  { description = "flameshot", group = "utility" }),
 
   awful.key({ }, "XF86AudioRaiseVolume", function () awful.spawn( "pamixer -i 1" ) end,
-  { description="increase volume", group="media" }),
+  { description = "increase volume", group = "media" }),
 
   awful.key({ }, "XF86AudioLowerVolume", function () awful.spawn( "pamixer -d 1" ) end,
-  { description="decrease volume", group="media" }),
+  { description = "decrease volume", group = "media" }),
 
   awful.key({ }, "XF86AudioMute", function () awful.spawn( "pamixer -t" ) end,
-  { description="toggle mute", group="media" }),
+  { description = "toggle mute", group = "media" }),
 
   awful.key({ }, "XF86AudioPlay", function () awful.spawn( "playerctl play-pause" ) end,
-  { description="toggle play", group="media" }),
+  { description = "toggle play", group = "media" }),
 
   awful.key({ }, "XF86AudioNext", function () awful.spawn( "playerctl next" ) end,
-  { description="next media", group="media" }),
+  { description = "next media", group = "media" }),
 
   awful.key({ }, "XF86AudioPrev", function () awful.spawn( "playerctl previous" ) end,
-  { description="previous media", group="media" }),
+  { description = "previous media", group = "media" }),
 
   awful.key {
     modifiers   = { modkey },
@@ -136,7 +140,7 @@ awful.keyboard.append_client_keybindings({
 -- Mouse keybinds
 --
 
-client.connect_signal("request::default_mousebindings", function()
+client.connect_signal( "request::default_mousebindings", function()
   awful.mouse.append_client_mousebindings({
     awful.button({ }, 1, function (c)
       c:activate { context = "mouse_click" }
