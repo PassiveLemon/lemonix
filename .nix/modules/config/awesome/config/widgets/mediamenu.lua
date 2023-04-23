@@ -3,23 +3,20 @@ local gears = require("gears")
 local beautiful = require("beautiful")
 local wibox = require("wibox")
 
-local bling = require("bling")
-
 local click_to_hide = require("config.helpers.click_to_hide")
 
 --
 -- Media management menu
 --
--- I gave up 98% of the way through and resorted to absolute heresy
 
 local mediamenu_pop_vis = false
 
-local song_name = wibox.widget {
+local title_text = wibox.widget {
   widget = wibox.widget.textbox,
   align = "left",
   valign = "center",
 }
-local artist_name = wibox.widget {
+local artist_text = wibox.widget {
   widget = wibox.widget.textbox,
   align = "left",
   valign = "center",
@@ -105,60 +102,70 @@ local loop_bg = wibox.widget {
   shape = gears.shape.rounded_rect,
 }
 
-local playerctl = bling.signal.playerctl.lib()
-playerctl:connect_signal("metadata", function(_, title, artist, album_path, album, new, player_name)
-  song_name:set_markup_silently(title)
-  artist_name:set_markup_silently(artist)
-end)
+local function updater()
+  awful.spawn.easy_async([[sh -c "sleep 0.1 && playerctl metadata title"]], function(title)
+    title_text.text = title
+  end)
+  awful.spawn.easy_async([[sh -c "sleep 0.1 && playerctl metadata artist"]], function(artist)
+    artist_text.text = artist
+  end)
+  awful.spawn.easy_async([[sh -c "sleep 0.1 && playerctl shuffle"]], function(shuffle_state)
+    if shuffle_state:find("On") then
+      shuffle.text = "󰒝"
+    elseif shuffle_state:find("Off") then
+      shuffle.text = "󰒞"
+    end
+  end)
+  awful.spawn.easy_async([[sh -c "sleep 0.1 && playerctl status"]], function(toggle_state)
+    if toggle_state:find("Playing") then
+      toggle.text = "󰏤"
+    elseif toggle_state:find("Paused") then
+      toggle.text = "󰐊"
+    end
+  end)
+  awful.spawn.easy_async([[sh -c "sleep 0.1 && playerctl loop"]], function(loop_state)
+    if loop_state:find("None") then
+      loop.text = "󰑗"
+    elseif loop_state:find("Playlist") then
+      loop.text = "󰑖"
+    elseif loop_state:find("Track") then
+      loop.text = "󰑘"
+    end
+  end)
+end
 
 local function shuffler()
-  playerctl:cycle_shuffle()
-  awful.spawn.easy_async("echo On", function(bullshit_on)
-  awful.spawn.easy_async("echo Off", function(bullshit_off)
-    awful.spawn.easy_async([[sh -c "sleep 0.1 && playerctl shuffle"]], function(shuffle_state)
-      if shuffle_state == bullshit_on then
-        shuffle.text = "󰒝"
-      elseif shuffle_state == bullshit_off then
-        shuffle.text = "󰒞"
-      end
-    end)
-  end)
+  awful.spawn.easy_async("playerctl shuffle", function(shuffle_state)
+    if shuffle_state:find("On") then
+      awful.spawn("playerctl shuffle off")
+    elseif shuffle_state:find("Off") then
+      awful.spawn("playerctl shuffle on")
+    end
+    updater()
   end)
 end
 
 local function toggler()
-  playerctl:play_pause()
-  awful.spawn.easy_async("echo Playing", function(bullshit_playing)
-  awful.spawn.easy_async("echo Paused", function(bullshit_paused)
-    awful.spawn.easy_async([[sh -c "sleep 0.1 && playerctl status"]], function(toggle_state)
-      if toggle_state == bullshit_playing then
-        toggle.text = "󰏤"
-      elseif toggle_state == bullshit_paused then
-        toggle.text = "󰐊"
-      end
-    end)
-  end)
+  awful.spawn.easy_async("playerctl status", function(toggle_state)
+    if toggle_state:find("Playing") then
+      awful.spawn("playerctl pause")
+    elseif toggle_state:find("Paused") then
+      awful.spawn("playerctl play")
+    end
+    updater()
   end)
 end
 
 local function looper()
-  awful.spawn.easy_async("echo None", function(bullshit_none)
-  awful.spawn.easy_async("echo Track", function(bullshit_track)
-  awful.spawn.easy_async("echo Playlist", function(bullshit_playlist)
-    awful.spawn.easy_async("playerctl loop", function(loop_state)
-      if loop_state == bullshit_none then
-        loop.text = "󰑘"
-        awful.spawn("playerctl loop Track")
-      elseif loop_state == bullshit_track then
-        loop.text = "󰑖"
-        awful.spawn("playerctl loop Playlist")
-      elseif loop_state == bullshit_playlist then
-        loop.text = "󰑗"
-        awful.spawn("playerctl loop None")
-      end
-    end)
-  end)
-  end)
+  awful.spawn.easy_async("playerctl loop", function(loop_state)
+    if loop_state:find("None") then
+      awful.spawn("playerctl loop Playlist")
+    elseif loop_state:find("Playlist") then
+      awful.spawn("playerctl loop Track")
+    elseif loop_state:find("Track") then
+      awful.spawn("playerctl loop None")
+    end
+    updater()
   end)
 end
 
@@ -169,8 +176,8 @@ local mediamenu_container = wibox.widget {
     margins = { top = 8, right = 8, bottom = 0, left = 8, },
     {
       layout = wibox.layout.fixed.vertical,
-      song_name,
-      artist_name,
+      title_text,
+      artist_text,
     },
   },
   {
@@ -211,7 +218,8 @@ shuffle_bg:connect_signal("mouse::leave", function()
 end)
 
 prev:buttons(gears.table.join(awful.button({}, 1, function()
-  playerctl:previous()
+  awful.spawn("playerctl previous")
+  updater()
 end)))
 
 prev:connect_signal("mouse::enter", function()
@@ -239,7 +247,8 @@ toggle_bg:connect_signal("mouse::leave", function()
 end)
 
 next:buttons(gears.table.join(awful.button({}, 1, function()
-  playerctl:next()
+  awful.spawn("playerctl next")
+  updater()
 end)))
 
 next:connect_signal("mouse::enter", function()
@@ -267,43 +276,7 @@ loop_bg:connect_signal("mouse::leave", function()
 end)
 
 awesome.connect_signal("signal::mediamenu", function()
-  awful.spawn.easy_async("echo On", function(bulllshit_on)
-  awful.spawn.easy_async("echo Off", function(bulllshit_off)
-    awful.spawn.easy_async("playerctl shuffle", function(shuffle_state)
-      if shuffle_state == bulllshit_on then
-        shuffle.text = "󰒝"
-      elseif shuffle_state == bulllshit_off then
-        shuffle.text = "󰒞"
-      end
-    end)
-  end)
-  end)
-  awful.spawn.easy_async("echo Playing", function(bullshit_playing)
-  awful.spawn.easy_async("echo Paused", function(bullshit_paused)
-    awful.spawn.easy_async("playerctl status", function(toggle_state)
-      if toggle_state == bullshit_playing then
-        toggle.text = "󰏤"
-      elseif toggle_state == bullshit_paused then
-        toggle.text = "󰐊"
-      end
-    end)
-  end)
-  end)
-  awful.spawn.easy_async("echo None", function(bullshit_none)
-  awful.spawn.easy_async("echo Track", function(bullshit_track)
-  awful.spawn.easy_async("echo Playlist", function(bullshit_playlist)
-    awful.spawn.easy_async("playerctl loop", function(loop_state)
-      if loop_state == bullshit_none then
-        loop.text = "󰑗"
-      elseif loop_state == bullshit_track then
-        loop.text = "󰑘"
-      elseif loop_state == bullshit_playlist then
-        loop.text = "󰑖"
-      end
-    end)
-  end)
-  end)
-  end)
+  updater()
   mediamenu_pop_vis = not mediamenu_pop_vis
   mediamenu_pop.visible = mediamenu_pop_vis
   mediamenu_pop.screen = awful.screen.focused()
