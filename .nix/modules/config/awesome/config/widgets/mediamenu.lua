@@ -9,13 +9,12 @@ local click_to_hide = require("config.helpers.click_to_hide")
 -- Media management menu
 --
 
-local mediamenu_pop_vis = false
-
 local title_text = wibox.widget {
   widget = wibox.widget.textbox,
   align = "left",
   valign = "center",
 }
+
 local artist_text = wibox.widget {
   widget = wibox.widget.textbox,
   align = "left",
@@ -198,10 +197,11 @@ local mediamenu_pop = awful.popup {
   widget = mediamenu_container,
   placement = awful.placement.centered,
   ontop = true,
-  visible = mediamenu_pop_vis,
   border_width = 2,
   border_color = beautiful.border_color_active,
 }
+
+mediamenu_pop.visible = false
 
 shuffle_bg:buttons(gears.table.join(awful.button({}, 1, function()
   shuffler()
@@ -277,8 +277,7 @@ end)
 
 awesome.connect_signal("signal::mediamenu", function()
   updater()
-  mediamenu_pop_vis = not mediamenu_pop_vis
-  mediamenu_pop.visible = mediamenu_pop_vis
+  mediamenu_pop.visible = not mediamenu_pop.visible
   mediamenu_pop.screen = awful.screen.focused()
 end)
 

@@ -3,12 +3,11 @@ local gears = require("gears")
 local beautiful = require("beautiful")
 local wibox = require("wibox")
 
+local click_to_hide = require("config.helpers.click_to_hide")
+
 --
 -- Resource monitor menu
 --
-
-local resourcemenu_pop_vis = false
-
 -- Special thanks to ChatGPT for the bulk of the commands.
 
 local space = wibox.widget {
@@ -31,7 +30,7 @@ local strg_free_nvme = wibox.widget {
   valign = "center",
 }
 
-awful.widget.watch([[sh -c "echo -n 'NVME: ' && df -h /dev/nvme0n1p3 | awk 'NR==2 {split(\$3, used, \"G\"); split(\$2, total, \"G\"); print used[1] \"/\" total[1] \" GB \" int((used[1]/total[1])*100) \"%\"}'"]], 5, function(_, stdout)
+awful.widget.watch([[sh -c "echo -n 'NVME: ' && df -h /dev/nvme0n1p3 | awk 'NR==2 {split(\$3, used, \"G\"); split(\$2, total, \"G\"); print used[1] \"/\" total[1] \" GB \" int((used[1]/total[1])*100) \"%\"}'"]], 10, function(_, stdout)
   strg_free_nvme.text = stdout:gsub( "\n", "" )
 end)
 
@@ -41,7 +40,7 @@ local strg_free_sdb = wibox.widget {
   valign = "center",
 }
 
-awful.widget.watch([[sh -c "echo -n 'SDB: ' && df -h /dev/sdb1 | awk 'NR==2 {split(\$3, used, \"T\"); split(\$2, total, \"T\"); print used[1] \"/\" total[1] \" TB \" int((used[1]/total[1])*100) \"%\"}'"]], 5, function(_, stdout)
+awful.widget.watch([[sh -c "echo -n 'SDB: ' && df -h /dev/sdb1 | awk 'NR==2 {split(\$3, used, \"T\"); split(\$2, total, \"T\"); print used[1] \"/\" total[1] \" TB \" int((used[1]/total[1])*100) \"%\"}'"]], 10, function(_, stdout)
   strg_free_sdb.text = stdout:gsub( "\n", "" )
 end)
 
@@ -51,7 +50,7 @@ local strg_free_sda = wibox.widget {
   valign = "center",
 }
 
-awful.widget.watch([[sh -c "echo -n 'SDA: ' && df -h /dev/sda1 | awk 'NR==2 {split(\$3, used, \"G\"); split(\$2, total, \"G\"); print used[1] \"/\" total[1] \" GB \" int((used[1]/total[1])*100) \"%\"}'"]], 5, function(_, stdout)
+awful.widget.watch([[sh -c "echo -n 'SDA: ' && df -h /dev/sda1 | awk 'NR==2 {split(\$3, used, \"G\"); split(\$2, total, \"G\"); print used[1] \"/\" total[1] \" GB \" int((used[1]/total[1])*100) \"%\"}'"]], 10, function(_, stdout)
   strg_free_sda.text = stdout:gsub( "\n", "" )
 end)
 
@@ -79,7 +78,7 @@ local cpu_temp = wibox.widget {
   valign = "center",
 }
 
-awful.widget.watch([[sh -c "cat /sys/class/thermal/thermal_zone*/temp | sed 's/\(.*\)000$/\1/' | tr -d '\n' && echo 'C'"]], 1, function(_, stdout)
+awful.widget.watch([[sh -c "cat /sys/class/thermal/thermal_zone*/temp | sed 's/\(.*\)000$/\1/' | tr -d '\n' && echo 'C'"]], 2, function(_, stdout)
   cpu_temp.text = stdout:gsub( "\n", "" )
 end)
 
@@ -96,7 +95,7 @@ local mem_use = wibox.widget {
   valign = "center",
 }
 
-awful.widget.watch([[sh -c "echo -n 'Used: ' && free -h | grep 'Mem:' | awk '{gsub(/Gi/,\"\",\$3); gsub(/Gi/,\"\",\$2); print \$3\"/\"\$2}' | tr '\n' ' ' && echo 'GiB'"]], 1, function(_, stdout)
+awful.widget.watch([[sh -c "echo -n 'Used: ' && free -h | grep 'Mem:' | awk '{gsub(/Gi/,\"\",\$3); gsub(/Gi/,\"\",\$2); print \$3\"/\"\$2}' | tr '\n' ' ' && echo 'GiB'"]], 2, function(_, stdout)
   mem_use.text = stdout:gsub( "\n", "" )
 end)
 
@@ -106,7 +105,7 @@ local cache_use = wibox.widget {
   valign = "center",
 }
 
-awful.widget.watch([[sh -c "echo -n 'Cache: ' && free -h | grep 'Mem:' | awk '{gsub(/Gi/,\"\",\$6); gsub(/Gi/,\"\",\$2); print \$6\"/\"\$2}' | tr '\n' ' ' && echo 'GiB'"]], 1, function(_, stdout)
+awful.widget.watch([[sh -c "echo -n 'Cache: ' && free -h | grep 'Mem:' | awk '{gsub(/Gi/,\"\",\$6); gsub(/Gi/,\"\",\$2); print \$6\"/\"\$2}' | tr '\n' ' ' && echo 'GiB'"]], 5, function(_, stdout)
   cache_use.text = stdout:gsub( "\n", "" )
 end)
 
@@ -133,7 +132,7 @@ local gpu_temp = wibox.widget {
   valign = "center",
 }
 
-awful.widget.watch([[sh -c "nvidia-smi --query-gpu=temperature.gpu --format=csv,noheader | tr -d '\n' && echo 'C'"]], 1, function(_, stdout)
+awful.widget.watch([[sh -c "nvidia-smi --query-gpu=temperature.gpu --format=csv,noheader | tr -d '\n' && echo 'C'"]], 2, function(_, stdout)
   gpu_temp.text = stdout:gsub( "\n", "" )
 end)
 
@@ -143,25 +142,8 @@ local gpu_mem = wibox.widget {
   valign = "center",
 }
 
-awful.widget.watch([[sh -c "echo -n 'GPU Mem: ' && nvidia-smi --query-gpu=memory.used,memory.total --format=csv,noheader,nounits | awk -F',' '{printf \"%.2f/%.2f GiB\n\", \$1/1024, \$2/1024}'"]], 1, function(_, stdout)
+awful.widget.watch([[sh -c "echo -n 'GPU Mem: ' && nvidia-smi --query-gpu=memory.used,memory.total --format=csv,noheader,nounits | awk -F',' '{printf \"%.2f/%.2f GiB\n\", \$1/1024, \$2/1024}'"]], 2, function(_, stdout)
   gpu_mem.text = stdout:gsub( "\n", "" )
-end)
-
-local audio_text = wibox.widget {
-  widget = wibox.widget.textbox,
-  text = "Audio",
-  align = "center",
-  valign = "center",
-}
-
-local audio_vol = wibox.widget {
-  widget = wibox.widget.textbox,
-  align = "left",
-  valign = "center",
-}
-
-awful.widget.watch([[sh -c "echo -n 'Volume: ' && pamixer --get-volume-human"]], 0.25, function(_, stdout)
-  audio_vol.text = stdout:gsub( "\n", "" )
 end)
 
 local network_text = wibox.widget {
@@ -177,7 +159,7 @@ local network_total = wibox.widget {
   valign = "center",
 }
 
-awful.widget.watch([[sh -c 'ip -s link show enp9s0 | awk '\''/RX:/{getline; rx=$1} /TX:/{getline; tx=$1} END{printf "Rx/Tx: %sB/%sB\n", convert(rx), convert(tx)} function convert(val) {suffix="B KMGTPE"; for(i=1; val>1024; i++) val/=1024; return int(val+0.5) substr(suffix, i, 1)}'\']], 3, function(_, stdout)
+awful.widget.watch([[sh -c 'ip -s link show enp9s0 | awk '\''/RX:/{getline; rx=$1} /TX:/{getline; tx=$1} END{printf "Rx/Tx: %sB/%sB\n", convert(rx), convert(tx)} function convert(val) {suffix="B KMGTPE"; for(i=1; val>1024; i++) val/=1024; return int(val+0.5) substr(suffix, i, 1)}'\']], 5, function(_, stdout)
   network_total.text = stdout:gsub( "\n", "" )
 end)
 
@@ -239,13 +221,15 @@ local resourcemenu_pop = awful.popup {
   widget = resourcemenu_container,
   placement = awful.placement.centered,
   ontop = true,
-  visible = resourcemenu_pop_vis,
   border_width = 2,
   border_color = beautiful.border_color_active,
 }
 
+resourcemenu_pop.visible = false
+
 awesome.connect_signal("signal::resourcemenu", function()
-  resourcemenu_pop_vis = not resourcemenu_pop_vis
-  resourcemenu_pop.visible = resourcemenu_pop_vis
+  resourcemenu_pop.visible = not resourcemenu_pop.visible
   resourcemenu_pop.screen = awful.screen.focused()
 end)
+
+click_to_hide.popup(resourcemenu_pop, nil, true)

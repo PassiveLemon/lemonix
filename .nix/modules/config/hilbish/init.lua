@@ -16,19 +16,19 @@ promptua.setTheme {
     provider  = "user.name",
     style     = "greyBg white",
     separator = "@",
-    format    = "@style @icon@info "
+    format    = "@style @icon@info ",
   },
   {
     provider  = "user.hostname",
     style     = "greyBg white",
     separator = "|",
-    format    = "@style @icon@info "
+    format    = "@style @icon@info ",
   },
   {
     provider  = "dir.path",
     style     = "greyBg white",
     separator = "",
-    format    = "@style @icon@info "
+    format    = "@style @icon@info ",
   },
   { separator = "\n" },
   {
