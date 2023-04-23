@@ -8,11 +8,16 @@ local dpi = xresources.apply_dpi
 local gfs = require("gears.filesystem")
 local themes_path = gfs.get_themes_dir()
 
+--
+-- Theming
+--
+
 local theme = { }
 
 theme.font          = "Fira Code Nerd Font 10"
-theme.taglist_font  = "Fira Code Nerd Font 10"
-theme.tasklist_font = "Fira Code Nerd Font 10"
+theme.font_large    = "Fira Code Nerd Font 24"
+theme.taglist_font  = theme.font
+theme.tasklist_font = theme.font
 
 theme.bg_normal     = "#222222"
 theme.bg_focus      = "#535d6c"
@@ -25,10 +30,12 @@ theme.fg_focus      = "#ffffff"
 theme.fg_urgent     = "#ffffff"
 theme.fg_minimize   = "#ffffff"
 
+theme.accent      = "#535d6c"
+
 theme.useless_gap         = 6
 theme.border_width        = dpi(2)
 theme.border_color_normal = "#000000"
-theme.border_color_active = "#535d6c"
+theme.border_color_active = theme.accent
 theme.border_color_marked = "#91231c"
 
 -- There are other variable sets

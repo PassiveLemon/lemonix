@@ -13,41 +13,41 @@ local lain = require("lain")
 
 local cpu = lain.widget.cpu {
   settings = function()
-    widget:set_markup( "CPU " .. cpu_now.usage .. "%" )
+    widget:set_markup("CPU " .. cpu_now.usage .. "%")
   end
 }
 
 local mem = lain.widget.mem {
   settings = function()
-    widget:set_markup( "RAM " .. mem_now.perc .. "%" )
+    widget:set_markup("RAM " .. mem_now.perc .. "%")
   end
 }
 
-screen.connect_signal( "request::desktop_decoration", function(s)
+screen.connect_signal("request::desktop_decoration", function(s)
   awful.tag({ " 1 ", " 2 ", " 3 ", " 4 ", " 5 " }, s, awful.layout.layouts[1])
 
   -- Separator bar
-  bar = wibox.widget{
+  bar = wibox.widget {
+    widget = wibox.widget.textbox,
     markup = '|',
     align  = 'center',
     valign = 'center',
-    widget = wibox.widget.textbox
   }
 
   -- Separator space
-  sep = wibox.widget{
+  sep = wibox.widget {
+    widget = wibox.widget.textbox,
     markup = ' ',
     align  = 'center',
     valign = 'center',
-    widget = wibox.widget.textbox
   }
 
   -- Percent
-  perc = wibox.widget{
+  perc = wibox.widget {
+    widget = wibox.widget.textbox,
     markup = '%',
     align  = 'center',
     valign = 'center',
-    widget = wibox.widget.textbox
   }
 
   -- Layoutbox
@@ -122,7 +122,7 @@ screen.connect_signal( "request::desktop_decoration", function(s)
       sep,
       bar,
       sep,
-      awful.widget.watch( [[sh -c " echo -n 'GPU ' && nvidia-smi | grep 'Default' | cut -d '|' -f 4 | tr -d 'Default' | tr -d '[:space:]'"]], 1 ),
+      awful.widget.watch([[sh -c " echo -n 'GPU ' && nvidia-smi | grep 'Default' | cut -d '|' -f 4 | tr -d 'Default' | tr -d '[:space:]'"]], 1),
       sep,
       bar,
       sep,
@@ -133,7 +133,7 @@ screen.connect_signal( "request::desktop_decoration", function(s)
       }),
       bar,
       sep,
-      awful.widget.watch( [[sh -c "echo -n 'VOL ' && pamixer --get-volume"]], 0.25 ),
+      awful.widget.watch([[sh -c "echo -n 'VOL ' && pamixer --get-volume"]], 0.25),
       perc,
       sep,
       bar,
