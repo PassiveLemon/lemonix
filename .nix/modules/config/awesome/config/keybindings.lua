@@ -3,6 +3,10 @@ local gears = require("gears")
 local beautiful = require("beautiful")
 local hotkeys_popup = require("awful.hotkeys_popup")
 
+require("config.widgets.mediamenu")
+require("config.widgets.powermenu")
+require("config.widgets.resourcemenu")
+
 --
 -- Keybindings
 --
