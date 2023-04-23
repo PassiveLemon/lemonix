@@ -159,8 +159,25 @@ local network_total = wibox.widget {
   valign = "center",
 }
 
-awful.widget.watch([[sh -c 'ip -s link show enp9s0 | awk '\''/RX:/{getline; rx=$1} /TX:/{getline; tx=$1} END{printf "Rx/Tx: %sB/%sB\n", convert(rx), convert(tx)} function convert(val) {suffix="B KMGTPE"; for(i=1; val>1024; i++) val/=1024; return int(val+0.5) substr(suffix, i, 1)}'\']], 5, function(_, stdout)
+awful.widget.watch([[sh -c 'ip -s link show enp9s0 | awk '\''/RX:/{getline; rx=$1} /TX:/{getline; tx=$1} END{printf "Rx/Tx: %sB/%sB\n", convert(rx), convert(tx)} function convert(val) {suffix="BKMGTPE"; for(i=1; val>1024; i++) val/=1024; return int(val+0.5) substr(suffix, i, 1)}'\']], 5, function(_, stdout)
   network_total.text = stdout:gsub( "\n", "" )
+end)
+
+local uptime_text = wibox.widget {
+  widget = wibox.widget.textbox,
+  text = "Uptime",
+  align = "center",
+  valign = "center",
+}
+
+local uptime = wibox.widget {
+  widget = wibox.widget.textbox,
+  align = "left",
+  valign = "center",
+}
+
+awful.widget.watch([[sh -c 'uptime | awk -F"[ ,:]+" '\''{print $6 " days, " $8 " hours"}'\''']], 60, function(_, stdout)
+  uptime.text = stdout:gsub( "\n", "" )
 end)
 
 local resourcemenu_container = wibox.widget {
@@ -213,6 +230,9 @@ local resourcemenu_container = wibox.widget {
       layout = wibox.layout.fixed.vertical,
       network_text,
       network_total,
+      space,
+      uptime_text,
+      uptime,
     },
   },
 }
