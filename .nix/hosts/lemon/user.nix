@@ -10,12 +10,9 @@
   ];
 
   environment.systemPackages = with pkgs; [
-    unstable.hilbish unstable.vscodium
-    unstable.firefox betterdiscordctl (unstable.discord.override { withOpenASAR = true; })
-    vlc gimp unstable.obs-studio authy htop neofetch xarchiver
-    unstable.jellyfin-media-player appimage-run filezilla easytag
-    unstable.github-desktop qbittorrent unstable.qpwgraph ventoy-bin
-    unstable.easyeffects pamixer playerctl stress
+    rofi unstable.hilbish unstable.vscodium unstable.github-desktop unstable.firefox betterdiscordctl (unstable.discord.override { withOpenASAR = true; })
+    mpv feh gimp unstable.obs-studio authy xarchiver filezilla easytag unstable.easyeffects unstable.qpwgraph
+    pamixer playerctl stress appimage-run htop neofetch ventoy-bin
     libsForQt5.kruler
   ];
 
@@ -115,7 +112,6 @@
         ../../modules/kitty.nix
         ../../modules/picom.nix     
         ../../modules/spicetify.nix
-        ../../modules/sxhkd.nix
         ../../modules/vscode.nix
       ];
       services = {

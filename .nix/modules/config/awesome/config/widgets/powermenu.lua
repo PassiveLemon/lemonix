@@ -113,6 +113,7 @@ end)
 
 poweroff:buttons(gears.table.join(awful.button({}, 1, function()
   powermenu_pop.visible = false
+  awful.spawn.easy_async("systemctl poweroff")
 end)))
 
 poweroff:connect_signal("mouse::enter", function()
@@ -127,6 +128,7 @@ end)
 
 restart:buttons(gears.table.join(awful.button({}, 1, function()
   powermenu_pop.visible = false
+  awful.spawn.easy_async("systemctl reboot")
 end)))
 
 restart:connect_signal("mouse::enter", function()
