@@ -13,7 +13,7 @@
     rofi unstable.hilbish unstable.vscodium unstable.github-desktop unstable.firefox betterdiscordctl (unstable.discord.override { withOpenASAR = true; })
     mpv feh gimp unstable.obs-studio authy xarchiver filezilla easytag unstable.easyeffects unstable.qpwgraph
     pamixer playerctl stress appimage-run htop neofetch ventoy-bin
-    libsForQt5.kruler
+    libsForQt5.kruler tauon haruna
   ];
 
   # Fonts
