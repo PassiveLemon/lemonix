@@ -3,9 +3,9 @@ local gears = require("gears")
 local beautiful = require("beautiful")
 local hotkeys_popup = require("awful.hotkeys_popup")
 
-require("config.widgets.mediamenu")
-require("config.widgets.powermenu")
-require("config.widgets.resourcemenu")
+local mediamenu = require("config.widgets.mediamenu")
+local powermenu = require("config.widgets.powermenu")
+local resourcemenu = require("config.widgets.resourcemenu")
 
 --
 -- Keybindings
@@ -23,13 +23,13 @@ awful.keyboard.append_global_keybindings({
   awful.key({ modkey, }, "space", function() awful.spawn("rofi -show drun -theme /home/lemon/.config/rofi/lemon.rasi -show-icons") end,
   { description = "run rofi", group = "launcher" }),
 
-  awful.key({ modkey, }, "x", function() awesome.emit_signal("signal::resourcemenu") end,
+  awful.key({ modkey, }, "x", function() resourcemenu.signal() end,
   { description = "menu", group = "utility" }),
 
-  awful.key({ modkey, }, "p", function() awesome.emit_signal("signal::powermenu") end,
+  awful.key({ modkey, }, "v", function() powermenu.signal() end,
   { description = "run powermenu", group = "launcher" }),
 
-  awful.key({ modkey, }, "c", function() awesome.emit_signal("signal::mediamenu") end,
+  awful.key({ modkey, }, "c", function() mediamenu.signal() end,
   { description = "run mediamenu", group = "launcher" }),
 
   awful.key({ modkey, }, "s", hotkeys_popup.show_help,

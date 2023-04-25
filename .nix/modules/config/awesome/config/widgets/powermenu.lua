@@ -141,9 +141,11 @@ restart:connect_signal("mouse::leave", function()
   restart.bg = beautiful.bg_normal
 end)
 
-awesome.connect_signal("signal::powermenu", function()
+local function signal()
   powermenu_pop.visible = not powermenu_pop.visible
   powermenu_pop.screen = awful.screen.focused()
-end)
+end
 
 click_to_hide.popup(powermenu_pop, nil, true)
+
+return { signal = signal }

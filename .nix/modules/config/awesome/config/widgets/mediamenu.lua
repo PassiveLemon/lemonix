@@ -275,10 +275,12 @@ loop_bg:connect_signal("mouse::leave", function()
   loop_bg.bg = beautiful.bg_normal
 end)
 
-awesome.connect_signal("signal::mediamenu", function()
+local function signal()
   updater()
   mediamenu_pop.visible = not mediamenu_pop.visible
   mediamenu_pop.screen = awful.screen.focused()
-end)
+end
 
 click_to_hide.popup(mediamenu_pop, nil, true)
+
+return { signal = signal }

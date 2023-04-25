@@ -247,9 +247,11 @@ local resourcemenu_pop = awful.popup {
 
 resourcemenu_pop.visible = false
 
-awesome.connect_signal("signal::resourcemenu", function()
+local function signal()
   resourcemenu_pop.visible = not resourcemenu_pop.visible
   resourcemenu_pop.screen = awful.screen.focused()
-end)
+end
 
 click_to_hide.popup(resourcemenu_pop, nil, true)
+
+return { signal = signal }
