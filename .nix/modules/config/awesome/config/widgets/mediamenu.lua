@@ -11,6 +11,7 @@ local click_to_hide = require("config.helpers.click_to_hide")
 
 local title_text = wibox.widget {
   widget = wibox.widget.textbox,
+  text = "No players found",
   align = "left",
   valign = "center",
 }
@@ -23,6 +24,7 @@ local artist_text = wibox.widget {
 
 local shuffle = wibox.widget {
   widget = wibox.widget.textbox,
+  text = "󰒞",
   font = beautiful.font_large,
   align = "center",
   valign = "center",
@@ -55,6 +57,7 @@ local prev = wibox.widget {
 
 local toggle = wibox.widget {
   widget = wibox.widget.textbox,
+  text = "󰐊",
   font = beautiful.font_large,
   align = "center",
   valign = "center",
@@ -87,6 +90,7 @@ local next = wibox.widget {
 
 local loop = wibox.widget {
   widget = wibox.widget.textbox,
+  text = "󰑗",
   font = beautiful.font_large,
   align = "center",
   valign = "center",
@@ -283,4 +287,4 @@ end
 
 click_to_hide.popup(mediamenu_pop, nil, true)
 
-return { signal = signal }
+return { signal = signal, updater = updater }

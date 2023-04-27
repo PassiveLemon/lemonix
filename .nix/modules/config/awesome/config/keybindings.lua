@@ -47,13 +47,13 @@ awful.keyboard.append_global_keybindings({
   awful.key({ }, "XF86AudioMute", function() awful.spawn("pamixer -t") end,
   { description = "toggle mute", group = "media" }),
 
-  awful.key({ }, "XF86AudioPrev", function() awful.spawn("playerctl previous") end,
+  awful.key({ }, "XF86AudioPrev", function() awful.spawn("playerctl previous") mediamenu.updater() end,
   { description = "previous media", group = "media" }),
 
-  awful.key({ }, "XF86AudioPlay", function() awful.spawn("playerctl play-pause") end,
+  awful.key({ }, "XF86AudioPlay", function() awful.spawn("playerctl play-pause") mediamenu.updater() end,
   { description = "toggle play", group = "media" }),
 
-  awful.key({ }, "XF86AudioNext", function() awful.spawn("playerctl next") end,
+  awful.key({ }, "XF86AudioNext", function() awful.spawn("playerctl next") mediamenu.updater() end,
   { description = "next media", group = "media" }),
 
   awful.key {
