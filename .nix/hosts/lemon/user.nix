@@ -14,6 +14,7 @@
     mpv feh gimp unstable.obs-studio authy xarchiver filezilla easytag unstable.easyeffects unstable.qpwgraph
     pamixer playerctl stress appimage-run htop neofetch ventoy-bin
     libsForQt5.kruler tauon haruna
+    i3lock-fancy-rapid
   ];
 
   # Fonts

@@ -98,7 +98,7 @@ powermenu_pop.visible = false
 
 lock:buttons(gears.table.join(awful.button({}, 1, function()
   powermenu_pop.visible = false
-  awful.spawn.easy_async("dm-tool switch-to-greeter")
+  awful.spawn.easy_async("i3lock-fancy-rapid 50 10")
 end)))
 
 lock:connect_signal("mouse::enter", function()
