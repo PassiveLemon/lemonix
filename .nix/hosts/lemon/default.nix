@@ -55,7 +55,7 @@
         description = "Lemon";
         home = "/home/lemon";
         uid = 1777;
-        extraGroups = [ "wheel" "networkmanager" ];
+        extraGroups = [ "wheel" "networkmanager" "docker" ];
         isNormalUser = true;
       };
       docker = {
