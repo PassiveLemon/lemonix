@@ -3,8 +3,8 @@ local gears = require("gears")
 local beautiful = require("beautiful")
 local wibox = require("wibox")
 
+local locker = require("config.helpers.locker")
 local click_to_hide = require("config.helpers.click_to_hide")
-
 
 --
 -- Power management menu
@@ -98,7 +98,7 @@ powermenu_pop.visible = false
 
 lock:buttons(gears.table.join(awful.button({}, 1, function()
   powermenu_pop.visible = false
-  awful.spawn.easy_async("i3lock-fancy-rapid 50 10")
+  locker.locker()
 end)))
 
 lock:connect_signal("mouse::enter", function()
