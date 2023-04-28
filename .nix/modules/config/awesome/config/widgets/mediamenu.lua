@@ -9,17 +9,35 @@ local click_to_hide = require("config.helpers.click_to_hide")
 -- Media management menu
 --
 
-local title_text = wibox.widget {
+local title = wibox.widget {
   widget = wibox.widget.textbox,
   text = "No players found",
   align = "left",
   valign = "center",
 }
 
-local artist_text = wibox.widget {
+local title_box = wibox.widget {
+  widget = wibox.container.background(title),
+  forced_width = 532,
+  forced_height = 15,
+  fg = beautiful.fg_normal,
+  bg = beautiful.bg_normal,
+  shape = gears.shape.rounded_rect,
+}
+
+local artist = wibox.widget {
   widget = wibox.widget.textbox,
   align = "left",
   valign = "center",
+}
+
+local artist_box = wibox.widget {
+  widget = wibox.container.background(artist),
+  forced_width = 532,
+  forced_height = 15,
+  fg = beautiful.fg_normal,
+  bg = beautiful.bg_normal,
+  shape = gears.shape.rounded_rect,
 }
 
 local shuffle = wibox.widget {
@@ -30,7 +48,7 @@ local shuffle = wibox.widget {
   valign = "center",
 }
 
-local shuffle_bg = wibox.widget {
+local shuffle_box = wibox.widget {
   widget = wibox.container.background(shuffle),
   forced_width = 100,
   forced_height = 100,
@@ -63,7 +81,7 @@ local toggle = wibox.widget {
   valign = "center",
 }
 
-local toggle_bg = wibox.widget {
+local toggle_box = wibox.widget {
   widget = wibox.container.background(toggle),
   forced_width = 100,
   forced_height = 100,
@@ -96,7 +114,7 @@ local loop = wibox.widget {
   valign = "center",
 }
 
-local loop_bg = wibox.widget {
+local loop_box = wibox.widget {
   widget = wibox.container.background(loop),
   forced_width = 100,
   forced_height = 100,
@@ -105,12 +123,27 @@ local loop_bg = wibox.widget {
   shape = gears.shape.rounded_rect,
 }
 
+local volume = wibox.widget {
+  widget = wibox.widget.slider,
+  maximum = 100,
+  bar_height = 6,
+  handle_width = 15,
+}
+
+local volume_box = wibox.widget {
+  widget = wibox.container.background(volume),
+  forced_width = 532,
+  forced_height = 15,
+  fg = beautiful.fg_normal,
+  bg = beautiful.bg_normal,
+}
+
 local function updater()
-  awful.spawn.easy_async([[sh -c "sleep 0.1 && playerctl metadata title"]], function(title)
-    title_text.text = title
+  awful.spawn.easy_async([[sh -c "sleep 0.1 && playerctl metadata title"]], function(title_state)
+    title.text = title_state
   end)
-  awful.spawn.easy_async([[sh -c "sleep 0.1 && playerctl metadata artist"]], function(artist)
-    artist_text.text = artist
+  awful.spawn.easy_async([[sh -c "sleep 0.1 && playerctl metadata artist"]], function(artist_state)
+    artist.text = artist_state
   end)
   awful.spawn.easy_async([[sh -c "sleep 0.1 && playerctl shuffle"]], function(shuffle_state)
     if shuffle_state:find("On") then
@@ -134,6 +167,9 @@ local function updater()
     elseif loop_state:find("Track") then
       loop.text = "󰑘"
     end
+  end)
+  awful.spawn.easy_async([[sh -c "sleep 0.1 && playerctl volume"]], function(volume_state)
+    volume.value = math.floor(volume_state * 100 + 0.5)
   end)
 end
 
@@ -176,23 +212,31 @@ local mediamenu_container = wibox.widget {
   layout = wibox.layout.align.vertical,
   {
     widget = wibox.container.margin,
-    margins = { top = 8, right = 8, bottom = 0, left = 8, },
+    margins = { top = 8, right = 8, bottom = 4, left = 8, },
     {
       layout = wibox.layout.fixed.vertical,
-      title_text,
-      artist_text,
+      title_box,
+      artist_box,
     },
   },
   {
     widget = wibox.container.margin,
-    margins = { top = 0, right = 8, bottom = 8, left = 8, },
+    margins = { top = 4, right = 8, bottom = 4, left = 8, },
     {
       layout = wibox.layout.fixed.horizontal,
-      shuffle_bg,
+      shuffle_box,
       prev,
-      toggle_bg,
+      toggle_box,
       next,
-      loop_bg,
+      loop_box,
+    },
+  },
+  {
+    widget = wibox.container.margin,
+    margins = { top = 4, right = 8, bottom = 8, left = 8, },
+    {
+      layout = wibox.layout.fixed.horizontal,
+      volume_box,
     },
   },
 }
@@ -207,18 +251,18 @@ local mediamenu_pop = awful.popup {
 
 mediamenu_pop.visible = false
 
-shuffle_bg:buttons(gears.table.join(awful.button({}, 1, function()
+shuffle_box:buttons(gears.table.join(awful.button({}, 1, function()
   shuffler()
 end)))
 
-shuffle_bg:connect_signal("mouse::enter", function()
-  shuffle_bg.fg = beautiful.fg_focus
-  shuffle_bg.bg = beautiful.accent
+shuffle_box:connect_signal("mouse::enter", function()
+  shuffle_box.fg = beautiful.fg_focus
+  shuffle_box.bg = beautiful.accent
 end)
 
-shuffle_bg:connect_signal("mouse::leave", function()
-  shuffle_bg.fg = beautiful.fg_normal
-  shuffle_bg.bg = beautiful.bg_normal
+shuffle_box:connect_signal("mouse::leave", function()
+  shuffle_box.fg = beautiful.fg_normal
+  shuffle_box.bg = beautiful.bg_normal
 end)
 
 prev:buttons(gears.table.join(awful.button({}, 1, function()
@@ -236,18 +280,18 @@ prev:connect_signal("mouse::leave", function()
   prev.bg = beautiful.bg_normal
 end)
 
-toggle_bg:buttons(gears.table.join(awful.button({}, 1, function()
+toggle_box:buttons(gears.table.join(awful.button({}, 1, function()
   toggler()
 end)))
 
-toggle_bg:connect_signal("mouse::enter", function()
-  toggle_bg.fg = beautiful.fg_focus
-  toggle_bg.bg = beautiful.accent
+toggle_box:connect_signal("mouse::enter", function()
+  toggle_box.fg = beautiful.fg_focus
+  toggle_box.bg = beautiful.accent
 end)
 
-toggle_bg:connect_signal("mouse::leave", function()
-  toggle_bg.fg = beautiful.fg_normal
-  toggle_bg.bg = beautiful.bg_normal
+toggle_box:connect_signal("mouse::leave", function()
+  toggle_box.fg = beautiful.fg_normal
+  toggle_box.bg = beautiful.bg_normal
 end)
 
 next:buttons(gears.table.join(awful.button({}, 1, function()
@@ -265,18 +309,23 @@ next:connect_signal("mouse::leave", function()
   next.bg = beautiful.bg_normal
 end)
 
-loop_bg:buttons(gears.table.join(awful.button({}, 1, function()
+loop_box:buttons(gears.table.join(awful.button({}, 1, function()
   looper()
 end)))
 
-loop_bg:connect_signal("mouse::enter", function()
-  loop_bg.fg = beautiful.fg_focus
-  loop_bg.bg = beautiful.accent
+loop_box:connect_signal("mouse::enter", function()
+  loop_box.fg = beautiful.fg_focus
+  loop_box.bg = beautiful.accent
 end)
 
-loop_bg:connect_signal("mouse::leave", function()
-  loop_bg.fg = beautiful.fg_normal
-  loop_bg.bg = beautiful.bg_normal
+loop_box:connect_signal("mouse::leave", function()
+  loop_box.fg = beautiful.fg_normal
+  loop_box.bg = beautiful.bg_normal
+end)
+
+volume:connect_signal("property::value", function(_, volume_state)
+	volume.value = volume_state
+	awful.spawn("playerctl volume " .. (volume_state/100), false)
 end)
 
 local function signal()
