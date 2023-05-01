@@ -218,8 +218,8 @@ local resourcemenu_container = wibox.widget {
       space,
       strg_text,
       strg_free_nvme,
-      strg_free_sdb,
       strg_free_sda,
+      strg_free_sdb,
     },
   },
   {
