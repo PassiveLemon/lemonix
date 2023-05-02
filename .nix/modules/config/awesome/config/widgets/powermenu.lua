@@ -3,60 +3,18 @@ local gears = require("gears")
 local beautiful = require("beautiful")
 local wibox = require("wibox")
 
-local locker = require("config.helpers.locker")
+local helpers = require("config.helpers.helpers")
 local click_to_hide = require("config.helpers.click_to_hide")
 
 --
 -- Power management menu
 --
 
-local lock = wibox.widget {
-  widget = wibox.container.background,
-  forced_width = 100,
-  forced_height = 100,
-  fg = beautiful.fg_normal,
-  bg = beautiful.bg_normal,
-  shape = gears.shape.rounded_rect,
-  {
-    widget = wibox.widget.textbox,
-    text = "󰌾",
-    font = beautiful.font_large,
-    align = "center",
-    valign = "center",
-  },
-}
+local lock = helpers.simplebtn(100, 100, "󰐥", beautiful.font_large)
 
-local poweroff = wibox.widget {
-  widget = wibox.container.background,
-  forced_width = 100,
-  forced_height = 100,
-  fg = beautiful.fg_normal,
-  bg = beautiful.bg_normal,
-  shape = gears.shape.rounded_rect,
-  {
-    widget = wibox.widget.textbox,
-    text = "󰐥",
-    font = beautiful.font_large,
-    align = "center",
-    valign = "center",
-  },
-}
+local poweroff = helpers.simplebtn(100, 100, "󰐥", beautiful.font_large)
 
-local restart = wibox.widget {
-  widget = wibox.container.background,
-  forced_width = 100,
-  forced_height = 100,
-  fg = beautiful.fg_normal,
-  bg = beautiful.bg_normal,
-  shape = gears.shape.rounded_rect,
-  {
-    widget = wibox.widget.textbox,
-    text = "󰑓",
-    font = beautiful.font_large,
-    align = "center",
-    valign = "center",
-  },
-}
+local restart = helpers.simplebtn(100, 100, "󰑓", beautiful.font_large)
 
 local powermenu_container = wibox.widget {
   layout = wibox.layout.align.vertical,
@@ -80,65 +38,13 @@ local powermenu_pop = awful.popup {
   border_color = beautiful.border_color_active,
 }
 
-local prompt = wibox.widget {
-  widget = wibox.container.background,
-  forced_width = 300,
-  forced_height = 36,
-  fg = beautiful.fg_normal,
-  bg = beautiful.bg_normal,
-  shape = gears.shape.rounded_rect,
-  {
-    widget = wibox.widget.textbox,
-    text = "Are you sure?",
-    align = "center",
-    valign = "center",
-  },
-}
+local prompt = helpers.simplebtn(300, 36, "Are you sure?")
 
-local confirmpow = wibox.widget {
-  widget = wibox.container.background,
-  forced_width = 100,
-  forced_height = 56,
-  fg = beautiful.fg_normal,
-  bg = beautiful.bg_normal,
-  shape = gears.shape.rounded_rect,
-  {
-    widget = wibox.widget.textbox,
-    text = "Poweroff",
-    align = "center",
-    valign = "center",
-  },
-}
+local confirmpow = helpers.simplebtn(100, 56, "Poweroff")
 
-local confirmres = wibox.widget {
-  widget = wibox.container.background,
-  forced_width = 100,
-  forced_height = 56,
-  fg = beautiful.fg_normal,
-  bg = beautiful.bg_normal,
-  shape = gears.shape.rounded_rect,
-  {
-    widget = wibox.widget.textbox,
-    text = "Restart",
-    align = "center",
-    valign = "center",
-  },
-}
+local confirmres = helpers.simplebtn(100, 56, "Restart")
 
-local cancel = wibox.widget {
-  widget = wibox.container.background,
-  forced_width = 200,
-  forced_height = 56,
-  fg = beautiful.fg_normal,
-  bg = beautiful.bg_normal,
-  shape = gears.shape.rounded_rect,
-  {
-    widget = wibox.widget.textbox,
-    text = "Cancel",
-    align = "center",
-    valign = "center",
-  },
-}
+local cancel = helpers.simplebtn(200, 56, "Cancel")
 
 local poweroff_container = wibox.widget {
   layout = wibox.layout.align.vertical,
@@ -209,95 +115,35 @@ local function confirmed(command)
   awful.spawn(command)
 end
 
-cancel:buttons(gears.table.join(awful.button({}, 1, function()
+cancel:connect_signal("button::press", function()
   poweroff_pop.visible = false
   restart_pop.visible = false
   powermenu_pop.visible = false
-end)))
-
-cancel:connect_signal("mouse::enter", function()
-  cancel.fg = beautiful.fg_focus
-  cancel.bg = beautiful.accent
 end)
 
-cancel:connect_signal("mouse::leave", function()
-  cancel.fg = beautiful.fg_normal
-  cancel.bg = beautiful.bg_normal
-end)
-
-confirmpow:buttons(gears.table.join(awful.button({}, 1, function()
+confirmpow:connect_signal("button::press", function()
   confirmed("systemctl poweroff")
-end)))
+end)
 
-confirmres:buttons(gears.table.join(awful.button({}, 1, function()
+confirmres:connect_signal("button::press", function()
   confirmed("systemctl reboot")
-end)))
-
-confirmpow:connect_signal("mouse::enter", function()
-  confirmpow.fg = beautiful.fg_focus
-  confirmpow.bg = beautiful.accent
 end)
 
-confirmpow:connect_signal("mouse::leave", function()
-  confirmpow.fg = beautiful.fg_normal
-  confirmpow.bg = beautiful.bg_normal
-end)
-
-confirmres:connect_signal("mouse::enter", function()
-  confirmres.fg = beautiful.fg_focus
-  confirmres.bg = beautiful.accent
-end)
-
-confirmres:connect_signal("mouse::leave", function()
-  confirmres.fg = beautiful.fg_normal
-  confirmres.bg = beautiful.bg_normal
-end)
-
-lock:buttons(gears.table.join(awful.button({}, 1, function()
+lock:connect_signal("button::press", function()
   powermenu_pop.visible = false
-  locker.locker()
-end)))
-
-lock:connect_signal("mouse::enter", function()
-  lock.fg = beautiful.fg_focus
-  lock.bg = beautiful.accent
+  helpers.locker()
 end)
 
-lock:connect_signal("mouse::leave", function()
-  lock.fg = beautiful.fg_normal
-  lock.bg = beautiful.bg_normal
-end)
-
-poweroff:buttons(gears.table.join(awful.button({}, 1, function()
+poweroff:connect_signal("button::press", function()
   poweroff_pop.visible = true
   powermenu_pop.visible = false
   poweroff_pop.screen = awful.screen.focused()
-end)))
-
-poweroff:connect_signal("mouse::enter", function()
-  poweroff.fg = beautiful.fg_focus
-  poweroff.bg = beautiful.accent
 end)
 
-poweroff:connect_signal("mouse::leave", function()
-  poweroff.fg = beautiful.fg_normal
-  poweroff.bg = beautiful.bg_normal
-end)
-
-restart:buttons(gears.table.join(awful.button({}, 1, function()
+restart:connect_signal("button::press", function()
   restart_pop.visible = true
   powermenu_pop.visible = false
   restart_pop.screen = awful.screen.focused()
-end)))
-
-restart:connect_signal("mouse::enter", function()
-  restart.fg = beautiful.fg_focus
-  restart.bg = beautiful.accent
-end)
-
-restart:connect_signal("mouse::leave", function()
-  restart.fg = beautiful.fg_normal
-  restart.bg = beautiful.bg_normal
 end)
 
 local function signal()
