@@ -20,7 +20,7 @@
       };
     };
     kernelPackages = pkgs.linuxKernel.packages.linux_zen;
-    kernelModules = [ "iwlwifi" "r8169" ];
+    kernelModules = [ "iwlwifi" ];
   };
 
   # Locale
@@ -32,7 +32,7 @@
 
   # Networking
   networking = {
-    hostName = "citrus-tree";
+    hostName = "lemon-tree";
     networkmanager.enable = true;
     firewall = {
       enable = true;

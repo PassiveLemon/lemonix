@@ -20,7 +20,7 @@
 
   # Networking
   networking = {
-    hostName = "citrus-tree";
+    hostName = "lime-tree";
     networkmanager.enable = true;
   };
 
