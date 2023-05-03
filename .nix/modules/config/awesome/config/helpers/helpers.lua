@@ -5,8 +5,19 @@ local wibox = require("wibox")
 
 local helpers = {}
 
+function helpers.text(txt, fnt, ali)
+  local text = wibox.widget {
+    widget = wibox.widget.textbox,
+    text = txt,
+    font = fnt,
+    align = ali,
+    valign = "center",
+  }
+return text
+end
+
 function helpers.simpletxt(x, y, txt, fnt, ali)
-  local button = wibox.widget {
+  local simpletext = wibox.widget {
     widget = wibox.container.background,
     forced_width = x,
     forced_height = y,
@@ -22,11 +33,11 @@ function helpers.simpletxt(x, y, txt, fnt, ali)
       valign = "center",
     },
   }
-return text
+return simpletext
 end
 
 function helpers.simplebtn(x, y, txt, fnt)
-  local button = wibox.widget {
+  local simplebutton = wibox.widget {
     widget = wibox.container.background,
     forced_width = x,
     forced_height = y,
@@ -42,19 +53,19 @@ function helpers.simplebtn(x, y, txt, fnt)
       valign = "center",
     },
   }
-  button:connect_signal("mouse::enter", function()
-    button.fg = beautiful.fg_focus
-    button.bg = beautiful.accent
+  simplebutton:connect_signal("mouse::enter", function()
+    simplebutton.fg = beautiful.fg_focus
+    simplebutton.bg = beautiful.accent
   end)
-  button:connect_signal("mouse::leave", function()
-    button.fg = beautiful.fg_normal
-    button.bg = beautiful.bg_normal
+  simplebutton:connect_signal("mouse::leave", function()
+    simplebutton.fg = beautiful.fg_normal
+    simplebutton.bg = beautiful.bg_normal
   end)
-return button
+return simplebutton
 end
 
 function helpers.simplesldr(x, y, h, w)
-  local slider = wibox.widget {
+  local simpleslider = wibox.widget {
     widget = wibox.container.background,
     forced_width = x,
     forced_height = y,
@@ -68,7 +79,19 @@ function helpers.simplesldr(x, y, h, w)
       handle_width = 15,
     },
   }
-return slider
+return simpleslider
+end
+
+function helpers.simplewtch(com, time)
+  local simplewatch = wibox.widget {
+    widget = wibox.widget.textbox,
+    align = "left",
+    valign = "center",
+  }
+  awful.widget.watch(com, time, function(_, stdout)
+    simplewatch.text = stdout:gsub( "\n", "" )
+  end)
+return simplewatch
 end
 
 function helpers.locker()
