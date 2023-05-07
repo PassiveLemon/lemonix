@@ -13,7 +13,7 @@ function helpers.text(txt, fnt, ali)
     align = ali,
     valign = "center",
   }
-return text
+  return text
 end
 
 function helpers.simpletxt(x, y, txt, fnt, ali)
@@ -33,7 +33,7 @@ function helpers.simpletxt(x, y, txt, fnt, ali)
       valign = "center",
     },
   }
-return simpletext
+  return simpletext
 end
 
 function helpers.simplebtn(x, y, txt, fnt)
@@ -61,7 +61,7 @@ function helpers.simplebtn(x, y, txt, fnt)
     simplebutton.fg = beautiful.fg_normal
     simplebutton.bg = beautiful.bg_normal
   end)
-return simplebutton
+  return simplebutton
 end
 
 function helpers.simplesldr(x, y, h, w)
@@ -74,12 +74,13 @@ function helpers.simplesldr(x, y, h, w)
     {
       id = "slider",
       widget = wibox.widget.slider,
+      minimum = 0,
       maximum = 100,
-      bar_height = 6,
-      handle_width = 15,
+      bar_height = h,
+      handle_width = w,
     },
   }
-return simpleslider
+  return simpleslider
 end
 
 function helpers.simplewtch(com, time)
@@ -91,7 +92,7 @@ function helpers.simplewtch(com, time)
   awful.widget.watch(com, time, function(_, stdout)
     simplewatch.text = stdout:gsub( "\n", "" )
   end)
-return simplewatch
+  return simplewatch
 end
 
 function helpers.locker()
