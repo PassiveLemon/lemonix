@@ -10,9 +10,14 @@
       exec = "appimage-run /home/lemon/Standalone/r2modman.AppImage --no-sandbox";
       terminal = false;
     };
-    stablediff = {
-      name = "stable-diff";
-      exec = "/home/lemon/Documents/GitHub/private/Scripts/StabDiff.sh";
+    sd-comfyui = {
+      name = "sd-comfyui";
+      exec = "/home/lemon/Documents/GitHub/private/Scripts/ComfyUI.sh";
+      terminal = true;
+    };
+    sd-auto = {
+      name = "sd-auto";
+      exec = "/home/lemon/Documents/GitHub/private/Scripts/Auto.sh";
       terminal = true;
     };
   };
