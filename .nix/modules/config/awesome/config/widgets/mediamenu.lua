@@ -57,10 +57,10 @@ local function updater()
     end
   end)
   awful.spawn.easy_async([[sh -c "sleep 0.1 && playerctl volume"]], function(volume_state)
-    if volume_state:find("No player could handle this command") then
-      volume.value = 0
+    if volume_state:find("No player could handle this command") or volume_state:find("No Players found") then
+      volume:get_children_by_id("slider")[1].value = 0
     else
-      volume.value = math.floor(volume_state * 100 + 0.5)
+      volume:get_children_by_id("slider")[1].value = math.floor(volume_state * 100 + 0.5)
     end
   end)
 end
@@ -165,8 +165,8 @@ loop:connect_signal("button::press", function()
   looper()
 end)
 
-volume:connect_signal("property::value", function(_, volume_state)
-	volume.value = volume_state
+volume:get_children_by_id("slider")[1]:connect_signal("property::value", function(slider, volume_state)
+  slider.value = volume_state
 	awful.spawn("playerctl volume " .. (volume_state/100), false)
 end)
 
