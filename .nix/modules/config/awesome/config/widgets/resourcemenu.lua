@@ -41,9 +41,9 @@ local strg_text = helpers.text("Storage", beautiful.font, "center")
 
 local strg_free_nvme = helpers.simplewtch([[sh -c "echo -n 'NVME: ' && df -h /dev/nvme0n1p3 | awk 'NR==2 {split(\$3, used, \"G\"); split(\$2, total, \"G\"); print used[1] \"/\" total[1] \" GB \" int((used[1]/total[1])*100) \"%\"}'"]], 60)
 
-local strg_free_sda = helpers.simplewtch([[sh -c "echo -n 'SDA: ' && df -h /dev/sda1 | awk 'NR==2 {split(\$3, used, \"G\"); split(\$2, total, \"G\"); print used[1] \"/\" total[1] \" GB \" int((used[1]/total[1])*100) \"%\"}'"]], 60)
+local strg_free_sda = helpers.simplewtch([[sh -c "echo -n 'SDA: ' && df -h /dev/sda1 | awk 'NR==2 {split(\$3, used, \"T\"); split(\$2, total, \"T\"); print used[1] \"/\" total[1] \" TB \" int((used[1]/total[1])*100) \"%\"}'"]], 60)
 
-local strg_free_sdb = helpers.simplewtch([[sh -c "echo -n 'SDB: ' && df -h /dev/sdb1 | awk 'NR==2 {split(\$3, used, \"T\"); split(\$2, total, \"T\"); print used[1] \"/\" total[1] \" TB \" int((used[1]/total[1])*100) \"%\"}'"]], 60)
+local strg_free_sdb = helpers.simplewtch([[sh -c "echo -n 'SDB: ' && df -h /dev/sdb1 | awk 'NR==2 {split(\$3, used, \"G\"); split(\$2, total, \"G\"); print used[1] \"/\" total[1] \" GB \" int((used[1]/total[1])*100) \"%\"}'"]], 60)
 
 local uptime_text = helpers.text("Uptime", beautiful.font, "center")
 
