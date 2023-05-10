@@ -1,17 +1,25 @@
-{ config, pkgs, ... }:
+{ config, pkgs, nixpkgs-f2k, ... }:
 #let pkgs = import <nixpkgs> {}; in
 #pkgs.callPackage ../../pkgs/lemonwalls.nix
 {
   imports = [
-    ../../modules/home-manager.nix
     ../../modules/xorg.nix
     ../../modules/gaming.nix
     #../../pkgs/lemonwalls.nix
   ];
 
+  nixpkgs = {
+    overlays = [
+      (final: prev:
+        {
+          awesome = nixpkgs-f2k.packages.${pkgs.system}.awesome-git;
+        })
+    ];
+  };
+
   environment.systemPackages = with pkgs; [
-    rofi unstable.hilbish unstable.vscodium unstable.github-desktop unstable.firefox betterdiscordctl (unstable.discord.override { withOpenASAR = true; })
-    mpv feh gimp unstable.obs-studio authy xarchiver filezilla easytag unstable.easyeffects unstable.qpwgraph
+    rofi hilbish vscodium github-desktop firefox betterdiscordctl (discord.override { withOpenASAR = true; })
+    vlc mpv feh gimp obs-studio authy xarchiver filezilla easytag easyeffects qpwgraph
     pamixer playerctl stress appimage-run htop neofetch ventoy-bin
     libsForQt5.kruler tauon haruna
     i3lock-fancy-rapid
@@ -20,11 +28,12 @@
   # Fonts
   fonts = {
     fonts = with pkgs; [
-      material-design-icons fira (nerdfonts.override { fonts = [ "FiraCode" ]; })
+      material-design-icons fira (nerdfonts.override { fonts = [ "FiraCode" ]; }) cozette
     ];
     fontconfig = {
       enable = true;
       antialias = true;
+      allowBitmaps = true;
       hinting = {
         enable = true;
         autohint = true;
@@ -48,7 +57,6 @@
       };
       windowManager.awesome = {
         enable = true;
-        package = (builtins.getFlake "github:fortuneteller2k/nixpkgs-f2k").packages.x86_64-linux.awesome-git;
       };
       libinput = {
         enable = true;
@@ -86,7 +94,7 @@
     seahorse.enable = true;
     nm-applet.enable = true;
   };
-  qt = {
+  qt5 = {
     enable = true;
     platformTheme = "gtk2";
     style = "gtk2";
@@ -99,52 +107,6 @@
       enable = true;
       defaultApplications = {
         "inode/directory" = "pcmanfm.desktop";
-      };
-    };
-  };
-
-  # Home Manager
-  home-manager = {
-    useGlobalPkgs = true;
-    users.lemon = { config, pkgs, ... }: {
-      imports = [
-        ./config/desktop.nix
-        ../../modules/gtk.nix
-        ../../modules/kitty.nix
-        ../../modules/picom.nix     
-        ../../modules/spicetify.nix
-        ../../modules/vscode.nix
-      ];
-      services = {
-        flameshot = {
-          enable = true;
-          settings = {
-            General = {
-              disabledTrayIcon = true;
-            };
-          };
-        };
-        megasync.enable = true;
-      };
-      home = {
-        file = {
-          ".config/" = {
-            source = ../../modules/config;
-            recursive = true;
-          };
-        };
-        stateVersion = "22.11";
-      };
-    };
-  };
-
-  # Unstable
-  nixpkgs = {
-    config = {
-      packageOverrides = pkgs: {
-        unstable = import (fetchTarball https://github.com/NixOS/nixpkgs/archive/nixos-unstable.tar.gz) {
-          config = config.nixpkgs.config;
-        };
       };
     };
   };

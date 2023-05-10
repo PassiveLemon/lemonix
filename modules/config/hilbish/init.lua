@@ -47,7 +47,7 @@ promptua.setTheme {
 promptua.init()
 
 -- Aliases
-hilbish.alias("ls", "exa -l")
+hilbish.alias("ls", "exa -F -l --group-directories-first")
 hilbish.alias("rm", "trash")
 
 -- Misc

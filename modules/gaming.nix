@@ -2,7 +2,7 @@
   environment.systemPackages = with pkgs; [
     gamemode protonup-ng dxvk
     bottles
-    unstable.lunar-client
+    lunar-client
     yuzu-mainline
   ];
   programs = {
@@ -14,13 +14,4 @@
   #  enable = true;
   #  web-ui.enable = true;
   #};
-  nixpkgs = {
-    config = {
-      packageOverrides = pkgs: {
-        unstable = import (fetchTarball https://github.com/NixOS/nixpkgs/archive/nixos-unstable.tar.gz) {
-          config = config.nixpkgs.config;
-        };
-      };
-    };
-  };
 }

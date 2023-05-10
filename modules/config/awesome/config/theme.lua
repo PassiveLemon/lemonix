@@ -101,6 +101,7 @@ theme.titlebar_maximized_button_focus_inactive  = themes_path.."default/titlebar
 theme.titlebar_maximized_button_normal_active = themes_path.."default/titlebar/maximized_normal_active.png"
 theme.titlebar_maximized_button_focus_active  = themes_path.."default/titlebar/maximized_focus_active.png"
 
+-- Replace this with your user and make sure an image is in the location.
 theme.wallpaper = "/home/lemon/.background-image"
 
 -- You can use your own layout icons like this:

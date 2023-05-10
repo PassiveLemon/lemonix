@@ -1,7 +1,7 @@
 { config, pkgs, ... }: {
   services.picom = {
     enable = true;
-    package = pkgs.unstable.picom-next;
+    package = pkgs.picom;
     settings = {
       # Shadows
       shadow = true;
@@ -59,13 +59,6 @@
         dnd = { shadow = true; };
         popup_menu = { opacity = 1; };
         dropdown_menu = { opacity = 0.8; };
-      };
-    };
-  };
-  nixpkgs.config = {
-    packageOverrides = pkgs: {
-      unstable = import (fetchTarball https://github.com/NixOS/nixpkgs/archive/nixos-unstable.tar.gz) {
-        config = config.nixpkgs.config;
       };
     };
   };

@@ -1,8 +1,4 @@
 { config, pkgs, ... }: {
-  imports = [
-    ./user.nix
-  ];
-
   # Boot
   boot = {
     loader = {
@@ -103,16 +99,6 @@
       driSupport = true;
     };
   };
-  #systemd.services = {
-  #  Ethernet1 = {
-  #    preStart = "/run/current-system/sw/bin/sleep 5";
-  #    serviceConfig = {
-  #      User = "root";
-  #      ExecStart = "/run/current-system/sw/bin/ethtool -s enp9s0 autoneg off speed 100 duplex full";
-  #    };
-  #    wantedBy = [ "multi-user.target" ];
-  #  };
-  #};
   nix = {
     settings = {
       experimental-features = [ "nix-command" "flakes" ];
