@@ -7,6 +7,9 @@ Current list of issues:
  - Said workaround is janky and the whole installer script needs to be updated.
  - Might need to revisit the dotscript as well.
 
+ Potential solutions:
+  - When rebuilding, just run a script to sync the module files to the home.
+
 
 The organization is based on master system configurations and modules. Stuff is still being worked on and will probably always be worked on so stuff will change. </br>
 
