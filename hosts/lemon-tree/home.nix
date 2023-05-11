@@ -1,17 +1,15 @@
 { config, pkgs, ... }: {
-
   imports = [
-        ./config/desktop.nix
-        ../../modules/gtk.nix
-        ../../modules/kitty.nix
-        ../../modules/picom.nix     
-        ../../modules/spicetify.nix
-        ../../modules/vscode.nix
-      ];
+    ./config/desktop.nix
+    ../../modules/gtk.nix
+    ../../modules/kitty.nix
+    ../../modules/picom.nix     
+    ../../modules/spicetify.nix
+    ../../modules/vscode.nix
+  ];
 
   nixpkgs.config = { allowUnfree = true; };
 
-  programs.home-manager.enable = true;
   home.username = "lemon";
   home.homeDirectory = "/home/lemon";
   home.stateVersion = "22.11";
@@ -34,6 +32,7 @@
         recursive = true;
       };
     };
-    stateVersion = "22.11";
   };
+  stateVersion = "22.11";
+  programs.home-manager.enable = true;
 }

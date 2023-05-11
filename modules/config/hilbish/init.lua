@@ -1,16 +1,15 @@
--- Imports
 local lunacolors = require('lunacolors')
-local bait       = require('bait')
-local promptua   = require('promptua')
+local bait  = require('bait')
+local promptua = require('promptua')
 
--- Prompt
 promptua.setConfig {
   prompt = {
     icon    = "",
     success = "",
-    fail    = ""
-  }
+    fail    = "",
+  },
 }
+
 promptua.setTheme {
   {
     provider  = "user.name",
@@ -41,15 +40,13 @@ promptua.setTheme {
 			end
 		end
 	},
-  { separator = ">= " },
+  { separator = ">== " },
 }
 
 promptua.init()
 
--- Aliases
 hilbish.alias("ls", "exa -F -l --group-directories-first")
 hilbish.alias("rm", "trash")
 
--- Misc
 hilbish.opts.greeting = false
-hilbish.opts.motd     = false
+hilbish.opts.motd = false

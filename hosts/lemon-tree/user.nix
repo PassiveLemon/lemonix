@@ -1,19 +1,16 @@
-{ config, pkgs, nixpkgs-f2k, ... }:
-#let pkgs = import <nixpkgs> {}; in
-#pkgs.callPackage ../../pkgs/lemonwalls.nix
-{
+{ inputs, outputs, config, pkgs, ... }: {
   imports = [
     ../../modules/xorg.nix
     ../../modules/gaming.nix
-    #../../pkgs/lemonwalls.nix
   ];
 
   nixpkgs = {
     overlays = [
       (final: prev:
         {
-          awesome = nixpkgs-f2k.packages.${pkgs.system}.awesome-git;
-        })
+          awesome = inputs.nixpkgs-f2k.packages.${pkgs.system}.awesome-git;
+        }
+      )
     ];
   };
 
@@ -94,7 +91,7 @@
     seahorse.enable = true;
     nm-applet.enable = true;
   };
-  qt5 = {
+  qt = {
     enable = true;
     platformTheme = "gtk2";
     style = "gtk2";

@@ -1,4 +1,9 @@
-{ config, pkgs, ... }: {
+{ inputs, outputs, config, pkgs, ... }: {
+  imports = [
+    ./hardware-configuration.nix
+    ./user.nix
+  ];
+  
   # Boot
   boot = {
     loader = {

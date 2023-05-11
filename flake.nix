@@ -4,40 +4,48 @@
   inputs = {
     stable.url = "github:nixos/nixpkgs/nixos-22.11";
     unstable.url = "github:NixOS/nixpkgs/nixos-unstable";
-    home-manager.url = "github:nix-community/home-manager/release-22.11"; 
-    home-manager.inputs.nixpkgs.follows = "stable";
+    home-manager = {
+      url = "github:nix-community/home-manager"; 
+      inputs.nixpkgs.follows = "unstable";
+    };
 
+    # User repos
     nixpkgs-f2k.url = "github:fortuneteller2k/nixpkgs-f2k";
   };
 
-  outputs = { self, stable, unstable, home-manager, nixpkgs-f2k, ... } @ inputs: {
+  outputs = { self, stable, unstable, home-manager, nixpkgs-f2k, ... } @ inputs:
+  let
+    inherit (self) outputs;
+  in
+  {
     nixosConfigurations = {
-      "lemon-tree" = stable.lib.nixosSystem {
-        specialArgs = { inherit nixpkgs-f2k; };
+      "lemon-tree" = unstable.lib.nixosSystem {
         system = "x86_64-linux";
+        specialArgs = { inherit inputs outputs; };
         modules = [
-          ./hosts/lemon-tree/hardware-configuration.nix
           ./hosts/lemon-tree/default.nix
-          ./hosts/lemon-tree/user.nix
+          home-manager.nixosModules.home-manager
         ];
       };
-
-      "lime-tree" = stable.lib.nixosSystem {
-        specialArgs = { inherit nixpkgs-f2k; };
+      "lime-tree" = unstable.lib.nixosSystem {
         system = "x86_64-linux";
+        specialArgs = { inherit inputs outputs; };
         modules = [
-          ./hosts/lime-tree/hardware-configuration.nix
           ./hosts/lime-tree/default.nix
-          ./hosts/lime-tree/user.nix
+          home-manager.nixosModules.home-manager
         ];
       };
     };
-
-    defaultPackage.x86_64-linux = home-manager.defaultPackage.x86_64-linux;
     homeConfigurations = {
-      lemon = home-manager.lib.homeManagerConfiguration {
-        pkgs = import stable { system = "x86_64-linux"; };
+      "lemon@lemon-tree" = home-manager.lib.homeManagerConfiguration {
+        pkgs = unstable.legacyPackages.x86_64-linux;
+        specialArgs = { inherit inputs outputs; };
         modules = [ ./hosts/lemon-tree/home.nix ];
+      };
+      "lemon@lime-tree" = home-manager.lib.homeManagerConfiguration {
+        pkgs = unstable.legacyPackages.x86_64-linux;
+        specialArgs = { inherit inputs outputs; };
+        modules = [ ./hosts/lime-tree/home.nix ];
       };
     };
   };

@@ -38,7 +38,7 @@ local powermenu_pop = awful.popup {
   border_color = beautiful.border_color_active,
 }
 
-local prompt = helpers.simplebtn(300, 36, "Are you sure?")
+local prompt = helpers.simpletxt(300, 36, "Are you sure?", beautiful.font, "center")
 
 local confirmpow = helpers.simplebtn(100, 56, "Poweroff")
 
