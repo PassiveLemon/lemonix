@@ -33,6 +33,12 @@
   #    };
   #  };
   #};
+
+  home.activation = {
+    configFiles = lib.hm.dag.entryAfter ["writeBoundary"] ''
+      cp -rf ${builtins.toPath ../../modules/config/}* $HOME/.config/
+    '';
+  };
   stateVersion = "22.11";
   programs.home-manager.enable = true;
 }
