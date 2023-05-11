@@ -10,6 +10,9 @@ sudo mkdir -p /etc/nixos/
 # Link this Git to /etc/nixos
 sudo ln -s ${PWD}/ /etc/nixos
 
+# Dumb workaround
+sudo cp -r ${PWD}/modules/config/*/ ${HOME}/.config/
+
 . ./dotscripts.sh
 
 echo "|| Awesome modules ||"

@@ -25,14 +25,14 @@
     };
     megasync.enable = true;
   };
-  home = {
-    file = {
-      ".config/" = {
-        source = ../../modules/config;
-        recursive = true;
-      };
-    };
-  };
+  #home = {
+  #  file = {
+  #    ".config" = {
+  #      source = ../../modules/config;
+  #      recursive = true;
+  #    };
+  #  };
+  #};
   stateVersion = "22.11";
   programs.home-manager.enable = true;
 }

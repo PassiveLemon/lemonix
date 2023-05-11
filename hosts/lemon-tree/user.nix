@@ -9,13 +9,14 @@
       (final: prev:
         {
           awesome = inputs.nixpkgs-f2k.packages.${pkgs.system}.awesome-git;
+          discord = prev.discord.override { withOpenASAR = true; };
         }
       )
     ];
   };
 
   environment.systemPackages = with pkgs; [
-    rofi hilbish vscodium github-desktop firefox betterdiscordctl (discord.override { withOpenASAR = true; })
+    rofi hilbish vscodium github-desktop firefox betterdiscordctl
     vlc mpv feh gimp obs-studio authy xarchiver filezilla easytag easyeffects qpwgraph
     pamixer playerctl stress appimage-run htop neofetch ventoy-bin
     libsForQt5.kruler tauon haruna

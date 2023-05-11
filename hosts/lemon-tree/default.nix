@@ -55,20 +55,11 @@
       lemon = {
         description = "Lemon";
         home = "/home/lemon";
-        uid = 1777;
-        extraGroups = [ "wheel" "networkmanager" "docker" ];
+        extraGroups = [ "wheel" "networkmanager" "docker" "video" ];
         isNormalUser = true;
-      };
-      docker = {
-        description = "Docker";
-        home = "/home/docker";
-        group = "docker";
-        extraGroups = [ "docker" "video" ];
-        isSystemUser = true;
       };
       monitor = {
         description = "Monitor";
-        uid = 1044;
         isNormalUser = true;
       };
     };
