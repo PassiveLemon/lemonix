@@ -40,7 +40,7 @@ promptua.setTheme {
 			end
 		end
 	},
-  { separator = ">== " },
+  { separator = ">= " },
 }
 
 promptua.init()
