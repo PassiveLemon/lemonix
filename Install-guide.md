@@ -59,7 +59,7 @@ login: root </br>
 > password </br>
 
 ## Cloning </br>
-`git clone --recurse-submodules https://github.com/PassiveLemon/lemonix` </br>
+`git clone https://github.com/PassiveLemon/lemonix` </br>
 `bash ./lemonix/Installer.sh` </br>
 
 Make sure to set user password: </br>

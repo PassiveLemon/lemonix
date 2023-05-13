@@ -1,11 +1,12 @@
-{ config, pkgs, ...}:
+{ inputs, outputs, pkgs, lib, ...}:
 let
-  flake-compat = builtins.fetchTarball "https://github.com/edolstra/flake-compat/archive/master.tar.gz";
-  spicetify-nix = (import flake-compat { src = builtins.fetchTarball "https://github.com/the-argus/spicetify-nix/archive/master.tar.gz"; }).defaultNix;
-  spicePkgs = spicetify-nix.packages.${pkgs.system}.default;
+  spicePkgs = inputs.spicetify-nix.packages.${pkgs.system}.default;
 in
 {
-  imports = [ spicetify-nix.homeManagerModule ];
+  nixpkgs.config.allowUnfreePredicate = pkg: builtins.elem (lib.getName pkg) [
+    "spotify"
+  ];
+
   programs.spicetify = {
     enable = true;
     theme = spicePkgs.themes.DefaultDynamic;

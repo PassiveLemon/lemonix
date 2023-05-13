@@ -24,7 +24,7 @@ awful.keyboard.append_global_keybindings({
   { description = "run rofi", group = "launcher" }),
 
   awful.key({ modkey, }, "x", function() resourcemenu.signal() end,
-  { description = "menu", group = "utility" }),
+  { description = "run resourcemenu", group = "launcher" }),
 
   awful.key({ modkey, }, "v", function() powermenu.signal() end,
   { description = "run powermenu", group = "launcher" }),
@@ -59,8 +59,8 @@ awful.keyboard.append_global_keybindings({
   awful.key {
     modifiers   = { modkey },
     keygroup    = "numpad",
-    description = "select layout directly",
-    group       = "layout",
+    description = "select workspace",
+    group       = "tag",
     on_press    = function(index)
       local t = awful.screen.focused().selected_tag
       if t then
@@ -72,7 +72,7 @@ awful.keyboard.append_global_keybindings({
   awful.key {
     modifiers   = { modkey },
     keygroup    = "numrow",
-    description = "only view tag",
+    description = "switch to tag",
     group       = "tag",
     on_press    = function(index)
       local screen = awful.screen.focused()
@@ -151,3 +151,14 @@ client.connect_signal( "request::default_mousebindings", function()
     end),
   })
 end)
+
+--
+-- Other
+--
+
+awful.keyboard.append_client_keybindings({
+  awful.key({}, "sudo nixos-rebuild switch", function() end,
+  { description = "Rebuild nixos", group = "other" }),
+  awful.key({}, "home-manager switch --flake /home/lemon/Documents/GitHub/lemonix/#lemon@lemon-tree", function() end,
+  { description = "Rebuild home-manager", group = "other" }),
+})

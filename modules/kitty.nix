@@ -1,6 +1,7 @@
 { config, pkgs, colors, ... }: {
   programs.kitty = {
     enable = true;
+    package = pkgs.kitty;
     settings = {
       background_opacity = "0.8";
       window_padding_width = "5 6 5 6";

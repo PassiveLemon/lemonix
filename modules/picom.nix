@@ -1,7 +1,7 @@
 { config, pkgs, ... }: {
   services.picom = {
     enable = true;
-    package = pkgs.picom;
+    package = pkgs.picom-next;
     settings = {
       # Shadows
       shadow = true;
@@ -45,7 +45,6 @@
       backend = "glx";
       vsync = true;
       use-damage = true;
-      refresh-rate = 144;
       log-level = "warn";
       xrender-sync-fence = true;
       mark-wmwin-focused = true;

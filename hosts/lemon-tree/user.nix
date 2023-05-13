@@ -4,22 +4,15 @@
     ../../modules/gaming.nix
   ];
 
-  nixpkgs = {
-    overlays = [
-      (final: prev:
-        {
-          awesome = inputs.nixpkgs-f2k.packages.${pkgs.system}.awesome-git;
-          discord = prev.discord.override { withOpenASAR = true; };
-        }
-      )
-    ];
-  };
+  nixpkgs.overlays = [ (final: prev: {
+    awesome = inputs.nixpkgs-f2k.packages.${pkgs.system}.awesome-git;
+  } ) ];
 
   environment.systemPackages = with pkgs; [
-    rofi hilbish vscodium github-desktop firefox betterdiscordctl
-    vlc mpv feh gimp obs-studio authy xarchiver filezilla easytag easyeffects qpwgraph
+    rofi hilbish vscodium github-desktop firefox betterdiscordctl (discord.override { withOpenASAR = true; })
+    mpv feh gimp obs-studio authy xarchiver filezilla easytag easyeffects qpwgraph openshot-qt
     pamixer playerctl stress appimage-run htop neofetch ventoy-bin
-    libsForQt5.kruler tauon haruna
+    libsForQt5.kruler haruna
     i3lock-fancy-rapid
   ];
 
@@ -49,9 +42,7 @@
       videoDrivers = [ "nvidia" ];
       displayManager = {
         defaultSession = "none+awesome";
-        lightdm = {
-          enable = true;      
-        };
+        startx.enable = true;
       };
       windowManager.awesome = {
         enable = true;
@@ -97,8 +88,10 @@
     platformTheme = "gtk2";
     style = "gtk2";
   };
-  security.pam.services.lemon.enableGnomeKeyring = true;
-  security.rtkit.enable = true;
+  security = {
+    pam.services.lemon.enableGnomeKeyring = true;
+    rtkit.enable = true;
+  };
   xdg = {
     portal.enable = true;
     mime = {

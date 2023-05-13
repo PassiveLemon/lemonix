@@ -1,5 +1,6 @@
 { config, pkgs, ... }: {
   programs.vscode = {
+    package = pkgs.vscodium;
     enableUpdateCheck = false;
     userSettings = {
       "workbench.colorTheme" = "One Dark Pro";
