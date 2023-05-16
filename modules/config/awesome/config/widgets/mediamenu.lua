@@ -3,6 +3,8 @@ local gears = require("gears")
 local beautiful = require("beautiful")
 local wibox = require("wibox")
 
+local naughty = require("naughty")
+
 local helpers = require("config.helpers.helpers")
 local click_to_hide = require("config.helpers.click_to_hide")
 
@@ -28,7 +30,13 @@ local volume = helpers.simplesldr(532, 15, 6, 15)
 
 local function updater()
   awful.spawn.easy_async([[sh -c "sleep 0.1 && playerctl metadata title"]], function(title_state)
-    title:get_children_by_id("textbox")[1].text = title_state
+    if title_state == "" or title_state:find("No player could handle this command") or title_state:find("No Players found") then
+      artist.visible = false
+      title:get_children_by_id("textbox")[1].text = "No media found"
+    else
+      artist.visible = true
+      title:get_children_by_id("textbox")[1].text = title_state
+    end
   end)
   awful.spawn.easy_async([[sh -c "sleep 0.1 && playerctl metadata artist"]], function(artist_state)
     artist:get_children_by_id("textbox")[1].text = artist_state
@@ -56,10 +64,11 @@ local function updater()
       loop:get_children_by_id("textbox")[1].text = "󰑘"
     end
   end)
-  awful.spawn.easy_async([[sh -c "sleep 0.1 && playerctl volume"]], function(volume_state)
-    if volume_state:find("No player could handle this command") or volume_state:find("No Players found") then
-      volume:get_children_by_id("slider")[1].value = 0
+  awful.spawn.easy_async('sh -c "sleep 0.1 && playerctl volume"', function(volume_state)
+    if volume_state == "" or volume_state:find("No player could handle this command") or volume_state:find("No Players found") then
+      volume.visible = false
     else
+      volume.visible = true
       volume:get_children_by_id("slider")[1].value = math.floor(volume_state * 100 + 0.5)
     end
   end)
