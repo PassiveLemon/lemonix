@@ -9,7 +9,7 @@
   } ) ];
 
   environment.systemPackages = with pkgs; [
-    rofi hilbish vscodium github-desktop firefox betterdiscordctl (discord.override { withOpenASAR = true; })
+    lite-xl rofi hilbish vscodium github-desktop firefox betterdiscordctl (discord.override { withOpenASAR = true; })
     mpv feh gimp obs-studio authy xarchiver filezilla easytag easyeffects qpwgraph openshot-qt
     pamixer playerctl stress appimage-run htop neofetch ventoy-bin
     libsForQt5.kruler haruna
