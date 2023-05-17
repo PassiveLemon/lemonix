@@ -10,6 +10,3 @@ if command -v dbus-update-activation-environment >/dev/null 2>&1; then
 fi
 
 exec awesome
-systemctl --user import-environment XAUTHORITY DISPLAY
-nm-applet
-megasync
