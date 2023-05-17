@@ -12,9 +12,9 @@ local click_to_hide = require("config.helpers.click_to_hide")
 -- Media management menu
 --
 
-local title = helpers.simpletxt(532, 15, nil, beautiful.font, "left")
+local title = helpers.simpletxt(516, 15, nil, beautiful.font, "left")
 
-local artist = helpers.simpletxt(532, 15, nil, beautiful.font, "left")
+local artist = helpers.simpletxt(516, 15, nil, beautiful.font, "left")
 
 local shuffle = helpers.simplebtn(100, 100, "󰒞", beautiful.font_large)
 
@@ -26,7 +26,7 @@ local next = helpers.simplebtn(100, 100, "󰒭", beautiful.font_large)
 
 local loop = helpers.simplebtn(100, 100, "󰑗", beautiful.font_large)
 
-local volume = helpers.simplesldr(532, 15, 6, 15)
+local volume = helpers.simplesldr(516, 15, 6, 15)
 
 local function updater()
   awful.spawn.easy_async([[sh -c "sleep 0.1 && playerctl metadata title"]], function(title_state)
@@ -64,7 +64,7 @@ local function updater()
       loop:get_children_by_id("textbox")[1].text = "󰑘"
     end
   end)
-  awful.spawn.easy_async('sh -c "sleep 0.1 && playerctl volume"', function(volume_state)
+  awful.spawn.easy_async([[sh -c "sleep 0.1 && playerctl volume"]], function(volume_state)
     if volume_state == "" or volume_state:find("No player could handle this command") or volume_state:find("No Players found") then
       volume.visible = false
     else
