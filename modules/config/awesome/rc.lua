@@ -14,3 +14,4 @@ awful.spawn.easy_async([[sh -c "kill $(pgrep easyeffects) ; sleep 0.2 && easyeff
 awful.spawn.easy_async("picom -b")
 awful.spawn.easy_async("nm-applet")
 awful.spawn.easy_async("megasync")
+
