@@ -1,10 +1,10 @@
 { config, pkgs, ... }: {
   xdg.desktopEntries = {
-    #gdlauncher = {
-    #  name = "GDLauncher";
-    #  exec = "appimage-run /home/lemon/Standalone/GDLauncher-linux-setup.AppImage --no-sandbox";
-    #  terminal = false;
-    #};
+    gdlauncher = {
+      name = "GDLauncher";
+      exec = "appimage-run /home/lemon/Standalone/GDLauncher-linux-setup.AppImage --no-sandbox";
+      terminal = false;
+    };
     xclicker = {
       name = "xclicker";
       exec = "appimage-run /home/lemon/Standalone/xclicker_amd64.AppImage";
