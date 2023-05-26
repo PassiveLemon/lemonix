@@ -14,6 +14,7 @@
     pamixer playerctl stress appimage-run htop neofetch ventoy-bin
     libsForQt5.kruler haruna
     i3lock-fancy-rapid
+    openssl certbot jq
   ];
 
   # Fonts
