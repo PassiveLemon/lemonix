@@ -112,6 +112,14 @@ function helpers.simplewtch(com, time)
   return simplewatch
 end
 
+function helpers.unfocus()
+  client.focus = nil
+  client.focus = awful.client.next(0)
+  if client.focus then
+      client.focus:raise()
+  end
+end
+
 function helpers.locker()
   awful.spawn([[sh -c " \
   playerctl pause; \
