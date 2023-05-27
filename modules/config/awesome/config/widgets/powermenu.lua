@@ -129,6 +129,7 @@ end)
 local function signal()
   powermenu_pop.visible = not powermenu_pop.visible
   powermenu_pop.screen = awful.screen.focused()
+  helpers.unfocus()
 end
 
 click_to_hide.popup(powermenu_pop, nil, true)

@@ -16,17 +16,17 @@ local title = helpers.simpletxt(516, 15, nil, beautiful.font, "left", 8, 8, 4, 8
 
 local artist = helpers.simpletxt(516, 15, nil, beautiful.font, "left", 0, 8, 4, 8)
 
-local shuffle = helpers.simplebtn(100, 100, "󰒞", beautiful.font_large, 4, 4, 4, 8)
+local shuffle = helpers.simplebtn(100, 100, "󰒞", beautiful.font_large, 4, 4, 8, 8)
 
-local prev = helpers.simplebtn(100, 100, "󰒮", beautiful.font_large, 4, 4, 4, 4)
+local prev = helpers.simplebtn(100, 100, "󰒮", beautiful.font_large, 4, 4, 8, 4)
 
-local toggle = helpers.simplebtn(100, 100, "󰐊", beautiful.font_large, 4, 4, 4, 4)
+local toggle = helpers.simplebtn(100, 100, "󰐊", beautiful.font_large, 4, 4, 8, 4)
 
-local next = helpers.simplebtn(100, 100, "󰒭", beautiful.font_large, 4, 4, 4, 4)
+local next = helpers.simplebtn(100, 100, "󰒭", beautiful.font_large, 4, 4, 8, 4)
 
-local loop = helpers.simplebtn(100, 100, "󰑗", beautiful.font_large, 4, 8, 4, 4)
+local loop = helpers.simplebtn(100, 100, "󰑗", beautiful.font_large, 4, 8, 8, 4)
 
-local volume = helpers.simplesldr(532, 15, 6, 15, 4, 8, 8, 8)
+local volume = helpers.simplesldr(532, 15, 6, 15, 0, 8, 8, 8)
 
 local function updater()
   awful.spawn.easy_async([[sh -c "sleep 0.1 && playerctl metadata title"]], function(title_state)
@@ -171,6 +171,7 @@ local function signal()
   updater()
   mediamenu_pop.visible = not mediamenu_pop.visible
   mediamenu_pop.screen = awful.screen.focused()
+  helpers.unfocus()
 end
 
 click_to_hide.popup(mediamenu_pop, nil, true)

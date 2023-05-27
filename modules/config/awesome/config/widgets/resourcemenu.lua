@@ -119,6 +119,7 @@ resourcemenu_pop.visible = false
 local function signal()
   resourcemenu_pop.visible = not resourcemenu_pop.visible
   resourcemenu_pop.screen = awful.screen.focused()
+  helpers.unfocus()
 end
 
 click_to_hide.popup(resourcemenu_pop, nil, true)
