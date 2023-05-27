@@ -5,79 +5,96 @@ local wibox = require("wibox")
 
 local helpers = {}
 
-function helpers.text(txt, fnt, ali)
-  local text = wibox.widget {
-    widget = wibox.widget.textbox,
-    text = txt,
-    font = fnt,
-    align = ali,
-    valign = "center",
-  }
-  return text
-end
-
-function helpers.simpletxt(x, y, txt, fnt, ali)
+function helpers.simpletxt(x, y, txt, fnt, ali, mt, mr, mb, ml)
   local simpletext = wibox.widget {
-    widget = wibox.container.background,
-    forced_width = x,
-    forced_height = y,
-    fg = beautiful.fg_normal,
-    bg = beautiful.bg_normal,
-    shape = gears.shape.rounded_rect,
+    widget = wibox.container.margin,
+    margins = {
+      top = mt,
+      right = mr,
+      bottom = mb,
+      left = ml,
+    },
     {
-      id = "textbox",
-      widget = wibox.widget.textbox,
-      text = txt,
-      font = fnt,
-      align = ali,
-      valign = "center",
+      widget = wibox.container.background,
+      forced_width = x,
+      forced_height = y,
+      fg = beautiful.fg_normal,
+      bg = beautiful.bg_normal,
+      shape = gears.shape.rounded_rect,
+      {
+        id = "textbox",
+        widget = wibox.widget.textbox,
+        text = txt,
+        font = fnt,
+        align = ali,
+        valign = "center",
+      },
     },
   }
   return simpletext
 end
 
-function helpers.simplebtn(x, y, txt, fnt)
+function helpers.simplebtn(x, y, txt, fnt, mt, mr, mb, ml)
   local simplebutton = wibox.widget {
-    widget = wibox.container.background,
-    forced_width = x,
-    forced_height = y,
-    fg = beautiful.fg_normal,
-    bg = beautiful.bg_normal,
-    shape = gears.shape.rounded_rect,
+    widget = wibox.container.margin,
+    margins = {
+      top = mt,
+      right = mr,
+      bottom = mb,
+      left = ml,
+    },
     {
-      id = "textbox",
-      widget = wibox.widget.textbox,
-      text = txt,
-      font = fnt,
-      align = "center",
-      valign = "center",
+      id = "background",
+      widget = wibox.container.background,
+      forced_width = x,
+      forced_height = y,
+      fg = beautiful.fg_normal,
+      bg = beautiful.bg_normal,
+      shape = gears.shape.rounded_rect,
+      {
+        id = "textbox",
+        widget = wibox.widget.textbox,
+        text = txt,
+        font = fnt,
+        align = "center",
+        valign = "center",
+      },
     },
   }
   simplebutton:connect_signal("mouse::enter", function()
-    simplebutton.fg = beautiful.fg_focus
-    simplebutton.bg = beautiful.accent
+    simplebutton:get_children_by_id("background")[1].fg = beautiful.fg_focus
+    simplebutton:get_children_by_id("background")[1].bg = beautiful.accent
   end)
   simplebutton:connect_signal("mouse::leave", function()
-    simplebutton.fg = beautiful.fg_normal
-    simplebutton.bg = beautiful.bg_normal
+    simplebutton:get_children_by_id("background")[1].fg = beautiful.fg_normal
+    simplebutton:get_children_by_id("background")[1].bg = beautiful.bg_normal
   end)
   return simplebutton
 end
 
-function helpers.simplesldr(x, y, h, w)
+function helpers.simplesldr(x, y, h, w, mt, mr, mb, ml)
   local simpleslider = wibox.widget {
-    widget = wibox.container.background,
-    forced_width = x,
-    forced_height = y,
-    fg = beautiful.fg_normal,
-    bg = beautiful.bg_normal,
+    widget = wibox.container.margin,
+    margins = {
+      top = mt,
+      right = mr,
+      bottom = mb,
+      left = ml,
+    },
     {
-      id = "slider",
-      widget = wibox.widget.slider,
-      minimum = 0,
-      maximum = 100,
-      bar_height = h,
-      handle_width = w,
+      widget = wibox.container.background,
+      forced_width = x,
+      forced_height = y,
+      fg = beautiful.fg_normal,
+      bg = beautiful.bg_normal,
+      {
+        id = "slider",
+        widget = wibox.widget.slider,
+        minimum = 0,
+        maximum = 100,
+        bar_height = h,
+        handle_width = w,
+      },
     },
   }
   return simpleslider
