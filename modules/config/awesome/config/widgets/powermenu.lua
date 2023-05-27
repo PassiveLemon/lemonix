@@ -10,23 +10,19 @@ local click_to_hide = require("config.helpers.click_to_hide")
 -- Power management menu
 --
 
-local lock = helpers.simplebtn(100, 100, "󰐥", beautiful.font_large)
+local lock = helpers.simplebtn(100, 100, "󰐥", beautiful.font_large, 8, 4, 8, 8)
 
-local poweroff = helpers.simplebtn(100, 100, "󰐥", beautiful.font_large)
+local poweroff = helpers.simplebtn(100, 100, "󰐥", beautiful.font_large, 8, 4, 8, 4)
 
-local restart = helpers.simplebtn(100, 100, "󰑓", beautiful.font_large)
+local restart = helpers.simplebtn(100, 100, "󰑓", beautiful.font_large, 8, 8, 8, 4)
 
 local powermenu_container = wibox.widget {
   layout = wibox.layout.align.vertical,
   {
-    widget = wibox.container.margin,
-    margins = { top = 8, right = 8, bottom = 8, left = 8, },
-    {
-      layout = wibox.layout.fixed.horizontal,
-      lock,
-      poweroff,
-      restart,
-    },
+    layout = wibox.layout.fixed.horizontal,
+    lock,
+    poweroff,
+    restart,
   },
 }
 
@@ -38,53 +34,37 @@ local powermenu_pop = awful.popup {
   border_color = beautiful.border_color_active,
 }
 
-local prompt = helpers.simpletxt(300, 36, "Are you sure?", beautiful.font, "center")
+local prompt = helpers.simpletxt(300, 36, "Are you sure?", beautiful.font, "center", 8, 8, 4, 8)
 
-local confirmpow = helpers.simplebtn(100, 56, "Poweroff")
+local confirmpow = helpers.simplebtn(100, 56, "Poweroff", beautiful.font, 4, 4, 8, 8)
 
-local confirmres = helpers.simplebtn(100, 56, "Restart")
+local confirmres = helpers.simplebtn(100, 56, "Restart", beautiful.font, 4, 4, 8, 8)
 
-local cancel = helpers.simplebtn(200, 56, "Cancel")
+local cancel = helpers.simplebtn(200, 56, "Cancel", beautiful.font, 4, 8, 8, 4)
 
 local poweroff_container = wibox.widget {
   layout = wibox.layout.align.vertical,
   {
-    widget = wibox.container.margin,
-    margins = { top = 8, right = 8, bottom = 4, left = 8, },
-    {
-      layout = wibox.layout.fixed.horizontal,
-      prompt,
-    },
+    layout = wibox.layout.fixed.horizontal,
+    prompt,
   },
   {
-    widget = wibox.container.margin,
-    margins = { top = 4, right = 8, bottom = 8, left = 8, },
-    {
-      layout = wibox.layout.fixed.horizontal,
-      confirmpow,
-      cancel,
-    },
+    layout = wibox.layout.fixed.horizontal,
+    confirmpow,
+    cancel,
   },
 }
 
 local restart_container = wibox.widget {
   layout = wibox.layout.align.vertical,
   {
-    widget = wibox.container.margin,
-    margins = { top = 8, right = 8, bottom = 4, left = 8, },
-    {
-      layout = wibox.layout.fixed.horizontal,
-      prompt,
-    },
+    layout = wibox.layout.fixed.horizontal,
+    prompt,
   },
   {
-    widget = wibox.container.margin,
-    margins = { top = 4, right = 8, bottom = 8, left = 8, },
-    {
-      layout = wibox.layout.fixed.horizontal,
-      confirmres,
-      cancel,
-    },
+    layout = wibox.layout.fixed.horizontal,
+    confirmres,
+    cancel,
   },
 }
 

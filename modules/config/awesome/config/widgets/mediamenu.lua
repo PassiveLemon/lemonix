@@ -12,21 +12,21 @@ local click_to_hide = require("config.helpers.click_to_hide")
 -- Media management menu
 --
 
-local title = helpers.simpletxt(516, 15, nil, beautiful.font, "left")
+local title = helpers.simpletxt(516, 15, nil, beautiful.font, "left", 8, 8, 4, 8)
 
-local artist = helpers.simpletxt(516, 15, nil, beautiful.font, "left")
+local artist = helpers.simpletxt(516, 15, nil, beautiful.font, "left", 0, 8, 4, 8)
 
-local shuffle = helpers.simplebtn(100, 100, "󰒞", beautiful.font_large)
+local shuffle = helpers.simplebtn(100, 100, "󰒞", beautiful.font_large, 4, 4, 4, 8)
 
-local prev = helpers.simplebtn(100, 100, "󰒮", beautiful.font_large)
+local prev = helpers.simplebtn(100, 100, "󰒮", beautiful.font_large, 4, 4, 4, 4)
 
-local toggle = helpers.simplebtn(100, 100, "󰐊", beautiful.font_large)
+local toggle = helpers.simplebtn(100, 100, "󰐊", beautiful.font_large, 4, 4, 4, 4)
 
-local next = helpers.simplebtn(100, 100, "󰒭", beautiful.font_large)
+local next = helpers.simplebtn(100, 100, "󰒭", beautiful.font_large, 4, 4, 4, 4)
 
-local loop = helpers.simplebtn(100, 100, "󰑗", beautiful.font_large)
+local loop = helpers.simplebtn(100, 100, "󰑗", beautiful.font_large, 4, 8, 4, 4)
 
-local volume = helpers.simplesldr(516, 15, 6, 15)
+local volume = helpers.simplesldr(532, 15, 6, 15, 4, 8, 8, 8)
 
 local function updater()
   awful.spawn.easy_async([[sh -c "sleep 0.1 && playerctl metadata title"]], function(title_state)
@@ -112,33 +112,21 @@ end
 local mediamenu_container = wibox.widget {
   layout = wibox.layout.align.vertical,
   {
-    widget = wibox.container.margin,
-    margins = { top = 8, right = 8, bottom = 4, left = 8, },
-    {
-      layout = wibox.layout.fixed.vertical,
-      title,
-      artist,
-    },
+    layout = wibox.layout.fixed.vertical,
+    title,
+    artist,
   },
   {
-    widget = wibox.container.margin,
-    margins = { top = 4, right = 8, bottom = 4, left = 8, },
-    {
-      layout = wibox.layout.fixed.horizontal,
-      shuffle,
-      prev,
-      toggle,
-      next,
-      loop,
-    },
+    layout = wibox.layout.fixed.horizontal,
+    shuffle,
+    prev,
+    toggle,
+    next,
+    loop,
   },
   {
-    widget = wibox.container.margin,
-    margins = { top = 4, right = 8, bottom = 8, left = 8, },
-    {
-      layout = wibox.layout.fixed.horizontal,
-      volume,
-    },
+    layout = wibox.layout.fixed.horizontal,
+    volume,
   },
 }
 
