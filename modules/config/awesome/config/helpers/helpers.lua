@@ -3,7 +3,7 @@ local gears = require("gears")
 local beautiful = require("beautiful")
 local wibox = require("wibox")
 
-local helpers = {}
+local helpers = { }
 
 function helpers.simpletxt(x, y, txt, fnt, ali, mt, mr, mb, ml)
   local simpletext = wibox.widget {
@@ -63,7 +63,7 @@ function helpers.simplebtn(x, y, txt, fnt, mt, mr, mb, ml)
   }
   simplebutton:connect_signal("mouse::enter", function()
     simplebutton:get_children_by_id("background")[1].fg = beautiful.fg_focus
-    simplebutton:get_children_by_id("background")[1].bg = beautiful.accent
+    simplebutton:get_children_by_id("background")[1].bg = beautiful.bg_minimize
   end)
   simplebutton:connect_signal("mouse::leave", function()
     simplebutton:get_children_by_id("background")[1].fg = beautiful.fg_normal
@@ -72,7 +72,7 @@ function helpers.simplebtn(x, y, txt, fnt, mt, mr, mb, ml)
   return simplebutton
 end
 
-function helpers.simplesldr(x, y, h, w, mt, mr, mb, ml)
+function helpers.simplesldr(x, y, w, h, max, mt, mr, mb, ml)
   local simpleslider = wibox.widget {
     widget = wibox.container.margin,
     margins = {
@@ -91,13 +91,55 @@ function helpers.simplesldr(x, y, h, w, mt, mr, mb, ml)
         id = "slider",
         widget = wibox.widget.slider,
         minimum = 0,
-        maximum = 100,
+        maximum = max,
+        handle_shape = gears.shape.circle,
+        handle_color = beautiful.fg_normal,
+        handle_width = 0,
         bar_height = h,
-        handle_width = w,
+        bar_shape = gears.shape.rounded_rect,
+        bar_color = beautiful.minimize,
+        bar_active_color = beautiful.fg_normal,
       },
     },
   }
+  simpleslider:connect_signal("mouse::enter", function()
+    simpleslider:get_children_by_id("slider")[1].handle_width = w
+  end)
+  simpleslider:connect_signal("mouse::leave", function()
+    simpleslider:get_children_by_id("slider")[1].handle_width = 0
+  end)
   return simpleslider
+end
+
+function helpers.simpleprog(x, y, w, max, mt, mr, mb, ml)
+  local simpleprog = wibox.widget {
+    widget = wibox.container.margin,
+    margins = {
+      top = mt,
+      right = mr,
+      bottom = mb,
+      left = ml,
+    },
+    {
+      widget = wibox.container.background,
+      forced_width = x,
+      forced_height = y,
+      fg = beautiful.fg_normal,
+      bg = beautiful.bg_normal,
+      {
+        id = "progressbar",
+        widget = wibox.widget.progressbar,
+        color = beautiful.fg_normal,
+        background_color = beautiful.bg_minimize,
+        bar_shape = gears.shape.rounded_rect,
+        shape = gears.shape.rounded_rect,
+        max_value = max,
+        forced_height = y,
+        forced_width = w,
+      },
+    },
+  }
+  return simpleprog
 end
 
 function helpers.simplewtch(com, time)
