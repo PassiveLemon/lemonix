@@ -78,11 +78,16 @@ local function loopupdater()
 end
 
 local function positionupdater()
-  awful.spawn.easy_async([[sh -c "sleep 0.1 && playerctl metadata mpris:length"]], function(length)
-    awful.spawn.easy_async([[sh -c "sleep 0.1 && playerctl position"]], function (current)
-      positiontrim = (((current * 1000000) / length) * 100)
-      position:get_children_by_id("progressbar")[1].value = positiontrim
-    end)
+  awful.spawn.easy_async([[sh -c "sleep 0.1 && playerctl position"]], function (current)
+    if current == "" or current:find("No player could handle this command") or current:find("No Players found") then
+      position.visible = false
+    else
+      position.visible = true
+      awful.spawn.easy_async([[sh -c "sleep 0.1 && playerctl metadata mpris:length"]], function(length)
+        positiontrim = (((current * 1000000) / length) * 100)
+        position:get_children_by_id("progressbar")[1].value = positiontrim
+      end)
+    end
   end)
 end
 
