@@ -222,5 +222,7 @@ click_to_hide.popup(mediamenu_pop, nil, true)
 
 return {
   signal = signal,
-  updater = updater,
+  metadataupdater = metadataupdater,
+  loopupdater = loopupdater,
+  positionupdater = positionupdater,
 }
