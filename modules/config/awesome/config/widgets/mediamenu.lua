@@ -26,9 +26,11 @@ local next = helpers.simplebtn(100, 100, "󰒭", beautiful.font_large, 4, 4, 8, 
 
 local loop = helpers.simplebtn(100, 100, "󰑗", beautiful.font_large, 4, 8, 8, 4)
 
-local volume = helpers.simplesldr(532, 15, 6, 15, 0, 8, 8, 8)
+local position = helpers.simpleprog(532, 6, 532, 100, 0, 8, 8, 8)
 
-local function updater()
+local volume = helpers.simplesldr(532, 15, 15, 6, 100, 0, 8, 8, 8)
+
+local function metadataupdater()
   awful.spawn.easy_async([[sh -c "sleep 0.1 && playerctl metadata title"]], function(title_state)
     if title_state == "" or title_state:find("No player could handle this command") or title_state:find("No Players found") then
       artist.visible = false
@@ -41,6 +43,9 @@ local function updater()
   awful.spawn.easy_async([[sh -c "sleep 0.1 && playerctl metadata artist"]], function(artist_state)
     artist:get_children_by_id("textbox")[1].text = artist_state
   end)
+end
+
+local function shuffleupdater()
   awful.spawn.easy_async([[sh -c "sleep 0.1 && playerctl shuffle"]], function(shuffle_state)
     if shuffle_state:find("On") then
       shuffle:get_children_by_id("textbox")[1].text = "󰒝"
@@ -48,6 +53,9 @@ local function updater()
       shuffle:get_children_by_id("textbox")[1].text = "󰒞"
     end
   end)
+end
+
+local function toggleupdater()
   awful.spawn.easy_async([[sh -c "sleep 0.1 && playerctl status"]], function(toggle_state)
     if toggle_state:find("Playing") then
       toggle:get_children_by_id("textbox")[1].text = "󰏤"
@@ -55,6 +63,9 @@ local function updater()
       toggle:get_children_by_id("textbox")[1].text = "󰐊"
     end
   end)
+end
+
+local function loopupdater()
   awful.spawn.easy_async([[sh -c "sleep 0.1 && playerctl loop"]], function(loop_state)
     if loop_state:find("None") then
       loop:get_children_by_id("textbox")[1].text = "󰑗"
@@ -64,6 +75,18 @@ local function updater()
       loop:get_children_by_id("textbox")[1].text = "󰑘"
     end
   end)
+end
+
+local function positionupdater()
+  awful.spawn.easy_async([[sh -c "sleep 0.1 && playerctl metadata mpris:length"]], function(length)
+    awful.spawn.easy_async([[sh -c "sleep 0.1 && playerctl position"]], function (current)
+      positiontrim = (((current * 1000000) / length) * 100)
+      position:get_children_by_id("progressbar")[1].value = positiontrim
+    end)
+  end)
+end
+
+local function volumeupdater()
   awful.spawn.easy_async([[sh -c "sleep 0.1 && playerctl volume"]], function(volume_state)
     if volume_state == "" or volume_state:find("No player could handle this command") or volume_state:find("No Players found") then
       volume.visible = false
@@ -81,7 +104,7 @@ local function shuffler()
     elseif shuffle_state:find("Off") then
       awful.spawn("playerctl shuffle on")
     end
-    updater()
+    shuffleupdater()
   end)
 end
 
@@ -92,7 +115,7 @@ local function toggler()
     elseif toggle_state:find("Paused") then
       awful.spawn("playerctl play")
     end
-    updater()
+    toggleupdater()
   end)
 end
 
@@ -105,9 +128,15 @@ local function looper()
     elseif loop_state:find("Track") then
       awful.spawn("playerctl loop None")
     end
-    updater()
+    loopupdater()
   end)
 end
+
+local timer = gears.timer {
+  timeout = 1,
+  autostart = true,
+  callback = positionupdater
+}
 
 local mediamenu_container = wibox.widget {
   layout = wibox.layout.align.vertical,
@@ -125,7 +154,8 @@ local mediamenu_container = wibox.widget {
     loop,
   },
   {
-    layout = wibox.layout.fixed.horizontal,
+    layout = wibox.layout.fixed.vertical,
+    position,
     volume,
   },
 }
@@ -146,7 +176,9 @@ end)
 
 prev:connect_signal("button::press", function()
   awful.spawn("playerctl previous")
-  updater()
+  metadataupdater()
+  loopupdater()
+  positionupdater()
 end)
 
 toggle:connect_signal("button::press", function()
@@ -155,7 +187,9 @@ end)
 
 next:connect_signal("button::press", function()
   awful.spawn("playerctl next")
-  updater()
+  metadataupdater()
+  loopupdater()
+  positionupdater()
 end)
 
 loop:connect_signal("button::press", function()
@@ -164,11 +198,16 @@ end)
 
 volume:get_children_by_id("slider")[1]:connect_signal("property::value", function(slider, volume_state)
   slider.value = volume_state
-	awful.spawn("playerctl volume " .. (volume_state/100), false)
+	awful.spawn("playerctl volume " .. (volume_state/100))
 end)
 
 local function signal()
-  updater()
+  metadataupdater()
+  toggleupdater()
+  shuffleupdater()
+  loopupdater()
+  positionupdater()
+  volumeupdater()
   mediamenu_pop.visible = not mediamenu_pop.visible
   mediamenu_pop.screen = awful.screen.focused()
   helpers.unfocus()
