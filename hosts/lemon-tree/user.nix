@@ -2,6 +2,7 @@
   imports = [
     ../../modules/xorg.nix
     ../../modules/gaming.nix
+    #../../modules/gdlauncher.nix
   ];
 
   nixpkgs.overlays = [ (final: prev: {
@@ -10,11 +11,10 @@
 
   environment.systemPackages = with pkgs; [
     lite-xl rofi hilbish vscodium github-desktop firefox betterdiscordctl (discord.override { withOpenASAR = true; })
-    mpv feh gimp obs-studio authy xarchiver filezilla easytag easyeffects qpwgraph openshot-qt
+    haruna feh gimp obs-studio authy xarchiver filezilla easytag easyeffects qpwgraph openshot-qt
     pamixer playerctl stress appimage-run htop neofetch ventoy-bin
-    libsForQt5.kruler haruna
+    libsForQt5.kruler
     i3lock-fancy-rapid
-    openssl certbot jq
   ];
 
   # Fonts
