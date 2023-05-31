@@ -1,7 +1,7 @@
 { config, pkgs, ... }: {
   environment.systemPackages = with pkgs; [
     gamemode protonup-ng dxvk
-    bottles ludusavi
+    bottles lutris ludusavi
     lunar-client
     yuzu-mainline
   ];
