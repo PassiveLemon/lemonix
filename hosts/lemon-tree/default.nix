@@ -42,6 +42,7 @@
         { from = 21000; to = 23000; }
         { from = 31000; to = 33000; }
         { from = 41000; to = 43000; }
+        { from = 51000; to = 53000; }
       ];
       allowedUDPPortRanges = [
         { from = 989; to = 989; }
@@ -126,7 +127,7 @@
   # Drives
   # 2 Gb Swap
   swapDevices = [
-    { device = "/dev/disk/by-uuid/c99f7496-c915-4dc4-89e5-a6690a3d93f1"; }
+    { device = "/dev/disk/by-partuuid/ea50918a-ab69-4126-a74c-5d1f0bb70612"; randomEncryption.enable = true; priority = 176; }
   ];
 
   # 2 TB Seagate
