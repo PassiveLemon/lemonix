@@ -15,6 +15,7 @@
     pamixer playerctl stress appimage-run htop neofetch ventoy-bin
     libsForQt5.kruler
     i3lock-fancy-rapid
+    xwinwrap mpv
   ];
 
   # Fonts

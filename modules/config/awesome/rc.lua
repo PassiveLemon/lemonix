@@ -15,3 +15,6 @@ awful.spawn.easy_async("picom -b")
 awful.spawn.easy_async("nm-applet")
 awful.spawn.easy_async("megasync")
 
+awful.spawn.easy_async([[sh -c "xwinwrap -ov -g 1920x1080+0+0 -- mpv -wid WID /home/HDD2TBEXT4/Downloads/fallen-leaves-lake-moewalls.com.mp4 --no-osc --no-osd-bar --loop-file --player-operation-mode=cplayer --no-audio --panscan=1.0 --no-input-default-bindings"]])
+awful.spawn.easy_async([[sh -c "xwinwrap -ov -g 1920x1080+1920+0 -- mpv -wid WID /home/HDD2TBEXT4/Downloads/fallen-leaves-lake-moewalls.com.mp4 --no-osc --no-osd-bar --loop-file --player-operation-mode=cplayer --no-audio --panscan=1.0 --no-input-default-bindings"]])
+
