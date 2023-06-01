@@ -3,7 +3,7 @@
     enable = true;
     package = pkgs.kitty;
     settings = {
-      background_opacity = "0.8";
+      background_opacity = "0.85";
       window_padding_width = "5 6 5 6";
       font_family = "Fira Code Medium Nerd Font Complete";
       font_size = 10;

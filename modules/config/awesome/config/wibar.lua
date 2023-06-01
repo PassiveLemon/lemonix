@@ -93,7 +93,8 @@ screen.connect_signal("request::desktop_decoration", function(s)
     height   = 23,
     border_width = 2,
     border_color = "#535d6c",
-    type = "dock"
+    type = "dock",
+    ontop = true,
   })
 
   wibar:setup {
