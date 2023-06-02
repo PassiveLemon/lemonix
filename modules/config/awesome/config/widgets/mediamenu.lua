@@ -12,22 +12,22 @@ local click_to_hide = require("config.helpers.click_to_hide")
 -- Media management menu
 --
 
-local title = helpers.simpletxt(516, 15, nil, beautiful.font, "left", 4, 4, 4, 8)
+local title = helpers.simpletxt(516, 15, nil, beautiful.font, "left", 4, 4, 4, 4)
 
-local artist = helpers.simpletxt(516, 15, nil, beautiful.font, "left", 0, 4, 4, 8)
+local artist = helpers.simpletxt(516, 15, nil, beautiful.font, "left", 0, 4, 4, 4)
 
-local shuffle = helpers.simplebtn(100, 100, "󰒞", beautiful.font_large, 4, 4, 8, 4)
+local shuffle = helpers.simplebtn(100, 100, "󰒞", beautiful.font_large, 4, 4, 4, 4)
 
-local prev = helpers.simplebtn(100, 100, "󰒮", beautiful.font_large, 4, 4, 8, 4)
+local prev = helpers.simplebtn(100, 100, "󰒮", beautiful.font_large, 4, 4, 4, 4)
 
-local toggle = helpers.simplebtn(100, 100, "󰐊", beautiful.font_large, 4, 4, 8, 4)
+local toggle = helpers.simplebtn(100, 100, "󰐊", beautiful.font_large, 4, 4, 4, 4)
 
-local next = helpers.simplebtn(100, 100, "󰒭", beautiful.font_large, 4, 4, 8, 4)
+local next = helpers.simplebtn(100, 100, "󰒭", beautiful.font_large, 4, 4, 4, 4)
 
-local loop = helpers.simplebtn(100, 100, "󰑗", beautiful.font_large, 4, 4, 8, 4)
+local loop = helpers.simplebtn(100, 100, "󰑗", beautiful.font_large, 4, 4, 4, 4)
 
 local position = helpers.simpleprog(532, 6, 532, 100, 4, 4, 4, 4)
-local positionsldr = helpers.simplesldrhdn(532, 6, 0, 6, 100, 4, 8, 4, 8)
+local positionsldr = helpers.simplesldrhdn(532, 6, 0, 6, 100, 4, 4, 4, 4)
 
 local volume = helpers.simplesldr(532, 16, 16, 6, 100, 4, 4, 4, 4)
 
@@ -146,7 +146,7 @@ end
 local timer = gears.timer {
   timeout = 1,
   autostart = true,
-  callback = positionupdater(nil)
+  callback = function() positionupdater(nil) end,
 }
 
 local mediamenu_container = wibox.widget {
