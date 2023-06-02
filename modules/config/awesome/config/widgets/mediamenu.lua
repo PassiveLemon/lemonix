@@ -78,7 +78,7 @@ local function loopupdater()
   end)
 end
 
-local function positionupdater(test1, position_state)
+local function positionupdater(position_state)
   awful.spawn.easy_async("playerctl position", function (current)
     if current == "" or current:find("No player could handle this command") or current:find("No Players found") then
       position.visible = false
@@ -146,7 +146,7 @@ end
 local timer = gears.timer {
   timeout = 1,
   autostart = true,
-  callback = positionupdater
+  callback = positionupdater(nil)
 }
 
 local mediamenu_container = wibox.widget {
@@ -195,33 +195,25 @@ local mediamenu_pop = awful.popup {
 mediamenu_pop.visible = false
 
 shuffle:connect_signal("button::press", function()
-  gears.timer.start_new(0.1, function()
-    shuffler()
-  end)
+  shuffler()
 end)
 
 prev:connect_signal("button::press", function()
   awful.spawn("playerctl previous")
-  gears.timer.start_new(0.1, function()
-    metadataupdater()
-    loopupdater()
-    positionupdater()
-  end)
+  metadataupdater()
+  loopupdater()
+  positionupdater()
 end)
 
 toggle:connect_signal("button::press", function()
-  gears.timer.start_new(0.1, function()
-    toggler()
-  end)
+  toggler()
 end)
 
 next:connect_signal("button::press", function()
   awful.spawn("playerctl next")
-  gears.timer.start_new(0.1, function()
-    metadataupdater()
-    loopupdater()
-    positionupdater()
-  end)
+  metadataupdater()
+  loopupdater()
+  positionupdater()
 end)
 
 loop:connect_signal("button::press", function()
@@ -229,7 +221,7 @@ loop:connect_signal("button::press", function()
 end)
 
 positionsldr:get_children_by_id("slider")[1]:connect_signal("property::value", function(slider, position_state)
-  positionupdater(nil, position_state)
+  positionupdater(position_state)
 end)
 
 volume:get_children_by_id("slider")[1]:connect_signal("property::value", function(slider, volume_state)
