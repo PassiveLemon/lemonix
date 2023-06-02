@@ -12,7 +12,7 @@
   environment.systemPackages = with pkgs; [
     lite-xl rofi hilbish vscodium github-desktop firefox betterdiscordctl (discord.override { withOpenASAR = true; })
     haruna feh gimp obs-studio authy xarchiver filezilla easytag easyeffects qpwgraph openshot-qt
-    pamixer playerctl stress appimage-run htop neofetch ventoy-bin
+    pamixer playerctl stress appimage-run htop nvtop-nvidia neofetch ventoy-bin
     libsForQt5.kruler
     i3lock-fancy-rapid
     xwinwrap mpv
