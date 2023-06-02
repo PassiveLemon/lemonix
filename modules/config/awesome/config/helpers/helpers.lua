@@ -111,6 +111,39 @@ function helpers.simplesldr(x, y, w, h, max, mt, mr, mb, ml)
   return simpleslider
 end
 
+function helpers.simplesldrhdn(x, y, w, h, max, mt, mr, mb, ml)
+  local simplesldrhdn = wibox.widget {
+    widget = wibox.container.margin,
+    margins = {
+      top = mt,
+      right = mr,
+      bottom = mb,
+      left = ml,
+    },
+    {
+      widget = wibox.container.background,
+      forced_width = x,
+      forced_height = y,
+      fg = "#00000000",
+      bg = "#00000000",
+      {
+        id = "slider",
+        widget = wibox.widget.slider,
+        minimum = 0,
+        maximum = max,
+        handle_shape = gears.shape.circle,
+        handle_color = beautiful.fg_normal,
+        handle_width = 0,
+        handle_height = 0,
+        bar_shape = gears.shape.rounded_rect,
+        bar_color = "#00000000",
+        bar_active_color = "#00000000",
+      },
+    },
+  }
+  return simplesldrhdn
+end
+
 function helpers.simpleprog(x, y, w, max, mt, mr, mb, ml)
   local simpleprog = wibox.widget {
     widget = wibox.container.margin,
