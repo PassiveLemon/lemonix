@@ -1,6 +1,6 @@
 { config, pkgs, ... }: {
   environment.systemPackages = with pkgs; [
-    gamemode protonup-ng dxvk
+    wine64 winetricks gamemode protonup-ng dxvk
     bottles lutris ludusavi
     lunar-client
     yuzu-mainline
