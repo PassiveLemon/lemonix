@@ -36,7 +36,7 @@
         pkgs = unstable.legacyPackages.x86_64-linux;
         extraSpecialArgs = { inherit inputs outputs; };
         modules = [
-          ./users/lemon/home.nix
+          ./users/lemon/home1.nix
           spicetify-nix.homeManagerModule
         ];
       };
@@ -44,7 +44,7 @@
         pkgs = unstable.legacyPackages.x86_64-linux;
         extraSpecialArgs = { inherit inputs outputs; };
         modules = [
-          ./users/lime/home.nix
+          ./users/lime/home2.nix
         ];
       };
     };

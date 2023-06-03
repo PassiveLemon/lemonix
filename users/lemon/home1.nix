@@ -1,6 +1,6 @@
 { config, pkgs, ... }: {
   imports = [
-    ../../hosts/lemon-tree/config/desktop.nix
+    ./config/desktop.nix
     ../../modules/gtk.nix
     ../../modules/kitty.nix
     ../../modules/picom.nix
