@@ -32,7 +32,7 @@ local positionsldr = helpers.simplesldrhdn(532, 6, 0, 6, 100, 4, 4, 4, 4)
 local volume = helpers.simplesldr(532, 16, 16, 6, 100, 4, 4, 4, 4)
 
 local function metadataupdater()
-  awful.spawn.easy_async([[sh -c "sleep 0.05 && playerctl metadata title"]], function(title_state)
+  awful.spawn.easy_async([[sh -c "sleep 0.1 && playerctl metadata title"]], function(title_state)
     if title_state == "" or title_state:find("No player could handle this command") or title_state:find("No Players found") then
       artist.visible = false
       title:get_children_by_id("textbox")[1].text = "No media found"
@@ -41,13 +41,13 @@ local function metadataupdater()
       title:get_children_by_id("textbox")[1].text = title_state
     end
   end)
-  awful.spawn.easy_async([[sh -c "sleep 0.05 && playerctl metadata artist"]], function(artist_state)
+  awful.spawn.easy_async([[sh -c "sleep 0.1 && playerctl metadata artist"]], function(artist_state)
     artist:get_children_by_id("textbox")[1].text = artist_state
   end)
 end
 
 local function shuffleupdater()
-  awful.spawn.easy_async([[sh -c "sleep 0.05 && playerctl shuffle"]], function(shuffle_state)
+  awful.spawn.easy_async([[sh -c "sleep 0.1 && playerctl shuffle"]], function(shuffle_state)
     if shuffle_state:find("On") then
       shuffle:get_children_by_id("textbox")[1].text = "󰒝"
     elseif shuffle_state:find("Off") then
@@ -57,7 +57,7 @@ local function shuffleupdater()
 end
 
 local function toggleupdater()
-  awful.spawn.easy_async([[sh -c "sleep 0.05 && playerctl status"]], function(toggle_state)
+  awful.spawn.easy_async([[sh -c "sleep 0.1 && playerctl status"]], function(toggle_state)
     if toggle_state:find("Playing") then
       toggle:get_children_by_id("textbox")[1].text = "󰏤"
     elseif toggle_state:find("Paused") then
@@ -67,7 +67,7 @@ local function toggleupdater()
 end
 
 local function loopupdater()
-  awful.spawn.easy_async([[sh -c "sleep 0.05 && playerctl loop"]], function(loop_state)
+  awful.spawn.easy_async([[sh -c "sleep 0.1 && playerctl loop"]], function(loop_state)
     if loop_state:find("None") then
       loop:get_children_by_id("textbox")[1].text = "󰑗"
     elseif loop_state:find("Playlist") then
