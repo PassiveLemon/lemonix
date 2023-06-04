@@ -15,37 +15,37 @@ modkey = "Mod4"
 
 awful.keyboard.append_global_keybindings({
   awful.key({ modkey, "Control" }, "r", awesome.restart,
-  { description = "reload awesome", group = "awesome" }),
+  { description = "reload awesome", group = "awesome", }),
 
   awful.key({ modkey, }, "Return", function() awful.spawn(terminal) end,
-  { description = "open a terminal", group = "launcher" }),
+  { description = "open a terminal", group = "launcher", }),
 
   awful.key({ modkey, }, "space", function() awful.spawn("rofi -show drun -theme /home/lemon/.config/rofi/lemon.rasi -show-icons") end,
-  { description = "run rofi", group = "launcher" }),
+  { description = "run rofi", group = "launcher", }),
 
   awful.key({ modkey, }, "x", function() resourcemenu.signal() end,
-  { description = "run resourcemenu", group = "launcher" }),
+  { description = "run resourcemenu", group = "launcher", }),
 
   awful.key({ modkey, }, "v", function() powermenu.signal() end,
-  { description = "run powermenu", group = "launcher" }),
+  { description = "run powermenu", group = "launcher", }),
 
   awful.key({ modkey, }, "c", function() mediamenu.signal() end,
-  { description = "run mediamenu", group = "launcher" }),
+  { description = "run mediamenu", group = "launcher", }),
 
   awful.key({ modkey, }, "s", hotkeys_popup.show_help,
-  { description = "show help", group = "utility" }),
+  { description = "show help", group = "utility", }),
 
   awful.key({ }, "Print", function() awful.spawn("flameshot gui") end,
-  { description = "flameshot", group = "utility" }),
+  { description = "flameshot", group = "utility", }),
 
   awful.key({ }, "XF86AudioRaiseVolume", function() awful.spawn("pamixer -i 1") end,
-  { description = "increase volume", group = "media" }),
+  { description = "increase volume", group = "media", }),
 
   awful.key({ }, "XF86AudioLowerVolume", function() awful.spawn("pamixer -d 1") end,
-  { description = "decrease volume", group = "media" }),
+  { description = "decrease volume", group = "media", }),
 
   awful.key({ }, "XF86AudioMute", function() awful.spawn("pamixer -t") end,
-  { description = "toggle mute", group = "media" }),
+  { description = "toggle mute", group = "media", }),
 
   awful.key({ }, "XF86AudioPrev", function()
     awful.spawn("playerctl previous")
@@ -53,7 +53,7 @@ awful.keyboard.append_global_keybindings({
     mediamenu.loopupdater()
     mediamenu.positionupdater()
   end,
-  { description = "previous media", group = "media" }),
+  { description = "previous media", group = "media", }),
 
   awful.key({ }, "XF86AudioPlay", function()
     awful.spawn("playerctl play-pause")
@@ -61,7 +61,7 @@ awful.keyboard.append_global_keybindings({
     mediamenu.loopupdater()
     mediamenu.positionupdater()
   end,
-  { description = "toggle play", group = "media" }),
+  { description = "toggle play", group = "media", }),
 
   awful.key({ }, "XF86AudioNext", function()
     awful.spawn("playerctl next")
@@ -69,7 +69,7 @@ awful.keyboard.append_global_keybindings({
     mediamenu.loopupdater()
     mediamenu.positionupdater()
   end,
-  { description = "next media", group = "media" }),
+  { description = "next media", group = "media", }),
 
   awful.key {
     modifiers   = { modkey },
@@ -128,25 +128,25 @@ awful.keyboard.append_global_keybindings({
   },
 
   awful.key({ modkey, }, "u", awful.client.urgent.jumpto,
-  { description = "jump to urgent client", group = "client" }),
+  { description = "jump to urgent client", group = "client", }),
 })
 
 awful.keyboard.append_client_keybindings({
   awful.key({ modkey, }, "Escape", function(c) c:kill() end,
-  { description = "close", group = "client" }),
+  { description = "close", group = "client", }),
 
   awful.key({ modkey, }, "m",
     function(c)
         c.fullscreen = not c.fullscreen
         c:raise()
     end,
-  { description = "toggle fullscreen", group = "client" }),
+  { description = "toggle fullscreen", group = "client", }),
 
   awful.key({ modkey, }, "f",  awful.client.floating.toggle,
-  { description = "toggle floating", group = "client" }),
+  { description = "toggle floating", group = "client", }),
 
   awful.key({ modkey, }, "n", function(c) c.minimized = true end,
-  { description = "minimize", group = "client" }),
+  { description = "minimize", group = "client", }),
 })
 
 --
@@ -156,13 +156,13 @@ awful.keyboard.append_client_keybindings({
 client.connect_signal( "request::default_mousebindings", function()
   awful.mouse.append_client_mousebindings({
     awful.button({ }, 1, function(c)
-      c:activate { context = "mouse_click" }
+      c:activate { context = "mouse_click", }
     end),
     awful.button({ modkey }, 1, function(c)
-      c:activate { context = "mouse_click", action = "mouse_move"  }
+      c:activate { context = "mouse_click", action = "mouse_move", }
     end),
     awful.button({ modkey }, 3, function(c)
-      c:activate { context = "mouse_click", action = "mouse_resize"}
+      c:activate { context = "mouse_click", action = "mouse_resize", }
     end),
   })
 end)
@@ -173,7 +173,7 @@ end)
 
 awful.keyboard.append_client_keybindings({
   awful.key({}, "sudo nixos-rebuild switch", function() end,
-  { description = "Rebuild nixos", group = "other" }),
+  { description = "Rebuild nixos", group = "other", }),
   awful.key({}, "home-manager switch --flake /home/lemon/Documents/GitHub/lemonix/#lemon@lemon-tree", function() end,
-  { description = "Rebuild home-manager", group = "other" }),
+  { description = "Rebuild home-manager", group = "other", }),
 })
