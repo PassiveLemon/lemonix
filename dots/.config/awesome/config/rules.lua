@@ -16,24 +16,24 @@ ruled.client.connect_signal("request::rules", function()
       focus = awful.client.focus.filter,
       raise = true,
       screen = awful.screen.preferred,
-      placement = awful.placement.no_offscreen
-    }
+      placement = awful.placement.no_offscreen,
+    },
   }
 
 -- Always floating clients
   ruled.client.append_rule {
     id = "floating",
     rule_any = {
-      instance = { "feh", "lxappearance", "authy desktop", "xarchiver", "kruler" },
-      class    = { "feh", "Lxappearance", "Authy Desktop", "Xarchiver", "kruler" },
-      name     = { "Customize Look and Feel", "Twilio Authy", "KRuler", "Confirm File Replacing", "Copying files" },
-      role     = { "pop-up", "GtkFileChooserDialog" },
+      instance = { "feh", "lxappearance", "authy desktop", "xarchiver", "kruler", },
+      class    = { "feh", "Lxappearance", "Authy Desktop", "Xarchiver", "kruler", },
+      name     = { "Customize Look and Feel", "Twilio Authy", "KRuler", "Confirm File Replacing", "Copying files", },
+      role     = { "pop-up", "GtkFileChooserDialog", },
     },
     properties = {
       floating = true,
       ontop = true,
-      placement = awful.placement.centered+awful.placement.no_offscreen
-    }
+      placement = awful.placement.centered+awful.placement.no_offscreen,
+    },
   }
 end)
 
@@ -52,21 +52,21 @@ ruled.client.connect_signal("request::rules", function()
       screen = "DP-0",
       tag = " 5 ",
       minimized = true,
-      urgent = false
-    }
+      urgent = false,
+    },
   }
 
   ruled.client.append_rule {
     rule = {
       instance = "kruler",
       class    = "kruler",
-      name     = "KRuler"
+      name     = "KRuler",
     },
     properties = {
       width = 1920,
       height = 75,
-      border_width = 0
-    }
+      border_width = 0,
+    },
   }
 end)
 
@@ -94,5 +94,5 @@ end)
 
 -- Enable sloppy focus, so that focus follows mouse.
 client.connect_signal("mouse::enter", function(c)
-  c:activate { context = "mouse_enter", raise = false }
+  c:activate { context = "mouse_enter", raise = false, }
 end)
