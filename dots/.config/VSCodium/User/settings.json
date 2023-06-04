@@ -1,0 +1,18 @@
+{
+  "editor.bracketPairColorization.enabled": false,
+  "editor.minimap.enabled": false,
+  "editor.tabSize": 2,
+  "security.workspace.trust.untrustedFiles": "open",
+  "update.mode": "none",
+  "workbench.colorTheme": "lemon-color-theme",
+  "workbench.iconTheme": "material-icon-theme",
+  "workbench.startupEditor": "none",
+  "workbench.welcomePage.extraAnnouncements": false,
+  "color-manager.autoStartIntellisense": true,
+  "editor.fontFamily": "'Fira Code Medium Nerd Font Complete Mono', 'monospace', monospace",
+  "editor.fontLigatures": false,
+  "emmet.excludeLanguages": [
+    "html",
+    "markdown"
+  ],
+}

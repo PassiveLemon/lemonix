@@ -61,11 +61,11 @@ function helpers.simplebtn(x, y, txt, fnt, mt, mr, mb, ml)
       },
     },
   }
-  simplebutton:connect_signal("mouse::enter", function()
+  simplebutton:get_children_by_id("background")[1]:connect_signal("mouse::enter", function()
     simplebutton:get_children_by_id("background")[1].fg = beautiful.fg_focus
     simplebutton:get_children_by_id("background")[1].bg = beautiful.bg_minimize
   end)
-  simplebutton:connect_signal("mouse::leave", function()
+  simplebutton:get_children_by_id("background")[1]:connect_signal("mouse::leave", function()
     simplebutton:get_children_by_id("background")[1].fg = beautiful.fg_normal
     simplebutton:get_children_by_id("background")[1].bg = beautiful.bg_normal
   end)
@@ -82,6 +82,7 @@ function helpers.simplesldr(x, y, w, h, max, mt, mr, mb, ml)
       left = ml,
     },
     {
+      id = "background",
       widget = wibox.container.background,
       forced_width = x,
       forced_height = y,
@@ -102,10 +103,10 @@ function helpers.simplesldr(x, y, w, h, max, mt, mr, mb, ml)
       },
     },
   }
-  simpleslider:connect_signal("mouse::enter", function()
+  simpleslider:get_children_by_id("background")[1]:connect_signal("mouse::enter", function()
     simpleslider:get_children_by_id("slider")[1].handle_width = w
   end)
-  simpleslider:connect_signal("mouse::leave", function()
+  simpleslider:get_children_by_id("background")[1]:connect_signal("mouse::leave", function()
     simpleslider:get_children_by_id("slider")[1].handle_width = 0
   end)
   return simpleslider
@@ -121,6 +122,7 @@ function helpers.simplesldrhdn(x, y, w, h, max, mt, mr, mb, ml)
       left = ml,
     },
     {
+      id = "background",
       widget = wibox.container.background,
       forced_width = x,
       forced_height = y,
@@ -154,6 +156,7 @@ function helpers.simpleprog(x, y, w, max, mt, mr, mb, ml)
       left = ml,
     },
     {
+      id = "background",
       widget = wibox.container.background,
       forced_width = x,
       forced_height = y,

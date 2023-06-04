@@ -19,11 +19,8 @@
     stateVersion = "22.11";
     file = {
       ".config/" = {
-        source = ../../modules/config;
+        source = ../../dots/.config;
         recursive = true;
-      };
-      ".xinitrc" = {
-        source = ./.xinitrc;
       };
     };
   };

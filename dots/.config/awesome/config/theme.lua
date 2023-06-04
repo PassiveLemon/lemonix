@@ -19,25 +19,29 @@ theme.font_large    = "Fira Code Nerd Font 24"
 theme.taglist_font  = theme.font
 theme.tasklist_font = theme.font
 
+theme.accent        = "#535d6c"
+
 theme.bg_normal     = "#222222"
-theme.bg_focus      = "#535d6c"
-theme.bg_urgent     = "#ff0000"
+theme.bg_normal2    = "#292929"
 theme.bg_minimize   = "#444444"
 theme.bg_minimize2  = "#333333"
+theme.bg_focus      = theme.accent
+theme.bg_urgent     = "#ff0000"
 theme.bg_systray    = theme.bg_normal
 
 theme.fg_normal     = "#aaaaaa"
+theme.fg_normal2    = "#dcdcdc"
+theme.fg_minimize   = "#8c8c8c"
 theme.fg_focus      = "#ffffff"
 theme.fg_urgent     = "#ffffff"
-theme.fg_minimize   = "#ffffff"
-
-theme.accent        = "#535d6c"
 
 theme.useless_gap         = 6
 theme.border_width        = dpi(2)
 theme.border_color_normal = "#000000"
 theme.border_color_active = theme.accent
 theme.border_color_marked = "#91231c"
+
+theme.tasklist_fg_minimize = "#dcdcdc"
 
 -- There are other variable sets
 -- overriding the default one when
@@ -130,7 +134,7 @@ theme.awesome_icon = theme_assets.awesome_icon(
 
 -- Define the icon theme for application icons. If not set then the icons
 -- from /usr/share/icons and /usr/share/icons/hicolor will be used.
-theme.icon_theme = nil
+theme.icon_theme = kora
 
 --
 -- Wallpaper
@@ -140,16 +144,16 @@ screen.connect_signal("request::wallpaper", function(s)
   awful.wallpaper {
     screen = s,
     widget = {
-      {
-        image     = theme.wallpaper,
-        upscale   = true,
-        downscale = true,
-        widget    = wibox.widget.imagebox,
-      },
+      widget = wibox.container.tile,
       valign = "center",
       halign = "center",
       tiled  = false,
-      widget = wibox.container.tile,
+      {
+        widget    = wibox.widget.imagebox,
+        image     = theme.wallpaper,
+        upscale   = true,
+        downscale = true,
+      },
     }
   }
 end)
