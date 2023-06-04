@@ -3,6 +3,8 @@ local gears = require("gears")
 local beautiful = require("beautiful")
 local wibox = require("wibox")
 
+local rubato = require("modules.rubato")
+
 local helpers = { }
 
 function helpers.simpletxt(x, y, txt, fnt, ali, mt, mr, mb, ml)
