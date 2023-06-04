@@ -7,9 +7,9 @@ local wibox = require("wibox")
 -- Wibar
 --
 
-local cpu_widget = require("awesome-wm-widgets.cpu-widget.cpu-widget")
-local ram_widget = require("awesome-wm-widgets.ram-widget.ram-widget")
-local lain = require("lain")
+local cpu_widget = require("modules.cpu-widget.cpu-widget")
+local ram_widget = require("modules.ram-widget.ram-widget")
+local lain = require("modules.lain")
 
 local cpu = lain.widget.cpu {
   settings = function()

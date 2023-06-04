@@ -3,8 +3,8 @@ local gears = require("gears")
 local beautiful = require("beautiful")
 local wibox = require("wibox")
 
-local helpers = require("config.helpers.helpers")
-local click_to_hide = require("config.helpers.click_to_hide")
+local helpers = require("helpers")
+local click_to_hide = require("modules.click_to_hide")
 
 --
 -- Power management menu

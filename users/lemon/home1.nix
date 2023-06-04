@@ -22,6 +22,17 @@
         source = ../../dots/.config;
         recursive = true;
       };
+      ".local/" = {
+        source = ../../dots/.local;
+        recursive = true;
+      };
+      ".vscode-oss/" = {
+        source = ../../dots/.vscode-oss;
+        recursive = true;
+      };
+      ".xinitrc" = {
+        source = ../../dots/.xinitrc;
+      };
     };
   };
 

@@ -5,8 +5,8 @@ local wibox = require("wibox")
 
 local naughty = require("naughty")
 
-local helpers = require("config.helpers.helpers")
-local click_to_hide = require("config.helpers.click_to_hide")
+local helpers = require("helpers")
+local click_to_hide = require("modules.click_to_hide")
 
 --
 -- Media management menu
@@ -32,7 +32,7 @@ local positionsldr = helpers.simplesldrhdn(532, 6, 0, 6, 100, 4, 4, 4, 4)
 local volume = helpers.simplesldr(532, 16, 16, 6, 100, 4, 4, 4, 4)
 
 local function metadataupdater()
-  awful.spawn.easy_async([[sh -c "sleep 0.1 && playerctl metadata title"]], function(title_state)
+  awful.spawn.easy_async([[sh -c "sleep 0.1 && playerctl metadata xesam:title"]], function(title_state)
     if title_state == "" or title_state:find("No player could handle this command") or title_state:find("No Players found") then
       artist.visible = false
       title:get_children_by_id("textbox")[1].text = "No media found"
@@ -41,7 +41,7 @@ local function metadataupdater()
       title:get_children_by_id("textbox")[1].text = title_state
     end
   end)
-  awful.spawn.easy_async([[sh -c "sleep 0.1 && playerctl metadata artist"]], function(artist_state)
+  awful.spawn.easy_async([[sh -c "sleep 0.1 && playerctl metadata xesam:artist"]], function(artist_state)
     artist:get_children_by_id("textbox")[1].text = artist_state
   end)
 end

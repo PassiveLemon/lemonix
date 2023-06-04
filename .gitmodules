@@ -1,3 +1,6 @@
-[submodule "dots/.config/awesome/modules/rubato"]
-	path = dots/.config/awesome/modules/rubato
-	url = https://github.com/andOrlando/rubato
+[submodule "dots/.config/awesome/modules/lain"]
+	path = dots/.config/awesome/modules/lain
+	url = https://github.com/lcpz/lain.git
+[submodule "dots/.config/awesome/modules/awesome-wm-widgets"]
+	path = dots/.config/awesome/modules/awesome-wm-widgets
+	url = https://github.com/streetturtle/awesome-wm-widgets.git

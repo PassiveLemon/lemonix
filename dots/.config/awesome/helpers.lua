@@ -3,8 +3,6 @@ local gears = require("gears")
 local beautiful = require("beautiful")
 local wibox = require("wibox")
 
-local rubato = require("modules.rubato")
-
 local helpers = { }
 
 function helpers.simpletxt(x, y, txt, fnt, ali, mt, mr, mb, ml)
@@ -17,6 +15,7 @@ function helpers.simpletxt(x, y, txt, fnt, ali, mt, mr, mb, ml)
       left = ml,
     },
     {
+      id = "background",
       widget = wibox.container.background,
       forced_width = x,
       forced_height = y,
