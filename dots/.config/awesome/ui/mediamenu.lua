@@ -3,8 +3,6 @@ local gears = require("gears")
 local beautiful = require("beautiful")
 local wibox = require("wibox")
 
-local naughty = require("naughty")
-
 local helpers = require("helpers")
 local click_to_hide = require("modules.click_to_hide")
 
