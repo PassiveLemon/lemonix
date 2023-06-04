@@ -26,15 +26,15 @@ naughty.config.defaults.margin = dpi(5)
 ruled.notification.connect_signal('request::rules', function()
   ruled.notification.append_rule {
     rule       = { urgency = "critical" },
-    properties = { bg = "#f35252", fg = "#abb2bf", implicit_timeout = 0, timeout = 0 }
+    properties = { bg = "#f35252", fg = beautiful.fg_normal, implicit_timeout = 5, timeout = 5, },
   }
   ruled.notification.append_rule {
     rule       = { urgency = "normal" },
-    properties = { bg = "#282c34", fg = "#abb2bf", implicit_timeout = 3, timeout = 3 }
+    properties = { bg = beautiful.bg_normal, fg = beautiful.fg_normal, implicit_timeout = 3, timeout = 3, },
   }
   ruled.notification.append_rule {
     rule       = { urgency = "low" },
-    properties = { bg = "#282c34", fg = "#abb2bf", implicit_timeout = 3, timeout = 3 }
+    properties = { bg = beautiful.bg_normal, fg = beautiful.fg_normal, implicit_timeout = 3, timeout = 3, },
   }
 end)
 
@@ -43,6 +43,6 @@ naughty.connect_signal("request::display_error", function(message, startup)
   naughty.notification {
     urgency = "critical",
     title   = "Oops, an error happened"..(startup and " during startup!" or "!"),
-    message = message
+    message = message,
   }
 end)
