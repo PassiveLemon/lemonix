@@ -22,8 +22,10 @@ local cpu_temp = helpers.simplewtch([[sh -c "cat /sys/class/thermal/thermal_zone
 local mem_text = helpers.simpletxt(nil, nil, "Memory", beautiful.font, "center")
 
 local mem_use = helpers.simplewtch([[sh -c "echo -n 'Used: ' && free -h | grep 'Mem:' | awk '{gsub(/Gi/,\"\",\$3); gsub(/Gi/,\"\",\$2); print \$3\"/\"\$2}' | tr '\n' ' ' && echo 'GiB'"]], 2)
+local mem_use_perc = helpers.simplewtch([[sh -c "echo -n '' && free -h | awk '/Mem:/{gsub(/Gi/,\"\",\$2); gsub(/Gi/,\"\",\$3); printf \"%.0f%%\", (\$3/\$2)*100}'"]], 2)
 
 local cache_use = helpers.simplewtch([[sh -c "echo -n 'Cache: ' && free -h | grep 'Mem:' | awk '{gsub(/Gi/,\"\",\$6); gsub(/Gi/,\"\",\$2); print \$6\"/\"\$2}' | tr '\n' ' ' && echo 'GiB'"]], 5)
+local cache_use_perc = helpers.simplewtch([[sh -c "echo -n '' && free -h | awk '/Mem:/{gsub(/Gi/,\"\",\$2); gsub(/Gi/,\"\",\$6); printf \"%.0f%%\", (\$6/\$2)*100}'"]], 5)
 
 local network_text = helpers.simpletxt(nil, nil, "Network", beautiful.font, "center")
 
@@ -76,14 +78,24 @@ local resourcemenu_container = wibox.widget {
     },
   },
   {
-    forced_width = 175,
+    forced_width = 185,
     margins = { top = 4, right = 2, bottom = 3, left = 2, },
     widget = wibox.container.margin,
     {
       layout = wibox.layout.fixed.vertical,
       mem_text,
-      mem_use,
-      cache_use,
+      {
+        layout = wibox.layout.fixed.horizontal,
+        mem_use,
+        space,
+        mem_use_perc,
+      },
+      {
+        layout = wibox.layout.fixed.horizontal,
+        cache_use,
+        space,
+        cache_use_perc,
+      },
       space,
       strg_text,
       strg_free_nvme,

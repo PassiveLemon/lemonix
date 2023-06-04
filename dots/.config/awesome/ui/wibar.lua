@@ -102,7 +102,7 @@ screen.connect_signal("request::desktop_decoration", function(s)
       sep,
       bar,
       sep,
-      helpers.simplewtch([[sh -c "echo -n 'CPU Usage: ' && top -bn1 | grep '%Cpu' | awk '{print int(100-$8)}' && echo -n '%'"]], 1),
+      helpers.simplewtch([[sh -c "echo -n 'CPU ' && top -bn1 | grep '%Cpu' | awk '{print int(100-$8)}' && echo -n '%'"]], 1),
       sep,
       cpu_widget({
         width = 20,
@@ -115,11 +115,8 @@ screen.connect_signal("request::desktop_decoration", function(s)
       sep,
       bar,
       sep,
-      --mem,
-      ram_widget({
-        color_used = "#f35252",
-        color_buf = "#f3d052",
-      }),
+      helpers.simplewtch([[sh -c "echo -n 'RAM ' && free -h | awk '/Mem:/{gsub(/Gi/,\"\",\$2); gsub(/Gi/,\"\",\$3); printf \"%.0f%%\", (\$3/\$2)*100}'"]], 2),
+      sep,
       bar,
       sep,
       helpers.simplewtch([[sh -c "echo -n 'VOL ' && pamixer --get-volume"]], 0.25),
