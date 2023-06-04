@@ -9,15 +9,8 @@ local helpers = require("helpers")
 -- Wibar
 --
 
-local cpu_widget = require("awesome-wm-widgets.cpu-widget.cpu-widget")
-local ram_widget = require("awesome-wm-widgets.ram-widget.ram-widget")
-local lain = require("lain")
-
-local mem = lain.widget.mem {
-  settings = function()
-    widget:set_markup("RAM " .. mem_now.perc .. "%")
-  end
-}
+local cpu_widget = require("modules.awesome-wm-widgets.cpu-widget.cpu-widget")
+local ram_widget = require("modules.awesome-wm-widgets.ram-widget.ram-widget")
 
 screen.connect_signal("request::desktop_decoration", function(s)
   awful.tag({ " 1 ", " 2 ", " 3 ", " 4 ", " 5 " }, s, awful.layout.layouts[1])
@@ -122,7 +115,7 @@ screen.connect_signal("request::desktop_decoration", function(s)
       sep,
       bar,
       sep,
-      mem,
+      --mem,
       ram_widget({
         color_used = "#f35252",
         color_buf = "#f3d052",
