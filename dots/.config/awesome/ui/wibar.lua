@@ -3,19 +3,15 @@ local gears = require("gears")
 local beautiful = require("beautiful")
 local wibox = require("wibox")
 
+local helpers = require("helpers")
+
 --
 -- Wibar
 --
 
-local cpu_widget = require("modules.cpu-widget.cpu-widget")
-local ram_widget = require("modules.ram-widget.ram-widget")
-local lain = require("modules.lain")
-
-local cpu = lain.widget.cpu {
-  settings = function()
-    widget:set_markup("CPU " .. cpu_now.usage .. "%")
-  end
-}
+local cpu_widget = require("awesome-wm-widgets.cpu-widget.cpu-widget")
+local ram_widget = require("awesome-wm-widgets.ram-widget.ram-widget")
+local lain = require("lain")
 
 local mem = lain.widget.mem {
   settings = function()
@@ -113,7 +109,7 @@ screen.connect_signal("request::desktop_decoration", function(s)
       sep,
       bar,
       sep,
-      cpu,
+      helpers.simplewtch([[sh -c "echo -n 'CPU Usage: ' && top -bn1 | grep '%Cpu' | awk '{print int(100-$8)}' && echo -n '%'"]], 1),
       sep,
       cpu_widget({
         width = 20,
@@ -122,7 +118,7 @@ screen.connect_signal("request::desktop_decoration", function(s)
       sep,
       bar,
       sep,
-      awful.widget.watch([[sh -c " echo -n 'GPU ' && nvidia-smi | grep 'Default' | cut -d '|' -f 4 | tr -d 'Default' | tr -d '[:space:]'"]], 1),
+      helpers.simplewtch([[sh -c "echo -n 'GPU ' && nvidia-smi | grep 'Default' | cut -d '|' -f 4 | tr -d 'Default' | tr -d '[:space:]'"]], 1),
       sep,
       bar,
       sep,
@@ -133,7 +129,7 @@ screen.connect_signal("request::desktop_decoration", function(s)
       }),
       bar,
       sep,
-      awful.widget.watch([[sh -c "echo -n 'VOL ' && pamixer --get-volume"]], 0.25),
+      helpers.simplewtch([[sh -c "echo -n 'VOL ' && pamixer --get-volume"]], 0.25),
       perc,
       sep,
       bar,
