@@ -110,10 +110,11 @@ local function shuffler()
   awful.spawn.easy_async("playerctl shuffle", function(shuffle_state)
     if shuffle_state:find("On") then
       awful.spawn("playerctl shuffle off")
+      shuffle:get_children_by_id("textbox")[1].text = "󰒞"
     elseif shuffle_state:find("Off") then
       awful.spawn("playerctl shuffle on")
+      shuffle:get_children_by_id("textbox")[1].text = "󰒝"
     end
-    shuffleupdater()
   end)
 end
 
@@ -121,10 +122,11 @@ local function toggler()
   awful.spawn.easy_async("playerctl status", function(toggle_state)
     if toggle_state:find("Playing") then
       awful.spawn("playerctl pause")
+      toggle:get_children_by_id("textbox")[1].text = "󰐊"
     elseif toggle_state:find("Paused") then
       awful.spawn("playerctl play")
+      toggle:get_children_by_id("textbox")[1].text = "󰏤"
     end
-    toggleupdater()
   end)
 end
 
@@ -132,12 +134,14 @@ local function looper()
   awful.spawn.easy_async("playerctl loop", function(loop_state)
     if loop_state:find("None") then
       awful.spawn("playerctl loop Playlist")
+      loop:get_children_by_id("textbox")[1].text = "󰑖"
     elseif loop_state:find("Playlist") then
       awful.spawn("playerctl loop Track")
+      loop:get_children_by_id("textbox")[1].text = "󰑘"
     elseif loop_state:find("Track") then
       awful.spawn("playerctl loop None")
+      loop:get_children_by_id("textbox")[1].text = "󰑗"
     end
-    loopupdater()
   end)
 end
 
@@ -199,6 +203,7 @@ end)
 prev:connect_signal("button::press", function()
   awful.spawn("playerctl previous")
   metadataupdater()
+  toggleupdater()
   loopupdater()
   positionupdater()
 end)
@@ -210,6 +215,7 @@ end)
 next:connect_signal("button::press", function()
   awful.spawn("playerctl next")
   metadataupdater()
+  toggleupdater()
   loopupdater()
   positionupdater()
 end)
