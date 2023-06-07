@@ -25,9 +25,9 @@
       # Corners
       corner-radius = 0;
       # Blur
-      blur-method = "dual_kawase";
-      blur-strength = 1;
-      blur-kern = "3x3box";
+      #blur-method = "gaussian";
+      #blur-strength = 3;
+      #blur-kern = "3x3box";
       blur-background-exclude = [
         "class_g != 'kitty' &&
         window_type != 'tooltip' &&
@@ -48,13 +48,12 @@
       daemon = true;
       backend = "xrender";
       vsync = false;
-      use-damage = false;
-      log-level = "warn";
+      use-damage = true;
+      log-level = "INFO";
       xrender-sync-fence = true;
       mark-wmwin-focused = true;
       mark-ovredir-focused = false;
-      detect-client-opacity = true;
-      detect-transient = true;
+      unredir-if-possible = true;
       wintypes = {
         tooltip = { fade = false; };
         dock = {
