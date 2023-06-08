@@ -3,6 +3,8 @@ local gears = require("gears")
 local beautiful = require("beautiful")
 local wibox = require("wibox")
 
+local naughty = require("naughty")
+
 local helpers = require("helpers")
 local click_to_hide = require("modules.click_to_hide")
 
@@ -10,9 +12,11 @@ local click_to_hide = require("modules.click_to_hide")
 -- Media management menu
 --
 
-local title = helpers.simpletxt(516, 15, nil, beautiful.font, "left", 4, 4, 4, 4)
+local title = helpers.simpletxt(456, 15, nil, beautiful.font, "left", 4, 4, 4, 4)
 
-local artist = helpers.simpletxt(516, 15, nil, beautiful.font, "left", 0, 4, 4, 4)
+local artist = helpers.simpletxt(456, 15, nil, beautiful.font, "left", 0, 4, 4, 4)
+
+local artimage = helpers.simpleimg(48, 48, nil, 4, 4, 4, 4)
 
 local shuffle = helpers.simplebtn(100, 100, "󰒞", beautiful.font_large, 4, 4, 4, 4)
 
@@ -30,7 +34,7 @@ local positionsldr = helpers.simplesldrhdn(532, 6, 0, 6, 100, 4, 4, 4, 4)
 local volume = helpers.simplesldr(532, 16, 16, 6, 100, 4, 4, 4, 4)
 
 local function metadataupdater()
-  awful.spawn.easy_async([[sh -c "sleep 0.1 && playerctl metadata xesam:title"]], function(title_state)
+  awful.spawn.easy_async_with_shell("sleep 0.1 && playerctl metadata xesam:title", function(title_state)
     if title_state == "" or title_state:find("No player could handle this command") or title_state:find("No Players found") then
       artist.visible = false
       title:get_children_by_id("textbox")[1].text = "No media found"
@@ -39,13 +43,24 @@ local function metadataupdater()
       title:get_children_by_id("textbox")[1].text = title_state
     end
   end)
-  awful.spawn.easy_async([[sh -c "sleep 0.1 && playerctl metadata xesam:artist"]], function(artist_state)
+  awful.spawn.easy_async_with_shell("sleep 0.1 && playerctl metadata xesam:artist", function(artist_state)
     artist:get_children_by_id("textbox")[1].text = artist_state
+  end)
+  awful.spawn.easy_async_with_shell("sleep 0.1 && playerctl metadata mpris:artUrl", function(artUrl)
+    artUrlTrim = artUrl.gsub(artUrl, ".*/", "")
+    artUrlTrim = artUrlTrim.gsub(artUrlTrim, "\n", "")
+    awful.spawn.easy_async_with_shell("test -f /tmp/mediamenu/" .. artUrlTrim .. ".jpg && echo true || echo false", function(test_state)
+      if test_state:find("false") then
+        awful.spawn.with_shell("curl -Lso /tmp/mediamenu/" .. artUrlTrim .. ".jpg " .. artUrl)
+      end
+      artUrlFile = gears.surface.load_silently("/tmp/mediamenu/" .. artUrlTrim .. ".jpg", beautiful.layout_fullscreen)
+      artimage:get_children_by_id("imagebox")[1].image = artUrlFile
+    end)
   end)
 end
 
 local function shuffleupdater()
-  awful.spawn.easy_async([[sh -c "sleep 0.1 && playerctl shuffle"]], function(shuffle_state)
+  awful.spawn.easy_async_with_shell("sleep 0.1 && playerctl shuffle", function(shuffle_state)
     if shuffle_state:find("On") then
       shuffle:get_children_by_id("textbox")[1].text = "󰒝"
     elseif shuffle_state:find("Off") then
@@ -55,7 +70,7 @@ local function shuffleupdater()
 end
 
 local function toggleupdater()
-  awful.spawn.easy_async([[sh -c "sleep 0.1 && playerctl status"]], function(toggle_state)
+  awful.spawn.easy_async_with_shell("sleep 0.1 && playerctl status", function(toggle_state)
     if toggle_state:find("Playing") then
       toggle:get_children_by_id("textbox")[1].text = "󰏤"
     elseif toggle_state:find("Paused") then
@@ -65,7 +80,7 @@ local function toggleupdater()
 end
 
 local function loopupdater()
-  awful.spawn.easy_async([[sh -c "sleep 0.1 && playerctl loop"]], function(loop_state)
+  awful.spawn.easy_async_with_shell("sleep 0.1 && playerctl loop", function(loop_state)
     if loop_state:find("None") then
       loop:get_children_by_id("textbox")[1].text = "󰑗"
     elseif loop_state:find("Playlist") then
@@ -151,50 +166,51 @@ local timer = gears.timer {
   callback = function() positionupdater(nil) end,
 }
 
-local mediamenu_container = wibox.widget {
-  layout = wibox.layout.margin,
-  margins = {
-    top = 4,
-    right = 4,
-    bottom = 4,
-    left = 4,
-  },
-  {
-    layout = wibox.layout.align.vertical,
-    {
-      layout = wibox.layout.fixed.vertical,
-      title,
-      artist,
-    },
-    {
-      layout = wibox.layout.fixed.horizontal,
-      shuffle,
-      prev,
-      toggle,
-      next,
-      loop,
-    },
-    {
-      layout = wibox.layout.fixed.vertical,
-      {
-        layout = wibox.layout.stack,
-        position,
-        positionsldr,
-      },
-      volume,
-    },
-  },
-}
-
 local mediamenu_pop = awful.popup {
-  widget = mediamenu_container,
   placement = awful.placement.centered,
-  ontop = true,
   border_width = 2,
   border_color = beautiful.border_color_active,
+  ontop = true,
+  visible = false,
+  widget = {
+    layout = wibox.layout.margin,
+    margins = {
+      top = 4,
+      right = 4,
+      bottom = 4,
+      left = 4,
+    },
+    {
+      layout = wibox.layout.align.vertical,
+      {
+        layout = wibox.layout.fixed.horizontal,
+        artimage,
+        {
+          layout = wibox.layout.align.vertical,
+          title,
+          artist,
+        },
+      },
+      {
+        layout = wibox.layout.fixed.horizontal,
+        shuffle,
+        prev,
+        toggle,
+        next,
+        loop,
+      },
+      {
+        layout = wibox.layout.fixed.vertical,
+        {
+          layout = wibox.layout.stack,
+          position,
+          positionsldr,
+        },
+        volume,
+      },
+    },
+  },
 }
-
-mediamenu_pop.visible = false
 
 shuffle:connect_signal("button::press", function()
   shuffler()

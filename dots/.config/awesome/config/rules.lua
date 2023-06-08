@@ -1,5 +1,6 @@
 local awful = require("awful")
 local gears = require("gears")
+local beautiful = require("beautiful")
 local ruled = require("ruled")
 
 --
@@ -33,6 +34,25 @@ ruled.client.connect_signal("request::rules", function()
       raise = true,
       placement = awful.placement.centered+awful.placement.no_offscreen,
     },
+  }
+end)
+
+--
+-- Notifications
+--
+
+ruled.notification.connect_signal('request::rules', function()
+  ruled.notification.append_rule {
+    rule = { urgency = "critical" },
+    properties = { bg = beautiful.bg_urgent, fg = beautiful.fg_normal, implicit_timeout = 5, timeout = 5, },
+  }
+  ruled.notification.append_rule {
+    rule = { urgency = "normal" },
+    properties = { bg = beautiful.bg_normal, fg = beautiful.fg_normal, implicit_timeout = 3, timeout = 3, },
+  }
+  ruled.notification.append_rule {
+    rule = { urgency = "low" },
+    properties = { bg = beautiful.bg_normal, fg = beautiful.fg_normal, implicit_timeout = 3, timeout = 3, },
   }
 end)
 

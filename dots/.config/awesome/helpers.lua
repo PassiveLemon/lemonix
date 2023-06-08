@@ -35,6 +35,32 @@ function helpers.simpletxt(x, y, txt, fnt, ali, mt, mr, mb, ml)
   return simpletext
 end
 
+function helpers.simpleimg(x, y, img, mt, mr, mb, ml)
+  local simpleimage = wibox.widget {
+    widget = wibox.container.margin,
+    margins = {
+      top = mt,
+      right = mr,
+      bottom = mb,
+      left = ml,
+    },
+    {
+      id = "constraint",
+      widget = wibox.container.constraint,
+      forced_width = x,
+      forced_height = y,
+      shape = gears.shape.rounded_rect,
+      {
+        id = "imagebox",
+        widget = wibox.widget.imagebox,
+        resize = true,
+        image = img,
+      },
+    },
+  }
+  return simpleimage
+end
+
 function helpers.simplebtn(x, y, txt, fnt, mt, mr, mb, ml)
   local simplebutton = wibox.widget {
     widget = wibox.container.margin,

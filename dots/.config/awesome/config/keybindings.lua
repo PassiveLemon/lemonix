@@ -13,8 +13,8 @@ local resourcemenu = require("ui.resourcemenu")
 
 modkey = "Mod4"
 
-awful.keyboard.append_global_keybindings({
-  awful.key({ modkey, "Control" }, "r", awesome.restart,
+awful.keyboard.append_global_keybindings {
+  awful.key({ modkey, "Control", }, "r", awesome.restart,
   { description = "reload awesome", group = "awesome", }),
 
   awful.key({ modkey, }, "Return", function() awful.spawn(terminal) end,
@@ -72,7 +72,7 @@ awful.keyboard.append_global_keybindings({
   { description = "next media", group = "media", }),
 
   awful.key {
-    modifiers   = { modkey },
+    modifiers   = { modkey, },
     keygroup    = "numpad",
     description = "select workspace",
     group       = "tag",
@@ -85,7 +85,7 @@ awful.keyboard.append_global_keybindings({
   },
 
   awful.key {
-    modifiers   = { modkey },
+    modifiers   = { modkey, },
     keygroup    = "numrow",
     description = "switch to tag",
     group       = "tag",
@@ -99,7 +99,7 @@ awful.keyboard.append_global_keybindings({
   },
 
   awful.key {
-    modifiers   = { modkey, "Control" },
+    modifiers   = { modkey, "Control", },
     keygroup    = "numrow",
     description = "toggle tag",
     group       = "tag",
@@ -113,7 +113,7 @@ awful.keyboard.append_global_keybindings({
   },
 
   awful.key {
-    modifiers = { modkey, "Shift" },
+    modifiers = { modkey, "Shift", },
     keygroup    = "numrow",
     description = "move focused client to tag",
     group       = "tag",
@@ -129,9 +129,9 @@ awful.keyboard.append_global_keybindings({
 
   awful.key({ modkey, }, "u", awful.client.urgent.jumpto,
   { description = "jump to urgent client", group = "client", }),
-})
+}
 
-awful.keyboard.append_client_keybindings({
+awful.keyboard.append_client_keybindings {
   awful.key({ modkey, }, "Escape", function(c) c:kill() end,
   { description = "close", group = "client", }),
 
@@ -147,14 +147,14 @@ awful.keyboard.append_client_keybindings({
 
   awful.key({ modkey, }, "n", function(c) c.minimized = true end,
   { description = "minimize", group = "client", }),
-})
+}
 
 --
 -- Mouse keybinds
 --
 
 client.connect_signal( "request::default_mousebindings", function()
-  awful.mouse.append_client_mousebindings({
+  awful.mouse.append_client_mousebindings {
     awful.button({ }, 1, function(c)
       c:activate { context = "mouse_click", }
     end),
@@ -164,16 +164,16 @@ client.connect_signal( "request::default_mousebindings", function()
     awful.button({ modkey }, 3, function(c)
       c:activate { context = "mouse_click", action = "mouse_resize", }
     end),
-  })
+  }
 end)
 
 --
 -- Other
 --
 
-awful.keyboard.append_client_keybindings({
+awful.keyboard.append_client_keybindings {
   awful.key({}, "sudo nixos-rebuild switch", function() end,
   { description = "Rebuild nixos", group = "other", }),
-  awful.key({}, "home-manager switch --flake /home/lemon/Documents/GitHub/lemonix/#lemon@lemon-tree", function() end,
+  awful.key({}, "home-manager switch --flake ~/Documents/GitHub/lemonix/#lemon@lemon-tree", function() end,
   { description = "Rebuild home-manager", group = "other", }),
-})
+}

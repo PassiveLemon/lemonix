@@ -51,82 +51,79 @@ local uptime_text = helpers.simpletxt(nil, nil, "Uptime", beautiful.font, "cente
 
 local uptime = helpers.simplewtch([[sh -c 'uptime | awk -F"[ ,:]+" '\''{print $6 " days, " $8 " hours"}'\''']], 60)
 
-local resourcemenu_container = wibox.widget {
-  layout = wibox.layout.align.horizontal,
-  {
-    forced_width = 210,
-    margins = { top = 4, right = 2, bottom = 3, left = 6, },
-    widget = wibox.container.margin,
-    {
-      layout = wibox.layout.fixed.vertical,
-      cpu_text,
-      {
-        layout = wibox.layout.fixed.horizontal,
-        cpu_use,
-        space,
-        cpu_temp,
-      },
-      space,
-      gpu_text,
-      {
-        layout = wibox.layout.fixed.horizontal,
-        gpu_use,
-        space,
-        gpu_temp,
-      },
-      gpu_mem,
-    },
-  },
-  {
-    forced_width = 185,
-    margins = { top = 4, right = 2, bottom = 3, left = 2, },
-    widget = wibox.container.margin,
-    {
-      layout = wibox.layout.fixed.vertical,
-      mem_text,
-      {
-        layout = wibox.layout.fixed.horizontal,
-        mem_use,
-        space,
-        mem_use_perc,
-      },
-      {
-        layout = wibox.layout.fixed.horizontal,
-        cache_use,
-        space,
-        cache_use_perc,
-      },
-      space,
-      strg_text,
-      strg_free_nvme,
-      strg_free_sda,
-      strg_free_sdb,
-    },
-  },
-  {
-    forced_width = 155,
-    margins = { top = 4, right = 6, bottom = 3, left = 2, },
-    widget = wibox.container.margin,
-    {
-      layout = wibox.layout.fixed.vertical,
-      network_text,
-      network_total,
-      space,
-      uptime_text,
-      uptime,
-    },
-  },
-}
-
 local resourcemenu_pop = awful.popup {
-  widget = resourcemenu_container,
   placement = awful.placement.centered,
-  ontop = true,
   border_width = 2,
   border_color = beautiful.border_color_active,
+  ontop = true,
+  visible = false,
+  widget = {
+    layout = wibox.layout.align.horizontal,
+    {
+      forced_width = 210,
+      margins = { top = 4, right = 2, bottom = 3, left = 6, },
+      widget = wibox.container.margin,
+      {
+        layout = wibox.layout.fixed.vertical,
+        cpu_text,
+        {
+          layout = wibox.layout.fixed.horizontal,
+          cpu_use,
+          space,
+          cpu_temp,
+        },
+        space,
+        gpu_text,
+        {
+          layout = wibox.layout.fixed.horizontal,
+          gpu_use,
+          space,
+          gpu_temp,
+        },
+        gpu_mem,
+      },
+    },
+    {
+      forced_width = 185,
+      margins = { top = 4, right = 2, bottom = 3, left = 2, },
+      widget = wibox.container.margin,
+      {
+        layout = wibox.layout.fixed.vertical,
+        mem_text,
+        {
+          layout = wibox.layout.fixed.horizontal,
+          mem_use,
+          space,
+          mem_use_perc,
+        },
+        {
+          layout = wibox.layout.fixed.horizontal,
+          cache_use,
+          space,
+          cache_use_perc,
+        },
+        space,
+        strg_text,
+        strg_free_nvme,
+        strg_free_sda,
+        strg_free_sdb,
+      },
+    },
+    {
+      forced_width = 155,
+      margins = { top = 4, right = 6, bottom = 3, left = 2, },
+      widget = wibox.container.margin,
+      {
+        layout = wibox.layout.fixed.vertical,
+        network_text,
+        network_total,
+        space,
+        uptime_text,
+        uptime,
+      },
+    },
+  },
 }
-
-resourcemenu_pop.visible = false
 
 local function signal()
   resourcemenu_pop.visible = not resourcemenu_pop.visible
