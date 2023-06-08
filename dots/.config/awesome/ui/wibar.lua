@@ -47,15 +47,11 @@ screen.connect_signal("request::desktop_decoration", function(s)
   -- Systray
   local systray_pop = awful.popup {
     ontop = true,
-    x = 0,
-    y = 25,
     border_width = 2,
     border_color = beautiful.border_color_active,
     visible = false,
     widget = {
       widget = wibox.container.background,
-      x = 0,
-      y = 25,
       forced_width = 256,
       forced_height = 25,
       bg = beautiful.bg_normal,
@@ -133,7 +129,6 @@ screen.connect_signal("request::desktop_decoration", function(s)
         layoutbox,
         bar,
         tasklist,
-        bar,
       },
       { -- Center
         layout = wibox.layout.flex.horizontal,
