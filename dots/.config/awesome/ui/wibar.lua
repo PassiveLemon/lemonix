@@ -5,14 +5,14 @@ local wibox = require("wibox")
 
 local helpers = require("helpers")
 
+local cpu_widget = require("modules.awesome-wm-widgets.cpu-widget.cpu-widget")
+
 --
 -- Wibar
 --
 
-local cpu_widget = require("modules.awesome-wm-widgets.cpu-widget.cpu-widget")
-
 screen.connect_signal("request::desktop_decoration", function(s)
-  awful.tag({ " 1 ", " 2 ", " 3 ", " 4 ", " 5 " }, s, awful.layout.layouts[1])
+  awful.tag({ " 1 ", " 2 ", " 3 ", " 4 ", " 5 ", }, s, awful.layout.layouts[1])
 
   -- Separator bar
   bar = wibox.widget {
@@ -44,7 +44,7 @@ screen.connect_signal("request::desktop_decoration", function(s)
   }
 
   -- Clock
-  clock = wibox.widget.textclock( "%a %b %d, %I:%M %p" )
+  clock = wibox.widget.textclock("%a %b %d, %I:%M %p")
 
   -- Taglist
   taglist = awful.widget.taglist {
@@ -58,21 +58,24 @@ screen.connect_signal("request::desktop_decoration", function(s)
       awful.button({ }, 3, awful.tag.viewtoggle),
       awful.button({ }, 4, function(t) awful.tag.viewnext(t.screen) end),
       awful.button({ }, 5, function(t) awful.tag.viewprev(t.screen) end),
-    }
+    },
   }
 
   -- Tasklist
   tasklist = awful.widget.tasklist {
-      screen  = s,
-      filter  = awful.widget.tasklist.filter.currenttags,
-      buttons = {
-        awful.button({ }, 1, function (c)
-          c:activate { context = "tasklist", action = "toggle_minimization" }
-        end),
-        awful.button({ }, 4, function() awful.client.focus.byidx( 1) end),
-        awful.button({ }, 5, function() awful.client.focus.byidx(-1) end),
-      }
-    }
+    screen  = s,
+    filter  = awful.widget.tasklist.filter.currenttags,
+    style = {
+      shape = gears.shape.rounded_rect,
+    },
+    buttons = {
+      awful.button({ }, 1, function (c)
+        c:activate { context = "tasklist", action = "toggle_minimization", }
+      end),
+      awful.button({ }, 4, function() awful.client.focus.byidx(1) end),
+      awful.button({ }, 5, function() awful.client.focus.byidx(-1) end),
+    },
+  }
 
   -- Bar
   wibar = awful.wibar({
@@ -80,12 +83,13 @@ screen.connect_signal("request::desktop_decoration", function(s)
     screen   = s,
     height   = 23,
     border_width = 2,
-    border_color = "#535d6c",
+    border_color = beautiful.accent,
     type = "dock",
   })
 
   wibar:setup {
     layout = wibox.layout.align.horizontal,
+    expand = "none",
     { -- Left
       layout = wibox.layout.fixed.horizontal,
       taglist,
@@ -94,8 +98,10 @@ screen.connect_signal("request::desktop_decoration", function(s)
       wibox.widget.systray,
       sep,
     },
-    -- Center
-    tasklist,
+    { -- Center
+      layout = wibox.layout.fixed.horizontal,
+      tasklist,
+    },
     { -- Right
       layout = wibox.layout.fixed.horizontal,
       sep,

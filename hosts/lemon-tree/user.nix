@@ -21,7 +21,7 @@
   # Fonts
   fonts = {
     fonts = with pkgs; [
-      material-design-icons fira (nerdfonts.override { fonts = [ "FiraCode" ]; }) cozette
+      material-design-icons fira (nerdfonts.override { fonts = [ "FiraCode" ]; })
     ];
     fontconfig = {
       enable = true;

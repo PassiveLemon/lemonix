@@ -41,7 +41,10 @@ theme.border_color_normal = "#000000"
 theme.border_color_active = theme.accent
 theme.border_color_marked = "#91231c"
 
-theme.tasklist_fg_minimize = "#dcdcdc"
+theme.tasklist_fg_minimize = theme.fg_normal2
+theme.tasklist_disable_task_name = false
+theme.tasklist_plain_task_name = true
+theme.tasklist_spacing = 8
 
 -- There are other variable sets
 -- overriding the default one when
@@ -63,9 +66,6 @@ theme.taglist_squares_sel = theme_assets.taglist_squares_sel(
 theme.taglist_squares_unsel = theme_assets.taglist_squares_unsel(
   taglist_square_size, theme.fg_normal
 )
-
-theme.tasklist_disable_task_name = false
-theme.tasklist_plain_task_name = true
 
 -- Variables set for theming the menu:
 -- menu_[bg|fg]_[normal|focus]

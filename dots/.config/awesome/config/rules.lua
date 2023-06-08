@@ -1,7 +1,6 @@
 local awful = require("awful")
 local gears = require("gears")
 local ruled = require("ruled")
-local menubar = require("menubar")
 
 --
 -- Rules
@@ -16,7 +15,7 @@ ruled.client.connect_signal("request::rules", function()
       focus = awful.client.focus.filter,
       raise = true,
       screen = awful.screen.preferred,
-      placement = awful.placement.no_offscreen,
+      placement = awful.placement.centered+awful.placement.no_offscreen,
     },
   }
 
@@ -31,7 +30,7 @@ ruled.client.connect_signal("request::rules", function()
     },
     properties = {
       floating = true,
-      ontop = true,
+      raise = true,
       placement = awful.placement.centered+awful.placement.no_offscreen,
     },
   }
@@ -46,7 +45,7 @@ ruled.client.connect_signal("request::rules", function()
     rule = {
       instance = "easyeffects",
       class    = "easyeffects",
-      name     = "Easy Effects"
+      name     = "Easy Effects",
     },
     properties = { 
       screen = "DP-0",
@@ -79,7 +78,6 @@ browser = "firefox"
 editor = os.getenv("EDITOR") or "nano"
 visual_editor = "codium"
 editor_cmd = terminal .. " -e " .. editor
-menubar.utils.terminal = terminal
 
 -- Layout
 tag.connect_signal("request::default_layouts", function()
