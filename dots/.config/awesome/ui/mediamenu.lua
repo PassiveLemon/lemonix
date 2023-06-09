@@ -160,7 +160,7 @@ local function looper()
   end)
 end
 
-local timer = gears.timer {
+local positionupdater_timer = gears.timer {
   timeout = 1,
   autostart = true,
   callback = function() positionupdater(nil) end,

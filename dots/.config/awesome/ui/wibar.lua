@@ -51,6 +51,7 @@ screen.connect_signal("request::desktop_decoration", function(s)
     border_color = beautiful.border_color_active,
     visible = false,
     widget = {
+      id = "background",
       widget = wibox.container.background,
       forced_width = 256,
       forced_height = 25,
@@ -60,6 +61,14 @@ screen.connect_signal("request::desktop_decoration", function(s)
         wibox.widget.systray,
       },
     },
+  }
+
+  local systray_autohider = gears.timer {
+    timeout = 2,
+    single_shot = true,
+    callback = function()
+      systray_pop.visible = false
+    end,
   }
 
   -- Taglist
@@ -170,6 +179,10 @@ screen.connect_signal("request::desktop_decoration", function(s)
   layoutbox:connect_signal("button::press", function()
     systray_pop.visible = not systray_pop.visible
     systray_pop.screen = awful.screen.focused()
+  end)
+
+  systray_pop:connect_signal("mouse::leave", function()
+    systray_autohider:start()
   end)
 
   click_to_hide.popup(systray_pop, nil, true)
