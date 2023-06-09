@@ -18,25 +18,90 @@ screen.connect_signal("request::desktop_decoration", function(s)
   -- Separator bar
   bar = wibox.widget {
     widget = wibox.widget.textbox,
-    markup = '|',
-    align = 'center',
-    valign = 'center',
+    markup = "|",
+    align = "center",
+    valign = "center",
   }
 
   -- Separator space
   sep = wibox.widget {
     widget = wibox.widget.textbox,
-    markup = ' ',
-    align = 'center',
-    valign = 'center',
+    markup = " ",
+    align = "center",
+    valign = "center",
   }
 
   -- Percent
   perc = wibox.widget {
     widget = wibox.widget.textbox,
-    markup = '%',
-    align = 'center',
-    valign = 'center',
+    markup = "%",
+    align = "center",
+    valign = "center",
+  }
+
+  -- CPU
+  cpu = wibox.widget {
+    widget = wibox.container.margin,
+    margins = { right = 1, bottom = 1, },
+    {
+      widget = wibox.widget.textbox,
+      markup = " ",
+      align = "center",
+      valign = "center",
+      font = "Fira Code Nerd Font 10",
+    },
+  }
+
+  -- GPU
+  gpu = wibox.widget {
+    widget = wibox.container.margin,
+    margins = { bottom = 0, },
+    {
+      widget = wibox.widget.textbox,
+      markup = "󰢮 ",
+      align = "center",
+      valign = "center",
+      font = "Fira Code Nerd Font 13",
+    },
+  }
+
+  -- Memory
+  memory = wibox.widget {
+    widget = wibox.container.margin,
+    margins = { right = 2, bottom = 1, },
+    {
+      widget = wibox.widget.textbox,
+      markup = " ",
+      align = "center",
+      valign = "center",
+      font = "Fira Code Nerd Font 10",
+    },
+  }
+
+  -- Speaker
+  speaker = wibox.widget {
+    widget = wibox.container.margin,
+    margins = { bottom = 1, },
+    {
+      widget = wibox.widget.textbox,
+      markup = "󰕾 ",
+      align = "center",
+      valign = "center",
+      font = "Fira Code Nerd Font 12",
+    },
+  }
+
+  -- Clock
+  clock = wibox.widget {
+    widget = wibox.container.margin,
+    margins = { bottom = 0, },
+    {
+      widget = wibox.widget.textbox,
+      markup = "󰥔 ",
+      align = "center",
+      valign = "center",
+      font = "Fira Code Nerd Font 11",
+    },
   }
 
   -- Layoutbox
@@ -119,9 +184,6 @@ screen.connect_signal("request::desktop_decoration", function(s)
     },
   }
 
-  -- Clock
-  clock = wibox.widget.textclock("%a %b %d, %I:%M %p")
-
   -- Bar
   wibar = awful.wibar {
     position = "top",
@@ -148,7 +210,8 @@ screen.connect_signal("request::desktop_decoration", function(s)
         sep,
         bar,
         sep,
-        helpers.simplewtch([[sh -c "echo -n 'CPU ' && top -bn1 | grep '%Cpu' | awk '{print int(100-$8)}' && echo -n '%'"]], 1),
+        cpu,
+        helpers.simplewtch([[sh -c "echo -n '' && top -bn1 | grep '%Cpu' | awk '{print int(100-$8)}' && echo -n '%'"]], 1),
         sep,
         cpu_widget({
           width = 20,
@@ -157,20 +220,24 @@ screen.connect_signal("request::desktop_decoration", function(s)
         sep,
         bar,
         sep,
-        helpers.simplewtch([[sh -c "echo -n 'GPU ' && nvidia-smi | grep 'Default' | cut -d '|' -f 4 | tr -d 'Default' | tr -d '[:space:]'"]], 1),
+        gpu,
+        helpers.simplewtch([[sh -c "echo -n '' && nvidia-smi | grep 'Default' | cut -d '|' -f 4 | tr -d 'Default' | tr -d '[:space:]'"]], 1),
         sep,
         bar,
         sep,
-        helpers.simplewtch([[sh -c "echo -n 'RAM ' && free -h | awk '/Mem:/{gsub(/Gi/,\"\",\$2); gsub(/Gi/,\"\",\$3); printf \"%.0f%%\", (\$3/\$2)*100}'"]], 2),
+        memory,
+        helpers.simplewtch([[sh -c "echo -n '' && free -h | awk '/Mem:/{gsub(/Gi/,\"\",\$2); gsub(/Gi/,\"\",\$3); printf \"%.0f%%\", (\$3/\$2)*100}'"]], 2),
         sep,
         bar,
         sep,
-        helpers.simplewtch([[sh -c "echo -n 'VOL ' && pamixer --get-volume"]], 0.25),
+        speaker,
+        helpers.simplewtch([[sh -c "echo -n '' && pamixer --get-volume"]], 0.25),
         perc,
         sep,
         bar,
         sep,
         clock,
+        wibox.widget.textclock("%a %b %d, %I:%M %p"),
         sep,
       },
     },
