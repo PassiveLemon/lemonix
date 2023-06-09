@@ -72,6 +72,7 @@
   environment = {
     systemPackages = with pkgs; [
       dash bash nano unzip unrar p7zip curl wget git gvfs psmisc
+      htop sysstat iotop stress nvtop-nvidia
       networkmanager ethtool
       exa trashy
       distrobox virt-manager OVMF pciutils virtiofsd
