@@ -12,11 +12,11 @@ local click_to_hide = require("modules.click_to_hide")
 -- Media management menu
 --
 
+local artimage = helpers.simpleimg(48, 48, nil, 4, 4, 4, 4)
+
 local title = helpers.simpletxt(456, 15, nil, beautiful.font, "left", 4, 4, 4, 4)
 
 local artist = helpers.simpletxt(456, 15, nil, beautiful.font, "left", 0, 4, 4, 4)
-
-local artimage = helpers.simpleimg(48, 48, nil, 4, 4, 4, 4)
 
 local shuffle = helpers.simplebtn(100, 100, "󰒞", beautiful.font_large, 4, 4, 4, 4)
 
@@ -34,7 +34,7 @@ local positionsldr = helpers.simplesldrhdn(532, 6, 0, 6, 100, 4, 4, 4, 4)
 local volume = helpers.simplesldr(532, 16, 16, 6, 100, 4, 4, 4, 4)
 
 local function metadataupdater()
-  awful.spawn.easy_async_with_shell("sleep 0.1 && playerctl metadata xesam:title", function(title_state)
+  awful.spawn.easy_async_with_shell("sleep 0.15 && playerctl metadata xesam:title", function(title_state)
     if title_state == "" or title_state:find("No player could handle this command") or title_state:find("No Players found") then
       artist.visible = false
       title:get_children_by_id("textbox")[1].text = "No media found"
@@ -43,24 +43,28 @@ local function metadataupdater()
       title:get_children_by_id("textbox")[1].text = title_state
     end
   end)
-  awful.spawn.easy_async_with_shell("sleep 0.1 && playerctl metadata xesam:artist", function(artist_state)
+  awful.spawn.easy_async_with_shell("sleep 0.15 && playerctl metadata xesam:artist", function(artist_state)
     artist:get_children_by_id("textbox")[1].text = artist_state
   end)
-  awful.spawn.easy_async_with_shell("sleep 0.1 && playerctl metadata mpris:artUrl", function(artUrl)
+end
+
+local function artimageupdater()
+  awful.spawn.easy_async_with_shell("sleep 0.15 && playerctl metadata mpris:artUrl", function(artUrl)
     artUrlTrim = artUrl.gsub(artUrl, ".*/", "")
     artUrlTrim = artUrlTrim.gsub(artUrlTrim, "\n", "")
+    artUrlFile = gears.surface.load_silently("/tmp/mediamenu/" .. artUrlTrim .. ".jpg", beautiful.layout_fullscreen)
     awful.spawn.easy_async_with_shell("test -f /tmp/mediamenu/" .. artUrlTrim .. ".jpg && echo true || echo false", function(test_state)
       if test_state:find("false") then
         awful.spawn.with_shell("curl -Lso /tmp/mediamenu/" .. artUrlTrim .. ".jpg " .. artUrl)
+        imageupdater_timer:start()
       end
-      artUrlFile = gears.surface.load_silently("/tmp/mediamenu/" .. artUrlTrim .. ".jpg", beautiful.layout_fullscreen)
       artimage:get_children_by_id("imagebox")[1].image = artUrlFile
     end)
   end)
 end
 
 local function shuffleupdater()
-  awful.spawn.easy_async_with_shell("sleep 0.1 && playerctl shuffle", function(shuffle_state)
+  awful.spawn.easy_async_with_shell("sleep 0.15 && playerctl shuffle", function(shuffle_state)
     if shuffle_state:find("On") then
       shuffle:get_children_by_id("textbox")[1].text = "󰒝"
     elseif shuffle_state:find("Off") then
@@ -70,7 +74,7 @@ local function shuffleupdater()
 end
 
 local function toggleupdater()
-  awful.spawn.easy_async_with_shell("sleep 0.1 && playerctl status", function(toggle_state)
+  awful.spawn.easy_async_with_shell("sleep 0.15 && playerctl status", function(toggle_state)
     if toggle_state:find("Playing") then
       toggle:get_children_by_id("textbox")[1].text = "󰏤"
     elseif toggle_state:find("Paused") then
@@ -80,7 +84,7 @@ local function toggleupdater()
 end
 
 local function loopupdater()
-  awful.spawn.easy_async_with_shell("sleep 0.1 && playerctl loop", function(loop_state)
+  awful.spawn.easy_async_with_shell("sleep 0.15 && playerctl loop", function(loop_state)
     if loop_state:find("None") then
       loop:get_children_by_id("textbox")[1].text = "󰑗"
     elseif loop_state:find("Playlist") then
@@ -160,10 +164,18 @@ local function looper()
   end)
 end
 
-local positionupdater_timer = gears.timer {
+local everythingupdater_timer = gears.timer {
   timeout = 1,
   autostart = true,
-  callback = function() positionupdater(nil) end,
+  callback = function()
+    artimageupdater()
+    metadataupdater()
+    toggleupdater()
+    shuffleupdater()
+    loopupdater()
+    positionupdater()
+    volumeupdater()
+  end,
 }
 
 local mediamenu_pop = awful.popup {
@@ -218,6 +230,7 @@ end)
 
 prev:connect_signal("button::press", function()
   awful.spawn("playerctl previous")
+  artimageupdater()
   metadataupdater()
   toggleupdater()
   loopupdater()
@@ -230,6 +243,7 @@ end)
 
 next:connect_signal("button::press", function()
   awful.spawn("playerctl next")
+  artimageupdater()
   metadataupdater()
   toggleupdater()
   loopupdater()
@@ -251,6 +265,7 @@ end)
 
 local function signal()
   gears.timer.start_new(0.1, function()
+    artimageupdater()
     metadataupdater()
     toggleupdater()
     shuffleupdater()
