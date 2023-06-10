@@ -6,6 +6,8 @@
     ../../modules/picom.nix
     ../../modules/vscode.nix
     ../../modules/spicetify.nix
+    #../../modules/gdlauncher.nix
+    #../../modules/gdlauncherold.nix
   ];
 
   nixpkgs.config = {
@@ -16,7 +18,6 @@
   home = {
     username = "lemon";
     homeDirectory = "/home/lemon";
-    stateVersion = "22.11";
     file = {
       ".config/" = {
         source = ../../dots/.config;
@@ -34,6 +35,7 @@
         source = ../../dots/.xinitrc;
       };
     };
+    stateVersion = "22.11";
   };
 
   services = {

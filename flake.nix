@@ -1,48 +1,51 @@
 {
-  description = "Lemons Nix";
+  description = "Lemon's NixOS";
 
   inputs = {
-    stable.url = "github:nixos/nixpkgs/nixos-22.11";
-    unstable.url = "github:NixOS/nixpkgs/nixos-unstable";
-    home-manager = {
-      url = "github:nix-community/home-manager"; 
-      inputs.nixpkgs.follows = "unstable";
-    };
+    nixos.url = "github:nixos/nixpkgs/nixos-23.05";
+    nixpkgs.url = "github:nixos/nixpkgs/nixpkgs-unstable";
+    home-manager.url = "github:nix-community/home-manager/release-23.05";
 
     # User repos
     nixpkgs-f2k.url = "github:fortuneteller2k/nixpkgs-f2k";
     spicetify-nix.url = github:the-argus/spicetify-nix;
   };
 
-  outputs = { self, stable, unstable, home-manager, nixpkgs-f2k, spicetify-nix, ... }@inputs:
+  outputs = inputs:
+  with inputs;
   let
-    inherit (self) outputs;
+    system = "x86_64-linux";
+    pkgs = import nixpkgs { inherit system; };
+    specialArgs = { inherit self inputs; };
+    extraSpecialArgs = specialArgs;
   in
   {
     nixosConfigurations = {
-      "lemon-tree" = unstable.lib.nixosSystem {
-        system = "x86_64-linux";
-        specialArgs = { inherit inputs outputs; };
-        modules = [ ./hosts/lemon-tree/default.nix ];
+      "lemon-tree" = nixos.lib.nixosSystem {
+        inherit system specialArgs;
+        modules = [
+          ./hosts/lemon-tree/default.nix
+          ./hosts/lemon-tree/user.nix
+        ];
       };
-      "lime-tree" = unstable.lib.nixosSystem {
-        system = "x86_64-linux";
-        specialArgs = { inherit inputs outputs; };
-        modules = [ ./hosts/lime-tree/default.nix ];
+      "lime-tree" = nixos.lib.nixosSystem {
+        inherit system specialArgs;
+        modules = [
+          ./hosts/lime-tree/default.nix
+          ./hosts/lime-tree/user.nix
+        ];
       };
     };
     homeConfigurations = {
       "lemon@lemon-tree" = home-manager.lib.homeManagerConfiguration {
-        pkgs = unstable.legacyPackages.x86_64-linux;
-        extraSpecialArgs = { inherit inputs outputs; };
+        inherit pkgs extraSpecialArgs;
         modules = [
           ./users/lemon/desktophome.nix
           spicetify-nix.homeManagerModule
         ];
       };
       "lemon@lime-tree" = home-manager.lib.homeManagerConfiguration {
-        pkgs = unstable.legacyPackages.x86_64-linux;
-        extraSpecialArgs = { inherit inputs outputs; };
+        inherit pkgs extraSpecialArgs;
         modules = [
           ./users/lime/laptophome.nix
         ];

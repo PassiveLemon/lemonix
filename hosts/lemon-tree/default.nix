@@ -1,7 +1,6 @@
 { inputs, outputs, config, pkgs, ... }: {
   imports = [
     ./hardware-configuration.nix
-    ./user.nix
   ];
   
   # Boot
@@ -12,7 +11,6 @@
       systemd-boot.enable = false;
       grub = {
         enable = true;
-        version = 2;
         efiSupport = true;
         useOSProber = true;
         device = "nodev";
@@ -86,8 +84,8 @@
     openssh = {
       enable = true;
       settings = {
-        passwordAuthentication = false;
-        kbdInteractiveAuthentication = false;
+        PasswordAuthentication = false;
+        KbdInteractiveAuthentication = false;
         X11Forwarding = false;
       };
       extraConfig = ''
@@ -123,7 +121,12 @@
       options = "--delete-older-than 14d";
     };
   };
-  nixpkgs.config.allowUnfree = true;
+  nixpkgs.config = {
+    allowUnfree = true;
+    permittedInsecurePackages = [
+      "openssl-1.1.1u"
+    ];
+  };
 
   # Drives
   # 2 Gb Swap

@@ -1,7 +1,6 @@
 { inputs, outputs, config, pkgs, ... }: {
   imports = [
     ./hardware-configuration.nix
-    ./user.nix
   ];
   
   # Boot
@@ -12,7 +11,6 @@
       systemd-boot.enable = false;
       grub = {
         enable = true;
-        version = 2;
         efiSupport = true;
         useOSProber = true;
         device = "nodev";
@@ -54,7 +52,8 @@
   environment = {
     systemPackages = with pkgs; [
       dash bash nano unzip unrar p7zip curl wget git gvfs psmisc
-      networkmanager
+      htop sysstat iotop stress nvtop-nvidia
+      networkmanager ethtool
       exa trashy
     ];
     binsh = "${pkgs.dash}/bin/dash";
@@ -79,7 +78,12 @@
       options = "--delete-older-than 14d";
     };
   };
-  nixpkgs.config.allowUnfree = true;
+  nixpkgs.config = {
+    allowUnfree = true;
+    permittedInsecurePackages = [
+      "openssl-1.1.1u"
+    ];
+  };
 
   # Drives
   # 2 Gb Swap

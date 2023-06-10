@@ -2,7 +2,6 @@
   imports = [
     ../../modules/xorg.nix
     ../../modules/gaming.nix
-    #../../modules/gdlauncher.nix
   ];
 
   nixpkgs.overlays = [ (final: prev: {
@@ -76,7 +75,6 @@
       enable = true;
       openFirewall = true;
     };
-    flatpak.enable = true;
     gnome.gnome-keyring.enable = true;
   };
   programs = {

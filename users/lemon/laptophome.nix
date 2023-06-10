@@ -2,7 +2,6 @@
   imports = [
     ../../modules/gtk.nix
     ../../modules/kitty.nix
-    ../../modules/picom.nix
     ../../modules/vscode.nix
     ../../modules/spicetify.nix
   ];
@@ -15,16 +14,24 @@
   home = {
     username = "lemon";
     homeDirectory = "/home/lemon";
-    stateVersion = "22.11";
     file = {
       ".config/" = {
-        source = ../../modules/config;
+        source = ../../dots/.config;
+        recursive = true;
+      };
+      ".local/" = {
+        source = ../../dots/.local;
+        recursive = true;
+      };
+      ".vscode-oss/" = {
+        source = ../../dots/.vscode-oss;
         recursive = true;
       };
       ".xinitrc" = {
-        source = ./.xinitrc;
+        source = ../../dots/.xinitrc;
       };
     };
+    stateVersion = "to be added";
   };
 
   services = {
