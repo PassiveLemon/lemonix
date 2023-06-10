@@ -35,16 +35,21 @@ local volume = helpers.simplesldr(532, 16, 16, 6, 100, 4, 4, 4, 4)
 
 local function artimageupdater()
   awful.spawn.easy_async_with_shell("sleep 0.15 && playerctl metadata mpris:artUrl", function(artUrl)
-    artUrlTrim = artUrl.gsub(artUrl, ".*/", "")
-    artUrlTrim = artUrlTrim.gsub(artUrlTrim, "\n", "")
-    artUrlFile = gears.surface.load_silently("/tmp/mediamenu/" .. artUrlTrim .. ".jpg", beautiful.layout_fullscreen)
-    awful.spawn.easy_async_with_shell("test -f /tmp/mediamenu/" .. artUrlTrim .. ".jpg && echo true || echo false", function(test_state)
-      if test_state:find("false") then
-        awful.spawn.with_shell("curl -Lso /tmp/mediamenu/" .. artUrlTrim .. ".jpg " .. artUrl)
-        imageupdater_timer:start()
-      end
-      artimage:get_children_by_id("imagebox")[1].image = artUrlFile
-    end)
+    if artUrl == "" or artUrl:find("No players found") or artUrl:find("No Players found") then
+      title:get_children_by_id("textbox")[1].width = 532
+      artist:get_children_by_id("textbox")[1].width = 532
+    else
+      artUrlTrim = artUrl.gsub(artUrl, ".*/", "")
+      artUrlTrim = artUrlTrim.gsub(artUrlTrim, "\n", "")
+      artUrlFile = gears.surface.load_silently("/tmp/mediamenu/" .. artUrlTrim .. ".jpg", beautiful.layout_fullscreen)
+      awful.spawn.easy_async_with_shell("test -f /tmp/mediamenu/" .. artUrlTrim .. ".jpg && echo true || echo false", function(test_state)
+        if test_state:find("false") then
+          awful.spawn.with_shell("curl -Lso /tmp/mediamenu/" .. artUrlTrim .. ".jpg " .. artUrl)
+          imageupdater_timer:start()
+        end
+        artimage:get_children_by_id("imagebox")[1].image = artUrlFile
+      end)
+    end
   end)
 end
 
@@ -104,10 +109,12 @@ local function positionupdater(position_state)
       position.visible = true
       positionsldr.visible = true
       awful.spawn.easy_async("playerctl metadata mpris:length", function(length)
-        position:get_children_by_id("progressbar")[1].value = (((current * 1000000) / length) * 100)
-        if position_state then
-          awful.spawn("playerctl position " .. ((position_state * length) / (100000000)))
-          position:get_children_by_id("progressbar")[1].value = position_state
+        if length ~= "" or length:find("No player could handle this command") or length:find("No Players found") then
+          position:get_children_by_id("progressbar")[1].value = (((current * 1000000) / length) * 100)
+          if position_state then
+            awful.spawn("playerctl position " .. ((position_state * length) / (100000000)))
+            position:get_children_by_id("progressbar")[1].value = position_state
+          end
         end
       end)
     end
