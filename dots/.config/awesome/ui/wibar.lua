@@ -91,6 +91,19 @@ screen.connect_signal("request::desktop_decoration", function(s)
     },
   }
 
+  -- Calendar
+  calendar = wibox.widget {
+    widget = wibox.container.margin,
+    margins = { bottom = 0, },
+    {
+      widget = wibox.widget.textbox,
+      markup = "󰸗 ",
+      align = "center",
+      valign = "center",
+      font = "Fira Code Nerd Font 11",
+    },
+  }
+
   -- Clock
   clock = wibox.widget {
     widget = wibox.container.margin,
@@ -236,8 +249,13 @@ screen.connect_signal("request::desktop_decoration", function(s)
         sep,
         bar,
         sep,
+        calendar,
+        helpers.simplewtch("date +'%a %b %-d'", 60),
+        sep,
+        bar,
+        sep,
         clock,
-        wibox.widget.textclock("%a %b %d, %I:%M %p"),
+        helpers.simplewtch("date +'%-I:%M %p'", 1),
         sep,
       },
     },
