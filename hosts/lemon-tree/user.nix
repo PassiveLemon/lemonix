@@ -14,6 +14,7 @@
     pamixer playerctl appimage-run neofetch ventoy-bin
     libsForQt5.kruler
     i3lock-fancy-rapid
+    wireplumber
   ];
 
   # Fonts
@@ -63,6 +64,7 @@
     };
     pipewire = {
       enable = true;
+      wireplumber.enable = true;
       jack.enable = true;
       pulse.enable = true;
       alsa = {
