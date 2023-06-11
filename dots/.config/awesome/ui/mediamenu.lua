@@ -41,11 +41,10 @@ local function artimageupdater()
     else
       artUrlTrim = artUrl.gsub(artUrl, ".*/", "")
       artUrlTrim = artUrlTrim.gsub(artUrlTrim, "\n", "")
-      artUrlFile = gears.surface.load_silently("/tmp/mediamenu/" .. artUrlTrim .. ".jpg", beautiful.layout_fullscreen)
-      awful.spawn.easy_async_with_shell("test -f /tmp/mediamenu/" .. artUrlTrim .. ".jpg && echo true || echo false", function(test_state)
+      artUrlFile = gears.surface.load_silently("/tmp/mediamenu/" .. artUrlTrim, beautiful.layout_fullscreen)
+      awful.spawn.easy_async_with_shell("test -f /tmp/mediamenu/" .. artUrlTrim .. " && echo true || echo false", function(test_state)
         if test_state:find("false") then
-          awful.spawn.with_shell("curl -Lso /tmp/mediamenu/" .. artUrlTrim .. ".jpg " .. artUrl)
-          imageupdater_timer:start()
+          awful.spawn.with_shell("curl -Lso /tmp/mediamenu/" .. artUrlTrim .. " " .. artUrl)
         end
         artimage:get_children_by_id("imagebox")[1].image = artUrlFile
       end)
