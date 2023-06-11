@@ -10,11 +10,11 @@ local click_to_hide = require("modules.click_to_hide")
 -- Media management menu
 --
 
-local artimage = helpers.simpleimg(48, 48, nil, 4, 4, 4, 4)
+local artimage = helpers.simpleimg(48, 0, nil, 4, 4, 4, 4)
 
-local title = helpers.simpletxt(456, 15, nil, beautiful.font, "left", 4, 4, 4, 4)
+local title = helpers.simpletxt(532, 15, nil, beautiful.font, "left", 4, 4, 4, 4)
 
-local artist = helpers.simpletxt(456, 15, nil, beautiful.font, "left", 0, 4, 4, 4)
+local artist = helpers.simpletxt(532, 15, nil, beautiful.font, "left", 0, 4, 4, 4)
 
 local shuffle = helpers.simplebtn(100, 100, "󰒞", beautiful.font_large, 4, 4, 4, 4)
 
@@ -33,9 +33,13 @@ local volume = helpers.simplesldr(532, 16, 16, 6, 100, 4, 4, 4, 4)
 
 local function artimageupdater()
   awful.spawn.easy_async_with_shell("sleep 0.15 && playerctl metadata mpris:artUrl", function(artUrl)
-    if artUrl == "" or artUrl:find("No players found") or artUrl:find("No Players found") then
-      title:get_children_by_id("textbox")[1].width = 532
-      artist:get_children_by_id("textbox")[1].width = 532
+    artUrl = artUrl.gsub(artUrl, "\n", "")
+    if artUrl == "" or artUrl:find("No players found") or artUrl == "No players found" or artUrl:find("No Players found") then
+      artimage:get_children_by_id("margin")[1].margins = { right = 0, left = 0, }
+      artimage:get_children_by_id("constraint")[1].forced_width = 0
+      artimage:get_children_by_id("constraint")[1].visible = false
+      title:get_children_by_id("background")[1].forced_width = 532
+      artist:get_children_by_id("background")[1].forced_width = title:get_children_by_id("textbox")[1].width
     else
       artUrlTrim = artUrl.gsub(artUrl, ".*/", "")
       artUrlTrim = artUrlTrim.gsub(artUrlTrim, "\n", "")
@@ -47,9 +51,11 @@ local function artimageupdater()
           awful.spawn.with_shell("curl -Lso /tmp/mediamenu/" .. artUrlTrim .. " " .. artUrl)
         end
         artimage:get_children_by_id("constraint")[1].forced_width = imageDynWidth
-        title:get_children_by_id("background")[1].forced_width = (532 - 8 - imageDynWidth)
-        artist:get_children_by_id("background")[1].forced_width = title:get_children_by_id("background")[1].forced_width
+        artimage:get_children_by_id("constraint")[1].forced_height = 48
+        artimage:get_children_by_id("constraint")[1].visible = true
         artimage:get_children_by_id("imagebox")[1].image = artUrlFile
+        title:get_children_by_id("background")[1].forced_width = (532 - 8 - imageDynWidth)
+        artist:get_children_by_id("background")[1].forced_width = title:get_children_by_id("textbox")[1].width
       end)
     end
   end)
