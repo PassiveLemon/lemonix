@@ -3,8 +3,6 @@ local gears = require("gears")
 local beautiful = require("beautiful")
 local wibox = require("wibox")
 
-local naughty = require("naughty")
-
 local helpers = require("helpers")
 local click_to_hide = require("modules.click_to_hide")
 
@@ -42,10 +40,15 @@ local function artimageupdater()
       artUrlTrim = artUrl.gsub(artUrl, ".*/", "")
       artUrlTrim = artUrlTrim.gsub(artUrlTrim, "\n", "")
       artUrlFile = gears.surface.load_silently("/tmp/mediamenu/" .. artUrlTrim, beautiful.layout_fullscreen)
+      imageAspRat = (artUrlFile:get_width() / artUrlFile:get_height())
+      imageDynWidth = math.floor((imageAspRat * 48) + 0.5)
       awful.spawn.easy_async_with_shell("test -f /tmp/mediamenu/" .. artUrlTrim .. " && echo true || echo false", function(test_state)
         if test_state:find("false") then
           awful.spawn.with_shell("curl -Lso /tmp/mediamenu/" .. artUrlTrim .. " " .. artUrl)
         end
+        artimage:get_children_by_id("constraint")[1].forced_width = imageDynWidth
+        title:get_children_by_id("background")[1].forced_width = (532 - 8 - imageDynWidth)
+        artist:get_children_by_id("background")[1].forced_width = title:get_children_by_id("background")[1].forced_width
         artimage:get_children_by_id("imagebox")[1].image = artUrlFile
       end)
     end
