@@ -7,6 +7,7 @@ local helpers = { }
 
 function helpers.simpletxt(x, y, txt, fnt, ali, mt, mr, mb, ml)
   local simpletext = wibox.widget {
+    id = "margin",
     widget = wibox.container.margin,
     margins = {
       top = mt,
@@ -37,6 +38,7 @@ end
 
 function helpers.simpleimg(x, y, img, mt, mr, mb, ml)
   local simpleimage = wibox.widget {
+    id = "margin",
     widget = wibox.container.margin,
     margins = {
       top = mt,
@@ -63,6 +65,7 @@ end
 
 function helpers.simplebtn(x, y, txt, fnt, mt, mr, mb, ml)
   local simplebutton = wibox.widget {
+    id = "margin",
     widget = wibox.container.margin,
     margins = {
       top = mt,
@@ -101,6 +104,7 @@ end
 
 function helpers.simplesldr(x, y, w, h, max, mt, mr, mb, ml)
   local simpleslider = wibox.widget {
+    id = "margin",
     widget = wibox.container.margin,
     margins = {
       top = mt,
@@ -141,6 +145,7 @@ end
 
 function helpers.simplesldrhdn(x, y, w, h, max, mt, mr, mb, ml)
   local simplesldrhdn = wibox.widget {
+    id = "margin",
     widget = wibox.container.margin,
     margins = {
       top = mt,
@@ -175,6 +180,7 @@ end
 
 function helpers.simpleprog(x, y, w, max, mt, mr, mb, ml)
   local simpleprog = wibox.widget {
+    id = "margin",
     widget = wibox.container.margin,
     margins = {
       top = mt,
