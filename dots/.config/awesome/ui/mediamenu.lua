@@ -48,8 +48,9 @@ local function artimageupdater()
       imageDynWidth = math.floor((imageAspRat * 48) + 0.5)
       awful.spawn.easy_async_with_shell("test -f /tmp/mediamenu/" .. artUrlTrim .. " && echo true || echo false", function(test_state)
         if test_state:find("false") then
-          awful.spawn.with_shell("curl -Lso /tmp/mediamenu/" .. artUrlTrim .. " " .. artUrl)
+          awful.spawn.with_shell("mkdir -p /tmp/mediamenu && curl -Lso /tmp/mediamenu/" .. artUrlTrim .. " " .. artUrl)
         end
+        artimage:get_children_by_id("margin")[1].margins = { right = 4, left = 4, }
         artimage:get_children_by_id("constraint")[1].forced_width = imageDynWidth
         artimage:get_children_by_id("constraint")[1].forced_height = 48
         artimage:get_children_by_id("constraint")[1].visible = true
