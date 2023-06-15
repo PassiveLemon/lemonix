@@ -41,11 +41,13 @@ local gpu_mem = helpers.simplewtch([[sh -c "echo -n 'GPU Mem: ' && nvidia-smi --
 
 local strg_text = helpers.simpletxt(nil, nil, "Storage", beautiful.font, "center")
 
-local strg_free_nvme = helpers.simplewtch([[sh -c "echo -n 'NVME: ' && df -h /dev/nvme0n1p3 | awk 'NR==2 {split(\$3, used, \"G\"); split(\$2, total, \"G\"); print used[1] \"/\" total[1] \" GB \" int((used[1]/total[1])*100) \"%\"}'"]], 60)
+local strg_free_nvme0 = helpers.simplewtch([[sh -c "echo -n 'NVME0: ' && df -h /dev/nvme0n1p2 | awk 'NR==2 {split(\$3, used, \"G\"); split(\$2, total, \"G\"); print used[1] \"/\" total[1] \" GB \" int((used[1]/total[1])*100) \"%\"}'"]], 60)
 
-local strg_free_sda = helpers.simplewtch([[sh -c "echo -n 'SDA: ' && df -h /dev/sda1 | awk 'NR==2 {split(\$3, used, \"T\"); split(\$2, total, \"T\"); print used[1] \"/\" total[1] \" TB \" int((used[1]/total[1])*100) \"%\"}'"]], 60)
+local strg_free_nvme1 = helpers.simplewtch([[sh -c "echo -n 'NVME1: ' && df -h /dev/nvme1n1p1 | awk 'NR==2 {split(\$3, used, \"G\"); split(\$2, total, \"G\"); print used[1] \"/\" total[1] \" GB \" int((used[1]/total[1])*100) \"%\"}'"]], 60)
 
-local strg_free_sdb = helpers.simplewtch([[sh -c "echo -n 'SDB: ' && df -h /dev/sdb1 | awk 'NR==2 {split(\$3, used, \"G\"); split(\$2, total, \"G\"); print used[1] \"/\" total[1] \" GB \" int((used[1]/total[1])*100) \"%\"}'"]], 60)
+local strg_free_sda1 = helpers.simplewtch([[sh -c "echo -n 'SDA1: ' && df -h /dev/sda1 | awk 'NR==2 {split(\$3, used, \"T\"); split(\$2, total, \"T\"); print used[1] \"/\" total[1] \" TB \" int((used[1]/total[1])*100) \"%\"}'"]], 60)
+
+local strg_free_sdb1 = helpers.simplewtch([[sh -c "echo -n 'SDB1: ' && df -h /dev/sdb1 | awk 'NR==2 {split(\$3, used, \"G\"); split(\$2, total, \"G\"); print used[1] \"/\" total[1] \" GB \" int((used[1]/total[1])*100) \"%\"}'"]], 60)
 
 local uptime_text = helpers.simpletxt(nil, nil, "Uptime", beautiful.font, "center")
 
@@ -104,9 +106,10 @@ local resourcemenu_pop = awful.popup {
         },
         space,
         strg_text,
-        strg_free_nvme,
-        strg_free_sda,
-        strg_free_sdb,
+        strg_free_nvme0,
+        strg_free_nvme1,
+        strg_free_sda1,
+        strg_free_sdb1,
       },
     },
     {
