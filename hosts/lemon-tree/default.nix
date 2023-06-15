@@ -129,10 +129,11 @@
   };
 
   # Drives
-  # 2 Gb Swap
-  swapDevices = [
-    { device = "/dev/disk/by-partuuid/ea50918a-ab69-4126-a74c-5d1f0bb70612"; randomEncryption.enable = true; priority = 176; }
-  ];
+  # Home (1 TB Sabrent)
+  fileSystems."/home" = {
+    device = "/dev/disk/by-uuid/30266ca4-5926-430a-83f5-403c30092cf5";
+    fsType = "ext4";
+  };
 
   # 2 TB Seagate
   fileSystems."/home/HDD2TBEXT4" = {
@@ -141,10 +142,10 @@
   };
 
   # 1 TB Toshiba
-  fileSystems."/home/BACKUPDRIVE" = {
-    device = "/dev/disk/by-uuid/76946991-d872-4936-82f2-298225ea010b";
-    fsType = "ext4";
-  };
+ # fileSystems."/home/BACKUPDRIVE" = {
+ #   device = "/dev/disk/by-uuid/76946991-d872-4936-82f2-298225ea010b";
+ #   fsType = "ext4";
+ # };
 
-  system.stateVersion = "22.11";
+  system.stateVersion = "23.05";
 }

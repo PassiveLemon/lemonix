@@ -2,7 +2,7 @@
   description = "Lemon's NixOS";
 
   inputs = {
-    nixos.url = "github:nixos/nixpkgs/nixos-23.05";
+    nixos.url = "github:nixos/nixpkgs/nixos-unstable";
     nixpkgs.url = "github:nixos/nixpkgs/nixpkgs-unstable";
     home-manager.url = "github:nix-community/home-manager/release-23.05";
 

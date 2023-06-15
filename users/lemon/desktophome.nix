@@ -35,7 +35,7 @@
         source = ../../dots/.xinitrc;
       };
     };
-    stateVersion = "22.11";
+    stateVersion = "23.05";
   };
 
   services = {
