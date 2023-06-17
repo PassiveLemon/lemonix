@@ -60,7 +60,7 @@ theme.layout_dwindle = themes_path.."default/layouts/dwindlew.png"
 -- Wallpaper
 --
 
-theme.icon_theme = kora
+theme.icon_theme = Papirus
 theme.wallpaper = "/home/lemon/.background-image"
 
 screen.connect_signal("request::wallpaper", function(s)
