@@ -63,20 +63,6 @@ end)
 ruled.client.connect_signal("request::rules", function()
   ruled.client.append_rule {
     rule = {
-      instance = "easyeffects",
-      class    = "easyeffects",
-      name     = "Easy Effects",
-    },
-    properties = { 
-      screen = "DP-0",
-      tag = " 5 ",
-      minimized = true,
-      urgent = false,
-    },
-  }
-
-  ruled.client.append_rule {
-    rule = {
       instance = "kruler",
       class    = "kruler",
       name     = "KRuler",

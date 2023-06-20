@@ -6,3 +6,5 @@ awful.spawn.easy_async_with_shell("pgrep easyeffects || easyeffects --gapplicati
 awful.spawn.easy_async_with_shell("pgrep picom || picom --experimental-backend -b")
 awful.spawn.easy_async_with_shell("pgrep nm-applet || nm-applet")
 awful.spawn.easy_async_with_shell("pgrep megasync || megasync")
+
+awful.spawn.easy_async("mkdir -p /tmp/mediamenu")

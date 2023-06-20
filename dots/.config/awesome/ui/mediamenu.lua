@@ -10,11 +10,13 @@ local click_to_hide = require("modules.click_to_hide")
 -- Media management menu
 --
 
-local artimage = helpers.simpleimg(48, 0, nil, 4, 4, 4, 4)
+local artimage = helpers.simpleimg(nil, 0, nil, 4, 4, 4, 4)
 
-local title = helpers.simpletxt(532, 15, nil, beautiful.font, "left", 4, 4, 4, 4)
+local title = helpers.simpletxt(532, 17, nil, beautiful.font, "left", 4, 4, 4, 4)
 
-local artist = helpers.simpletxt(532, 15, nil, beautiful.font, "left", 0, 4, 4, 4)
+local artist = helpers.simpletxt(532, 17, nil, beautiful.font, "left", 0, 4, 4, 4)
+
+local album = helpers.simpletxt(532, 17, nil, beautiful.font, "left", 0, 4, 4, 4)
 
 local shuffle = helpers.simplebtn(100, 100, "󰒞", beautiful.font_large, 4, 4, 4, 4)
 
@@ -26,59 +28,76 @@ local next = helpers.simplebtn(100, 100, "󰒭", beautiful.font_large, 4, 4, 4, 
 
 local loop = helpers.simplebtn(100, 100, "󰑗", beautiful.font_large, 4, 4, 4, 4)
 
+--wip
+local position_cur = helpers.simpletxt(532, 15, nil, beautiful.font, "left", 4, 4, 4, 4)
+local position_tot = helpers.simpletxt(532, 15, nil, beautiful.font, "left", 4, 4, 4, 4)
+--
+
 local position = helpers.simpleprog(532, 6, 532, 100, 4, 4, 4, 4)
 local positionsldr = helpers.simplesldrhdn(532, 6, 0, 6, 100, 4, 4, 4, 4)
 
-local volume = helpers.simplesldr(532, 16, 16, 6, 100, 4, 4, 4, 4)
+local volume_icon = helpers.simpleicn(18, 15, "󰕾", "Fira Code Nerd Font 12", 3, 5, 3, 0)
+
+local volume = helpers.simplesldr(513, 16, 16, 6, 100, 4, 4, 4, 0)
 
 local function artimageupdater()
   awful.spawn.easy_async_with_shell("sleep 0.15 && playerctl metadata mpris:artUrl", function(artUrl)
     artUrl = artUrl.gsub(artUrl, "\n", "")
-    if artUrl == "" or artUrl:find("No players found") or artUrl == "No players found" or artUrl:find("No Players found") then
-      artimage:get_children_by_id("margin")[1].margins = { right = 0, left = 0, }
-      artimage:get_children_by_id("constraint")[1].forced_width = 0
-      artimage:get_children_by_id("constraint")[1].visible = false
+    if artUrl == "" or artUrl == "No players found" or artUrl == "No player could handle this command" then
+      artimage.visible = false
       title:get_children_by_id("background")[1].forced_width = 532
-      artist:get_children_by_id("background")[1].forced_width = title:get_children_by_id("textbox")[1].width
     else
       artUrlTrim = artUrl.gsub(artUrl, ".*/", "")
-      artUrlTrim = artUrlTrim.gsub(artUrlTrim, "\n", "")
       artUrlFile = gears.surface.load_silently("/tmp/mediamenu/" .. artUrlTrim, beautiful.layout_fullscreen)
       imageAspRat = (artUrlFile:get_width() / artUrlFile:get_height())
-      imageDynWidth = math.floor((imageAspRat * 48) + 0.5)
-      awful.spawn.easy_async_with_shell("test -f /tmp/mediamenu/" .. artUrlTrim .. " && echo true || echo false", function(test_state)
-        if test_state:find("false") then
-          awful.spawn.with_shell("mkdir -p /tmp/mediamenu && curl -Lso /tmp/mediamenu/" .. artUrlTrim .. " " .. artUrl)
-        end
-        artimage:get_children_by_id("margin")[1].margins = { right = 4, left = 4, }
-        artimage:get_children_by_id("constraint")[1].forced_width = imageDynWidth
-        artimage:get_children_by_id("constraint")[1].forced_height = 48
-        artimage:get_children_by_id("constraint")[1].visible = true
-        artimage:get_children_by_id("imagebox")[1].image = artUrlFile
-        title:get_children_by_id("background")[1].forced_width = (532 - 8 - imageDynWidth)
-        artist:get_children_by_id("background")[1].forced_width = title:get_children_by_id("textbox")[1].width
-      end)
+      ImageDynHeight = ((title:get_children_by_id("background")[1].forced_height * 3) + 8)
+      imageDynWidth = math.floor((imageAspRat * ImageDynHeight) + 0.5)
+      awful.spawn.with_shell("test -f /tmp/mediamenu/" .. artUrlTrim .. " || curl -Lso /tmp/mediamenu/" .. artUrlTrim .. " " .. artUrl)
+      artimage:get_children_by_id("constraint")[1].forced_width = imageDynWidth
+      artimage:get_children_by_id("constraint")[1].forced_height = ImageDynHeight
+      artimage:get_children_by_id("imagebox")[1].image = artUrlFile
+      artimage.visible = true
+      title:get_children_by_id("background")[1].forced_width = (532 - 8 - imageDynWidth)
     end
+    artist:get_children_by_id("background")[1].forced_width = title:get_children_by_id("textbox")[1].width
+    album:get_children_by_id("background")[1].forced_width = title:get_children_by_id("textbox")[1].width
   end)
 end
 
 local function metadataupdater()
   awful.spawn.easy_async_with_shell("sleep 0.15 && playerctl metadata xesam:title", function(title_state)
-    if title_state == "" or title_state:find("No player could handle this command") or title_state:find("No Players found") then
+    title_state = title_state.gsub(title_state, "\n", "")
+    if title_state == "" or title_state == "No players found" or title_state == "No player could handle this command" then
       artist.visible = false
+      album.visible = false
       title:get_children_by_id("textbox")[1].text = "No media found"
     else
-      artist.visible = true
       title:get_children_by_id("textbox")[1].text = title_state
     end
   end)
   awful.spawn.easy_async_with_shell("sleep 0.15 && playerctl metadata xesam:artist", function(artist_state)
-    artist:get_children_by_id("textbox")[1].text = artist_state
+    artist_state = artist_state.gsub(artist_state, "\n", "")
+    if artist_state == "" or artist_state == "No players found" or artist_state == "No player could handle this command" then
+      artist.visible = false
+    else
+      artist.visible = true
+      artist:get_children_by_id("textbox")[1].text = "By " .. artist_state
+    end
+  end)
+  awful.spawn.easy_async_with_shell("sleep 0.15 && playerctl metadata xesam:album", function(album_state)
+    album_state = album_state.gsub(album_state, "\n", "")
+    if album_state == "" or album_state == "No players found" or album_state == "No player could handle this command" then
+      album.visible = false
+    else
+      album.visible = true
+      album:get_children_by_id("textbox")[1].text = "On " .. album_state
+    end
   end)
 end
 
 local function shuffleupdater()
   awful.spawn.easy_async_with_shell("sleep 0.15 && playerctl shuffle", function(shuffle_state)
+    shuffle:get_children_by_id("textbox")[1].font = beautiful.font_large
     if shuffle_state:find("On") then
       shuffle:get_children_by_id("textbox")[1].text = "󰒝"
     elseif shuffle_state:find("Off") then
@@ -89,6 +108,7 @@ end
 
 local function toggleupdater()
   awful.spawn.easy_async_with_shell("sleep 0.15 && playerctl status", function(toggle_state)
+    toggle:get_children_by_id("textbox")[1].font = beautiful.font_large
     if toggle_state:find("Playing") then
       toggle:get_children_by_id("textbox")[1].text = "󰏤"
     elseif toggle_state:find("Paused") then
@@ -99,6 +119,7 @@ end
 
 local function loopupdater()
   awful.spawn.easy_async_with_shell("sleep 0.15 && playerctl loop", function(loop_state)
+    loop:get_children_by_id("textbox")[1].font = beautiful.font_large
     if loop_state:find("None") then
       loop:get_children_by_id("textbox")[1].text = "󰑗"
     elseif loop_state:find("Playlist") then
@@ -111,14 +132,16 @@ end
 
 local function positionupdater(position_state)
   awful.spawn.easy_async("playerctl position", function (current)
-    if current == "" or current:find("No player could handle this command") or current:find("No Players found") then
+    current = current.gsub(current, "\n", "")
+    if current == "" or current == "No players found" or current == "No player could handle this command" then
       position.visible = false
       positionsldr.visible = false
     else
       position.visible = true
       positionsldr.visible = true
       awful.spawn.easy_async("playerctl metadata mpris:length", function(length)
-        if length ~= "" or length:find("No player could handle this command") or length:find("No Players found") then
+        length = length.gsub(length, "\n", "")
+        if length ~= "" or length ~= "No players found" or length ~= "No player could handle this command" then
           position:get_children_by_id("progressbar")[1].value = (((current * 1000000) / length) * 100)
           if position_state then
             awful.spawn("playerctl position " .. ((position_state * length) / (100000000)))
@@ -132,10 +155,13 @@ end
 
 local function volumeupdater()
   awful.spawn.easy_async("playerctl volume", function(volume_state)
-    if volume_state == "" or volume_state:find("No player could handle this command") or volume_state:find("No Players found") then
+    volume_state = volume_state.gsub(volume_state, "\n", "")
+    if volume_state == "" or volume_state == "No players found" or volume_state == "No player could handle this command" then
       volume.visible = false
+      volume_icon.visible = false
     else
       volume.visible = true
+      volume_icon.visible = true
       volume:get_children_by_id("slider")[1].value = math.floor(volume_state * 100 + 0.5)
     end
   end)
@@ -217,6 +243,7 @@ local mediamenu_pop = awful.popup {
           layout = wibox.layout.align.vertical,
           title,
           artist,
+          album,
         },
       },
       {
@@ -234,7 +261,11 @@ local mediamenu_pop = awful.popup {
           position,
           positionsldr,
         },
-        volume,
+        {
+          layout = wibox.layout.align.horizontal,
+          volume_icon,
+          volume,
+        },
       },
     },
   },
@@ -280,15 +311,13 @@ volume:get_children_by_id("slider")[1]:connect_signal("property::value", functio
 end)
 
 local function signal()
-  gears.timer.start_new(0.1, function()
-    artimageupdater()
-    metadataupdater()
-    toggleupdater()
-    shuffleupdater()
-    loopupdater()
-    positionupdater()
-    volumeupdater()
-  end)
+  artimageupdater()
+  metadataupdater()
+  toggleupdater()
+  shuffleupdater()
+  loopupdater()
+  positionupdater()
+  volumeupdater()
   mediamenu_pop.visible = not mediamenu_pop.visible
   mediamenu_pop.screen = awful.screen.focused()
   helpers.unfocus()

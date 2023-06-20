@@ -36,6 +36,36 @@ function helpers.simpletxt(x, y, txt, fnt, ali, mt, mr, mb, ml)
   return simpletext
 end
 
+function helpers.simpleicn(x, y, txt, fnt, mt, mr, mb, ml)
+  local simpleicon = wibox.widget {
+    id = "margin",
+    widget = wibox.container.margin,
+    margins = {
+      top = mt,
+      right = mr,
+      bottom = mb,
+      left = ml,
+    },
+    {
+      id = "background",
+      widget = wibox.container.background,
+      forced_width = x,
+      forced_height = y,
+      fg = beautiful.fg_normal,
+      bg = beautiful.bg_normal,
+      shape = gears.shape.rounded_rect,
+      {
+        widget = wibox.widget.textbox,
+        markup = txt,
+        font = fnt,
+        align = "center",
+        valign = "center",
+      },
+    },
+  }
+  return simpleicon
+end
+
 function helpers.simpleimg(x, y, img, mt, mr, mb, ml)
   local simpleimage = wibox.widget {
     id = "margin",
