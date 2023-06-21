@@ -6,9 +6,16 @@
   ];
 
   # Overlay
-  nixpkgs.overlays = [ (final: prev: {
-    awesome = inputs.nixpkgs-f2k.packages.${pkgs.system}.awesome-git;
-  } ) ];
+  nixpkgs = {
+    overlays = [
+      (final: prev: {
+        awesome = inputs.nixpkgs-f2k.packages.${pkgs.system}.awesome-git;
+      }) ];
+    config = {
+      allowUnfree = true;
+      allowUnfreePredicate = _: true;
+    };
+  };
 
   # Packages
   environment.systemPackages = with pkgs; [

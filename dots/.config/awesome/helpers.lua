@@ -159,7 +159,7 @@ function helpers.simplesldr(x, y, w, h, max, mt, mr, mb, ml)
         handle_width = 0,
         bar_height = h,
         bar_shape = gears.shape.rounded_rect,
-        bar_color = beautiful.minimize,
+        bar_color = beautiful.bg_minimize,
         bar_active_color = beautiful.fg_normal,
       },
     },
