@@ -3,8 +3,6 @@ local gears = require("gears")
 local wibox = require("wibox")
 
 local theme_assets = require("beautiful.theme_assets")
-local xresources = require("beautiful.xresources")
-local dpi = xresources.apply_dpi
 
 local themes_path = gears.filesystem.get_themes_dir()
 
@@ -15,8 +13,8 @@ local themes_path = gears.filesystem.get_themes_dir()
 local theme = { }
 
 -- Font
-theme.font          = "Fira Code Nerd Font 10"
-theme.font_large    = "Fira Code Nerd Font 24"
+theme.font          = "FiraMono Nerd Font Regular 10"
+theme.font_large    = "FiraMono Nerd Font Regular 24"
 theme.taglist_font  = theme.font
 theme.tasklist_font = theme.font
 
@@ -38,7 +36,7 @@ theme.fg_focus      = "#ffffff"
 theme.fg_urgent     = "#ffffff"
 
 -- Other
-theme.border_width        = dpi(2)
+theme.border_width        = 2
 theme.border_color_normal = "#000000"
 theme.border_color_active = theme.accent
 theme.border_color_marked = "#91231c"
@@ -49,12 +47,11 @@ theme.tasklist_disable_task_name = true
 theme.tasklist_spacing = 8
 
 -- Taglist squares:
-local taglist_square_size = dpi(4)
+local taglist_square_size = 4
 theme.taglist_squares_sel = theme_assets.taglist_squares_sel(taglist_square_size, theme.fg_normal)
 theme.taglist_squares_unsel = theme_assets.taglist_squares_unsel(taglist_square_size, theme.fg_normal)
 
 theme.layout_dwindle = themes_path.."default/layouts/dwindlew.png"
-
 
 --
 -- Wallpaper

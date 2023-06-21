@@ -29,7 +29,7 @@ local cache_use_perc = helpers.simplewtch([[sh -c "echo -n '' && free -h | awk '
 
 local network_text = helpers.simpletxt(nil, nil, "Network", beautiful.font, "center")
 
-local network_total = helpers.simplewtch([[sh -c 'ip -s link show enp9s0 | awk '\''/RX:/{getline; rx=$1} /TX:/{getline; tx=$1} END{printf "Rx/Tx: %sB/%sB\n", convert(rx), convert(tx)} function convert(val) {suffix="BKMGTPE"; for(i=1; val>1024; i++) val/=1024; return int(val+0.5) substr(suffix, i, 1)}'\']], 5)
+local network_total = helpers.simplewtch([[sh -c 'ip -s link show enp7s0 | awk '\''/RX:/{getline; rx=$1} /TX:/{getline; tx=$1} END{printf "Rx/Tx: %sB/%sB\n", convert(rx), convert(tx)} function convert(val) {suffix="BKMGTPE"; for(i=1; val>1024; i++) val/=1024; return int(val+0.5) substr(suffix, i, 1)}'\']], 5)
 
 local gpu_text = helpers.simpletxt(nil, nil, "GPU", beautiful.font, "center")
 

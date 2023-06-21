@@ -2,12 +2,15 @@
   imports = [
     ../../modules/xorg.nix
     ../../modules/gaming.nix
+    ../../modules/customization.nix
   ];
 
+  # Overlay
   nixpkgs.overlays = [ (final: prev: {
     awesome = inputs.nixpkgs-f2k.packages.${pkgs.system}.awesome-git;
   } ) ];
 
+  # Packages
   environment.systemPackages = with pkgs; [
     lite-xl rofi hilbish vscodium github-desktop firefox betterdiscordctl (discord.override { withOpenASAR = true; })
     haruna feh gimp obs-studio authy xarchiver filezilla easytag easyeffects qpwgraph openshot-qt qbittorrent
@@ -16,24 +19,6 @@
     i3lock-fancy-rapid
     wireplumber
   ];
-
-  # Fonts
-  fonts = {
-    fonts = with pkgs; [
-      material-design-icons fira (nerdfonts.override { fonts = [ "FiraCode" ]; })
-    ];
-    fontconfig = {
-      enable = true;
-      antialias = true;
-      allowBitmaps = true;
-      hinting = {
-        enable = true;
-        autohint = true;
-        style = "hintfull";
-      };
-      subpixel.lcdfilter = "default";
-    };
-  };
 
   # Configs
   services = {

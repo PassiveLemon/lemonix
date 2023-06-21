@@ -9,7 +9,7 @@
   "workbench.startupEditor": "none",
   "workbench.welcomePage.extraAnnouncements": false,
   "color-manager.autoStartIntellisense": true,
-  "editor.fontFamily": "'Fira Code Medium Nerd Font Complete Mono', 'monospace', monospace",
+  "editor.fontFamily": "'FiraCode Nerd Font Ret', 'monospace', monospace",
   "editor.fontLigatures": false,
   "emmet.excludeLanguages": [
     "html",

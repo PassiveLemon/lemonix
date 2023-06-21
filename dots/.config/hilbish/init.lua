@@ -11,25 +11,37 @@ promptua.setConfig {
 }
 
 promptua.setTheme {
-  {
-    provider  = "user.name",
-    style     = "greyBg white",
-    separator = "@",
-    format    = "@style @icon@info ",
+  { 
+    separator = "┌─┤ ",
+    format    = "@style@icon@info",
   },
   {
-    provider  = "user.hostname",
-    style     = "greyBg white",
-    separator = "|",
-    format    = "@style @icon@info ",
+    provider  = "user.name",
+    style     = "yellow",
+    format    = "@style@icon@info",
+  },
+  { 
+    separator = "├",
+    format    = "@style@icon@info",
+  },
+  { 
+    separator = "─┤ ",
+    format    = "@style@icon@info",
   },
   {
     provider  = "dir.path",
-    style     = "greyBg white",
-    separator = "",
-    format    = "@style @icon@info ",
+    style     = "blue",
+    format    = "@style@icon@info",
+  },
+  { 
+    separator = "│",
+    format    = "@style@icon@info",
   },
   { separator = "\n" },
+  { 
+    separator = "└ ",
+    format    = "@style@icon@info",
+  },
   {
 		provider = 'prompt.failSuccess',
 		style = function(info)
@@ -40,7 +52,10 @@ promptua.setTheme {
 			end
 		end
 	},
-  { separator = ">= " },
+  {
+    separator = ">= ",
+    format    = "@style@icon@info",
+  },
 }
 
 promptua.init()

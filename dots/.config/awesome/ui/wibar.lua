@@ -117,10 +117,7 @@ screen.connect_signal("request::desktop_decoration", function(s)
     },
   }
 
-  -- Layoutbox
-  layoutbox = awful.widget.layoutbox {
-    screen = s,
-  }
+  layoutbox = helpers.simpleimg(25, 25, beautiful.layout_dwindle, 0, 0, 0, 0)
 
   -- Systray
   local systray_pop = awful.popup {
