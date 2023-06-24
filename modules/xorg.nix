@@ -1,8 +1,11 @@
 { config, pkgs, ... }: {
   environment.systemPackages = with pkgs; [
-    # Desktop functionality
+    # Xorg
     xorg.xf86videovesa xorg.xf86videofbdev
-    xorg.xinit xorg.xrandr xorg.xhost libsecret gnome.seahorse gnome.gnome-keyring
-    pcmanfm gparted pavucontrol networkmanagerapplet
+    xorg.xinit xorg.xrandr xorg.xhost
+
+    # Base packages
+    libsecret gnome.seahorse gnome.gnome-keyring
+    firefox pcmanfm gparted pavucontrol networkmanagerapplet
   ];
 }

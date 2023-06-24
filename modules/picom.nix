@@ -1,7 +1,7 @@
 { inputs, outputs, config, pkgs, ... }: {
   nixpkgs.overlays = [ (final: prev: {
     picom = inputs.nixpkgs-f2k.packages.${pkgs.system}.picom-pijulius;
-  } ) ];
+  }) ];
 
   services.picom = {
     enable = true;
@@ -18,12 +18,15 @@
         "class_g = 'firefox' && window_type = 'popup_menu'"
         "class_g = 'firefox' && argb"
       ];
+
       # Fading
       fading = true;
       fade-in-step = 0.12;
       fade-out-step = 0.12;
+
       # Corners
       corner-radius = 0;
+
       # Blur
       #blur-method = "gaussian";
       #blur-strength = 3;
@@ -44,6 +47,7 @@
         "_NET_WM_STATE@:32a *= '_NET_WM_STATE_HIDDEN'"
         "_GTK_FRAME_EXTENTS@:c"
       ];
+
       # Other
       daemon = true;
       backend = "xrender";
@@ -65,6 +69,7 @@
         dropdown_menu = { opacity = 1; };
         utility = { shadow = false; };
       };
+      
       # Animations
       animations = true;
       animation-for-transient-window = "zoom";

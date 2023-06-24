@@ -61,7 +61,10 @@ promptua.setTheme {
 promptua.init()
 
 hilbish.alias("ls", "exa -F -l --group-directories-first")
-hilbish.alias("rm", "trash")
+hilbish.alias("tp", "trash put")
+hilbish.alias("tr", "trash restore")
+hilbish.alias("nrs", "sudo nixos-rebuild switch")
+hilbish.alias("hms", "home-manager switch --flake ~/Documents/GitHub/lemonix#lemon@silver")
 
 hilbish.opts.greeting = false
 hilbish.opts.motd = false

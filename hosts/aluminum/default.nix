@@ -31,7 +31,7 @@
 
   # Networking
   networking = {
-    hostName = "lime-tree";
+    hostName = "aluminum";
     networkmanager.enable = true;
   };
 

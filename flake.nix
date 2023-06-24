@@ -21,33 +21,33 @@
   in
   {
     nixosConfigurations = {
-      "lemon-tree" = nixos.lib.nixosSystem {
+      "silver" = nixos.lib.nixosSystem {
         inherit system specialArgs;
         modules = [
-          ./hosts/lemon-tree/default.nix
-          ./hosts/lemon-tree/user.nix
+          ./hosts/silver/default.nix
+          ./hosts/silver/user.nix
         ];
       };
-      "lime-tree" = nixos.lib.nixosSystem {
+      "aluminum" = nixos.lib.nixosSystem {
         inherit system specialArgs;
         modules = [
-          ./hosts/lime-tree/default.nix
-          ./hosts/lime-tree/user.nix
+          ./hosts/aluminum/default.nix
+          ./hosts/aluminum/user.nix
         ];
       };
     };
     homeConfigurations = {
-      "lemon@lemon-tree" = home-manager.lib.homeManagerConfiguration {
+      "lemon@silver" = home-manager.lib.homeManagerConfiguration {
         inherit pkgs extraSpecialArgs;
         modules = [
-          ./users/lemon/desktophome.nix
+          ./users/lemon/silver.nix
           spicetify-nix.homeManagerModule
         ];
       };
-      "lemon@lime-tree" = home-manager.lib.homeManagerConfiguration {
+      "lemon@aluminum" = home-manager.lib.homeManagerConfiguration {
         inherit pkgs extraSpecialArgs;
         modules = [
-          ./users/lime/laptophome.nix
+          ./users/lime/aluminum.nix
         ];
       };
     };

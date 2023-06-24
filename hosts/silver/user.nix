@@ -2,29 +2,21 @@
   imports = [
     ../../modules/xorg.nix
     ../../modules/gaming.nix
-    ../../modules/customization.nix
   ];
 
   # Overlay
-  nixpkgs = {
-    overlays = [
-      (final: prev: {
-        awesome = inputs.nixpkgs-f2k.packages.${pkgs.system}.awesome-git;
-      }) ];
-    config = {
-      allowUnfree = true;
-      allowUnfreePredicate = _: true;
-    };
+  nixpkgs.config = {
+    allowUnfree = true;
+    allowUnfreePredicate = _: true;
   };
 
   # Packages
   environment.systemPackages = with pkgs; [
-    lite-xl rofi hilbish vscodium github-desktop firefox betterdiscordctl (discord.override { withOpenASAR = true; })
-    haruna feh gimp obs-studio authy xarchiver filezilla easytag easyeffects qpwgraph openshot-qt qbittorrent
+    lite-xl rofi hilbish vscodium github-desktop betterdiscordctl (discord.override { withOpenASAR = true; })
+    haruna feh gimp obs-studio authy xarchiver filezilla easytag easyeffects soundux openshot-qt qbittorrent
     pamixer playerctl appimage-run neofetch ventoy-bin
     libsForQt5.kruler
     i3lock-fancy-rapid
-    wireplumber
   ];
 
   # Configs
@@ -34,11 +26,7 @@
       excludePackages = [ pkgs.xterm ];
       videoDrivers = [ "nvidia" ];
       displayManager = {
-        defaultSession = "none+awesome";
         startx.enable = true;
-      };
-      windowManager.awesome = {
-        enable = true;
       };
       libinput = {
         enable = true;
@@ -84,14 +72,5 @@
   security = {
     pam.services.lemon.enableGnomeKeyring = true;
     rtkit.enable = true;
-  };
-  xdg = {
-    portal.enable = true;
-    mime = {
-      enable = true;
-      defaultApplications = {
-        "inode/directory" = "pcmanfm.desktop";
-      };
-    };
   };
 }

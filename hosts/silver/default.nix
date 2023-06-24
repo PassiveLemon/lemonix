@@ -31,7 +31,7 @@
 
   # Networking
   networking = {
-    hostName = "lemon-tree";
+    hostName = "silver";
     networkmanager.enable = true;
     firewall = {
       enable = true;
@@ -56,12 +56,12 @@
         home = "/home/lemon";
         extraGroups = [ "wheel" "networkmanager" "docker" "video" ];
         isNormalUser = true;
-        openssh.authorizedKeys.keys = [ "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQC6XpVE0Tj3gEOcTwWAODH2Sm7u6smE9kwZ0Z4ZV4q9Nc/cH+f0DXKLOljswW2iu0cj8tEsANu5P8JIt+oMA3HXy4qSIzKnaVP7a5/rEQ+yoVwF4AdqzLHKd39D9GP9zDDz0UO4ZaxYEg9q206BHOkS4StpRy1fpES2TneNd/7477mjJbboIyDJK1EzUfQoU/fP9FiSnpWbZKrQtK0m/iol5+2AB8Qp/5htMVm9+KXftCO15cydbi9UKJzJll4SFa8y09/GV/Rgqua5Wj7KH4cDgzXqpIPRo63H0XqfVLjOH1NHeyxX+pmuNZuFGbrqBWF7AtuFGmpujAp9K7tIfkGTi/mJi5rSq+ejiAwJzw7qldGQw8rsfsKVU5pS22JE56X/XYfgmf95ds5lYzTjgx5juVbdjvY3uq6It/JKbvHCP0ueUT78H0RtDRthew0VXq91QWJMrRmwFlc6JRFobk4EcqnWc0kz6aJ6p3SRGymscX/0+UaS/KyyPKSTIVrAaY8= lemon@lemon-tree" ];
+        openssh.authorizedKeys.keys = [ "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQC6XpVE0Tj3gEOcTwWAODH2Sm7u6smE9kwZ0Z4ZV4q9Nc/cH+f0DXKLOljswW2iu0cj8tEsANu5P8JIt+oMA3HXy4qSIzKnaVP7a5/rEQ+yoVwF4AdqzLHKd39D9GP9zDDz0UO4ZaxYEg9q206BHOkS4StpRy1fpES2TneNd/7477mjJbboIyDJK1EzUfQoU/fP9FiSnpWbZKrQtK0m/iol5+2AB8Qp/5htMVm9+KXftCO15cydbi9UKJzJll4SFa8y09/GV/Rgqua5Wj7KH4cDgzXqpIPRo63H0XqfVLjOH1NHeyxX+pmuNZuFGbrqBWF7AtuFGmpujAp9K7tIfkGTi/mJi5rSq+ejiAwJzw7qldGQw8rsfsKVU5pS22JE56X/XYfgmf95ds5lYzTjgx5juVbdjvY3uq6It/JKbvHCP0ueUT78H0RtDRthew0VXq91QWJMrRmwFlc6JRFobk4EcqnWc0kz6aJ6p3SRGymscX/0+UaS/KyyPKSTIVrAaY8= lemon@silver" ];
       };
       monitor = {
         description = "Monitor";
         isNormalUser = true;
-        openssh.authorizedKeys.keys = [ "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQDKnHEuvbz6ShItc0fik42zGdpo3DkgVWRwy+XBOWKAthibCRX4TgTYJtT5Fao207H/DStJjOrgrhWnqQS4Pxd2JZgFkATajv2j5xGrFC+zA3LAGXjCEkGyzBQGHc/Z6lwuCKsUdCdX51MxaXjyOvzQ6/N/xZEJilPGT1eF83Qr/msAyUJTsKpgnoyugfpiS6tlFm1t9czz16X24d62lTEp8e91+lNNUNCBhzApN8qBOKX1ubjmRDn7N1rbsMxINAi734Lmw8WTe/XfYAMIcWdaRG2c+8zEjcopAdorCPFoajU1mfc5yTTLEfFLuwwqelTUtomuTVVXicG1tj8nh9veTXJlhHl86SrFiVPF8WfMvI38cWrZM8wag/kOGYEi8JM83DzikHavp4YcKgrJCuo8/Cyt7OSKCPrxIwmKh5uUiU5y0L++sMRgdwOOPmVKSV2cBcTaV62O/B3OnrveFHRFsGgMxmrLSSbWVyn0gQ+ulubZP1sGZ0eJlp9lJ3ix7HE= monitor@lemon-tree" ];
+        openssh.authorizedKeys.keys = [ "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQDKnHEuvbz6ShItc0fik42zGdpo3DkgVWRwy+XBOWKAthibCRX4TgTYJtT5Fao207H/DStJjOrgrhWnqQS4Pxd2JZgFkATajv2j5xGrFC+zA3LAGXjCEkGyzBQGHc/Z6lwuCKsUdCdX51MxaXjyOvzQ6/N/xZEJilPGT1eF83Qr/msAyUJTsKpgnoyugfpiS6tlFm1t9czz16X24d62lTEp8e91+lNNUNCBhzApN8qBOKX1ubjmRDn7N1rbsMxINAi734Lmw8WTe/XfYAMIcWdaRG2c+8zEjcopAdorCPFoajU1mfc5yTTLEfFLuwwqelTUtomuTVVXicG1tj8nh9veTXJlhHl86SrFiVPF8WfMvI38cWrZM8wag/kOGYEi8JM83DzikHavp4YcKgrJCuo8/Cyt7OSKCPrxIwmKh5uUiU5y0L++sMRgdwOOPmVKSV2cBcTaV62O/B3OnrveFHRFsGgMxmrLSSbWVyn0gQ+ulubZP1sGZ0eJlp9lJ3ix7HE= monitor@silver" ];
       };
     };
   };
@@ -147,8 +147,8 @@
     };
     gc = {
       automatic = true;
-      dates = "weekly";
-      options = "--delete-older-than 14d";
+      dates = "daily";
+      options = "--delete-older-than 3d";
     };
   };
   nixpkgs.config = {
@@ -162,12 +162,14 @@
   fileSystems."/home" = {
     device = "/dev/disk/by-uuid/30266ca4-5926-430a-83f5-403c30092cf5";
     fsType = "ext4";
+    options = [ "noatime" ];
   };
 
   # 2 TB Seagate
   fileSystems."/home/HDD2TBEXT4" = {
     device = "/dev/disk/by-uuid/c532ca53-130a-46c6-9e06-3aee4fd8b6e2";
     fsType = "ext4";
+    options = [ "noatime" ];
   };
 
   # 1 TB Toshiba

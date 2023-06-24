@@ -1,13 +1,9 @@
 { config, pkgs, ... }: {
   imports = [
-    ./config/desktop.nix
-    ../../modules/gtk.nix
+    ../../modules/customization.nix
     ../../modules/kitty.nix
-    ../../modules/picom.nix
     ../../modules/vscode.nix
     ../../modules/spicetify.nix
-    #../../modules/gdlauncher.nix
-    #../../modules/gdlauncherold.nix
   ];
 
   nixpkgs.config = {
@@ -35,7 +31,7 @@
         source = ../../dots/.xinitrc;
       };
     };
-    stateVersion = "23.05";
+    stateVersion = "to be added";
   };
 
   services = {
@@ -47,7 +43,6 @@
         };
       };
     };
-    megasync.enable = true;
   };
   programs.home-manager.enable = true;
 }
