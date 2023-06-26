@@ -130,8 +130,8 @@ local function loopupdater()
 end
 
 positionset = true
-enable = false
-slidervalueset = true
+sliderupdate = false
+sliderselfupdate = true
 
 local function positionupdater(position_state)
   awful.spawn.easy_async("playerctl position", function (current)
@@ -142,15 +142,17 @@ local function positionupdater(position_state)
       position.visible = true
       awful.spawn.easy_async("playerctl metadata mpris:length", function(length)
         length = length.gsub(length, "\n", "")
-        if length ~= "" or length ~= "No players found" or length ~= "No player could handle this command" then
+        if length == "" or length == "No players found" or length == "No player could handle this command" then
+          position.visible = false
+        else
           if positionset == true then
             if position_state then
               awful.spawn("playerctl position " .. ((position_state * length) / (100000000)))
             end
           end
-          if enable == true then
-            slidervalueset = false
-            enable = false
+          if sliderupdate == true then
+            sliderselfupdate = false
+            sliderupdate = false
             position:get_children_by_id("slider")[1].value = ((current * 100000000) / (length))
           end
         end
@@ -217,7 +219,7 @@ local everythingupdater_timer = gears.timer {
   autostart = true,
   callback = function()
     positionset = false
-    enable = true
+    sliderupdate = true
     artimageupdater()
     metadataupdater()
     toggleupdater()
@@ -309,13 +311,13 @@ loop:connect_signal("button::press", function()
 end)
 
 position:get_children_by_id("slider")[1]:connect_signal("property::value", function(slider, position_state)
-  if slidervalueset == true then
+  if sliderselfupdate == true then
     slider.value = position_state
     positionupdater(position_state)
   end
   positionset = true
-  enable = false
-  slidervalueset = true
+  sliderupdate = false
+  sliderselfupdate = true
 end)
 
 volume:get_children_by_id("slider")[1]:connect_signal("property::value", function(slider, volume_state)
