@@ -266,6 +266,14 @@ screen.connect_signal("request::desktop_decoration", function(s)
   systray_pop:connect_signal("mouse::leave", function()
     systray_autohider:start()
   end)
+  
+  systray_pop:connect_signal("mouse::enter", function()
+    systray_autohider:stop()
+  end)
+
+  systray_pop:connect_signal("button::press", function()
+    systray_autohider:stop()
+  end)
 
   click_to_hide.popup(systray_pop, nil, true)
 end)

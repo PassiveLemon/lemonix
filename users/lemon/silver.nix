@@ -45,7 +45,6 @@
       package = inputs.nixpkgs-f2k.packages.${pkgs.system}.awesome-git;
     };
   };
-
   services = {
     flameshot = {
       enable = true;

@@ -10,7 +10,7 @@ local click_to_hide = require("modules.click_to_hide")
 -- Power management menu
 --
 
-local lock = helpers.simplebtn(100, 100, "󰐥", beautiful.font_large, 8, 4, 8, 8)
+local lock = helpers.simplebtn(100, 100, "", beautiful.font_large, 8, 4, 8, 8)
 
 local poweroff = helpers.simplebtn(100, 100, "󰐥", beautiful.font_large, 8, 4, 8, 4)
 

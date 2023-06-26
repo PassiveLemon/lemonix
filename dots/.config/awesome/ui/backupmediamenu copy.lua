@@ -33,7 +33,8 @@ local position_cur = helpers.simpletxt(532, 15, nil, beautiful.font, "left", 4, 
 local position_tot = helpers.simpletxt(532, 15, nil, beautiful.font, "left", 4, 4, 4, 4)
 --
 
-local position = helpers.simplesldr(532, 16, 16, 6, 100, 4, 4, 4, 4)
+local position = helpers.simpleprog(532, 6, 532, 100, 4, 4, 4, 4)
+local positionsldr = helpers.simplesldrhdn(532, 16, 16, 6, 100, 4, 4, 4, 4)
 
 local volume_icon = helpers.simpleicn(18, 15, "󰕾", "Fira Code Nerd Font 12", 3, 5, 3, 0)
 
@@ -129,35 +130,31 @@ local function loopupdater()
   end)
 end
 
-positionset = true
-enable = false
-slidervalueset = true
-
 local function positionupdater(position_state)
   awful.spawn.easy_async("playerctl position", function (current)
     current = current.gsub(current, "\n", "")
     if current == "" or current == "No players found" or current == "No player could handle this command" then
       position.visible = false
+      positionsldr.visible = false
     else
       position.visible = true
+      positionsldr.visible = true
       awful.spawn.easy_async("playerctl metadata mpris:length", function(length)
         length = length.gsub(length, "\n", "")
         if length ~= "" or length ~= "No players found" or length ~= "No player could handle this command" then
-          if positionset == true then
-            if position_state then
-              awful.spawn("playerctl position " .. ((position_state * length) / (100000000)))
-            end
-          end
-          if enable == true then
-            slidervalueset = false
-            enable = false
-            position:get_children_by_id("slider")[1].value = ((current * 100000000) / (length))
+          position:get_children_by_id("progressbar")[1].value = (((current * 1000000) / length) * 100)
+          if position_state then
+            awful.spawn("playerctl position " .. ((position_state * length) / (100000000)))
+            position:get_children_by_id("progressbar")[1].value = position_state
           end
         end
       end)
     end
   end)
 end
+
+local function positionupdater_revamp()
+
 
 local function volumeupdater()
   awful.spawn.easy_async("playerctl volume", function(volume_state)
@@ -216,8 +213,6 @@ local everythingupdater_timer = gears.timer {
   timeout = 1,
   autostart = true,
   callback = function()
-    positionset = false
-    enable = true
     artimageupdater()
     metadataupdater()
     toggleupdater()
@@ -267,6 +262,7 @@ local mediamenu_pop = awful.popup {
         {
           layout = wibox.layout.stack,
           position,
+          positionsldr,
         },
         {
           layout = wibox.layout.align.horizontal,
@@ -308,14 +304,8 @@ loop:connect_signal("button::press", function()
   looper()
 end)
 
-position:get_children_by_id("slider")[1]:connect_signal("property::value", function(slider, position_state)
-  if slidervalueset == true then
-    slider.value = position_state
-    positionupdater(position_state)
-  end
-  positionset = true
-  enable = false
-  slidervalueset = true
+positionsldr:get_children_by_id("slider")[1]:connect_signal("property::value", function(slider, position_state)
+  positionupdater(position_state)
 end)
 
 volume:get_children_by_id("slider")[1]:connect_signal("property::value", function(slider, volume_state)
