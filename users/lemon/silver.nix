@@ -16,6 +16,8 @@
     username = "lemon";
     packages = with pkgs; [
       (callPackage ../../pkgs/gdlauncher.nix {})
+      (callPackage ../../pkgs/xclicker.nix {})
+      (callPackage ../../pkgs/animdl/default.nix {})
     ];
     homeDirectory = "/home/lemon";
     file = {
@@ -69,17 +71,12 @@
     desktopEntries = {
       gdlauncher = {
         name = "GDLauncher-hm";
-        exec = "appimage-run /home/lemon/Standalone/GDLauncher-linux-setup.AppImage --no-sandbox";
+        exec = "gdlauncher";
         terminal = false;
       };
       xclicker = {
         name = "xclicker";
-        exec = "appimage-run /home/lemon/Standalone/xclicker_amd64.AppImage";
-        terminal = false;
-      };
-      r2modman = {
-        name = "r2modman";
-        exec = "appimage-run /home/lemon/Standalone/r2modman.AppImage --no-sandbox";
+        exec = "xclicker";
         terminal = false;
       };
       sd-comfyui = {
