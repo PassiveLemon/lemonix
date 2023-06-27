@@ -73,7 +73,7 @@
       htop sysstat iotop stress nvtop-nvidia
       networkmanager ethtool
       exa trashy
-      distrobox virt-manager OVMF pciutils virtiofsd
+      virt-manager OVMF pciutils virtiofsd
     ];
     binsh = "${pkgs.dash}/bin/dash";
     shells = with pkgs; [ bash ];

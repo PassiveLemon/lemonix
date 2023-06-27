@@ -15,9 +15,9 @@
   home = {
     username = "lemon";
     packages = with pkgs; [
-      (callPackage ../../pkgs/gdlauncher.nix {})
-      (callPackage ../../pkgs/xclicker.nix {})
-      (callPackage ../../pkgs/animdl/default.nix {})
+      (callPackage ../../pkgs/gdlauncher {})
+      (callPackage ../../pkgs/xclicker {})
+      (callPackage ../../pkgs/animdl {})
     ];
     homeDirectory = "/home/lemon";
     file = {
@@ -70,12 +70,12 @@
     };
     desktopEntries = {
       gdlauncher = {
-        name = "GDLauncher-hm";
+        name = "GDLauncher";
         exec = "gdlauncher";
         terminal = false;
       };
       xclicker = {
-        name = "xclicker";
+        name = "XClicker";
         exec = "xclicker";
         terminal = false;
       };
