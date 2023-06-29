@@ -20,5 +20,6 @@
     "rgba(255,165,0,0.12)",
     "rgba(60,179,113,0.12)",
     "rgba(0,0,255,0.12)"
-  ]
+  ],
+  "files.insertFinalNewline": true
 }
