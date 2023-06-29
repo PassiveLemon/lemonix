@@ -16,8 +16,10 @@
     username = "lemon";
     packages = with pkgs; [
       (callPackage ../../pkgs/gdlauncher {})
-      (callPackage ../../pkgs/xclicker {})
-      (callPackage ../../pkgs/animdl {})
+      (callPackage ../../pkgs/gdlauncher2 {})
+      #(callPackage ../../pkgs/xclicker {})
+      (python3Packages.callPackage ../../pkgs/animdl {})
+      #(python3Packages.callPackage ../../pkgs/comtypes {})
     ];
     homeDirectory = "/home/lemon";
     file = {

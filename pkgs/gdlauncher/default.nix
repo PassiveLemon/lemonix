@@ -1,30 +1,41 @@
-{ pkgs, lib, ... }:
-let
+{ fetchFromGitHub, buildNpmPackage, pkgs, lib, ... }:
+buildNpmPackage rec {
   pname = "gdlauncher";
   version = "1.1.30";
-  name = "${pname}-${version}";
-  src = pkgs.fetchurl {
-    url = "https://github.com/gorilla-devs/GDLauncher/releases/download/v${version}/GDLauncher-linux-setup.AppImage";
-    hash = "sha256-4cXT3exhoMAK6gW3Cpx1L7cm9Xm0FK912gGcRyLYPwM=";
+  src = fetchFromGitHub {
+    owner = "gorilla-devs";
+    repo = "${pname}";
+    rev = "v${version}";
+    hash = "sha256-TH7k2nnpCOTEsP5Doo2EmWDH9weGrlvcBhymicPkGjs=";
   };
+  desiredVersion = "16.13.1";
+  nodejs = pkgs.nodejs.overrideAttrs (oldAttrs: {
+    version = desiredVersion;
+    name = "nodejs-${desiredVersion}";
+  });
 
-  appimageContents = pkgs.appimageTools.extractType2 { inherit name src; };
-in
-pkgs.appimageTools.wrapType2 rec {
-  inherit name src;
+  nativeBuildInputs = with pkgs; [ gnat13 rustup nodejs (python311.withPackages(ps: with ps; [ distutils_extra ])) ];
 
-  extraInstallCommands = ''
-    mv $out/bin/${name} $out/bin/${pname}
-    install -Dm444 ${appimageContents}/${pname}.desktop $out/share/applications/${pname}.desktop
-    cp -a ${appimageContents}/usr/share/icons $out/share
-  '';
+  forceGitDeps = true;
+  makeCacheWritable = true;
+
+  NODE_OPTIONS = "--openssl-legacy-provider";
+  dontNpmBuild = true;
+
+  npmFlags = [ "--legacy-peer-deps" "--ignore-scripts" ];
+  npmDepsHash = "sha256-br1Mast/0UYW3nPC/vgkfXDqESbDfEYOwrimU8v+9W0=";
+  npmBuildScript = "release";
+
+  #installPhase = ''
+  #  
+  #'';
 
   meta = with lib; {
     description = "A simple, yet powerful Minecraft custom launcher with a strong focus on the user experience";
     homepage = "https://gdlauncher.com/";
     changelog = "https://github.com/gorilla-devs/GDLauncher/releases/tag/v${version}";
     license = licenses.gpl3Only;
-    maintainers = with maintainers; [ "PassiveLemon" ];
+    maintainers = with maintainers; [ PassiveLemon ];
     platforms = [ "x86_64-linux" ];
   };
 }
