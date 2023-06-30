@@ -66,8 +66,8 @@ naughty.connect_signal("request::display", function(n)
             {
               widget = wibox.container.constraint,
               strategy = "max",
-              width = 69,
-              height = 69,
+              width = 89,
+              height = 89,
               naughty.widget.icon,
             },
           },
@@ -97,7 +97,7 @@ naughty.connect_signal("request::display", function(n)
               {
                 widget = wibox.container.constraint,
                 strategy = "max",
-                height = 50,
+                height = 70,
                 {
                   widget = wibox.container.margin,
                   left = 4,
