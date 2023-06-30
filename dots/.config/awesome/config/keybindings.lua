@@ -174,6 +174,6 @@ end)
 awful.keyboard.append_client_keybindings {
   awful.key({}, "sudo nixos-rebuild switch", function() end,
   { description = "Rebuild nixos", group = "other", }),
-  awful.key({}, "home-manager switch --flake ~/Documents/GitHub/lemonix/#lemon@lemon-tree", function() end,
+  awful.key({}, "home-manager switch --flake ~/Documents/GitHub/lemonix/#lemon@silver", function() end,
   { description = "Rebuild home-manager", group = "other", }),
 }
