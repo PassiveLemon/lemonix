@@ -232,7 +232,7 @@ local everythingupdater_timer = gears.timer {
 
 local mediamenu_pop = awful.popup {
   placement = awful.placement.centered,
-  border_width = 2,
+  border_width = 3,
   border_color = beautiful.border_color_active,
   ontop = true,
   visible = false,
