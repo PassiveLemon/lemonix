@@ -29,7 +29,7 @@ local cache_use_perc = helpers.simplewtch([[sh -c "echo -n '' && free -h | awk '
 
 local network_text = helpers.simpletxt(nil, nil, "Network", beautiful.font, "center")
 
-local network_total = helpers.simplewtch([[sh -c 'ip -s link show enp7s0 | awk '\''/RX:/{getline; rx=$1} /TX:/{getline; tx=$1} END{printf "Rx/Tx: %sB/%sB\n", convert(rx), convert(tx)} function convert(val) {suffix="BKMGTPE"; for(i=1; val>1024; i++) val/=1024; return int(val+0.5) substr(suffix, i, 1)}'\']], 5)
+local network_total = helpers.simplewtch([[sh -c 'ip -s link show enp7s0 | awk '\''/RX:/{getline; rx=$1} /TX:/{getline; tx=$1} END{printf "Dn/Up: %sB/%sB\n", convert(rx), convert(tx)} function convert(val) {suffix="BKMGTPE"; for(i=1; val>1024; i++) val/=1024; return int(val+0.5) substr(suffix, i, 1)}'\']], 5)
 
 local gpu_text = helpers.simpletxt(nil, nil, "GPU", beautiful.font, "center")
 
@@ -51,11 +51,11 @@ local strg_free_sdb1 = helpers.simplewtch([[sh -c "echo -n 'SDB1: ' && df -h /de
 
 local uptime_text = helpers.simpletxt(nil, nil, "Uptime", beautiful.font, "center")
 
-local uptime = helpers.simplewtch([[sh -c 'uptime | awk -F"[ ,:]+" '\''{print $6 " days, " $8 " hours"}'\''']], 60)
+local uptime = helpers.simplewtch([[sh -c "uptime | awk -F'( |,|:)+' '{if (\$6 >= 1) {print \$6, \"days\", \$8, \"hours\"} else {print \$8, \"hours\"}}'"]], 60)
 
 local resourcemenu_pop = awful.popup {
   placement = awful.placement.centered,
-  border_width = 2,
+  border_width = 3,
   border_color = beautiful.border_color_active,
   ontop = true,
   visible = false,
