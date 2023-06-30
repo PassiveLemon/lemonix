@@ -4,6 +4,7 @@ local beautiful = require("beautiful")
 local wibox = require("wibox")
 
 local helpers = require("helpers")
+local fancy_taglist = require("modules.fancy_taglist")
 local click_to_hide = require("modules.click_to_hide")
 
 local cpu_widget = require("modules.awesome-wm-widgets.cpu-widget.cpu-widget")
@@ -18,12 +19,12 @@ screen.connect_signal("request::desktop_decoration", function(s)
   -- Separator bar
   bar = wibox.widget {
     widget = wibox.widget.textbox,
-    markup = "|",
+    markup = "│",
     align = "center",
     valign = "center",
   }
 
-  -- Separator space
+  -- Space
   sep = wibox.widget {
     widget = wibox.widget.textbox,
     markup = " ",
@@ -37,6 +38,28 @@ screen.connect_signal("request::desktop_decoration", function(s)
     markup = "%",
     align = "center",
     valign = "center",
+  }
+
+  -- Caps Lock
+  capsl = helpers.simpletxt(26, 26, "Aa_", beautiful.font, "Center", 4, 4, 4, 4)
+
+  function capsl_updater()
+    awful.spawn.easy_async_with_shell("xset q | grep Caps | awk '{print $4}'", function (caps_state)
+      caps_state = caps_state.gsub(caps_state, "\n", "")
+      if caps_state == "on" then
+        capsl:get_children_by_id("textbox")[1].text = "A_a"
+      else
+        capsl:get_children_by_id("textbox")[1].text = "Aa_"
+      end
+    end)
+  end
+
+  capsl_timer = gears.timer {
+    timeout = 0.25,
+    autostart = true,
+    callback = function()
+      capsl_updater()
+    end,
   }
 
   -- CPU
@@ -117,10 +140,10 @@ screen.connect_signal("request::desktop_decoration", function(s)
     },
   }
 
-  layoutbox = helpers.simpleimg(25, 25, beautiful.layout_dwindle, 0, 0, 0, 0)
+  layoutbox = helpers.simpleimg(26, 26, beautiful.layout_dwindle, 0, 0, 0, 0)
 
   -- Systray
-  local systray_pop = awful.popup {
+  systray_pop = awful.popup {
     ontop = true,
     border_width = 2,
     border_color = beautiful.border_color_active,
@@ -138,7 +161,7 @@ screen.connect_signal("request::desktop_decoration", function(s)
     },
   }
 
-  local systray_autohider = gears.timer {
+  systray_autohider = gears.timer {
     timeout = 2,
     single_shot = true,
     callback = function()
@@ -146,60 +169,29 @@ screen.connect_signal("request::desktop_decoration", function(s)
     end,
   }
 
-  -- Taglist
-  taglist = awful.widget.taglist {
+  s.fancy_taglist = fancy_taglist.new {
     screen = s,
-    filter = awful.widget.taglist.filter.all,
-    style = {
-      shape = gears.shape.circle,
-    },
-    buttons = {
+    taglist_buttons = {
       awful.button({ }, 1, function(t) t:view_only() end),
       awful.button({ }, 3, awful.tag.viewtoggle),
       awful.button({ }, 4, function(t) awful.tag.viewnext(t.screen) end),
       awful.button({ }, 5, function(t) awful.tag.viewprev(t.screen) end),
     },
-  }
-
-  -- Tasklist
-  tasklist = awful.widget.tasklist {
-    screen = s,
-    filter = awful.widget.tasklist.filter.currenttags,
-    style = {
-      shape = gears.shape.circle,
-    },
-    widget_template = {
-      widget = wibox.container.background,
-      id = "background_role",
-      forced_width = 25,
-      forced_height = 25,
-      create_callback = function(self, c)
-        self:get_children_by_id("clienticon")[1].client = c
-      end,
-      {
-        widget = wibox.container.margin,
-        margins = 1,
-        {
-          id = "clienticon",
-          widget = awful.widget.clienticon,
-        },
-      },
-    },
-    buttons = {
+    tasklist_buttons = {
       awful.button({ }, 1, function (c)
         c:activate { context = "tasklist", action = "toggle_minimization", }
       end),
       awful.button({ }, 4, function() awful.client.focus.byidx(1) end),
       awful.button({ }, 5, function() awful.client.focus.byidx(-1) end),
-    },
+    }
   }
 
   -- Bar
   wibar = awful.wibar {
     position = "top",
     screen = s,
-    height = 25,
-    border_width = 2,
+    height = 26,
+    border_width = 0,
     border_color = beautiful.accent,
     type = "dock",
     widget = {
@@ -208,16 +200,6 @@ screen.connect_signal("request::desktop_decoration", function(s)
       { -- Left
         layout = wibox.layout.fixed.horizontal,
         layoutbox,
-        bar,
-        tasklist,
-      },
-      { -- Center
-        layout = wibox.layout.flex.horizontal,
-        taglist,
-      },
-      { -- Right
-        layout = wibox.layout.fixed.horizontal,
-        sep,
         bar,
         sep,
         cpu,
@@ -237,7 +219,14 @@ screen.connect_signal("request::desktop_decoration", function(s)
         sep,
         memory,
         helpers.simplewtch([[sh -c "echo -n '' && free -h | awk '/Mem:/{gsub(/Gi/,\"\",\$2); gsub(/Gi/,\"\",\$3); printf \"%.0f%%\", (\$3/\$2)*100}'"]], 2),
-        sep,
+      },
+      { -- Center
+        layout = wibox.layout.flex.horizontal,
+        s.fancy_taglist,
+      },
+      { -- Right
+        layout = wibox.layout.fixed.horizontal,
+        capsl,
         bar,
         sep,
         speaker,
@@ -257,6 +246,18 @@ screen.connect_signal("request::desktop_decoration", function(s)
       },
     },
   }
+
+  -- Bottom pseudoborder
+  wibar = awful.wibar {
+    position = "top",
+    screen = s,
+    y = 26,
+    height = 3,
+    border_width = 0,
+    bg = beautiful.border_color_active,
+    type = "dock",
+  }
+
 
   layoutbox:connect_signal("button::press", function()
     systray_pop.visible = not systray_pop.visible
