@@ -16,6 +16,7 @@ ruled.client.connect_signal("request::rules", function()
       focus = awful.client.focus.filter,
       raise = true,
       screen = awful.screen.preferred,
+      size_hints_honor = false,
       placement = awful.placement.centered+awful.placement.no_offscreen,
     },
   }
