@@ -3,11 +3,11 @@ local gears = require("gears")
 local beautiful = require("beautiful")
 local wibox = require("wibox")
 
-local helpers = require("helpers")
+local helpers = require("modules.helpers")
 local fancy_taglist = require("modules.fancy_taglist")
 local click_to_hide = require("modules.click_to_hide")
 
-local cpu_widget = require("modules.awesome-wm-widgets.cpu-widget.cpu-widget")
+local cpu_widget = require("libraries.awesome-wm-widgets.cpu-widget.cpu-widget")
 
 --
 -- Wibar
@@ -195,75 +195,70 @@ screen.connect_signal("request::desktop_decoration", function(s)
     border_color = beautiful.accent,
     type = "dock",
     widget = {
-      layout = wibox.layout.align.horizontal,
-      expand = "none",
-      { -- Left
-        layout = wibox.layout.fixed.horizontal,
-        layoutbox,
-        bar,
-        sep,
-        cpu,
-        helpers.simplewtch([[sh -c "echo -n '' && top -bn1 | grep '%Cpu' | awk '{print int(100-$8)}' && echo -n '%'"]], 1),
-        sep,
-        cpu_widget({
-          width = 20,
-          color = "#f35252",
-        }),
-        sep,
-        bar,
-        sep,
-        gpu,
-        helpers.simplewtch([[sh -c "echo -n '' && nvidia-smi | grep 'Default' | cut -d '|' -f 4 | tr -d 'Default' | tr -d '[:space:]'"]], 1),
-        sep,
-        bar,
-        sep,
-        memory,
-        helpers.simplewtch([[sh -c "echo -n '' && free -h | awk '/Mem:/{gsub(/Gi/,\"\",\$2); gsub(/Gi/,\"\",\$3); printf \"%.0f%%\", (\$3/\$2)*100}'"]], 2),
+      layout = wibox.layout.fixed.vertical,
+      {
+        layout = wibox.layout.align.horizontal,
+        expand = "none",
+        { -- Left
+          layout = wibox.layout.fixed.horizontal,
+          layoutbox,
+          bar,
+          sep,
+          cpu,
+          helpers.simplewtch([[sh -c "echo -n '' && top -bn1 | grep '%Cpu' | awk '{print int(100-$8)}' && echo -n '%'"]], 1),
+          sep,
+          cpu_widget({
+            width = 20,
+            color = "#f35252",
+          }),
+          sep,
+          bar,
+          sep,
+          gpu,
+          helpers.simplewtch([[sh -c "echo -n '' && nvidia-smi | grep 'Default' | cut -d '|' -f 4 | tr -d 'Default' | tr -d '[:space:]'"]], 1),
+          sep,
+          bar,
+          sep,
+          memory,
+          helpers.simplewtch([[sh -c "echo -n '' && free -h | awk '/Mem:/{gsub(/Gi/,\"\",\$2); gsub(/Gi/,\"\",\$3); printf \"%.0f%%\", (\$3/\$2)*100}'"]], 2),
+        },
+        { -- Center
+          layout = wibox.layout.flex.horizontal,
+          s.fancy_taglist,
+        },
+        { -- Right
+          layout = wibox.layout.fixed.horizontal,
+          capsl,
+          bar,
+          sep,
+          speaker,
+          helpers.simplewtch([[sh -c "echo -n '' && pamixer --get-volume"]], 0.25),
+          perc,
+          sep,
+          bar,
+          sep,
+          calendar,
+          helpers.simplewtch("date +'%a %b %-d'", 60),
+          sep,
+          bar,
+          sep,
+          clock,
+          helpers.simplewtch("date +'%-I:%M %p'", 1),
+          sep,
+        },
       },
-      { -- Center
-        layout = wibox.layout.flex.horizontal,
-        s.fancy_taglist,
-      },
-      { -- Right
-        layout = wibox.layout.fixed.horizontal,
-        capsl,
-        bar,
-        sep,
-        speaker,
-        helpers.simplewtch([[sh -c "echo -n '' && pamixer --get-volume"]], 0.25),
-        perc,
-        sep,
-        bar,
-        sep,
-        calendar,
-        helpers.simplewtch("date +'%a %b %-d'", 60),
-        sep,
-        bar,
-        sep,
-        clock,
-        helpers.simplewtch("date +'%-I:%M %p'", 1),
-        sep,
+      {
+        widget = wibox.container.background,
+        forced_height = 3,
+        bg = beautiful.border_color_active,
       },
     },
   }
-
-  -- Bottom pseudoborder
-  wibar = awful.wibar {
-    position = "top",
-    screen = s,
-    y = 26,
-    height = 3,
-    border_width = 0,
-    bg = beautiful.border_color_active,
-    type = "dock",
-  }
-
 
   layoutbox:connect_signal("button::press", function()
     systray_pop.visible = not systray_pop.visible
     systray_pop.screen = awful.screen.focused()
   end)
-
   systray_pop:connect_signal("mouse::leave", function()
     systray_autohider:start()
   end)
@@ -271,10 +266,9 @@ screen.connect_signal("request::desktop_decoration", function(s)
   systray_pop:connect_signal("mouse::enter", function()
     systray_autohider:stop()
   end)
-
   systray_pop:connect_signal("button::press", function()
     systray_autohider:stop()
   end)
-
   click_to_hide.popup(systray_pop, nil, true)
+
 end)

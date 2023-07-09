@@ -70,7 +70,7 @@
   environment = {
     systemPackages = with pkgs; [
       dash bash nano unzip unrar p7zip curl wget git gvfs psmisc
-      htop sysstat iotop stress nvtop-nvidia
+      htop sysstat iotop stress nvtop-nvidia netcat
       networkmanager ethtool
       exa trashy
       virt-manager OVMF pciutils virtiofsd
@@ -175,10 +175,11 @@
   };
 
   # 1 TB Toshiba
- # fileSystems."/home/BACKUPDRIVE" = {
- #   device = "/dev/disk/by-uuid/76946991-d872-4936-82f2-298225ea010b";
- #   fsType = "ext4";
- # };
+  fileSystems."/home/BACKUPDRIVE" = {
+    device = "/dev/disk/by-uuid/76946991-d872-4936-82f2-298225ea010b";
+    fsType = "ext4";
+    options = [ "noatime" ];
+  };
 
   system.stateVersion = "23.05";
 }

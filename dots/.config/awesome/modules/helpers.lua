@@ -22,7 +22,6 @@ function helpers.simpletxt(x, y, txt, fnt, ali, mt, mr, mb, ml)
       forced_height = y,
       fg = beautiful.fg_normal,
       bg = beautiful.bg_normal,
-      shape = gears.shape.rounded_rect,
       {
         id = "textbox",
         widget = wibox.widget.textbox,

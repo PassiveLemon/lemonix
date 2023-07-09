@@ -3,7 +3,7 @@ local gears = require("gears")
 local beautiful = require("beautiful")
 local wibox = require("wibox")
 
-local helpers = require("helpers")
+local helpers = require("modules.helpers")
 local click_to_hide = require("modules.click_to_hide")
 
 --
@@ -40,7 +40,7 @@ local volume_icon = helpers.simpleicn(18, 15, "󰕾", "Fira Code Nerd Font 12", 
 local volume = helpers.simplesldr(513, 16, 16, 6, 100, 4, 4, 4, 0)
 
 local function artimageupdater()
-  awful.spawn.easy_async_with_shell("sleep 0.15 && playerctl metadata mpris:artUrl", function(artUrl)
+  awful.spawn.easy_async_with_shell("sleep 0.15 && playerctl -p spotify metadata mpris:artUrl", function(artUrl)
     artUrl = artUrl.gsub(artUrl, "\n", "")
     if artUrl == "" or artUrl == "No players found" or artUrl == "No player could handle this command" then
       artimage.visible = false
@@ -64,7 +64,7 @@ local function artimageupdater()
 end
 
 local function metadataupdater()
-  awful.spawn.easy_async_with_shell("sleep 0.15 && playerctl metadata xesam:title", function(title_state)
+  awful.spawn.easy_async_with_shell("sleep 0.15 && playerctl -p spotify metadata xesam:title", function(title_state)
     title_state = title_state.gsub(title_state, "\n", "")
     if title_state == "" or title_state == "No players found" or title_state == "No player could handle this command" then
       artist.visible = false
@@ -74,7 +74,7 @@ local function metadataupdater()
       title:get_children_by_id("textbox")[1].text = title_state
     end
   end)
-  awful.spawn.easy_async_with_shell("sleep 0.15 && playerctl metadata xesam:artist", function(artist_state)
+  awful.spawn.easy_async_with_shell("sleep 0.15 && playerctl -p spotify metadata xesam:artist", function(artist_state)
     artist_state = artist_state.gsub(artist_state, "\n", "")
     if artist_state == "" or artist_state == "No players found" or artist_state == "No player could handle this command" then
       artist.visible = false
@@ -83,7 +83,7 @@ local function metadataupdater()
       artist:get_children_by_id("textbox")[1].text = "By " .. artist_state
     end
   end)
-  awful.spawn.easy_async_with_shell("sleep 0.15 && playerctl metadata xesam:album", function(album_state)
+  awful.spawn.easy_async_with_shell("sleep 0.15 && playerctl -p spotify metadata xesam:album", function(album_state)
     album_state = album_state.gsub(album_state, "\n", "")
     if album_state == "" or album_state == "No players found" or album_state == "No player could handle this command" then
       album.visible = false
@@ -95,7 +95,7 @@ local function metadataupdater()
 end
 
 local function shuffleupdater()
-  awful.spawn.easy_async_with_shell("sleep 0.15 && playerctl shuffle", function(shuffle_state)
+  awful.spawn.easy_async_with_shell("sleep 0.15 && playerctl -p spotify shuffle", function(shuffle_state)
     shuffle:get_children_by_id("textbox")[1].font = beautiful.font_large
     if shuffle_state:find("On") then
       shuffle:get_children_by_id("textbox")[1].text = "󰒝"
@@ -106,7 +106,7 @@ local function shuffleupdater()
 end
 
 local function toggleupdater()
-  awful.spawn.easy_async_with_shell("sleep 0.15 && playerctl status", function(toggle_state)
+  awful.spawn.easy_async_with_shell("sleep 0.15 && playerctl -p spotify status", function(toggle_state)
     toggle:get_children_by_id("textbox")[1].font = beautiful.font_large
     if toggle_state:find("Playing") then
       toggle:get_children_by_id("textbox")[1].text = "󰏤"
@@ -117,7 +117,7 @@ local function toggleupdater()
 end
 
 local function loopupdater()
-  awful.spawn.easy_async_with_shell("sleep 0.15 && playerctl loop", function(loop_state)
+  awful.spawn.easy_async_with_shell("sleep 0.15 && playerctl -p spotify loop", function(loop_state)
     loop:get_children_by_id("textbox")[1].font = beautiful.font_large
     if loop_state:find("None") then
       loop:get_children_by_id("textbox")[1].text = "󰑗"
@@ -134,20 +134,20 @@ sliderupdate = false
 sliderselfupdate = true
 
 local function positionupdater(position_state)
-  awful.spawn.easy_async("playerctl position", function (current)
+  awful.spawn.easy_async("playerctl -p spotify position", function (current)
     current = current.gsub(current, "\n", "")
     if current == "" or current == "No players found" or current == "No player could handle this command" then
       position.visible = false
     else
       position.visible = true
-      awful.spawn.easy_async("playerctl metadata mpris:length", function(length)
+      awful.spawn.easy_async("playerctl -p spotify metadata mpris:length", function(length)
         length = length.gsub(length, "\n", "")
         if length == "" or length == "No players found" or length == "No player could handle this command" then
           position.visible = false
         else
           if positionset == true then
             if position_state then
-              awful.spawn("playerctl position " .. ((position_state * length) / (100000000)))
+              awful.spawn("playerctl -p spotify position " .. ((position_state * length) / (100000000)))
             end
           end
           if sliderupdate == true then
@@ -162,7 +162,7 @@ local function positionupdater(position_state)
 end
 
 local function volumeupdater()
-  awful.spawn.easy_async("playerctl volume", function(volume_state)
+  awful.spawn.easy_async("playerctl -p spotify volume", function(volume_state)
     volume_state = volume_state.gsub(volume_state, "\n", "")
     if volume_state == "" or volume_state == "No players found" or volume_state == "No player could handle this command" then
       volume.visible = false
@@ -176,39 +176,39 @@ local function volumeupdater()
 end
 
 local function shuffler()
-  awful.spawn.easy_async("playerctl shuffle", function(shuffle_state)
+  awful.spawn.easy_async("playerctl -p spotify shuffle", function(shuffle_state)
     if shuffle_state:find("On") then
-      awful.spawn("playerctl shuffle off")
+      awful.spawn("playerctl -p spotify shuffle off")
       shuffle:get_children_by_id("textbox")[1].text = "󰒞"
     elseif shuffle_state:find("Off") then
-      awful.spawn("playerctl shuffle on")
+      awful.spawn("playerctl -p spotify shuffle on")
       shuffle:get_children_by_id("textbox")[1].text = "󰒝"
     end
   end)
 end
 
 local function toggler()
-  awful.spawn.easy_async("playerctl status", function(toggle_state)
+  awful.spawn.easy_async("playerctl -p spotify status", function(toggle_state)
     if toggle_state:find("Playing") then
-      awful.spawn("playerctl pause")
+      awful.spawn("playerctl -p spotify pause")
       toggle:get_children_by_id("textbox")[1].text = "󰐊"
     elseif toggle_state:find("Paused") then
-      awful.spawn("playerctl play")
+      awful.spawn("playerctl -p spotify play")
       toggle:get_children_by_id("textbox")[1].text = "󰏤"
     end
   end)
 end
 
 local function looper()
-  awful.spawn.easy_async("playerctl loop", function(loop_state)
+  awful.spawn.easy_async("playerctl -p spotify loop", function(loop_state)
     if loop_state:find("None") then
-      awful.spawn("playerctl loop Playlist")
+      awful.spawn("playerctl -p spotify loop Playlist")
       loop:get_children_by_id("textbox")[1].text = "󰑖"
     elseif loop_state:find("Playlist") then
-      awful.spawn("playerctl loop Track")
+      awful.spawn("playerctl -p spotify loop Track")
       loop:get_children_by_id("textbox")[1].text = "󰑘"
     elseif loop_state:find("Track") then
-      awful.spawn("playerctl loop None")
+      awful.spawn("playerctl -p spotify loop None")
       loop:get_children_by_id("textbox")[1].text = "󰑗"
     end
   end)
@@ -245,12 +245,12 @@ local mediamenu_pop = awful.popup {
       left = 4,
     },
     {
-      layout = wibox.layout.align.vertical,
+      layout = wibox.layout.fixed.vertical,
       {
         layout = wibox.layout.fixed.horizontal,
         artimage,
         {
-          layout = wibox.layout.align.vertical,
+          layout = wibox.layout.fixed.vertical,
           title,
           artist,
           album,
@@ -271,7 +271,7 @@ local mediamenu_pop = awful.popup {
           position,
         },
         {
-          layout = wibox.layout.align.horizontal,
+          layout = wibox.layout.fixed.horizontal,
           volume_icon,
           volume,
         },
@@ -285,7 +285,7 @@ shuffle:connect_signal("button::press", function()
 end)
 
 prev:connect_signal("button::press", function()
-  awful.spawn("playerctl previous")
+  awful.spawn("playerctl -p spotify previous")
   artimageupdater()
   metadataupdater()
   toggleupdater()
@@ -298,7 +298,7 @@ toggle:connect_signal("button::press", function()
 end)
 
 next:connect_signal("button::press", function()
-  awful.spawn("playerctl next")
+  awful.spawn("playerctl -p spotify next")
   artimageupdater()
   metadataupdater()
   toggleupdater()
@@ -322,7 +322,7 @@ end)
 
 volume:get_children_by_id("slider")[1]:connect_signal("property::value", function(slider, volume_state)
   slider.value = volume_state
-	awful.spawn("playerctl volume " .. (volume_state/100))
+	awful.spawn("playerctl -p spotify volume " .. (volume_state/100))
 end)
 
 local function signal()

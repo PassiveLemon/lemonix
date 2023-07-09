@@ -5,8 +5,6 @@ local wibox = require("wibox")
 local ruled = require("ruled")
 local naughty = require("naughty")
 
-local helpers = require("helpers")
-
 --
 -- Notifications
 --

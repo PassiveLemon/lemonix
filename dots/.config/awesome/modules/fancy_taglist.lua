@@ -8,14 +8,14 @@ local function constrain_icon(widget)
     id = "margintest",
     widget = wibox.container.margin,
     top = 3,
-    right = 2,
+    right = 3,
     bottom = 3,
     left = 0,
-    {
-      widget = wibox.container.constraint,
-      height = 20,
-      strategy = 'exact',
-      widget,
+		{
+			widget = wibox.container.constraint,
+			height = 20,
+			strategy = 'exact',
+			widget,
     },
   }
 end
@@ -71,7 +71,7 @@ function module.new(config)
 				widget = wibox.container.background,
 				{
           widget = wibox.container.margin,
-          left = 2,
+          left = 3,
           {
             layout = wibox.layout.fixed.horizontal,
             -- tag
