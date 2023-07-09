@@ -18,6 +18,7 @@
     libsForQt5.kruler
     i3lock-fancy-rapid
     stdenvNoCC gnumake gnat13 husky nodejs_16 python2 rustup (python311.withPackages(ps: with ps; [ distutils_extra ]))
+    lua gdk-pixbuf gtk3
   ];
 
   # Configs
