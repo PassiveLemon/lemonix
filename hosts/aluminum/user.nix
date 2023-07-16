@@ -3,35 +3,19 @@
     ../../modules/xorg.nix
   ];
 
-  nixpkgs.overlays = [ (final: prev: {
-    awesome = inputs.nixpkgs-f2k.packages.${pkgs.system}.awesome-git;
-  } ) ];
+  # Overlay
+  nixpkgs.config = {
+    allowUnfree = true;
+    allowUnfreePredicate = _: true;
+  };
 
   environment.systemPackages = with pkgs; [
-    lite-xl rofi hilbish vscodium github-desktop firefox betterdiscordctl (discord.override { withOpenASAR = true; })
-    haruna feh gimp obs-studio authy xarchiver filezilla easytag easyeffects qpwgraph openshot-qt
-    pamixer playerctl stress appimage-run htop nvtop neofetch ventoy-bin
+    lite-xl rofi hilbish vscodium github-desktop
+    haruna feh gimp obs-studio authy xarchiver filezilla easytag easyeffects soundux openshot-qt qbittorrent
+    pamixer playerctl appimage-run neofetch ventoy-bin
     libsForQt5.kruler
     i3lock-fancy-rapid
   ];
-
-  # Fonts
-  fonts = {
-    fonts = with pkgs; [
-      material-design-icons fira (nerdfonts.override { fonts = [ "FiraCode" ]; }) cozette
-    ];
-    fontconfig = {
-      enable = true;
-      antialias = true;
-      allowBitmaps = true;
-      hinting = {
-        enable = true;
-        autohint = true;
-        style = "hintfull";
-      };
-      subpixel.lcdfilter = "default";
-    };
-  };
 
   # Configs
   services = {
@@ -40,11 +24,7 @@
       excludePackages = [ pkgs.xterm ];
       #videoDrivers = [ "intel" ];
       displayManager = {
-        defaultSession = "none+awesome";
         startx.enable = true;
-      };
-      windowManager.awesome = {
-        enable = true;
       };
       libinput = {
         enable = true;
@@ -62,7 +42,6 @@
     };
     pipewire = {
       enable = true;
-      jack.enable = true;
       pulse.enable = true;
       alsa = {
         enable = true;
@@ -74,7 +53,6 @@
       enable = true;
       openFirewall = true;
     };
-    flatpak.enable = true;
     gnome.gnome-keyring.enable = true;
   };
   programs = {
@@ -90,14 +68,5 @@
   security = {
     pam.services.lemon.enableGnomeKeyring = true;
     rtkit.enable = true;
-  };
-  xdg = {
-    portal.enable = true;
-    mime = {
-      enable = true;
-      defaultApplications = {
-        "inode/directory" = "pcmanfm.desktop";
-      };
-    };
   };
 }

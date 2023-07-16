@@ -37,10 +37,7 @@
       enable = true;
       allowedTCPPortRanges = [
         { from = 22; to = 22;}
-        { from = 21000; to = 23000; }
-        { from = 31000; to = 33000; }
-        { from = 41000; to = 43000; }
-        { from = 51000; to = 53000; }
+        { from = 50000; to = 55000; }
       ];
       allowedUDPPortRanges = [
         { from = 989; to = 989; }

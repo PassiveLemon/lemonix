@@ -5,7 +5,7 @@
     # Font
     material-design-icons fira (nerdfonts.override { fonts = [ "FiraCode" "FiraMono" ]; })
   ];
-  
+
   fonts.fontconfig.enable = true;
 
   gtk = {

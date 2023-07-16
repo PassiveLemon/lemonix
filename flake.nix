@@ -40,14 +40,15 @@
       "lemon@silver" = home-manager.lib.homeManagerConfiguration {
         inherit pkgs extraSpecialArgs;
         modules = [
-          ./users/lemon/silver.nix
+          ./hosts/silver/home.nix
           spicetify-nix.homeManagerModule
         ];
       };
       "lemon@aluminum" = home-manager.lib.homeManagerConfiguration {
         inherit pkgs extraSpecialArgs;
         modules = [
-          ./users/lime/aluminum.nix
+          ./hosts/aluminum/home.nix
+          spicetify-nix.homeManagerModule
         ];
       };
     };

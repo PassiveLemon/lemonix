@@ -59,6 +59,7 @@ promptua.init()
 hilbish.alias("ls", "exa -F -l --group-directories-first")
 hilbish.alias("tp", "trash put")
 hilbish.alias("tr", "trash restore")
+hilbish.alias("rm", "trash")
 hilbish.alias("nrs", "sudo nixos-rebuild switch")
 hilbish.alias("hms", "home-manager switch --flake ~/Documents/GitHub/lemonix#lemon@silver")
 

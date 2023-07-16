@@ -12,13 +12,13 @@
 
   # Packages
   environment.systemPackages = with pkgs; [
-    lite-xl rofi hilbish vscodium github-desktop betterdiscordctl (discord.override { withOpenASAR = true; })
+    lite-xl rofi hilbish vscodium github-desktop
     haruna feh gimp obs-studio authy xarchiver filezilla easytag easyeffects soundux openshot-qt qbittorrent
     pamixer playerctl appimage-run neofetch ventoy-bin
     libsForQt5.kruler
     i3lock-fancy-rapid
-    stdenvNoCC gnumake gnat13 husky nodejs_16 python2 rustup (python311.withPackages(ps: with ps; [ distutils_extra ]))
-    lua gdk-pixbuf gtk3
+
+    jq stdenvNoCC gnumake gnat13 husky nodejs_16 python2 rustup (python311.withPackages(ps: with ps; [ distutils_extra pillow numpy pyautogui xlib ]))
   ];
 
   # Configs

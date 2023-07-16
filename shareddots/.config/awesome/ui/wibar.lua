@@ -145,14 +145,14 @@ screen.connect_signal("request::desktop_decoration", function(s)
   -- Systray
   systray_pop = awful.popup {
     ontop = true,
-    border_width = 2,
+    border_width = 0,
     border_color = beautiful.border_color_active,
     visible = false,
     widget = {
       id = "background",
       widget = wibox.container.background,
       forced_width = 256,
-      forced_height = 25,
+      forced_height = 26,
       bg = beautiful.bg_normal,
       {
         layout = wibox.layout.fixed.horizontal,
@@ -259,16 +259,17 @@ screen.connect_signal("request::desktop_decoration", function(s)
     systray_pop.visible = not systray_pop.visible
     systray_pop.screen = awful.screen.focused()
   end)
+
   systray_pop:connect_signal("mouse::leave", function()
     systray_autohider:start()
   end)
-  
   systray_pop:connect_signal("mouse::enter", function()
     systray_autohider:stop()
   end)
   systray_pop:connect_signal("button::press", function()
     systray_autohider:stop()
   end)
+
   click_to_hide.popup(systray_pop, nil, true)
 
 end)
