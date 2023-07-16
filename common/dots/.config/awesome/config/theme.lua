@@ -18,22 +18,56 @@ theme.font_large    = "FiraMono Nerd Font Regular 24"
 theme.taglist_font  = theme.font
 theme.tasklist_font = theme.font
 
--- Colors
+-- Color set
+theme.bg0      = "#222222"
+theme.bg1      = "#292929"
+theme.bg2      = "#333333"
+theme.bg3      = "#444444"
+theme.bg4      = "unset"
+
+theme.fg0      = "#aaaaaa"
+theme.fg1      = "#dcdcdc"
+theme.fg2      = "#8c8c8c"
+theme.fg3      = "#ffffff"
+theme.fg4      = "unset"
+
+-- Terminal
+theme.bg       = theme.bg0
+theme.fg       = theme.fg0
+theme.blackd   = "#31343a"
+theme.blackl   = "#40454f"
+theme.redd     = "#f05d6b"
+theme.redl     = theme.redd
+theme.greend   = "#93cb6b"
+theme.greenl   = theme.greend
+theme.yellowd  = "#eac56f"
+theme.yellowl  = theme.yellowd
+theme.blued    = "#61b8ff"
+theme.bluel    = theme.blued
+theme.magentad = "#cd61ec"
+theme.magental = theme.magentad
+theme.cyand    = "#53d2e0"
+theme.cyanl    = theme.cyand
+theme.whited   = "#c6c6c6"
+theme.whitel   = "#e2e2e2"
+
+-- Custom Links & Colors
+-- Eventually I'll convert to the new template
 theme.accent        = "#535d6c"
 
-theme.bg_normal     = "#222222"
-theme.bg_normal2    = "#292929"
-theme.bg_minimize   = "#333333"
-theme.bg_minimize2  = "#444444"
+theme.bg_normal     = theme.bg0
+theme.bg_normal2    = theme.bg1
+theme.bg_minimize   = theme.bg2
+theme.bg_minimize2  = theme.bg3
 theme.bg_focus      = theme.accent
 theme.bg_urgent     = "#f35252"
 theme.bg_systray    = theme.bg_normal
 
-theme.fg_normal     = "#aaaaaa"
-theme.fg_normal2    = "#dcdcdc"
-theme.fg_minimize   = "#8c8c8c"
-theme.fg_focus      = "#ffffff"
-theme.fg_urgent     = "#ffffff"
+theme.fg_normal     = theme.fg0
+theme.fg_normal2    = theme.fg1
+theme.fg_minimize   = theme.fg2
+theme.fg_focus      = theme.fg3
+theme.fg_urgent     = theme.fg3
 
 -- Other
 theme.border_width        = 3

@@ -9,7 +9,7 @@
       font_size = 10;
       enable_audio_bell = "no";
       update_check_interval = 0;
-      url_color = "#4892cb";
+      url_color = "#61b8ff";
       shell = "hilbish";
 
       foreground = "#aaaaaa";

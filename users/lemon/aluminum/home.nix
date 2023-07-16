@@ -1,9 +1,9 @@
 { inputs, outputs, config, pkgs, ... }: {
   imports = [
-    ../../modules/customization.nix
-    ../../modules/kitty.nix
-    ../../modules/vscode.nix
-    ../../modules/spicetify.nix
+    ../../../modules/customization.nix
+    ../../../modules/kitty.nix
+    ../../../modules/vscode.nix
+    ../../../modules/spicetify.nix
   ];
 
   nixpkgs.config = {
@@ -19,19 +19,19 @@
     homeDirectory = "/home/lemon";
     file = {
       ".config/" = {
-        source = ../../shareddots/.config;
+        source = ../../../common/dots/.config;
         recursive = true;
       };
       ".local/" = {
-        source = ../../shareddots/.local;
+        source = ../../../common/dots/.local;
         recursive = true;
       };
       ".vscode-oss/" = {
-        source = ../../shareddots/.vscode-oss;
+        source = ../../../common/dots/.vscode-oss;
         recursive = true;
       };
       ".xinitrc" = {
-        source = ../../shareddots/.xinitrc;
+        source = ../../../common/dots/.xinitrc;
       };
     };
     stateVersion = "to be added";

@@ -1,10 +1,10 @@
 { inputs, outputs, config, pkgs, ... }: {
   imports = [
-    ../../modules/customization.nix
-    ../../modules/kitty.nix
-    ../../modules/picom.nix
-    ../../modules/vscode.nix
-    ../../modules/spicetify.nix
+    ../../../modules/customization.nix
+    ../../../modules/kitty.nix
+    ../../../modules/picom.nix
+    ../../../modules/vscode.nix
+    ../../../modules/spicetify.nix
   ];
 
   nixpkgs.config = {
@@ -15,10 +15,10 @@
   home = {
     packages = with pkgs; [
       xonotic webcord-vencord
-      #(callPackage ../../pkgs/gdlauncher {})
-      (callPackage ../../pkgs/gdlauncher2 {})
-      #(callPackage ../../pkgs/xclicker {})
-      (python3Packages.callPackage ../../pkgs/animdl {})
+      #(callPackage ../../../pkgs/gdlauncher {})
+      (callPackage ../../../pkgs/gdlauncher2 {})
+      #(callPackage ../../../pkgs/xclicker {})
+      (python3Packages.callPackage ../../../pkgs/animdl {})
     ];
     username = "lemon";
     homeDirectory = "/home/lemon";
@@ -27,19 +27,19 @@
         source = ./dots/.config/awesome/config/autostart.lua;
       };
       ".config/" = {
-        source = ../../shareddots/.config;
+        source = ../../../common/dots/.config;
         recursive = true;
       };
       ".local/" = {
-        source = ../../shareddots/.local;
+        source = ../../../common/dots/.local;
         recursive = true;
       };
       ".vscode-oss/" = {
-        source = ../../shareddots/.vscode-oss;
+        source = ../../../common/dots/.vscode-oss;
         recursive = true;
       };
       ".xinitrc" = {
-        source = ../../doshareddotsts/.xinitrc;
+        source = ../../../common/dots/.xinitrc;
       };
     };
     stateVersion = "23.05";
