@@ -1,4 +1,7 @@
-{ python3Packages, buildPythonApplication, fetchFromGitHub, lib,
+{ lib,
+  python3Packages,
+  buildPythonApplication,
+  fetchFromGitHub,
   poetry-core,
   click,
   cssselect,
@@ -20,15 +23,34 @@ in
 buildPythonApplication rec {
   pname = "animdl";
   version = "1.7.17";
+
   src = fetchFromGitHub {
     owner = "justfoolingaround";
     repo = "animdl";
+    # Using the commit hash because upstream does not have releases. https://github.com/justfoolingaround/animdl/issues/277
     rev = "fd3277fb919c4b5e7ef42daba0bd001695a9c124";
     hash = "sha256-pgtrStorkIJJ3oIGgRjNWYwcQ5jUC8IS5iI9CyDJkzE=";
   };
+
   format = "pyproject";
-  nativeBuildInputs = [ poetry-core cssselect ];
-  propagatedBuildInputs = [ anchor-kr anitopy click httpx lxml packaging pkginfo pyyaml pycryptodomex regex rich tqdm yarl ];
+  nativeBuildInputs = [
+    poetry-core
+    cssselect
+  ];
+  propagatedBuildInputs = [
+    anchor-kr
+    anitopy
+    click
+    httpx
+    lxml
+    packaging
+    pkginfo pyyaml
+    pycryptodomex
+    regex
+    rich
+    tqdm
+    yarl
+  ];
 
   postPatch = ''
     substituteInPlace pyproject.toml \
