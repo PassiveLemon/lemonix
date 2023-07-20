@@ -14,11 +14,10 @@
 
   home = {
     packages = with pkgs; [
-      xonotic webcord-vencord
-      #(callPackage ../../../pkgs/gdlauncher {})
-      (callPackage ../../../pkgs/gdlauncher2 {})
-      #(callPackage ../../../pkgs/xclicker {})
-      (python3Packages.callPackage ../../../pkgs/animdl {})
+      xonotic webcord-vencord tidal-hifi blahaj lolcat go
+      (callPackage ../../../pkgs/corrupter { })
+      (callPackage ../../../pkgs/xclicker/back.nix { })
+      (python3Packages.callPackage ../../../pkgs/animdl { })
     ];
     username = "lemon";
     homeDirectory = "/home/lemon";
@@ -83,14 +82,14 @@
         type = "Application";
         categories = [ "Application" ];
       };
-      gdlauncher = {
-        name = "GDLauncher";
-        exec = "gdlauncher-1.1.30";
-        icon = "/home/lemon/.icons/Papirus/32x32/apps/gdlauncher.svg";
-        terminal = false;
-        type = "Application";
-        categories = [ "Application" ];
-      };
+      #gdlauncher = {
+      #  name = "GDLauncher";
+      #  exec = "gdlauncher-1.1.30";
+      #  icon = "/home/lemon/.icons/Papirus/32x32/apps/gdlauncher.svg";
+      #  terminal = false;
+      #  type = "Application";
+      #  categories = [ "Application" ];
+      #};
       xclicker = {
         name = "XClicker";
         exec = "xclicker";

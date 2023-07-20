@@ -19,6 +19,8 @@
     i3lock-fancy-rapid
 
     jq stdenvNoCC gnumake gnat13 husky nodejs_16 python2 rustup (python311.withPackages(ps: with ps; [ distutils_extra pillow numpy pyautogui xlib ]))
+    (callPackage ../../pkgs/gdlauncher { })
+    dotnet-sdk dotnet-runtime
   ];
 
   # Configs
