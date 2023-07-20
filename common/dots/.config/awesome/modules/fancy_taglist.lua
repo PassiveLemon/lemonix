@@ -8,7 +8,7 @@ local function constrain_icon(widget)
     id = "margintest",
     widget = wibox.container.margin,
     top = 3,
-    right = 3,
+    right = 1,
     bottom = 3,
     left = 0,
 		{
@@ -40,8 +40,12 @@ local fancytasklist = function(cfg, t)
 		widget_template = {
 			layout = wibox.layout.stack,
       {
-        id = "clienticon",
-        widget = awful.widget.clienticon,
+				widget = wibox.container.margin,
+				right = 2,
+				{
+					id = "clienticon",
+					widget = awful.widget.clienticon,
+				},
       },
       create_callback = function(self, c, _, _)
 				self:get_children_by_id("clienticon")[1].client = c
@@ -71,7 +75,7 @@ function module.new(config)
 				widget = wibox.container.background,
 				{
           widget = wibox.container.margin,
-          left = 3,
+          left = 2,
           {
             layout = wibox.layout.fixed.horizontal,
             -- tag
