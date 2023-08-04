@@ -14,9 +14,10 @@
 
   home = {
     packages = with pkgs; [
-      xonotic webcord-vencord tidal-hifi blahaj lolcat go
+      xonotic webcord-vencord tidal-hifi
       (callPackage ../../../pkgs/corrupter { })
-      (callPackage ../../../pkgs/xclicker/back.nix { })
+      (callPackage ../../../pkgs/slavartdl { })
+      (callPackage ../../../pkgs/xclicker { })
       (python3Packages.callPackage ../../../pkgs/animdl { })
     ];
     username = "lemon";
