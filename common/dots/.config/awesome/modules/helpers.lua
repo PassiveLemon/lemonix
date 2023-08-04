@@ -255,7 +255,7 @@ function helpers.simplewtch(com, time)
     valign = "center",
   }
   awful.widget.watch(com, time, function(_, stdout)
-    simplewatch.text = stdout:gsub( "\n", "" )
+    simplewatch.markup = stdout:gsub( "\n", "" )
   end)
   return simplewatch
 end

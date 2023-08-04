@@ -40,28 +40,6 @@ screen.connect_signal("request::desktop_decoration", function(s)
     valign = "center",
   }
 
-  -- Caps Lock
-  capsl = helpers.simpletxt(26, 26, "Aa_", beautiful.font, "Center", 4, 4, 4, 4)
-
-  function capsl_updater()
-    awful.spawn.easy_async_with_shell("xset q | grep Caps | awk '{print $4}'", function (caps_state)
-      caps_state = caps_state.gsub(caps_state, "\n", "")
-      if caps_state == "on" then
-        capsl:get_children_by_id("textbox")[1].text = "A_a"
-      else
-        capsl:get_children_by_id("textbox")[1].text = "Aa_"
-      end
-    end)
-  end
-
-  capsl_timer = gears.timer {
-    timeout = 0.25,
-    autostart = true,
-    callback = function()
-      capsl_updater()
-    end,
-  }
-
   -- CPU
   cpu = wibox.widget {
     widget = wibox.container.margin,
@@ -205,7 +183,7 @@ screen.connect_signal("request::desktop_decoration", function(s)
           bar,
           sep,
           cpu,
-          helpers.simplewtch([[sh -c "echo -n '' && top -bn1 | grep '%Cpu' | awk '{print int(100-$8)}' && echo -n '%'"]], 1),
+          helpers.simplewtch([[sh -c "top -bn1 | grep '%Cpu' | awk '{print int(100-$8)}' && echo -n '%'"]], 1),
           sep,
           cpu_widget({
             width = 20,
@@ -215,12 +193,12 @@ screen.connect_signal("request::desktop_decoration", function(s)
           bar,
           sep,
           gpu,
-          helpers.simplewtch([[sh -c "echo -n '' && nvidia-smi | grep 'Default' | cut -d '|' -f 4 | tr -d 'Default' | tr -d '[:space:]'"]], 1),
+          helpers.simplewtch([[sh -c "nvidia-smi | grep 'Default' | awk '{print $12}'"]], 1),
           sep,
           bar,
           sep,
           memory,
-          helpers.simplewtch([[sh -c "echo -n '' && free -h | awk '/Mem:/{gsub(/Gi/,\"\",\$2); gsub(/Gi/,\"\",\$3); printf \"%.0f%%\", (\$3/\$2)*100}'"]], 2),
+          helpers.simplewtch([[sh -c "free -h | awk '/Mem:/{gsub(/Gi/,\"\",\$2); gsub(/Gi/,\"\",\$3); printf \"%.0f%%\", (\$3/\$2)*100}'"]], 2),
         },
         { -- Center
           layout = wibox.layout.flex.horizontal,
@@ -228,11 +206,12 @@ screen.connect_signal("request::desktop_decoration", function(s)
         },
         { -- Right
           layout = wibox.layout.fixed.horizontal,
-          capsl,
+          helpers.simplewtch([[bash -c "[ $(xset q | grep Caps | awk '{print $4}') = "on" ] && echo '<span underline=\"single\">A</span>a' || echo 'A<span underline=\"single\">a</span>'"]], 0.25),
+          sep,
           bar,
           sep,
           speaker,
-          helpers.simplewtch([[sh -c "echo -n '' && pamixer --get-volume"]], 0.25),
+          helpers.simplewtch("pamixer --get-volume", 0.25),
           perc,
           sep,
           bar,
