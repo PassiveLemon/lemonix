@@ -61,7 +61,7 @@ end)
 -- Other
 --
 
-terminal = "kitty"
+terminal = "tym"
 browser = "firefox"
 editor = os.getenv("EDITOR") or "nano"
 visual_editor = "codium"
