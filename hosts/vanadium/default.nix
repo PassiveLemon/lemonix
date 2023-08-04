@@ -23,6 +23,13 @@
     hostName = "vanadium";
   };
 
+  # Overlay
+  nixpkgs.config = {
+    allowUnfree = true;
+    allowUnfreePredicate = _: true;
+  };
+
+
   # Packages
   environment = {
     systemPackages = with pkgs; [

@@ -19,7 +19,7 @@
       };
     };
     kernelPackages = pkgs.linuxKernel.packages.linux_zen;
-    kernelModules = [ "iwlwifi" ];
+    kernelModules = [ "iwlwifi" "kvm-amd" ];
   };
 
   # Locale
@@ -51,7 +51,7 @@
       lemon = {
         description = "Lemon";
         home = "/home/lemon";
-        extraGroups = [ "wheel" "networkmanager" "docker" "video" ];
+        extraGroups = [ "wheel" "networkmanager" "docker" "video" "kvm" "libvirtd" ];
         isNormalUser = true;
         openssh.authorizedKeys.keys = [ "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQC6XpVE0Tj3gEOcTwWAODH2Sm7u6smE9kwZ0Z4ZV4q9Nc/cH+f0DXKLOljswW2iu0cj8tEsANu5P8JIt+oMA3HXy4qSIzKnaVP7a5/rEQ+yoVwF4AdqzLHKd39D9GP9zDDz0UO4ZaxYEg9q206BHOkS4StpRy1fpES2TneNd/7477mjJbboIyDJK1EzUfQoU/fP9FiSnpWbZKrQtK0m/iol5+2AB8Qp/5htMVm9+KXftCO15cydbi9UKJzJll4SFa8y09/GV/Rgqua5Wj7KH4cDgzXqpIPRo63H0XqfVLjOH1NHeyxX+pmuNZuFGbrqBWF7AtuFGmpujAp9K7tIfkGTi/mJi5rSq+ejiAwJzw7qldGQw8rsfsKVU5pS22JE56X/XYfgmf95ds5lYzTjgx5juVbdjvY3uq6It/JKbvHCP0ueUT78H0RtDRthew0VXq91QWJMrRmwFlc6JRFobk4EcqnWc0kz6aJ6p3SRGymscX/0+UaS/KyyPKSTIVrAaY8= lemon@silver" ];
       };
@@ -67,10 +67,10 @@
   environment = {
     systemPackages = with pkgs; [
       dash bash nano unzip unrar p7zip curl wget git gvfs psmisc
-      htop sysstat iotop stress nvtop-nvidia netcat
+      htop sysstat iotop stress nvtop-nvidia netcat lm_sensors
       networkmanager ethtool
       exa trashy
-      virt-manager OVMF pciutils virtiofsd
+      virt-manager OVMF pciutils virtiofsd libvirt
     ];
     binsh = "${pkgs.dash}/bin/dash";
     shells = with pkgs; [ bash ];
@@ -122,13 +122,24 @@
         AuthenticationMethods publickey
       '';
     };
+    sysstat.enable = true;
   };
   virtualisation = {
+    containerd.enable = true;
     docker = { 
       enable = true;
       enableNvidia = true;
       liveRestore = false;
+      daemon.settings = {
+        containerd = "/run/containerd/containerd.sock";
+        containerd-namespace = "docker";
+        features = {
+          experimental = true;
+          containerd-snapshotter = true;
+        };
+      };
     };
+    libvirtd.enable = true;
   };
   hardware = {
     nvidia.open = true;
