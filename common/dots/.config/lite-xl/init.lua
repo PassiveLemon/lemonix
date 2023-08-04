@@ -9,7 +9,7 @@ style.font = renderer.font.load(USERDIR .. "/fonts/FiraCodeNerdFont-Retina.ttf",
 style.code_font = renderer.font.load(USERDIR .. "/fonts/FiraCodeNerdFontMono-Retina.ttf", 14 * SCALE)
 
 keymap.add_direct {
-	['ctrl+shift+r'] = 'core:restart'
+	["ctrl+shift+r"] = "core:restart"
 }
 
 config.fps = 144
@@ -27,6 +27,11 @@ config.plugins.treeview = {
   expand_dirs_to_focused_file = true,
   scroll_to_focused_file = true,
   animate_scroll_to_focused_file = true,
+}
+
+config.plugins.exterm = {
+  executable = "tym",
+  keymap = "ctrl+shift+space",
 }
 
 local default_path = "/home/lemon/Documents"
