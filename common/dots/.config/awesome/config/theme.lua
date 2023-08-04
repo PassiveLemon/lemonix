@@ -13,8 +13,8 @@ local themes_path = gears.filesystem.get_themes_dir()
 local theme = { }
 
 -- Font
-theme.font          = "FiraMono Nerd Font Regular 10"
-theme.font_large    = "FiraMono Nerd Font Regular 24"
+theme.font          = "FiraCode Nerd Font Mono Ret 10"
+theme.font_large    = "FiraCode Nerd Font Mono Ret 24"
 theme.taglist_font  = theme.font
 theme.tasklist_font = theme.font
 

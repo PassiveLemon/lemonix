@@ -9,7 +9,7 @@ local naughty = require("naughty")
 -- Notifications
 --
 
-ruled.notification.connect_signal('request::rules', function()
+ruled.notification.connect_signal("request::rules", function()
   ruled.notification.append_rule {
     rule = { urgency = "critical" },
     properties = { bg = beautiful.bg_urgent, fg = beautiful.fg_normal, implicit_timeout = 5, timeout = 5, },
