@@ -9,6 +9,7 @@ tym.set_config{
   cell_width = 80,
   cell_height = 100,
   scrollback_length = 1024,
+  scrollback_on_output = true,
   cursor_shape = "block",
-  font = "FiraCode Nerd Font Mono SemBd 10",
+  font = "FiraCode Nerd Font Mono Ret 10",
 }
