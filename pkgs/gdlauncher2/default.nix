@@ -1,4 +1,7 @@
-{ appimageTools, fetchurl, lib }:
+{ lib,
+  appimageTools,
+  fetchurl
+}:
 let
   pname = "gdlauncher";
   version = "1.1.30";
@@ -22,7 +25,7 @@ appimageTools.wrapType2 {
     homepage = "https://gdlauncher.com/";
     changelog = "https://github.com/gorilla-devs/GDLauncher/releases/tag/v${version}";
     license = licenses.gpl3Only;
-    maintainers = with maintainers; [ PassiveLemon ];
+    maintainers = with maintainers; [ passivelemon ];
     platforms = [ "x86_64-linux" ];
   };
 }

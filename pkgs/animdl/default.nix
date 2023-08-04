@@ -44,8 +44,9 @@ buildPythonApplication rec {
     httpx
     lxml
     packaging
-    pkginfo pyyaml
+    pkginfo
     pycryptodomex
+    pyyaml
     regex
     rich
     tqdm
@@ -64,7 +65,7 @@ buildPythonApplication rec {
     description = "A highly efficient, powerful and fast anime scraper";
     homepage = "https://github.com/justfoolingaround/animdl";
     license = licenses.gpl3Only;
-    maintainers = with maintainers; [ PassiveLemon ];
+    maintainers = with maintainers; [ passivelemon ];
     platforms = [ "x86_64-linux" ];
   };
 }

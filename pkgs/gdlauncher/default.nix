@@ -51,9 +51,7 @@ buildNpmPackage rec {
 
     install -Dm644 public/icon.png $out/share/icons/hicolor/256x256/apps/gdlauncher.png
 
-    ln -s $out/lib/
-
-    makeWrapper '${electron_19}/bin/electron' $out/bin/gdlauncher \
+    makeWrapper $out/bin/gdlauncher \
       --add-flags $out/lib/node_modules/gdlauncher/src
 
     runHook postInstall
@@ -64,7 +62,7 @@ buildNpmPackage rec {
     homepage = "https://gdlauncher.com/";
     changelog = "https://github.com/gorilla-devs/GDLauncher/releases/tag/v${version}";
     license = licenses.gpl3Only;
-    maintainers = with maintainers; [ PassiveLemon ];
+    maintainers = with maintainers; [ passivelemon ];
     platforms = [ "x86_64-linux" ];
   };
 }

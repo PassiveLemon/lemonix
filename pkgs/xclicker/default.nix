@@ -1,4 +1,14 @@
-{ fetchFromGitHub, stdenv, pkgs, lib, ... }:
+{ lib,
+  stdenv, 
+  fetchFromGitHub,
+  gnumake,
+  gtk3,
+  meson,
+  ninja,
+  pkg-config,
+  xorg,
+  makeWrapper
+}:
 stdenv.mkDerivation rec {
   pname = "xclicker";
   version = "1.4.0";
@@ -9,15 +19,19 @@ stdenv.mkDerivation rec {
     hash = "sha256-f47V81fQcfR04PTkaj/yByH7CLXuu8CnMnjwpKZO2qE=";
   };
 
-  nativeBuildInputs = with pkgs; [ gnumake meson ninja pkg-config gtk3 xorg.libXtst ];  
-
-  buildPhase = ''
-    make install
-  '';
+  nativeBuildInputs = [
+    gnumake
+    gtk3
+    meson
+    ninja
+    pkg-config
+    xorg.libXtst
+    makeWrapper
+  ];
 
   installPhase = ''
     mkdir -p $out/bin
-    cp ./build/release/src/xclicker $out/bin
+    cd $out/bin
   '';
 
   meta = with lib; {
@@ -25,7 +39,7 @@ stdenv.mkDerivation rec {
     homepage = "https://xclicker.xyz/";
     changelog = "https://github.com/robiot/XClicker/releases/tag/v${version}";
     license = licenses.gpl3Only;
-    maintainers = with maintainers; [ PassiveLemon ];
+    maintainers = with maintainers; [ passivelemon ];
     platforms = [ "x86_64-linux" ];
   };
 }

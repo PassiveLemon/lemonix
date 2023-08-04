@@ -1,4 +1,8 @@
-{ lib, python3Packages, buildPythonPackage, fetchFromGitHub }:
+{ lib,
+  python3Packages,
+  buildPythonPackage,
+  fetchFromGitHub
+}:
 python3Packages.buildPythonPackage rec {
   pname = "anchor";
   version = "3";
@@ -19,6 +23,6 @@ python3Packages.buildPythonPackage rec {
     description = "Python library for scraping";
     homepage = "https://github.com/justfoolingaround/anchor";
     license = licenses.unfree;
-    maintainers = with maintainers; [ PassiveLemon ];
+    maintainers = with maintainers; [ passivelemon ];
   };
 }

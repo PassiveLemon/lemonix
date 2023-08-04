@@ -1,4 +1,8 @@
-{ lib, python3Packages, buildPythonPackage, fetchFromGitHub }:
+{ lib,
+  python3Packages,
+  buildPythonPackage,
+  fetchFromGitHub
+}:
 python3Packages.buildPythonPackage rec {
   pname = "anitopy";
   version = "2.1.1";
@@ -18,6 +22,6 @@ python3Packages.buildPythonPackage rec {
     description = "Python library for parsing anime video filenames";
     homepage = "https://github.com/igorcmoura/anitopy";
     license = licenses.mpl20;
-    maintainers = with maintainers; [ PassiveLemon ];
+    maintainers = with maintainers; [ passivelemon ];
   };
 }
