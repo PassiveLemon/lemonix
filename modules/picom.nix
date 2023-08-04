@@ -28,7 +28,7 @@
       corner-radius = 0;
 
       # Blur
-      #blur-method = "gaussian";
+      #blur-method = "dual_kawase";
       #blur-strength = 3;
       #blur-kern = "3x3box";
       blur-background-exclude = [

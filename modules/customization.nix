@@ -3,7 +3,8 @@
     # Theme/Icon
     lxappearance matcha-gtk-theme kora-icon-theme papirus-icon-theme
     # Font
-    material-design-icons fira (nerdfonts.override { fonts = [ "FiraCode" "FiraMono" ]; })
+    fira (nerdfonts.override { fonts = [ "FiraCode" "FiraMono" ]; })
+    material-design-icons
   ];
 
   fonts.fontconfig.enable = true;

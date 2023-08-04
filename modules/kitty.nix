@@ -5,15 +5,21 @@
     settings = {
       background_opacity = "0.85";
       window_padding_width = "5 6 5 6";
-      font_family = "FiraCode Nerd Font Ret";
-      font_size = 10;
+
       enable_audio_bell = "no";
+      confirm_os_window_close = 0;
       update_check_interval = 0;
-      url_color = "#61b8ff";
       shell = "hilbish";
+
+      font_family = "FiraCode Nerd Font Mono Ret";
+      font_size = 10;
+      font_features = "none";
+      disable_ligatures = "always";
 
       foreground = "#aaaaaa";
       background = "#222222";
+
+      url_color = "#61b8ff";
 
       # black
       color0 = "#31343a";
