@@ -12,13 +12,13 @@
 
   # Packages
   environment.systemPackages = with pkgs; [
-    lite-xl rofi hilbish vscodium github-desktop
+    i3lock-fancy-rapid
+    tym lite-xl rofi hilbish vscodium github-desktop
     haruna feh gimp obs-studio authy xarchiver filezilla easytag easyeffects soundux openshot-qt qbittorrent
     pamixer playerctl appimage-run neofetch ventoy-bin
     libsForQt5.kruler
-    i3lock-fancy-rapid
 
-    jq stdenvNoCC gnumake gnat13 husky nodejs_16 python2 rustup (python311.withPackages(ps: with ps; [ distutils_extra pillow numpy pyautogui xlib keyboard evdev random2 pyyaml pynput ]))
+    jq stdenvNoCC gnumake gnat13 husky nodejs_16 python2 rustup (python311.withPackages(ps: with ps; [ pillow-simd evdev pyyaml]))
     #(callPackage ../../pkgs/gdlauncher { })
     go
     dotnet-sdk dotnet-runtime

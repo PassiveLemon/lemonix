@@ -66,10 +66,10 @@
   # Packages
   environment = {
     systemPackages = with pkgs; [
-      dash bash nano unzip unrar p7zip curl wget git gvfs psmisc
+      dash bash
+      nano unzip unrar p7zip curl wget git gvfs psmisc exa trashy
       htop sysstat iotop stress nvtop-nvidia netcat lm_sensors
       networkmanager ethtool
-      exa trashy
       virt-manager OVMF pciutils virtiofsd libvirt
     ];
     binsh = "${pkgs.dash}/bin/dash";
@@ -169,7 +169,9 @@
   };
 
   # Drives
-  # Home (1 TB Sabrent)
+  # 500 GB Crucial (Root)
+  
+  # 1 TB Sabrent (Home)
   fileSystems."/home" = {
     device = "/dev/disk/by-uuid/30266ca4-5926-430a-83f5-403c30092cf5";
     fsType = "ext4";
