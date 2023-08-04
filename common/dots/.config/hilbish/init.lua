@@ -12,7 +12,7 @@ promptua.setConfig {
 
 promptua.setTheme {
   { 
-    separator = "│ ",
+    separator = "┃ ",
     format    = "@style@icon@info",
   },
   {
@@ -21,7 +21,7 @@ promptua.setTheme {
     format    = "@style@icon@info",
   },
   { 
-    separator = "│ ",
+    separator = "┃ ",
     format    = "@style@icon@info",
   },
   {
@@ -30,7 +30,7 @@ promptua.setTheme {
     format    = "@style@icon@info",
   },
   { 
-    separator = "│ ",
+    separator = "┃ ",
     format    = "@style@icon@info",
   },
   {

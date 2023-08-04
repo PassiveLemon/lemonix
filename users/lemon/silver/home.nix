@@ -1,7 +1,6 @@
 { inputs, outputs, config, pkgs, ... }: {
   imports = [
     ../../../modules/customization.nix
-    ../../../modules/kitty.nix
     ../../../modules/picom.nix
     ../../../modules/vscode.nix
     ../../../modules/spicetify.nix
@@ -14,7 +13,7 @@
 
   home = {
     packages = with pkgs; [
-      xonotic webcord-vencord tidal-hifi
+      xonotic webcord-vencord sonixd tidal-hifi
       (callPackage ../../../pkgs/corrupter { })
       (callPackage ../../../pkgs/slavartdl { })
       (callPackage ../../../pkgs/xclicker { })
