@@ -13,7 +13,7 @@
 
   home = {
     packages = with pkgs; [
-      xonotic webcord-vencord sonixd tidal-hifi
+      xonotic webcord-vencord sonixd tidal-hifi teams
       (callPackage ../../../pkgs/corrupter { })
       (callPackage ../../../pkgs/slavartdl { })
       (callPackage ../../../pkgs/xclicker { })
@@ -108,3 +108,4 @@
     };
   };
 }
+
