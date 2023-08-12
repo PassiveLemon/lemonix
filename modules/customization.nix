@@ -2,6 +2,7 @@
   home.packages = with pkgs; [
     # Theme/Icon
     lxappearance matcha-gtk-theme kora-icon-theme papirus-icon-theme
+    volantes-cursors
     # Font
     fira (nerdfonts.override { fonts = [ "FiraCode" "FiraMono" ]; })
     material-design-icons
