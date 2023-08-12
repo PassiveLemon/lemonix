@@ -92,7 +92,7 @@ theme.layout_dwindle = themes_path .. "default/layouts/dwindlew.png"
 --
 
 theme.icon_theme = "Papirus"
-theme.wallpaper = os.getenv("HOME") .. "/.wallpaper"
+theme.wallpaper = os.getenv("HOME") .. "/.wallpaper-image"
 
 screen.connect_signal("request::wallpaper", function(s)
   awful.wallpaper {

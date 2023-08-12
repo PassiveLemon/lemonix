@@ -147,6 +147,7 @@
       enable = true;
       driSupport = true;
     };
+    bluetooth.enable = true;
   };
   nix = {
     settings = {

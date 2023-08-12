@@ -16,7 +16,7 @@ These are my dotfiles for my NixOS system. I like using Lua so a lot of the conf
 * System theme to match the Matcha Dark Aliz GTK theme.
 * Volantes Cursors
 * Papirus Icons
-* You must put your own wallpaper at `~/.wallpaper`. Do not include an extension.
+* You must put your own wallpaper at `~/.wallpaper-image`. Do not include an extension.
 
 ## Install </br>
 Use the Installer.sh script in other. I will not guarantee that it works because stuff changes so much and I don't often remember to update it. </br>

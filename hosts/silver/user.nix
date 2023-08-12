@@ -18,7 +18,7 @@
     pamixer playerctl appimage-run neofetch ventoy-bin
     libsForQt5.kruler
 
-    jq stdenvNoCC gnumake gnat13 husky nodejs_16 python2 rustup (python311.withPackages(ps: with ps; [ pillow-simd evdev pyyaml]))
+    jq stdenvNoCC gnumake gnat13 husky nodejs_16 python2 rustup (python311.withPackages(ps: with ps; [ pillow-simd evdev pyyaml pynput]))
     #(callPackage ../../pkgs/gdlauncher { })
     go
     dotnet-sdk dotnet-runtime
@@ -60,6 +60,7 @@
       enable = true;
       openFirewall = true;
     };
+    blueman.enable = true;
     gnome.gnome-keyring.enable = true;
   };
   programs = {

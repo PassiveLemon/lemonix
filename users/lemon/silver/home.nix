@@ -13,7 +13,7 @@
 
   home = {
     packages = with pkgs; [
-      xonotic webcord-vencord sonixd tidal-hifi teams
+      xonotic webcord-vencord sonixd tidal-hifi teams headsetcontrol
       (callPackage ../../../pkgs/corrupter { })
       (callPackage ../../../pkgs/slavartdl { })
       (callPackage ../../../pkgs/xclicker { })
@@ -27,10 +27,6 @@
       };
       ".config/" = {
         source = ../../../common/dots/.config;
-        recursive = true;
-      };
-      ".local/" = {
-        source = ../../../common/dots/.local;
         recursive = true;
       };
       ".vscode-oss/" = {
@@ -71,6 +67,7 @@
       defaultApplications = {
         "inode/directory" = "pcmanfm.desktop";
         "x-scheme-handler/gdlauncher" = "gdlauncher.desktop";
+        "x-scheme-handler/msteams" = "teams.desktop";
       };
     };
     desktopEntries = {
