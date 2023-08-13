@@ -53,6 +53,10 @@ local uptime_text = helpers.simpletxt(nil, nil, "Uptime", beautiful.font, "cente
 
 local uptime = helpers.simplewtch([[sh -c "uptime | awk -F'( |,|:)+' '{if (\$6 >= 1) {print \$6, \"days\", \$8, \"hours\"} else {print \$8, \"hours\"}}'"]], 60)
 
+local devices_text = helpers.simpletxt(nil, nil, "Devices", beautiful.font, "center")
+
+local headset_bat = helpers.simplewtch([[sh -c "echo -n 'HS BAT: ' && headsetcontrol -c -b && echo -n '%'"]], 15)
+
 local resourcemenu_pop = awful.popup {
   placement = awful.placement.centered,
   border_width = 3,
@@ -123,6 +127,9 @@ local resourcemenu_pop = awful.popup {
         space,
         uptime_text,
         uptime,
+        space,
+        devices_text,
+        headset_bat,
       },
     },
   },
