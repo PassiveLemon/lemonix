@@ -3,7 +3,7 @@ local gears = require("gears")
 local beautiful = require("beautiful")
 local wibox = require("wibox")
 
-local helpers = require("modules.helpers")
+local helpers = require("helpers")
 local click_to_hide = require("modules.click_to_hide")
 
 --
@@ -12,30 +12,30 @@ local click_to_hide = require("modules.click_to_hide")
 
 local artimage = helpers.simpleimg(nil, 0, nil, 4, 4, 4, 4)
 
-local title = helpers.simpletxt(532, 17, nil, beautiful.font, "left", 4, 4, 4, 4)
+local title = helpers.simpletxt(532, 17, nil, beautiful.sysfont(10), "left", 4, 4, 4, 4)
 
-local artist = helpers.simpletxt(532, 17, nil, beautiful.font, "left", 0, 4, 4, 4)
+local artist = helpers.simpletxt(532, 17, nil, beautiful.sysfont(10), "left", 0, 4, 4, 4)
 
-local album = helpers.simpletxt(532, 17, nil, beautiful.font, "left", 0, 4, 4, 4)
+local album = helpers.simpletxt(532, 17, nil, beautiful.sysfont(10), "left", 0, 4, 4, 4)
 
-local shuffle = helpers.simplebtn(100, 100, "󰒞", beautiful.font_large, 4, 4, 4, 4)
+local shuffle = helpers.simplebtn(100, 100, "󰒞", beautiful.sysfont(24), 4, 4, 4, 4)
 
-local prev = helpers.simplebtn(100, 100, "󰒮", beautiful.font_large, 4, 4, 4, 4)
+local prev = helpers.simplebtn(100, 100, "󰒮", beautiful.sysfont(24), 4, 4, 4, 4)
 
-local toggle = helpers.simplebtn(100, 100, "󰐊", beautiful.font_large, 4, 4, 4, 4)
+local toggle = helpers.simplebtn(100, 100, "󰐊", beautiful.sysfont(23), 4, 4, 4, 4)
 
-local next = helpers.simplebtn(100, 100, "󰒭", beautiful.font_large, 4, 4, 4, 4)
+local next = helpers.simplebtn(100, 100, "󰒭", beautiful.sysfont(24), 4, 4, 4, 4)
 
-local loop = helpers.simplebtn(100, 100, "󰑗", beautiful.font_large, 4, 4, 4, 4)
+local loop = helpers.simplebtn(100, 100, "󰑗", beautiful.sysfont(26), 4, 4, 4, 4)
 
 --wip
-local position_cur = helpers.simpletxt(532, 15, nil, beautiful.font, "left", 4, 4, 4, 4)
-local position_tot = helpers.simpletxt(532, 15, nil, beautiful.font, "left", 4, 4, 4, 4)
+local position_cur = helpers.simpletxt(532, 15, nil, beautiful.sysfont(10), "left", 4, 4, 4, 4)
+local position_tot = helpers.simpletxt(532, 15, nil, beautiful.sysfont(10), "left", 4, 4, 4, 4)
 --
 
 local position = helpers.simplesldr(532, 16, 16, 6, 100, 4, 4, 4, 4)
 
-local volume_icon = helpers.simpleicn(18, 15, "󰕾", "Fira Code Nerd Font 12", 3, 5, 3, 0)
+local volume_icon = helpers.simpleicn(18, 15, "󰕾", beautiful.sysfont(14), 3, 5, 3, 0)
 
 local volume = helpers.simplesldr(513, 16, 16, 6, 100, 4, 4, 4, 0)
 
@@ -51,12 +51,13 @@ local function artimageupdater()
       imageAspRat = (artUrlFile:get_width() / artUrlFile:get_height())
       ImageDynHeight = ((title:get_children_by_id("background")[1].forced_height * 3) + 8)
       imageDynWidth = math.floor((imageAspRat * ImageDynHeight) + 0.5)
-      awful.spawn.with_shell("test -f /tmp/mediamenu/" .. artUrlTrim .. " || curl -Lso /tmp/mediamenu/" .. artUrlTrim .. " " .. artUrl)
-      artimage:get_children_by_id("constraint")[1].forced_width = imageDynWidth
-      artimage:get_children_by_id("constraint")[1].forced_height = ImageDynHeight
-      artimage:get_children_by_id("imagebox")[1].image = artUrlFile
-      artimage.visible = true
-      title:get_children_by_id("background")[1].forced_width = (532 - 8 - imageDynWidth)
+      awful.spawn.easy_async_with_shell("test -f /tmp/mediamenu/" .. artUrlTrim .. " || curl -Lso /tmp/mediamenu/" .. artUrlTrim .. " " .. artUrl, function()
+        artimage:get_children_by_id("constraint")[1].forced_width = imageDynWidth
+        artimage:get_children_by_id("constraint")[1].forced_height = ImageDynHeight
+        artimage:get_children_by_id("imagebox")[1].image = artUrlFile
+        artimage.visible = true
+        title:get_children_by_id("background")[1].forced_width = (532 - 8 - imageDynWidth)
+      end)
     end
     artist:get_children_by_id("background")[1].forced_width = title:get_children_by_id("textbox")[1].width
     album:get_children_by_id("background")[1].forced_width = title:get_children_by_id("textbox")[1].width
@@ -96,7 +97,6 @@ end
 
 local function shuffleupdater()
   awful.spawn.easy_async_with_shell("sleep 0.15 && playerctl -p spotify shuffle", function(shuffle_state)
-    shuffle:get_children_by_id("textbox")[1].font = beautiful.font_large
     if shuffle_state:find("On") then
       shuffle:get_children_by_id("textbox")[1].text = "󰒝"
     elseif shuffle_state:find("Off") then
@@ -107,7 +107,6 @@ end
 
 local function toggleupdater()
   awful.spawn.easy_async_with_shell("sleep 0.15 && playerctl -p spotify status", function(toggle_state)
-    toggle:get_children_by_id("textbox")[1].font = beautiful.font_large
     if toggle_state:find("Playing") then
       toggle:get_children_by_id("textbox")[1].text = "󰏤"
     elseif toggle_state:find("Paused") then
@@ -118,7 +117,6 @@ end
 
 local function loopupdater()
   awful.spawn.easy_async_with_shell("sleep 0.15 && playerctl -p spotify loop", function(loop_state)
-    loop:get_children_by_id("textbox")[1].font = beautiful.font_large
     if loop_state:find("None") then
       loop:get_children_by_id("textbox")[1].text = "󰑗"
     elseif loop_state:find("Playlist") then

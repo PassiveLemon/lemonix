@@ -3,7 +3,7 @@ local gears = require("gears")
 local beautiful = require("beautiful")
 local wibox = require("wibox")
 
-local helpers = require("modules.helpers")
+local helpers = require("helpers")
 local fancy_taglist = require("modules.fancy_taglist")
 local click_to_hide = require("modules.click_to_hide")
 
@@ -49,7 +49,7 @@ screen.connect_signal("request::desktop_decoration", function(s)
       markup = " ",
       align = "center",
       valign = "center",
-      font = "Fira Code Nerd Font 10",
+      font = beautiful.sysfont(10),
     },
   }
 
@@ -62,7 +62,7 @@ screen.connect_signal("request::desktop_decoration", function(s)
       markup = "󰢮 ",
       align = "center",
       valign = "center",
-      font = "Fira Code Nerd Font 13",
+      font = beautiful.sysfont(13),
     },
   }
 
@@ -75,7 +75,7 @@ screen.connect_signal("request::desktop_decoration", function(s)
       markup = " ",
       align = "center",
       valign = "center",
-      font = "Fira Code Nerd Font 10",
+      font = beautiful.sysfont(10),
     },
   }
 
@@ -88,7 +88,7 @@ screen.connect_signal("request::desktop_decoration", function(s)
       markup = "󰕾 ",
       align = "center",
       valign = "center",
-      font = "Fira Code Nerd Font 12",
+      font = beautiful.sysfont(12),
     },
   }
 
@@ -101,7 +101,7 @@ screen.connect_signal("request::desktop_decoration", function(s)
       markup = "󰸗 ",
       align = "center",
       valign = "center",
-      font = "Fira Code Nerd Font 11",
+      font = beautiful.sysfont(11),
     },
   }
 
@@ -114,7 +114,7 @@ screen.connect_signal("request::desktop_decoration", function(s)
       markup = "󰥔 ",
       align = "center",
       valign = "center",
-      font = "Fira Code Nerd Font 11",
+      font = beautiful.sysfont(11),
     },
   }
 
