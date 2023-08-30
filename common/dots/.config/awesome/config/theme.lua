@@ -13,12 +13,17 @@ local themes_path = gears.filesystem.get_themes_dir()
 local theme = { }
 
 -- Font
-theme.font          = "FiraCode Nerd Font Mono Ret 10"
-theme.font_large    = "FiraCode Nerd Font Mono Ret 24"
-theme.taglist_font  = theme.font
-theme.tasklist_font = theme.font
+function theme.sysfont(size)
+  return "FiraCode Nerd Font Mono Ret" .. " " .. size
+end
+function theme.cusfont(font, size)
+  return font .. " " .. size
+end
+theme.font          = theme.sysfont(10)
+theme.taglist_font  = theme.sysfont(10)
+theme.tasklist_font = theme.sysfont(10)
 
--- Color set
+-- Mono
 theme.bg0      = "#222222"
 theme.bg1      = "#292929"
 theme.bg2      = "#333333"
@@ -31,7 +36,7 @@ theme.fg2      = "#8c8c8c"
 theme.fg3      = "#ffffff"
 theme.fg4      = "unset"
 
--- Terminal
+-- Color
 theme.bg       = theme.bg0
 theme.fg       = theme.fg0
 theme.blackd   = "#31343a"
