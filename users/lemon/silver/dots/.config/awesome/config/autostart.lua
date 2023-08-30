@@ -1,8 +1,9 @@
 local awful = require("awful")
 
 -- Display
-awful.spawn.with_shell("xrandr --output DP-0 --primary --mode 1920x1080 --rate 143.9 --rotate normal --output DP-2 --mode 1920x1080 --rate 143.9 --rotate normal --left-of DP-0")
-awful.spawn.with_shell("xrandr --output DP-0 --gamma 1.0:0.92:0.92 --output DP-2 --gamma 1.0:0.92:0.92")
+awful.spawn.easy_async("xrandr --output DP-0 --primary --mode 1920x1080 --rate 143.9 --rotate normal --output DP-2 --mode 1920x1080 --rate 143.9 --rotate normal --left-of DP-0", function()
+  awful.spawn.easy_async("xrandr --output DP-0 --gamma 1.0:0.92:0.92 --output DP-2 --gamma 1.0:0.92:0.92")
+end)
 
 -- Programs
 awful.spawn.with_shell("pgrep easyeffects || easyeffects --gapplication-service")
