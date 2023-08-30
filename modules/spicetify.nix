@@ -11,9 +11,12 @@ in
     enable = true;
     theme = spicePkgs.themes.DefaultDynamic;
     enabledExtensions = with spicePkgs.extensions; [
-      autoSkipVideo
-      seekSong
       adblock
+      autoSkipVideo
+      genre
+      loopyLoop
+      seekSong
+      volumePercentage
     ];
   };
 }

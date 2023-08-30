@@ -17,6 +17,7 @@
       (callPackage ../../../pkgs/corrupter { })
       (callPackage ../../../pkgs/slavartdl { })
       (callPackage ../../../pkgs/xclicker { })
+      (callPackage ../../../pkgs/vinegar { })
       (python3Packages.callPackage ../../../pkgs/animdl { })
     ];
     username = "lemon";
@@ -44,7 +45,7 @@
     enable = true;
     windowManager.awesome = {
       enable = true;
-      package = inputs.nixpkgs-f2k.packages.${pkgs.system}.awesome-git;
+      package = inputs.nixpkgs-f2k.packages.${pkgs.system}.awesome-luajit-git;
     };
   };
   services = {
