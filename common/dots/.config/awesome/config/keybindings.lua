@@ -6,6 +6,7 @@ local hotkeys_popup = require("awful.hotkeys_popup")
 local mediamenu = require("ui.mediamenu")
 local powermenu = require("ui.powermenu")
 local resourcemenu = require("ui.resourcemenu")
+local crosshair = require("ui.crosshair")
 
 --
 -- Keybindings
@@ -31,6 +32,9 @@ awful.keyboard.append_global_keybindings {
 
   awful.key({ modkey, }, "c", function() mediamenu.signal() end,
   { description = "run mediamenu", group = "launcher", }),
+
+  awful.key({ modkey, }, "b", function() crosshair.signal() end,
+  { description = "run crosshair", group = "launcher", }),
 
   awful.key({ modkey, }, "s", hotkeys_popup.show_help,
   { description = "show help", group = "utility", }),
