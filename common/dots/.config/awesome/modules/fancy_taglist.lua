@@ -1,3 +1,5 @@
+-- Credit to https://gist.github.com/intrntbrn/08af1058d887f4d10a464c6f272ceafa/
+
 local awful = require("awful")
 local wibox = require("wibox")
 
