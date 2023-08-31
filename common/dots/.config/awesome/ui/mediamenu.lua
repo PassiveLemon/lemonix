@@ -49,15 +49,14 @@ local function artimageupdater()
       artUrlTrim = artUrl.gsub(artUrl, ".*/", "")
       artUrlFile = gears.surface.load_silently("/tmp/mediamenu/" .. artUrlTrim, beautiful.layout_fullscreen)
       imageAspRat = (artUrlFile:get_width() / artUrlFile:get_height())
-      ImageDynHeight = ((title:get_children_by_id("background")[1].forced_height * 3) + 8)
-      imageDynWidth = math.floor((imageAspRat * ImageDynHeight) + 0.5)
-      awful.spawn.easy_async_with_shell("test -f /tmp/mediamenu/" .. artUrlTrim .. " || curl -Lso /tmp/mediamenu/" .. artUrlTrim .. " " .. artUrl, function()
-        artimage:get_children_by_id("constraint")[1].forced_width = imageDynWidth
-        artimage:get_children_by_id("constraint")[1].forced_height = ImageDynHeight
-        artimage:get_children_by_id("imagebox")[1].image = artUrlFile
-        artimage.visible = true
-        title:get_children_by_id("background")[1].forced_width = (532 - 8 - imageDynWidth)
-      end)
+      imageDynHeight = ((title:get_children_by_id("background")[1].forced_height * 3) + 8)
+      imageDynWidth =  helpers.simplernd((imageAspRat * imageDynHeight), 1)
+      awful.spawn.with_shell("test -f /tmp/mediamenu/" .. artUrlTrim .. " || curl -Lso /tmp/mediamenu/" .. artUrlTrim .. " " .. artUrl)
+      artimage:get_children_by_id("constraint")[1].forced_width = imageDynWidth
+      artimage:get_children_by_id("constraint")[1].forced_height = imageDynHeight
+      artimage:get_children_by_id("imagebox")[1].image = artUrlFile
+      artimage.visible = true
+      title:get_children_by_id("background")[1].forced_width = (532 - 8 - imageDynWidth)
     end
     artist:get_children_by_id("background")[1].forced_width = title:get_children_by_id("textbox")[1].width
     album:get_children_by_id("background")[1].forced_width = title:get_children_by_id("textbox")[1].width
@@ -131,6 +130,7 @@ positionset = true
 sliderupdate = false
 sliderselfupdate = true
 
+-- This is terrible but it works. It gets a slider to update the players position without the position feeding back into the slider and causing recursion.
 local function positionupdater(position_state)
   awful.spawn.easy_async("playerctl -p spotify position", function (current)
     current = current.gsub(current, "\n", "")
@@ -145,13 +145,13 @@ local function positionupdater(position_state)
         else
           if positionset == true then
             if position_state then
-              awful.spawn("playerctl -p spotify position " .. ((position_state * length) / (100000000)))
+              awful.spawn("playerctl -p spotify position " .. helpers.simplernd(((position_state * length) / (100000000)), 3))
             end
           end
           if sliderupdate == true then
             sliderselfupdate = false
             sliderupdate = false
-            position:get_children_by_id("slider")[1].value = ((current * 100000000) / (length))
+            position:get_children_by_id("slider")[1].value = helpers.simplernd(((current * 100000000) / (length)), 3)
           end
         end
       end)
@@ -168,7 +168,7 @@ local function volumeupdater()
     else
       volume.visible = true
       volume_icon.visible = true
-      volume:get_children_by_id("slider")[1].value = math.floor(volume_state * 100 + 0.5)
+      volume:get_children_by_id("slider")[1].value = helpers.simplernd((volume_state * 100), 3)
     end
   end)
 end
@@ -234,6 +234,7 @@ local mediamenu_pop = awful.popup {
   border_color = beautiful.border_color_active,
   ontop = true,
   visible = false,
+  width = 530,
   widget = {
     layout = wibox.layout.margin,
     margins = {
@@ -320,7 +321,7 @@ end)
 
 volume:get_children_by_id("slider")[1]:connect_signal("property::value", function(slider, volume_state)
   slider.value = volume_state
-	awful.spawn("playerctl -p spotify volume " .. (volume_state/100))
+	awful.spawn("playerctl -p spotify volume " .. helpers.simplernd((volume_state/100), 3))
 end)
 
 local function signal()

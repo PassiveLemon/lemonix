@@ -19,7 +19,7 @@
     libsForQt5.kruler
 
     jq stdenvNoCC gnumake gnat13 husky nodejs_16 python2 rustup (python311.withPackages(ps: with ps; [ pip pillow evdev pyyaml pynput colorama ]))
-    #(callPackage ../../pkgs/gdlauncher { })
+    (callPackage ../../pkgs/gdlauncher2 { })
     go
     dotnet-sdk dotnet-runtime
     distrobox

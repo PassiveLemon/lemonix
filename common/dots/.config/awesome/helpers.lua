@@ -248,6 +248,12 @@ function helpers.simpleprog(x, y, w, max, mt, mr, mb, ml)
   return simpleprogressbar
 end
 
+function helpers.simplernd(number, place)
+  local decimal = 10 ^ place
+  local rounded = math.floor(number * decimal + 0.5) / decimal
+  return rounded
+end
+
 function helpers.simplewtch(com, time)
   local simplewatch = wibox.widget {
     widget = wibox.widget.textbox,
