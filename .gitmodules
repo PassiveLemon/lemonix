@@ -4,3 +4,6 @@
 [submodule "common/dots/.config/lite-xl/libraries/widget"]
 	path = common/dots/.config/lite-xl/libraries/widget
 	url = https://github.com/lite-xl/lite-xl-widgets
+[submodule "common/dots/.config/awesome/libraries/feather"]
+	path = common/dots/.config/awesome/libraries/feather
+	url = https://github.com/feathericons/feather

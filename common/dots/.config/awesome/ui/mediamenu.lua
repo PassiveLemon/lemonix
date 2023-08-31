@@ -51,7 +51,14 @@ local function artimageupdater()
       imageAspRat = (artUrlFile:get_width() / artUrlFile:get_height())
       imageDynHeight = ((title:get_children_by_id("background")[1].forced_height * 3) + 8)
       imageDynWidth =  helpers.simplernd((imageAspRat * imageDynHeight), 1)
-      awful.spawn.with_shell("test -f /tmp/mediamenu/" .. artUrlTrim .. " || curl -Lso /tmp/mediamenu/" .. artUrlTrim .. " " .. artUrl)
+      awful.spawn.easy_async_with_shell("test -f /tmp/mediamenu/" .. artUrlTrim .. " && echo true || echo false", function(filetest)
+        filetest = filetest.gsub(filetest, "\n", "")
+        if filetest == "false" then
+          artimage.visible = false
+          imageDynWidth = 0
+          awful.spawn.with_shell("curl -Lso /tmp/mediamenu/" .. artUrlTrim .. " " .. artUrl)
+        end
+      end)
       artimage:get_children_by_id("constraint")[1].forced_width = imageDynWidth
       artimage:get_children_by_id("constraint")[1].forced_height = imageDynHeight
       artimage:get_children_by_id("imagebox")[1].image = artUrlFile
@@ -234,7 +241,7 @@ local mediamenu_pop = awful.popup {
   border_color = beautiful.border_color_active,
   ontop = true,
   visible = false,
-  width = 530,
+  maximum_width = 530,
   widget = {
     layout = wibox.layout.margin,
     margins = {

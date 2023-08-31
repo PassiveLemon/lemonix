@@ -13,6 +13,31 @@ local cpu_widget = require("libraries.awesome-wm-widgets.cpu-widget.cpu-widget")
 -- Wibar
 --
 
+local function icon(x, y, img, mt, mr, mb, ml)
+  local icon = wibox.widget {
+    id = "margin",
+    widget = wibox.container.margin,
+    margins = {
+      top = mt,
+      right = mr,
+      bottom = mb,
+      left = ml,
+    },
+    {
+      id = "background",
+      widget = wibox.container.background,
+      bg = beautiful.fg,
+      {
+        id = "imagebox",
+        widget = wibox.widget.imagebox,
+        resize = true,
+        image = img,
+      },
+    },
+  }
+  return icon
+end
+
 screen.connect_signal("request::desktop_decoration", function(s)
   awful.tag({ " 1 ", " 2 ", " 3 ", }, s, awful.layout.layouts[1])
 
@@ -41,17 +66,7 @@ screen.connect_signal("request::desktop_decoration", function(s)
   }
 
   -- CPU
-  cpu = wibox.widget {
-    widget = wibox.container.margin,
-    margins = { right = 1, bottom = 1, },
-    {
-      widget = wibox.widget.textbox,
-      markup = " ",
-      align = "center",
-      valign = "center",
-      font = beautiful.sysfont(10),
-    },
-  }
+  cpu = icon(16, 16, os.getenv("HOME") .. "/.config/awesome/libraries/feather/icons/cpu.svg")
 
   -- GPU
   gpu = wibox.widget {
@@ -62,7 +77,7 @@ screen.connect_signal("request::desktop_decoration", function(s)
       markup = "󰢮 ",
       align = "center",
       valign = "center",
-      font = beautiful.sysfont(13),
+      font = beautiful.sysfont(18),
     },
   }
 
@@ -75,7 +90,7 @@ screen.connect_signal("request::desktop_decoration", function(s)
       markup = " ",
       align = "center",
       valign = "center",
-      font = beautiful.sysfont(10),
+      font = beautiful.sysfont(14),
     },
   }
 
@@ -88,7 +103,7 @@ screen.connect_signal("request::desktop_decoration", function(s)
       markup = "󰕾 ",
       align = "center",
       valign = "center",
-      font = beautiful.sysfont(12),
+      font = beautiful.sysfont(14),
     },
   }
 
@@ -101,7 +116,7 @@ screen.connect_signal("request::desktop_decoration", function(s)
       markup = "󰸗 ",
       align = "center",
       valign = "center",
-      font = beautiful.sysfont(11),
+      font = beautiful.sysfont(14),
     },
   }
 
@@ -114,7 +129,7 @@ screen.connect_signal("request::desktop_decoration", function(s)
       markup = "󰥔 ",
       align = "center",
       valign = "center",
-      font = beautiful.sysfont(11),
+      font = beautiful.sysfont(14),
     },
   }
 
