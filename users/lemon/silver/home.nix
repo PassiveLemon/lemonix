@@ -4,6 +4,8 @@
     ../../../modules/picom.nix
     ../../../modules/vscode.nix
     ../../../modules/spicetify.nix
+    ../../../modules/bspwm/default.nix
+    ../../../modules/polybar/default.nix
   ];
 
   nixpkgs.config = {
@@ -43,9 +45,11 @@
 
   xsession = {
     enable = true;
-    windowManager.awesome = {
-      enable = true;
-      package = inputs.nixpkgs-f2k.packages.${pkgs.system}.awesome-luajit-git;
+    windowManager = {
+      awesome = {
+        enable = false;
+        package = inputs.nixpkgs-f2k.packages.${pkgs.system}.awesome-git;
+      };
     };
   };
   services = {

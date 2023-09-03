@@ -163,6 +163,7 @@
   nixpkgs.config = {
     permittedInsecurePackages = [
       "openssl-1.1.1u"
+      "nodejs-16.20.2"
       "nodejs-16.20.0"
       "python-2.7.18.6"
       "electron-19.0.7"

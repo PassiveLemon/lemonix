@@ -5,8 +5,8 @@ local wibox = require("wibox")
 
 local helpers = { }
 
-function helpers.simpletxt(x, y, txt, fnt, ali, mt, mr, mb, ml)
-  local simpletext = wibox.widget {
+function helpers.simplebase(x, y, mt, mr, mb, ml, shape, widgetpass)
+  local simplebase = wibox.widget {
     id = "margin",
     widget = wibox.container.margin,
     margins = {
@@ -22,47 +22,27 @@ function helpers.simpletxt(x, y, txt, fnt, ali, mt, mr, mb, ml)
       forced_height = y,
       fg = beautiful.fg_normal,
       bg = beautiful.bg_normal,
+      shape = shape,
       {
-        id = "textbox",
-        widget = wibox.widget.textbox,
-        text = txt,
-        font = fnt,
-        align = ali,
-        valign = "center",
+        widget = widgetpass,
       },
     },
   }
-  return simpletext
+  return simplebase
 end
 
-function helpers.simpleicn(x, y, txt, fnt, mt, mr, mb, ml)
-  local simpleicon = wibox.widget {
-    id = "margin",
-    widget = wibox.container.margin,
-    margins = {
-      top = mt,
-      right = mr,
-      bottom = mb,
-      left = ml,
-    },
-    {
-      id = "background",
-      widget = wibox.container.background,
-      forced_width = x,
-      forced_height = y,
-      fg = beautiful.fg_normal,
-      bg = beautiful.bg_normal,
-      shape = gears.shape.rounded_rect,
-      {
-        widget = wibox.widget.textbox,
-        markup = txt,
-        font = fnt,
-        align = "center",
-        valign = "center",
-      },
-    },
+-- @@ It appears that I cannot dynamically edit the text for one of these text widgets. Need to look into.
+
+function helpers.simpletxt(x, y, mt, mr, mb, ml, shape, txt, fnt, ali)
+  local simpletext = wibox.widget {
+    id = "textbox",
+    widget = wibox.widget.textbox,
+    text = txt,
+    font = fnt,
+    align = ali,
+    valign = "center",
   }
-  return simpleicon
+  return helpers.simplebase(x, y, mt, mr, mb, ml, nil, simpletext)
 end
 
 function helpers.simpleimg(x, y, img, mt, mr, mb, ml)
@@ -90,6 +70,54 @@ function helpers.simpleimg(x, y, img, mt, mr, mb, ml)
     },
   }
   return simpleimage
+end
+
+function helpers.simpleicn(x, y, mt, mr, mb, ml, shape, img, color)
+  local simpleicon = wibox.widget {
+    id = "imagebox",
+    widget = wibox.widget.imagebox,
+    resize = true,
+    image = gears.color.recolor_image(img, color),
+    forced_width = x,
+    forced_height = y,
+    valign = "center",
+    halign = "center",
+  }
+  --return helpers.simplebase(x, y, mt, mr, mb, ml, nil, simpleicon)
+end
+
+function helpers.complexbtn(x, y, mt, mr, mb, ml, widgetpass)
+  local complexbutton = wibox.widget {
+    id = "margin",
+    widget = wibox.container.margin,
+    margins = {
+      top = mt,
+      right = mr,
+      bottom = mb,
+      left = ml,
+    },
+    {
+      id = "background",
+      widget = wibox.container.background,
+      forced_width = x,
+      forced_height = y,
+      fg = beautiful.fg_normal,
+      bg = beautiful.bg_normal,
+      shape = gears.shape.rounded_rect,
+      {
+        widget = widgetpass,
+      },
+    },
+  }
+  complexbutton:get_children_by_id("background")[1]:connect_signal("mouse::enter", function()
+    complexbutton:get_children_by_id("background")[1].fg = beautiful.fg_focus
+    complexbutton:get_children_by_id("background")[1].bg = beautiful.bg_minimize
+  end)
+  complexbutton:get_children_by_id("background")[1]:connect_signal("mouse::leave", function()
+    complexbutton:get_children_by_id("background")[1].fg = beautiful.fg_normal
+    complexbutton:get_children_by_id("background")[1].bg = beautiful.bg_normal
+  end)
+  return complexbutton
 end
 
 function helpers.simplebtn(x, y, txt, fnt, mt, mr, mb, ml)

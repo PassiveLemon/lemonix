@@ -10,11 +10,13 @@ local click_to_hide = require("modules.click_to_hide")
 -- Power management menu
 --
 
-local lock = helpers.simplebtn(100, 100, "", beautiful.sysfont(24), 8, 4, 8, 8)
+--local lock_icon = helpers.simpleicn(12, 12, 37, 37, 37, 37, nil, os.getenv("HOME") .. "/.config/awesome/libraries/feather/icons/lock.svg", beautiful.fg)
+--local poweroff_icon = helpers.simpleicn(12, 12, 37, 37, 37, 37, nil, os.getenv("HOME") .. "/.config/awesome/libraries/feather/icons/power.svg", beautiful.fg)
+--local restart_icon = helpers.simpleicn(12, 12, 37, 37, 37, 37, nil, , os.getenv("HOME") .. "/.config/awesome/libraries/feather/icons/refresh-cw.svg", beautiful.fg)
 
-local poweroff = helpers.simplebtn(100, 100, "󰐥", beautiful.sysfont(27), 8, 4, 8, 4)
-
-local restart = helpers.simplebtn(100, 100, "󰑓", beautiful.sysfont(30), 8, 8, 8, 4)
+--local lock = helpers.complexbtn(100, 100, 8, 4, 8, 8, lock_icon)
+--local poweroff = helpers.complexbtn(100, 100, 8, 4, 8, 4, poweroff_icon)
+--local restart = helpers.complexbtn(100, 100, 8, 8, 8, 4, restart_icon)
 
 local powermenu_widget = wibox.widget {
   layout = wibox.layout.align.vertical,
@@ -26,13 +28,10 @@ local powermenu_widget = wibox.widget {
   },
 }
 
-local prompt = helpers.simpletxt(308, 36, "Are you sure?", beautiful.sysfont(10), "center", 8, 8, 4, 8)
-
-local confirmpow = helpers.simplebtn(100, 56, "Poweroff", beautiful.sysfont(10), 4, 4, 8, 8)
-
-local confirmres = helpers.simplebtn(100, 56, "Restart", beautiful.sysfont(10), 4, 4, 8, 8)
-
-local cancel = helpers.simplebtn(208, 56, "Cancel", beautiful.sysfont(10), 4, 8, 8, 4)
+--local prompt = helpers.simpletxt(308, 36, 8, 8, 4, 8, nil, "Are you sure?", beautiful.sysfont(10), "center")
+--local confirmpow = helpers.simplebtn(100, 56, "Poweroff", beautiful.sysfont(10), 4, 4, 8, 8)
+--local confirmres = helpers.simplebtn(100, 56, "Restart", beautiful.sysfont(10), 4, 4, 8, 8)
+--local cancel = helpers.simplebtn(208, 56, "Cancel", beautiful.sysfont(10), 4, 8, 8, 4)
 
 local poweroff_widget = wibox.widget {
   layout = wibox.layout.align.vertical,
