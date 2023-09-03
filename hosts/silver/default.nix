@@ -43,6 +43,7 @@
         { from = 989; to = 989; }
       ];
     };
+    nameservers = [ "192.168.1.177" "1.1.1.1" "8.8.8.8" ];
   };
 
   # Users
@@ -70,7 +71,7 @@
       nano unzip unrar p7zip curl wget git gvfs psmisc exa bat trashy
       htop sysstat iotop stress nvtop-nvidia netcat lm_sensors
       networkmanager ethtool
-      virt-manager OVMF pciutils virtiofsd libvirt
+      distrobox virt-manager OVMF pciutils virtiofsd libvirt
     ];
     binsh = "${pkgs.dash}/bin/dash";
     shells = with pkgs; [ bash ];
@@ -125,27 +126,28 @@
     sysstat.enable = true;
   };
   virtualisation = {
-    containerd.enable = true;
     docker = { 
       enable = true;
       enableNvidia = true;
       liveRestore = false;
-      daemon.settings = {
-        containerd = "/run/containerd/containerd.sock";
-        containerd-namespace = "docker";
-        features = {
-          experimental = true;
-          containerd-snapshotter = true;
-        };
+      autoPrune = {
+        enable = true;
+        dates = "weekly";
       };
     };
     libvirtd.enable = true;
   };
   hardware = {
-    nvidia.open = true;
+    nvidia = {
+      open = true;
+      package = config.boot.kernelPackages.nvidiaPackages.stable;
+      modesetting.enable = true;
+      powerManagement.enable = true;
+    };
     opengl = {
       enable = true;
       driSupport = true;
+      driSupport32Bit = true;
     };
     bluetooth.enable = true;
   };
@@ -157,17 +159,12 @@
     gc = {
       automatic = true;
       dates = "daily";
-      options = "--delete-older-than 3d";
+      options = "--delete-older-than 5d";
     };
   };
   nixpkgs.config = {
-    permittedInsecurePackages = [
-      "openssl-1.1.1u"
-      "nodejs-16.20.2"
-      "nodejs-16.20.0"
-      "python-2.7.18.6"
-      "electron-19.0.7"
-    ];
+    allowUnfree = true;
+    allowUnfreePredicate = (_: true);
   };
 
   # Drives

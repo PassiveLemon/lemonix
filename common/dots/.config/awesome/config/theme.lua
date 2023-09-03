@@ -65,7 +65,7 @@ theme.bg_normal2    = theme.bg1
 theme.bg_minimize   = theme.bg2
 theme.bg_minimize2  = theme.bg3
 theme.bg_focus      = theme.accent
-theme.bg_urgent     = "#f35252"
+theme.bg_urgent     = theme.redd
 theme.bg_systray    = theme.bg_normal
 
 theme.fg_normal     = theme.fg0
@@ -78,7 +78,6 @@ theme.fg_urgent     = theme.fg3
 theme.border_width        = 3
 theme.border_color_normal = "#000000"
 theme.border_color_active = theme.accent
-theme.border_color_marked = "#91231c"
 theme.useless_gap         = 6
 
 theme.tasklist_fg_minimize = theme.fg_normal2

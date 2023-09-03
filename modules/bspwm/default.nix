@@ -1,6 +1,8 @@
 { config, pkgs, ... }: {
   imports = [
     ./sxhkd.nix
+    ../polybar/default.nix
+    ../dunst.nix
   ];
   xsession.windowManager.bspwm = {
     enable = true;
@@ -20,12 +22,14 @@
       bspc config gapless_monocle true
     '';
     extraConfig = ''
+      killall -q polybar picom
       pgrep -x sxhkd > /dev/null || sxhkd &
       feh --bg-fill $HOME/.wallpaper-image &
-      pgrep -x polybar > /dev/null || polybar lemon-left &
-      pgrep -x polybar > /dev/null || polybar lemon-right &
       xsetroot -cursor_name left_ptr &
-      pgrep -x picom > /dev/null || picom --experimental-backend -b &
+      while pgrep -u $UID -x polybar >dev/dev/null; do sleep 1; done
+      polybar lemon-left &
+      polybar lemon-right &
+      picom --experimental-backend -b &
       pgrep -x easyeffects > /dev/null || easyeffects --gapplication-service &
       pgrep -x nm-applet > /dev/null || nm-applet &
       pgrep -x megasync > /dev/null || megasync &

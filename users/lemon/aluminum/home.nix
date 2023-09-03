@@ -1,31 +1,30 @@
 { inputs, outputs, config, pkgs, ... }: {
   imports = [
+    ../../../modules/bspwm/default.nix
     ../../../modules/customization.nix
-    ../../../modules/kitty.nix
-    ../../../modules/vscode.nix
+    ../../../modules/dunst.nix
+    ../../../modules/polybar/default.nix
     ../../../modules/spicetify.nix
   ];
 
-  nixpkgs.config = {
-    allowUnfree = true;
-    allowUnfreePredicate = _: true;
-  };
-
   home = {
     packages = with pkgs; [
-      webcord-vencord
+      i3lock-fancy-rapid
+      firefox pcmanfm gparted pavucontrol
+      lite-xl rofi hilbish vscodium github-desktop webcord-vencord
+      haruna feh gimp obs-studio authy xarchiver filezilla easytag easyeffects soundux openshot-qt qbittorrent
+      pamixer playerctl appimage-run neofetch ventoy-bin act scrot
+      libsForQt5.kruler
     ];
     username = "lemon";
     homeDirectory = "/home/lemon";
     file = {
+      ".config/awesome/config/autostart.lua" = {
+        source = ./dots/.config/awesome/config/autostart.lua;
+      };
       ".config/" = {
         source = ../../../common/dots/.config;
         recursive = true;
-      };
-      ".local/" = {
-        source = ../../../common/dots/.local;
-        recursive = true;
-      };
       ".vscode-oss/" = {
         source = ../../../common/dots/.vscode-oss;
         recursive = true;
@@ -40,8 +39,8 @@
   xsession = {
     enable = true;
     windowManager.awesome = {
-      enable = true;
-      package = inputs.nixpkgs-f2k.packages.${pkgs.system}.awesome-git;
+      enable = false;
+      package = inputs.nixpkgs-f2k.packages.${pkgs.system}.awesome-luajit-git;
     };
   };
   services = {
@@ -74,5 +73,12 @@
         categories = [ "Application" ];
       };
     };
+  };
+  nixpkgs.config = {
+    allowUnfree = true;
+    allowUnfreePredicate = (_: true);
+    permittedInsecurePackages = [
+      "openssl-1.1.1u"
+    ];
   };
 }

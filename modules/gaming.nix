@@ -1,15 +1,10 @@
 { config, pkgs, ... }: {
-  environment.systemPackages = with pkgs; [
+  home.packages = with pkgs; [
+    steam lunar-client yuzu-mainline
+    bottles lutris
     wineWowPackages.staging winetricks gamemode protonup-ng dxvk
-    bottles lutris ludusavi
-    lunar-client
-    yuzu-mainline
+    ludusavi
   ];
-  programs = {
-    steam = {
-      enable = true;
-    };
-  };
   #services.archisteamfarm = {
   #  enable = true;
   #  web-ui.enable = true;

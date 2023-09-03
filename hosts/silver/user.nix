@@ -1,28 +1,6 @@
 { inputs, outputs, config, pkgs, ... }: {
   imports = [
     ../../modules/xorg.nix
-    ../../modules/gaming.nix
-  ];
-
-  # Overlay
-  nixpkgs.config = {
-    allowUnfree = true;
-    allowUnfreePredicate = _: true;
-  };
-
-  # Packages
-  environment.systemPackages = with pkgs; [
-    i3lock-fancy-rapid
-    tym lite-xl rofi hilbish vscodium github-desktop act
-    haruna feh gimp obs-studio authy xarchiver filezilla easytag easyeffects soundux openshot-qt qbittorrent
-    pamixer playerctl appimage-run neofetch ventoy-bin
-    libsForQt5.kruler
-
-    jq stdenvNoCC gnumake gnat13 nodejs_16 python2 rustup (python311.withPackages(ps: with ps; [ pip pillow evdev pyyaml pynput colorama ]))
-    (callPackage ../../pkgs/gdlauncher2 { })
-    go
-    dotnet-sdk dotnet-runtime
-    distrobox
   ];
 
   # Configs
@@ -61,13 +39,11 @@
       enable = true;
       openFirewall = true;
     };
-    blueman.enable = true;
     gnome.gnome-keyring.enable = true;
   };
   programs = {
     dconf.enable = true;
     seahorse.enable = true;
-    nm-applet.enable = true;
   };
   qt = {
     enable = true;

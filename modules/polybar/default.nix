@@ -28,7 +28,7 @@
         font-0 = "FiraCode Nerd Font Mono Ret:style=Medium:size=10;2";
         font-1 = "FiraCode Nerd Font Mono Ret:style=Medium:size=12;1";
         font-2 = "FiraCode Nerd Font Mono Ret:style=Medium:size=12;2";
-        font-3 = "FiraCode Nerd Font Mono Ret:style=Medium:size=10;5";
+        font-3 = "FiraCode Nerd Font Mono Ret:style=Medium:size=10;1";
 
         modules-left = "sep nix sep bar sep cpu sep bar sep memory sep bar sep title sep";
         modules-center = "bspwm";
@@ -51,8 +51,9 @@
         border-bottom-size = 0;
 
         font-0 = "FiraCode Nerd Font Mono Ret:style=Medium:size=10;2";
-        font-1 = "FiraCode Nerd Font Mono Ret:style=Medium:size=10;1";
+        font-1 = "FiraCode Nerd Font Mono Ret:style=Medium:size=12;1";
         font-2 = "FiraCode Nerd Font Mono Ret:style=Medium:size=12;2";
+        font-3 = "FiraCode Nerd Font Mono Ret:style=Medium:size=10;1";
 
         modules-left = "sep cpu sep bar sep memory sep bar sep title sep";
         modules-center = "bspwm";

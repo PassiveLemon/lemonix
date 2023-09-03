@@ -3,26 +3,11 @@
     ../../modules/xorg.nix
   ];
 
-  # Overlay
-  nixpkgs.config = {
-    allowUnfree = true;
-    allowUnfreePredicate = _: true;
-  };
-
-  environment.systemPackages = with pkgs; [
-    lite-xl rofi hilbish vscodium github-desktop
-    haruna feh gimp obs-studio authy xarchiver filezilla easytag easyeffects soundux openshot-qt qbittorrent
-    pamixer playerctl appimage-run neofetch ventoy-bin
-    libsForQt5.kruler
-    i3lock-fancy-rapid
-  ];
-
   # Configs
   services = {
     xserver = {
       enable = true;
       excludePackages = [ pkgs.xterm ];
-      #videoDrivers = [ "intel" ];
       displayManager = {
         startx.enable = true;
       };
@@ -53,6 +38,7 @@
       enable = true;
       openFirewall = true;
     };
+    blueman.enable = true;
     gnome.gnome-keyring.enable = true;
   };
   programs = {

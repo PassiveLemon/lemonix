@@ -7,7 +7,11 @@
   boot = {
     loader = {
       efi.canTouchEfiVariables = true;
-      systemd-boot.enable = true;
+      timeout = 3;
+      systemd-boot = {
+        enable = true;
+        configurationLimit = 50;
+      };
     };
   };
 
@@ -21,19 +25,14 @@
   # Networking
   networking = {
     hostName = "vanadium";
+    nameservers = [ "192.168.1.177" "1.1.1.1" "8.8.8.8" ];
   };
-
-  # Overlay
-  nixpkgs.config = {
-    allowUnfree = true;
-    allowUnfreePredicate = _: true;
-  };
-
 
   # Packages
   environment = {
     systemPackages = with pkgs; [
       dash bash nano unzip unrar p7zip curl wget git
+      htop sysstat iotop stress nvtop-nvidia netcat lm_sensors
     ];
     binsh = "${pkgs.dash}/bin/dash";
     shells = with pkgs; [ bash ];
@@ -48,7 +47,25 @@
   virtualisation = {
     docker = { 
       enable = true;
+      enableNvidia = true;
       liveRestore = false;
+      autoPrune = {
+        enable = true;
+        dates = "weekly";
+      };
+    };
+  };
+  hardware = {
+    nvidia = {
+      open = true;
+      package = config.boot.kernelPackages.nvidiaPackages.stable;
+      modesetting.enable = true;
+      powerManagement.enable = true;
+    };
+    opengl = {
+      enable = true;
+      driSupport = true;
+      driSupport32Bit = true;
     };
   };
   nix = {
@@ -59,8 +76,12 @@
     gc = {
       automatic = true;
       dates = "daily";
-      options = "--delete-older-than 3d";
+      options = "--delete-older-than 14d";
     };
+  };
+  nixpkgs.config = {
+    allowUnfree = true;
+    allowUnfreePredicate = (_: true);
   };
 
   system.stateVersion = "23.05";

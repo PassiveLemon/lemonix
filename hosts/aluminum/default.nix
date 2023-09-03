@@ -33,6 +33,7 @@
   networking = {
     hostName = "aluminum";
     networkmanager.enable = true;
+    nameservers = [ "192.168.1.177" "1.1.1.1" "8.8.8.8" ];
   };
 
   # Users
@@ -43,7 +44,6 @@
         home = "/home/lemon";
         extraGroups = [ "wheel" "networkmanager" ];
         isNormalUser = true;
-        openssh.authorizedKeys.keys = [ "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQC6XpVE0Tj3gEOcTwWAODH2Sm7u6smE9kwZ0Z4ZV4q9Nc/cH+f0DXKLOljswW2iu0cj8tEsANu5P8JIt+oMA3HXy4qSIzKnaVP7a5/rEQ+yoVwF4AdqzLHKd39D9GP9zDDz0UO4ZaxYEg9q206BHOkS4StpRy1fpES2TneNd/7477mjJbboIyDJK1EzUfQoU/fP9FiSnpWbZKrQtK0m/iol5+2AB8Qp/5htMVm9+KXftCO15cydbi9UKJzJll4SFa8y09/GV/Rgqua5Wj7KH4cDgzXqpIPRo63H0XqfVLjOH1NHeyxX+pmuNZuFGbrqBWF7AtuFGmpujAp9K7tIfkGTi/mJi5rSq+ejiAwJzw7qldGQw8rsfsKVU5pS22JE56X/XYfgmf95ds5lYzTjgx5juVbdjvY3uq6It/JKbvHCP0ueUT78H0RtDRthew0VXq91QWJMrRmwFlc6JRFobk4EcqnWc0kz6aJ6p3SRGymscX/0+UaS/KyyPKSTIVrAaY8= lemon@lemon-tree" ];
       };
     };
   };
@@ -51,10 +51,10 @@
   # Packages
   environment = {
     systemPackages = with pkgs; [
-      dash bash nano unzip unrar p7zip curl wget git gvfs psmisc
-      htop sysstat iotop stress nvtop-nvidia
-      networkmanager ethtool
-      exa trashy
+      dash bash
+      nano unzip unrar p7zip curl wget git gvfs psmisc exa bat trashy
+      htop sysstat iotop stress netcat lm_sensors
+      networkmanager
     ];
     binsh = "${pkgs.dash}/bin/dash";
     shells = with pkgs; [ bash ];
@@ -65,6 +65,9 @@
     opengl = {
       enable = true;
       driSupport = true;
+      extraPackages = with pkgs; [
+        intel-media-driver
+      ];
     };
   };
   nix = {
@@ -80,16 +83,11 @@
   };
   nixpkgs.config = {
     allowUnfree = true;
-    permittedInsecurePackages = [
-      "openssl-1.1.1u"
-    ];
+    allowUnfreePredicate = (_: true);
   };
 
   # Drives
-  # 2 Gb Swap
-  swapDevices = [
-    { device = "to be added"; randomEncryption.enable = true; priority = 176; }
-  ];
+  # To be added
 
   system.stateVersion = "to be added";
 }
