@@ -1,6 +1,6 @@
-#!/usr/bin/env bash
+#!/bin/sh
 
-# Killalls. Kill Picom because it sometimes has bugs
+# Killall. Kill Picom because it sometimes has bugs
 killall -q polybar picom
 
 # Bspwm

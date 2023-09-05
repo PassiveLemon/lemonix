@@ -1,6 +1,6 @@
-#!/usr/bin/env bash
+#!/bin/sh
 
-# Killalls.
+# Killall
 killall -q polybar
 
 # Bspwm

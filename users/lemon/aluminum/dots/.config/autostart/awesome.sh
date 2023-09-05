@@ -1,4 +1,4 @@
-#!/usr/bin/env bash
+#!/bin/sh
 
 # Display
 xrandr --output xxxxxx --primary --mode 1920x1080 --rate xxxxxx --rotate normal
