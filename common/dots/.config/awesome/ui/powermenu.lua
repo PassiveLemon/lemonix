@@ -32,7 +32,7 @@ local powermenu_widget = wibox.widget {
   },
 }
 
-local prompt = helpers.simpletxt(308, 36, 8, 8, 4, 8, nil, "Are you sure?", beautiful.sysfont(10), "center")
+local prompt = helpers.simpletxt(308, 36, 8, 8, 4, 8, "Are you sure?", beautiful.sysfont(10), "center")
 local confirmpow = helpers.simplebtn(100, 56, 4, 4, 8, 8, "Poweroff", beautiful.sysfont(10))
 local confirmres = helpers.simplebtn(100, 56, 4, 4, 8, 8, "Restart", beautiful.sysfont(10))
 local cancel = helpers.simplebtn(208, 56, 4, 8, 8, 4, "Cancel", beautiful.sysfont(10))
