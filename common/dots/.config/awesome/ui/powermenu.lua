@@ -20,7 +20,7 @@ local click_to_hide = require("modules.click_to_hide")
 
 local lock = helpers.simplebtn(100, 100, 8, 4, 8, 8, "", beautiful.sysfont(24))
 local poweroff = helpers.simplebtn(100, 100, 8, 4, 8, 4, "󰐥", beautiful.sysfont(27))
-local restart = helpers.simplebtn(100, 100, 8, 8, 8, 4, "󰑓", beautiful.sysfont(30))
+local restart = helpers.simplebtn(100, 100, 8, 8, 8, 4, "󰑓", beautiful.sysfont(31))
 
 local powermenu_widget = wibox.widget {
   layout = wibox.layout.align.vertical,
