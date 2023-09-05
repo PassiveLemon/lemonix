@@ -5,7 +5,7 @@ local hotkeys_popup = require("awful.hotkeys_popup")
 
 local mediamenu = require("ui.mediamenu")
 local powermenu = require("ui.powermenu")
-local resourcemenu = require("ui.resourcemenu")
+--local resourcemenu = require("ui.resourcemenu")
 local crosshair = require("ui.crosshair")
 
 --
@@ -24,8 +24,8 @@ awful.keyboard.append_global_keybindings {
   awful.key({ modkey, }, "space", function() awful.spawn("rofi -show drun -theme /home/lemon/.config/rofi/lemon.rasi -show-icons") end,
   { description = "run rofi", group = "launcher", }),
 
-  awful.key({ modkey, }, "x", function() resourcemenu.signal() end,
-  { description = "run resourcemenu", group = "launcher", }),
+  --awful.key({ modkey, }, "x", function() resourcemenu.signal() end,
+  --{ description = "run resourcemenu", group = "launcher", }),
 
   awful.key({ modkey, }, "v", function() powermenu.signal() end,
   { description = "run powermenu", group = "launcher", }),

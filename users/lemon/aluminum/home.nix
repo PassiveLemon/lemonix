@@ -19,8 +19,9 @@
     username = "lemon";
     homeDirectory = "/home/lemon";
     file = {
-      ".config/awesome/config/autostart.lua" = {
-        source = ./dots/.config/awesome/config/autostart.lua;
+      ".config/autostart/" = {
+        source = ./dots/.config/autostart;
+        recursive = true;
       };
       ".config/" = {
         source = ../../../common/dots/.config;

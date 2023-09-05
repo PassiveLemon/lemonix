@@ -7,10 +7,6 @@
   xsession.windowManager.bspwm = {
     enable = true;
     extraConfigEarly = ''
-      xrandr --output DP-0 --primary --mode 1920x1080 --rate 143.9 --rotate normal --output DP-2 --mode 1920x1080 --rate 143.9 --rotate normal --left-of DP-0
-      xrandr --output DP-0 --gamma 1.0:0.92:0.92 --output DP-2 --gamma 1.0:0.92:0.92
-      bspc monitor DP-2 -d 1 2 3
-      bspc monitor DP-0 -d 4 5 6
       bspc config pointer_motion_interval 7
       bspc config focus_follows_pointer true
       bspc config border_width 2
@@ -22,17 +18,10 @@
       bspc config gapless_monocle true
     '';
     extraConfig = ''
-      killall -q polybar picom
       pgrep -x sxhkd > /dev/null || sxhkd &
       feh --bg-fill $HOME/.wallpaper-image &
       xsetroot -cursor_name left_ptr &
-      while pgrep -u $UID -x polybar >dev/dev/null; do sleep 1; done
-      polybar lemon-left &
-      polybar lemon-right &
-      picom --experimental-backend -b &
-      pgrep -x easyeffects > /dev/null || easyeffects --gapplication-service &
-      pgrep -x nm-applet > /dev/null || nm-applet &
-      pgrep -x megasync > /dev/null || megasync &
+      test -f $HOME/.config/autostart/bspwm.sh && bash $HOME/.config/autostart/bspwm.sh &
     '';
   };
 }

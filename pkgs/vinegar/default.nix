@@ -1,6 +1,6 @@
 { lib,
-  buildGoModule,
-  fetchFromGitHub
+  fetchFromGitHub,
+  buildGoModule
 }:
 buildGoModule rec {
   pname = "vinegar";

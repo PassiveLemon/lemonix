@@ -40,14 +40,92 @@ screen.connect_signal("request::desktop_decoration", function(s)
     valign = "center",
   }
 
-  cpu = helpers.simpleicn(14, 14, os.getenv("HOME") .. "/.config/awesome/libraries/feather/icons/cpu.svg", beautiful.fg, 0, 5, 0, 4)
-  gpu = helpers.simpleicn(14, 14, os.getenv("HOME") .. "/.config/awesome/libraries/feather/icons/database.svg", beautiful.fg, 0, 5, 0, 4)
-  memory = helpers.simpleicn(14, 14, os.getenv("HOME") .. "/.config/awesome/libraries/feather/icons/credit-card.svg", beautiful.fg, 0, 5, 0, 4)
-  speaker = helpers.simpleicn(14, 14, os.getenv("HOME") .. "/.config/awesome/libraries/feather/icons/volume-2.svg", beautiful.fg, 0, 5, 0, 4)
-  calendar = helpers.simpleicn(14, 14, os.getenv("HOME") .. "/.config/awesome/libraries/feather/icons/calendar.svg", beautiful.fg, 0, 5, 0, 4)
-  clock = helpers.simpleicn(14, 14, os.getenv("HOME") .. "/.config/awesome/libraries/feather/icons/clock.svg", beautiful.fg, 0, 5, 0, 4)
+  --cpu = helpers.simpleicn(14, 14, 0, 5, 0, 4, os.getenv("HOME") .. "/.config/awesome/libraries/feather/icons/cpu.svg", beautiful.fg)
+  --gpu = helpers.simpleicn(14, 14, 0, 5, 0, 4, os.getenv("HOME") .. "/.config/awesome/libraries/feather/icons/database.svg", beautiful.fg)
+  --memory = helpers.simpleicn(14, 14, 0, 5, 0, 4, os.getenv("HOME") .. "/.config/awesome/libraries/feather/icons/credit-card.svg", beautiful.fg)
+  --speaker = helpers.simpleicn(14, 14, 0, 5, 0, 4, os.getenv("HOME") .. "/.config/awesome/libraries/feather/icons/volume-2.svg", beautiful.fg)
+  --calendar = helpers.simpleicn(14, 14, 0, 5, 0, 4, os.getenv("HOME") .. "/.config/awesome/libraries/feather/icons/calendar.svg", beautiful.fg)
+  --clock = helpers.simpleicn(14, 14, 0, 5, 0, 4, os.getenv("HOME") .. "/.config/awesome/libraries/feather/icons/clock.svg", beautiful.fg)
 
-  layoutbox = helpers.simpleimg(26, 26, beautiful.layout_dwindle, 0, 0, 0, 0)
+  -- CPU
+  cpu = wibox.widget {
+    widget = wibox.container.margin,
+    margins = { right = 1, bottom = 2, },
+    {
+      widget = wibox.widget.textbox,
+      markup = " ",
+      align = "center",
+      valign = "center",
+      font = beautiful.sysfont(15),
+    },
+  }
+
+  -- GPU
+  gpu = wibox.widget {
+    widget = wibox.container.margin,
+    margins = { bottom = 0, },
+    {
+      widget = wibox.widget.textbox,
+      markup = "󰢮 ",
+      align = "center",
+      valign = "center",
+      font = beautiful.sysfont(18),
+    },
+  }
+
+  -- Memory
+  memory = wibox.widget {
+    widget = wibox.container.margin,
+    margins = { right = 2, bottom = 2, },
+    {
+      widget = wibox.widget.textbox,
+      markup = " ",
+      align = "center",
+      valign = "center",
+      font = beautiful.sysfont(15),
+    },
+  }
+
+  -- Speaker
+  speaker = wibox.widget {
+    widget = wibox.container.margin,
+    margins = { bottom = 1, },
+    {
+      widget = wibox.widget.textbox,
+      markup = "󰕾 ",
+      align = "center",
+      valign = "center",
+      font = beautiful.sysfont(14),
+    },
+  }
+
+  -- Calendar
+  calendar = wibox.widget {
+    widget = wibox.container.margin,
+    margins = { bottom = 3, },
+    {
+      widget = wibox.widget.textbox,
+      markup = "󰸗 ",
+      align = "center",
+      valign = "center",
+      font = beautiful.sysfont(14),
+    },
+  }
+
+  -- Clock
+  clock = wibox.widget {
+    widget = wibox.container.margin,
+    margins = { bottom = 1, },
+    {
+      widget = wibox.widget.textbox,
+      markup = "󰥔 ",
+      align = "center",
+      valign = "center",
+      font = beautiful.sysfont(14),
+    },
+  }
+
+  layoutbox = helpers.simpleimg(26, 26, 0, 0, 0, 0, beautiful.layout_dwindle)
 
   -- Systray
   systray_pop = awful.popup {
@@ -110,6 +188,7 @@ screen.connect_signal("request::desktop_decoration", function(s)
           layout = wibox.layout.fixed.horizontal,
           layoutbox,
           bar,
+          sep,
           cpu,
           helpers.simplewtch([[sh -c "top -bn1 | grep '%Cpu' | awk '{print int(100-$8)}' && echo -n '%'"]], 1),
           sep,
@@ -119,10 +198,12 @@ screen.connect_signal("request::desktop_decoration", function(s)
           }),
           sep,
           bar,
+          sep,
           gpu,
-          helpers.simplewtch([[sh -c "nvidia-smi | grep 'Default' | awk '{print $12}'"]], 1),
+          helpers.simplewtch([[sh -c "nvidia-smi | grep 'Default' | awk '{print $13}'"]], 1),
           sep,
           bar,
+          sep,
           memory,
           helpers.simplewtch([[sh -c "free -h | awk '/Mem:/{gsub(/Gi/,\"\",\$2); gsub(/Gi/,\"\",\$3); printf \"%.0f%%\", (\$3/\$2)*100}'"]], 2),
         },
@@ -135,15 +216,18 @@ screen.connect_signal("request::desktop_decoration", function(s)
           helpers.simplewtch([[bash -c "[ $(xset q | grep Caps | awk '{print $4}') = "on" ] && echo '<span underline=\"single\">A</span>a' || echo 'A<span underline=\"single\">a</span>'"]], 0.25),
           sep,
           bar,
+          sep,
           speaker,
           helpers.simplewtch("pamixer --get-volume", 0.25),
           perc,
           sep,
           bar,
+          sep,
           calendar,
           helpers.simplewtch("date +'%a %b %-d'", 60),
           sep,
           bar,
+          sep,
           clock,
           helpers.simplewtch("date +'%-I:%M %p'", 1),
           sep,

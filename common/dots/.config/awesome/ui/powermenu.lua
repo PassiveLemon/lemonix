@@ -18,6 +18,10 @@ local click_to_hide = require("modules.click_to_hide")
 --local poweroff = helpers.complexbtn(100, 100, 8, 4, 8, 4, poweroff_icon)
 --local restart = helpers.complexbtn(100, 100, 8, 8, 8, 4, restart_icon)
 
+local lock = helpers.simplebtn(100, 100, 8, 4, 8, 8, "", beautiful.sysfont(24))
+local poweroff = helpers.simplebtn(100, 100, 8, 4, 8, 4, "󰐥", beautiful.sysfont(27))
+local restart = helpers.simplebtn(100, 100, 8, 8, 8, 4, "󰑓", beautiful.sysfont(30))
+
 local powermenu_widget = wibox.widget {
   layout = wibox.layout.align.vertical,
   {
@@ -28,10 +32,10 @@ local powermenu_widget = wibox.widget {
   },
 }
 
---local prompt = helpers.simpletxt(308, 36, 8, 8, 4, 8, nil, "Are you sure?", beautiful.sysfont(10), "center")
---local confirmpow = helpers.simplebtn(100, 56, "Poweroff", beautiful.sysfont(10), 4, 4, 8, 8)
---local confirmres = helpers.simplebtn(100, 56, "Restart", beautiful.sysfont(10), 4, 4, 8, 8)
---local cancel = helpers.simplebtn(208, 56, "Cancel", beautiful.sysfont(10), 4, 8, 8, 4)
+local prompt = helpers.simpletxt(308, 36, 8, 8, 4, 8, nil, "Are you sure?", beautiful.sysfont(10), "center")
+local confirmpow = helpers.simplebtn(100, 56, 4, 4, 8, 8, "Poweroff", beautiful.sysfont(10))
+local confirmres = helpers.simplebtn(100, 56, 4, 4, 8, 8, "Restart", beautiful.sysfont(10))
+local cancel = helpers.simplebtn(208, 56, 4, 8, 8, 4, "Cancel", beautiful.sysfont(10))
 
 local poweroff_widget = wibox.widget {
   layout = wibox.layout.align.vertical,

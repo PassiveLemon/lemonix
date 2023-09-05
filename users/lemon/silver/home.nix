@@ -1,6 +1,6 @@
 { inputs, outputs, config, pkgs, ... }: {
   imports = [
-    ../../../modules/bspwm/default.nix
+    #../../../modules/bspwm/default.nix
     ../../../modules/customization.nix
     ../../../modules/gaming.nix
     ../../../modules/picom.nix
@@ -35,8 +35,9 @@
     username = "lemon";
     homeDirectory = "/home/lemon";
     file = {
-      ".config/awesome/config/autostart.lua" = {
-        source = ./dots/.config/awesome/config/autostart.lua;
+      ".config/autostart/" = {
+        source = ./dots/.config/autostart;
+        recursive = true;
       };
       ".config/" = {
         source = ../../../common/dots/.config;
@@ -57,7 +58,7 @@
     enable = true;
     windowManager = {
       awesome = {
-        enable = false;
+        enable = true;
         package = inputs.nixpkgs-f2k.packages.${pkgs.system}.awesome-luajit-git;
       };
     };
