@@ -52,7 +52,7 @@
   environment = {
     systemPackages = with pkgs; [
       dash bash
-      nano unzip unrar p7zip curl wget git gvfs psmisc exa bat trashy
+      nano unzip unrar p7zip curl wget git gvfs psmisc
       htop sysstat iotop stress netcat lm_sensors
       networkmanager
     ];

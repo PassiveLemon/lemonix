@@ -1,6 +1,11 @@
 { inputs, outputs, config, pkgs, ... }: {
   imports = [
-    ../../modules/xorg.nix
+    ../../common/modules/xorg.nix
+  ];
+
+  # Packages
+  environment.systemPackages = with pkgs; [
+    networkmanagerapplet blueman
   ];
 
   # Configs
@@ -39,6 +44,7 @@
       enable = true;
       openFirewall = true;
     };
+    blueman.enable = true;
     gnome.gnome-keyring.enable = true;
   };
   programs = {

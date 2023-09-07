@@ -1,6 +1,11 @@
 { inputs, outputs, config, pkgs, ... }: {
   imports = [
-    ../../modules/xorg.nix
+    ../../common/modules/xorg.nix
+  ];
+
+  # Packages
+  environment.systemPackages = with pkgs; [
+    networkmanagerapplet blueman
   ];
 
   # Configs

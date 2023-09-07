@@ -68,7 +68,7 @@
   environment = {
     systemPackages = with pkgs; [
       dash bash
-      nano unzip unrar p7zip curl wget git gvfs psmisc exa bat trashy
+      nano unzip unrar p7zip curl wget git gvfs psmisc
       htop sysstat iotop stress nvtop-nvidia netcat lm_sensors
       networkmanager ethtool
       distrobox virt-manager OVMF pciutils virtiofsd libvirt

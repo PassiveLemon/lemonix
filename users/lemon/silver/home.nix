@@ -1,10 +1,9 @@
 { inputs, outputs, config, pkgs, ... }: {
   imports = [
-    #../../../modules/bspwm/default.nix
-    ../../../modules/customization.nix
-    ../../../modules/gaming.nix
-    ../../../modules/picom.nix
-    ../../../modules/spicetify.nix
+    ../../../common/modules/customization.nix
+    ../../../common/modules/gaming.nix
+    ../../../common/modules/picom.nix
+    ../../../common/modules/spicetify.nix
   ];
 
   home = {
@@ -13,6 +12,7 @@
       firefox pcmanfm gparted pavucontrol
       tym lite-xl rofi hilbish vscodium github-desktop webcord-vencord
       haruna feh gimp obs-studio authy xarchiver filezilla easytag easyeffects soundux openshot-qt qbittorrent
+      exa bat trashy fd ripgrep
       pamixer playerctl appimage-run neofetch ventoy-bin headsetcontrol act scrot
       libsForQt5.kruler
       xonotic
@@ -64,7 +64,6 @@
     };
   };
   services = {
-    blueman-applet.enable = true;
     flameshot = {
       enable = true;
       settings = {
@@ -74,7 +73,6 @@
       };
     };
     megasync.enable = true;
-    network-manager-applet.enable = true;
   };
   programs = {
     home-manager.enable = true;
