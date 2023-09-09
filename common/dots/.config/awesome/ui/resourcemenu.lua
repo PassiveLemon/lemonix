@@ -12,59 +12,46 @@ local cpu = require("modules.watches.cpu")
 -- Resource monitor menu
 --
 
-local space = helpers.simpletxt(nil, nil, " ", beautiful.sysfont(10), "center")
+local space = helpers.simpletxt(nil, nil, nil, nil, nil, nil, " ", beautiful.sysfont(10), "center")
 
-local cpu_text = helpers.simpletxt(nil, nil, "CPU", beautiful.sysfont(10), "center")
+local cpu_text = helpers.simpletxt(nil, nil, nil, nil, nil, nil, "CPU", beautiful.sysfont(10), "center")
+local cpu_use = helpers.simplewtch([[sh -c "echo -n 'Usage: ' && top -bn1 | grep '%Cpu' | awk '{print int(100-$8)}' && echo -n '%'"]], 1)
+--local cpu_use_test = helpers.simpletxt(nil, nil, nil, nil, nil, nil, nil, beautiful.sysfont(10), "center")
 
-local cpu_use = helpers.simpletxt(nil, nil, nil, beautiful.sysfont(10), "center")
-
-cpu_timer = gears.timer {
-  autostart = true,
-  timeout = 1,
-  single_shot = false,
-  callback = function()
-    cpu_use:get_children_by_id("textbox")[1].text = cpu.use()
-  end,
-}
-
+--cpu_timer = gears.timer {
+--  autostart = true,
+--  timeout = 1,
+--  single_shot = false,
+--  callback = function()
+--    cpu_use_test:get_children_by_id("textbox")[1].text = cpu.use()
+--  end,
+--}
 local cpu_temp = helpers.simplewtch([[sh -c "cat /sys/class/thermal/thermal_zone*/temp | sed 's/\(.*\)000$/\1/' | tr -d '\n' && echo 'C'"]], 2)
 
-local mem_text = helpers.simpletxt(nil, nil, "Memory", beautiful.sysfont(10), "center")
+local gpu_text = helpers.simpletxt(nil, nil, nil, nil, nil, nil, "GPU", beautiful.sysfont(10), "center")
+local gpu_use = helpers.simplewtch([[sh -c "echo -n 'Usage: ' && nvidia-smi | grep 'Default' | cut -d '|' -f 4 | tr -d 'Default' | tr -d '[:space:]'"]], 1)
+local gpu_temp = helpers.simplewtch([[sh -c "nvidia-smi --query-gpu=temperature.gpu --format=csv,noheader | tr -d '\n' && echo 'C'"]], 2)
+local gpu_mem = helpers.simplewtch([[sh -c "echo -n 'Memory: ' && nvidia-smi --query-gpu=memory.used,memory.total --format=csv,noheader,nounits | awk -F',' '{printf \"%.2f/%.2f GiB\n\", \$1/1024, \$2/1024}'"]], 2)
 
+local mem_text = helpers.simpletxt(nil, nil, nil, nil, nil, nil, "Memory", beautiful.sysfont(10), "center")
 local mem_use = helpers.simplewtch([[sh -c "echo -n 'Used: ' && free -h | grep 'Mem:' | awk '{gsub(/Gi/,\"\",\$3); gsub(/Gi/,\"\",\$2); print \$3\"/\"\$2}' | tr '\n' ' ' && echo 'GiB'"]], 2)
 local mem_use_perc = helpers.simplewtch([[sh -c "echo -n '' && free -h | awk '/Mem:/{gsub(/Gi/,\"\",\$2); gsub(/Gi/,\"\",\$3); printf \"%.0f%%\", (\$3/\$2)*100}'"]], 2)
-
 local cache_use = helpers.simplewtch([[sh -c "echo -n 'Cache: ' && free -h | grep 'Mem:' | awk '{gsub(/Gi/,\"\",\$6); gsub(/Gi/,\"\",\$2); print \$6\"/\"\$2}' | tr '\n' ' ' && echo 'GiB'"]], 5)
 local cache_use_perc = helpers.simplewtch([[sh -c "echo -n '' && free -h | awk '/Mem:/{gsub(/Gi/,\"\",\$2); gsub(/Gi/,\"\",\$6); printf \"%.0f%%\", (\$6/\$2)*100}'"]], 5)
 
-local network_text = helpers.simpletxt(nil, nil, "Network", beautiful.sysfont(10), "center")
+local strg_text = helpers.simpletxt(nil, nil, nil, nil, nil, nil, "Storage", beautiful.sysfont(10), "center")
+local strg_free_nvme0 = helpers.simplewtch([[sh -c "echo -n 'NVME0: ' && df -h /dev/nvme0n1p1 | awk 'NR==2 {split(\$3, used, \"G\"); split(\$2, total, \"G\"); print used[1] \"/\" total[1] \" GiB \" int((used[1]/total[1])*100) \"%\"}'"]], 60)
+local strg_free_nvme1 = helpers.simplewtch([[sh -c "echo -n 'NVME1: ' && df -h /dev/nvme1n1p1 | awk 'NR==2 {split(\$3, used, \"G\"); split(\$2, total, \"G\"); print used[1] \"/\" total[1] \" GiB \" int((used[1]/total[1])*100) \"%\"}'"]], 60)
+local strg_free_sda1 = helpers.simplewtch([[sh -c "echo -n 'SDA1: ' && df -h /dev/sda1 | awk 'NR==2 {split(\$3, used, \"T\"); split(\$2, total, \"T\"); print used[1] \"/\" total[1] \" TiB \" int((used[1]/total[1])*100) \"%\"}'"]], 60)
+local strg_free_sdb1 = helpers.simplewtch([[sh -c "echo -n 'SDB1: ' && df -h /dev/sdb1 | awk 'NR==2 {split(\$3, used, \"G\"); split(\$2, total, \"G\"); print used[1] \"/\" total[1] \" GiB \" int((used[1]/total[1])*100) \"%\"}'"]], 60)
 
+local network_text = helpers.simpletxt(nil, nil, nil, nil, nil, nil, "Network", beautiful.sysfont(10), "center")
 local network_total = helpers.simplewtch([[sh -c 'ip -s link show enp7s0 | awk '\''/RX:/{getline; rx=$1} /TX:/{getline; tx=$1} END{printf "Dn/Up: %sB/%sB\n", convert(rx), convert(tx)} function convert(val) {suffix="BKMGTPE"; for(i=1; val>1024; i++) val/=1024; return int(val+0.5) substr(suffix, i, 1)}'\']], 5)
 
-local gpu_text = helpers.simpletxt(nil, nil, "GPU", beautiful.sysfont(10), "center")
-
-local gpu_use = helpers.simplewtch([[sh -c "echo -n 'GPU Usage: ' && nvidia-smi | grep 'Default' | cut -d '|' -f 4 | tr -d 'Default' | tr -d '[:space:]'"]], 1)
-
-local gpu_temp = helpers.simplewtch([[sh -c "nvidia-smi --query-gpu=temperature.gpu --format=csv,noheader | tr -d '\n' && echo 'C'"]], 2)
-
-local gpu_mem = helpers.simplewtch([[sh -c "echo -n 'GPU Mem: ' && nvidia-smi --query-gpu=memory.used,memory.total --format=csv,noheader,nounits | awk -F',' '{printf \"%.2f/%.2f GiB\n\", \$1/1024, \$2/1024}'"]], 2)
-
-local strg_text = helpers.simpletxt(nil, nil, "Storage", beautiful.sysfont(10), "center")
-
-local strg_free_nvme0 = helpers.simplewtch([[sh -c "echo -n 'NVME0: ' && df -h /dev/nvme0n1p2 | awk 'NR==2 {split(\$3, used, \"G\"); split(\$2, total, \"G\"); print used[1] \"/\" total[1] \" GB \" int((used[1]/total[1])*100) \"%\"}'"]], 60)
-
-local strg_free_nvme1 = helpers.simplewtch([[sh -c "echo -n 'NVME1: ' && df -h /dev/nvme1n1p1 | awk 'NR==2 {split(\$3, used, \"G\"); split(\$2, total, \"G\"); print used[1] \"/\" total[1] \" GB \" int((used[1]/total[1])*100) \"%\"}'"]], 60)
-
-local strg_free_sda1 = helpers.simplewtch([[sh -c "echo -n 'SDA1: ' && df -h /dev/sda1 | awk 'NR==2 {split(\$3, used, \"T\"); split(\$2, total, \"T\"); print used[1] \"/\" total[1] \" TB \" int((used[1]/total[1])*100) \"%\"}'"]], 60)
-
-local strg_free_sdb1 = helpers.simplewtch([[sh -c "echo -n 'SDB1: ' && df -h /dev/sdb1 | awk 'NR==2 {split(\$3, used, \"G\"); split(\$2, total, \"G\"); print used[1] \"/\" total[1] \" GB \" int((used[1]/total[1])*100) \"%\"}'"]], 60)
-
-local uptime_text = helpers.simpletxt(nil, nil, "Uptime", beautiful.sysfont(10), "center")
-
+local uptime_text = helpers.simpletxt(nil, nil, nil, nil, nil, nil, "Uptime", beautiful.sysfont(10), "center")
 local uptime = helpers.simplewtch([[sh -c "uptime | awk -F'( |,|:)+' '{if (\$6 >= 1) {print \$6, \"days\", \$8, \"hours\"} else {print \$8, \"hours\"}}'"]], 60)
 
-local devices_text = helpers.simpletxt(nil, nil, "Devices", beautiful.sysfont(10), "center")
-
+local devices_text = helpers.simpletxt(nil, nil, nil, nil, nil, nil, "Devices", beautiful.sysfont(10), "center")
 local headset_bat = helpers.simplewtch([[sh -c "echo -n 'HS BAT: ' && headsetcontrol -c -b && echo -n '%'"]], 15)
 
 local resourcemenu_pop = awful.popup {
@@ -148,7 +135,6 @@ local resourcemenu_pop = awful.popup {
 local function signal()
   resourcemenu_pop.visible = not resourcemenu_pop.visible
   resourcemenu_pop.screen = awful.screen.focused()
-  helpers.unfocus()
 end
 
 click_to_hide.popup(resourcemenu_pop, nil, true)
