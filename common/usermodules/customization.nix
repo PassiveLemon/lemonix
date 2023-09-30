@@ -1,4 +1,4 @@
-{ config, pkgs, ... }: {
+{ inputs, outputs, pkgs, config, lib, ... }: {
   home.packages = with pkgs; [
     # Theme/Icon
     lxappearance matcha-gtk-theme papirus-icon-theme

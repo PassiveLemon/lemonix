@@ -54,7 +54,7 @@ local uptime = helpers.simplewtch([[sh -c "uptime | awk -F'( |,|:)+' '{if (\$6 >
 local devices_text = helpers.simpletxt(nil, nil, nil, nil, nil, nil, "Devices", beautiful.sysfont(10), "center")
 local headset_bat = helpers.simplewtch([[sh -c "echo -n 'HS BAT: ' && headsetcontrol -c -b && echo -n '%'"]], 15)
 
-local resourcemenu_pop = awful.popup {
+local main = awful.popup {
   placement = awful.placement.centered,
   border_width = 3,
   border_color = beautiful.border_color_active,
@@ -133,10 +133,10 @@ local resourcemenu_pop = awful.popup {
 }
 
 local function signal()
-  resourcemenu_pop.visible = not resourcemenu_pop.visible
-  resourcemenu_pop.screen = awful.screen.focused()
+  main.visible = not main.visible
+  main.screen = awful.screen.focused()
 end
 
-click_to_hide.popup(resourcemenu_pop, nil, true)
+click_to_hide.popup(main, nil, true)
 
 return { signal = signal }

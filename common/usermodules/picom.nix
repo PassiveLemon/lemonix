@@ -1,4 +1,4 @@
-{ inputs, outputs, config, pkgs, ... }: {
+{ inputs, outputs, pkgs, config, lib, ... }: {
   nixpkgs.overlays = [ (final: prev: {
     picom = inputs.nixpkgs-f2k.packages.${pkgs.system}.picom-pijulius;
   }) ];

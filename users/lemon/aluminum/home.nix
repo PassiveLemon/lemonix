@@ -1,9 +1,9 @@
-{ inputs, outputs, config, pkgs, ... }: {
+{ inputs, outputs, pkgs, config, lib, ... }: {
   imports = [
-    ../../../common/modules/customization.nix
-    ../../../common/modules/dunst.nix
-    ../../../common/modules/polybar/default.nix
-    ../../../common/modules/spicetify.nix
+    ../../../common/usermodules/customization.nix
+    ../../../common/usermodules/dunst.nix
+    ../../../common/usermodules/polybar/default.nix
+    ../../../common/usermodules/spicetify.nix
   ];
 
   home = {

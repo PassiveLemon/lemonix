@@ -1,6 +1,6 @@
-{ inputs, outputs, config, pkgs, ... }: {
+{ inputs, outputs, pkgs, config, lib, ... }: {
   imports = [
-    ../../common/modules/xorg.nix
+    ../../common/usermodules/xorg.nix
   ];
 
   # Packages

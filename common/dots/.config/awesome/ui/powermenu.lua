@@ -63,7 +63,7 @@ local restart_widget = wibox.widget {
   },
 }
 
-local powermenu_pop = awful.popup {
+local main = awful.popup {
   placement = awful.placement.centered,
   border_width = 3,
   border_color = beautiful.border_color_active,
@@ -73,12 +73,12 @@ local powermenu_pop = awful.popup {
 }
 
 local function confirmed(command)
-  powermenu_pop.visible = false
+  main.visible = false
   awful.spawn(command)
 end
 
 cancel:connect_signal("button::press", function()
-  powermenu_pop.widget = powermenu_widget
+  main.widget = powermenu_widget
 end)
 
 confirmpow:connect_signal("button::press", function()
@@ -90,25 +90,25 @@ confirmres:connect_signal("button::press", function()
 end)
 
 lock:connect_signal("button::press", function()
-  powermenu_pop.visible = false
+  main.visible = false
   helpers.locker()
 end)
 
 poweroff:connect_signal("button::press", function()
-  powermenu_pop.widget = poweroff_widget
+  main.widget = poweroff_widget
 end)
 
 restart:connect_signal("button::press", function()
-  powermenu_pop.widget = restart_widget
+  main.widget = restart_widget
 end)
 
 local function signal()
-  powermenu_pop.widget = powermenu_widget
-  powermenu_pop.visible = not powermenu_pop.visible
-  powermenu_pop.screen = awful.screen.focused()
+  main.widget = powermenu_widget
+  main.visible = not main.visible
+  main.screen = awful.screen.focused()
   helpers.unfocus()
 end
 
-click_to_hide.popup(powermenu_pop, nil, true)
+click_to_hide.popup(main, nil, true)
 
 return { signal = signal }

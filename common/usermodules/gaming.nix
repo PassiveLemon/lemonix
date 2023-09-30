@@ -1,8 +1,8 @@
-{ config, pkgs, ... }: {
+{ inputs, outputs, pkgs, config, lib, ... }: {
   home.packages = with pkgs; [
     steam lunar-client yuzu-mainline
     bottles lutris
-    wineWowPackages.staging winetricks gamemode protonup-ng dxvk
+    pkgs.master.wineWowPackages.staging winetricks gamemode protonup-ng dxvk
     ludusavi
   ];
   #services.archisteamfarm = {

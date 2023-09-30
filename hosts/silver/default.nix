@@ -1,4 +1,4 @@
-{ inputs, outputs, config, pkgs, ... }: {
+{ inputs, outputs, pkgs, config, lib, ... }: {
   imports = [
     ./hardware-configuration.nix
   ];
@@ -36,11 +36,11 @@
     firewall = {
       enable = true;
       allowedTCPPortRanges = [
-        { from = 22; to = 22;}
-        { from = 50000; to = 55000; }
+        { from = 22; to = 22; }
+        { from = 50000; to = 54000; }
       ];
       allowedUDPPortRanges = [
-        { from = 989; to = 989; }
+        { from = 53; to = 53; }
       ];
     };
     nameservers = [ "192.168.1.177" "1.1.1.1" "8.8.8.8" ];

@@ -224,7 +224,7 @@ local everythingupdater_timer = gears.timer {
   end,
 }
 
-local mediamenu_pop = awful.popup {
+local main = awful.popup {
   placement = awful.placement.centered,
   border_width = 3,
   border_color = beautiful.border_color_active,
@@ -328,12 +328,12 @@ local function signal()
   loopupdater()
   positionupdater()
   volumeupdater()
-  mediamenu_pop.visible = not mediamenu_pop.visible
-  mediamenu_pop.screen = awful.screen.focused()
+  main.visible = not main.visible
+  main.screen = awful.screen.focused()
   helpers.unfocus()
 end
 
-click_to_hide.popup(mediamenu_pop, nil, true)
+click_to_hide.popup(main, nil, true)
 
 return {
   signal = signal,

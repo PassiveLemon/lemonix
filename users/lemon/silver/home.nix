@@ -1,19 +1,19 @@
-{ inputs, outputs, config, pkgs, ... }: {
+{ inputs, outputs, pkgs, config, lib, ... }: {
   imports = [
-    ../../../common/modules/customization.nix
-    ../../../common/modules/gaming.nix
-    ../../../common/modules/picom.nix
-    ../../../common/modules/spicetify.nix
+    ../../../common/usermodules/customization.nix
+    ../../../common/usermodules/gaming.nix
+    ../../../common/usermodules/picom.nix
+    ../../../common/usermodules/spicetify.nix
   ];
 
   home = {
     packages = with pkgs; [
       i3lock-fancy-rapid
       firefox pcmanfm gparted pavucontrol
-      tym lite-xl rofi hilbish vscodium github-desktop webcord-vencord
-      haruna feh gimp obs-studio authy xarchiver filezilla easytag easyeffects soundux openshot-qt qbittorrent
+      tym lite-xl rofi hilbish vscodium github-desktop webcord-vencord imhex tauon
+      haruna feh gimp obs-studio authy xarchiver filezilla easytag easyeffects soundux flowblade audacity qbittorrent
       exa bat trashy fd ripgrep
-      pamixer playerctl appimage-run neofetch ventoy-bin headsetcontrol act scrot
+      pamixer playerctl appimage-run neofetch ventoy-bin act scrot headsetcontrol
       libsForQt5.kruler
       xonotic
 
@@ -23,13 +23,15 @@
       stdenvNoCC gnumake gnat13 nodejs_16 rustup
       go
       dotnet-sdk
+      libtifiles2 libticonv libticalcs2 libticables2
 
       # Custom
       (callPackage ../../../pkgs/gdlauncher2 { }) # Use appimage wrapper version for now
       (callPackage ../../../pkgs/corrupter { })
       (callPackage ../../../pkgs/slavartdl { })
+      (callPackage ../../../pkgs/tilp2 { })
       (callPackage ../../../pkgs/xclicker2 { }) # Use appimage wrapper version for now
-      (callPackage ../../../pkgs/vinegar { })
+      (callPackage ../../../pkgs/vinegar { wine = pkgs.master.wineWowPackages.staging; })
       (python3Packages.callPackage ../../../pkgs/animdl { })
     ];
     username = "lemon";

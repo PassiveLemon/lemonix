@@ -202,7 +202,7 @@ screen.connect_signal("request::desktop_decoration", function(s)
           sep,
           gpu,
           sep,
-          helpers.simplewtch([[sh -c "nvidia-smi | grep 'Default' | awk '{print $13}'"]], 1),
+          helpers.simplewtch([[sh -c "nvidia-smi | grep 'Default' | awk '{print $12}'"]], 1),
           sep,
           bar,
           sep,
