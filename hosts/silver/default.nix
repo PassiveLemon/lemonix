@@ -78,29 +78,21 @@
     etc = let
       json = pkgs.formats.json {};
     in {
-      "pipewire/pipewire.d/92-low-latency.conf".source = json.generate "92-low-latency.conf" {
-        context.properties = {
-          default.clock.rate = 48000;
-          default.clock.quantum = 48;
-          default.clock.min-quantum = 48;
-          default.clock.max-quantum = 48;
-        };
-      };
       "pipewire/pipewire-pulse.d/92-low-latency.conf".source = json.generate "92-low-latency.conf" {
         context.modules = [
           {
             name = "libpipewire-module-protocol-pulse";
             args = {
-              pulse.min.req = "48/48000";
-              pulse.default.req = "48/48000";
-              pulse.max.req = "48/48000";
-              pulse.min.quantum = "48/48000";
-              pulse.max.quantum = "48/48000";
+              pulse.min.req = "128/48000";
+              pulse.default.req = "128/48000";
+              pulse.max.req = "128/48000";
+              pulse.min.quantum = "128/48000";
+              pulse.max.quantum = "128/48000";
             };
           }
         ];
         stream.properties = {
-          node.latency = "48/48000";
+          node.latency = "128/48000";
           resample.quality = 1;
         };
       };
@@ -113,8 +105,9 @@
       enable = true;
       settings = {
         PasswordAuthentication = false;
+        PermitRootLogin = false;
         KbdInteractiveAuthentication = false;
-        X11Forwarding = false;
+        X11Forwarding = "no";
       };
       extraConfig = ''
         AllowTcpForwarding yes
@@ -123,7 +116,7 @@
         AuthenticationMethods publickey
       '';
     };
-    sysstat.enable = true;
+    journald.extraConfig = "SystemMaxUse=1G";
   };
   virtualisation = {
     docker = { 
@@ -132,7 +125,7 @@
       liveRestore = false;
       autoPrune = {
         enable = true;
-        dates = "weekly";
+        dates = "monthly";
       };
     };
     libvirtd.enable = true;
@@ -159,7 +152,7 @@
     gc = {
       automatic = true;
       dates = "daily";
-      options = "--delete-older-than 5d";
+      options = "--delete-older-than 30d";
     };
   };
   nixpkgs.config = {

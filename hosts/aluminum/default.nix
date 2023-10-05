@@ -33,6 +33,7 @@
   networking = {
     hostName = "aluminum";
     networkmanager.enable = true;
+    firewall.enable = true;
     nameservers = [ "192.168.1.177" "1.1.1.1" "8.8.8.8" ];
   };
 
@@ -61,6 +62,7 @@
   };
 
   # Configs
+  services.journald.extraConfig = "SystemMaxUse=1G";
   hardware = {
     opengl = {
       enable = true;
@@ -78,7 +80,7 @@
     gc = {
       automatic = true;
       dates = "weekly";
-      options = "--delete-older-than 14d";
+      options = "--delete-older-than 30d";
     };
   };
   nixpkgs.config = {
