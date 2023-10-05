@@ -18,4 +18,4 @@ pgrep -x nm-applet > /dev/null || nm-applet &
 pgrep -x megasync > /dev/null || megasync &
 
 # Other
-mkdir -p /tmp/mediamenu
+mkdir -p $HOME/.cache/lemonix/mediamenu/

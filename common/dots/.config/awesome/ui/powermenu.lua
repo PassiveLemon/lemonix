@@ -18,9 +18,45 @@ local click_to_hide = require("modules.click_to_hide")
 --local poweroff = helpers.complexbtn(100, 100, 8, 4, 8, 4, poweroff_icon)
 --local restart = helpers.complexbtn(100, 100, 8, 8, 8, 4, restart_icon)
 
-local lock = helpers.simplebtn(100, 100, 8, 4, 8, 8, "", beautiful.sysfont(24))
-local poweroff = helpers.simplebtn(100, 100, 8, 4, 8, 4, "󰐥", beautiful.sysfont(27))
-local restart = helpers.simplebtn(100, 100, 8, 8, 8, 4, "󰑓", beautiful.sysfont(31))
+local lock = helpers.button({
+  margins = {
+    top = 8,
+    right = 4,
+    bottom = 8,
+    left = 8,
+  },
+  x = 100,
+  y = 100,
+  shape = gears.shape.rounded_rect,
+  text = "",
+  font = beautiful.sysfont(24),
+})
+local poweroff = helpers.button({
+  margins = {
+    top = 8,
+    right = 4,
+    bottom = 8,
+    left = 4,
+  },
+  x = 100,
+  y = 100,
+  shape = gears.shape.rounded_rect,
+  text = "󰐥",
+  font = beautiful.sysfont(27),
+})
+local restart = helpers.button({
+  margins = {
+    top = 8,
+    right = 8,
+    bottom = 8,
+    left = 4,
+  },
+  x = 100,
+  y = 100,
+  shape = gears.shape.rounded_rect,
+  text = "󰑓",
+  font = beautiful.sysfont(31),
+})
 
 local powermenu_widget = wibox.widget {
   layout = wibox.layout.align.vertical,
@@ -32,10 +68,53 @@ local powermenu_widget = wibox.widget {
   },
 }
 
-local prompt = helpers.simpletxt(308, 36, 8, 8, 4, 8, "Are you sure?", beautiful.sysfont(10), "center")
-local confirmpow = helpers.simplebtn(100, 56, 4, 4, 8, 8, "Poweroff", beautiful.sysfont(10))
-local confirmres = helpers.simplebtn(100, 56, 4, 4, 8, 8, "Restart", beautiful.sysfont(10))
-local cancel = helpers.simplebtn(208, 56, 4, 8, 8, 4, "Cancel", beautiful.sysfont(10))
+local prompt = helpers.text({
+  margins = {
+    top = 8,
+    right = 8,
+    bottom = 4,
+    left = 8,
+  },
+  x = 308,
+  y = 36,
+  text = "Are you sure?",
+})
+local confirmpow = helpers.button({
+  margins = {
+    top = 4,
+    right = 4,
+    bottom = 8,
+    left = 8,
+  },
+  x = 100,
+  y = 56,
+  shape = gears.shape.rounded_rect,
+  text = "Poweroff",
+})
+local confirmres = helpers.button({
+  margins = {
+    top = 4,
+    right = 4,
+    bottom = 8,
+    left = 8,
+  },
+  x = 100,
+  y = 56,
+  shape = gears.shape.rounded_rect,
+  text = "Restart",
+})
+local cancel = helpers.button({
+  margins = {
+    top = 4,
+    right = 8,
+    bottom = 8,
+    left = 4,
+  },
+  x = 208,
+  y = 56,
+  shape = gears.shape.rounded_rect,
+  text = "Cancel",
+})
 
 local poweroff_widget = wibox.widget {
   layout = wibox.layout.align.vertical,

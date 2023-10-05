@@ -10,4 +10,4 @@ pgrep -x nm-applet > /dev/null || nm-applet &
 pgrep -x blueman-applet > /dev/null || blueman-applet &
 
 # Other
-mkdir -p /tmp/mediamenu
+mkdir -p $HOME/.cache/lemonix/mediamenu/

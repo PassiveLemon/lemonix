@@ -10,46 +10,182 @@ local click_to_hide = require("modules.click_to_hide")
 -- Media management menu
 --
 
-local artimage = helpers.simpleimg(nil, nil, 4, 4, 4, 4, nil)
-local title = helpers.simpletxt(532, 17, 4, 4, 4, 4, nil, beautiful.sysfont(10), "left")
-local artist = helpers.simpletxt(532, 17, 0, 4, 4, 4, nil, beautiful.sysfont(10), "left")
-local album = helpers.simpletxt(532, 17, 0, 4, 4, 4, nil, beautiful.sysfont(10), "left")
-local shuffle = helpers.simplebtn(100, 100, 4, 4, 4, 4, "󰒞", beautiful.sysfont(24))
-local prev = helpers.simplebtn(100, 100, 4, 4, 4, 4, "󰒮", beautiful.sysfont(24))
-local toggle = helpers.simplebtn(100, 100, 4, 4, 4, 4, "󰐊", beautiful.sysfont(23))
-local next = helpers.simplebtn(100, 100, 4, 4, 4, 4, "󰒭", beautiful.sysfont(24))
-local loop = helpers.simplebtn(100, 100, 4, 4, 4, 4, "󰑗", beautiful.sysfont(26))
+local artimage = helpers.text({
+  margins = {
+    top = 4,
+    right = 4,
+    bottom = 4,
+    left = 4,
+  },
+})
+local title = helpers.text({
+  x = 532,
+  y = 17,
+  margins = {
+    top = 4,
+    right = 4,
+    bottom = 4,
+    left = 4,
+  },
+  halign = "left",
+})
+local artist = helpers.text({
+  x = 532,
+  y = 17,
+  margins = {
+    top = 0,
+    right = 4,
+    bottom = 4,
+    left = 4,
+  },
+  halign = "left",
+})
+local album = helpers.text({
+  x = 532,
+  y = 17,
+  margins = {
+    top = 0,
+    right = 4,
+    bottom = 4,
+    left = 4,
+  },
+  halign = "left",
+})
+local shuffle = helpers.button({
+  margins = {
+    top = 4,
+    right = 4,
+    bottom = 4,
+    left = 4,
+  },
+  x = 100,
+  y = 100,
+  shape = gears.shape.rounded_rect,
+  text = "󰒞",
+  font = beautiful.sysfont(24),
+})
+local prev = helpers.button({
+  x = 100,
+  y = 100,
+  margins = {
+    top = 4,
+    right = 4,
+    bottom = 4,
+    left = 4,
+  },
+  shape = gears.shape.rounded_rect,
+  text = "󰒮",
+  font = beautiful.sysfont(24),
+})
+local toggle = helpers.button({
+  x = 100,
+  y = 100,
+  margins = {
+    top = 4,
+    right = 4,
+    bottom = 4,
+    left = 4,
+  },
+  shape = gears.shape.rounded_rect,
+  text = "󰐊",
+  font = beautiful.sysfont(23),
+})
+local next = helpers.button({
+  x = 100,
+  y = 100,
+  margins = {
+    top = 4,
+    right = 4,
+    bottom = 4,
+    left = 4,
+  },
+  shape = gears.shape.rounded_rect,
+  text = "󰒭",
+  font = beautiful.sysfont(24)
+})
+local loop = helpers.button({
+  x = 100,
+  y = 100,
+  margins = {
+    top = 4,
+    right = 4,
+    bottom = 4,
+    left = 4,
+  },
+  shape = gears.shape.rounded_rect,
+  text = "󰑗",
+  font = beautiful.sysfont(26),
+})
 
 --wip
-local position_cur = helpers.simpletxt(532, 15, 4, 4, 4, 4, nil, beautiful.sysfont(10), "left")
-local position_tot = helpers.simpletxt(532, 15, 4, 4, 4, 4, nil, beautiful.sysfont(10), "left")
+--local position_cur = helpers.simpletxt(532, 15, 4, 4, 4, 4, nil, beautiful.sysfont(10), "left")
+--local position_tot = helpers.simpletxt(532, 15, 4, 4, 4, 4, nil, beautiful.sysfont(10), "left")
 --
-local position = helpers.simplesldr(532, 16, 4, 4, 4, 4, 16, 6, 100)
-local volume_icon = helpers.simpleicn(18, 15, 3, 5, 3, 0, "󰕾", beautiful.sysfont(14))
-local volume = helpers.simplesldr(513, 16, 4, 4, 4, 0, 16, 6, 100)
+
+local position = helpers.slider({
+  margins = {
+    top = 4,
+    right = 4,
+    bottom = 4,
+    left = 4,
+  },
+  x = 532,
+  y = 16, 
+  max = 100,
+  handle_width = 16,
+  bar_height = 6,
+  bar_shape = gears.shape.rounded_rect,
+})
+local volume_icon = helpers.text({
+  margins = {
+    top = 3,
+    right = 5,
+    bottom = 3,
+    left = 0,
+  },
+  x = 18, 
+  y = 15,
+  text = "󰕾",
+  font = beautiful.sysfont(14),
+})
+local volume = helpers.slider({
+  margins = {
+    top = 4,
+    right = 4,
+    bottom = 4,
+    left = 0,
+  },
+  x = 513,
+  y = 16,
+  max = 100,
+  handle_width = 16,
+  bar_height = 6,
+  bar_shape = gears.shape.rounded_rect,
+})
 
 local function artimageupdater()
   awful.spawn.easy_async_with_shell("sleep 0.15 && playerctl -p spotify metadata mpris:artUrl", function(artUrl)
-    artUrl = artUrl.gsub(artUrl, "\n", "")
+    local artUrl = artUrl:gsub(".*/", "")
     if artUrl == "" or artUrl == "No players found" or artUrl == "No player could handle this command" then
       artimage.visible = false
       title:get_children_by_id("background")[1].forced_width = 532
     else
-      artUrlTrim = artUrl.gsub(artUrl, ".*/", "")
-      artUrlFile = gears.surface.load_uncached("/tmp/mediamenu/" .. artUrlTrim)
-      imageAspRat = (artUrlFile:get_width() / artUrlFile:get_height())
-      imageDynHeight = ((title:get_children_by_id("background")[1].forced_height * 3) + 8)
-      imageDynWidth =  helpers.simplernd((imageAspRat * imageDynHeight), 1)
-      awful.spawn.easy_async_with_shell("test -f /tmp/mediamenu/" .. artUrlTrim .. " && echo true || echo false", function(fileTest)
-        fileTest = fileTest.gsub(fileTest, "\n", "")
+      local tmpDir = os.getenv("HOME") .. "/.cache/lemonix/mediamenu/"
+      local artUrlTrim = artUrl:gsub("\n", "")
+      local artUrlFile = gears.surface.load_uncached(tmpDir .. artUrlTrim)
+      local imageAspRat = (artUrlFile:get_width() / artUrlFile:get_height())
+      local imageDynHeight = ((title:get_children_by_id("background")[1].forced_height * 3) + 8)
+      local imageDynWidth =  helpers.round((imageAspRat * imageDynHeight), 1)
+      awful.spawn.easy_async_with_shell("test -f " .. tmpDir .. artUrlTrim .. " && echo true || echo false", function(fileTest)
+        local fileTest = fileTest:gsub("\n", "")
         if fileTest == "false" then
           artimage.visible = false
           imageDynWidth = 0
-          awful.spawn.with_shell("curl -Lso /tmp/mediamenu/" .. artUrlTrim .. " " .. artUrl)
+          awful.spawn.with_shell("curl -Lso " .. tmpDir .. artUrlTrim .. " " .. artUrl)
         end
       end)
-      artimage:get_children_by_id("constraint")[1].forced_width = imageDynWidth
-      artimage:get_children_by_id("constraint")[1].forced_height = imageDynHeight
+      artimage:get_children_by_id("background")[1].forced_width = imageDynWidth
+      artimage:get_children_by_id("background")[1].forced_height = imageDynHeight
       artimage:get_children_by_id("imagebox")[1].image = artUrlFile
       artimage.visible = true
       title:get_children_by_id("background")[1].forced_width = (532 - 8 - imageDynWidth)
@@ -61,7 +197,7 @@ end
 
 local function metadataupdater()
   awful.spawn.easy_async_with_shell("sleep 0.15 && playerctl -p spotify metadata xesam:title", function(title_state)
-    title_state = title_state.gsub(title_state, "\n", "")
+    local title_state = title_state:gsub("\n", "")
     if title_state == "" or title_state == "No players found" or title_state == "No player could handle this command" then
       artist.visible = false
       album.visible = false
@@ -71,7 +207,7 @@ local function metadataupdater()
     end
   end)
   awful.spawn.easy_async_with_shell("sleep 0.15 && playerctl -p spotify metadata xesam:artist", function(artist_state)
-    artist_state = artist_state.gsub(artist_state, "\n", "")
+    local artist_state = artist_state:gsub("\n", "")
     if artist_state == "" or artist_state == "No players found" or artist_state == "No player could handle this command" then
       artist.visible = false
     else
@@ -80,7 +216,7 @@ local function metadataupdater()
     end
   end)
   awful.spawn.easy_async_with_shell("sleep 0.15 && playerctl -p spotify metadata xesam:album", function(album_state)
-    album_state = album_state.gsub(album_state, "\n", "")
+    local album_state = album_state:gsub("\n", "")
     if album_state == "" or album_state == "No players found" or album_state == "No player could handle this command" then
       album.visible = false
     else
@@ -122,32 +258,32 @@ local function loopupdater()
   end)
 end
 
-positionset = true
-sliderupdate = false
-sliderselfupdate = true
+local positionset = true
+local sliderupdate = false
+local sliderselfupdate = true
 
 -- This is terrible but it works. It gets a slider to update the players position without the position feeding back into the slider and causing recursion.
 local function positionupdater(position_state)
   awful.spawn.easy_async("playerctl -p spotify position", function (current)
-    current = current.gsub(current, "\n", "")
+    local current = current:gsub("\n", "")
     if current == "" or current == "No players found" or current == "No player could handle this command" then
       position.visible = false
     else
       position.visible = true
       awful.spawn.easy_async("playerctl -p spotify metadata mpris:length", function(length)
-        length = length.gsub(length, "\n", "")
+        local length = length:gsub("\n", "")
         if length == "" or length == "No players found" or length == "No player could handle this command" then
           position.visible = false
         else
           if positionset == true then
             if position_state then
-              awful.spawn("playerctl -p spotify position " .. helpers.simplernd(((position_state * length) / (100000000)), 3))
+              awful.spawn("playerctl -p spotify position " .. helpers.round(((position_state * length) / (100000000)), 3))
             end
           end
           if sliderupdate == true then
             sliderselfupdate = false
             sliderupdate = false
-            position:get_children_by_id("slider")[1].value = helpers.simplernd(((current * 100000000) / (length)), 3)
+            position:get_children_by_id("slider")[1].value = helpers.round(((current * 100000000) / (length)), 3)
           end
         end
       end)
@@ -157,14 +293,14 @@ end
 
 local function volumeupdater()
   awful.spawn.easy_async("playerctl -p spotify volume", function(volume_state)
-    volume_state = volume_state.gsub(volume_state, "\n", "")
+    local volume_state = volume_state:gsub("\n", "")
     if volume_state == "" or volume_state == "No players found" or volume_state == "No player could handle this command" then
       volume.visible = false
       volume_icon.visible = false
     else
       volume.visible = true
       volume_icon.visible = true
-      volume:get_children_by_id("slider")[1].value = helpers.simplernd((volume_state * 100), 3)
+      volume:get_children_by_id("slider")[1].value = helpers.round((volume_state * 100), 3)
     end
   end)
 end
@@ -317,7 +453,7 @@ end)
 
 volume:get_children_by_id("slider")[1]:connect_signal("property::value", function(slider, volume_state)
   slider.value = volume_state
-	awful.spawn("playerctl -p spotify volume " .. helpers.simplernd((volume_state/100), 3))
+	awful.spawn("playerctl -p spotify volume " .. helpers.round((volume_state/100), 3))
 end)
 
 local function signal()

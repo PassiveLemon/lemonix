@@ -27,14 +27,14 @@ awful.keyboard.append_global_keybindings {
   awful.key({ modkey, }, "t", function() launcher.signal() end,
   { description = "|| run launcher", group = "launcher", }),
 
-  awful.key({ modkey, }, "x", function() resourcemenu.signal() end,
-  { description = "|| run resourcemenu", group = "launcher", }),
+  awful.key({ modkey, }, "c", function() mediamenu.signal() end,
+  { description = "|| run mediamenu", group = "launcher", }),
 
   awful.key({ modkey, }, "v", function() powermenu.signal() end,
   { description = "|| run powermenu", group = "launcher", }),
 
-  awful.key({ modkey, }, "c", function() mediamenu.signal() end,
-  { description = "|| run mediamenu", group = "launcher", }),
+  awful.key({ modkey, }, "x", function() resourcemenu.signal() end,
+  { description = "|| run resourcemenu", group = "launcher", }),
 
   awful.key({ modkey, }, "s", hotkeys_popup.show_help,
   { description = "|| show help", group = "utility", }),
