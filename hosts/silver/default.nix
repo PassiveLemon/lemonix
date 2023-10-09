@@ -105,9 +105,9 @@
       enable = true;
       settings = {
         PasswordAuthentication = false;
-        PermitRootLogin = false;
+        PermitRootLogin = "no";
         KbdInteractiveAuthentication = false;
-        X11Forwarding = "no";
+        X11Forwarding = false;
       };
       extraConfig = ''
         AllowTcpForwarding yes
