@@ -1,24 +1,16 @@
 local awful = require("awful")
 local gears = require("gears")
-local beautiful = require("beautiful")
+local b = require("beautiful")
 local wibox = require("wibox")
 
-local helpers = require("helpers")
-
+local h = require("helpers")
 local click_to_hide = require("modules.click_to_hide")
-
-require("modules.watches.cpu")
-require("modules.watches.gpu")
-require("modules.watches.memory")
-require("modules.watches.storage")
-require("modules.watches.network")
-require("modules.watches.other")
 
 --
 -- Resource monitor menu
 --
 
-local space = helpers.text({
+local space = h.text({
   margins = {
     top = 0,
     right = 0,
@@ -28,7 +20,7 @@ local space = helpers.text({
   text = " ",
 })
 
-local cpu_text = helpers.text({
+local cpu_text = h.text({
   margins = {
     top = 0,
     right = 0,
@@ -37,7 +29,7 @@ local cpu_text = helpers.text({
   },
   text = "CPU",
 })
-local cpu_use = helpers.text({
+local cpu_use = h.text({
   margins = {
     top = 0,
     right = 0,
@@ -46,7 +38,7 @@ local cpu_use = helpers.text({
   },
   halign = "left",
 })
-local cpu_temp = helpers.text({
+local cpu_temp = h.text({
   margins = {
     top = 0,
     right = 0,
@@ -60,7 +52,7 @@ awesome.connect_signal("signal::cpu", function(use, temp)
   cpu_temp:get_children_by_id("textbox")[1].text = temp .. "C"
 end)
 
-local gpu_text = helpers.text({
+local gpu_text = h.text({
   margins = {
     top = 0,
     right = 0,
@@ -69,7 +61,7 @@ local gpu_text = helpers.text({
   },
   text = "GPU",
 })
-local gpu_use = helpers.text({
+local gpu_use = h.text({
   margins = {
     top = 0,
     right = 0,
@@ -78,7 +70,7 @@ local gpu_use = helpers.text({
   },
   halign = "left",
 })
-local gpu_temp = helpers.text({
+local gpu_temp = h.text({
   margins = {
     top = 0,
     right = 0,
@@ -87,7 +79,7 @@ local gpu_temp = helpers.text({
   },
   halign = "left",
 })
-local gpu_mem = helpers.text({
+local gpu_mem = h.text({
   margins = {
     top = 0,
     right = 0,
@@ -102,7 +94,7 @@ awesome.connect_signal("signal::gpu", function(use, temp, mem)
   gpu_mem:get_children_by_id("textbox")[1].text = "Memory: " .. mem
 end)
 
-local mem_text = helpers.text({
+local mem_text = h.text({
   margins = {
     top = 0,
     right = 0,
@@ -111,7 +103,7 @@ local mem_text = helpers.text({
   },
   text = "Memory",
 })
-local mem_use = helpers.text({
+local mem_use = h.text({
   margins = {
     top = 0,
     right = 0,
@@ -120,7 +112,7 @@ local mem_use = helpers.text({
   },
   halign = "left",
 })
-local mem_use_perc = helpers.text({
+local mem_use_perc = h.text({
   margins = {
     top = 0,
     right = 0,
@@ -129,7 +121,7 @@ local mem_use_perc = helpers.text({
   },
   halign = "left",
 })
-local cache_use = helpers.text({
+local cache_use = h.text({
   margins = {
     top = 0,
     right = 0,
@@ -138,7 +130,7 @@ local cache_use = helpers.text({
   },
   halign = "left",
 })
-local cache_use_perc = helpers.text({
+local cache_use_perc = h.text({
   margins = {
     top = 0,
     right = 0,
@@ -154,7 +146,7 @@ awesome.connect_signal("signal::memory", function(use, use_perc, cache, cache_pe
   cache_use_perc:get_children_by_id("textbox")[1].text = cache_perc .. "%"
 end)
 
-local strg_text = helpers.text({
+local strg_text = h.text({
   margins = {
     top = 0,
     right = 0,
@@ -163,7 +155,7 @@ local strg_text = helpers.text({
   },
   text = "Storage",
 })
-local strg_free_nvme0 = helpers.text({
+local strg_free_nvme0 = h.text({
   margins = {
     top = 0,
     right = 0,
@@ -172,7 +164,7 @@ local strg_free_nvme0 = helpers.text({
   },
   halign = "left",
 })
-local strg_free_nvme1 = helpers.text({
+local strg_free_nvme1 = h.text({
   margins = {
     top = 0,
     right = 0,
@@ -181,7 +173,7 @@ local strg_free_nvme1 = helpers.text({
   },
   halign = "left",
 })
-local strg_free_sda = helpers.text({
+local strg_free_sda = h.text({
   margins = {
     top = 0,
     right = 0,
@@ -190,7 +182,7 @@ local strg_free_sda = helpers.text({
   },
   halign = "left",
 })
-local strg_free_sdb = helpers.text({
+local strg_free_sdb = h.text({
   margins = {
     top = 0,
     right = 0,
@@ -206,7 +198,7 @@ awesome.connect_signal("signal::storage", function(nvme0, nvme1, sda, sdb)
   strg_free_sdb:get_children_by_id("textbox")[1].text = "SDB: " .. sdb
 end)
 
-local network_text = helpers.text({
+local network_text = h.text({
   margins = {
     top = 0,
     right = 0,
@@ -215,7 +207,7 @@ local network_text = helpers.text({
   },
   text = "Network",
 })
-local network_total = helpers.text({
+local network_total = h.text({
   margins = {
     top = 0,
     right = 0,
@@ -228,7 +220,7 @@ awesome.connect_signal("signal::network", function(total)
 	network_total:get_children_by_id("textbox")[1].text = "Dn/Up: " .. total
 end)
 
-local uptime_text = helpers.text({
+local uptime_text = h.text({
   margins = {
     top = 0,
     right = 0,
@@ -237,7 +229,7 @@ local uptime_text = helpers.text({
   },
   text = "Uptime",
 })
-local uptime_time = helpers.text({
+local uptime_time = h.text({
   margins = {
     top = 0,
     right = 0,
@@ -246,7 +238,7 @@ local uptime_time = helpers.text({
   },
   halign = "left",
 })
-local devices_text = helpers.text({
+local devices_text = h.text({
   margins = {
     top = 0,
     right = 0,
@@ -255,7 +247,7 @@ local devices_text = helpers.text({
   },
   text = "Devices",
 })
-local headset_bat = helpers.text({
+local headset_bat = h.text({
   margins = {
     top = 0,
     right = 0,
@@ -272,7 +264,7 @@ end)
 local main = awful.popup {
   placement = awful.placement.centered,
   border_width = 3,
-  border_color = beautiful.border_color_active,
+  border_color = b.border_color_active,
   ontop = true,
   visible = false,
   widget = {

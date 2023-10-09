@@ -1,9 +1,9 @@
 local awful = require("awful")
 local gears = require("gears")
-local beautiful = require("beautiful")
+local b = require("beautiful")
 local wibox = require("wibox")
 
-local helpers = require("helpers")
+local h = require("helpers")
 
 --
 -- Crosshairs
@@ -11,7 +11,7 @@ local helpers = require("helpers")
 
 local crosshair1_right_pop = awful.popup {
   border_width = 0,
-  border_color = beautiful.border_color_active,
+  border_color = b.border_color_active,
   x = 2883,
   y = 537,
   ontop = true,
@@ -28,7 +28,7 @@ local crosshair1_right_pop = awful.popup {
 
 local crosshair1_bottom_pop = awful.popup {
   border_width = 0,
-  border_color = beautiful.border_color_active,
+  border_color = b.border_color_active,
   x = 2875,
   y = 543,
   ontop = true,
@@ -45,7 +45,7 @@ local crosshair1_bottom_pop = awful.popup {
 
 local crosshair1_left_pop = awful.popup {
   border_width = 0,
-  border_color = beautiful.border_color_active,
+  border_color = b.border_color_active,
   x = 2875,
   y = 537,
   ontop = true,
@@ -71,7 +71,7 @@ end
 
 local crosshair2_top_pop = awful.popup {
   border_width = 0,
-  border_color = beautiful.border_color_active,
+  border_color = b.border_color_active,
   x = 2873,
   y = 539,
   ontop = true,
@@ -88,7 +88,7 @@ local crosshair2_top_pop = awful.popup {
 
 local crosshair2_bottom_pop = awful.popup {
   border_width = 0,
-  border_color = beautiful.border_color_active,
+  border_color = b.border_color_active,
   x = 2879,
   y = 540,
   ontop = true,
@@ -112,7 +112,7 @@ end
 
 local crosshair3_top_pop = awful.popup {
   border_width = 0,
-  border_color = beautiful.border_color_active,
+  border_color = b.border_color_active,
   x = 2879,
   y = 537,
   ontop = true,
@@ -129,7 +129,7 @@ local crosshair3_top_pop = awful.popup {
 
 local crosshair3_right_pop = awful.popup {
   border_width = 0,
-  border_color = beautiful.border_color_active,
+  border_color = b.border_color_active,
   x = 2881,
   y = 539,
   ontop = true,
@@ -146,7 +146,7 @@ local crosshair3_right_pop = awful.popup {
 
 local crosshair3_bottom_pop = awful.popup {
   border_width = 0,
-  border_color = beautiful.border_color_active,
+  border_color = b.border_color_active,
   x = 2879,
   y = 541,
   ontop = true,
@@ -163,7 +163,7 @@ local crosshair3_bottom_pop = awful.popup {
 
 local crosshair3_left_pop = awful.popup {
   border_width = 0,
-  border_color = beautiful.border_color_active,
+  border_color = b.border_color_active,
   x = 2877,
   y = 539,
   ontop = true,

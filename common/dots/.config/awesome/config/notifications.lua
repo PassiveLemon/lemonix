@@ -1,6 +1,6 @@
 local awful = require("awful")
 local gears = require("gears")
-local beautiful = require("beautiful")
+local b = require("beautiful")
 local wibox = require("wibox")
 local ruled = require("ruled")
 local naughty = require("naughty")
@@ -12,23 +12,23 @@ local naughty = require("naughty")
 ruled.notification.connect_signal("request::rules", function()
   ruled.notification.append_rule {
     rule = { urgency = "critical" },
-    properties = { bg = beautiful.bg_urgent, fg = beautiful.fg_normal, implicit_timeout = 5, timeout = 5, },
+    properties = { bg = b.bg_urgent, fg = b.fg_normal, implicit_timeout = 5, timeout = 5, },
   }
   ruled.notification.append_rule {
     rule = { urgency = "normal" },
-    properties = { bg = beautiful.bg_normal, fg = beautiful.fg_normal, implicit_timeout = 3, timeout = 3, },
+    properties = { bg = b.bg_normal, fg = b.fg_normal, implicit_timeout = 3, timeout = 3, },
   }
   ruled.notification.append_rule {
     rule = { urgency = "low" },
-    properties = { bg = beautiful.bg_normal, fg = beautiful.fg_normal, implicit_timeout = 3, timeout = 3, },
+    properties = { bg = b.bg_normal, fg = b.fg_normal, implicit_timeout = 3, timeout = 3, },
   }
 end)
 
-beautiful.notification_margin = 8
-beautiful.notification_border_width = 2
-beautiful.notification_border_color = beautiful.border_color_active
-beautiful.notification_max_height = beautiful.notification_icon_size
-beautiful.notification_icon_size = 64
+b.notification_margin = 8
+b.notification_border_width = 2
+b.notification_border_color = b.border_color_active
+b.notification_max_height = b.notification_icon_size
+b.notification_icon_size = 64
 
 naughty.config.defaults.timeout = 3
 naughty.config.defaults.screen = awful.screen.focused()
@@ -43,7 +43,7 @@ naughty.connect_signal("request::display", function(n)
   naughty.layout.box {
 		notification = n,
 		type = "notification",
-		bg = beautiful.bg_normal,
+		bg = b.bg_normal,
 		widget_template = {
 			id = "background_role",
 			widget = naughty.container.background,
@@ -95,7 +95,7 @@ naughty.connect_signal("request::display", function(n)
               {
                 widget = wibox.container.constraint,
                 strategy = "max",
-                height = 70,
+                height = 200,
                 {
                   widget = wibox.container.margin,
                   left = 4,
@@ -111,6 +111,9 @@ naughty.connect_signal("request::display", function(n)
       },
 		},
 	}
+  --image = io.open("/tmp/testimg", "w")
+  --image:write(naughty.widget.icon)
+  --image:close()
 end)
 
 -- Error handling

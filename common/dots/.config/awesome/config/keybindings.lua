@@ -1,6 +1,6 @@
 local awful = require("awful")
 local gears = require("gears")
-local beautiful = require("beautiful")
+local b = require("beautiful")
 local hotkeys_popup = require("awful.hotkeys_popup")
 
 local mediamenu = require("ui.mediamenu")
@@ -53,25 +53,25 @@ awful.keyboard.append_global_keybindings {
 
   awful.key({ }, "XF86AudioPrev", function()
     awful.spawn("playerctl previous")
-    mediamenu.metadataupdater()
-    mediamenu.loopupdater()
-    mediamenu.positionupdater()
+    mediamenu.metadata_updater()
+    mediamenu.loop_updater()
+    mediamenu.position_updater()
   end,
   { description = "|| previous media", group = "media", }),
 
   awful.key({ }, "XF86AudioPlay", function()
     awful.spawn("playerctl play-pause")
-    mediamenu.metadataupdater()
-    mediamenu.loopupdater()
-    mediamenu.positionupdater()
+    mediamenu.metadataUpdater()
+    mediamenu.loopUpdater()
+    mediamenu.positionUpdater()
   end,
   { description = "|| toggle play", group = "media", }),
 
   awful.key({ }, "XF86AudioNext", function()
     awful.spawn("playerctl next")
-    mediamenu.metadataupdater()
-    mediamenu.loopupdater()
-    mediamenu.positionupdater()
+    mediamenu.metadataUpdater()
+    mediamenu.loopUpdater()
+    mediamenu.positionUpdater()
   end,
   { description = "|| next media", group = "media", }),
 
@@ -144,7 +144,7 @@ awful.keyboard.append_global_keybindings {
           c:raise()
       end,
     { description = "|| toggle fullscreen", group = "client", }),
-  }
+  },
 }
 
 --

@@ -1,6 +1,6 @@
 local awful = require("awful")
 local gears = require("gears")
-local beautiful = require("beautiful")
+local b = require("beautiful")
 local wibox = require("wibox")
 
 local helpers = { }
@@ -21,8 +21,8 @@ function helpers.text(conf)
       widget = wibox.container.background,
       forced_width = conf.x,
       forced_height = conf.y,
-      fg = conf.fg or beautiful.fg_normal,
-      bg = conf.bg or beautiful.bg_normal,
+      fg = conf.fg or b.fg0,
+      bg = conf.bg or b.bg0,
       {
         -- Allow use of either text or image
         layout = wibox.layout.stack,
@@ -31,7 +31,7 @@ function helpers.text(conf)
           widget = wibox.widget.textbox,
           markup = conf.markup,
           text = conf.text,
-          font = conf.font or beautiful.sysfont(10),
+          font = conf.font or b.sysfont(10),
           halign = conf.halign or "center",
           valign = conf.valign or "center",
         },
@@ -63,8 +63,8 @@ function helpers.button(conf)
       widget = wibox.container.background,
       forced_width = conf.x,
       forced_height = conf.y,
-      fg = conf.fg or beautiful.fg_normal,
-      bg = conf.bg or beautiful.bg_normal,
+      fg = conf.fg or b.fg0,
+      bg = conf.bg or b.bg1,
       shape = conf.shape,
       {
         -- Allow use of either text or image
@@ -74,7 +74,7 @@ function helpers.button(conf)
           widget = wibox.widget.textbox,
           markup = conf.markup,
           text = conf.text,
-          font = conf.font or beautiful.sysfont(10),
+          font = conf.font or b.sysfont(10),
           halign = conf.halign or "center",
           valign = conf.valign or "center",
         },
@@ -88,12 +88,12 @@ function helpers.button(conf)
     },
   }
   button:get_children_by_id("background")[1]:connect_signal("mouse::enter", function()
-    button:get_children_by_id("background")[1].fg = conf.fg_focus or beautiful.fg_focus
-    button:get_children_by_id("background")[1].bg = conf.bg or beautiful.bg_minimize
+    button:get_children_by_id("background")[1].fg = conf.fg_focus or b.fg_focus
+    button:get_children_by_id("background")[1].bg = conf.bg or b.bg_minimize
   end)
   button:get_children_by_id("background")[1]:connect_signal("mouse::leave", function()
-    button:get_children_by_id("background")[1].fg = conf.fg or beautiful.fg_normal
-    button:get_children_by_id("background")[1].bg = conf.bg or beautiful.bg_normal
+    button:get_children_by_id("background")[1].fg = conf.fg or b.fg_normal
+    button:get_children_by_id("background")[1].bg = conf.bg or b.bg1
   end)
   return button
 end
@@ -114,30 +114,30 @@ function helpers.slider(conf)
       widget = wibox.container.background,
       forced_width = conf.x,
       forced_height = conf.y,
-      fg = conf.fg or beautiful.fg_normal,
-      bg = conf.bg or beautiful.bg_normal,
+      fg = conf.fg or b.fg0,
+      bg = conf.bg or b.bg0l,
       {
         id = "slider",
         widget = wibox.widget.slider,
         minimum = conf.min or 0,
         maximum = conf.max,
         handle_shape = conf.handle_shape or gears.shape.circle,
-        handle_color = conf.handle_color or beautiful.fg_normal,
+        handle_color = conf.handle_color or b.fg0,
         handle_width = 0,
         bar_height = conf.bar_height,
         bar_shape = conf.bar_shape,
-        bar_color = conf.bar_color or beautiful.bg_minimize,
-        bar_active_color = conf.bar_active_color or beautiful.fg_normal,
+        bar_color = conf.bar_color or b.bg2,
+        bar_active_color = conf.bar_active_color or b.fg0,
       },
     },
   }
   slider:get_children_by_id("background")[1]:connect_signal("mouse::enter", function()
     slider:get_children_by_id("slider")[1].handle_width = conf.handle_width
-    slider:get_children_by_id("slider")[1].bar_active_color = conf.bar_active_color or beautiful.fg_minimize
+    slider:get_children_by_id("slider")[1].bar_active_color = conf.bar_active_color or b.fg0
   end)
   slider:get_children_by_id("background")[1]:connect_signal("mouse::leave", function()
     slider:get_children_by_id("slider")[1].handle_width = 0
-    slider:get_children_by_id("slider")[1].bar_active_color = conf.bar_active_color or beautiful.fg_normal
+    slider:get_children_by_id("slider")[1].bar_active_color = conf.bar_active_color or b.fg0
   end)
   return slider
 end
@@ -158,13 +158,13 @@ function helpers.progressbar(conf)
       widget = wibox.container.background,
       forced_width = conf.x,
       forced_height = conf.y,
-      fg = conf.fg or beautiful.fg_normal,
-      bg = conf.bg or beautiful.bg_normal,
+      fg = conf.fg or b.fg0,
+      bg = conf.bg or b.bg0,
       {
         id = "progressbar",
         widget = wibox.widget.progressbar,
-        color = conf.color or beautiful.fg_normal,
-        background_color = conf.background_color or beautiful.bg_minimize,
+        color = conf.color or b.fg0,
+        background_color = conf.background_color or b.bg2,
         shape = conf.shape,
         max_value = conf.max,
         margins = {
@@ -208,13 +208,6 @@ function helpers.unfocus()
   if client.focus then
     client.focus:raise()
   end
-end
-
-function helpers.locker()
-  awful.spawn.with_shell("\
-  playerctl pause; \
-  i3lock-fancy-rapid 50 10 -n; \
-  ")
 end
 
 return helpers

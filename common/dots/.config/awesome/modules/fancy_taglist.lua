@@ -12,7 +12,7 @@ local function constrain_icon(widget)
     top = 3,
     right = 1,
     bottom = 3,
-    left = 0,
+    left = 1,
 		{
 			widget = wibox.container.constraint,
 			height = 20,

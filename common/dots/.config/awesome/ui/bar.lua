@@ -1,26 +1,22 @@
 local awful = require("awful")
 local gears = require("gears")
-local beautiful = require("beautiful")
+local b = require("beautiful")
 local wibox = require("wibox")
 
-local helpers = require("helpers")
-local fancy_taglist = require("modules.fancy_taglist")
+local h = require("helpers")
 local click_to_hide = require("modules.click_to_hide")
-
+local fancy_taglist = require("modules.fancy_taglist")
 local cpu_widget = require("libraries.awesome-wm-widgets.cpu-widget.cpu-widget")
-require("modules.watches.cpu")
-require("modules.watches.gpu")
-require("modules.watches.memory")
 
 --
 -- Wibar
 --
 
 screen.connect_signal("request::desktop_decoration", function(s)
-  awful.tag({ " 1 ", " 2 ", " 3 ", }, s, awful.layout.layouts[1])
+  awful.tag({ "", "", "", }, s, awful.layout.layouts[1])
 
   -- Separator bar
-  local bar = helpers.text({
+  local bar = h.text({
     margins = {
       top = 0,
       right = 0,
@@ -31,7 +27,7 @@ screen.connect_signal("request::desktop_decoration", function(s)
   })
 
   -- Space
-  local sep = helpers.text({
+  local sep = h.text({
     margins = {
       top = 0,
       right = 0,
@@ -42,7 +38,7 @@ screen.connect_signal("request::desktop_decoration", function(s)
   })
 
   -- Percent
-  local perc = helpers.text({
+  local perc = h.text({
     margins = {
       top = 0,
       right = 0,
@@ -52,15 +48,15 @@ screen.connect_signal("request::desktop_decoration", function(s)
     text = "%",
   })
 
-  --cpu = helpers.simpleicn(14, 14, 0, 5, 0, 4, os.getenv("HOME") .. "/.config/awesome/libraries/feather/icons/cpu.svg", beautiful.fg)
-  --gpu = helpers.simpleicn(14, 14, 0, 5, 0, 4, os.getenv("HOME") .. "/.config/awesome/libraries/feather/icons/database.svg", beautiful.fg)
-  --memory = helpers.simpleicn(14, 14, 0, 5, 0, 4, os.getenv("HOME") .. "/.config/awesome/libraries/feather/icons/credit-card.svg", beautiful.fg)
-  --speaker = helpers.simpleicn(14, 14, 0, 5, 0, 4, os.getenv("HOME") .. "/.config/awesome/libraries/feather/icons/volume-2.svg", beautiful.fg)
-  --calendar = helpers.simpleicn(14, 14, 0, 5, 0, 4, os.getenv("HOME") .. "/.config/awesome/libraries/feather/icons/calendar.svg", beautiful.fg)
-  --clock = helpers.simpleicn(14, 14, 0, 5, 0, 4, os.getenv("HOME") .. "/.config/awesome/libraries/feather/icons/clock.svg", beautiful.fg)
+  --cpu = h.simpleicn(14, 14, 0, 5, 0, 4, os.getenv("HOME") .. "/.config/awesome/libraries/feather/icons/cpu.svg", b.fg)
+  --gpu = h.simpleicn(14, 14, 0, 5, 0, 4, os.getenv("HOME") .. "/.config/awesome/libraries/feather/icons/database.svg", b.fg)
+  --memory = h.simpleicn(14, 14, 0, 5, 0, 4, os.getenv("HOME") .. "/.config/awesome/libraries/feather/icons/credit-card.svg", b.fg)
+  --speaker = h.simpleicn(14, 14, 0, 5, 0, 4, os.getenv("HOME") .. "/.config/awesome/libraries/feather/icons/volume-2.svg", b.fg)
+  --calendar = h.simpleicn(14, 14, 0, 5, 0, 4, os.getenv("HOME") .. "/.config/awesome/libraries/feather/icons/calendar.svg", b.fg)
+  --clock = h.simpleicn(14, 14, 0, 5, 0, 4, os.getenv("HOME") .. "/.config/awesome/libraries/feather/icons/clock.svg", b.fg)
 
   -- CPU
-  local cpu_icon = helpers.text({
+  local cpu_icon = h.text({
     margins = {
       top = 0,
       right = 1,
@@ -68,9 +64,9 @@ screen.connect_signal("request::desktop_decoration", function(s)
       left = 0,
     },
     text = "",
-    font = beautiful.sysfont(15),
+    font = b.sysfont(15),
   })
-  local cpu = helpers.text({
+  local cpu = h.text({
     margins = {
       top = 0,
       right = 0,
@@ -84,7 +80,7 @@ screen.connect_signal("request::desktop_decoration", function(s)
   end)
 
   -- GPU
-  local gpu_icon = helpers.text({
+  local gpu_icon = h.text({
     margins = {
       top = 0,
       right = 0,
@@ -92,9 +88,9 @@ screen.connect_signal("request::desktop_decoration", function(s)
       left = 0,
     },
     text = "󰢮",
-    font = beautiful.sysfont(18),
+    font = b.sysfont(18),
   })
-  local gpu = helpers.text({
+  local gpu = h.text({
     margins = {
       top = 0,
       right = 0,
@@ -108,7 +104,7 @@ screen.connect_signal("request::desktop_decoration", function(s)
   end)
 
   -- Memory
-  local memory_icon = helpers.text({
+  local memory_icon = h.text({
     margins = {
       top = 0,
       right = 2,
@@ -116,9 +112,9 @@ screen.connect_signal("request::desktop_decoration", function(s)
       left = 0,
     },
     text = "",
-    font = beautiful.sysfont(15),
+    font = b.sysfont(15),
   })
-  local memory = helpers.text({
+  local memory = h.text({
     margins = {
       top = 0,
       right = 0,
@@ -132,7 +128,7 @@ screen.connect_signal("request::desktop_decoration", function(s)
   end)
 
   -- Speaker
-  local speaker_icon = helpers.text({
+  local speaker_icon = h.text({
     margins = {
       top = 0,
       right = 0,
@@ -140,11 +136,11 @@ screen.connect_signal("request::desktop_decoration", function(s)
       left = 0,
     },
     text = "󰕾",
-    font = beautiful.sysfont(14),
+    font = b.sysfont(14),
   })
 
   -- Calendar
-  local calendar_icon = helpers.text({
+  local calendar_icon = h.text({
     margins = {
       top = 0,
       right = 0,
@@ -152,11 +148,11 @@ screen.connect_signal("request::desktop_decoration", function(s)
       left = 0,
     },
     text = "󰸗",
-    font = beautiful.sysfont(14),
+    font = b.sysfont(14),
   })
 
   -- Clock
-  local clock_icon = helpers.text({
+  local clock_icon = h.text({
     margins = {
       top = 0,
       right = 0,
@@ -164,10 +160,10 @@ screen.connect_signal("request::desktop_decoration", function(s)
       left = 0,
     },
     text = "󰥔",
-    font = beautiful.sysfont(14),
+    font = b.sysfont(14),
   })
 
-  local layoutbox = helpers.text({
+  local layoutbox = h.text({
     margins = {
       top = 0,
       right = 0,
@@ -176,14 +172,14 @@ screen.connect_signal("request::desktop_decoration", function(s)
     },
     x = 26,
     y = 26, 
-    image = beautiful.layout_dwindle,
+    image = b.layout_dwindle,
   })
 
   -- Systray
   local systray_pop = awful.popup {
     ontop = true,
     border_width = 0,
-    border_color = beautiful.border_color_active,
+    border_color = b.border_color_active,
     visible = false,
     type = "desktop",
     widget = {
@@ -191,7 +187,7 @@ screen.connect_signal("request::desktop_decoration", function(s)
       widget = wibox.container.background,
       forced_width = 384,
       forced_height = 26,
-      bg = beautiful.bg_normal,
+      bg = b.bg_normal,
       {
         layout = wibox.layout.fixed.horizontal,
         wibox.widget.systray,
@@ -230,7 +226,7 @@ screen.connect_signal("request::desktop_decoration", function(s)
     screen = s,
     height = 26,
     border_width = 0,
-    border_color = beautiful.accent,
+    border_color = b.accent,
     type = "dock",
     widget = {
       layout = wibox.layout.align.horizontal,
@@ -263,7 +259,7 @@ screen.connect_signal("request::desktop_decoration", function(s)
         sep,
         bar,
         sep,
-        helpers.watch([[bash -c "[ $(playerctl status) = "Playing" ] && echo '󰎈'"]], 0.125),
+        h.watch([[bash -c "[ $(playerctl -p spotify,tauon status) = "Playing" ] && echo '󰎈'"]], 0.125),
       },
       { -- Center
         layout = wibox.layout.flex.horizontal,
@@ -271,26 +267,26 @@ screen.connect_signal("request::desktop_decoration", function(s)
       },
       { -- Right
         layout = wibox.layout.fixed.horizontal,
-        helpers.watch([[bash -c "[ $(xset q | grep Caps | awk '{print $4}') = "on" ] && echo '<span underline=\"single\">A</span>a' || echo 'A<span underline=\"single\">a</span>'"]], 0.125),
+        h.watch([[bash -c "[ $(xset q | grep Caps | awk '{print $4}') = "on" ] && echo '<span underline=\"single\">A</span>a' || echo 'A<span underline=\"single\">a</span>'"]], 0.125),
         sep,
         bar,
         sep,
         speaker_icon,
         sep,
-        helpers.watch("pamixer --get-volume", 0.25),
+        h.watch("pamixer --get-volume", 0.25),
         perc,
         sep,
         bar,
         sep,
         calendar_icon,
         sep,
-        helpers.watch("date +'%a %b %-d'", 60),
+        h.watch("date +'%a %b %-d'", 60),
         sep,
         bar,
         sep,
         clock_icon,
         sep,
-        helpers.watch("date +'%-I:%M %p'", 1),
+        h.watch("date +'%-I:%M %p'", 1),
         sep,
       },
     },

@@ -1,6 +1,7 @@
 local awful = require("awful")
 local gears = require("gears")
 local wibox = require("wibox")
+local naughty = require("naughty")
 
 local theme_assets = require("beautiful.theme_assets")
 
@@ -25,16 +26,16 @@ theme.tasklist_font = theme.sysfont(10)
 
 -- Mono
 theme.bg0      = "#222222"
-theme.bg1      = "#292929"
-theme.bg2      = "#333333"
-theme.bg3      = "#444444"
-theme.bg4      = "unset"
+theme.bg1      = "#272727"
+theme.bg2      = "#303030"
+theme.bg3      = "#343434"
+theme.bg4      = "#383838"
 
 theme.fg0      = "#aaaaaa"
 theme.fg1      = "#dcdcdc"
 theme.fg2      = "#8c8c8c"
 theme.fg3      = "#ffffff"
-theme.fg4      = "unset"
+theme.fg4      = "#ffffff"
 
 -- Color
 theme.bg       = theme.bg0
@@ -56,38 +57,35 @@ theme.cyanl    = theme.cyand
 theme.whited   = "#c6c6c6"
 theme.whitel   = "#e2e2e2"
 
--- Custom Links & Colors
--- Eventually I'll convert to the new template
-theme.accent        = "#535d6c"
-
+-- Links
 theme.bg_normal     = theme.bg0
-theme.bg_normal2    = theme.bg1
 theme.bg_minimize   = theme.bg2
-theme.bg_minimize2  = theme.bg3
-theme.bg_focus      = theme.accent
+theme.bg_focus      = theme.bg4
 theme.bg_urgent     = theme.redd
 theme.bg_systray    = theme.bg_normal
 
 theme.fg_normal     = theme.fg0
-theme.fg_normal2    = theme.fg1
 theme.fg_minimize   = theme.fg2
 theme.fg_focus      = theme.fg3
 theme.fg_urgent     = theme.fg3
 
 -- Other
+theme.accent        = "#535d6c"
+
 theme.border_width        = 3
-theme.border_color_normal = "#000000"
+theme.border_color_normal = theme.blackd
 theme.border_color_active = theme.accent
-theme.useless_gap         = 6
 
-theme.tasklist_fg_minimize = theme.fg_normal2
+theme.tasklist_fg_minimize       = theme.fg_focus
 theme.tasklist_disable_task_name = true
-theme.tasklist_spacing = 1
+theme.tasklist_spacing           = 1
 
--- Taglist
-local taglist_square_size = 0
-theme.taglist_squares_sel = theme_assets.taglist_squares_sel(taglist_square_size, theme.fg_normal)
-theme.taglist_squares_unsel = theme_assets.taglist_squares_unsel(taglist_square_size, theme.fg_normal)
+theme.taglist_squares_sel = theme_assets.taglist_squares_sel(0, theme.fg_normal)
+theme.taglist_squares_unsel = theme_assets.taglist_squares_unsel(0, theme.fg_normal)
+
+theme.useless_gap = 6
+
+theme.margins = 4
 
 theme.layout_dwindle = themes_path .. "default/layouts/dwindlew.png"
 
@@ -96,6 +94,12 @@ theme.layout_dwindle = themes_path .. "default/layouts/dwindlew.png"
 --
 
 theme.icon_theme = "Papirus"
+awful.spawn.easy_async_with_shell("test -f " .. os.getenv("HOME") .. "/.wallpaper-image && echo true || echo false", function(fileTest)
+  fileTest = fileTest:gsub("\n", "")
+  if fileTest == "false" then
+    naughty.notify({ title = "No wallpaper found", })
+  end
+end)
 theme.wallpaper = os.getenv("HOME") .. "/.wallpaper-image"
 
 screen.connect_signal("request::wallpaper", function(s)

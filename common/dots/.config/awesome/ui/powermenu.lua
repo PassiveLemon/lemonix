@@ -1,24 +1,24 @@
 local awful = require("awful")
 local gears = require("gears")
-local beautiful = require("beautiful")
+local b = require("beautiful")
 local wibox = require("wibox")
 
-local helpers = require("helpers")
+local h = require("helpers")
 local click_to_hide = require("modules.click_to_hide")
 
 --
 -- Power management menu
 --
 
---local lock_icon = helpers.simpleicn(12, 12, 37, 37, 37, 37, nil, os.getenv("HOME") .. "/.config/awesome/libraries/feather/icons/lock.svg", beautiful.fg)
---local poweroff_icon = helpers.simpleicn(12, 12, 37, 37, 37, 37, nil, os.getenv("HOME") .. "/.config/awesome/libraries/feather/icons/power.svg", beautiful.fg)
---local restart_icon = helpers.simpleicn(12, 12, 37, 37, 37, 37, nil, , os.getenv("HOME") .. "/.config/awesome/libraries/feather/icons/refresh-cw.svg", beautiful.fg)
+--local lock_icon = h.simpleicn(12, 12, 37, 37, 37, 37, nil, os.getenv("HOME") .. "/.config/awesome/libraries/feather/icons/lock.svg", b.fg)
+--local poweroff_icon = h.simpleicn(12, 12, 37, 37, 37, 37, nil, os.getenv("HOME") .. "/.config/awesome/libraries/feather/icons/power.svg", b.fg)
+--local restart_icon = h.simpleicn(12, 12, 37, 37, 37, 37, nil, , os.getenv("HOME") .. "/.config/awesome/libraries/feather/icons/refresh-cw.svg", b.fg)
 
---local lock = helpers.complexbtn(100, 100, 8, 4, 8, 8, lock_icon)
---local poweroff = helpers.complexbtn(100, 100, 8, 4, 8, 4, poweroff_icon)
---local restart = helpers.complexbtn(100, 100, 8, 8, 8, 4, restart_icon)
+--local lock = h.complexbtn(100, 100, 8, 4, 8, 8, lock_icon)
+--local poweroff = h.complexbtn(100, 100, 8, 4, 8, 4, poweroff_icon)
+--local restart = h.complexbtn(100, 100, 8, 8, 8, 4, restart_icon)
 
-local lock = helpers.button({
+local lock = h.button({
   margins = {
     top = 8,
     right = 4,
@@ -29,9 +29,9 @@ local lock = helpers.button({
   y = 100,
   shape = gears.shape.rounded_rect,
   text = "",
-  font = beautiful.sysfont(24),
+  font = b.sysfont(24),
 })
-local poweroff = helpers.button({
+local poweroff = h.button({
   margins = {
     top = 8,
     right = 4,
@@ -42,9 +42,9 @@ local poweroff = helpers.button({
   y = 100,
   shape = gears.shape.rounded_rect,
   text = "󰐥",
-  font = beautiful.sysfont(27),
+  font = b.sysfont(27),
 })
-local restart = helpers.button({
+local restart = h.button({
   margins = {
     top = 8,
     right = 8,
@@ -55,7 +55,7 @@ local restart = helpers.button({
   y = 100,
   shape = gears.shape.rounded_rect,
   text = "󰑓",
-  font = beautiful.sysfont(31),
+  font = b.sysfont(31),
 })
 
 local powermenu_widget = wibox.widget {
@@ -68,7 +68,7 @@ local powermenu_widget = wibox.widget {
   },
 }
 
-local prompt = helpers.text({
+local prompt = h.text({
   margins = {
     top = 8,
     right = 8,
@@ -79,7 +79,7 @@ local prompt = helpers.text({
   y = 36,
   text = "Are you sure?",
 })
-local confirmpow = helpers.button({
+local confirm_pow = h.button({
   margins = {
     top = 4,
     right = 4,
@@ -91,7 +91,7 @@ local confirmpow = helpers.button({
   shape = gears.shape.rounded_rect,
   text = "Poweroff",
 })
-local confirmres = helpers.button({
+local confirm_res = h.button({
   margins = {
     top = 4,
     right = 4,
@@ -103,7 +103,7 @@ local confirmres = helpers.button({
   shape = gears.shape.rounded_rect,
   text = "Restart",
 })
-local cancel = helpers.button({
+local cancel = h.button({
   margins = {
     top = 4,
     right = 8,
@@ -124,7 +124,7 @@ local poweroff_widget = wibox.widget {
   },
   {
     layout = wibox.layout.fixed.horizontal,
-    confirmpow,
+    confirm_pow,
     cancel,
   },
 }
@@ -137,7 +137,7 @@ local restart_widget = wibox.widget {
   },
   {
     layout = wibox.layout.fixed.horizontal,
-    confirmres,
+    confirm_res,
     cancel,
   },
 }
@@ -145,7 +145,7 @@ local restart_widget = wibox.widget {
 local main = awful.popup {
   placement = awful.placement.centered,
   border_width = 3,
-  border_color = beautiful.border_color_active,
+  border_color = b.border_color_active,
   ontop = true,
   visible = false,
   widget = powermenu_widget,
@@ -160,17 +160,20 @@ cancel:connect_signal("button::press", function()
   main.widget = powermenu_widget
 end)
 
-confirmpow:connect_signal("button::press", function()
+confirm_pow:connect_signal("button::press", function()
   confirmed("systemctl poweroff")
 end)
 
-confirmres:connect_signal("button::press", function()
+confirm_res:connect_signal("button::press", function()
   confirmed("systemctl reboot")
 end)
 
 lock:connect_signal("button::press", function()
   main.visible = false
-  helpers.locker()
+  awful.spawn.with_shell("\
+  playerctl pause; \
+  i3lock-fancy-rapid 50 10 -n; \
+  ")
 end)
 
 poweroff:connect_signal("button::press", function()
@@ -185,7 +188,7 @@ local function signal()
   main.widget = powermenu_widget
   main.visible = not main.visible
   main.screen = awful.screen.focused()
-  helpers.unfocus()
+  h.unfocus()
 end
 
 click_to_hide.popup(main, nil, true)

@@ -1,11 +1,15 @@
 local awful = require("awful")
 local gears = require("gears")
-local beautiful = require("beautiful")
+local b = require("beautiful")
 local wibox = require("wibox")
 local menubar = require("menubar")
 
-local helpers = require("helpers")
+local h = require("helpers")
 local click_to_hide = require("modules.click_to_hide")
+
+--
+-- WIP custom app launcher (Rofi alternative)
+--
 
 local itemListDir = "/tmp/launcher/"
 local homeAppDir = "/home/lemon/.local/share/applications/"
@@ -23,7 +27,7 @@ end)
 local main = awful.popup {
   placement = awful.placement.centered,
   border_width = 3,
-  border_color = beautiful.border_color_active,
+  border_color = b.border_color_active,
   ontop = true,
   visible = false,
   widget = {
