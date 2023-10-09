@@ -1,6 +1,6 @@
-{ lib,
+{ buildGoModule,
   fetchFromGitHub,
-  buildGoModule
+  lib
 }:
 buildGoModule rec {
   pname = "corrupter";

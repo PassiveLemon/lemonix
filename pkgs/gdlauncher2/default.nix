@@ -1,6 +1,6 @@
-{ lib,
-  appimageTools,
-  fetchurl
+{ appimageTools,
+  fetchurl,
+  lib,
 }:
 let
   pname = "gdlauncher";

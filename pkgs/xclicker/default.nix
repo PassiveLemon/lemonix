@@ -1,17 +1,18 @@
-{ lib,
-  stdenv, 
+{ stdenv, 
   fetchFromGitHub,
+  lib,
   gnumake,
   gtk3,
+  makeWrapper,
   meson,
   ninja,
   pkg-config,
-  xorg,
-  makeWrapper
+  xorg
 }:
 stdenv.mkDerivation rec {
   pname = "xclicker";
   version = "1.4.0";
+
   src = fetchFromGitHub {
     owner = "robiot";
     repo = "xclicker";

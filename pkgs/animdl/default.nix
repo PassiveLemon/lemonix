@@ -1,7 +1,7 @@
-{ lib,
-  python3Packages,
+{ python3Packages,
   buildPythonApplication,
   fetchFromGitHub,
+  lib,
   poetry-core,
   click,
   cssselect,
@@ -22,14 +22,14 @@ let
 in
 buildPythonApplication rec {
   pname = "animdl";
-  version = "1.7.17";
+  version = "1.7.24";
 
   src = fetchFromGitHub {
     owner = "justfoolingaround";
     repo = "animdl";
     # Using the commit hash because upstream does not have releases. https://github.com/justfoolingaround/animdl/issues/277
-    rev = "fd3277fb919c4b5e7ef42daba0bd001695a9c124";
-    hash = "sha256-pgtrStorkIJJ3oIGgRjNWYwcQ5jUC8IS5iI9CyDJkzE=";
+    rev = "08d0c6a2c4d57d7ce342fe6b16955f1570d44849";
+    hash = "sha256-/XPVWBitFYsUkb9WMlR5F2amAPcVnDtJUgFXP2gXyNk=";
   };
 
   format = "pyproject";
@@ -65,6 +65,7 @@ buildPythonApplication rec {
     description = "A highly efficient, powerful and fast anime scraper";
     homepage = "https://github.com/justfoolingaround/animdl";
     license = licenses.gpl3Only;
+    mainProgram = "animdl";
     maintainers = with maintainers; [ passivelemon ];
     platforms = [ "x86_64-linux" ];
   };

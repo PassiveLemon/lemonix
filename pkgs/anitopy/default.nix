@@ -1,7 +1,7 @@
-{ lib,
-  python3Packages,
+{ python3Packages,
   buildPythonPackage,
-  fetchFromGitHub
+  fetchFromGitHub,
+  lib
 }:
 python3Packages.buildPythonPackage rec {
   pname = "anitopy";
@@ -9,7 +9,7 @@ python3Packages.buildPythonPackage rec {
 
   src = fetchFromGitHub {
     owner = "igorcmoura";
-    repo = "${pname}";
+    repo = "anitopy";
     rev = "v${version}";
     hash = "sha256-xXEf7AJKg7grDmkKfFuC4Fk6QYFJtezClyfA3vq8TfQ=";
   };

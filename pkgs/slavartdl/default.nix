@@ -1,10 +1,11 @@
-{ lib,
+{ buildGoModule,
   fetchFromGitHub,
-  buildGoModule
+  lib
 }:
 buildGoModule rec {
   pname = "corrupter";
   version = "1.0.7";
+
   src = fetchFromGitHub {
     owner = "tywil04";
     repo = "slavartdl";

@@ -1,9 +1,12 @@
-{ fetchFromGitHub, buildNpmPackage, makeDesktopItem, lib,
+{ buildNpmPackage,
+  fetchFromGitHub,
+  makeDesktopItem,
+  lib,
   electron_19,
-  nodejs,
   gnat13,
+  nodejs,
+  python311,
   rustup,
-  python311
 }:
 let
   nodejs' = nodejs.overrideAttrs (oldAttrs: {
@@ -14,9 +17,10 @@ in
 buildNpmPackage rec {
   pname = "gdlauncher";
   version = "1.1.30";
+
   src = fetchFromGitHub {
     owner = "gorilla-devs";
-    repo = "${pname}";
+    repo = "gdlauncher";
     rev = "v${version}";
     hash = "sha256-TH7k2nnpCOTEsP5Doo2EmWDH9weGrlvcBhymicPkGjs=";
   };
