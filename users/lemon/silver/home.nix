@@ -9,13 +9,12 @@
   home = {
     packages = with pkgs; [
       i3lock-fancy-rapid
-      firefox pcmanfm gparted pavucontrol
+      firefox pcmanfm gparted pavucontrol qpwgraph helvum pw-viz pipecontrol
       tym lite-xl rofi hilbish vscodium github-desktop webcord-vencord imhex tauon sonixd
-      haruna feh gimp obs-studio authy xarchiver filezilla easytag easyeffects soundux flowblade audacity qbittorrent
+      haruna feh gimp authy xarchiver filezilla easytag easyeffects soundux flowblade audacity qbittorrent
       exa bat trashy fd ripgrep
       pamixer playerctl appimage-run neofetch ventoy-bin act scrot headsetcontrol
       libsForQt5.kruler
-      xonotic
 
       # Development
       (python311.withPackages(ps: with ps; [ pip pillow evdev pyyaml pynput colorama ]))
@@ -78,6 +77,10 @@
   };
   programs = {
     home-manager.enable = true;
+    obs-studio = {
+      enable = true;
+      plugins = with pkgs.obs-studio-plugins; [ obs-pipewire-audio-capture ];
+    };
   };
   xdg = {
     mime.enable = true;
@@ -86,6 +89,7 @@
       defaultApplications = {
         "inode/directory" = "pcmanfm.desktop";
         "x-scheme-handler/gdlauncher" = "gdlauncher.desktop";
+        "x-scheme-handler/discord-409416265891971072" = "discord-409416265891971072.desktop";
       };
     };
     desktopEntries = {
