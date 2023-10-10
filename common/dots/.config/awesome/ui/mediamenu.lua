@@ -163,8 +163,30 @@ local volume = h.slider({
   bar_shape = gears.shape.rounded_rect,
 })
 
-local playerctl = "playerctl -p spotify,tauon"
-local tmp_dir = os.getenv("HOME") .. "/.cache/lemonix/mediamenu/"
+local playerctl = "playerctl -p spotify,tauon,Sonixd"
+local art_dir = os.getenv("HOME") .. "/.cache/lemonix/mediamenu/"
+
+local function art_image_processor(art_url, art_url_trim)
+  -- Resize and scale the image box based on preview dimensions and the height of title text (so it fits beside the text). Mostly pointless if the image is always the same shape.
+  h.file_test(art_dir, art_url_trim, function(file_test)
+    if file_test == "false" then
+      art_image.visible = false
+      awful.spawn.with_shell("curl -Lso " .. art_dir .. art_url_trim .. ' "' .. art_url .. '"')
+    else
+      local art_url_file = gears.surface.load_uncached(art_dir .. art_url_trim)
+      local image_asp_rat = (art_url_file:get_width() / art_url_file:get_height())
+      local image_dyn_height = ((title:get_children_by_id("background")[1].forced_height * 3) + 8)
+      local image_dyn_width =  h.round((image_asp_rat * image_dyn_height), 1)
+      art_image:get_children_by_id("background")[1].forced_width = image_dyn_width
+      art_image:get_children_by_id("background")[1].forced_height = image_dyn_height
+      art_image:get_children_by_id("imagebox")[1].image = art_url_file
+      art_image.visible = true
+      title:get_children_by_id("background")[1].forced_width = (532 - 8 - image_dyn_width)
+      artist:get_children_by_id("background")[1].forced_width = title:get_children_by_id("textbox")[1].width
+      album:get_children_by_id("background")[1].forced_width = title:get_children_by_id("textbox")[1].width
+    end
+  end)
+end
 
 local function art_image_updater()
   awful.spawn.easy_async_with_shell("sleep 0.15 && " .. playerctl .. " metadata mpris:artUrl", function(art_url)
@@ -173,27 +195,19 @@ local function art_image_updater()
       art_image.visible = false
       title:get_children_by_id("background")[1].forced_width = 532
     else
-      -- Resize and scale the image box based on preview dimensions. Pointless if the image is always the same shape.
-      local art_url_trim = art_url:gsub(".*/", "")
-      local art_url_file = gears.surface.load_uncached(tmp_dir .. art_url_trim)
-      local image_asp_rat = (art_url_file:get_width() / art_url_file:get_height())
-      local image_dyn_height = ((title:get_children_by_id("background")[1].forced_height * 3) + 8)
-      local image_dyn_width =  h.round((image_asp_rat * image_dyn_height), 1)
-      awful.spawn.easy_async_with_shell("test -f " .. tmp_dir .. art_url_trim .. " && echo true || echo false", function(file_test)
-        local file_test = file_test:gsub("\n", "")
-        if file_test == "false" then
-          art_image.visible = false
-          awful.spawn.with_shell("curl -Lso " .. tmp_dir .. art_url_trim .. " " .. art_url)
+      awful.spawn.easy_async("playerctl -l", function(player_list)
+        if string.find(player_list, "spotify") then
+          local art_url_trim = art_url:gsub(".*/", "")
+          art_image_processor(art_url, art_url_trim)
+        elseif string.find(player_list, "tauon") then
+          local art_url_trim = art_url:gsub(".*/", "")
+          art_image_processor(art_url, art_url_trim)
+        elseif string.find(player_list, "Sonixd") then
+          local art_url_trim = art_url:match("id=mf%-(.-)&u=Lemon")
+          art_image_processor(art_url, art_url_trim)
         end
       end)
-      art_image:get_children_by_id("background")[1].forced_width = image_dyn_width
-      art_image:get_children_by_id("background")[1].forced_height = image_dyn_height
-      art_image:get_children_by_id("imagebox")[1].image = art_url_file
-      art_image.visible = true
-      title:get_children_by_id("background")[1].forced_width = (532 - 8 - image_dyn_width)
     end
-    artist:get_children_by_id("background")[1].forced_width = title:get_children_by_id("textbox")[1].width
-    album:get_children_by_id("background")[1].forced_width = title:get_children_by_id("textbox")[1].width
   end)
 end
 
@@ -310,10 +324,10 @@ end
 local function shuffler()
   awful.spawn.easy_async(playerctl .. " shuffle", function(shuffle_state)
     if shuffle_state:find("On") then
-      awful.spawn("playerctl -p spotify shuffle off")
+      awful.spawn(playerctl .. " shuffle off")
       shuffle:get_children_by_id("textbox")[1].text = "󰒞"
     elseif shuffle_state:find("Off") then
-      awful.spawn("playerctl -p spotify shuffle on")
+      awful.spawn(playerctl .. " shuffle on")
       shuffle:get_children_by_id("textbox")[1].text = "󰒝"
     end
   end)
@@ -322,10 +336,10 @@ end
 local function toggler()
   awful.spawn.easy_async(playerctl .. " status", function(toggle_state)
     if toggle_state:find("Playing") then
-      awful.spawn("playerctl -p spotify pause")
+      awful.spawn(playerctl .. " pause")
       toggle:get_children_by_id("textbox")[1].text = "󰐊"
     elseif toggle_state:find("Paused") then
-      awful.spawn("playerctl -p spotify play")
+      awful.spawn(playerctl .. " play")
       toggle:get_children_by_id("textbox")[1].text = "󰏤"
     end
   end)
@@ -334,13 +348,13 @@ end
 local function looper()
   awful.spawn.easy_async(playerctl .. " loop", function(loop_state)
     if loop_state:find("None") then
-      awful.spawn("playerctl -p spotify loop Playlist")
+      awful.spawn(playerctl .. " loop Playlist")
       loop:get_children_by_id("textbox")[1].text = "󰑖"
     elseif loop_state:find("Playlist") then
-      awful.spawn("playerctl -p spotify loop Track")
+      awful.spawn(playerctl .. " loop Track")
       loop:get_children_by_id("textbox")[1].text = "󰑘"
     elseif loop_state:find("Track") then
-      awful.spawn("playerctl -p spotify loop None")
+      awful.spawn(playerctl .. " loop None")
       loop:get_children_by_id("textbox")[1].text = "󰑗"
     end
   end)
