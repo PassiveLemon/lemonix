@@ -61,17 +61,17 @@ awful.keyboard.append_global_keybindings {
 
   awful.key({ }, "XF86AudioPlay", function()
     awful.spawn("playerctl play-pause")
-    mediamenu.metadataUpdater()
-    mediamenu.loopUpdater()
-    mediamenu.positionUpdater()
+    mediamenu.metadata_updater()
+    mediamenu.loop_updater()
+    mediamenu.position_updater()
   end,
   { description = "|| toggle play", group = "media", }),
 
   awful.key({ }, "XF86AudioNext", function()
     awful.spawn("playerctl next")
-    mediamenu.metadataUpdater()
-    mediamenu.loopUpdater()
-    mediamenu.positionUpdater()
+    mediamenu.metadata_updater()
+    mediamenu.loop_updater()
+    mediamenu.position_updater()
   end,
   { description = "|| next media", group = "media", }),
 
