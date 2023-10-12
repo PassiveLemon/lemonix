@@ -45,6 +45,7 @@
       enable = true;
       openFirewall = true;
     };
+    mullvad-vpn.enable = true;
     blueman.enable = true;
     gnome.gnome-keyring.enable = true;
   };

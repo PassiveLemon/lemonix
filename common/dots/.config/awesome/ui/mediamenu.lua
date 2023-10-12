@@ -203,7 +203,7 @@ local function art_image_updater()
           local art_url_trim = art_url:gsub(".*/", "")
           art_image_processor(art_url, art_url_trim)
         elseif string.find(player_list, "Sonixd") then
-          local art_url_trim = art_url:match("id=mf%-(.-)&u=Lemon")
+          local art_url_trim = art_url:match("id=([^&]+)&u=Lemon")
           art_image_processor(art_url, art_url_trim)
         end
       end)
