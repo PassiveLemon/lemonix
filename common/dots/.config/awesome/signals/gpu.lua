@@ -5,7 +5,7 @@ local awful = require("awful")
 --
 
 awful.widget.watch("echo", 1, function()
-  awful.spawn.easy_async_with_shell("nvidia-smi | grep 'Default' | awk '{print 0+$12}'", function(use)
+  awful.spawn.easy_async_with_shell("nvidia-smi --query-gpu=utilization.gpu --format=csv,noheader,nounits", function(use)
     local use = use:gsub("\n", "")
     awful.spawn.easy_async_with_shell("nvidia-smi --query-gpu=temperature.gpu --format=csv,noheader", function(temp)
       local temp = temp:gsub("\n", "")
