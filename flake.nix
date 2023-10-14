@@ -7,7 +7,7 @@
     master.url = "github:nixos/nixpkgs/master";
 
     home-manager = {
-      url = "github:nix-community/home-manager/release-23.05";
+      url = "github:nix-community/home-manager/master";
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
@@ -32,7 +32,11 @@
     nixpkgs-overlays = ({ inputs, outputs, config, system, ... }: {
       nixpkgs.overlays = [
         (final: _prev: {
-          unstable = import inputs.unstable {
+          stable = import inputs.nixos {
+            system = final.system;
+            config.allowUnfree = true;
+          };
+          unstable = import inputs.nixpkgs {
             system = final.system;
             config.allowUnfree = true;
           };
