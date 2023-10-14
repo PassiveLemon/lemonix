@@ -72,6 +72,8 @@
       htop sysstat iotop stress nvtop-nvidia netcat lm_sensors
       networkmanager ethtool
       distrobox virt-manager OVMF pciutils virtiofsd libvirt
+      # Required for the FS to complete its check and allow me to boot while on nixos-23.05
+      pkgs.unstable.e2fsprogs
     ];
     binsh = "${pkgs.dash}/bin/dash";
     shells = with pkgs; [ bash ];
