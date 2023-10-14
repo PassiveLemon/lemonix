@@ -25,7 +25,12 @@ buildNpmPackage rec {
     hash = "sha256-TH7k2nnpCOTEsP5Doo2EmWDH9weGrlvcBhymicPkGjs=";
   };
 
-  nativeBuildInputs = [ gnat13 rustup nodejs' (python311.withPackages(ps: with ps; [ distutils_extra ])) ];
+  nativeBuildInputs = [
+    gnat13
+    rustup
+    nodejs'
+    (python311.withPackages(ps: with ps; [ distutils_extra ]))
+  ];
 
   forceGitDeps = true;
   makeCacheWritable = true;
