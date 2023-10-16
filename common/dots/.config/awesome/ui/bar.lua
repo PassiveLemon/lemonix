@@ -259,7 +259,7 @@ screen.connect_signal("request::desktop_decoration", function(s)
         sep,
         bar,
         sep,
-        h.watch([[bash -c "[ $(playerctl -p spotify,tauon status) = "Playing" ] && echo '󰎈'"]], 0.125),
+        h.watch([[bash -c "[ $(playerctl -p spotify,tauon,Sonixd status) = "Playing" ] && echo '󰎈'"]], 0.125),
       },
       { -- Center
         layout = wibox.layout.flex.horizontal,
