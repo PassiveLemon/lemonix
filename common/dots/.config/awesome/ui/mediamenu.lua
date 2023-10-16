@@ -181,25 +181,6 @@ local function art_image_processor(art_dir, art_url_trim)
   album:get_children_by_id("background")[1].forced_width = title:get_children_by_id("textbox")[1].width
 end
 
-local function art_image_locator1(art_dir, client_cache_dir, art_url_trim, art_url)
-  h.file_test(art_dir, art_url_trim, function(file_test)
-    if file_test == "true" then
-      art_image_processor(art_dir, art_url_trim)
-    else
-      if client_cache_dir ~= nil then
-        h.file_test(client_cache_dir, art_url_trim, function(file_test)
-          if file_test == "true" then
-            art_image_processor(client_cache_dir, art_url_trim)
-          end
-        end)
-      else
-        art_image.visible = false
-        awful.spawn.with_shell("curl -Lso " .. art_dir .. art_url_trim .. ' "' .. art_url .. '"')
-      end
-    end
-  end)
-end
-
 local function art_image_locator(art_dir, client_cache_dir, art_url_trim, art_url)
   if client_cache_dir ~= nil then
     h.file_test(client_cache_dir, art_url_trim, function(file_test)
