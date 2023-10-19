@@ -144,6 +144,9 @@ local uptime_time = h.text({
   },
   halign = "left",
 })
+awesome.connect_signal("signal::other", function(uptime, headset)
+	uptime_time:get_children_by_id("textbox")[1].text = uptime .. " "
+end)
 
 local main = awful.popup {
   placement = awful.placement.centered,

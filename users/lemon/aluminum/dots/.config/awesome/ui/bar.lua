@@ -103,6 +103,30 @@ screen.connect_signal("request::desktop_decoration", function(s)
     memory:get_children_by_id("textbox")[1].text = use_perc .. "%"
   end)
 
+  -- Battery
+  local battery_icon = h.text({
+    margins = {
+      top = 0,
+      right = 2,
+      bottom = 2,
+      left = 0,
+    },
+    text = "󰁹",
+    font = b.sysfont(15),
+  })
+  local battery = h.text({
+    margins = {
+      top = 0,
+      right = 0,
+      bottom = 0,
+      left = 0,
+    },
+    halign = "left",
+  })
+  awesome.connect_signal("signal::battery", function(cap)
+    battery:get_children_by_id("textbox")[1].text = cap .. "%"
+  end)
+
   -- Speaker
   local speaker_icon = h.text({
     margins = {
@@ -226,6 +250,12 @@ screen.connect_signal("request::desktop_decoration", function(s)
         memory_icon,
         sep,
         memory,
+        sep,
+        bar,
+        sep,
+        battery_icon,
+        sep,
+        battery,
         sep,
         bar,
         sep,
