@@ -64,7 +64,7 @@ hilbish.alias("tr", "trash restore")
 hilbish.alias("rm", "trash")
 hilbish.alias("nfu", "tmpdir=$PWD cd ~/Documents/GitHub/lemonix && nix flake update ; cd $tmpdir")
 hilbish.alias("nrs", "sudo nixos-rebuild switch")
-hilbish.alias("hms", "home-manager switch --flake ~/Documents/GitHub/lemonix#$USER@silver")
+hilbish.alias("hms", "home-manager switch --flake ~/Documents/GitHub/lemonix#" .. hilbish.user .. "@" .. hilbish.host)
 
 hilbish.opts.greeting = false
 hilbish.opts.motd = false

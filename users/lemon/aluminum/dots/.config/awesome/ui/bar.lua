@@ -79,30 +79,6 @@ screen.connect_signal("request::desktop_decoration", function(s)
     cpu:get_children_by_id("textbox")[1].text = use .. "%"
   end)
 
-  -- GPU
-  local gpu_icon = h.text({
-    margins = {
-      top = 0,
-      right = 0,
-      bottom = 0,
-      left = 0,
-    },
-    text = "󰢮",
-    font = b.sysfont(18),
-  })
-  local gpu = h.text({
-    margins = {
-      top = 0,
-      right = 0,
-      bottom = 0,
-      left = 0,
-    },
-    halign = "left",
-  })
-  awesome.connect_signal("signal::gpu", function(use, temp)
-    gpu:get_children_by_id("textbox")[1].text = use .. "%"
-  end)
-
   -- Memory
   local memory_icon = h.text({
     margins = {
@@ -244,12 +220,6 @@ screen.connect_signal("request::desktop_decoration", function(s)
           width = 20,
           color = "#f35252",
         }),
-        sep,
-        bar,
-        sep,
-        gpu_icon,
-        sep,
-        gpu,
         sep,
         bar,
         sep,

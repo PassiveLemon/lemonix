@@ -22,6 +22,10 @@
         source = ./dots/.config/autostart;
         recursive = true;
       };
+      ".config/awesome/" = {
+        source = ./dots/.config/awesome;
+        recursive = true;
+      };
       ".config/" = {
         source = ../../../common/dots/.config;
         recursive = true;
