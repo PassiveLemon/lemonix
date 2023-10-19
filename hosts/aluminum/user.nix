@@ -26,7 +26,6 @@
         touchpad = {
           middleEmulation = false;
           accelProfile = "flat";
-          accelSpeed = "-0.5";
         };
       };
     };
