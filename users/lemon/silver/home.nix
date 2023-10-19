@@ -1,6 +1,6 @@
 { inputs, outputs, pkgs, config, lib, ... }: {
   imports = [
-    ../../../common/usermodules/customization.nix
+    ./modules/customization.nix
     ../../../common/usermodules/gaming.nix
     ../../../common/usermodules/picom.nix
     ../../../common/usermodules/spicetify.nix
@@ -41,6 +41,18 @@
     file = {
       ".config/autostart/" = {
         source = ./dots/.config/autostart;
+        recursive = true;
+      };
+      ".config/awesome/config" = {
+        source = ./dots/.config/awesome/config;
+        recursive = true;
+      };
+      ".config/awesome/signals" = {
+        source = ./dots/.config/awesome/signals;
+        recursive = true;
+      };
+      ".config/awesome/ui" = {
+        source = ./dots/.config/awesome/ui;
         recursive = true;
       };
       ".config/" = {
