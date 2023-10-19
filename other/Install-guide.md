@@ -49,6 +49,8 @@ OK -> Should see a connection success line </br>
 
 Find a temporary directory. </br>
 `git clone https://github.com/PassiveLemon/lemonix && cd lemonix` </br>
+
+`sudo cp /etc/nixos/hardware-configuration.nix ./hosts/silver/` </br>
 `sudo nixos-install --flake .#silver` </br>
 
 # Set root </br>
@@ -59,15 +61,16 @@ Find a temporary directory. </br>
 login: root </br>
 > password </br>
 
+Make sure to set user password: </br>
+`passwd lemon` </br>
+> password </br>
+
 # Cloning </br>
 The home drive should now be mounted in place. Cd to `~/Documents/GitHub/lemonix/`. </br>
+Otherwise, head to `~/Documents/GitHub/` and `git clone --recurse-submodules https://github.com/PassiveLemon/lemonix && cd lemonix`
 `bash ./other/Installer.sh`. It must be run from the root of the repository. </br>
 
 Hardware config should be in `/etc/nixos-backup/`. Copy that to `<lemonix>/hosts/silver/hardware-configuration.nix`. </br>
 
 `nix run home-manager/release-23.05 -- init --switch` </br>
 `home-manager switch --flake .#lemon@silver` </br>
-
-Make sure to set user password: </br>
-`sudo passwd lemon` </br>
-> password </br>

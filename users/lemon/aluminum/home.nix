@@ -1,20 +1,19 @@
 { inputs, outputs, pkgs, config, lib, ... }: {
   imports = [
     ../../../common/usermodules/customization.nix
-    ../../../common/usermodules/dunst.nix
-    ../../../common/usermodules/polybar/default.nix
     ../../../common/usermodules/spicetify.nix
   ];
 
   home = {
     packages = with pkgs; [
       i3lock-fancy-rapid
-      firefox pcmanfm gparted pavucontrol
-      lite-xl rofi hilbish vscodium github-desktop webcord-vencord
-      haruna feh gimp obs-studio authy xarchiver filezilla easytag easyeffects soundux openshot-qt qbittorrent
-      exa bat trashy fd ripgrep
-      pamixer playerctl appimage-run neofetch ventoy-bin act scrot
+      firefox pcmanfm gparted pavucontrol qpwgraph helvum
+      tym lite-xl rofi hilbish vscodium github-desktop webcord-vencord imhex tauon sonixd
+      haruna feh gimp authy xarchiver easyeffects audacity
+      eza bat trashy fd ripgrep
+      pamixer playerctl appimage-run neofetch ventoy-bin act maim
       libsForQt5.kruler
+      mullvad-vpn
     ];
     username = "lemon";
     homeDirectory = "/home/lemon";
@@ -26,6 +25,7 @@
       ".config/" = {
         source = ../../../common/dots/.config;
         recursive = true;
+      };
       ".vscode-oss/" = {
         source = ../../../common/dots/.vscode-oss;
         recursive = true;
@@ -34,14 +34,14 @@
         source = ../../../common/dots/.xinitrc;
       };
     };
-    stateVersion = "to be added";
+    stateVersion = "23.05";
   };
 
   xsession = {
     enable = true;
     windowManager.awesome = {
       enable = true;
-      package = inputs.nixpkgs-f2k.packages.${pkgs.system}.awesome-luajit-git;
+      package = inputs.nixpkgs-f2k.packages.${pkgs.system}.awesome-git;
     };
   };
   services = {

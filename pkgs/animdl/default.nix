@@ -22,25 +22,25 @@ let
 in
 buildPythonApplication rec {
   pname = "animdl";
-  version = "1.7.24";
+  version = "1.7.27";
 
   src = fetchFromGitHub {
     owner = "justfoolingaround";
     repo = "animdl";
     # Using the commit hash because upstream does not have releases. https://github.com/justfoolingaround/animdl/issues/277
-    rev = "08d0c6a2c4d57d7ce342fe6b16955f1570d44849";
+    rev = "c7c3b79198e66695e0bbbc576f9d9b788616957f";
     hash = "sha256-/XPVWBitFYsUkb9WMlR5F2amAPcVnDtJUgFXP2gXyNk=";
   };
 
   format = "pyproject";
   nativeBuildInputs = [
     poetry-core
-    cssselect
   ];
   propagatedBuildInputs = [
     anchor-kr
     anitopy
     click
+    cssselect
     httpx
     lxml
     packaging

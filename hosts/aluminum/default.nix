@@ -8,17 +8,12 @@
     loader = {
       efi.canTouchEfiVariables = true;
       timeout = 3;
-      systemd-boot.enable = false;
-      grub = {
+      systemd-boot = {
         enable = true;
-        efiSupport = true;
-        useOSProber = true;
-        device = "nodev";
-        gfxmodeEfi = "1920x1080";
         configurationLimit = 50;
       };
     };
-    kernelPackages = pkgs.linuxKernel.packages.linux_zen;
+    kernelPackages = pkgs.linuxPackages_latest;
     kernelModules = [ "rtl8821ce" ];
   };
 
@@ -91,5 +86,5 @@
   # Drives
   # To be added
 
-  system.stateVersion = "to be added";
+  system.stateVersion = "23.05";
 }

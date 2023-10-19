@@ -16,9 +16,6 @@ cd ${HOME}/.config/awesome/libraries/
 if [ ! -d "./awesome-wm-widgets/" ]; then
   git clone --depth 1 https://github.com/streetturtle/awesome-wm-widgets.git
 fi
-if [ ! -d "./feather/" ]; the
-  git clone --depth 1 https://github.com/feathericons/feather.git
-fi
 
 echo "|| Dots installed. ||"
 
