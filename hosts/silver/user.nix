@@ -1,7 +1,6 @@
 { inputs, outputs, pkgs, config, lib, ... }: {
   imports = [
     inputs.nix-gaming.nixosModules.pipewireLowLatency
-    #../../modules/tilp2.nix
   ];
 
   # Packages
@@ -47,11 +46,16 @@
         rate = 48000;
       };
     };
-    printing.enable = true;
     avahi = {
       enable = true;
       openFirewall = true;
     };
+    udev.extraRules = ''
+      ACTION!="add|change", GOTO="headset_end"
+      KERNEL=="hidraw*", SUBSYSTEM=="hidraw", ATTRS{idVendor}=="1b1c", ATTRS{idProduct}=="0a51", TAG+="uaccess"
+      LABEL="headset_end"
+    ''; # Headsetcontrol udev rule
+    printing.enable = true;
     mullvad-vpn.enable = true;
     blueman.enable = true;
     gnome.gnome-keyring.enable = true;
