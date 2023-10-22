@@ -1,34 +1,89 @@
-{ buildPythonApplication,
+{ lib,
+  buildPythonApplication,
   fetchFromGitHub,
-  lib,
+  symlinkJoin,
+  makeWrapper,
+  qt5,
   setuptools,
+  certifi,
+  charset-normalizer,
+  defusedxml,
+  ffmpeg,
+  idna,
+  ifaddr,
+  librespot,
+  music-tag,
+  mutagen,
+  packaging,
+  pillow,
+  protobuf,
+  pycryptodomex,
+  pyogg,
+  pyqt5,
+  pyqt5_sip,
+  pyxdg,
+  requests,
+  show-in-file-manager,
+  urllib3,
+  websocket-client,
   zeroconf,
-  pycryptodomex
+  python3Packages
 }:
-buildPythonApplication rec {
-  pname = "onthespot";
-  version = "0.5";
+let
+  unwrapped = buildPythonApplication rec {
+    pname = "onthespot";
+    version = "0.5";
+    format = "pyproject";
 
-  src = fetchFromGitHub {
-    owner = "casualsnek";
-    repo = "onthespot";
-    rev = "v${version}";
-    hash = "sha256-VaJBNsT7uNOGY43GnzhUqDQNiPoFZcc2UaIfOKgkufg=";
+    src = fetchFromGitHub {
+      owner = "casualsnek";
+      repo = "onthespot";
+      rev = "v${version}";
+      hash = "sha256-VaJBNsT7uNOGY43GnzhUqDQNiPoFZcc2UaIfOKgkufg=";
+    };
+
+    nativeBuildInputs = [
+      qt5.wrapQtAppsHook
+      setuptools
+    ];
+    propagatedBuildInputs = [
+      qt5.wrapQtAppsHook
+      certifi
+      charset-normalizer
+      defusedxml
+      idna
+      ifaddr
+      librespot
+      music-tag
+      mutagen
+      packaging
+      pillow
+      protobuf
+      pycryptodomex
+      pyogg
+      pyqt5
+      pyqt5_sip
+      pyxdg
+      requests
+      show-in-file-manager
+      urllib3
+      websocket-client
+      zeroconf
+    ];
+
+    makeWrapperArgs = [
+      "\${qtWrapperArgs[@]}"
+    ];
   };
+in
+symlinkJoin {
+  name = "onthespot";
+  paths = [ unwrapped ];
+  buildInputs = [ makeWrapper ];
 
-  format = "pyproject";
-  nativeBuildInputs = [
-    setuptools
-    zeroconf
-  ];
-  propagatedBuildInputs = [
-    zeroconf
-    pycryptodomex
-  ];
-
-  postPatch = ''
-    substituteInPlace requirements.txt \
-      --replace 'zeroconf==0.62.0' 'zeroconf~=0.62.0'
+  postBuild = ''
+    wrapProgram $out/bin/onthespot_gui \
+      --prefix PATH : ${lib.makeBinPath [ ffmpeg ]}
   '';
 
   meta = with lib; {
