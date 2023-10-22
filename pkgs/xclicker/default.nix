@@ -1,43 +1,31 @@
-{ stdenv, 
-  fetchFromGitHub,
-  lib,
-  gnumake,
-  gtk3,
-  makeWrapper,
-  meson,
-  ninja,
-  pkg-config,
-  xorg
+{ lib,
+  appimageTools,
+  fetchurl,
 }:
-stdenv.mkDerivation rec {
+let
   pname = "xclicker";
-  version = "1.4.0";
-
-  src = fetchFromGitHub {
-    owner = "robiot";
-    repo = "xclicker";
-    rev = "v${version}";
-    hash = "sha256-f47V81fQcfR04PTkaj/yByH7CLXuu8CnMnjwpKZO2qE=";
+  version = "1.5.0";
+  src = fetchurl {
+    url = "https://github.com/robiot/xclicker/releases/download/v${version}/xclicker_${version}_amd64.AppImage";
+    hash = "sha256-eTKL+pFqEg1FZKbH580Jw51mIiFaL7tpKTSuxYcVaGE=";
   };
 
-  nativeBuildInputs = [
-    gnumake
-    gtk3
-    meson
-    ninja
-    pkg-config
-    xorg.libXtst
-    makeWrapper
-  ];
+  appimageContents = appimageTools.extractType2 { inherit pname version src; };
+in
+appimageTools.wrapType2 {
+  inherit pname version src;
 
-  installPhase = ''
-    mkdir -p $out/bin
-    cd $out/bin
+  extraInstallCommands = ''
+    mv $out/bin/${pname}-${version} $out/bin/${pname}
+
+    install -m 444 -D ${appimageContents}/${pname}.desktop -t $out/share/applications
+    substituteInPlace $out/share/applications/${pname}.desktop \
+      --replace 'Exec=AppRun --no-sandbox %U' 'Exec=${pname}'
   '';
 
   meta = with lib; {
     description = "An open-source, easy to use, feature-rich, blazing fast Autoclicker for linux desktops using x11.";
-    homepage = "https://xclicker.xyz/";
+    homepage = "https://github.com/robiot/XClicker";
     changelog = "https://github.com/robiot/XClicker/releases/tag/v${version}";
     license = licenses.gpl3Only;
     maintainers = with maintainers; [ passivelemon ];

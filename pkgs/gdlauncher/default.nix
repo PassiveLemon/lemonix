@@ -1,69 +1,27 @@
-{ buildNpmPackage,
-  fetchFromGitHub,
-  makeDesktopItem,
-  lib,
-  electron_19,
-  gnat13,
-  nodejs,
-  python311,
-  rustup,
+{ lib,
+  appimageTools,
+  fetchurl,
 }:
 let
-  nodejs' = nodejs.overrideAttrs (oldAttrs: {
-    name = "nodejs-16.13.1";
-    version = "16.13.1";
-  });
-in
-buildNpmPackage rec {
   pname = "gdlauncher";
   version = "1.1.30";
-
-  src = fetchFromGitHub {
-    owner = "gorilla-devs";
-    repo = "gdlauncher";
-    rev = "v${version}";
-    hash = "sha256-TH7k2nnpCOTEsP5Doo2EmWDH9weGrlvcBhymicPkGjs=";
+  src = fetchurl {
+    url = "https://github.com/gorilla-devs/GDLauncher/releases/download/v${version}/GDLauncher-linux-setup.AppImage";
+    hash = "sha256-4cXT3exhoMAK6gW3Cpx1L7cm9Xm0FK912gGcRyLYPwM=";
   };
 
-  nativeBuildInputs = [
-    gnat13
-    rustup
-    nodejs'
-    (python311.withPackages(ps: with ps; [ distutils_extra ]))
-  ];
+  appimageContents = appimageTools.extractType2 { inherit pname version src; };
+in
+appimageTools.wrapType2 {
+  inherit pname version src;
 
-  forceGitDeps = true;
-  makeCacheWritable = true;
-  dontNpmBuild = true;
-  NODE_OPTIONS = "--openssl-legacy-provider";
-  ELECTRON_SKIP_BINARY_DOWNLOAD = "1";
+  extraInstallCommands = ''
+    mv $out/bin/${pname}-${version} $out/bin/${pname}
 
-  npmFlags = [ "--legacy-peer-deps" "--ignore-scripts" ];
-  npmDepsHash = "sha256-br1Mast/0UYW3nPC/vgkfXDqESbDfEYOwrimU8v+9W0=";
-  npmBuildScript = "release";
-
-  desktopItem = makeDesktopItem {
-    name = "gdlauncher";
-    exec = "gdlauncher";
-    icon = "gdlauncher";
-    desktopName = "GDLauncher";
-    comment = meta.description;
-    categories = [ "Game" ];
-    mimeTypes = [ "x-scheme-handler/gdlauncher" ];
-  };
-
-  installPhase = ''
-    runHook preInstall
-
-    mkdir -p $out/lib/node_modules/gdlauncher
-    cp -r src public $out/lib/node_modules/gdlauncher/
-
-    install -Dm644 public/icon.png $out/share/icons/hicolor/256x256/apps/gdlauncher.png
-
-    makeWrapper $out/bin/gdlauncher \
-      --add-flags $out/lib/node_modules/gdlauncher/src
-
-    runHook postInstall
+    install -m 444 -D ${appimageContents}/${pname}.desktop -t $out/share/applications/
+    substituteInPlace $out/share/applications/${pname}.desktop \
+      --replace 'Exec=AppRun --no-sandbox %U' 'Exec=${pname}'
+    cp -r ${appimageContents}/usr/share/icons $out/share
   '';
 
   meta = with lib; {
