@@ -1,15 +1,15 @@
-{ stdenv,
-  lib,
-  fetchurl,
-  fetchpatch,
-  pkg-config,
-  autoreconfHook,
-  gnome2,
-  glib,
-  libtifiles2,
-  libticables2,
-  libticalcs2,
-  libticonv
+{ stdenv
+, lib
+, fetchurl
+, fetchpatch
+, pkg-config
+, autoreconfHook
+, gnome2
+, glib
+, libtifiles2
+, libticables2
+, libticalcs2
+, libticonv
 }:
 
 stdenv.mkDerivation rec {

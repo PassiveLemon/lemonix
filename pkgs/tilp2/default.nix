@@ -1,22 +1,21 @@
-{ callPackage,
-  stdenv,
-  lib,
-  fetchurl,
-  fetchpatch,
-  autoreconfHook,
-  pkg-config,
-  intltool,
-  glib,
-  gnome2,
-  libticables2,
-  libticalcs2,
-  libticonv,
-  libtifiles2
+# This and GFM were taken from an old package that was removed.
+
+{ stdenv
+, lib
+, fetchurl
+, fetchpatch
+, autoreconfHook
+, pkg-config
+, intltool
+, glib
+, gnome2
+, gfm
+, libticables2
+, libticalcs2
+, libticonv
+, libtifiles2
 }:
 
-let
-  gfm = callPackage ../gfm { };
-in
 stdenv.mkDerivation rec {
   pname = "tilp2";
   version = "1.18";
