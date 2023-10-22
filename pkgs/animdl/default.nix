@@ -16,7 +16,6 @@
   rich,
   tqdm,
   yarl,
-  python3Packages
 }:
 buildPythonApplication {
   pname = "animdl";

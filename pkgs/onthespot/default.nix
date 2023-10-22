@@ -27,7 +27,6 @@
   urllib3,
   websocket-client,
   zeroconf,
-  python3Packages
 }:
 let
   unwrapped = buildPythonApplication rec {
