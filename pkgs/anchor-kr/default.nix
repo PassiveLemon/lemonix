@@ -1,11 +1,11 @@
-{ python3Packages,
+{ lib,
   buildPythonPackage,
-  fetchFromGitHub,
-  lib
+  fetchFromGitHub
 }:
-python3Packages.buildPythonPackage rec {
+buildPythonPackage {
   pname = "anchor";
   version = "3";
+  format = "setuptools";
 
   src = fetchFromGitHub {
     owner = "justfoolingaround";
@@ -14,8 +14,6 @@ python3Packages.buildPythonPackage rec {
     rev = "4cedb6a51877ed3a292cad61eb19013382915e86";
     hash = "sha256-t75IFBSz6ncHRqXRxbrM9EQdr8xPXjSd9di+/y2LegE=";
   };
-
-  format = "setuptools";
 
   pythonImportsCheck = [ "anchor" ];
 

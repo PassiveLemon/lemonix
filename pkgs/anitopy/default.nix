@@ -1,11 +1,11 @@
-{ python3Packages,
+{ lib,
   buildPythonPackage,
-  fetchFromGitHub,
-  lib
+  fetchFromGitHub
 }:
-python3Packages.buildPythonPackage rec {
+buildPythonPackage rec {
   pname = "anitopy";
   version = "2.1.1";
+  format = "setuptools";
 
   src = fetchFromGitHub {
     owner = "igorcmoura";
@@ -14,9 +14,8 @@ python3Packages.buildPythonPackage rec {
     hash = "sha256-xXEf7AJKg7grDmkKfFuC4Fk6QYFJtezClyfA3vq8TfQ=";
   };
 
-  format = "setuptools";
-
   pythonImportsCheck = [ "anitopy" ];
+  doCheck = true;
 
   meta = with lib; {
     description = "Python library for parsing anime video filenames";

@@ -1,7 +1,6 @@
-{ python3Packages,
+{ lib,
   buildPythonApplication,
   fetchFromGitHub,
-  lib,
   poetry-core,
   click,
   cssselect,
@@ -14,25 +13,26 @@
   regex,
   rich,
   tqdm,
-  yarl
+  yarl,
+  python3Packages
 }:
 let
   anchor-kr = python3Packages.callPackage ../anchor-kr { };
   anitopy = python3Packages.callPackage ../anitopy { };
 in
-buildPythonApplication rec {
+buildPythonApplication {
   pname = "animdl";
   version = "1.7.27";
+  format = "pyproject";
 
   src = fetchFromGitHub {
     owner = "justfoolingaround";
     repo = "animdl";
     # Using the commit hash because upstream does not have releases. https://github.com/justfoolingaround/animdl/issues/277
     rev = "c7c3b79198e66695e0bbbc576f9d9b788616957f";
-    hash = "sha256-/XPVWBitFYsUkb9WMlR5F2amAPcVnDtJUgFXP2gXyNk=";
+    hash = "sha256-kn6vCCFhJNlruxoO+PTHVIwTf1E5j1aSdBhrFuGzUq4=";
   };
 
-  format = "pyproject";
   nativeBuildInputs = [
     poetry-core
   ];
@@ -53,13 +53,7 @@ buildPythonApplication rec {
     yarl
   ];
 
-  postPatch = ''
-    substituteInPlace pyproject.toml \
-      --replace 'pycryptodomex = "~=3.14.1"' 'pycryptodomex = "*"' \
-      --replace 'rich = ">=13.3.1,<13.3.4"' 'rich = "*"' \
-      --replace 'version = "4.9.1"' 'version = "*"' \
-      --replace 'comtypes = "~=1.1.11"' ' '
-  '';
+  doCheck = true;
 
   meta = with lib; {
     description = "A highly efficient, powerful and fast anime scraper";
