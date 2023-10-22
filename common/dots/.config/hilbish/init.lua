@@ -58,7 +58,7 @@ promptua.setTheme {
 promptua.init()
 
 hilbish.alias("ls", "eza -Fl --group-directories-first")
-hilbish.alias("cat", "bat")
+hilbish.alias("cat", "bat --theme=Lemon")
 hilbish.alias("tp", "trash put")
 hilbish.alias("tr", "trash restore")
 hilbish.alias("rm", "trash")

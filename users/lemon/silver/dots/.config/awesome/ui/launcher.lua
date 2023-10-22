@@ -8,12 +8,12 @@ local h = require("helpers")
 local click_to_hide = require("modules.click_to_hide")
 
 --
--- WIP custom app launcher (Rofi alternative)
+-- Custom app launcher (Rofi alternative) [[WIP]]
 --
 
 local itemListDir = "/tmp/launcher/"
-local homeAppDir = "/home/lemon/.local/share/applications/"
-local homeAppDirNix = "/home/lemon/.nix-profile/share/applications/"
+local homeAppDir = os.getenv("HOME") .. "/.local/share/applications/"
+local homeAppDirNix = os.getenv("HOME") .. "/.nix-profile/share/applications/"
 
 local item = {
 

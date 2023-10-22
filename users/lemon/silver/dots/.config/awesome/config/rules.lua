@@ -21,7 +21,7 @@ ruled.client.connect_signal("request::rules", function()
     },
   }
 
--- Always floating clients
+  -- Always floating clients
   ruled.client.append_rule {
     id = "floating",
     rule_any = {
@@ -36,13 +36,11 @@ ruled.client.connect_signal("request::rules", function()
       placement = awful.placement.centered+awful.placement.no_offscreen,
     },
   }
-end)
 
---
--- Apps
---
+  --
+  -- Specifics
+  --
 
-ruled.client.connect_signal("request::rules", function()
   ruled.client.append_rule {
     rule = {
       instance = "kruler",

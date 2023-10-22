@@ -1,11 +1,13 @@
 { inputs, outputs, pkgs, config, lib, ... }: {
   imports = [
-    ../../common/usermodules/xorg.nix
+    inputs.nix-gaming.nixosModules.pipewireLowLatency
     #../../modules/tilp2.nix
   ];
 
   # Packages
   environment.systemPackages = with pkgs; [
+    xorg.xorgserver xorg.xinit xorg.xrandr xorg.xhost
+    xorg.xf86videovesa xorg.xf86videofbdev xorg.xf86inputevdev xorg.xf86inputsynaptics xorg.xf86inputlibinput xorg.xf86videointel
     networkmanagerapplet blueman
   ];
 
@@ -38,6 +40,11 @@
       alsa = {
         enable = true;
         support32Bit = true;
+      };
+      lowLatency = { # Module of Nix-gaming
+        enable = true;
+        quantum = 128;
+        rate = 48000;
       };
     };
     printing.enable = true;

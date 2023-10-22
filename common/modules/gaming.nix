@@ -1,7 +1,8 @@
 { inputs, outputs, pkgs, config, lib, ... }: {
   home.packages = with pkgs; [
     steam
-    lunar-client prismlauncher
+    lunar-client prismlauncher (callPackage ../../pkgs/gdlauncher { })
+    (callPackage ../../pkgs/vinegar { wine = inputs.nix-gaming.packages.${pkgs.system}.wine-ge; })
     xonotic runelite
     yuzu-mainline
     bottles lutris

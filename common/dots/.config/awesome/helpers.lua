@@ -11,10 +11,10 @@ function helpers.text(conf)
     id = "margin",
     widget = wibox.container.margin,
     margins = {
-      top = conf.margins.top or 0,
-      right = conf.margins.right or 0,
-      bottom = conf.margins.bottom or 0,
-      left = conf.margins.left or 0,
+      top = conf.margins and conf.margins.top or 0,
+      right = conf.margins and conf.margins.right or 0,
+      bottom = conf.margins and conf.margins.bottom or 0,
+      left = conf.margins and conf.margins.left or 0,
     },
     {
       id = "background",
@@ -24,7 +24,7 @@ function helpers.text(conf)
       fg = conf.fg or b.fg0,
       bg = conf.bg or b.bg0,
       {
-        -- Allow use of either text or image
+        -- Allow use of either text or image. Kind of pointless to make 2 separate ones.
         layout = wibox.layout.stack,
         {
           id = "textbox",
@@ -48,15 +48,16 @@ function helpers.text(conf)
 end
 
 function helpers.button(conf)
+  -- Same as h.text, just with hover signals.
   conf = conf or { }
   local button = wibox.widget {
     id = "margin",
     widget = wibox.container.margin,
     margins = {
-      top = conf.margins.top or 0,
-      right = conf.margins.right or 0,
-      bottom = conf.margins.bottom or 0,
-      left = conf.margins.left or 0,
+      top = conf.margins and conf.margins.top or 0,
+      right = conf.margins and conf.margins.right or 0,
+      bottom = conf.margins and conf.margins.bottom or 0,
+      left = conf.margins and conf.margins.left or 0,
     },
     {
       id = "background",
@@ -67,7 +68,6 @@ function helpers.button(conf)
       bg = conf.bg or b.bg1,
       shape = conf.shape,
       {
-        -- Allow use of either text or image
         layout = wibox.layout.stack,
         {
           id = "textbox",
@@ -104,10 +104,10 @@ function helpers.slider(conf)
     id = "margin",
     widget = wibox.container.margin,
     margins = {
-      top = conf.margins.top or 0,
-      right = conf.margins.right or 0,
-      bottom = conf.margins.bottom or 0,
-      left = conf.margins.left or 0,
+      top = conf.margins and conf.margins.top or 0,
+      right = conf.margins and conf.margins.right or 0,
+      bottom = conf.margins and conf.margins.bottom or 0,
+      left = conf.margins and conf.margins.left or 0,
     },
     {
       id = "background",
@@ -148,10 +148,10 @@ function helpers.progressbar(conf)
     id = "margin",
     widget = wibox.container.margin,
     margins = {
-      top = conf.margins.top or 0,
-      right = conf.margins.right or 0,
-      bottom = conf.margins.bottom or 0,
-      left = conf.margins.left or 0,
+      top = conf.margins and conf.margins.top or 0,
+      right = conf.margins and conf.margins.right or 0,
+      bottom = conf.margins and conf.margins.bottom or 0,
+      left = conf.margins and conf.margins.left or 0,
     },
     {
       id = "background",

@@ -72,14 +72,14 @@ end
 local crosshair2_top_pop = awful.popup {
   border_width = 0,
   border_color = b.border_color_active,
-  x = 2873,
+  x = 2875,
   y = 539,
   ontop = true,
   visible = false,
   type = "desktop",
   widget = {
     widget = wibox.container.background,
-    forced_width = 14,
+    forced_width = 10,
     forced_height = 2,
     fg = "#00ff00",
     bg = "#00ff00",
@@ -97,7 +97,7 @@ local crosshair2_bottom_pop = awful.popup {
   widget = {
     widget = wibox.container.background,
     forced_width = 2,
-    forced_height = 7,
+    forced_height = 5,
     fg = "#00ff00",
     bg = "#00ff00",
   };

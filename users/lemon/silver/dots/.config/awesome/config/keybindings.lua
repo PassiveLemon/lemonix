@@ -3,10 +3,11 @@ local gears = require("gears")
 local b = require("beautiful")
 local hotkeys_popup = require("awful.hotkeys_popup")
 
-local mediamenu = require("ui.mediamenu")
-local powermenu = require("ui.powermenu")
-local resourcemenu = require("ui.resourcemenu")
+local media = require("ui.media")
+local power = require("ui.power")
+local resource = require("ui.resource")
 local crosshair = require("ui.crosshair")
+local volume = require("signal.volume")
 
 --
 -- Keybindings
@@ -18,6 +19,7 @@ awful.keyboard.append_global_keybindings {
   awful.key({ modkey, "Control", }, "r", awesome.restart,
   { description = "|| reload awesome", group = "awesome", }),
 
+  -- Launcher
   awful.key({ modkey, }, "Return", function() awful.spawn(terminal) end,
   { description = "|| open a terminal", group = "launcher", }),
 
@@ -27,53 +29,58 @@ awful.keyboard.append_global_keybindings {
   awful.key({ modkey, }, "t", function() launcher.signal() end,
   { description = "|| run launcher", group = "launcher", }),
 
-  awful.key({ modkey, }, "c", function() mediamenu.signal() end,
-  { description = "|| run mediamenu", group = "launcher", }),
+  awful.key({ modkey, }, "c", function() media.signal() end,
+  { description = "|| run media player", group = "launcher", }),
 
-  awful.key({ modkey, }, "v", function() powermenu.signal() end,
+  awful.key({ modkey, }, "v", function() power.signal() end,
   { description = "|| run powermenu", group = "launcher", }),
 
-  awful.key({ modkey, }, "x", function() resourcemenu.signal() end,
-  { description = "|| run resourcemenu", group = "launcher", }),
+  awful.key({ modkey, }, "x", function() resource.signal() end,
+  { description = "|| run resource monitor", group = "launcher", }),
 
+  -- Control
+  awful.key({ }, "XF86AudioRaiseVolume", function()
+    awful.spawn.easy_async("pamixer -i 1", function()
+      volume.volume()
+    end)
+  end,
+  { description = "|| increase volume", group = "control", }),
+
+  awful.key({ }, "XF86AudioLowerVolume", function()
+    awful.spawn.easy_async("pamixer -d 1", function()
+      volume.volume()
+    end)
+  end,
+  { description = "|| decrease volume", group = "control", }),
+
+  awful.key({ }, "XF86AudioMute", function()
+    awful.spawn.easy_async("pamixer -t", function()
+      volume.volume()
+    end)
+  end,
+  { description = "|| toggle mute", group = "control", }),
+
+  awful.key({ }, "XF86AudioNext", function()
+    media.nexter()
+  end,
+  { description = "|| next media", group = "control", }),
+
+  awful.key({ }, "XF86AudioPrev", function()
+    media.previouser()
+  end,
+  { description = "|| previous media", group = "control", }),
+
+  awful.key({ }, "XF86AudioPlay", function()
+    media.toggler()
+  end,
+  { description = "|| toggle play", group = "control", }),
+
+  -- Utility
   awful.key({ modkey, }, "s", hotkeys_popup.show_help,
   { description = "|| show help", group = "utility", }),
 
   awful.key({ }, "Print", function() awful.spawn("flameshot gui") end,
   { description = "|| flameshot", group = "utility", }),
-
-  awful.key({ }, "XF86AudioRaiseVolume", function() awful.spawn("pamixer -i 1") end,
-  { description = "|| increase volume", group = "media", }),
-
-  awful.key({ }, "XF86AudioLowerVolume", function() awful.spawn("pamixer -d 1") end,
-  { description = "|| decrease volume", group = "media", }),
-
-  awful.key({ }, "XF86AudioMute", function() awful.spawn("pamixer -t") end,
-  { description = "|| toggle mute", group = "media", }),
-
-  awful.key({ }, "XF86AudioPrev", function()
-    awful.spawn("playerctl previous")
-    mediamenu.metadata_updater()
-    mediamenu.loop_updater()
-    mediamenu.position_updater()
-  end,
-  { description = "|| previous media", group = "media", }),
-
-  awful.key({ }, "XF86AudioPlay", function()
-    awful.spawn("playerctl play-pause")
-    mediamenu.metadata_updater()
-    mediamenu.loop_updater()
-    mediamenu.position_updater()
-  end,
-  { description = "|| toggle play", group = "media", }),
-
-  awful.key({ }, "XF86AudioNext", function()
-    awful.spawn("playerctl next")
-    mediamenu.metadata_updater()
-    mediamenu.loop_updater()
-    mediamenu.position_updater()
-  end,
-  { description = "|| next media", group = "media", }),
 
   awful.key {
     modifiers   = { modkey, "Mod1" },
@@ -85,6 +92,7 @@ awful.keyboard.append_global_keybindings {
     end,
   },
 
+  -- Tag
   awful.key {
     modifiers   = { modkey, },
     keygroup    = "numrow",
@@ -128,6 +136,7 @@ awful.keyboard.append_global_keybindings {
     end,
   },
 
+  -- Client
   awful.keyboard.append_client_keybindings {
     awful.key({ modkey, }, "Escape", function(c) c:kill() end,
     { description = "|| close", group = "client", }),
@@ -169,6 +178,7 @@ end)
 -- Other
 --
 
+-- These are just for information. They have no binding.
 awful.keyboard.append_client_keybindings {
   awful.key({ }, "sudo nixos-rebuild switch", function() end,
   { description = "|| rebuild nixos", group = "other", }),

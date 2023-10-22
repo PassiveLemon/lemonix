@@ -1,9 +1,9 @@
 { inputs, outputs, pkgs, config, lib, ... }: {
   imports = [
     ./modules/customization.nix
-    ../../../common/usermodules/gaming.nix
-    ../../../common/usermodules/picom.nix
-    ../../../common/usermodules/spicetify.nix
+    ../../../common/modules/gaming.nix
+    ../../../common/modules/picom.nix
+    ../../../common/modules/spicetify.nix
   ];
 
   home = {
@@ -27,14 +27,12 @@
       maim slop xdotool
 
       # Custom
-      (callPackage ../../../pkgs/gdlauncher2 { }) # Use appimage wrapper version for now
       (callPackage ../../../pkgs/corrupter { })
       (callPackage ../../../pkgs/slavartdl { })
       (callPackage ../../../pkgs/tilp2 { })
-      (callPackage ../../../pkgs/xclicker2 { }) # Use appimage wrapper version for now
-      (callPackage ../../../pkgs/vinegar { wine = pkgs.master.wineWowPackages.staging; })
-      (python3Packages.callPackage ../../../pkgs/animdl { })
-      #(python3Packages.callPackage ../../../pkgs/onthespot { })
+      (callPackage ../../../pkgs/xclicker { })
+      (python3Packages.callPackage ../../../pkgs/animdl { anchor-kr = python3Packages.callPackage ../../../pkgs/anchor-kr { }; anitopy = python3Packages.callPackage ../../../pkgs/anitopy { }; })
+      (python3Packages.callPackage ../../../pkgs/onthespot { music-tag = python3Packages.callPackage ../../../pkgs/music-tag { }; })
     ];
     username = "lemon";
     homeDirectory = "/home/lemon";
@@ -47,8 +45,8 @@
         source = ./dots/.config/awesome/config;
         recursive = true;
       };
-      ".config/awesome/signals" = {
-        source = ./dots/.config/awesome/signals;
+      ".config/awesome/signal" = {
+        source = ./dots/.config/awesome/signal;
         recursive = true;
       };
       ".config/awesome/ui" = {
@@ -108,26 +106,13 @@
       };
     };
     desktopEntries = {
-      discord = {
+      discord = { # Launcher Webcord with CSS theme as a Discord alias
         name = "Discord";
         exec = "webcord -- --add-css-theme=/home/lemon/.config/BetterDiscord/themes/Lemon.theme.css";
         icon = "/home/lemon/.icons/Papirus/32x32/apps/webcord.svg";
         terminal = false;
         type = "Application";
         categories = [ "Application" ];
-      };
-      gdlauncher = {
-        name = "GDLauncher";
-        exec = "gdlauncher-1.1.30";
-        icon = "/home/lemon/.icons/Papirus/32x32/apps/gdlauncher.svg";
-        terminal = false;
-        type = "Application";
-        categories = [ "Application" ];
-      };
-      xclicker = {
-        name = "XClicker";
-        exec = "xclicker";
-        terminal = false;
       };
       sd-comfyui = {
         name = "sd-comfyui";

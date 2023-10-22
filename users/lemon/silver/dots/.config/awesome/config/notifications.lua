@@ -111,9 +111,6 @@ naughty.connect_signal("request::display", function(n)
       },
 		},
 	}
-  --image = io.open("/tmp/testimg", "w")
-  --image:write(naughty.widget.icon)
-  --image:close()
 end)
 
 -- Error handling

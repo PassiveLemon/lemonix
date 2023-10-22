@@ -77,28 +77,6 @@
     ];
     binsh = "${pkgs.dash}/bin/dash";
     shells = with pkgs; [ bash ];
-    etc = let
-      json = pkgs.formats.json {};
-    in {
-      "pipewire/pipewire-pulse.d/92-low-latency.conf".source = json.generate "92-low-latency.conf" {
-        context.modules = [
-          {
-            name = "libpipewire-module-protocol-pulse";
-            args = {
-              pulse.min.req = "128/48000";
-              pulse.default.req = "128/48000";
-              pulse.max.req = "128/48000";
-              pulse.min.quantum = "128/48000";
-              pulse.max.quantum = "128/48000";
-            };
-          }
-        ];
-        stream.properties = {
-          node.latency = "128/48000";
-          resample.quality = 1;
-        };
-      };
-    };
   };
 
   # Configs

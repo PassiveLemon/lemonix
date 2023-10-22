@@ -94,12 +94,6 @@ theme.layout_dwindle = themes_path .. "default/layouts/dwindlew.png"
 --
 
 theme.icon_theme = "Papirus"
-awful.spawn.easy_async_with_shell("test -f " .. os.getenv("HOME") .. "/.wallpaper-image && echo true || echo false", function(fileTest)
-  fileTest = fileTest:gsub("\n", "")
-  if fileTest == "false" then
-    naughty.notify({ title = "No wallpaper found", })
-  end
-end)
 theme.wallpaper = os.getenv("HOME") .. "/.wallpaper-image"
 
 screen.connect_signal("request::wallpaper", function(s)

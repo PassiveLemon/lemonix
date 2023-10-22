@@ -7,13 +7,15 @@
     master.url = "github:nixos/nixpkgs/master";
 
     home-manager = {
-      url = "github:nix-community/home-manager/master";
+      url = "github:nix-community/home-manager";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-
-    # User repos
     nixpkgs-f2k = {
       url = "github:fortuneteller2k/nixpkgs-f2k";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+    nix-gaming = {
+      url = "github:fufexan/nix-gaming";
       inputs.nixpkgs.follows = "nixpkgs";
     };
     spicetify-nix = {
