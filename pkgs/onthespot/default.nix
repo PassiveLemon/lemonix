@@ -90,7 +90,7 @@ symlinkJoin {
     description = "qt based music downloader written in python";
     homepage = "https://github.com/casualsnek/onthespot";
     license = licenses.gpl2Only;
-    mainProgram = "onthespot";
+    mainProgram = "onthespot_gui";
     maintainers = with maintainers; [ passivelemon ];
     platforms = [ "x86_64-linux" ];
   };

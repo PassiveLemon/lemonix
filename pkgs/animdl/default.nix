@@ -2,6 +2,8 @@
   buildPythonApplication,
   fetchFromGitHub,
   poetry-core,
+  anchor-kr,
+  anitopy,
   click,
   cssselect,
   httpx,
@@ -16,10 +18,6 @@
   yarl,
   python3Packages
 }:
-let
-  anchor-kr = python3Packages.callPackage ../anchor-kr { };
-  anitopy = python3Packages.callPackage ../anitopy { };
-in
 buildPythonApplication {
   pname = "animdl";
   version = "1.7.27";
