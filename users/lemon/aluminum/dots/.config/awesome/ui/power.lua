@@ -7,16 +7,8 @@ local h = require("helpers")
 local click_to_hide = require("modules.click_to_hide")
 
 --
--- Power management menu
+-- Powermenu
 --
-
---local lock_icon = h.simpleicn(12, 12, 37, 37, 37, 37, nil, os.getenv("HOME") .. "/.config/awesome/libraries/feather/icons/lock.svg", b.fg)
---local poweroff_icon = h.simpleicn(12, 12, 37, 37, 37, 37, nil, os.getenv("HOME") .. "/.config/awesome/libraries/feather/icons/power.svg", b.fg)
---local restart_icon = h.simpleicn(12, 12, 37, 37, 37, 37, nil, , os.getenv("HOME") .. "/.config/awesome/libraries/feather/icons/refresh-cw.svg", b.fg)
-
---local lock = h.complexbtn(100, 100, 8, 4, 8, 8, lock_icon)
---local poweroff = h.complexbtn(100, 100, 8, 4, 8, 4, poweroff_icon)
---local restart = h.complexbtn(100, 100, 8, 8, 8, 4, restart_icon)
 
 local lock = h.button({
   margins = {

@@ -5,46 +5,23 @@ local wibox = require("wibox")
 
 local h = require("helpers")
 local click_to_hide = require("modules.click_to_hide")
+local cpu_widget = require("libraries.awesome-wm-widgets.cpu-widget.cpu-widget")
 
 --
--- Resource monitor menu
+-- Resource monitor
 --
 
 local space = h.text({
-  margins = {
-    top = 0,
-    right = 0,
-    bottom = 0,
-    left = 0,
-  },
   text = " ",
 })
 
 local cpu_text = h.text({
-  margins = {
-    top = 0,
-    right = 0,
-    bottom = 0,
-    left = 0,
-  },
   text = "CPU",
 })
 local cpu_use = h.text({
-  margins = {
-    top = 0,
-    right = 0,
-    bottom = 0,
-    left = 0,
-  },
   halign = "left",
 })
 local cpu_temp = h.text({
-  margins = {
-    top = 0,
-    right = 0,
-    bottom = 0,
-    left = 0,
-  },
   halign = "left",
 })
 awesome.connect_signal("signal::cpu", function(use, temp)
@@ -53,73 +30,31 @@ awesome.connect_signal("signal::cpu", function(use, temp)
 end)
 
 local mem_text = h.text({
-  margins = {
-    top = 0,
-    right = 0,
-    bottom = 0,
-    left = 0,
-  },
   text = "Memory",
 })
 local mem_use = h.text({
-  margins = {
-    top = 0,
-    right = 0,
-    bottom = 0,
-    left = 0,
-  },
   halign = "left",
 })
 local mem_use_perc = h.text({
-  margins = {
-    top = 0,
-    right = 0,
-    bottom = 0,
-    left = 0,
-  },
   halign = "left",
 })
 local cache_use = h.text({
-  margins = {
-    top = 0,
-    right = 0,
-    bottom = 0,
-    left = 0,
-  },
   halign = "left",
 })
 local cache_use_perc = h.text({
-  margins = {
-    top = 0,
-    right = 0,
-    bottom = 0,
-    left = 0,
-  },
   halign = "left",
 })
 awesome.connect_signal("signal::memory", function(use, use_perc, cache, cache_perc)
-	mem_use:get_children_by_id("textbox")[1].text = "Used: " .. use .. " GiB"
+	mem_use:get_children_by_id("textbox")[1].text = "Used: " .. use .. " GB"
   mem_use_perc:get_children_by_id("textbox")[1].text = use_perc .. "%"
-  cache_use:get_children_by_id("textbox")[1].text = "Cache: " .. cache .. " GiB"
+  cache_use:get_children_by_id("textbox")[1].text = "Cache: " .. cache .. " GB"
   cache_use_perc:get_children_by_id("textbox")[1].text = cache_perc .. "%"
 end)
 
 local network_text = h.text({
-  margins = {
-    top = 0,
-    right = 0,
-    bottom = 0,
-    left = 0,
-  },
   text = "Network",
 })
 local network_total = h.text({
-  margins = {
-    top = 0,
-    right = 0,
-    bottom = 0,
-    left = 0,
-  },
   halign = "left",
 })
 awesome.connect_signal("signal::network", function(total)
@@ -127,25 +62,13 @@ awesome.connect_signal("signal::network", function(total)
 end)
 
 local uptime_text = h.text({
-  margins = {
-    top = 0,
-    right = 0,
-    bottom = 0,
-    left = 0,
-  },
   text = "Uptime",
 })
 local uptime_time = h.text({
-  margins = {
-    top = 0,
-    right = 0,
-    bottom = 0,
-    left = 0,
-  },
   halign = "left",
 })
-awesome.connect_signal("signal::other", function(uptime, headset)
-	uptime_time:get_children_by_id("textbox")[1].text = uptime .. " "
+awesome.connect_signal("signal::other", function(uptime)
+	uptime_time:get_children_by_id("textbox")[1].text = "" .. uptime
 end)
 
 local main = awful.popup {
@@ -166,6 +89,8 @@ local main = awful.popup {
         {
           layout = wibox.layout.fixed.horizontal,
           cpu_use,
+          space,
+          cpu_widget({ width = 20, color = "#f35252", }),
           space,
           cpu_temp,
         },
@@ -190,6 +115,9 @@ local main = awful.popup {
           space,
           cache_use_perc,
         },
+        space,
+        network_text,
+        network_total,
       },
     },
     {
@@ -198,9 +126,6 @@ local main = awful.popup {
       widget = wibox.container.margin,
       {
         layout = wibox.layout.fixed.vertical,
-        network_text,
-        network_total,
-        space,
         uptime_text,
         uptime_time,
       },

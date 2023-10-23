@@ -7,7 +7,7 @@ local h = require("helpers")
 local click_to_hide = require("modules.click_to_hide")
 
 --
--- Media management menu
+-- Media player
 --
 
 local art_image = h.text({
@@ -33,7 +33,6 @@ local artist = h.text({
   x = 532,
   y = 17,
   margins = {
-    top = 0,
     right = b.margins,
     bottom = b.margins,
     left = b.margins,
@@ -44,7 +43,6 @@ local album = h.text({
   x = 532,
   y = 17,
   margins = {
-    top = 0,
     right = b.margins,
     bottom = b.margins,
     left = b.margins,
@@ -141,7 +139,6 @@ local volume_icon = h.text({
     top = 3,
     right = 5,
     bottom = 3,
-    left = 0,
   },
   x = 18, 
   y = 15,
@@ -153,7 +150,6 @@ local volume = h.slider({
     top = b.margins,
     right = b.margins,
     bottom = b.margins,
-    left = 0,
   },
   x = 513,
   y = 16,
@@ -162,33 +158,26 @@ local volume = h.slider({
   bar_height = 6,
   bar_shape = gears.shape.rounded_rect,
 })
-local naughty = require("naughty")
-local playerctl = "playerctl -p spotify,tauon,Sonixd"
+
+local playerctl = "playerctl -p spotify,tauon,Sonixd -s"
 local art_dir = os.getenv("HOME") .. "/.cache/lemonix/mediamenu/"
 
+-- Display updating functions
+
 local function art_image_processor(art_dir, art_url_trim)
-  -- Resize and scale the image box based on preview dimensions and the height of title text (so it fits beside the text). Mostly pointless if the image is always the same shape.
-  local art_url_load = gears.surface.load_uncached(art_dir .. art_url_trim)
-  local image_asp_rat = (art_url_load:get_width() / art_url_load:get_height())
+  local art_image_load = gears.surface.load_uncached(art_dir .. art_url_trim)
   local image_dyn_height = ((title:get_children_by_id("background")[1].forced_height * 3) + 8)
-  local image_dyn_width =  h.round((image_asp_rat * image_dyn_height), 1)
-  art_image:get_children_by_id("background")[1].forced_width = image_dyn_width
+  art_image:get_children_by_id("background")[1].forced_width = image_dyn_height
   art_image:get_children_by_id("background")[1].forced_height = image_dyn_height
-  art_image:get_children_by_id("imagebox")[1].image = art_url_load
+  art_image:get_children_by_id("imagebox")[1].image = art_image_load
   art_image.visible = true
-  title:get_children_by_id("background")[1].forced_width = (532 - 8 - image_dyn_width)
+  title:get_children_by_id("background")[1].forced_width = (532 - 8 - image_dyn_height)
   artist:get_children_by_id("background")[1].forced_width = title:get_children_by_id("textbox")[1].width
   album:get_children_by_id("background")[1].forced_width = title:get_children_by_id("textbox")[1].width
 end
 
 local function art_image_locator(art_dir, client_cache_dir, art_url_trim, art_url)
-  if client_cache_dir ~= nil then
-    h.file_test(client_cache_dir, art_url_trim, function(file_test)
-      if file_test == "true" then
-        art_image_processor(client_cache_dir, art_url_trim)
-      end
-    end)
-  else
+  if client_cache_dir == nil then
     h.file_test(art_dir, art_url_trim, function(file_test)
       if file_test == "true" then
         art_image_processor(art_dir, art_url_trim)
@@ -197,94 +186,146 @@ local function art_image_locator(art_dir, client_cache_dir, art_url_trim, art_ur
         awful.spawn.with_shell("curl -Lso " .. art_dir .. art_url_trim .. ' "' .. art_url .. '"')
       end
     end)
+  else
+    h.file_test(client_cache_dir, art_url_trim, function(file_test)
+      if file_test == "true" then
+        art_image_processor(client_cache_dir, art_url_trim)
+      end
+    end)
   end
 end
 
-local function art_image_updater()
-  awful.spawn.easy_async_with_shell("sleep 0.15 && " .. playerctl .. " metadata mpris:artUrl", function(art_url)
-    local art_url = art_url:gsub("\n", "")
-    if art_url == "" or art_url == "No players found" or art_url == "No player could handle this command" then
+local function art_image_updater(art_url)
+  local function _updater(art_url)
+    if art_url == "" then
       art_image.visible = false
       title:get_children_by_id("background")[1].forced_width = 532
     else
       awful.spawn.easy_async("playerctl -l", function(player_list)
-        if string.find(player_list, "spotify") then
+        if player_list:find("spotify") then
           local art_url_trim = art_url:gsub(".*/", "")
           art_image_locator(art_dir, nil, art_url_trim, art_url)
-        elseif string.find(player_list, "tauon") then
+        elseif player_list:find("tauon") then
           local art_url_trim = art_url:gsub(".*/", "")
           local client_cache_dir = os.getenv("HOME") .. "/.cache/TauonMusicBox/export/"
           art_image_locator(art_dir, client_cache_dir, art_url_trim, art_url)
-        elseif string.find(player_list, "Sonixd") then
-          local art_url_trim = art_url:match("id=([^&]+)&u=Lemon")
+        elseif player_list:find("sonixd") then
+          local art_url_trim = art_url:match("id=(.*)&u=Lemon")
           art_image_locator(art_dir, nil, art_url_trim, art_url)
         end
       end)
     end
-  end)
+  end
+  if art_url then
+    _updater(art_url)
+  else
+    -- If you run a playerctl command that changes the song, the command will exit but not always after changing the metadata information. This helps ensure that the new metadata is there before running the next command.
+    awful.spawn.easy_async_with_shell("sleep 0.05 && " .. playerctl .. " metadata mpris:artUrl", function(art_url)
+      _updater(art_url)
+    end)
+  end
 end
 
-local function metadata_updater()
-  awful.spawn.easy_async_with_shell("sleep 0.15 && " .. playerctl .. " metadata xesam:title", function(title_state)
-    local title_state = title_state:gsub("\n", "")
-    if title_state == "" or title_state == "No players found" or title_state == "No player could handle this command" then
+local function metadata_updater(title_state, artist_state, album_state)
+  local function _title_updater(title_state)
+    if title_state == "" then
       artist.visible = false
       album.visible = false
       title:get_children_by_id("textbox")[1].text = "No media found"
     else
       title:get_children_by_id("textbox")[1].text = title_state
     end
-  end)
-  awful.spawn.easy_async_with_shell("sleep 0.15 && " .. playerctl .. " metadata xesam:artist", function(artist_state)
-    local artist_state = artist_state:gsub("\n", "")
-    if artist_state == "" or artist_state == "No players found" or artist_state == "No player could handle this command" then
+  end
+  local function _artist_updater(artist_state)
+    if artist_state == "" then
       artist.visible = false
     else
       artist.visible = true
       artist:get_children_by_id("textbox")[1].text = "By " .. artist_state
     end
-  end)
-  awful.spawn.easy_async_with_shell("sleep 0.15 && " .. playerctl .. " metadata xesam:album", function(album_state)
-    local album_state = album_state:gsub("\n", "")
-    if album_state == "" or album_state == "No players found" or album_state == "No player could handle this command" then
+  end
+  local function _album_updater(album_state)
+    if album_state == "" then
       album.visible = false
     else
       album.visible = true
       album:get_children_by_id("textbox")[1].text = "On " .. album_state
     end
-  end)
+  end
+  if title_state then
+    _title_updater(title_state)
+  else
+    awful.spawn.easy_async_with_shell("sleep 0.05 && " .. playerctl .. " metadata xesam:title", function(title_state)
+      _title_updater(title_state)
+    end)
+  end
+  if artist_state then
+    _artist_updater(artist_state)
+  else
+    awful.spawn.easy_async_with_shell("sleep 0.05 && " .. playerctl .. " metadata xesam:artist", function(artist_state)
+      _artist_updater(artist_state)
+    end)
+  end
+  if album_state then
+    _album_updater(album_state)
+  else
+    awful.spawn.easy_async_with_shell("sleep 0.05 && " .. playerctl .. " metadata xesam:album", function(album_state)
+      _album_updater(album_state)
+    end)
+  end
 end
 
-local function shuffle_updater()
-  awful.spawn.easy_async_with_shell("sleep 0.15 && " .. playerctl .. " shuffle", function(shuffle_state)
-    if shuffle_state:find("On") then
+local function shuffle_updater(shuffle_state)
+  local function _updater(shuffle_state)
+    if shuffle_state == "On" then
       shuffle:get_children_by_id("textbox")[1].text = "󰒝"
-    elseif shuffle_state:find("Off") then
+    elseif shuffle_state == "Off" then
       shuffle:get_children_by_id("textbox")[1].text = "󰒞"
     end
-  end)
+  end
+  if shuffle_state then
+    _updater(shuffle_state)
+  else
+    awful.spawn.easy_async_with_shell("sleep 0.05 && " .. playerctl .. " shuffle", function(shuffle_state)
+      _updater(shuffle_state)
+    end)
+  end
 end
 
-local function toggle_updater()
-  awful.spawn.easy_async_with_shell("sleep 0.15 && " .. playerctl .. " status", function(toggle_state)
-    if toggle_state:find("Playing") then
+local function toggle_updater(toggle_state)
+  local function _updater(toggle_state)
+    if toggle_state == "Playing" then
       toggle:get_children_by_id("textbox")[1].text = "󰏤"
-    elseif toggle_state:find("Paused") then
+    elseif toggle_state == "Paused" then
       toggle:get_children_by_id("textbox")[1].text = "󰐊"
     end
-  end)
+  end
+  if toggle_state then
+    _updater(toggle_state)
+  else
+    awful.spawn.easy_async_with_shell("sleep 0.05 && " .. playerctl .. " status", function(toggle_state)
+      _updater(toggle_state)
+    end)
+  end
 end
 
-local function loop_updater()
-  awful.spawn.easy_async_with_shell("sleep 0.15 && " .. playerctl .. " loop", function(loop_state)
-    if loop_state:find("None") then
+local function loop_updater(loop_state)
+  local function _updater(loop_state)
+    if loop_state == "None" then
       loop:get_children_by_id("textbox")[1].text = "󰑗"
-    elseif loop_state:find("Playlist") then
+    elseif loop_state == "Playlist" then
       loop:get_children_by_id("textbox")[1].text = "󰑖"
-    elseif loop_state:find("Track") then
+    elseif loop_state == "Track" then
       loop:get_children_by_id("textbox")[1].text = "󰑘"
     end
-  end)
+  end
+  if loop_state then
+    _updater(loop_state)
+  else
+    awful.spawn.easy_async_with_shell("sleep 0.05 && " .. playerctl .. " loop", function(loop_state)
+      _updater(loop_state)
+    end)
+  end
 end
 
 local position_set = true
@@ -292,38 +333,38 @@ local slider_update = false
 local slider_self_update = true
 
 -- This is terrible but it works. It gets a slider to update the players position without the position feeding back into the slider and causing recursion.
-local function position_updater(position_state)
-  awful.spawn.easy_async(playerctl .. " position", function(current)
-    local current = current:gsub("\n", "")
-    if current == "" or current == "No players found" or current == "No player could handle this command" then
+local function position_updater(position_state, current, length)
+  local function _updater(position_state, current, length)
+    if length == "" then
       position.visible = false
     else
       position.visible = true
-      awful.spawn.easy_async(playerctl .. " metadata mpris:length", function(length)
-        local length = length:gsub("\n", "")
-        if length == "" or length == "No players found" or length == "No player could handle this command" then
-          position.visible = false
-        else
-          if position_set == true then
-            if position_state then
-              awful.spawn(playerctl .. " position " .. h.round(((position_state * length) / 100000000), 3))
-            end
-          end
-          if slider_update == true then
-            slider_self_update = false
-            slider_update = false
-            position:get_children_by_id("slider")[1].value = h.round(((current * 100000000) / (length)), 3)
-          end
+      if position_set == true then
+        if position_state then
+          awful.spawn(playerctl .. " position " .. h.round(((position_state * length) / (100000000)), 3))
         end
-      end)
+      end
+      if slider_update == true then
+        slider_self_update = false
+        slider_update = false
+        position:get_children_by_id("slider")[1].value = h.round(((current * 100) / (length)), 3)
+      end
     end
-  end)
+  end
+  if (current and length) then
+    _updater(position_state, current, length)
+  else
+    awful.spawn.easy_async(playerctl .. " position", function(current)
+      awful.spawn.easy_async(playerctl .. " metadata mpris:length", function(length)
+        _updater(position_state, current, length)
+      end)
+    end)
+  end
 end
 
-local function volume_updater()
-  awful.spawn.easy_async(playerctl .. " volume", function(volume_state)
-    local volume_state = volume_state:gsub("\n", "")
-    if volume_state == "" or volume_state == "No players found" or volume_state == "No player could handle this command" then
+local function volume_updater(volume_state)
+  local function _updater(volume_state)
+    if volume_state == "" then
       volume.visible = false
       volume_icon.visible = false
     else
@@ -331,63 +372,79 @@ local function volume_updater()
       volume_icon.visible = true
       volume:get_children_by_id("slider")[1].value = h.round((volume_state * 100), 3)
     end
-  end)
+  end
+  if volume_state then
+    _updater(volume_state)
+  else
+    awful.spawn.easy_async(playerctl .. " volume", function(volume_state)
+      _updater(volume_state)
+    end)
+  end
 end
+
+-- Controlling functions
 
 local function shuffler()
   awful.spawn.easy_async(playerctl .. " shuffle", function(shuffle_state)
-    if shuffle_state:find("On") then
+    shuffle_state = shuffle_state:gsub("\n", "")
+    if shuffle_state == "On" then
       awful.spawn(playerctl .. " shuffle off")
       shuffle:get_children_by_id("textbox")[1].text = "󰒞"
-    elseif shuffle_state:find("Off") then
+    elseif shuffle_state == "Off" then
       awful.spawn(playerctl .. " shuffle on")
       shuffle:get_children_by_id("textbox")[1].text = "󰒝"
     end
   end)
 end
 
+local function previouser()
+  awful.spawn.easy_async(playerctl .. " previous", function()
+    art_image_updater()
+    metadata_updater()
+    toggle_updater()
+    loop_updater()
+    position_updater()
+  end)
+end
+
 local function toggler()
   awful.spawn.easy_async(playerctl .. " status", function(toggle_state)
-    if toggle_state:find("Playing") then
+    toggle_state = toggle_state:gsub("\n", "")
+    if toggle_state == "Playing" then
       awful.spawn(playerctl .. " pause")
       toggle:get_children_by_id("textbox")[1].text = "󰐊"
-    elseif toggle_state:find("Paused") then
+    elseif toggle_state == "Paused" then
       awful.spawn(playerctl .. " play")
       toggle:get_children_by_id("textbox")[1].text = "󰏤"
     end
   end)
 end
 
+local function nexter()
+  awful.spawn.easy_async(playerctl .. " next", function()
+    art_image_updater()
+    metadata_updater()
+    toggle_updater()
+    loop_updater()
+    position_updater()
+  end)
+end
+
 local function looper()
   awful.spawn.easy_async(playerctl .. " loop", function(loop_state)
-    if loop_state:find("None") then
+    loop_state = loop_state:gsub("\n", "")
+    if loop_state == "None" then
       awful.spawn(playerctl .. " loop Playlist")
       loop:get_children_by_id("textbox")[1].text = "󰑖"
-    elseif loop_state:find("Playlist") then
+    elseif loop_state == "Playlist" then
       awful.spawn(playerctl .. " loop Track")
       loop:get_children_by_id("textbox")[1].text = "󰑘"
-    elseif loop_state:find("Track") then
+    elseif loop_state == "Track" then
       awful.spawn(playerctl .. " loop None")
       loop:get_children_by_id("textbox")[1].text = "󰑗"
     end
   end)
 end
-
-local everything_updater = gears.timer {
-  timeout = 1,
-  autostart = true,
-  callback = function()
-    position_set = false
-    slider_update = true
-    art_image_updater()
-    metadata_updater()
-    toggle_updater()
-    shuffle_updater()
-    loop_updater()
-    position_updater()
-    volume_updater()
-  end,
-}
 
 local main = awful.popup {
   placement = awful.placement.centered,
@@ -406,7 +463,7 @@ local main = awful.popup {
     },
     {
       layout = wibox.layout.fixed.vertical,
-      {
+      { 
         layout = wibox.layout.fixed.horizontal,
         art_image,
         {
@@ -445,12 +502,7 @@ shuffle:connect_signal("button::press", function()
 end)
 
 prev:connect_signal("button::press", function()
-  awful.spawn(playerctl .. " previous")
-  art_image_updater()
-  metadata_updater()
-  toggle_updater()
-  loop_updater()
-  position_updater()
+  previouser()
 end)
 
 toggle:connect_signal("button::press", function()
@@ -458,12 +510,7 @@ toggle:connect_signal("button::press", function()
 end)
 
 next:connect_signal("button::press", function()
-  awful.spawn(playerctl .. " next")
-  art_image_updater()
-  metadata_updater()
-  toggle_updater()
-  loop_updater()
-  position_updater()
+  nexter()
 end)
 
 loop:connect_signal("button::press", function()
@@ -482,7 +529,19 @@ end)
 
 volume:get_children_by_id("slider")[1]:connect_signal("property::value", function(slider, volume_state)
   slider.value = volume_state
-	awful.spawn(playerctl .. " volume " .. h.round((volume_state / 100), 3))
+	awful.spawn(playerctl .. " volume " .. h.round(((volume_state) / (100)), 3))
+end)
+
+awesome.connect_signal("signal::playerctl", function(art_url, title, artist, album, shuffle, status, loop, position, length, volume)
+  art_image_updater(art_url)
+  metadata_updater(title, artist, album)
+  shuffle_updater(shuffle)
+  toggle_updater(status)
+  loop_updater(loop)
+  position_set = false
+  slider_update = true
+  position_updater(nil, position, length)
+  volume_updater(volume)
 end)
 
 local function signal()
@@ -505,4 +564,7 @@ return {
   metadata_updater = metadata_updater,
   loop_updater = loop_updater,
   position_updater = position_updater,
+  nexter = nexter,
+  toggler = toggler,
+  previouser = previouser,
 }

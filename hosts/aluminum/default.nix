@@ -13,7 +13,7 @@
         configurationLimit = 50;
       };
     };
-    kernelPackages = pkgs.linuxPackages_latest;
+    kernelPackages = pkgs.linuxKernel.packages.linux_zen;
     kernelModules = [ "rtl8821ce" ];
   };
 
@@ -49,7 +49,7 @@
     systemPackages = with pkgs; [
       dash bash
       nano unzip unrar p7zip curl wget git gvfs psmisc
-      htop sysstat iotop stress netcat lm_sensors
+      htop sysstat iotop stress netcat lm_sensors powertop
       networkmanager
     ];
     binsh = "${pkgs.dash}/bin/dash";
@@ -57,7 +57,23 @@
   };
 
   # Configs
-  services.journald.extraConfig = "SystemMaxUse=1G";
+  services = {
+    journald.extraConfig = "SystemMaxUse=1G";
+    thermald.enable = true;
+    tlp = {
+      enable = true;
+      settings = {
+        CPU_SCALING_GOVERNOR_ON_AC = "performance";
+        CPU_SCALING_GOVERNOR_ON_BAT = "powersave";
+        CPU_ENERGY_PERF_POLICY_ON_BAT = "power";
+        CPU_ENERGY_PERF_POLICY_ON_AC = "performance";
+        CPU_MIN_PERF_ON_AC = 0;
+        CPU_MAX_PERF_ON_AC = 100;
+        CPU_MIN_PERF_ON_BAT = 0;
+        CPU_MAX_PERF_ON_BAT = 50;
+      };
+    };
+  };
   hardware = {
     opengl = {
       enable = true;
@@ -67,6 +83,7 @@
       ];
     };
   };
+  powerManagement.enable = true;
   nix = {
     settings = {
       experimental-features = [ "nix-command" "flakes" ];
@@ -84,7 +101,7 @@
   };
 
   # Drives
-  # To be added
+  # 128 GB Internal (Root)
 
   system.stateVersion = "23.05";
 }

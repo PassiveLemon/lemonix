@@ -1,0 +1,7 @@
+require("signal.battery")
+require("signal.cpu")
+require("signal.memory")
+require("signal.network")
+require("signal.other")
+require("signal.playerctl")
+require("signal.volume")

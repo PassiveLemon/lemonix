@@ -1,7 +1,7 @@
 { inputs, outputs, pkgs, config, lib, ... }: {
   imports = [
     ./modules/customization.nix
-    ../../../common/usermodules/spicetify.nix
+    ../../../common/modules/spicetify.nix
   ];
 
   home = {
@@ -11,9 +11,9 @@
       tym lite-xl rofi hilbish vscodium github-desktop webcord-vencord imhex tauon sonixd
       haruna feh gimp authy xarchiver easyeffects audacity
       eza bat trashy fd ripgrep
-      pamixer playerctl appimage-run neofetch ventoy-bin act maim
+      brightnessctl pamixer playerctl appimage-run neofetch ventoy-bin act maim
       libsForQt5.kruler
-      mullvad-vpn
+      mullvad-vpn cloudflare-warp
     ];
     username = "lemon";
     homeDirectory = "/home/lemon";
@@ -26,8 +26,8 @@
         source = ./dots/.config/awesome/config;
         recursive = true;
       };
-      ".config/awesome/signals" = {
-        source = ./dots/.config/awesome/signals;
+      ".config/awesome/signal" = {
+        source = ./dots/.config/awesome/signal;
         recursive = true;
       };
       ".config/awesome/ui" = {
