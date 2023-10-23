@@ -60,6 +60,16 @@ awful.keyboard.append_global_keybindings {
   end,
   { description = "|| toggle mute", group = "control", }),
 
+  awful.key({ }, "XF86MonBrightnessUp", function()
+    awful.spawn("brightnessctl set 3%+")
+  end,
+  { description = "|| increase brightness", group = "control", }),
+
+  awful.key({ }, "XF86MonBrightnessDown", function()
+    awful.spawn("brightnessctl set 3%-")
+  end,
+  { description = "|| decrease brightness", group = "control", }),
+
   awful.key({ }, "XF86AudioNext", function()
     media.nexter()
   end,
