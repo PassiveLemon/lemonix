@@ -76,8 +76,12 @@ screen.connect_signal("request::desktop_decoration", function(s)
   local battery_text = h.text({
     halign = "left",
   })
-  awesome.connect_signal("signal::battery", function(cap)
-    battery_text:get_children_by_id("textbox")[1].text = cap .. "%"
+  local battery_etr = h.text({
+    halign = "left",
+  })
+  awesome.connect_signal("signal::battery", function(use, now, full)
+    battery_text:get_children_by_id("textbox")[1].text = h.round(((now / full) * 100), 0) .. "%"
+    battery_etr:get_children_by_id("textbox")[1].text = h.round(((full - now) / (use)), 1) .. " hours"
   end)
 
   -- Music
@@ -179,6 +183,8 @@ screen.connect_signal("request::desktop_decoration", function(s)
         battery_icon,
         sep,
         battery_text,
+        sep,
+        battery_etr,
         sep,
         bar,
         sep,
