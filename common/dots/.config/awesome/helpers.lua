@@ -183,17 +183,11 @@ end
 
 function helpers.round(number, place)
   local decimal = (10 ^ place)
-  return (math.floor((number * decimal) + (5 / decimal)) / decimal)
+  return (math.floor((number * decimal) + (0.5 / decimal)) / decimal)
 end
 
 function helpers.watch(com, time)
   local watch = helpers.text({
-    margins = {
-      top = 0,
-      right = 0,
-      bottom = 0,
-      left = 0,
-    },
     halign = "left"
   })
   awful.widget.watch(com, time, function(widget, stdout)
