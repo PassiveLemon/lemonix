@@ -73,11 +73,14 @@
         CPU_MAX_PERF_ON_BAT = 50;
       };
     };
-    logind.extraConfig = ''
-      HandlePowerKey=suspend
-      IdleAction=hybrid-sleep
-      IdleActionSec=30m
-    '';
+    logind = {
+      lidSwitch = "suspend-then-hibernate";
+      extraConfig = ''
+        HandlePowerKey=hibernate
+        IdleAction=suspend-then-hibernate
+        IdleActionSec=30m
+      '';
+    };
   };
   hardware = {
     opengl = {
