@@ -196,7 +196,6 @@ screen.connect_signal("request::desktop_decoration", function(s)
       },
       { -- Right
         layout = wibox.layout.fixed.horizontal,
-        h.watch([[bash -c "[ \"$(xset q | grep Caps | awk '{print $4}')\" = \"on\" ] && echo '<span underline=\"single\">A</span>a' || echo 'A<span underline=\"single\">a</span>'"]], 0.125),
         sep,
         bar,
         sep,
