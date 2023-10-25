@@ -70,16 +70,8 @@
         CPU_MIN_PERF_ON_AC = 0;
         CPU_MAX_PERF_ON_AC = 100;
         CPU_MIN_PERF_ON_BAT = 0;
-        CPU_MAX_PERF_ON_BAT = 50;
+        CPU_MAX_PERF_ON_BAT = 40;
       };
-    };
-    logind = {
-      lidSwitch = "suspend-then-hibernate";
-      extraConfig = ''
-        HandlePowerKey=hibernate
-        IdleAction=suspend-then-hibernate
-        IdleActionSec=30m
-      '';
     };
   };
   hardware = {

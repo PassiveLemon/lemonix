@@ -22,11 +22,20 @@
           accelSpeed = "-0.5";
         };
         touchpad = {
+          buttonMapping = "1 1 3 4 5 6 7";
           middleEmulation = false;
           accelProfile = "flat";
           naturalScrolling = true;
         };
       };
+    };
+    logind = {
+      lidSwitch = "suspend-then-hibernate";
+      extraConfig = ''
+        HandlePowerKey=hibernate
+        IdleAction=suspend-then-hibernate
+        IdleActionSec=30m
+      '';
     };
     pipewire = {
       enable = true;
