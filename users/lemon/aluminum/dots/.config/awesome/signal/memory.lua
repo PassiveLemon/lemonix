@@ -31,4 +31,4 @@ local memory_timer = gears.timer {
   end,
 }
 
-return { memory = memory }
+return { memory = memory, }

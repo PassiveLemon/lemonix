@@ -34,5 +34,5 @@ local playerctl_timer = gears.timer {
   end,
 }
 
-return { playerctl = playerctl }
+return { playerctl = playerctl, }
 

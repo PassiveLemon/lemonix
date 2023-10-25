@@ -25,4 +25,4 @@ local volume_timer = gears.timer {
   end,
 }
 
-return { volume = volume }
+return { volume = volume, }

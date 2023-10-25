@@ -28,4 +28,4 @@ local charge_timer = gears.timer {
   end,
 }
 
-return { charge = charge }
+return { charge = charge, }

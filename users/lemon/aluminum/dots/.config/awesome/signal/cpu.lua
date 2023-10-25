@@ -25,4 +25,4 @@ local cpu_timer = gears.timer {
   end,
 }
 
-return { cpu = cpu }
+return { cpu = cpu, }

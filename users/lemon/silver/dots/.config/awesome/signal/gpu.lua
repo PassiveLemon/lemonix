@@ -28,4 +28,4 @@ local gpu_timer = gears.timer {
   end,
 }
 
-return { gpu = gpu }
+return { gpu = gpu, }
