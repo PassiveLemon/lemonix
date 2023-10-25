@@ -14,29 +14,29 @@ local caps = require("signal.caps")
 -- Keybindings
 --
 
-modkey = "Mod4"
+super = "Mod4" -- Windows key
 
 awful.keyboard.append_global_keybindings {
-  awful.key({ modkey, "Control", }, "r", awesome.restart,
+  awful.key({ super, "Control", }, "r", awesome.restart,
   { description = "|| reload awesome", group = "awesome", }),
 
   -- Launcher
-  awful.key({ modkey, }, "Return", function() awful.spawn(terminal) end,
+  awful.key({ super, }, "Return", function() awful.spawn(terminal) end,
   { description = "|| open a terminal", group = "launcher", }),
 
-  awful.key({ modkey, }, "space", function() awful.spawn("rofi -show drun -theme " .. os.getenv("HOME") .. "/.config/rofi/lemon.rasi -show-icons") end,
+  awful.key({ super, }, "space", function() awful.spawn("rofi -show drun -theme " .. os.getenv("HOME") .. "/.config/rofi/lemon.rasi -show-icons") end,
   { description = "|| run rofi", group = "launcher", }),
 
-  awful.key({ modkey, }, "t", function() launcher.signal() end,
+  awful.key({ super, }, "t", function() launcher.signal() end,
   { description = "|| run launcher", group = "launcher", }),
 
-  awful.key({ modkey, }, "c", function() media.signal() end,
+  awful.key({ super, }, "c", function() media.signal() end,
   { description = "|| run media player", group = "launcher", }),
 
-  awful.key({ modkey, }, "v", function() power.signal() end,
+  awful.key({ super, }, "v", function() power.signal() end,
   { description = "|| run powermenu", group = "launcher", }),
 
-  awful.key({ modkey, }, "x", function() resource.signal() end,
+  awful.key({ super, }, "x", function() resource.signal() end,
   { description = "|| run resource monitor", group = "launcher", }),
 
   -- Control
@@ -77,14 +77,14 @@ awful.keyboard.append_global_keybindings {
   { description = "|| toggle play", group = "control", }),
 
   -- Utility
-  awful.key({ modkey, }, "s", hotkeys_popup.show_help,
+  awful.key({ super, }, "s", hotkeys_popup.show_help,
   { description = "|| show help", group = "utility", }),
 
   awful.key({ }, "Print", function() awful.spawn("flameshot gui") end,
   { description = "|| flameshot", group = "utility", }),
 
   awful.key {
-    modifiers   = { modkey, "Mod1" },
+    modifiers   = { super, "Mod1" },
     keygroup    = "numrow",
     description = "|| enable crosshair",
     group       = "utility",
@@ -95,7 +95,7 @@ awful.keyboard.append_global_keybindings {
 
   -- Tag
   awful.key {
-    modifiers   = { modkey, },
+    modifiers   = { super, },
     keygroup    = "numrow",
     description = "|| switch to tag",
     group       = "tag",
@@ -109,7 +109,7 @@ awful.keyboard.append_global_keybindings {
   },
 
   awful.key {
-    modifiers   = { modkey, "Control", },
+    modifiers   = { super, "Control", },
     keygroup    = "numrow",
     description = "|| toggle tag",
     group       = "tag",
@@ -123,7 +123,7 @@ awful.keyboard.append_global_keybindings {
   },
 
   awful.key {
-    modifiers = { modkey, "Shift", },
+    modifiers = { super, "Shift", },
     keygroup    = "numrow",
     description = "|| move focused client to tag",
     group       = "tag",
@@ -145,16 +145,16 @@ awful.keyboard.append_global_keybindings {
 
   -- Client
   awful.keyboard.append_client_keybindings {
-    awful.key({ modkey, }, "Escape", function(c) c:kill() end,
+    awful.key({ super, }, "Escape", function(c) c:kill() end,
     { description = "|| close", group = "client", }),
 
-    awful.key({ modkey, }, "f",  awful.client.floating.toggle,
+    awful.key({ super, }, "f",  awful.client.floating.toggle,
     { description = "|| toggle floating", group = "client", }),
 
-    awful.key({ modkey, }, "n", function(c) c.minimized = true end,
+    awful.key({ super, }, "n", function(c) c.minimized = true end,
     { description = "|| minimize", group = "client", }),
   
-    awful.key({ modkey, }, "m",
+    awful.key({ super, }, "m",
       function(c)
           c.fullscreen = not c.fullscreen
           c:raise()
@@ -172,10 +172,10 @@ client.connect_signal( "request::default_mousebindings", function()
     awful.button({ }, 1, function(c)
       c:activate { context = "mouse_click", }
     end),
-    awful.button({ modkey }, 1, function(c)
+    awful.button({ super }, 1, function(c)
       c:activate { context = "mouse_click", action = "mouse_move", }
     end),
-    awful.button({ modkey }, 3, function(c)
+    awful.button({ super }, 3, function(c)
       c:activate { context = "mouse_click", action = "mouse_resize", }
     end),
   }
