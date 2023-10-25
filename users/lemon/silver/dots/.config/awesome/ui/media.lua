@@ -277,9 +277,10 @@ end
 
 local function shuffle_updater(shuffle_state)
   local function _updater(shuffle_state)
-    if shuffle_state == "On" then
+    -- Returning true or false when using metadata -f seems to be a bug? It's been reported upstream.
+    if shuffle_state == "On" or shuffle_state == "true" then
       shuffle:get_children_by_id("textbox")[1].text = "󰒝"
-    elseif shuffle_state == "Off" then
+    elseif shuffle_state == "Off" or shuffle_state == "false" then
       shuffle:get_children_by_id("textbox")[1].text = "󰒞"
     end
   end
@@ -547,9 +548,11 @@ end)
 local function signal()
   art_image_updater()
   metadata_updater()
-  toggle_updater()
   shuffle_updater()
+  toggle_updater()
   loop_updater()
+  position_set = false
+  slider_update = true
   position_updater()
   volume_updater()
   main.visible = not main.visible
