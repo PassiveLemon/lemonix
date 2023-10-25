@@ -1,25 +1,38 @@
 local awful = require("awful")
 local gears = require("gears")
 
+local caps_cache
+
 local function emit(caps)
   awesome.emit_signal('signal::caps', caps)
 end
 
-local function caps()
-  awful.spawn.easy_async_with_shell("sleep 0.2 && xset q | grep Caps | awk '{print $4}'", function(caps)
+local function caps_query()
+  awful.spawn.easy_async_with_shell("xset q | grep Caps | awk '{print $4}'", function(caps)
     local caps = caps:gsub("\n", "")
+    caps_cache = caps
     emit(caps)
   end)
 end
 
-local caps_timer = gears.timer {
-  timeout = 2,
+local function caps()
+  if caps_cache == "on" then
+    caps_cache = "off"
+    emit(caps_cache)
+  elseif caps_cache == "off" then
+    caps_cache = "on"
+    emit(caps_cache)
+  end
+end
+
+local caps_query_timer = gears.timer {
+  timeout = 0.5,
   autostart = true,
   callback = function()
-    caps()
+    caps_query()
   end,
 }
 
-caps()
+caps_query()
 
-return { caps = caps }
+return { caps = caps, }
