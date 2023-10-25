@@ -8,6 +8,7 @@ local power = require("ui.power")
 local resource = require("ui.resource")
 local crosshair = require("ui.crosshair")
 local volume = require("signal.volume")
+local caps = require("signal.caps")
 
 --
 -- Keybindings
@@ -135,6 +136,12 @@ awful.keyboard.append_global_keybindings {
       end
     end,
   },
+
+  -- Misc
+  awful.key({ }, "Caps_Lock", function()
+    caps.caps()
+  end,
+  { description = "|| caps lock", group = "misc", }),
 
   -- Client
   awful.keyboard.append_client_keybindings {
