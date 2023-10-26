@@ -124,6 +124,10 @@
     };
     bluetooth.enable = true;
   };
+  zramSwap = {
+    enable = true;
+    memoryPercent = 17;
+  };
   nix = {
     settings = {
       experimental-features = [ "nix-command" "flakes" ];
