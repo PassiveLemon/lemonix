@@ -29,14 +29,12 @@
         };
       };
     };
-    logind = {
-      lidSwitch = "suspend-then-hibernate";
-      extraConfig = ''
-        HandlePowerKey=hibernate
-        IdleAction=suspend-then-hibernate
-        IdleActionSec=30m
-      '';
-    };
+    logind.extraConfig = ''
+      HandlePowerKey=hibernate
+      HandleLidSwitch=suspend-then-hibernate
+      IdleAction=suspend-then-hibernate
+      IdleActionSec=15m
+    '';
     pipewire = {
       enable = true;
       pulse.enable = true;
