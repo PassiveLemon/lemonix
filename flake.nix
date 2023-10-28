@@ -11,7 +11,7 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
     nixpkgs-f2k = {
-      url = "github:fortuneteller2k/nixpkgs-f2k";
+      url = "github:moni-dz/nixpkgs-f2k";
       inputs.nixpkgs.follows = "nixpkgs";
     };
     nix-gaming = {
