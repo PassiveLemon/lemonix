@@ -81,7 +81,7 @@ screen.connect_signal("request::desktop_decoration", function(s)
   })
   awesome.connect_signal("signal::battery", function(use, now, full)
     battery_text:get_children_by_id("textbox")[1].text = h.round(((now / full) * 100), 0) .. "%"
-    battery_etr:get_children_by_id("textbox")[1].text = h.round(((full - now) / (use)), 1) .. " hours"
+    battery_etr:get_children_by_id("textbox")[1].text = h.round((now / use), 1) .. " hours"
   end)
 
   -- Music
