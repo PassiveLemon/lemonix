@@ -6,7 +6,7 @@
     xonotic runelite
     yuzu-mainline
     bottles lutris
-    pkgs.master.wineWowPackages.stagingFull gamemode protonup-ng dxvk
+    master.wineWowPackages.stagingFull gamemode protonup-ng dxvk
     ludusavi
   ];
   #services.archisteamfarm = {
