@@ -30,10 +30,10 @@
       };
     };
     logind.extraConfig = ''
-      HandlePowerKey=hibernate
+      HandlePowerKey=suspend
       HandleLidSwitch=suspend-then-hibernate
       IdleAction=suspend-then-hibernate
-      IdleActionSec=15m
+      IdleActionSec=60m
     '';
     pipewire = {
       enable = true;
