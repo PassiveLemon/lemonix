@@ -10,7 +10,7 @@
     packages = with pkgs; [
       i3lock-fancy-rapid
       firefox pcmanfm gparted pavucontrol helvum
-      tym lite-xl rofi hilbish vscodium github-desktop webcord-vencord imhex tauon
+      tym lite-xl rofi hilbish vscodium github-desktop master.webcord-vencord imhex tauon
       haruna feh gimp authy xarchiver filezilla easytag easyeffects soundux flowblade audacity qbittorrent
       eza bat trashy fd ripgrep
       pamixer playerctl appimage-run neofetch ventoy-bin act maim headsetcontrol
