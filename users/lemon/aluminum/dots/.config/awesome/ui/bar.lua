@@ -79,9 +79,18 @@ screen.connect_signal("request::desktop_decoration", function(s)
   local battery_etr = h.text({
     halign = "left",
   })
-  awesome.connect_signal("signal::battery", function(use, now, full)
+  awesome.connect_signal("signal::power", function(ac, use, now, full)
     battery_text:get_children_by_id("textbox")[1].text = h.round(((now / full) * 100), 0) .. "%"
-    battery_etr:get_children_by_id("textbox")[1].text = h.round((now / use), 1) .. " hours"
+    local _etr = h.round((now / use), 1)
+    if ac == "1" then
+      battery_etr:get_children_by_id("textbox")[1].text = " Charging"
+    else
+      if _etr < 1 then
+        battery_etr:get_children_by_id("textbox")[1].text = (_etr * 60) .. " mins"
+      else
+        battery_etr:get_children_by_id("textbox")[1].text = _etr .. " hours"
+      end
+    end
   end)
 
   -- Music
@@ -94,6 +103,17 @@ screen.connect_signal("request::desktop_decoration", function(s)
     else
       music_icon:get_children_by_id("textbox")[1].text = ""
     end
+  end)
+
+  -- Brightness
+  local light_icon = h.text({
+    text = "󰌵",
+  })
+  local light_text = h.text({
+    halign = "left",
+  })
+  awesome.connect_signal("signal::brightness", function(cur, max)
+    light_text:get_children_by_id("textbox")[1].text = h.round(((cur / max) * 100), 0) .. "%"
   end)
 
   -- Volume
@@ -196,6 +216,10 @@ screen.connect_signal("request::desktop_decoration", function(s)
       },
       { -- Right
         layout = wibox.layout.fixed.horizontal,
+        sep,
+        light_icon,
+        sep,
+        light_text,
         sep,
         bar,
         sep,

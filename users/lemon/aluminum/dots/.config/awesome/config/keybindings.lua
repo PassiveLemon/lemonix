@@ -8,6 +8,7 @@ local power = require("ui.power")
 local resource = require("ui.resource")
 local crosshair = require("ui.crosshair")
 local volume = require("signal.volume")
+local brightness = require("signal.brightness")
 
 --
 -- Keybindings
@@ -61,12 +62,16 @@ awful.keyboard.append_global_keybindings {
   { description = "|| toggle mute", group = "control", }),
 
   awful.key({ }, "XF86MonBrightnessUp", function()
-    awful.spawn("brightnessctl set 3%+")
+    awful.spawn.easy_async("brightnessctl set 3%+", function()
+      brightness.brightness()
+    end)
   end,
   { description = "|| increase brightness", group = "control", }),
 
   awful.key({ }, "XF86MonBrightnessDown", function()
-    awful.spawn("brightnessctl set 3%-")
+    awful.spawn.easy_async("brightnessctl set 3%-", function()
+      brightness.brightness()
+    end)
   end,
   { description = "|| decrease brightness", group = "control", }),
 
