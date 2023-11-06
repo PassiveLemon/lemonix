@@ -7,17 +7,15 @@ These are my dotfiles for my NixOS system. I like using Lua so a lot of the conf
 ## Features </br>
 * NixOS system flake with Home-Manager. Based around a single user for each host.
 * Extensible modules. System customization, Spicetify, picom, etc.
-* Bspwm configuration with Sxhkd, Polybar, Dunst.
 * AwesomeWM configuration with Wibar, Naughty and extra UI elements: Music player, powermenu, resource monitor.
 * Tym terminal with Hilbish as the terminal shell. Bash is the default user shell and Dash is the system shell.
 * Lite XL as the primary editor with plugins and VSCodium for other needs.
+* Custom color theme with inspiration from One Dark.
 * Rofi theme to match the Awesome theme.
 * Discord theme with BetterDiscord CSS.
-* Htop, Neofetch.
-* System theme to match the Matcha Dark Aliz GTK theme.
 * Volantes Cursors
 * Papirus Icons
 
 ## Install </br>
-Use the Installer.sh script in other. I will not guarantee that it works because stuff changes so much and I don't often remember to update it. It's also designed for MY use case so you will have to modify stuff to get it to work in your case. I WILL NOT help with this. </br>
+Use the Installer.sh script and follow the guide in /other. I will not guarantee that it works because stuff changes so much and I don't often remember to update it. It's also designed for MY use case so you will have to modify stuff to get it to work in your case. I WILL NOT help with this. </br>
 
