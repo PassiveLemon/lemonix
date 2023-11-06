@@ -31,20 +31,23 @@
     pkgs = import nixpkgs { inherit system; };
     specialArgs = { inherit self inputs; };
     extraSpecialArgs = specialArgs;
+    config = {
+      allowUnfree = true;
+    };
     nixpkgs-overlays = ({ inputs, outputs, config, system, ... }: {
       nixpkgs.overlays = [
         (final: _prev: {
           stable = import inputs.nixos {
             system = final.system;
-            config.allowUnfree = true;
+            config = final.config;
           };
           unstable = import inputs.nixpkgs {
             system = final.system;
-            config.allowUnfree = true;
+            config = final.config;
           };
           master = import inputs.master {
             system = final.system;
-            config.allowUnfree = true;
+            config = final.config;
           };
         })
       ];
