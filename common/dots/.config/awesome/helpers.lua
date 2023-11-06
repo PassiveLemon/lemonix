@@ -7,7 +7,7 @@ local helpers = { }
 
 function helpers.text(conf)
   conf = conf or { }
-  local text = wibox.widget {
+  local text = wibox.widget({
     id = "margin",
     widget = wibox.container.margin,
     margins = {
@@ -29,6 +29,8 @@ function helpers.text(conf)
         {
           id = "textbox",
           widget = wibox.widget.textbox,
+          forced_width = conf.x,
+          forced_height = conf.y,
           markup = conf.markup,
           text = conf.text,
           font = conf.font or b.sysfont(10),
@@ -43,14 +45,14 @@ function helpers.text(conf)
         },
       }
     },
-  }
+  })
   return text
 end
 
 function helpers.button(conf)
   -- Same as h.text, just with hover signals.
   conf = conf or { }
-  local button = wibox.widget {
+  local button = wibox.widget({
     id = "margin",
     widget = wibox.container.margin,
     margins = {
@@ -86,10 +88,10 @@ function helpers.button(conf)
         },
       }
     },
-  }
+  })
   button:get_children_by_id("background")[1]:connect_signal("mouse::enter", function()
     button:get_children_by_id("background")[1].fg = conf.fg_focus or b.fg_focus
-    button:get_children_by_id("background")[1].bg = conf.bg or b.bg_minimize
+    button:get_children_by_id("background")[1].bg = conf.bg_focus or b.bg_minimize
   end)
   button:get_children_by_id("background")[1]:connect_signal("mouse::leave", function()
     button:get_children_by_id("background")[1].fg = conf.fg or b.fg_normal
@@ -100,7 +102,7 @@ end
 
 function helpers.slider(conf)
   conf = conf or { }
-  local slider = wibox.widget {
+  local slider = wibox.widget({
     id = "margin",
     widget = wibox.container.margin,
     margins = {
@@ -130,7 +132,7 @@ function helpers.slider(conf)
         bar_active_color = conf.bar_active_color or b.fg0,
       },
     },
-  }
+  })
   slider:get_children_by_id("background")[1]:connect_signal("mouse::enter", function()
     slider:get_children_by_id("slider")[1].handle_width = conf.handle_width
     slider:get_children_by_id("slider")[1].bar_active_color = conf.bar_active_color or b.fg0
@@ -144,7 +146,7 @@ end
 
 function helpers.progressbar(conf)
   conf = conf or { }
-  local progressbar = wibox.widget {
+  local progressbar = wibox.widget({
     id = "margin",
     widget = wibox.container.margin,
     margins = {
@@ -177,7 +179,7 @@ function helpers.progressbar(conf)
         forced_height = conf.forced_height,
       },
     },
-  }
+  })
   return progressbar
 end
 
@@ -186,10 +188,8 @@ function helpers.round(number, place)
   return (math.floor((number * decimal) + (0.5 / decimal)) / decimal)
 end
 
-function helpers.watch(com, time)
-  local watch = helpers.text({
-    halign = "left"
-  })
+function helpers.watch(com, time, conf)
+  local watch = helpers.text(conf)
   awful.widget.watch(com, time, function(widget, stdout)
     watch:get_children_by_id("textbox")[1].markup = stdout:gsub("\n", "")
   end)
