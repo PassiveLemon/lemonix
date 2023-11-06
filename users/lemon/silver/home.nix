@@ -8,23 +8,22 @@
 
   home = {
     packages = with pkgs; [
-      i3lock-fancy-rapid
-      firefox pcmanfm gparted pavucontrol helvum
-      tym lite-xl rofi hilbish vscodium github-desktop master.webcord-vencord imhex tauon
-      haruna feh gimp authy xarchiver filezilla easytag easyeffects soundux flowblade audacity qbittorrent
+      i3lock-fancy-rapid firefox pcmanfm xarchiver gparted
+      tym hilbish lite-xl rofi vscodium obsidian github-desktop imhex act
+      easyeffects pavucontrol helvum mpv tauon feishin audacity easytag
+      flowblade haruna feh gimp
+      master.webcord-vencord authy filezilla qbittorrent
       eza bat trashy fd ripgrep
-      pamixer playerctl appimage-run neofetch ventoy-bin act maim headsetcontrol
+      pamixer playerctl appimage-run neofetch ventoy-bin headsetcontrol
       libsForQt5.kruler
       mullvad-vpn
+      maim slop xdotool
 
       # Development
-      (python311.withPackages(ps: with ps; [ pip pillow evdev pyyaml pynput colorama ]))
       jq
-      stdenvNoCC gnumake gnat13 nodejs_16 rustup
-      go
+      (python311.withPackages(ps: with ps; [ pip pillow evdev pyyaml pynput colorama ]))
       dotnet-sdk
       libtifiles2 libticonv libticalcs2 libticables2
-      maim slop xdotool
 
       # Custom
       (callPackage ../../../pkgs/corrupter { })
@@ -106,7 +105,7 @@
       };
     };
     desktopEntries = {
-      discord = { # Launcher Webcord with CSS theme as a Discord alias
+      discord = { # Alias Discord to Webcord with CSS skin
         name = "Discord";
         exec = "webcord -- --add-css-theme=/home/lemon/.config/BetterDiscord/themes/Lemon.theme.css";
         icon = "/home/lemon/.icons/Papirus/32x32/apps/webcord.svg";
@@ -130,11 +129,7 @@
     allowUnfree = true;
     allowUnfreePredicate = (_: true);
     permittedInsecurePackages = [
-      "openssl-1.1.1u"
-      "nodejs-16.20.2"
-      "nodejs-16.20.0"
-      "python-2.7.18.6"
-      "electron-19.0.7"
+      "electron-24.8.6" # Feishin
     ];
   };
 }
