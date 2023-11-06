@@ -5,9 +5,9 @@ local wibox = require("wibox")
 
 local h = require("helpers")
 local click_to_hide = require("modules.click_to_hide")
-local fancy_taglist = require("modules.fancy_taglist")
 
 local volume = require("signal.volume")
+local media = require("ui.media")
 local panel = require("ui.panel")
 
 --
@@ -15,81 +15,66 @@ local panel = require("ui.panel")
 --
 
 screen.connect_signal("request::desktop_decoration", function(s)
-  awful.tag({ "", "", "", }, s, awful.layout.layouts[1])
-
-  -- Separator bar
-  local bar = h.text({
-    text = "│",
-  })
+  awful.tag({ "1", "2", "3", }, s, awful.layout.layouts[1])
 
   -- Space
-  local sep = h.text({
+  local sep1 = h.text({
     text = " ",
   })
 
-  -- Percent
-  local perc = h.text({
-    text = "%",
+  local sep2 = h.text({
+    bg = b.bg2,
+    text = " ",
   })
-
+  
   -- CPU
   local cpu_icon = h.text({
     margins = {
-      right = 1,
+      right = 3,
       bottom = 2,
     },
+    bg = b.bg2,
     text = "",
     font = b.sysfont(15),
   })
   local cpu_text = h.text({
+    margins = {
+      left = 3,
+    },
+    bg = b.bg2,
     halign = "left",
   })
   awesome.connect_signal("signal::cpu", function(use, temp)
     cpu_text:get_children_by_id("textbox")[1].text = use .. "%"
   end)
 
-  -- GPU
-  local gpu_icon = h.text({
-    text = "󰢮",
-    font = b.sysfont(18),
-  })
-  local gpu_text = h.text({
-    halign = "left",
-  })
-  awesome.connect_signal("signal::gpu", function(use, temp)
-    gpu_text:get_children_by_id("textbox")[1].text = use .. "%"
-  end)
-
   -- Memory
   local memory_icon = h.text({
     margins = {
-      right = 2,
+      right = 3,
       bottom = 2,
     },
+    bg = b.bg2,
     text = "",
     font = b.sysfont(15),
   })
   local memory_text = h.text({
+    margins = {
+      left = 3,
+    },
+    bg = b.bg2,
     halign = "left",
   })
   awesome.connect_signal("signal::memory", function(use, use_perc, cache, cache_perc)
     memory_text:get_children_by_id("textbox")[1].text = use_perc .. "%"
   end)
 
-  -- Music
-  local music_icon = h.text({
-    text = "󰎈",
-  })
-  awesome.connect_signal("signal::playerctl", function(_, _, _, _, _, status)
-    if status == "Playing" then
-      music_icon:get_children_by_id("textbox")[1].text = "󰎈"
-    else
-      music_icon:get_children_by_id("textbox")[1].text = ""
-    end
-  end)
-
   -- Caps lock
   local caps_icon = h.text({
+    margins = {
+      left = 3,
+    },
+    bg = b.bg2,
     markup = 'A<span underline="single">a</span>',
   })
   awesome.connect_signal("signal::caps", function(caps)
@@ -103,64 +88,286 @@ screen.connect_signal("request::desktop_decoration", function(s)
   -- Volume
   local volume_icon = h.text({
     margins = {
-      bottom = 1,
+      right = 3,
     },
-    text = "󰕾",
-    font = b.sysfont(14),
+    bg = b.bg2,
+    text = "󰖀",
   })
   local volume_text = h.text({
     halign = "left",
   })
   awesome.connect_signal("signal::volume", function(value)
-    volume_text:get_children_by_id("textbox")[1].text = value .. ""
+    if value == "Muted" then
+      volume_icon:get_children_by_id("textbox")[1].text = "󰝟"
+      volume_icon:get_children_by_id("textbox")[1].font = b.sysfont(17)
+      volume_text:get_children_by_id("textbox")[1].text = "Muted"
+    elseif value < "33" then
+      volume_icon:get_children_by_id("textbox")[1].text = "󰕿"
+      volume_icon:get_children_by_id("textbox")[1].font = b.sysfont(9)
+      volume_text:get_children_by_id("textbox")[1].text = value .. ""
+    elseif value < "67" then
+      volume_icon:get_children_by_id("textbox")[1].text = "󰖀"
+      volume_icon:get_children_by_id("textbox")[1].font = b.sysfont(13)
+      volume_text:get_children_by_id("textbox")[1].text = value .. ""
+    else
+      volume_icon:get_children_by_id("textbox")[1].text = "󰕾"
+      volume_icon:get_children_by_id("textbox")[1].font = b.sysfont(15)
+      volume_text:get_children_by_id("textbox")[1].text = value .. ""
+    end
   end)
 
-  -- Calendar
-  local calendar_icon = h.text({
+  -- Internet
+  local wifi_icon = h.text({
     margins = {
-      bottom = 3,
+      right = 3,
+      left = 3,
     },
-    text = "󰸗",
+    bg = b.bg2,
+    text = "󰤨",
     font = b.sysfont(14),
   })
 
-  -- Clock
-  local clock_icon = h.text({
+  -- Pills
+  local pill_nixos = h.button({
     margins = {
-      bottom = 1,
+      right = 2,
+      left = 4,
     },
-    text = "󰥔",
-    font = b.sysfont(14),
+    x = 24,
+    y = 24,
+    bg = b.bg2,
+    shape = gears.shape.circle,
+    text = "",
+    font = b.sysfont(16),
+    bg_focus = b.bg4,
   })
 
-  local layoutbox = h.text({
-    x = 26,
-    y = 26, 
-    image = b.layout_dwindle,
+  local pill_cpu = wibox.widget({
+    layout = wibox.layout.margin,
+    margins = {
+      right = 2,
+      left = 2,
+    },
+    {
+      widget = wibox.container.place,
+      valign = "center",
+      halign = "center",
+      forced_height = 24,
+      {
+        widget = wibox.container.background,
+        bg = b.bg2,
+        shape = gears.shape.rounded_bar,
+        forced_height = 24,
+        {
+          layout = wibox.layout.fixed.horizontal,
+          sep2,
+          cpu_icon,
+          cpu_text,
+          sep2,
+        },
+      },
+    },
   })
 
-  s.fancy_taglist = fancy_taglist.new {
+  local pill_memory = wibox.widget({
+    layout = wibox.layout.margin,
+    margins = {
+      right = 2,
+      left = 2,
+    },
+    {
+      widget = wibox.container.place,
+      valign = "center",
+      halign = "center",
+      forced_height = 24,
+      {
+        widget = wibox.container.background,
+        bg = b.bg2,
+        shape = gears.shape.rounded_bar,
+        forced_height = 24,
+        {
+          layout = wibox.layout.fixed.horizontal,
+          sep2,
+          memory_icon,
+          memory_text,
+          sep2,
+        },
+      },
+    },
+  })
+
+  local pill_music = h.button({
+    margins = {
+      right = 2,
+      left = 2,
+    },
+    x = 24,
+    y = 24,
+    bg = b.bg2,
+    shape = gears.shape.circle,
+    text = "󰎈",
+    bg_focus = b.bg4,
+  })
+  awesome.connect_signal("signal::playerctl", function(_, _, _, _, _, status)
+    if status == "Playing" then
+      pill_music.visible = true
+    else
+      pill_music.visible = false
+    end
+  end)
+
+  local pill_utils = wibox.widget({
+    layout = wibox.layout.margin,
+    margins = {
+      right = 2,
+      left = 2,
+    },
+    {
+      widget = wibox.container.place,
+      valign = "center",
+      halign = "center",
+      forced_height = 24,
+      {
+        widget = wibox.container.background,
+        bg = b.bg2,
+        shape = gears.shape.rounded_bar,
+        forced_height = 24,
+        {
+          layout = wibox.layout.fixed.horizontal,
+          sep2,
+          volume_icon,
+          wifi_icon,
+          caps_icon,
+          sep2,
+        },
+      },
+    },
+  })
+
+  local pill_date = wibox.widget({
+    layout = wibox.layout.margin,
+    margins = {
+      right = 2,
+      left = 2,
+    },
+    {
+      widget = wibox.container.place,
+      valign = "center",
+      halign = "center",
+      forced_height = 24,
+      {
+        widget = wibox.container.background,
+        bg = b.bg2,
+        shape = gears.shape.rounded_bar,
+        forced_height = 24,
+        {
+          layout = wibox.layout.fixed.horizontal,
+          sep2,
+          h.watch("date +'%a %b %-d'", 60, {
+            bg = b.bg2,
+            halign = "left",
+          }),
+          sep2,
+        },
+      },
+    },
+  })
+
+  local pill_time = wibox.widget({
+    layout = wibox.layout.margin,
+    margins = {
+      right = 4,
+      left = 2,
+    },
+    {
+      widget = wibox.container.place,
+      valign = "center",
+      halign = "center",
+      forced_height = 24,
+      {
+        widget = wibox.container.background,
+        bg = b.bg2,
+        shape = gears.shape.rounded_bar,
+        forced_height = 24,
+        {
+          layout = wibox.layout.fixed.horizontal,
+          sep2,
+          h.watch("date +'%-I:%M %p'", 3, {
+            bg = b.bg2,
+            halign = "left",
+          }),
+          sep2,
+        },
+      },
+    },
+  })
+
+  s.taglist = awful.widget.taglist({
     screen = s,
-    taglist_buttons = {
+    filter = awful.widget.taglist.filter.all,
+    buttons = {
       awful.button({ }, 1, function(t) t:view_only() end),
       awful.button({ }, 3, awful.tag.viewtoggle),
       awful.button({ }, 4, function(t) awful.tag.viewnext(t.screen) end),
       awful.button({ }, 5, function(t) awful.tag.viewprev(t.screen) end),
     },
-    tasklist_buttons = {
-      awful.button({ }, 1, function (c)
-        c:activate { context = "tasklist", action = "toggle_minimization", }
-      end),
-      awful.button({ }, 4, function() awful.client.focus.byidx(1) end),
-      awful.button({ }, 5, function() awful.client.focus.byidx(-1) end),
+    layout = {
+      layout = wibox.layout.fixed.horizontal,
+      spacing = 0,
     },
-  }
+    widget_template = {
+      widget = wibox.container.place,
+      valign = "center",
+      halign = "center",
+      forced_height = 24,
+      {
+        widget = wibox.container.background,
+        bg = b.bg2,
+        {
+          layout = wibox.layout.fixed.horizontal,
+          sep2,
+          {
+            id = "text_role",
+            widget = wibox.widget.textbox,
+          },
+          sep2,
+        },
+      },
+    },
+  })
+
+  s.tasklist = awful.widget.tasklist({
+    screen  = s,
+    filter  = awful.widget.tasklist.filter.currenttags,
+    buttons = {
+      awful.button({ }, 1, function (c)
+        c:activate({ context = "tasklist", action = "toggle_minimization" })
+      end),
+      awful.button({ }, 4, function() awful.client.focus.byidx(-1) end),
+      awful.button({ }, 5, function() awful.client.focus.byidx( 1) end),
+    },
+    layout = {
+      layout = wibox.layout.fixed.horizontal,
+      spacing = 0,
+    },
+    widget_template = {
+      widget = wibox.container.place,
+      valign = "center",
+      halign = "center",
+      forced_height = 20,
+      forced_width = 20,
+      {
+        widget = wibox.container.place,
+        awful.widget.clienticon,
+      },
+    },
+  })
 
   -- Bar
-  local wibar = awful.wibar {
+  s.wibar = awful.wibar({
     position = "top",
     screen = s,
-    height = 26,
+    height = 32,
     border_width = 0,
     border_color = b.accent,
     type = "dock",
@@ -169,58 +376,70 @@ screen.connect_signal("request::desktop_decoration", function(s)
       expand = "none",
       { -- Left
         layout = wibox.layout.fixed.horizontal,
-        layoutbox,
-        bar,
-        sep,
-        cpu_icon,
-        sep,
-        cpu_text,
-        sep,
-        bar,
-        sep,
-        gpu_icon,
-        sep,
-        gpu_text,
-        sep,
-        bar,
-        sep,
-        memory_icon,
-        sep,
-        memory_text,
-        sep,
-        bar,
-        sep,
-        music_icon,
+        pill_nixos,
+        {
+          layout = wibox.layout.margin,
+          margins = {
+            right = 2,
+            left = 2,
+          },
+          {
+            widget = wibox.container.place,
+            valign = "center",
+            halign = "center",
+            forced_height = 24,
+            {
+              widget = wibox.container.background,
+              bg = b.bg2,
+              shape = gears.shape.rounded_bar,
+              forced_height = 24,
+              {
+                layout = wibox.layout.fixed.horizontal,
+                s.taglist,
+              },
+            },
+          },
+        },
+        pill_cpu,
+        pill_memory,
       },
       { -- Center
         layout = wibox.layout.flex.horizontal,
-        s.fancy_taglist,
+        {
+          layout = wibox.layout.margin,
+          margins = {
+            right = 2,
+            left = 2,
+          },
+          {
+            widget = wibox.container.place,
+            valign = "center",
+            halign = "center",
+            forced_height = 24,
+            {
+              widget = wibox.container.background,
+              bg = b.bg2,
+              shape = gears.shape.rounded_bar,
+              forced_height = 24,
+              {
+                layout = wibox.layout.fixed.horizontal,
+                sep2,
+                s.tasklist,
+                sep2,
+              },
+            },
+          },
+        },
       },
       { -- Right
         layout = wibox.layout.fixed.horizontal,
-        caps_icon,
-        sep,
-        bar,
-        sep,
-        volume_icon,
-        sep,
-        volume_text,
-        sep,
-        bar,
-        sep,
-        calendar_icon,
-        sep,
-        h.watch("date +'%a %b %-d'", 60),
-        sep,
-        bar,
-        sep,
-        clock_icon,
-        sep,
-        h.watch("date +'%-I:%M %p'", 3),
-        sep,
+        pill_music,
+        pill_utils,
+        pill_date,
+        pill_time,
       },
     },
-  }
+  })
 
   volume_text:connect_signal("button::press", function()
     awful.spawn.easy_async("pamixer -t", function()
@@ -228,7 +447,10 @@ screen.connect_signal("request::desktop_decoration", function(s)
     end)
   end)
 
-  layoutbox:connect_signal("button::press", function()
+  pill_nixos:connect_signal("button::press", function()
     panel.signal()
+  end)
+  pill_music:connect_signal("button::press", function()
+    media.signal()
   end)
 end)
