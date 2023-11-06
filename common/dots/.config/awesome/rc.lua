@@ -11,6 +11,12 @@ awful.spawn.easy_async_with_shell("test -f " .. autostart .. "awesome.sh && echo
   end
 end)
 
+terminal = "tym"
+browser = "firefox"
+editor = os.getenv("EDITOR") or "nano"
+visual_editor = "codium"
+editor_cmd = terminal .. " -e " .. editor
+
 require("config.notifications")
 require("config.keybindings")
 require("config.rules")
