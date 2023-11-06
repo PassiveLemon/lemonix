@@ -1,8 +1,8 @@
 local awful = require("awful")
 local gears = require("gears")
 
-local uptime_cache = "N/A"
-local headset_cache = "N/A"
+local uptime_cache
+local headset_cache
 
 local function emit(uptime, headset)
   if uptime == nil then
