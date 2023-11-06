@@ -12,7 +12,7 @@ headsetcontrol -l 0
 headsetcontrol -s 100
 
 # Programs
-picom --experimental-backend -b &
+picom -b &
 #pgrep -x easyeffects > /dev/null || easyeffects --gapplication-service &
 pgrep -x nm-applet > /dev/null || nm-applet &
 pgrep -x megasync > /dev/null || megasync &

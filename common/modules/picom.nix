@@ -1,10 +1,7 @@
 { inputs, outputs, pkgs, config, lib, ... }: {
-  nixpkgs.overlays = [ (final: prev: {
-    picom = inputs.nixpkgs-f2k.packages.${pkgs.system}.picom-pijulius;
-  }) ];
-
   services.picom = {
     enable = true;
+    package = pkgs.picom-allusive;
     settings = {
       # Shadows
       shadow = true;
@@ -64,6 +61,9 @@
           shadow = true;
           clip-shadow-above = true;
         };
+        desktop = {
+          animation = "none";
+        };
         dnd = { shadow = true; };
         popup_menu = { opacity = 1; };
         dropdown_menu = { opacity = 1; };
@@ -72,11 +72,11 @@
       
       # Animations
       animations = true;
-      animation-for-transient-window = "zoom";
+      #animation-for-transient-window = "zoom";
       animation-for-open-window = "zoom";
       animation-for-unmap-window = "zoom";
-      animation-for-workspace-switch-in = "slide-right";
-      animation-for-workspace-switch-out = "slide-left";
+      #animation-for-workspace-switch-in = "slide-right";
+      #animation-for-workspace-switch-out = "slide-left";
       animation-stiffness = 400;
       animation-dampening = 20;
       animation-window-mass = 0.5;
