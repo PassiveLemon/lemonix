@@ -24,7 +24,7 @@ local systray_pop = awful.popup({
   widget = {
     id = "background",
     widget = wibox.container.background,
-    forced_width = 384,
+    forced_width = 420,
     forced_height = 32,
     bg = b.bg_normal,
     {
