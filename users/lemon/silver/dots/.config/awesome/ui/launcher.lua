@@ -24,7 +24,7 @@ awful.spawn.easy_async_with_shell("find " .. homeAppDir .. " -type f -name *.des
   table.insert(applicationList, menubar.utils.parse_desktop_file(line)
 end)
 
-local main = awful.popup {
+local main = awful.popup({
   placement = awful.placement.centered,
   border_width = 3,
   border_color = b.border_color_active,
@@ -32,7 +32,7 @@ local main = awful.popup {
   visible = false,
   widget = {
   },
-}
+})
 
 local function generateLauncher()
   for _, application in pairs(applicationList) Documents

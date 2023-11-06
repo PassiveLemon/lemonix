@@ -20,12 +20,12 @@ end
 
 gpu()
 
-local gpu_timer = gears.timer {
+local gpu_timer = gears.timer({
   timeout = 1,
   autostart = true,
   callback = function()
     gpu()
   end,
-}
+})
 
 return { gpu = gpu, }

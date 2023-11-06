@@ -1,7 +1,7 @@
 local awful = require("awful")
 local gears = require("gears")
 
-local playerctl = "playerctl -p spotify,tauon,Sonixd"
+local playerctl = "playerctl -p spotify,tauon,Feishin -s"
 
 local function emit(art_url, title, artist, album, shuffle, status, loop, position, length, volume)
   awesome.emit_signal('signal::playerctl', art_url, title, artist, album, shuffle, status, loop, position, length, volume)
@@ -34,5 +34,5 @@ local playerctl_timer = gears.timer {
   end,
 }
 
-return { playerctl = playerctl, }
+return { metadata = metadata, }
 

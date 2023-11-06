@@ -9,7 +9,7 @@ local h = require("helpers")
 -- Crosshairs
 --
 
-local crosshair1_right_pop = awful.popup {
+local crosshair1_right_pop = awful.popup({
   border_width = 0,
   border_color = b.border_color_active,
   x = 2883,
@@ -24,9 +24,9 @@ local crosshair1_right_pop = awful.popup {
     fg = "#00ff00",
     bg = "#00ff00",
   };
-}
+})
 
-local crosshair1_bottom_pop = awful.popup {
+local crosshair1_bottom_pop = awful.popup({
   border_width = 0,
   border_color = b.border_color_active,
   x = 2875,
@@ -41,9 +41,9 @@ local crosshair1_bottom_pop = awful.popup {
     fg = "#00ff00",
     bg = "#00ff00",
   };
-}
+})
 
-local crosshair1_left_pop = awful.popup {
+local crosshair1_left_pop = awful.popup({
   border_width = 0,
   border_color = b.border_color_active,
   x = 2875,
@@ -58,7 +58,7 @@ local crosshair1_left_pop = awful.popup {
     fg = "#00ff00",
     bg = "#00ff00",
   };
-}
+})
 
 local function crosshair1()
   crosshair1_right_pop.visible = not crosshair1_right_pop.visible
@@ -69,7 +69,7 @@ local function crosshair1()
   crosshair1_left_pop.screen = screen.primary
 end
 
-local crosshair2_top_pop = awful.popup {
+local crosshair2_top_pop = awful.popup({
   border_width = 0,
   border_color = b.border_color_active,
   x = 2875,
@@ -84,9 +84,9 @@ local crosshair2_top_pop = awful.popup {
     fg = "#00ff00",
     bg = "#00ff00",
   };
-}
+})
 
-local crosshair2_bottom_pop = awful.popup {
+local crosshair2_bottom_pop = awful.popup({
   border_width = 0,
   border_color = b.border_color_active,
   x = 2879,
@@ -101,7 +101,7 @@ local crosshair2_bottom_pop = awful.popup {
     fg = "#00ff00",
     bg = "#00ff00",
   };
-}
+})
 
 local function crosshair2()
   crosshair2_top_pop.visible = not crosshair2_top_pop.visible
@@ -110,7 +110,7 @@ local function crosshair2()
   crosshair2_bottom_pop.screen = screen.primary
 end
 
-local crosshair3_top_pop = awful.popup {
+local crosshair3_top_pop = awful.popup({
   border_width = 0,
   border_color = b.border_color_active,
   x = 2879,
@@ -125,9 +125,9 @@ local crosshair3_top_pop = awful.popup {
     fg = "#00ff00",
     bg = "#00ff00",
   };
-}
+})
 
-local crosshair3_right_pop = awful.popup {
+local crosshair3_right_pop = awful.popup({
   border_width = 0,
   border_color = b.border_color_active,
   x = 2881,
@@ -142,9 +142,9 @@ local crosshair3_right_pop = awful.popup {
     fg = "#00ff00",
     bg = "#00ff00",
   };
-}
+})
 
-local crosshair3_bottom_pop = awful.popup {
+local crosshair3_bottom_pop = awful.popup({
   border_width = 0,
   border_color = b.border_color_active,
   x = 2879,
@@ -159,9 +159,9 @@ local crosshair3_bottom_pop = awful.popup {
     fg = "#00ff00",
     bg = "#00ff00",
   };
-}
+})
 
-local crosshair3_left_pop = awful.popup {
+local crosshair3_left_pop = awful.popup ({
   border_width = 0,
   border_color = b.border_color_active,
   x = 2877,
@@ -176,7 +176,7 @@ local crosshair3_left_pop = awful.popup {
     fg = "#00ff00",
     bg = "#00ff00",
   };
-}
+})
 
 local function crosshair3()
   crosshair3_top_pop.visible = not crosshair3_top_pop.visible

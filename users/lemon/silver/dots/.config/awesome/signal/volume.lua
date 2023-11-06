@@ -17,12 +17,12 @@ end
 
 volume()
 
-local volume_timer = gears.timer {
+local volume_timer = gears.timer({
   timeout = 1,
   autostart = true,
   callback = function()
     volume()
   end,
-}
+})
 
 return { volume = volume, }

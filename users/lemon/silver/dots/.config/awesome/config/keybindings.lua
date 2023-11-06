@@ -7,8 +7,8 @@ local media = require("ui.media")
 local power = require("ui.power")
 local resource = require("ui.resource")
 local crosshair = require("ui.crosshair")
-local volume = require("signal.volume")
 local caps = require("signal.caps")
+local volume = require("signal.volume")
 
 --
 -- Keybindings
@@ -16,7 +16,7 @@ local caps = require("signal.caps")
 
 super = "Mod4" -- Windows key
 
-awful.keyboard.append_global_keybindings {
+awful.keyboard.append_global_keybindings({
   awful.key({ super, "Control", }, "r", awesome.restart,
   { description = "|| reload awesome", group = "awesome", }),
 
@@ -83,7 +83,7 @@ awful.keyboard.append_global_keybindings {
   awful.key({ }, "Print", function() awful.spawn("flameshot gui") end,
   { description = "|| flameshot", group = "utility", }),
 
-  awful.key {
+  awful.key({
     modifiers   = { super, "Mod1" },
     keygroup    = "numrow",
     description = "|| enable crosshair",
@@ -91,10 +91,10 @@ awful.keyboard.append_global_keybindings {
     on_press    = function(index)
       crosshair.signal(index)
     end,
-  },
+  }),
 
   -- Tag
-  awful.key {
+  awful.key({
     modifiers   = { super, },
     keygroup    = "numrow",
     description = "|| switch to tag",
@@ -106,9 +106,9 @@ awful.keyboard.append_global_keybindings {
         tag:view_only()
       end
     end,
-  },
+  }),
 
-  awful.key {
+  awful.key({
     modifiers   = { super, "Control", },
     keygroup    = "numrow",
     description = "|| toggle tag",
@@ -120,9 +120,9 @@ awful.keyboard.append_global_keybindings {
         awful.tag.viewtoggle(tag)
       end
     end,
-  },
+  }),
 
-  awful.key {
+  awful.key({
     modifiers = { super, "Shift", },
     keygroup    = "numrow",
     description = "|| move focused client to tag",
@@ -135,7 +135,7 @@ awful.keyboard.append_global_keybindings {
         end
       end
     end,
-  },
+  }),
 
   -- Misc
   awful.key({ }, "Caps_Lock", function()
@@ -144,7 +144,7 @@ awful.keyboard.append_global_keybindings {
   { description = "|| caps lock", group = "misc", }),
 
   -- Client
-  awful.keyboard.append_client_keybindings {
+  awful.keyboard.append_client_keybindings({
     awful.key({ super, }, "Escape", function(c) c:kill() end,
     { description = "|| close", group = "client", }),
 
@@ -160,25 +160,25 @@ awful.keyboard.append_global_keybindings {
           c:raise()
       end,
     { description = "|| toggle fullscreen", group = "client", }),
-  },
-}
+  }),
+})
 
 --
 -- Mouse keybinds
 --
 
 client.connect_signal( "request::default_mousebindings", function()
-  awful.mouse.append_client_mousebindings {
+  awful.mouse.append_client_mousebindings({
     awful.button({ }, 1, function(c)
-      c:activate { context = "mouse_click", }
+      c:activate({ context = "mouse_click", })
     end),
     awful.button({ super }, 1, function(c)
-      c:activate { context = "mouse_click", action = "mouse_move", }
+      c:activate({ context = "mouse_click", action = "mouse_move", })
     end),
     awful.button({ super }, 3, function(c)
-      c:activate { context = "mouse_click", action = "mouse_resize", }
+      c:activate({ context = "mouse_click", action = "mouse_resize", })
     end),
-  }
+  })
 end)
 
 --
@@ -186,10 +186,10 @@ end)
 --
 
 -- These are just for information. They have no binding.
-awful.keyboard.append_client_keybindings {
+awful.keyboard.append_client_keybindings({
   awful.key({ }, "sudo nixos-rebuild switch", function() end,
   { description = "|| rebuild nixos", group = "other", }),
 
   awful.key({ }, "home-manager switch --flake ~/Documents/GitHub/lemonix/#lemon@silver", function() end,
   { description = "|| rebuild home-manager", group = "other", }),
-}
+})

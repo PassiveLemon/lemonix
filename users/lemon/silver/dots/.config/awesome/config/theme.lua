@@ -69,12 +69,9 @@ theme.fg_minimize   = theme.fg2
 theme.fg_focus      = theme.fg3
 theme.fg_urgent     = theme.fg3
 
--- Other
-theme.accent        = "#535d6c"
-
 theme.border_width        = 3
 theme.border_color_normal = theme.blackd
-theme.border_color_active = theme.accent
+theme.border_color_active = theme.blackl
 
 theme.tasklist_fg_minimize       = theme.fg_focus
 theme.tasklist_disable_task_name = true
@@ -97,7 +94,7 @@ theme.icon_theme = "Papirus"
 theme.wallpaper = os.getenv("HOME") .. "/.wallpaper-image"
 
 screen.connect_signal("request::wallpaper", function(s)
-  awful.wallpaper {
+  awful.wallpaper({
     screen = s,
     widget = {
       widget = wibox.container.tile,
@@ -111,7 +108,7 @@ screen.connect_signal("request::wallpaper", function(s)
         downscale = true,
       },
     },
-  }
+  })
 end)
 
 return theme

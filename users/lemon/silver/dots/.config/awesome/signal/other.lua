@@ -33,20 +33,20 @@ end
 uptime()
 headset()
 
-local uptime_timer = gears.timer {
+local uptime_timer = gears.timer({
   timeout = 15,
   autostart = true,
   callback = function()
     uptime()
   end,
-}
+})
 
-local headset_timer = gears.timer {
+local headset_timer = gears.timer({
   timeout = 5,
   autostart = true,
   callback = function()
     headset()
   end,
-}
+})
 
 return { main = main, }
