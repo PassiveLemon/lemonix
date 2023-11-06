@@ -108,7 +108,7 @@ local cancel = h.button({
   text = "Cancel",
 })
 
-local poweroff_widget = wibox.widget {
+local poweroff_widget = wibox.widget({
   layout = wibox.layout.align.vertical,
   {
     layout = wibox.layout.fixed.horizontal,
@@ -119,9 +119,9 @@ local poweroff_widget = wibox.widget {
     confirm_pow,
     cancel,
   },
-}
+})
 
-local restart_widget = wibox.widget {
+local restart_widget = wibox.widget({
   layout = wibox.layout.align.vertical,
   {
     layout = wibox.layout.fixed.horizontal,
@@ -132,16 +132,16 @@ local restart_widget = wibox.widget {
     confirm_res,
     cancel,
   },
-}
+})
 
-local main = awful.popup {
+local main = awful.popup({
   placement = awful.placement.centered,
   border_width = 3,
   border_color = b.border_color_active,
   ontop = true,
   visible = false,
   widget = powermenu_widget,
-}
+})
 
 local function confirmed(command)
   main.visible = false

@@ -49,4 +49,7 @@ local headset_timer = gears.timer({
   end,
 })
 
-return { main = main, }
+return { 
+  uptime = uptime,
+  headset = headset,
+}

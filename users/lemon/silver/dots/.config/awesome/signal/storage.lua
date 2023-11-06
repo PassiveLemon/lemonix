@@ -31,4 +31,4 @@ local storage_timer = gears.timer({
   end,
 })
 
-return { storage = storage, }
+return { storage = storage }

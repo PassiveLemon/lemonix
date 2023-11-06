@@ -97,13 +97,13 @@ theme.icon_theme = "Papirus"
 awful.spawn.easy_async_with_shell("test -f " .. os.getenv("HOME") .. "/.wallpaper-image && echo true || echo false", function(fileTest)
   fileTest = fileTest:gsub("\n", "")
   if fileTest == "false" then
-    naughty.notify({ title = "No wallpaper found", })
+    naughty.notify({ title = "No wallpaper found" })
   end
 end)
 theme.wallpaper = os.getenv("HOME") .. "/.wallpaper-image"
 
 screen.connect_signal("request::wallpaper", function(s)
-  awful.wallpaper {
+  awful.wallpaper({
     screen = s,
     widget = {
       widget = wibox.container.tile,
@@ -117,7 +117,7 @@ screen.connect_signal("request::wallpaper", function(s)
         downscale = true,
       },
     },
-  }
+  })
 end)
 
 return theme

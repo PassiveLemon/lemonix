@@ -26,13 +26,13 @@ end
 
 metadata()
 
-local playerctl_timer = gears.timer {
+local playerctl_timer = gears.timer({
   timeout = 1,
   autostart = true,
   callback = function()
     metadata()
   end,
-}
+})
 
-return { playerctl = playerctl, }
+return { metadata = metadata }
 

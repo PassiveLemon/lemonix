@@ -35,4 +35,4 @@ local caps_query_timer = gears.timer({
 
 caps_query()
 
-return { caps = caps, }
+return { caps = caps }

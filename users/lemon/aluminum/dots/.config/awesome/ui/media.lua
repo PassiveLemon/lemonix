@@ -5,6 +5,8 @@ local wibox = require("wibox")
 
 local h = require("helpers")
 local click_to_hide = require("modules.click_to_hide")
+local playerctl_signal = require("signal.playerctl")
+
 
 --
 -- Media player
@@ -19,34 +21,34 @@ local art_image = h.text({
   },
 })
 local title = h.text({
-  x = 532,
-  y = 17,
   margins = {
     top = b.margins,
     right = b.margins,
     bottom = b.margins,
     left = b.margins,
   },
+  x = 532,
+  y = 17,
   halign = "left",
 })
 local artist = h.text({
-  x = 532,
-  y = 17,
   margins = {
     right = b.margins,
     bottom = b.margins,
     left = b.margins,
   },
+  x = 532,
+  y = 17,
   halign = "left",
 })
 local album = h.text({
-  x = 532,
-  y = 17,
   margins = {
     right = b.margins,
     bottom = b.margins,
     left = b.margins,
   },
+  x = 532,
+  y = 17,
   halign = "left",
 })
 local shuffle = h.button({
@@ -63,53 +65,53 @@ local shuffle = h.button({
   font = b.sysfont(24),
 })
 local prev = h.button({
-  x = 100,
-  y = 100,
   margins = {
     top = b.margins,
     right = b.margins,
     bottom = b.margins,
     left = b.margins,
   },
+  x = 100,
+  y = 100,
   shape = gears.shape.rounded_rect,
   text = "󰒮",
   font = b.sysfont(24),
 })
 local toggle = h.button({
-  x = 100,
-  y = 100,
   margins = {
     top = b.margins,
     right = b.margins,
     bottom = b.margins,
     left = b.margins,
   },
+  x = 100,
+  y = 100,
   shape = gears.shape.rounded_rect,
   text = "󰐊",
   font = b.sysfont(23),
 })
 local next = h.button({
-  x = 100,
-  y = 100,
   margins = {
     top = b.margins,
     right = b.margins,
     bottom = b.margins,
     left = b.margins,
   },
+  x = 100,
+  y = 100,
   shape = gears.shape.rounded_rect,
   text = "󰒭",
   font = b.sysfont(24)
 })
 local loop = h.button({
-  x = 100,
-  y = 100,
   margins = {
     top = b.margins,
     right = b.margins,
     bottom = b.margins,
     left = b.margins,
   },
+  x = 100,
+  y = 100,
   shape = gears.shape.rounded_rect,
   text = "󰑗",
   font = b.sysfont(26),
@@ -159,7 +161,7 @@ local volume = h.slider({
   bar_shape = gears.shape.rounded_rect,
 })
 
-local playerctl = "playerctl -p spotify,tauon,Sonixd -s"
+local playerctl = "playerctl -p spotify,tauon,Feishin -s"
 local art_dir = os.getenv("HOME") .. "/.cache/lemonix/mediamenu/"
 
 -- Display updating functions
@@ -209,8 +211,8 @@ local function art_image_updater(art_url)
           local art_url_trim = art_url:gsub(".*/", "")
           local client_cache_dir = os.getenv("HOME") .. "/.cache/TauonMusicBox/export/"
           art_image_locator(art_dir, client_cache_dir, art_url_trim, art_url)
-        elseif player_list:find("sonixd") then
-          local art_url_trim = art_url:match("id=(.*)&u=Lemon")
+        elseif player_list:find("Feishin") then
+          local art_url_trim = art_url:match("?id=(.*)&u=Lemon")
           art_image_locator(art_dir, nil, art_url_trim, art_url)
         end
       end)
@@ -400,11 +402,7 @@ end
 
 local function previouser()
   awful.spawn.easy_async(playerctl .. " previous", function()
-    art_image_updater()
-    metadata_updater()
-    toggle_updater()
-    loop_updater()
-    position_updater()
+    playerctl_signal.metadata()
   end)
 end
 
@@ -418,16 +416,13 @@ local function toggler()
       awful.spawn(playerctl .. " play")
       toggle:get_children_by_id("textbox")[1].text = "󰏤"
     end
+    playerctl_signal.metadata()
   end)
 end
 
 local function nexter()
   awful.spawn.easy_async(playerctl .. " next", function()
-    art_image_updater()
-    metadata_updater()
-    toggle_updater()
-    loop_updater()
-    position_updater()
+    playerctl_signal.metadata()
   end)
 end
 
@@ -447,7 +442,7 @@ local function looper()
   end)
 end
 
-local main = awful.popup {
+local main = awful.popup({
   placement = awful.placement.centered,
   border_width = 3,
   border_color = b.border_color_active,
@@ -496,7 +491,7 @@ local main = awful.popup {
       },
     },
   },
-}
+})
 
 shuffle:connect_signal("button::press", function()
   shuffler()

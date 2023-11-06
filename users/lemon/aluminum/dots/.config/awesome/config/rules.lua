@@ -9,7 +9,7 @@ local ruled = require("ruled")
 
 -- Rules to apply to new clients.
 ruled.client.connect_signal("request::rules", function()
-  ruled.client.append_rule {
+  ruled.client.append_rule({
     id = "global",
     rule = { },
     properties = {
@@ -19,23 +19,23 @@ ruled.client.connect_signal("request::rules", function()
       size_hints_honor = false,
       placement = awful.placement.centered+awful.placement.no_offscreen,
     },
-  }
+  })
 
 -- Always floating clients
-  ruled.client.append_rule {
+  ruled.client.append_rule({
     id = "floating",
     rule_any = {
-      instance = { "feh", "lxappearance", "authy desktop", "xarchiver", "kruler", },
-      class    = { "feh", "Lxappearance", "Authy Desktop", "Xarchiver", "kruler", },
-      name     = { "Customize Look and Feel", "Twilio Authy", "KRuler", "Confirm File Replacing", "Copying files", },
-      role     = { "pop-up", "GtkFileChooserDialog", },
+      instance = { "feh", "lxappearance", "authy desktop", "xarchiver", "kruler" },
+      class    = { "feh", "Lxappearance", "Authy Desktop", "Xarchiver", "kruler" },
+      name     = { "Customize Look and Feel", "Twilio Authy", "KRuler", "Confirm File Replacing", "Copying files" },
+      role     = { "pop-up", "GtkFileChooserDialog" },
     },
     properties = {
       floating = true,
       raise = true,
       placement = awful.placement.centered+awful.placement.no_offscreen,
     },
-  }
+  })
 end)
 
 --
@@ -43,7 +43,7 @@ end)
 --
 
 ruled.client.connect_signal("request::rules", function()
-  ruled.client.append_rule {
+  ruled.client.append_rule({
     rule = {
       instance = "kruler",
       class    = "kruler",
@@ -54,18 +54,12 @@ ruled.client.connect_signal("request::rules", function()
       height = 75,
       border_width = 0,
     },
-  }
+  })
 end)
 
 --
 -- Other
 --
-
-terminal = "tym"
-browser = "firefox"
-editor = os.getenv("EDITOR") or "nano"
-visual_editor = "codium"
-editor_cmd = terminal .. " -e " .. editor
 
 -- Layout
 tag.connect_signal("request::default_layouts", function()
@@ -80,5 +74,5 @@ end)
 
 -- Enable sloppy focus, so that focus follows mouse.
 client.connect_signal("mouse::enter", function(c)
-  c:activate { context = "mouse_enter", raise = false, }
+  c:activate { context = "mouse_enter", raise = false }
 end)

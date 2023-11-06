@@ -23,12 +23,12 @@ end
 
 memory()
 
-local memory_timer = gears.timer {
+local memory_timer = gears.timer({
   timeout = 3,
   autostart = true,
   callback = function()
     memory()
   end,
-}
+})
 
-return { memory = memory, }
+return { memory = memory }

@@ -14,12 +14,12 @@ end
 
 total()
 
-local total_timer = gears.timer {
+local total_timer = gears.timer({
   timeout = 1,
   autostart = true,
   callback = function()
     total()
   end,
-}
+})
 
-return { total = total, }
+return { total = total }

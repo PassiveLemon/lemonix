@@ -1,10 +1,10 @@
 local awful = require("awful")
 local gears = require("gears")
 
-local ac_cache
-local use_cache
-local now_cache
-local full_cache
+local ac_cache = 0
+local use_cache = 1
+local now_cache = 1
+local full_cache = 1
 
 local function emit(ac, use, now, full)
   if ac == nil then
@@ -24,7 +24,7 @@ end
 
 local function ac()
   awful.spawn.easy_async("cat /sys/class/power_supply/AC0/online", function(ac)
-    local use = use:gsub("\n", "")
+    local ac = ac:gsub("\n", "")
     ac_cache = ac
     emit(ac, nil, nil, nil)
   end)
@@ -39,7 +39,7 @@ local function battery()
         local full = full:gsub("\n", "")
         use_cache = use
         now_cache = now
-        full_cache = cache
+        full_cache = full
         emit(nil, use, now, full)
       end)
     end)
@@ -49,14 +49,14 @@ end
 ac()
 battery()
 
-local power_timer = gears.timer {
+local power_timer = gears.timer({
   timeout = 5,
   autostart = true,
   callback = function()
     ac()
     battery()
   end,
-}
+})
 
 return {
   ac = ac,

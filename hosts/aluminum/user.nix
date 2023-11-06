@@ -32,7 +32,7 @@
     logind.extraConfig = ''
       HandlePowerKey=suspend
       HandleLidSwitch=suspend-then-hibernate
-      IdleAction=suspend-then-hibernate
+      IdleAction=ignore
       IdleActionSec=60m
     '';
     pipewire = {

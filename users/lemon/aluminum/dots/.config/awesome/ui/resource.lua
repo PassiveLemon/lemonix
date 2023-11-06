@@ -71,7 +71,7 @@ awesome.connect_signal("signal::other", function(uptime)
 	uptime_time:get_children_by_id("textbox")[1].text = "" .. uptime
 end)
 
-local main = awful.popup {
+local main = awful.popup({
   placement = awful.placement.centered,
   border_width = 3,
   border_color = b.border_color_active,
@@ -81,7 +81,7 @@ local main = awful.popup {
     layout = wibox.layout.align.horizontal,
     {
       forced_width = 210,
-      margins = { top = 4, right = 2, bottom = 3, left = 6, },
+      margins = { top = 4, right = 2, bottom = 3, left = 6 },
       widget = wibox.container.margin,
       {
         layout = wibox.layout.fixed.vertical,
@@ -90,7 +90,7 @@ local main = awful.popup {
           layout = wibox.layout.fixed.horizontal,
           cpu_use,
           space,
-          cpu_widget({ width = 20, color = "#f35252", }),
+          cpu_widget({ width = 20, color = "#f35252" }),
           space,
           cpu_temp,
         },
@@ -98,7 +98,7 @@ local main = awful.popup {
     },
     {
       forced_width = 200,
-      margins = { top = 4, right = 2, bottom = 3, left = 2, },
+      margins = { top = 4, right = 2, bottom = 3, left = 2 },
       widget = wibox.container.margin,
       {
         layout = wibox.layout.fixed.vertical,
@@ -122,7 +122,7 @@ local main = awful.popup {
     },
     {
       forced_width = 155,
-      margins = { top = 4, right = 6, bottom = 3, left = 2, },
+      margins = { top = 4, right = 6, bottom = 3, left = 2 },
       widget = wibox.container.margin,
       {
         layout = wibox.layout.fixed.vertical,
@@ -131,7 +131,7 @@ local main = awful.popup {
       },
     },
   },
-}
+})
 
 local function signal()
   main.visible = not main.visible

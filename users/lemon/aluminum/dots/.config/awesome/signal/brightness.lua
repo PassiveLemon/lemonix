@@ -17,12 +17,12 @@ end
 
 brightness()
 
-local brightness_timer = gears.timer {
+local brightness_timer = gears.timer({
   timeout = 2,
   autostart = true,
   callback = function()
     brightness()
   end,
-}
+})
 
-return { brightness = brightness, }
+return { brightness = brightness }

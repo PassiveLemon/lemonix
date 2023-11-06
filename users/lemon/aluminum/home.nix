@@ -7,7 +7,7 @@
   home = {
     packages = with pkgs; [
       i3lock-fancy-rapid
-      firefox pcmanfm gparted pavucontrol qpwgraph helvum
+      firefox pcmanfm gparted pavucontrol helvum
       tym lite-xl rofi hilbish vscodium github-desktop webcord-vencord imhex tauon sonixd
       haruna feh gimp authy xarchiver easyeffects audacity
       eza bat trashy fd ripgrep

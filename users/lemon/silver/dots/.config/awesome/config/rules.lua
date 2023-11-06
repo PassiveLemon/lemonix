@@ -25,10 +25,10 @@ ruled.client.connect_signal("request::rules", function()
   ruled.client.append_rule({
     id = "floating",
     rule_any = {
-      instance = { "feh", "lxappearance", "authy desktop", "xarchiver", "kruler", },
-      class    = { "feh", "Lxappearance", "Authy Desktop", "Xarchiver", "kruler", },
-      name     = { "Customize Look and Feel", "Twilio Authy", "KRuler", "Confirm File Replacing", "Copying files", },
-      role     = { "pop-up", "GtkFileChooserDialog", },
+      instance = { "feh", "lxappearance", "authy desktop", "xarchiver", "kruler" },
+      class    = { "feh", "Lxappearance", "Authy Desktop", "Xarchiver", "kruler" },
+      name     = { "Customize Look and Feel", "Twilio Authy", "KRuler", "Confirm File Replacing", "Copying files" },
+      role     = { "pop-up", "GtkFileChooserDialog" },
     },
     properties = {
       floating = true,
@@ -72,5 +72,5 @@ end)
 
 -- Enable sloppy focus, so that focus follows mouse.
 client.connect_signal("mouse::enter", function(c)
-  c:activate { context = "mouse_enter", raise = false, }
+  c:activate { context = "mouse_enter", raise = false }
 end)

@@ -10,18 +10,18 @@ local naughty = require("naughty")
 --
 
 ruled.notification.connect_signal("request::rules", function()
-  ruled.notification.append_rule {
+  ruled.notification.append_rule({
     rule = { urgency = "critical" },
-    properties = { bg = b.bg_urgent, fg = b.fg_normal, implicit_timeout = 5, timeout = 5, },
-  }
-  ruled.notification.append_rule {
+    properties = { bg = b.bg_urgent, fg = b.fg_normal, implicit_timeout = 5, timeout = 5 },
+  })
+  ruled.notification.append_rule({
     rule = { urgency = "normal" },
-    properties = { bg = b.bg_normal, fg = b.fg_normal, implicit_timeout = 3, timeout = 3, },
-  }
-  ruled.notification.append_rule {
+    properties = { bg = b.bg_normal, fg = b.fg_normal, implicit_timeout = 3, timeout = 3 },
+  })
+  ruled.notification.append_rule({
     rule = { urgency = "low" },
-    properties = { bg = b.bg_normal, fg = b.fg_normal, implicit_timeout = 3, timeout = 3, },
-  }
+    properties = { bg = b.bg_normal, fg = b.fg_normal, implicit_timeout = 3, timeout = 3 },
+  })
 end)
 
 b.notification_margin = 8
@@ -40,7 +40,7 @@ naughty.config.defaults.position = "bottom_right"
 naughty.config.padding = 12
 
 naughty.connect_signal("request::display", function(n)
-  naughty.layout.box {
+  naughty.layout.box({
 		notification = n,
 		type = "notification",
 		bg = b.bg_normal,
@@ -110,17 +110,14 @@ naughty.connect_signal("request::display", function(n)
         },
       },
 		},
-	}
-  --image = io.open("/tmp/testimg", "w")
-  --image:write(naughty.widget.icon)
-  --image:close()
+	})
 end)
 
 -- Error handling
 naughty.connect_signal("request::display_error", function(message, startup)
-  naughty.notification {
+  naughty.notification({
     urgency = "critical",
     title = "Oops, an error happened" .. (startup and " during startup!" or "!"),
     message = message,
-  }
+  })
 end)

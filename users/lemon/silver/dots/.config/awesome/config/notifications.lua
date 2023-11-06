@@ -12,15 +12,15 @@ local naughty = require("naughty")
 ruled.notification.connect_signal("request::rules", function()
   ruled.notification.append_rule({
     rule = { urgency = "critical" },
-    properties = { bg = b.bg_urgent, fg = b.fg_normal, implicit_timeout = 5, timeout = 5, },
+    properties = { bg = b.bg_urgent, fg = b.fg_normal, implicit_timeout = 5, timeout = 5 },
   })
   ruled.notification.append_rule({
     rule = { urgency = "normal" },
-    properties = { bg = b.bg_normal, fg = b.fg_normal, implicit_timeout = 3, timeout = 3, },
+    properties = { bg = b.bg_normal, fg = b.fg_normal, implicit_timeout = 3, timeout = 3 },
   })
   ruled.notification.append_rule({
     rule = { urgency = "low" },
-    properties = { bg = b.bg_normal, fg = b.fg_normal, implicit_timeout = 3, timeout = 3, },
+    properties = { bg = b.bg_normal, fg = b.fg_normal, implicit_timeout = 3, timeout = 3 },
   })
 end)
 

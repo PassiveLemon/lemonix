@@ -22,4 +22,4 @@ local total_timer = gears.timer({
   end,
 })
 
-return { total = total, }
+return { total = total }

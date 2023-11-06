@@ -127,7 +127,7 @@ local main = awful.popup({
     layout = wibox.layout.align.horizontal,
     {
       forced_width = 210,
-      margins = { top = 4, right = 2, bottom = 3, left = 6, },
+      margins = { top = 4, right = 2, bottom = 3, left = 6 },
       widget = wibox.container.margin,
       {
         layout = wibox.layout.fixed.vertical,
@@ -151,7 +151,7 @@ local main = awful.popup({
     },
     {
       forced_width = 200,
-      margins = { top = 4, right = 2, bottom = 3, left = 2, },
+      margins = { top = 4, right = 2, bottom = 3, left = 2 },
       widget = wibox.container.margin,
       {
         layout = wibox.layout.fixed.vertical,
@@ -178,7 +178,7 @@ local main = awful.popup({
     },
     {
       forced_width = 155,
-      margins = { top = 4, right = 6, bottom = 3, left = 2, },
+      margins = { top = 4, right = 6, bottom = 3, left = 2 },
       widget = wibox.container.margin,
       {
         layout = wibox.layout.fixed.vertical,

@@ -17,12 +17,12 @@ end
 
 cpu()
 
-local cpu_timer = gears.timer {
+local cpu_timer = gears.timer({
   timeout = 1,
   autostart = true,
   callback = function()
     cpu()
   end,
-}
+})
 
-return { cpu = cpu, }
+return { cpu = cpu }
