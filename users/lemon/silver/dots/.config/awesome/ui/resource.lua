@@ -5,7 +5,6 @@ local wibox = require("wibox")
 
 local h = require("helpers")
 local click_to_hide = require("modules.click_to_hide")
-local cpu_widget = require("libraries.awesome-wm-widgets.cpu-widget.cpu-widget")
 
 --
 -- Resource monitor
@@ -69,6 +68,28 @@ awesome.connect_signal("signal::memory", function(use, use_perc, cache, cache_pe
   cache_use_perc:get_children_by_id("textbox")[1].text = cache_perc .. "%"
 end)
 
+local strg_text = h.text({
+  text = "Storage",
+})
+local strg_free_nvme0 = h.text({
+  halign = "left",
+})
+local strg_free_nvme1 = h.text({
+  halign = "left",
+})
+local strg_free_sda = h.text({
+  halign = "left",
+})
+local strg_free_sdb = h.text({
+  halign = "left",
+})
+awesome.connect_signal("signal::storage", function(nvme0, nvme1, sda, sdb)
+	strg_free_nvme0:get_children_by_id("textbox")[1].text = "NVME0: " .. nvme0
+  strg_free_nvme1:get_children_by_id("textbox")[1].text = "NVME1: " .. nvme1
+  strg_free_sda:get_children_by_id("textbox")[1].text = "SDA: " .. sda
+  strg_free_sdb:get_children_by_id("textbox")[1].text = "SDB: " .. sdb
+end)
+
 local network_text = h.text({
   text = "Network",
 })
@@ -96,7 +117,7 @@ awesome.connect_signal("signal::other", function(uptime, headset)
   headset_bat:get_children_by_id("textbox")[1].text = "HS BAT: " .. headset .. "%"
 end)
 
-local main = awful.popup {
+local main = awful.popup({
   placement = awful.placement.centered,
   border_width = 3,
   border_color = b.border_color_active,
@@ -114,8 +135,6 @@ local main = awful.popup {
         {
           layout = wibox.layout.fixed.horizontal,
           cpu_use,
-          space,
-          cpu_widget({ width = 20, color = "#f35252", }),
           space,
           cpu_temp,
         },
@@ -150,8 +169,11 @@ local main = awful.popup {
           cache_use_perc,
         },
         space,
-        network_text,
-        network_total,
+        strg_text,
+        strg_free_nvme0,
+        strg_free_nvme1,
+        strg_free_sda,
+        strg_free_sdb,
       },
     },
     {
@@ -160,6 +182,9 @@ local main = awful.popup {
       widget = wibox.container.margin,
       {
         layout = wibox.layout.fixed.vertical,
+        network_text,
+        network_total,
+        space,
         uptime_text,
         uptime_time,
         space,
@@ -168,7 +193,7 @@ local main = awful.popup {
       },
     },
   },
-}
+})
 
 local function signal()
   main.visible = not main.visible
