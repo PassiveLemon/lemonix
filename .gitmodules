@@ -1,6 +1,3 @@
-[submodule "common/dots/.config/awesome/libraries/awesome-wm-widgets"]
-	path = common/dots/.config/awesome/libraries/awesome-wm-widgets
-	url = https://github.com/streetturtle/awesome-wm-widgets
 [submodule "common/dots/.config/lite-xl/libraries/widget"]
 	path = common/dots/.config/lite-xl/libraries/widget
 	url = https://github.com/lite-xl/lite-xl-widgets
