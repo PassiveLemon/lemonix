@@ -44,33 +44,20 @@
       ];
     };
     interfaces = {
-      "br0" = {
+      enp7s0 = {
         ipv4.addresses = [{
           address = "192.168.1.177";
           prefixLength = 24;
         }];
         useDHCP = false;
       };
-      #enp7s0 = {
-      #  ipv4.addresses = [{
-      #    address = "192.168.1.177";
-      #    prefixLength = 24;
-      #  }];
-      #  useDHCP = false;
-      #};
-      #wlp6s0 = {
-      #  ipv4.addresses = [{
-      #    address = "192.168.1.178";
-      #    prefixLength = 24;
-      #  }];
-      #  useDHCP = false;
-      #};
-    };
-    bridges = {
-      br0.interfaces = [
-        "enp7s0"
-        "wlp6s0"
-      ];
+      wlp6s0 = {
+        ipv4.addresses = [{
+          address = "192.168.1.178";
+          prefixLength = 24;
+        }];
+        useDHCP = false;
+      };
     };
     defaultGateway = "192.168.1.1";
     nameservers = [ "192.168.1.177" "1.1.1.1" "8.8.8.8" ];
@@ -125,12 +112,6 @@
         AllowStreamLocalForwarding no
         AuthenticationMethods publickey
       '';
-    };
-    hostapd = {
-      enable = true;
-      interface = "wlp6s0";
-      wpaPassphrase = "parsewold2122";
-      ssid = "Unknown Network";
     };
     journald.extraConfig = "SystemMaxUse=1G";
   };
