@@ -51,13 +51,6 @@
         }];
         useDHCP = false;
       };
-      wlp6s0 = {
-        ipv4.addresses = [{
-          address = "192.168.1.178";
-          prefixLength = 24;
-        }];
-        useDHCP = false;
-      };
     };
     defaultGateway = "192.168.1.1";
     nameservers = [ "192.168.1.177" "1.1.1.1" "8.8.8.8" ];
@@ -115,6 +108,7 @@
     };
     journald.extraConfig = "SystemMaxUse=1G";
   };
+  systemd.services.NetworkManager-wait-online.enable = lib.mkForce false;
   virtualisation = {
     docker = { 
       enable = true;
