@@ -358,8 +358,14 @@ screen.connect_signal("request::desktop_decoration", function(s)
       forced_width = 20,
       {
         widget = wibox.container.place,
-        awful.widget.clienticon,
+        {
+          id = "imagebox",
+          widget = wibox.widget.imagebox,
+        },
       },
+      create_callback = function(self, c, index)
+        self:get_children_by_id("imagebox")[1].image = c.theme_icon
+      end,
     },
   })
 

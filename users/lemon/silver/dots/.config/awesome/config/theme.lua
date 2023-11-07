@@ -2,6 +2,7 @@ local awful = require("awful")
 local gears = require("gears")
 local wibox = require("wibox")
 local naughty = require("naughty")
+local menubar_utils = require "menubar.utils"
 
 local theme_assets = require("beautiful.theme_assets")
 
@@ -87,10 +88,16 @@ theme.margins = 4
 theme.layout_dwindle = themes_path .. "default/layouts/dwindlew.png"
 
 --
--- Wallpaper
+-- Wallpaper & icons
 --
 
 theme.icon_theme = "Papirus"
+
+client.connect_signal("property::class", function(c)
+  if not c.class then return end
+  c.theme_icon = menubar_utils.lookup_icon(string.lower(c.class)) or c.icon
+end)
+
 theme.wallpaper = os.getenv("HOME") .. "/.wallpaper-image"
 
 screen.connect_signal("request::wallpaper", function(s)

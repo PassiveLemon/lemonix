@@ -90,16 +90,16 @@ theme.margins = 4
 theme.layout_dwindle = themes_path .. "default/layouts/dwindlew.png"
 
 --
--- Wallpaper
+-- Wallpaper & icons
 --
 
 theme.icon_theme = "Papirus"
-awful.spawn.easy_async_with_shell("test -f " .. os.getenv("HOME") .. "/.wallpaper-image && echo true || echo false", function(fileTest)
-  fileTest = fileTest:gsub("\n", "")
-  if fileTest == "false" then
-    naughty.notify({ title = "No wallpaper found" })
-  end
+
+client.connect_signal("property::class", function(c)
+  if not c.class then return end
+  c.theme_icon = menubar_utils.lookup_icon(string.lower(c.class)) or c.icon
 end)
+
 theme.wallpaper = os.getenv("HOME") .. "/.wallpaper-image"
 
 screen.connect_signal("request::wallpaper", function(s)
