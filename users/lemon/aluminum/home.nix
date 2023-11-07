@@ -6,12 +6,13 @@
 
   home = {
     packages = with pkgs; [
-      i3lock-fancy-rapid
-      firefox pcmanfm gparted pavucontrol helvum
-      tym lite-xl rofi hilbish vscodium github-desktop webcord-vencord imhex tauon sonixd
-      haruna feh gimp authy xarchiver easyeffects audacity
+      i3lock-fancy-rapid firefox pcmanfm xarchiver gparted
+      tym hilbish lite-xl rofi vscodium obsidian github-desktop imhex act
+      easyeffects pavucontrol helvum mpv tauon feishin audacity easytag
+      flowblade haruna feh gimp
+      master.webcord-vencord authy filezilla qbittorrent
       eza bat trashy fd ripgrep
-      brightnessctl pamixer playerctl appimage-run neofetch ventoy-bin act maim
+      brightnessctl pamixer playerctl appimage-run neofetch ventoy-bin headsetcontrol
       libsForQt5.kruler
       mullvad-vpn cloudflare-warp
     ];
@@ -91,7 +92,7 @@
     allowUnfree = true;
     allowUnfreePredicate = (_: true);
     permittedInsecurePackages = [
-      "openssl-1.1.1u"
+      "electron-24.8.6"
     ];
   };
 }
