@@ -125,6 +125,7 @@
   virtualisation = {
     docker = { 
       enable = true;
+      enableOnBoot = true;
       liveRestore = false;
       autoPrune = {
         enable = true;
