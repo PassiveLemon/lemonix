@@ -75,6 +75,13 @@
       enable = true;
       defaultApplications = {
         "inode/directory" = "pcmanfm.desktop";
+        "audio/flac" = "mpv.desktop";
+        "audio/mpeg" = "mpv.desktop";
+        "audio/ogg" = "mpv.desktop";
+        "audio/wav" = "mpv.desktop";
+        "video/mp4" = "org.kde.haruna.desktop";
+        "video/quicktime" = "org.kde.haruna.desktop";
+        "video/webm" = "org.kde.haruna.desktop";
       };
     };
     desktopEntries = {

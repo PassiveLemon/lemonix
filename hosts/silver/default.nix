@@ -36,15 +36,15 @@
     firewall = {
       enable = true;
       allowedTCPPortRanges = [
+        { from = 50000; to = 55000; }
         { from = 22; to = 22; }
-        { from = 50000; to = 54000; }
       ];
       allowedUDPPortRanges = [
         { from = 53; to = 53; }
       ];
     };
     interfaces = {
-      enp7s0 = {
+      enp10s0 = {
         ipv4.addresses = [{
           address = "192.168.1.177";
           prefixLength = 24;
@@ -52,24 +52,28 @@
         useDHCP = false;
       };
     };
+    enableIPv6 = false;
     defaultGateway = "192.168.1.1";
-    nameservers = [ "192.168.1.177" "1.1.1.1" "8.8.8.8" ];
+    nameservers = [ "192.168.1.178" "1.1.1.1" ];
   };
 
   # Users
   users = {
     users = {
+      root = {
+        hashedPassword = null;
+      };
       lemon = {
         description = "Lemon";
         home = "/home/lemon";
-        extraGroups = [ "wheel" "networkmanager" "docker" "video" "kvm" "libvirtd" ];
+        extraGroups = [ "wheel" "networkmanager" "docker" "video" "storage" "kvm" "libvirtd" ];
         isNormalUser = true;
-        openssh.authorizedKeys.keys = [ "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQC6XpVE0Tj3gEOcTwWAODH2Sm7u6smE9kwZ0Z4ZV4q9Nc/cH+f0DXKLOljswW2iu0cj8tEsANu5P8JIt+oMA3HXy4qSIzKnaVP7a5/rEQ+yoVwF4AdqzLHKd39D9GP9zDDz0UO4ZaxYEg9q206BHOkS4StpRy1fpES2TneNd/7477mjJbboIyDJK1EzUfQoU/fP9FiSnpWbZKrQtK0m/iol5+2AB8Qp/5htMVm9+KXftCO15cydbi9UKJzJll4SFa8y09/GV/Rgqua5Wj7KH4cDgzXqpIPRo63H0XqfVLjOH1NHeyxX+pmuNZuFGbrqBWF7AtuFGmpujAp9K7tIfkGTi/mJi5rSq+ejiAwJzw7qldGQw8rsfsKVU5pS22JE56X/XYfgmf95ds5lYzTjgx5juVbdjvY3uq6It/JKbvHCP0ueUT78H0RtDRthew0VXq91QWJMrRmwFlc6JRFobk4EcqnWc0kz6aJ6p3SRGymscX/0+UaS/KyyPKSTIVrAaY8= lemon@silver" ];
+        openssh.authorizedKeys.keys = [ "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQCG6NqaIG0ltxWYwMjCyWHg9/gfYSbqzkLhENJSVVOYtLUfmMU0VdBeStyfU+yR9Ey5L2OuGamh4LXWVq3J2WMNhvM8puSUlSP4BCSy5+ZgjFbyFbLv6k4XOQzEpNgW9wemXcwRey2Irw+9uj3JTzEyXEzhgymBC0useH2+vi38RA0Q6U41sa01YFfDPMPYeBw5ooNFQOKGCGHS8YwSOOca1hk/qaaRPseYakzTa2sfYbOJOF6QrQLh+qn8GDrWj4MZEqhSiZBbJywPl+qtPMovGWQA2YeP88KtomWQ9kiGhvIrgngg/YelpI+hrBFohEE1FyGru/xnjKN6MlbPtUzcXbyWsppCEQjvW8UMJlWRCWjg11oeVCgmn0iCVxm9+1QNMfRo/w3bIkQVdwYU+IvWcUFyY7pc4Fpvtr+Zz+Jhxv+DPDrWED262pVp23rkLzTsCatB2I5+SpvEesc0arY5dQinjm6AOGkyDCX6pNlCg9azygiPw1pAu49Z9TgWNNU= lemon@silver" ];
       };
       monitor = {
         description = "Monitor";
         isNormalUser = true;
-        openssh.authorizedKeys.keys = [ "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQDKnHEuvbz6ShItc0fik42zGdpo3DkgVWRwy+XBOWKAthibCRX4TgTYJtT5Fao207H/DStJjOrgrhWnqQS4Pxd2JZgFkATajv2j5xGrFC+zA3LAGXjCEkGyzBQGHc/Z6lwuCKsUdCdX51MxaXjyOvzQ6/N/xZEJilPGT1eF83Qr/msAyUJTsKpgnoyugfpiS6tlFm1t9czz16X24d62lTEp8e91+lNNUNCBhzApN8qBOKX1ubjmRDn7N1rbsMxINAi734Lmw8WTe/XfYAMIcWdaRG2c+8zEjcopAdorCPFoajU1mfc5yTTLEfFLuwwqelTUtomuTVVXicG1tj8nh9veTXJlhHl86SrFiVPF8WfMvI38cWrZM8wag/kOGYEi8JM83DzikHavp4YcKgrJCuo8/Cyt7OSKCPrxIwmKh5uUiU5y0L++sMRgdwOOPmVKSV2cBcTaV62O/B3OnrveFHRFsGgMxmrLSSbWVyn0gQ+ulubZP1sGZ0eJlp9lJ3ix7HE= monitor@silver" ];
+        openssh.authorizedKeys.keys = [ "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQDwMBh4nqwYBgpB7Pp/tE83y91C23P3eSyTFaOGPQL88QMUBJP1ZMKM3lotXPIZ+ADDUitNvLfsRTzXsCxWjhsNM1Y5Egf36aQm24ZA/h6jj9mSs/EVp7jZR72ok5gYCxtg9QfwAlEXhaIBQq/XzbAwORN23AJJR8ymSrGnmkm550XzsXbEFKg2EG49kXEWrzPKpMvcL02U7tPiSxH99aJieFXyDEFxssOU6Scv9AIU6ERxwlKYV2bVMF3RLkpJ8mkgcuOVt7i4fHFkcKERRHbx3k6RsbBN4xt/Nhu4hkE+6MTY1u8q9S3kJr5s80Gfpp7zgCjhwB4y7VpLpnQSQk1ewf/pKhNB61dvMkU4B7X1znitN+GR291XEOIAeCl4ba7ATBfmyouhQ0wpGsRvYfheyXMo7u4z43kq3mZSAKWuLNmGUv469HZ4vTKo8IZ+xBC2pHn9hlXLfeHXmVa/XwtnXpmi23xkr6TKxATYVYAsWO9A5Ll//L+EWluAhjj5jT8= monitor@silver" ];
       };
     };
   };
@@ -79,9 +83,8 @@
     systemPackages = with pkgs; [
       dash bash
       nano unzip unrar p7zip curl wget git gvfs psmisc
-      htop sysstat iotop stress nvtop-nvidia netcat lm_sensors
+      htop sysstat iotop stress nvtop-nvidia netcat lm_sensors smartmontools dig
       networkmanager ethtool
-      distrobox virt-manager OVMF pciutils virtiofsd libvirt
       # Required for the FS to complete its check and allow me to boot while on nixos-23.05
       pkgs.unstable.e2fsprogs
     ];
@@ -93,22 +96,26 @@
   services = {
     openssh = {
       enable = true;
-      settings = {
-        PasswordAuthentication = false;
-        PermitRootLogin = "no";
-        KbdInteractiveAuthentication = false;
-        X11Forwarding = false;
-      };
       extraConfig = ''
-        AllowTcpForwarding yes
         AllowAgentForwarding no
         AllowStreamLocalForwarding no
+        AllowTcpForwarding yes
         AuthenticationMethods publickey
+        KbdInteractiveAuthentication no
+        PasswordAuthentication no
+        PermitEmptyPasswords no
+        PermitRootLogin no
+        X11Forwarding no
       '';
     };
+    udisks2 = {
+      enable = true;
+      mountOnMedia = true;
+    };
+    gvfs.enable = true;
+    devmon.enable = true;
     journald.extraConfig = "SystemMaxUse=1G";
   };
-  systemd.services.NetworkManager-wait-online.enable = lib.mkForce false;
   virtualisation = {
     docker = { 
       enable = true;
@@ -117,6 +124,9 @@
       autoPrune = {
         enable = true;
         dates = "monthly";
+      };
+      daemon.settings = {
+        hosts = [ "unix:///var/run/docker.sock" ];
       };
     };
     libvirtd.enable = true;
@@ -138,6 +148,13 @@
   zramSwap = {
     enable = true;
     memoryPercent = 17;
+    priority = 100;
+  };
+  documentation = {
+    enable = false;
+    doc.enable = false;
+    man.enable = false;
+    dev.enable = false;
   };
   nix = {
     settings = {

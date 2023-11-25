@@ -29,16 +29,19 @@
     hostName = "aluminum";
     networkmanager.enable = true;
     firewall.enable = true;
-    nameservers = [ "192.168.1.177" "1.1.1.1" "8.8.8.8" ];
+    nameservers = [ "192.168.1.178" "1.1.1.1" "8.8.8.8" ];
   };
 
   # Users
   users = {
     users = {
+      root = {
+        hashedPassword = null;
+      };
       lemon = {
         description = "Lemon";
         home = "/home/lemon";
-        extraGroups = [ "wheel" "networkmanager" ];
+        extraGroups = [ "wheel" "networkmanager" "storage" "video" ];
         isNormalUser = true;
       };
     };
@@ -49,7 +52,7 @@
     systemPackages = with pkgs; [
       dash bash
       nano unzip unrar p7zip curl wget git gvfs psmisc
-      htop sysstat iotop stress netcat lm_sensors powertop
+      htop sysstat iotop stress netcat lm_sensors powertop smartmontools
       networkmanager
     ];
     binsh = "${pkgs.dash}/bin/dash";
@@ -58,7 +61,6 @@
 
   # Configs
   services = {
-    journald.extraConfig = "SystemMaxUse=1G";
     thermald.enable = true;
     tlp = {
       enable = true;
@@ -73,6 +75,13 @@
         CPU_MAX_PERF_ON_BAT = 40;
       };
     };
+    udisks2 = {
+      enable = true;
+      mountOnMedia = true;
+    };
+    gvfs.enable = true;
+    devmon.enable = true;
+    journald.extraConfig = "SystemMaxUse=1G";
   };
   hardware = {
     opengl = {
@@ -84,8 +93,18 @@
     };
     bluetooth.enable = true;
   };
-  zramSwap.enable = true;
+  zramSwap = {
+    enable = true;
+    memoryPercent = 25;
+    priority = 100;
+  };
   powerManagement.enable = true;
+  documentation = {
+    enable = false;
+    doc.enable = false;
+    man.enable = false;
+    dev.enable = false;
+  };
   nix = {
     settings = {
       experimental-features = [ "nix-command" "flakes" ];

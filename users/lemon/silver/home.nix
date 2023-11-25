@@ -18,10 +18,14 @@
       libsForQt5.kruler
       mullvad-vpn
       maim slop xdotool
+      freetube
+      rsync
 
       # Development
       jq
       (python311.withPackages(ps: with ps; [ pip pillow evdev pyyaml pynput colorama ]))
+      (luajit.withPackages (ps: with ps; [ luarocks ]))
+      cmake
       dotnet-sdk
       libtifiles2 libticonv libticalcs2 libticables2
 
@@ -100,6 +104,14 @@
       enable = true;
       defaultApplications = {
         "inode/directory" = "pcmanfm.desktop";
+        "audio/flac" = "mpv.desktop";
+        "audio/mpeg" = "mpv.desktop";
+        "audio/ogg" = "mpv.desktop";
+        "audio/wav" = "mpv.desktop";
+        "video/mp4" = "org.kde.haruna.desktop";
+        "video/quicktime" = "org.kde.haruna.desktop";
+        "video/webm" = "org.kde.haruna.desktop";
+        "x-scheme-handler/ror2mm" = "r2modman.desktop";
         "x-scheme-handler/gdlauncher" = "gdlauncher.desktop";
         "x-scheme-handler/discord-409416265891971072" = "discord-409416265891971072.desktop";
       };

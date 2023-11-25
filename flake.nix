@@ -4,7 +4,8 @@
   inputs = {
     nixos.url = "github:nixos/nixpkgs/nixos-23.05";
     nixpkgs.url = "github:nixos/nixpkgs/nixpkgs-unstable";
-    master.url = "github:nixos/nixpkgs/master";
+    master.url = "github:nixos/nixpkgs";
+    nixos-hardware.url = "github:nixos/nixos-hardware";
 
     home-manager = {
       url = "github:nix-community/home-manager";
@@ -55,6 +56,7 @@
   in
   {
     nixosConfigurations = {
+      # Desktop
       "silver" = nixos.lib.nixosSystem {
         inherit system specialArgs;
         modules = [
@@ -63,12 +65,22 @@
           ./hosts/silver/user.nix
         ];
       };
+      # Laptop (Craptop)
       "aluminum" = nixos.lib.nixosSystem {
         inherit system specialArgs;
         modules = [
           nixpkgs-overlays
           ./hosts/aluminum/default.nix
           ./hosts/aluminum/user.nix
+        ];
+      };
+      # Raspberry Pi
+      "palladium" = nixos.lib.nixosSystem {
+        inherit system specialArgs;
+        modules = [
+          nixos-hardware.nixosModules.raspberry-pi-4
+          nixpkgs-overlays
+          ./hosts/palladium/default.nix
         ];
       };
     };
