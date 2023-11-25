@@ -331,27 +331,19 @@ local function loop_updater(loop_state)
   end
 end
 
-local position_set = true
-local slider_update = false
-local slider_self_update = true
+--naughty = require("naughty")
 
--- This is terrible but it works. It gets a slider to update the players position without the position feeding back into the slider and causing recursion.
 local function position_updater(position_state, current, length)
   local function _updater(position_state, current, length)
     if length == "" then
       position.visible = false
     else
       position.visible = true
-      if position_set == true then
-        if position_state then
-          awful.spawn(playerctl .. " position " .. h.round(((position_state * length) / (100000000)), 3))
-        end
+      if position_state then
+        awful.spawn(playerctl .. " position " .. h.round(((position_state * length) / (100000000)), 3))
       end
-      if slider_update == true then
-        slider_self_update = false
-        slider_update = false
-        position:get_children_by_id("slider")[1].value = h.round(((current * 100) / (length)), 3)
-      end
+      --naughty.notify({ message = "test2" })
+      position:get_children_by_id("slider")[1]._private.value = h.round(((current * 100) / (length)), 3)
     end
   end
   if (current and length) then
@@ -359,6 +351,7 @@ local function position_updater(position_state, current, length)
   else
     awful.spawn.easy_async(playerctl .. " position", function(current)
       awful.spawn.easy_async(playerctl .. " metadata mpris:length", function(length)
+        --naughty.notify({ message = "test1" })
         _updater(position_state, current, length)
       end)
     end)
@@ -514,13 +507,8 @@ loop:connect_signal("button::press", function()
 end)
 
 position:get_children_by_id("slider")[1]:connect_signal("property::value", function(slider, position_state)
-  if slider_self_update == true then
-    slider.value = position_state
-    position_updater(position_state)
-  end
-  position_set = true
-  slider_update = false
-  slider_self_update = true
+  slider.value = position_state
+  position_updater(position_state)
 end)
 
 volume:get_children_by_id("slider")[1]:connect_signal("property::value", function(slider, volume_state)
@@ -534,8 +522,6 @@ awesome.connect_signal("signal::playerctl", function(art_url, title, artist, alb
   shuffle_updater(shuffle)
   toggle_updater(status)
   loop_updater(loop)
-  position_set = false
-  slider_update = true
   position_updater(nil, position, length)
   volume_updater(volume)
 end)
@@ -546,8 +532,6 @@ local function signal()
   shuffle_updater()
   toggle_updater()
   loop_updater()
-  position_set = false
-  slider_update = true
   position_updater()
   volume_updater()
   main.visible = not main.visible
@@ -566,3 +550,4 @@ return {
   toggler = toggler,
   previouser = previouser,
 }
+
