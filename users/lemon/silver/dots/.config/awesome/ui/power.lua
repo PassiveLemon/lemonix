@@ -12,10 +12,10 @@ local click_to_hide = require("modules.click_to_hide")
 
 local lock = h.button({
   margins = {
-    top = 8,
-    right = 4,
-    bottom = 8,
-    left = 8,
+    top = b.margins,
+    right = b.margins,
+    bottom = b.margins,
+    left = b.margins,
   },
   x = 100,
   y = 100,
@@ -25,10 +25,10 @@ local lock = h.button({
 })
 local poweroff = h.button({
   margins = {
-    top = 8,
-    right = 4,
-    bottom = 8,
-    left = 4,
+    top = b.margins,
+    right = b.margins,
+    bottom = b.margins,
+    left = b.margins,
   },
   x = 100,
   y = 100,
@@ -38,10 +38,10 @@ local poweroff = h.button({
 })
 local restart = h.button({
   margins = {
-    top = 8,
-    right = 8,
-    bottom = 8,
-    left = 4,
+    top = b.margins,
+    right = b.margins,
+    bottom = b.margins,
+    left = b.margins,
   },
   x = 100,
   y = 100,
@@ -50,22 +50,31 @@ local restart = h.button({
   font = b.sysfont(31),
 })
 
-local powermenu_widget = wibox.widget {
-  layout = wibox.layout.align.vertical,
-  {
-    layout = wibox.layout.fixed.horizontal,
-    lock,
-    poweroff,
-    restart,
+local powermenu_widget = wibox.widget({
+layout = wibox.layout.margin,
+  margins = {
+    top = b.margins,
+    right = b.margins,
+    bottom = b.margins,
+    left = b.margins,
   },
-}
+  {
+    layout = wibox.layout.align.vertical,
+    {
+      layout = wibox.layout.fixed.horizontal,
+      lock,
+      poweroff,
+      restart,
+    },
+  },
+})
 
 local prompt = h.text({
   margins = {
-    top = 8,
-    right = 8,
-    bottom = 4,
-    left = 8,
+    top = b.margins,
+    right = b.margins,
+    bottom = b.margins,
+    left = b.margins,
   },
   x = 308,
   y = 36,
@@ -73,10 +82,10 @@ local prompt = h.text({
 })
 local confirm_pow = h.button({
   margins = {
-    top = 4,
-    right = 4,
-    bottom = 8,
-    left = 8,
+    top = b.margins,
+    right = b.margins,
+    bottom = b.margins,
+    left = b.margins,
   },
   x = 100,
   y = 56,
@@ -85,10 +94,10 @@ local confirm_pow = h.button({
 })
 local confirm_res = h.button({
   margins = {
-    top = 4,
-    right = 4,
-    bottom = 8,
-    left = 8,
+    top = b.margins,
+    right = b.margins,
+    bottom = b.margins,
+    left = b.margins,
   },
   x = 100,
   y = 56,
@@ -97,10 +106,10 @@ local confirm_res = h.button({
 })
 local cancel = h.button({
   margins = {
-    top = 4,
-    right = 8,
-    bottom = 8,
-    left = 4,
+    top = b.margins,
+    right = b.margins,
+    bottom = b.margins,
+    left = b.margins,
   },
   x = 208,
   y = 56,
@@ -109,28 +118,46 @@ local cancel = h.button({
 })
 
 local poweroff_widget = wibox.widget({
-  layout = wibox.layout.align.vertical,
-  {
-    layout = wibox.layout.fixed.horizontal,
-    prompt,
+  layout = wibox.layout.margin,
+  margins = {
+    top = b.margins,
+    right = b.margins,
+    bottom = b.margins,
+    left = b.margins,
   },
   {
-    layout = wibox.layout.fixed.horizontal,
-    confirm_pow,
-    cancel,
+    layout = wibox.layout.align.vertical,
+    {
+      layout = wibox.layout.fixed.horizontal,
+      prompt,
+    },
+    {
+      layout = wibox.layout.fixed.horizontal,
+      confirm_pow,
+      cancel,
+    },
   },
 })
 
 local restart_widget = wibox.widget({
-  layout = wibox.layout.align.vertical,
-  {
-    layout = wibox.layout.fixed.horizontal,
-    prompt,
+  layout = wibox.layout.margin,
+  margins = {
+    top = b.margins,
+    right = b.margins,
+    bottom = b.margins,
+    left = b.margins,
   },
   {
-    layout = wibox.layout.fixed.horizontal,
-    confirm_res,
-    cancel,
+    layout = wibox.layout.align.vertical,
+    {
+      layout = wibox.layout.fixed.horizontal,
+      prompt,
+    },
+    {
+      layout = wibox.layout.fixed.horizontal,
+      confirm_res,
+      cancel,
+    },
   },
 })
 
@@ -186,3 +213,4 @@ end
 click_to_hide.popup(main, nil, true)
 
 return { signal = signal }
+

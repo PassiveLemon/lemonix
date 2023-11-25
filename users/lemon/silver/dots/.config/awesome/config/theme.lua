@@ -81,6 +81,8 @@ theme.tasklist_spacing           = 1
 theme.taglist_squares_sel = theme_assets.taglist_squares_sel(0, theme.fg_normal)
 theme.taglist_squares_unsel = theme_assets.taglist_squares_unsel(0, theme.fg_normal)
 
+theme.bg_systray = theme.bg2
+
 theme.useless_gap = 6
 
 theme.margins = 4

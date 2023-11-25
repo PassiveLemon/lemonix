@@ -8,7 +8,7 @@ local click_to_hide = require("modules.click_to_hide")
 
 local volume = require("signal.volume")
 local media = require("ui.media")
-local panel = require("ui.panel")
+--local panel = require("ui.panel")
 
 --
 -- Wibar
@@ -140,6 +140,40 @@ screen.connect_signal("request::desktop_decoration", function(s)
     text = "",
     font = b.sysfont(16),
     bg_focus = b.bg4,
+  })
+
+  local pill_systray = wibox.widget({
+    visible = false,
+    layout = wibox.layout.margin,
+    margins = {
+      right = 2,
+      left = 2,
+    },
+    {
+      widget = wibox.container.place,
+      valign = "center",
+      halign = "center",
+      forced_height = 24,
+      {
+        widget = wibox.container.background,
+        bg = b.bg2,
+        shape = gears.shape.rounded_bar,
+        forced_height = 24,
+        {
+          layout = wibox.layout.fixed.horizontal,
+          sep2,
+          wibox.widget.systray,
+        },
+      },
+    },
+  })
+
+  local pill_systray_hider = gears.timer({
+    timeout = 2,
+    single_shot = true,
+    callback = function()
+      pill_systray.visible = false
+    end,
   })
 
   local pill_cpu = wibox.widget({
@@ -383,6 +417,7 @@ screen.connect_signal("request::desktop_decoration", function(s)
       { -- Left
         layout = wibox.layout.fixed.horizontal,
         pill_nixos,
+        pill_systray,
         {
           layout = wibox.layout.margin,
           margins = {
@@ -447,15 +482,26 @@ screen.connect_signal("request::desktop_decoration", function(s)
     },
   })
 
-  volume_text:connect_signal("button::press", function()
+  volume_icon:connect_signal("button::press", function()
     awful.spawn.easy_async("pamixer -t", function()
       volume.volume()
     end)
   end)
 
   pill_nixos:connect_signal("button::press", function()
-    panel.signal()
+    pill_systray.visible = not pill_systray.visible
+    pill_systray.screen = awful.screen.focused()
   end)
+  pill_systray:connect_signal("mouse::enter", function()
+    pill_systray_hider:stop()
+  end)
+  pill_systray:connect_signal("mouse::leave", function()
+    pill_systray_hider:again()
+  end)
+  s.wibar:connect_signal("mouse::leave", function()
+    pill_systray_hider:again()
+  end)
+
   pill_music:connect_signal("button::press", function()
     media.signal()
   end)
