@@ -25,7 +25,7 @@
             "input-gain": 0.0,
             "laxity": 15,
             "makeup": 0.0,
-            "mode": "Wide",
+            "mode": "Split",
             "output-gain": 0.0,
             "ratio": 3.0,
             "sc-listen": false,
@@ -108,7 +108,7 @@
                 },
                 "band15": {
                     "frequency": 16493.816315762135,
-                    "gain": 10.46,
+                    "gain": 5.17,
                     "mode": "RLC (BT)",
                     "mute": false,
                     "q": 2.352103854385948,
@@ -275,7 +275,7 @@
                 },
                 "band15": {
                     "frequency": 16493.816315762135,
-                    "gain": 10.46,
+                    "gain": 5.17,
                     "mode": "RLC (BT)",
                     "mute": false,
                     "q": 2.352103854385948,

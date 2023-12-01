@@ -10,7 +10,7 @@
     packages = with pkgs; [
       i3lock-fancy-rapid firefox pcmanfm xarchiver gparted
       tym hilbish lite-xl rofi vscodium obsidian github-desktop imhex act
-      easyeffects pavucontrol helvum mpv tauon feishin audacity easytag
+      stable.easyeffects pavucontrol helvum mpv tauon feishin audacity easytag
       flowblade haruna feh gimp
       master.webcord-vencord authy filezilla qbittorrent
       eza bat trashy fd ripgrep
@@ -34,6 +34,7 @@
       (callPackage ../../../pkgs/slavartdl { })
       (callPackage ../../../pkgs/tilp2 { gfm = callPackage ../../../pkgs/gfm { }; })
       (callPackage ../../../pkgs/xclicker { })
+      (python3Packages.callPackage ../../../pkgs/pulsemeeter { })
       (python3Packages.callPackage ../../../pkgs/animdl { anchor-kr = python3Packages.callPackage ../../../pkgs/anchor-kr { }; anitopy = python3Packages.callPackage ../../../pkgs/anitopy { }; })
       (python3Packages.callPackage ../../../pkgs/onthespot { music-tag = python3Packages.callPackage ../../../pkgs/music-tag { }; })
     ];
