@@ -1,70 +1,53 @@
-# Taken from #251795 and slightly modified. Will remove this from my repo once it gets merged.
-
 { lib
 , buildGoModule
 , fetchFromGitHub
 , wine
-, symlinkJoin
-, makeWrapper
+, makeBinaryWrapper
 , pkg-config
 , libGL
 , libxkbcommon
 , xorg
 }:
 
-let
-  version = "1.5.4";
+buildGoModule rec {
+  pname = "vinegar";
+  version = "1.5.8";
 
-  unwrapped = buildGoModule rec {
-    pname = "vinegar";
-
-    inherit version;
-
-    src = fetchFromGitHub {
-      owner = "vinegarhq";
-      repo = "vinegar";
-      rev = "v${version}";
-      hash = "sha256-6fQZ+NCJq7mMEGKubTIiffC2+05FUmM58Qb+6PMsoC8=";
-    };
-
-    vendorHash = "sha256-EO7G2WD00wVErO72pag9qIxmLeBGV9orY98piGuh8Ac=";
-
-    makeFlags = [
-      "PREFIX=$(out)"
-      "VERSION=${version}"
-    ];
-
-    buildPhase = ''
-      runHook preBuild
-      make $makeFlags
-      runHook postBuild
-    '';
-
-    installPhase = ''
-      runHook preInstall
-      make install $makeFlags
-      runHook postInstall
-    '';
-
-    nativeBuildInputs = [ pkg-config ];
-    buildInputs = [ libGL libxkbcommon xorg.libX11 xorg.libXcursor xorg.libXfixes ];
+  src = fetchFromGitHub {
+    owner = "vinegarhq";
+    repo = "vinegar";
+    rev = "v${version}";
+    hash = "sha256-1KDcc9Hms1hQgpvf/49zFJ85kDUsieNcoOTYaZWV+S0=";
   };
 
-in
-symlinkJoin {
-  name = "vinegar";
-  paths = [ unwrapped ];
-  buildInputs = [ makeWrapper ];
+  vendorHash = "sha256-UJLwSOJ4vZt3kquKllm5OMfFheZtAG5gLSA20313PpA=";
+
+  nativeBuildInputs = [ pkg-config makeBinaryWrapper ];
+  buildInputs = [ libGL libxkbcommon xorg.libX11 xorg.libXcursor xorg.libXfixes wine ];
+
+  buildPhase = ''
+    runHook preBuild
+    make PREFIX=$out
+    runHook postBuild
+  '';
+
+  installPhase = ''
+    runHook preInstall
+    make PREFIX=$out install
+    runHook postInstall
+  '';
+
+  postInstall = ''
+    wrapProgram $out/bin/vinegar \
+      --prefix PATH : ${lib.makeBinPath [ wine ]}
+  '';
+
   meta = with lib; {
     description = "An open-source, minimal, configurable, fast bootstrapper for running Roblox on Linux";
     homepage = "https://github.com/vinegarhq/vinegar";
     changelog = "https://github.com/vinegarhq/vinegar/releases/tag/v${version}";
     mainProgram = "vinegar";
     license = licenses.gpl3Only;
-    maintainers = with maintainers; [ ];
+    maintainers = with maintainers; [ nyanbinary ];
   };
-  postBuild = ''
-    wrapProgram $out/bin/vinegar \
-      --prefix PATH : ${lib.makeBinPath [ wine ]}
-  '';
 }
