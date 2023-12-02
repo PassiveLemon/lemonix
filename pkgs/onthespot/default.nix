@@ -28,59 +28,52 @@
   websocket-client,
   zeroconf,
 }:
-let
-  unwrapped = buildPythonApplication rec {
-    pname = "onthespot";
-    version = "0.5";
-    format = "pyproject";
+buildPythonApplication rec {
+  pname = "onthespot";
+  version = "0.5";
+  format = "pyproject";
 
-    src = fetchFromGitHub {
-      owner = "casualsnek";
-      repo = "onthespot";
-      rev = "v${version}";
-      hash = "sha256-VaJBNsT7uNOGY43GnzhUqDQNiPoFZcc2UaIfOKgkufg=";
-    };
-
-    nativeBuildInputs = [
-      qt5.wrapQtAppsHook
-      setuptools
-    ];
-    propagatedBuildInputs = [
-      qt5.wrapQtAppsHook
-      certifi
-      charset-normalizer
-      defusedxml
-      idna
-      ifaddr
-      librespot
-      music-tag
-      mutagen
-      packaging
-      pillow
-      protobuf
-      pycryptodomex
-      pyogg
-      pyqt5
-      pyqt5_sip
-      pyxdg
-      requests
-      show-in-file-manager
-      urllib3
-      websocket-client
-      zeroconf
-    ];
-
-    makeWrapperArgs = [
-      "\${qtWrapperArgs[@]}"
-    ];
+  src = fetchFromGitHub {
+    owner = "casualsnek";
+    repo = "onthespot";
+    rev = "v${version}";
+    hash = "sha256-VaJBNsT7uNOGY43GnzhUqDQNiPoFZcc2UaIfOKgkufg=";
   };
-in
-symlinkJoin {
-  name = "onthespot";
-  paths = [ unwrapped ];
-  buildInputs = [ makeWrapper ];
 
-  postBuild = ''
+  nativeBuildInputs = [
+    qt5.wrapQtAppsHook
+    setuptools
+  ];
+  propagatedBuildInputs = [
+    qt5.wrapQtAppsHook
+    certifi
+    charset-normalizer
+    defusedxml
+    idna
+    ifaddr
+    librespot
+    music-tag
+    mutagen
+    packaging
+    pillow
+    protobuf
+    pycryptodomex
+    pyogg
+    pyqt5
+    pyqt5_sip
+    pyxdg
+    requests
+    show-in-file-manager
+    urllib3
+    websocket-client
+    zeroconf
+  ];
+
+  makeWrapperArgs = [
+    "\${qtWrapperArgs[@]}"
+  ];
+
+  postInstall = ''
     wrapProgram $out/bin/onthespot_gui \
       --prefix PATH : ${lib.makeBinPath [ ffmpeg ]}
   '';
