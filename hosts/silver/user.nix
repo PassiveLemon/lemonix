@@ -69,6 +69,10 @@
     platformTheme = "gtk2";
     style = "gtk2";
   };
+  xdg.portal = {
+    enable = true;
+    extraPortals = [ pkgs.xdg-desktop-portal-gtk ];
+  };
   security = {
     pam.services.lemon.enableGnomeKeyring = true;
     rtkit.enable = true;
