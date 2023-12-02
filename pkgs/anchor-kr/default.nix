@@ -16,6 +16,7 @@ buildPythonPackage {
   };
 
   pythonImportsCheck = [ "anchor" ];
+  doCheck = true;
 
   meta = with lib; {
     description = "Python library for scraping";
