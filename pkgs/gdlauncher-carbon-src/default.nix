@@ -1,3 +1,4 @@
+# WIP. CURRENTLY NOT FUNCTIONAL
 { lib,
   stdenv,
   stdenvNoCC,
@@ -10,7 +11,7 @@
   rustfmt,
   pkg-config,
   gcc,
-  openssl
+  openssl,
 }:
 stdenvNoCC.mkDerivation rec {
   pname = "gdlauncher-carbon";
@@ -91,7 +92,8 @@ stdenvNoCC.mkDerivation rec {
     description = "A simple, yet powerful Minecraft custom launcher with a strong focus on the user experience";
     homepage = "https://gdlauncher.com/";
     #changelog = "https://github.com/gorilla-devs/GDLauncher-Carbon/releases/tag/v${version}";
-    license = licenses.gpl3Only;
+    license = licenses.bsl11;
+    mainProgram = "gdlauncher-carbon";
     maintainers = with maintainers; [ passivelemon ];
     platforms = [ "x86_64-linux" ];
   };

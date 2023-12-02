@@ -18,8 +18,8 @@ appimageTools.wrapType2 {
   extraInstallCommands = ''
     mv $out/bin/${pname}-${version} $out/bin/${pname}
 
-    install -m 444 -D ${appimageContents}/${pname}.desktop -t $out/share/applications/
-    substituteInPlace $out/share/applications/${pname}.desktop \
+    install -Dm444 ${appimageContents}/gdlauncher.desktop -t $out/share/applications
+    substituteInPlace $out/share/applications/gdlauncher.desktop \
       --replace 'Exec=AppRun --no-sandbox %U' 'Exec=${pname}'
     cp -r ${appimageContents}/usr/share/icons $out/share
   '';
@@ -29,6 +29,7 @@ appimageTools.wrapType2 {
     homepage = "https://gdlauncher.com/";
     changelog = "https://github.com/gorilla-devs/GDLauncher/releases/tag/v${version}";
     license = licenses.gpl3Only;
+    mainProgram = "gdlauncher";
     maintainers = with maintainers; [ passivelemon ];
     platforms = [ "x86_64-linux" ];
   };
