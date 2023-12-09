@@ -17,8 +17,8 @@
       pamixer playerctl appimage-run neofetch ventoy-bin headsetcontrol
       libsForQt5.kruler
       mullvad-vpn
-      maim slop xdotool
-      freetube
+      scrot maim slop xdotool
+      freetube animdl
       rsync
 
       # Development
@@ -35,7 +35,6 @@
       (callPackage ../../../pkgs/tilp2 { gfm = callPackage ../../../pkgs/gfm { }; })
       (callPackage ../../../pkgs/xclicker { })
       (python3Packages.callPackage ../../../pkgs/pulsemeeter { })
-      (python3Packages.callPackage ../../../pkgs/animdl { anchor-kr = python3Packages.callPackage ../../../pkgs/anchor-kr { }; anitopy = python3Packages.callPackage ../../../pkgs/anitopy { }; })
       (python3Packages.callPackage ../../../pkgs/onthespot { music-tag = python3Packages.callPackage ../../../pkgs/music-tag { }; })
     ];
     username = "lemon";
@@ -121,7 +120,7 @@
       discord = { # Alias Discord to Webcord with CSS skin
         name = "Discord";
         exec = "webcord -- --add-css-theme=/home/lemon/.config/BetterDiscord/themes/Lemon.theme.css";
-        icon = "/home/lemon/.icons/Papirus/32x32/apps/webcord.svg";
+        icon = "/home/lemon/.icons/Papirus/64x64/apps/webcord.svg";
         terminal = false;
         type = "Application";
         categories = [ "Application" ];
