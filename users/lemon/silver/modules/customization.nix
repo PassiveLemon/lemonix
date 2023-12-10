@@ -29,6 +29,7 @@
         gtk-xft-hinting = 1;
         gtk-xft-hintstyle = "hintslight";
         gtk-xft-rgba = "rgb";
+        gtk-modules = "gail:atk-bridge";
       };
       bookmarks = [
         "file:///home/lemon/.local/share/Trash"

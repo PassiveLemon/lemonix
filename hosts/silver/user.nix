@@ -36,6 +36,7 @@
     pipewire = {
       enable = true;
       pulse.enable = true;
+      jack.enable = true;
       alsa = {
         enable = true;
         support32Bit = true;
@@ -71,10 +72,12 @@
   };
   xdg.portal = {
     enable = true;
-    extraPortals = [ pkgs.xdg-desktop-portal-gtk ];
-  };
-  security = {
-    pam.services.lemon.enableGnomeKeyring = true;
-    rtkit.enable = true;
+    config = {
+      common = {
+        default = [
+          "gtk"
+        ];
+      };
+    };
   };
 }

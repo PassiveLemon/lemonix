@@ -72,6 +72,7 @@
       };
       monitor = {
         description = "Monitor";
+        home = "/home/monitor";
         isNormalUser = true;
         openssh.authorizedKeys.keys = [ "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQDwMBh4nqwYBgpB7Pp/tE83y91C23P3eSyTFaOGPQL88QMUBJP1ZMKM3lotXPIZ+ADDUitNvLfsRTzXsCxWjhsNM1Y5Egf36aQm24ZA/h6jj9mSs/EVp7jZR72ok5gYCxtg9QfwAlEXhaIBQq/XzbAwORN23AJJR8ymSrGnmkm550XzsXbEFKg2EG49kXEWrzPKpMvcL02U7tPiSxH99aJieFXyDEFxssOU6Scv9AIU6ERxwlKYV2bVMF3RLkpJ8mkgcuOVt7i4fHFkcKERRHbx3k6RsbBN4xt/Nhu4hkE+6MTY1u8q9S3kJr5s80Gfpp7zgCjhwB4y7VpLpnQSQk1ewf/pKhNB61dvMkU4B7X1znitN+GR291XEOIAeCl4ba7ATBfmyouhQ0wpGsRvYfheyXMo7u4z43kq3mZSAKWuLNmGUv469HZ4vTKo8IZ+xBC2pHn9hlXLfeHXmVa/XwtnXpmi23xkr6TKxATYVYAsWO9A5Ll//L+EWluAhjj5jT8= monitor@silver" ];
       };
@@ -101,6 +102,7 @@
         AllowStreamLocalForwarding no
         AllowTcpForwarding yes
         AuthenticationMethods publickey
+        ChallengeResponseAuthentication no
         KbdInteractiveAuthentication no
         PasswordAuthentication no
         PermitEmptyPasswords no
@@ -145,6 +147,10 @@
       driSupport32Bit = true;
     };
     bluetooth.enable = true;
+  };
+  security = {
+    sudo.execWheelOnly = true;
+    rtkit.enable = true;
   };
   zramSwap = {
     enable = true;
