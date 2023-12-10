@@ -38,6 +38,7 @@
     pipewire = {
       enable = true;
       pulse.enable = true;
+      jack.enable = true;
       alsa = {
         enable = true;
         support32Bit = true;
@@ -61,9 +62,5 @@
     enable = true;
     platformTheme = "gtk2";
     style = "gtk2";
-  };
-  security = {
-    pam.services.lemon.enableGnomeKeyring = true;
-    rtkit.enable = true;
   };
 }

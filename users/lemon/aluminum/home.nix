@@ -8,7 +8,7 @@
     packages = with pkgs; [
       i3lock-fancy-rapid firefox pcmanfm xarchiver gparted
       tym hilbish lite-xl rofi vscodium obsidian github-desktop imhex act
-      easyeffects pavucontrol helvum mpv tauon feishin audacity easytag
+      old.easyeffects pavucontrol helvum mpv tauon feishin audacity easytag
       flowblade haruna feh gimp
       master.webcord-vencord authy filezilla qbittorrent
       eza bat trashy fd ripgrep

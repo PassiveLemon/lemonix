@@ -93,12 +93,16 @@
     };
     bluetooth.enable = true;
   };
+  powerManagement.enable = true;
+  security = {
+    sudo.execWheelOnly = true;
+    rtkit.enable = true;
+  };
   zramSwap = {
     enable = true;
     memoryPercent = 25;
     priority = 100;
   };
-  powerManagement.enable = true;
   documentation = {
     enable = false;
     doc.enable = false;
