@@ -35,10 +35,10 @@
   # Users
   users = {
     users = {
-      root = {
+      "root" = {
         hashedPassword = null;
       };
-      lemon = {
+      "lemon" = {
         description = "Lemon";
         home = "/home/lemon";
         extraGroups = [ "wheel" "networkmanager" "storage" "video" ];

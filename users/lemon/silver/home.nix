@@ -117,7 +117,7 @@
       };
     };
     desktopEntries = {
-      discord = { # Alias Discord to Webcord with CSS skin
+      "discord" = { # Alias Discord to Webcord with CSS skin
         name = "Discord";
         exec = "webcord -- --add-css-theme=/home/lemon/.config/BetterDiscord/themes/Lemon.theme.css";
         icon = "/home/lemon/.icons/Papirus/64x64/apps/webcord.svg";
@@ -125,12 +125,12 @@
         type = "Application";
         categories = [ "Application" ];
       };
-      sd-comfyui = {
+      "sd-comfyui" = {
         name = "sd-comfyui";
         exec = "/home/lemon/Documents/GitHub/private/Scripts/ComfyUI.sh";
         terminal = true;
       };
-      sd-auto = {
+      "sd-auto" = {
         name = "sd-auto";
         exec = "/home/lemon/Documents/GitHub/private/Scripts/Auto.sh";
         terminal = true;

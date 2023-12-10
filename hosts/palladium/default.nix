@@ -43,7 +43,7 @@
       ];
     };
     interfaces = {
-      end0 = {
+      "end0" = {
         ipv4.addresses = [{
           address = "192.168.1.178";
           prefixLength = 24;
@@ -59,20 +59,20 @@
   # Users
   users = {
     groups = {
-      gpio = { };
+      "gpio" = { };
     };
     users = {
-      root = {
+      "root" = {
         hashedPassword = null;
       };
-      nixos = {
+      "nixos" = {
         description = "NixOS";
         home = "/home/nixos";
         extraGroups = [ "wheel" "networkmanager" "docker" "video" "storage" "gpio" ];
         isNormalUser = true;
         openssh.authorizedKeys.keys = [ "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQDWKTvSQ2O9qNMyhg5EakyDNQVK9O3dDuPlH1Wfo3DkA0aGb14YfcGj07bQpdJ5RrebNSMwATxiEU0GuTazZqnjTtG5mP3R3Z1vQS2LTVEXyU6UiHatMqJxqerKshMJBVyLc2Rn4/c2Uj88I3NPnxqt4H/Xz4hbhNLOeuPtB9Arj/xzglc3BJQ14ctjxjkT41fkic+7VQUhq9VbbmOiC8Hs68T/cWk2QZaA/2QvF+3wPlhh27WJdfHX1xJrKYe20IV7JU5199LtStYCwOHMnHX2iTARWQFNYfsatyBMEGjbO6sFwDs9NWPjqA4s0IG/D2jWi8QkB/YgkN+7XDELE0S/rxT5hLOCuScv3ozL8pB1aWZirTuVodg5n/MJ/WcaM/J3Gg2phnGgPuqnjpDUdwQSQlcfFEmqqlZEhR5Ei5QJMxrlPtMRcZbZv6reLvllZUNM5xTOuxKUSkABcMUam8jx7q2qQcIg6nJGOO+Q85NTp0dKKn/AJ7SAJTar1K4X1VU= nixos@palladium" ];
       };
-      monitor = {
+      "monitor" = {
         description = "Monitor";
         home = "/home/monitor";
         isNormalUser = true;
@@ -181,11 +181,13 @@
   # Drives
   # 32 GB SD (Root)
 
-  # 16 GB Sandisk (Home)
-  fileSystems."/home" = {
-    device = "/dev/disk/by-uuid/fc95e5c7-b812-437e-93ac-64205074f1fb";
-    fsType = "ext4";
-    options = [ "noatime" ];
+  fileSystems = {
+    # 16 GB Sandisk (Home)
+    "/home" = {
+      device = "/dev/disk/by-uuid/fc95e5c7-b812-437e-93ac-64205074f1fb";
+      fsType = "ext4";
+      options = [ "noatime" ];
+    };
   };
 
   system.stateVersion = "23.05";

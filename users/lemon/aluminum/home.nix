@@ -85,7 +85,7 @@
       };
     };
     desktopEntries = {
-      discord = {
+      "discord" = {
         name = "Discord";
         exec = "webcord -- --add-css-theme=/home/lemon/.config/BetterDiscord/themes/Lemon.theme.css";
         icon = "/home/lemon/.icons/Papirus/32x32/apps/webcord.svg";
