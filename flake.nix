@@ -2,7 +2,8 @@
   description = "Lemon's NixOS";
 
   inputs = {
-    nixos.url = "github:nixos/nixpkgs/nixos-23.05";
+    nixos-old.url = "github:nixos/nixpkgs/nixos-23.05";
+    nixos.url = "github:nixos/nixpkgs/nixos-23.11";
     nixpkgs.url = "github:nixos/nixpkgs/nixpkgs-unstable";
     master.url = "github:nixos/nixpkgs";
     nixos-hardware.url = "github:nixos/nixos-hardware";
@@ -38,6 +39,10 @@
     nixpkgs-overlays = ({ inputs, outputs, config, system, ... }: {
       nixpkgs.overlays = [
         (final: _prev: {
+          old = import inputs.nixos-old {
+            system = final.system;
+            config = final.config;
+          };
           stable = import inputs.nixos {
             system = final.system;
             config = final.config;
