@@ -47,6 +47,7 @@
     printing.enable = true;
     avahi = {
       enable = true;
+      nssmdns = true;
       openFirewall = true;
     };
     mullvad-vpn.enable = true;
@@ -56,11 +57,14 @@
   programs = {
     dconf.enable = true;
     seahorse.enable = true;
-    nm-applet.enable = true;
   };
   qt = {
     enable = true;
     platformTheme = "gtk2";
     style = "gtk2";
+  };
+  xdg.portal = {
+    enable = true;
+    config.common.default = [ "gtk" ];
   };
 }

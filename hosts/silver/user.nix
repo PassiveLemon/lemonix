@@ -26,11 +26,6 @@
           accelProfile = "flat";
           accelSpeed = "-0.5";
         };
-        touchpad = {
-          middleEmulation = false;
-          accelProfile = "flat";
-          accelSpeed = "-0.5";
-        };
       };
     };
     pipewire = {
@@ -47,8 +42,10 @@
         rate = 48000;
       };
     };
+    printing.enable = true;
     avahi = {
       enable = true;
+      nssmdns = true;
       openFirewall = true;
     };
     udev.extraRules = ''
@@ -56,7 +53,6 @@
       KERNEL=="hidraw*", SUBSYSTEM=="hidraw", ATTRS{idVendor}=="1b1c", ATTRS{idProduct}=="0a51", TAG+="uaccess"
       LABEL="headset_end"
     ''; # Headsetcontrol udev rule
-    printing.enable = true;
     mullvad-vpn.enable = true;
     blueman.enable = true;
     gnome.gnome-keyring.enable = true;
@@ -72,12 +68,6 @@
   };
   xdg.portal = {
     enable = true;
-    config = {
-      common = {
-        default = [
-          "gtk"
-        ];
-      };
-    };
+    config.common.default = [ "gtk" ];
   };
 }
