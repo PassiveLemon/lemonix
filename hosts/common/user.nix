@@ -11,7 +11,6 @@
     xserver = {
       enable = true;
       excludePackages = [ pkgs.xterm ];
-      videoDrivers = [ "nvidia" ];
       displayManager = {
         startx.enable = true;
       };
