@@ -1,13 +1,12 @@
 { inputs, outputs, pkgs, config, lib, ... }: {
   imports = [
+    ../common/default.nix
     ./hardware-configuration.nix
   ];
   
   # Boot
   boot = {
     loader = {
-      efi.canTouchEfiVariables = true;
-      timeout = 3;
       systemd-boot.enable = false;
       grub = {
         enable = true;
@@ -22,19 +21,11 @@
     kernelModules = [ "iwlwifi" "kvm-amd" ];
   };
 
-  # Locale
-  time = { 
-    timeZone = "America/New_York";
-    hardwareClockInLocalTime = true;
-  };
-  i18n.defaultLocale = "en_US.UTF-8";
-
   # Networking
   networking = {
     hostName = "silver";
     networkmanager.enable = true;
     firewall = {
-      enable = true;
       allowedTCPPortRanges = [
         { from = 50000; to = 55000; }
         { from = 22; to = 22; }
@@ -54,15 +45,12 @@
     };
     enableIPv6 = false;
     defaultGateway = "192.168.1.1";
-    nameservers = [ "192.168.1.178" "1.1.1.1" ];
+    nameservers = [ "192.168.1.178" ];
   };
 
   # Users
   users = {
     users = {
-      "root" = {
-        hashedPassword = null;
-      };
       "lemon" = {
         description = "Lemon";
         home = "/home/lemon";
@@ -82,15 +70,10 @@
   # Packages
   environment = {
     systemPackages = with pkgs; [
-      dash bash
-      nano unzip unrar p7zip curl wget git gvfs psmisc
-      htop sysstat iotop stress nvtop-nvidia netcat lm_sensors smartmontools dig
-      networkmanager ethtool
+      nvtop-nvidia
       # Required for the FS to complete its check and allow me to boot while on nixos-23.05
       pkgs.unstable.e2fsprogs
     ];
-    binsh = "${pkgs.dash}/bin/dash";
-    shells = with pkgs; [ bash ];
   };
 
   # Configs
@@ -110,13 +93,6 @@
         X11Forwarding no
       '';
     };
-    udisks2 = {
-      enable = true;
-      mountOnMedia = true;
-    };
-    gvfs.enable = true;
-    devmon.enable = true;
-    journald.extraConfig = "SystemMaxUse=1G";
   };
   virtualisation = {
     docker = { 
@@ -147,36 +123,6 @@
       driSupport32Bit = true;
     };
     bluetooth.enable = true;
-  };
-  security = {
-    sudo.execWheelOnly = true;
-    rtkit.enable = true;
-  };
-  zramSwap = {
-    enable = true;
-    memoryPercent = 17;
-    priority = 100;
-  };
-  documentation = {
-    enable = false;
-    doc.enable = false;
-    man.enable = false;
-    dev.enable = false;
-  };
-  nix = {
-    settings = {
-      experimental-features = [ "nix-command" "flakes" ];
-      auto-optimise-store = true;
-    };
-    gc = {
-      automatic = true;
-      dates = "weekly";
-      options = "--delete-older-than 30d";
-    };
-  };
-  nixpkgs.config = {
-    allowUnfree = true;
-    allowUnfreePredicate = (_: true);
   };
 
   # Drives

@@ -1,13 +1,12 @@
 { inputs, outputs, pkgs, config, lib, ... }: {
   imports = [
+    ../common/default.nix
     ./hardware-configuration.nix
   ];
   
   # Boot
   boot = {
     loader = {
-      efi.canTouchEfiVariables = true;
-      timeout = 3;
       systemd-boot.enable = false;
       grub.enable = false;
       generic-extlinux-compatible.enable = true;
@@ -20,19 +19,11 @@
     kernelPackages = pkgs.linuxPackages_rpi4;
   };
 
-  # Locale
-  time = { 
-    timeZone = "America/New_York";
-    hardwareClockInLocalTime = true;
-  };
-  i18n.defaultLocale = "en_US.UTF-8";
-
   # Networking
   networking = {
     hostName = "palladium";
     networkmanager.enable = true;
     firewall = {
-      enable = true;
       allowedTCPPortRanges = [
         { from = 40000; to = 44000; }
         { from = 22; to = 22; }
@@ -53,7 +44,6 @@
     };
     enableIPv6 = false;
     defaultGateway = "192.168.1.1";
-    nameservers = [ "1.1.1.1" "8.8.8.8" ];
   };
 
   # Users
@@ -62,9 +52,6 @@
       "gpio" = { };
     };
     users = {
-      "root" = {
-        hashedPassword = null;
-      };
       "nixos" = {
         description = "NixOS";
         home = "/home/nixos";
@@ -84,15 +71,9 @@
   # Packages
   environment = {
     systemPackages = with pkgs; [
-      dash bash
-      nano unzip unrar p7zip curl wget git gvfs psmisc
-      htop sysstat iotop stress netcat lm_sensors smartmontools dig
-      networkmanager ethtool
       libraspberrypi raspberrypi-eeprom
       neofetch
     ];
-    binsh = "${pkgs.dash}/bin/dash";
-    shells = with pkgs; [ bash ];
   };
 
   # Configs
@@ -112,13 +93,6 @@
         X11Forwarding no
       '';
     };
-    udisks2 = {
-      enable = true;
-      mountOnMedia = true;
-    };
-    gvfs.enable = true;
-    devmon.enable = true;
-    journald.extraConfig = "SystemMaxUse=500M";
     udev.extraRules = ''
       SUBSYSTEM=="bcm2835-gpiomem", KERNEL=="gpiomem", GROUP="gpio", MODE="0660"
       SUBSYSTEM=="gpio", KERNEL=="gpiochip*", ACTION=="add", RUN+="${pkgs.bash}/bin/bash -c 'chown root:gpio  /sys/class/gpio/export /sys/class/gpio/unexport ; chmod 220 /sys/class/gpio/export /sys/class/gpio/unexport'"
@@ -146,36 +120,6 @@
       filter = "*rpi-4-*.dtb";
     };
     enableRedistributableFirmware = true;
-  };
-  security = {
-    sudo.execWheelOnly = true;
-    rtkit.enable = true;
-  };
-  zramSwap = {
-    enable = true;
-    memoryPercent = 25;
-    priority = 100;
-  };
-  documentation = {
-    enable = false;
-    doc.enable = false;
-    man.enable = false;
-    dev.enable = false;
-  };
-  nix = {
-    settings = {
-      experimental-features = [ "nix-command" "flakes" ];
-      auto-optimise-store = true;
-    };
-    gc = {
-      automatic = true;
-      dates = "weekly";
-      options = "--delete-older-than 30d";
-    };
-  };
-  nixpkgs.config = {
-    allowUnfree = true;
-    allowUnfreePredicate = (_: true);
   };
 
   # Drives

@@ -1,13 +1,12 @@
 { inputs, outputs, pkgs, config, lib, ... }: {
   imports = [
+    ../common/default.nix
     ./hardware-configuration.nix
   ];
   
   # Boot
   boot = {
     loader = {
-      efi.canTouchEfiVariables = true;
-      timeout = 3;
       systemd-boot = {
         enable = true;
         configurationLimit = 50;
@@ -17,27 +16,15 @@
     kernelModules = [ "rtl8821ce" ];
   };
 
-  # Locale
-  time = { 
-    timeZone = "America/New_York";
-    hardwareClockInLocalTime = true;
-  };
-  i18n.defaultLocale = "en_US.UTF-8";
-
   # Networking
   networking = {
     hostName = "aluminum";
-    networkmanager.enable = true;
-    firewall.enable = true;
-    nameservers = [ "192.168.1.178" "1.1.1.1" "8.8.8.8" ];
+    nameservers = [ "192.168.1.178" ];
   };
 
   # Users
   users = {
     users = {
-      "root" = {
-        hashedPassword = null;
-      };
       "lemon" = {
         description = "Lemon";
         home = "/home/lemon";
@@ -45,18 +32,6 @@
         isNormalUser = true;
       };
     };
-  };
-
-  # Packages
-  environment = {
-    systemPackages = with pkgs; [
-      dash bash
-      nano unzip unrar p7zip curl wget git gvfs psmisc
-      htop sysstat iotop stress netcat lm_sensors powertop smartmontools
-      networkmanager
-    ];
-    binsh = "${pkgs.dash}/bin/dash";
-    shells = with pkgs; [ bash ];
   };
 
   # Configs
@@ -94,36 +69,6 @@
     bluetooth.enable = true;
   };
   powerManagement.enable = true;
-  security = {
-    sudo.execWheelOnly = true;
-    rtkit.enable = true;
-  };
-  zramSwap = {
-    enable = true;
-    memoryPercent = 25;
-    priority = 100;
-  };
-  documentation = {
-    enable = false;
-    doc.enable = false;
-    man.enable = false;
-    dev.enable = false;
-  };
-  nix = {
-    settings = {
-      experimental-features = [ "nix-command" "flakes" ];
-      auto-optimise-store = true;
-    };
-    gc = {
-      automatic = true;
-      dates = "weekly";
-      options = "--delete-older-than 30d";
-    };
-  };
-  nixpkgs.config = {
-    allowUnfree = true;
-    allowUnfreePredicate = (_: true);
-  };
 
   # Drives
   # 128 GB Internal (Root)
