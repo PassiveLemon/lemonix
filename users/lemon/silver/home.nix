@@ -1,41 +1,39 @@
 { inputs, outputs, pkgs, config, lib, ... }: {
   imports = [
     ./modules/customization.nix
-    ../../../common/modules/gaming.nix
-    ../../../common/modules/picom.nix
-    ../../../common/modules/spicetify.nix
+    ../../../modules/gaming.nix
+    ../../../modules/picom.nix
+    ../../../modules/spicetify.nix
   ];
 
   home = {
     packages = with pkgs; [
-      i3lock-fancy-rapid firefox pcmanfm xarchiver gparted
-      tym hilbish lite-xl rofi vscodium obsidian github-desktop imhex act
+      tym i3lock-fancy-rapid pcmanfm xarchiver gparted
+      firefox master.webcord-vencord freetube authy
+      lite-xl rofi vscodium github-desktop imhex act
+      obsidian libreoffice drawio
       old.easyeffects pavucontrol helvum soundux mpv tauon feishin audacity easytag
-      flowblade haruna feh gimp
-      master.webcord-vencord authy filezilla qbittorrent
-      eza bat trashy fd ripgrep
+      scrot flowblade haruna feh gimp animdl
+      filezilla qbittorrent
+      hilbish eza bat thefuck trashy fd ripgrep
       pamixer playerctl appimage-run neofetch ventoy-bin headsetcontrol
-      libsForQt5.kruler
-      mullvad-vpn
-      scrot maim slop xdotool
-      freetube animdl
-      rsync
+      libsForQt5.kruler localsend mullvad-vpn onthespot
+
+      freecad openscad solvespace prusa-slicer cura meshlab
+
+      # Testing
+      rsync syncthing
 
       # Development
       jq
-      (python311.withPackages(ps: with ps; [ pip pillow evdev pyyaml pynput colorama ]))
-      (luajit.withPackages (ps: with ps; [ luarocks ]))
-      cmake
       dotnet-sdk
-      libtifiles2 libticonv libticalcs2 libticables2
 
       # Custom
       (callPackage ../../../pkgs/corrupter { })
-      (callPackage ../../../pkgs/slavartdl { })
-      (callPackage ../../../pkgs/tilp2 { gfm = callPackage ../../../pkgs/gfm { }; })
       (callPackage ../../../pkgs/xclicker { })
+      (callPackage ../../../pkgs/tilp2 { gfm = callPackage ../../../pkgs/gfm { }; })
       (python3Packages.callPackage ../../../pkgs/pulsemeeter { })
-      (python3Packages.callPackage ../../../pkgs/onthespot { music-tag = python3Packages.callPackage ../../../pkgs/music-tag { }; })
+      (python3Packages.callPackage ../../../pkgs/poepyautopot { })
     ];
     username = "lemon";
     homeDirectory = "/home/lemon";
@@ -105,10 +103,24 @@
       defaultApplications = {
         "inode/directory" = "pcmanfm.desktop";
         "audio/flac" = "mpv.desktop";
+        "audio/matroska" = "mpv.desktop";
         "audio/mpeg" = "mpv.desktop";
         "audio/ogg" = "mpv.desktop";
+        "audio/opus" = "mpv.desktop";
+        "audio/vorbis" = "mpv.desktop";
         "audio/wav" = "mpv.desktop";
+        "image/bmp" = "feh.desktop";
+        "image/gif" = "firefox.desktop";
+        "image/heic" = "feh.desktop";
+        "image/heif" = "feh.desktop";
+        "image/jpeg" = "feh.desktop";
+        "image/png" = "feh.desktop";
+        "image/svg+xml" = "feh.desktop";
+        "video/matroska" = "org.kde.haruna.desktop";
         "video/mp4" = "org.kde.haruna.desktop";
+        "video/mpeg" = "org.kde.haruna.desktop";
+        "video/MPV" = "org.kde.haruna.desktop";
+        "video/ogg" = "org.kde.haruna.desktop";
         "video/quicktime" = "org.kde.haruna.desktop";
         "video/webm" = "org.kde.haruna.desktop";
         "x-scheme-handler/ror2mm" = "r2modman.desktop";
@@ -142,6 +154,7 @@
     allowUnfreePredicate = (_: true);
     permittedInsecurePackages = [
       "electron-24.8.6" # Feishin
+      "electron-25.9.0"
     ];
   };
 }

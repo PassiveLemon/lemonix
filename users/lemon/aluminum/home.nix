@@ -1,20 +1,21 @@
 { inputs, outputs, pkgs, config, lib, ... }: {
   imports = [
     ./modules/customization.nix
-    ../../../common/modules/spicetify.nix
+    ../../../modules/spicetify.nix
   ];
 
   home = {
     packages = with pkgs; [
-      i3lock-fancy-rapid firefox pcmanfm xarchiver gparted
-      tym hilbish lite-xl rofi vscodium obsidian github-desktop imhex act
+      tym i3lock-fancy-rapid pcmanfm xarchiver gparted
+      firefox master.webcord-vencord freetube authy
+      lite-xl rofi vscodium github-desktop imhex act
+      obsidian libreoffice drawio
       old.easyeffects pavucontrol helvum mpv tauon feishin audacity easytag
-      flowblade haruna feh gimp
-      master.webcord-vencord authy filezilla qbittorrent
-      eza bat trashy fd ripgrep
-      brightnessctl pamixer playerctl appimage-run neofetch ventoy-bin headsetcontrol
-      libsForQt5.kruler
-      mullvad-vpn cloudflare-warp
+      scrot flowblade haruna feh gimp animdl
+      filezilla qbittorrent
+      hilbish eza bat thefuck trashy fd ripgrep
+      pamixer playerctl appimage-run neofetch ventoy-bin headsetcontrol brightnessctl
+      libsForQt5.kruler localsend mullvad-vpn cloudflare-warp
     ];
     username = "lemon";
     homeDirectory = "/home/lemon";
@@ -67,8 +68,13 @@
       };
     };
   };
-  programs.home-manager.enable = true;
-
+  programs = {
+    home-manager.enable = true;
+    obs-studio = {
+      enable = true;
+      plugins = with pkgs.obs-studio-plugins; [ obs-pipewire-audio-capture ];
+    };
+  };
   xdg = {
     mime.enable = true;
     mimeApps = {
@@ -76,10 +82,24 @@
       defaultApplications = {
         "inode/directory" = "pcmanfm.desktop";
         "audio/flac" = "mpv.desktop";
+        "audio/matroska" = "mpv.desktop";
         "audio/mpeg" = "mpv.desktop";
         "audio/ogg" = "mpv.desktop";
+        "audio/opus" = "mpv.desktop";
+        "audio/vorbis" = "mpv.desktop";
         "audio/wav" = "mpv.desktop";
+        "image/bmp" = "feh.desktop";
+        "image/gif" = "firefox.desktop";
+        "image/heic" = "feh.desktop";
+        "image/heif" = "feh.desktop";
+        "image/jpeg" = "feh.desktop";
+        "image/png" = "feh.desktop";
+        "image/svg+xml" = "feh.desktop";
+        "video/matroska" = "org.kde.haruna.desktop";
         "video/mp4" = "org.kde.haruna.desktop";
+        "video/mpeg" = "org.kde.haruna.desktop";
+        "video/MPV" = "org.kde.haruna.desktop";
+        "video/ogg" = "org.kde.haruna.desktop";
         "video/quicktime" = "org.kde.haruna.desktop";
         "video/webm" = "org.kde.haruna.desktop";
       };
@@ -99,7 +119,7 @@
     allowUnfree = true;
     allowUnfreePredicate = (_: true);
     permittedInsecurePackages = [
-      "electron-24.8.6"
+      "electron-24.8.6" # Feishin
     ];
   };
 }
