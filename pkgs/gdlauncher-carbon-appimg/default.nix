@@ -29,7 +29,6 @@ appimageTools.wrapType2 {
   meta = with lib; {
     description = "A simple, yet powerful Minecraft custom launcher with a strong focus on the user experience";
     homepage = "https://gdlauncher.com/";
-    #changelog = "https://github.com/gorilla-devs/GDLauncher/releases/tag/v${version}";
     license = licenses.bsl11;
     mainProgram = "gdlauncher-carbon";
     maintainers = with maintainers; [ passivelemon ];
