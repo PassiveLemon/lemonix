@@ -1,25 +1,30 @@
-{ lib,
-  buildGoModule,
-  fetchFromGitHub,
-}:
-buildGoModule rec {
+# PR: https://github.com/NixOS/nixpkgs/pull/268382
+{ buildGoModule, fetchFromGitHub, lib, nix-update-script }:
+
+buildGoModule {
   pname = "corrupter";
   version = "1.0";
+
   src = fetchFromGitHub {
     owner = "r00tman";
     repo = "corrupter";
-    # Upstream does provide a release but it cannot be built due to missing go.mod. This commit has it. https://github.com/r00tman/corrupter/issues/15
+    # https://github.com/r00tman/corrupter/issues/15
     rev = "d7aecbb8b622a2c6fafe7baea5f718b46155be15";
-    sha256 = "sha256-GEia3wZqI/j7/dpBbL1SQLkOXZqEwanKGM4wY9nLIqE=";
+    hash = "sha256-GEia3wZqI/j7/dpBbL1SQLkOXZqEwanKGM4wY9nLIqE=";
   };
 
   vendorHash = null;
 
+  # There are no tests available for this package.
+  doCheck = false;
+
+  passthru.updateScript = nix-update-script { };
+
   meta = with lib; {
-    description = "Simple image glitcher";
+    description = "Simple image glitcher suitable for producing lockscreens.";
     homepage = "https://github.com/r00tman/corrupter";
     license = licenses.bsd2;
-    maintainers = with maintainers; [ PassiveLemon ];
-    platforms = [ "x86_64-linux" ];
+    maintainers = [ maintainers.ivan770 ];
+    mainProgram = "corrupter";
   };
 }
