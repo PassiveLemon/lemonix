@@ -1,6 +1,7 @@
 { inputs, outputs, pkgs, config, lib, ... }: {
   imports = [
     inputs.nix-gaming.nixosModules.pipewireLowLatency
+    ../../modules/alvr.nix
   ];
 
   # Packages
@@ -60,6 +61,11 @@
   programs = {
     dconf.enable = true;
     seahorse.enable = true;
+    alvr = {
+      enable = false;
+      package = pkgs.callPackage ../../pkgs/alvr { };
+      openFirewall = true;
+    };
   };
   qt = {
     enable = true;
