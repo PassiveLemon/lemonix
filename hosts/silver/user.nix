@@ -2,14 +2,11 @@
   imports = [
     ../common/user.nix
     inputs.nix-gaming.nixosModules.pipewireLowLatency
-    ../../modules/alvr.nix
+    ../../modules/nixos/alvr.nix
   ];
 
   # Configs
   services = {
-    xserver = {
-      videoDrivers = [ "nvidia" ];
-    };
     pipewire = {
       lowLatency = { # Module of Nix-gaming
         enable = true;
