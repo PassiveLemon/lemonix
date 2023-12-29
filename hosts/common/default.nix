@@ -19,7 +19,6 @@
   networking = {
     networkmanager.enable = true;
     firewall.enable = true;
-    nameservers = [ "1.1.1.1" "8.8.8.8" ];
   };
 
   # Users
@@ -35,7 +34,7 @@
     systemPackages = with pkgs; [
       dash bash
       nano unzip unrar p7zip curl wget git gvfs psmisc
-      htop sysstat iotop stress netcat lm_sensors smartmontools dig
+      htop sysstat iotop stress netcat lm_sensors smartmontools dig neofetch
       networkmanager ethtool
     ];
     binsh = "${pkgs.dash}/bin/dash";
