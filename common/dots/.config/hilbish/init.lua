@@ -59,16 +59,38 @@ promptua.setTheme {
   },
 }
 
-promptua.init()
 
 function get_last_command()
   return hilbish.history.get(hilbish.history.size() - 1)
 end
 
+function test_file(file, callback)
+  if type(file) ~= "string" then
+    return false
+  end
+  return os.rename(file, file) and true or false
+end
+
+local shell_check = function()
+  if test_file("shell.nix") then
+    hilbish.run("nix-shell")
+  end
+end
+
+function catch_register()
+  bait.catch("cd", shell_check)
+end
+
+function catch_release()
+  bait.release("cd", shell_check)
+end
+
 function run_and_return(dir, cmd)
+  catch_release() -- Needed to avoid shell checking when running the nix flake update (nfu) command
   hilbish.run("cd " .. dir)
   hilbish.run(cmd)
   hilbish.run("cd -")
+  catch_register()
 end
 
 hilbish.alias("ls", "eza -Fl --group-directories-first")
@@ -84,5 +106,8 @@ commander.register("nfu", function()
 end)
 
 commander.register("fuck", function()
-	os.execute("thefuck " .. get_last_command())
+	hilbish.run("thefuck " .. get_last_command())
 end)
+
+promptua.init()
+catch_register()
