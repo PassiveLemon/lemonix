@@ -2,8 +2,8 @@
   imports = [
     ../common/home.nix
     ./modules/customization.nix
-    ../../../modules/gaming.nix
-    ../../../modules/picom.nix
+    ../../../modules/home-manager/gaming.nix
+    ../../../modules/home-manager/picom.nix
   ];
 
   home = {

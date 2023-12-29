@@ -1,7 +1,7 @@
 { inputs, outputs, pkgs, config, lib, ... }: {
   imports = [
     ./modules/customization.nix
-    ../../../modules/spicetify.nix
+    ../../../modules/home-manager/spicetify.nix
   ];
 
   home = {
