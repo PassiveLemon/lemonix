@@ -14,8 +14,8 @@
       scrot flowblade haruna feh gimp animdl
       filezilla qbittorrent
       hilbish eza bat thefuck trashy fd ripgrep
-      pamixer playerctl appimage-run neofetch ventoy-bin
-      libsForQt5.kruler localsend mullvad-vpn onthespot
+      pamixer playerctl appimage-run ventoy-bin
+      libsForQt5.kruler localsend old.mullvad-vpn onthespot
     ];
     username = "lemon";
     homeDirectory = "/home/lemon";
