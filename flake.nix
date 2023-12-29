@@ -66,15 +66,21 @@
         inherit system specialArgs;
         modules = [
           nixpkgs-overlays
+          nixos-hardware.nixosModules.common-cpu-amd-pstate
+          nixos-hardware.nixosModules.common-gpu-nvidia-nonprime
+          nixos-hardware.nixosModules.common-pc-ssd
           ./hosts/silver/default.nix
           ./hosts/silver/user.nix
         ];
       };
-      # Laptop (Craptop)
+      # Laptop
       "aluminum" = nixos.lib.nixosSystem {
         inherit system specialArgs;
         modules = [
           nixpkgs-overlays
+          nixos-hardware.nixosModules.common-cpu-intel
+          nixos-hardware.nixosModules.common-gpu-intel
+          nixos-hardware.nixosModules.common-pc-laptop-ssd
           ./hosts/aluminum/default.nix
           ./hosts/aluminum/user.nix
         ];
@@ -83,8 +89,9 @@
       "palladium" = nixos.lib.nixosSystem {
         inherit system specialArgs;
         modules = [
-          nixos-hardware.nixosModules.raspberry-pi-4
           nixpkgs-overlays
+          nixos-hardware.nixosModules.common-pc-ssd
+          nixos-hardware.nixosModules.raspberry-pi-4
           ./hosts/palladium/default.nix
         ];
       };
