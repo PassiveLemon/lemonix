@@ -12,7 +12,7 @@ mkdir -p $HOME/.cache/lemonix/mediamenu/
 
 # Display
 sleep 0.5
-xrandr --output DP-0 --primary --mode 1920x1080 --rate 143.9 --rotate normal --output DP-2 --mode 1920x1080 --rate 143.9 --rotate normal --left-of DP-0
+xrandr --output DP-0 --primary --mode 1920x1080 --rate 143.85 --output DP-2 --mode 1920x1080 --rate 143.85
 xrandr --output DP-0 --gamma 1.0:0.92:0.92 --output DP-2 --gamma 1.0:0.92:0.92
 
 # Programs
