@@ -19,7 +19,7 @@
   # Networking
   networking = {
     hostName = "aluminum";
-    nameservers = [ "192.168.1.178" ];
+    nameservers = [ "192.168.1.178" "1.1.1.1" ];
   };
 
   # Users
