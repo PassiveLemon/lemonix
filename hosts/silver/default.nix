@@ -26,12 +26,18 @@
     hostName = "silver";
     networkmanager.enable = true;
     firewall = {
-      allowedTCPPortRanges = [
-        { from = 50000; to = 55000; }
-        { from = 22; to = 22; }
+      allowedTCPPorts = [
+        22 # SSH
+        #2375 2377 # Docker socket & Swarm
+        #7946 # Swarm container discovery
+        #9001 # Portainer
       ];
-      allowedUDPPortRanges = [
-        { from = 53; to = 53; }
+      #allowedUDPPorts = [
+        #4789 # Swarm overlay network
+        #7946 # Swarm container discovery
+      #];
+      allowedTCPPortRanges = [
+        { from = 50000; to = 55000; } # Docker containers
       ];
     };
     interfaces = {
@@ -45,7 +51,7 @@
     };
     enableIPv6 = false;
     defaultGateway = "192.168.1.1";
-    nameservers = [ "192.168.1.178" ];
+    nameservers = [ "192.168.1.178" "1.1.1.1" ];
   };
 
   # Users

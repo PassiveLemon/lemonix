@@ -24,13 +24,21 @@
     hostName = "palladium";
     networkmanager.enable = true;
     firewall = {
-      allowedTCPPortRanges = [
-        { from = 40000; to = 44000; }
-        { from = 22; to = 22; }
-        { from = 2375; to = 2375; }
+      allowedTCPPorts = [
+        22 # SSH
+        53 # Pi-hole
+        80
+        443
+        2375 #2377 # Docker socket & Swarm
+        #7946 # Swarm container discovery
+        #9001 # Portainer
       ];
-      allowedUDPPortRanges = [
-        { from = 53; to = 53; } 
+      #allowedUDPPorts = [
+        #4789 # Swarm overlay network
+        #7946 # Swarm container discovery
+      #];
+      allowedTCPPortRanges = [
+        { from = 40000; to = 44000; } # Docker containers
       ];
     };
     interfaces = {
@@ -44,6 +52,7 @@
     };
     enableIPv6 = false;
     defaultGateway = "192.168.1.1";
+    nameservers = [ "1.1.1.1" ];
   };
 
   # Users
@@ -72,7 +81,6 @@
   environment = {
     systemPackages = with pkgs; [
       libraspberrypi raspberrypi-eeprom
-      neofetch
     ];
   };
 
@@ -98,6 +106,15 @@
       SUBSYSTEM=="gpio", KERNEL=="gpiochip*", ACTION=="add", RUN+="${pkgs.bash}/bin/bash -c 'chown root:gpio  /sys/class/gpio/export /sys/class/gpio/unexport ; chmod 220 /sys/class/gpio/export /sys/class/gpio/unexport'"
       SUBSYSTEM=="gpio", KERNEL=="gpio*", ACTION=="add",RUN+="${pkgs.bash}/bin/bash -c 'chown root:gpio /sys%p/active_low /sys%p/direction /sys%p/edge /sys%p/value ; chmod 660 /sys%p/active_low /sys%p/direction /sys%p/edge /sys%p/value'"
     '';
+    logrotate = {
+      enable = true;
+      settings = {
+        "/home/docker/Containers/Networking/Traefik/logs/access.log" = {
+          frequency = "daily";
+          rotate = 7;
+        };
+      };
+    };
   };
   virtualisation = {
     docker = { 
