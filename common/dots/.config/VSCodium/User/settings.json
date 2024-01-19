@@ -22,5 +22,7 @@
     "rgba(0,0,255,0.12)"
   ],
   "files.insertFinalNewline": true,
-  "html.autoClosingTags": false
+  "html.autoClosingTags": false,
+  "editor.smoothScrolling": true,
+  "workbench.smoothScrolling": true
 }

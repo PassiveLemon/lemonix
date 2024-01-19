@@ -16,7 +16,7 @@ in
         type = types.bool;
         default = false;
         description = lib.mdDoc ''
-          Open the default ports in the firewall for the ALVR server.
+          Whether to open the default ports in the firewall for the ALVR server.
         '';
       };
     };

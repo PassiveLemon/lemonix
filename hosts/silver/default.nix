@@ -60,15 +60,17 @@
       "lemon" = {
         description = "Lemon";
         home = "/home/lemon";
+        hashedPassword = "$6$J7q0.RZ88OJiQRkq$mQx2d32YHf6IXqZNMSv.o/sslQMgBAGIKID2aL6tLpN6XFpXp2Fda5p1Yi78H/cXOolBPIuXEQPzxhmKp5qWc0";
         extraGroups = [ "wheel" "networkmanager" "docker" "video" "storage" "kvm" "libvirtd" ];
         isNormalUser = true;
-        openssh.authorizedKeys.keys = [ "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQCG6NqaIG0ltxWYwMjCyWHg9/gfYSbqzkLhENJSVVOYtLUfmMU0VdBeStyfU+yR9Ey5L2OuGamh4LXWVq3J2WMNhvM8puSUlSP4BCSy5+ZgjFbyFbLv6k4XOQzEpNgW9wemXcwRey2Irw+9uj3JTzEyXEzhgymBC0useH2+vi38RA0Q6U41sa01YFfDPMPYeBw5ooNFQOKGCGHS8YwSOOca1hk/qaaRPseYakzTa2sfYbOJOF6QrQLh+qn8GDrWj4MZEqhSiZBbJywPl+qtPMovGWQA2YeP88KtomWQ9kiGhvIrgngg/YelpI+hrBFohEE1FyGru/xnjKN6MlbPtUzcXbyWsppCEQjvW8UMJlWRCWjg11oeVCgmn0iCVxm9+1QNMfRo/w3bIkQVdwYU+IvWcUFyY7pc4Fpvtr+Zz+Jhxv+DPDrWED262pVp23rkLzTsCatB2I5+SpvEesc0arY5dQinjm6AOGkyDCX6pNlCg9azygiPw1pAu49Z9TgWNNU= lemon@silver" ];
+        openssh.authorizedKeys.keys = [ "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIDHteP0JhNBJOlom+X8PY8s0FXPdUY4VcV6PgPPzXIKi lemon@silver" ];
       };
       "monitor" = {
         description = "Monitor";
         home = "/home/monitor";
+        hashedPassword = "$6$0XNvp3iEh8YJqrVr$43U1A.yN9kdw4CZJ9YpJYuEzyUzLYbOWIIDpK54bJdlhaXMl5P0Y3eicO/MEZSKBGQpTfzlFDVQFesIRKHLXN0";
         isNormalUser = true;
-        openssh.authorizedKeys.keys = [ "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQDwMBh4nqwYBgpB7Pp/tE83y91C23P3eSyTFaOGPQL88QMUBJP1ZMKM3lotXPIZ+ADDUitNvLfsRTzXsCxWjhsNM1Y5Egf36aQm24ZA/h6jj9mSs/EVp7jZR72ok5gYCxtg9QfwAlEXhaIBQq/XzbAwORN23AJJR8ymSrGnmkm550XzsXbEFKg2EG49kXEWrzPKpMvcL02U7tPiSxH99aJieFXyDEFxssOU6Scv9AIU6ERxwlKYV2bVMF3RLkpJ8mkgcuOVt7i4fHFkcKERRHbx3k6RsbBN4xt/Nhu4hkE+6MTY1u8q9S3kJr5s80Gfpp7zgCjhwB4y7VpLpnQSQk1ewf/pKhNB61dvMkU4B7X1znitN+GR291XEOIAeCl4ba7ATBfmyouhQ0wpGsRvYfheyXMo7u4z43kq3mZSAKWuLNmGUv469HZ4vTKo8IZ+xBC2pHn9hlXLfeHXmVa/XwtnXpmi23xkr6TKxATYVYAsWO9A5Ll//L+EWluAhjj5jT8= monitor@silver" ];
+        openssh.authorizedKeys.keys = [ "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAII7MCTB+V/YSqbRZIWlAsh5uPAfBToG3Pg8JsYgnIKg2 monitor@silver" ];
       };
     };
   };

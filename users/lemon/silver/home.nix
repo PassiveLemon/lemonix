@@ -9,9 +9,9 @@
   home = {
     packages = with pkgs; [
       headsetcontrol
+      freecad prusa-slicer
 
       # Testing
-      freecad openscad solvespace prusa-slicer cura meshlab
       rsync syncthing
 
       # Development
@@ -19,7 +19,6 @@
       dotnet-sdk
 
       # Custom
-      (callPackage ../../../pkgs/corrupter { })
       (callPackage ../../../pkgs/xclicker { })
       (callPackage ../../../pkgs/tilp2 { gfm = callPackage ../../../pkgs/gfm { }; })
       (python3Packages.callPackage ../../../pkgs/pulsemeeter { })
@@ -53,8 +52,7 @@
     mimeApps = {
       enable = true;
       defaultApplications = {
-        "x-scheme-handler/ror2mm" = "r2modman.desktop";
-        "x-scheme-handler/gdlauncher" = "gdlauncher.desktop";
+        "text/x-gcode" = "userapp-prusa-slicer-GEUUG2.desktop";
         "x-scheme-handler/discord-409416265891971072" = "discord-409416265891971072.desktop";
       };
     };

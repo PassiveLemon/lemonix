@@ -22,7 +22,7 @@
   };
   programs = {
     alvr = {
-      enable = false;
+      enable = true;
       package = pkgs.callPackage ../../pkgs/alvr { };
       openFirewall = true;
     };

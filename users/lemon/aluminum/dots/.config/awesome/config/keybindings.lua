@@ -151,6 +151,13 @@ awful.keyboard.append_global_keybindings({
           c:raise()
       end,
     { description = "|| toggle fullscreen", group = "client" }),
+
+    awful.key({ super, "Control" }, "m",
+      function (c)
+        c.maximized = not c.maximized
+        c:raise()
+      end,
+    { description = "|| toggle maximized", group = "client"}),
   }),
 })
 

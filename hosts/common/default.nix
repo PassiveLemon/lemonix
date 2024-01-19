@@ -23,9 +23,10 @@
 
   # Users
   users = {
+    mutableUsers = false;
     users = {
       "root" = {
-        hashedPassword = null;
+        hashedPassword = "!";
       };
     };
   };
@@ -33,7 +34,7 @@
   environment = {
     systemPackages = with pkgs; [
       dash bash
-      nano unzip unrar p7zip curl wget git gvfs psmisc
+      nano unzip unrar p7zip zip curl wget git gvfs psmisc
       htop sysstat iotop stress netcat lm_sensors smartmontools dig neofetch
       networkmanager ethtool
     ];

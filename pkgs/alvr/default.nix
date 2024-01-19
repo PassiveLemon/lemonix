@@ -4,10 +4,10 @@
 }:
 let
   pname = "alvr";
-  version = "20.5.0";
+  version = "20.6.0";
   src = fetchurl {
     url = "https://github.com/alvr-org/ALVR/releases/download/v${version}/ALVR-x86_64.AppImage";
-    hash = "sha256-shA93fK/F+PNRv+DCTfvN+tm0w/sj/yPEYc5ms2vHRk=";
+    hash = "sha256-LVKDJ5I77K4/QQLhP279QHLtrayLXgUSuCPA5TOdmYM=";
   };
 
   appimageContents = appimageTools.extractType2 { inherit pname version src; };

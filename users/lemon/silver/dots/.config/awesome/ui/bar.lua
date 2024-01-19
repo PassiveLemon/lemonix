@@ -15,7 +15,7 @@ local media = require("ui.media")
 --
 
 screen.connect_signal("request::desktop_decoration", function(s)
-  awful.tag({ "1", "2", "3", }, s, awful.layout.layouts[1])
+  awful.tag({ "1", "2", "3", "4" }, s, awful.layout.layouts[1])
 
   -- Space
   local sep1 = h.text({

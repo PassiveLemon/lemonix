@@ -1,7 +1,7 @@
 { inputs, outputs, pkgs, config, lib, ... }: {
   imports = [
     ./modules/customization.nix
-    ../../../modules/home-manager/spicetify.nix
+    #../../../modules/home-manager/spicetify.nix
   ];
 
   home = {
@@ -10,12 +10,12 @@
       firefox master.webcord-vencord freetube authy
       lite-xl rofi vscodium github-desktop imhex act
       obsidian libreoffice drawio
-      old.easyeffects pavucontrol helvum soundux mpv tauon feishin audacity easytag
-      scrot flowblade haruna feh gimp animdl
+      old.easyeffects pavucontrol helvum mpv tauon feishin audacity easytag #soundux
+      scrot libsForQt5.kdenlive haruna feh gimp (python3Packages.callPackage ../../../pkgs/animdl { }) #animdl
       filezilla qbittorrent
       hilbish eza bat thefuck trashy fd ripgrep
       pamixer playerctl appimage-run ventoy-bin
-      libsForQt5.kruler localsend old.mullvad-vpn onthespot
+      libsForQt5.kruler localsend old.mullvad-vpn #onthespot
     ];
     username = "lemon";
     homeDirectory = "/home/lemon";
@@ -46,7 +46,7 @@
     flameshot = {
       enable = true;
       settings = {
-        General = {
+        "General" = {
           disabledTrayIcon = true;
         };
       };
@@ -65,6 +65,7 @@
       enable = true;
       defaultApplications = {
         "inode/directory" = "pcmanfm.desktop";
+        "application/zip" = "xarchiver.desktop";
         "audio/flac" = "mpv.desktop";
         "audio/matroska" = "mpv.desktop";
         "audio/mpeg" = "mpv.desktop";

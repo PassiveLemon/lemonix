@@ -15,6 +15,9 @@
       "8250.nr_uarts=1"
       "console=ttyAMA0,115200"
       "console=tty1"
+      "cgroup_enable=cpuset"
+      "cgroup_enable=memory"
+      "cgroup_memory=1"
     ];
     kernelPackages = pkgs.linuxPackages_rpi4;
   };
@@ -27,8 +30,7 @@
       allowedTCPPorts = [
         22 # SSH
         53 # Pi-hole
-        80
-        443
+        80 443 # Web traffic
         2375 #2377 # Docker socket & Swarm
         #7946 # Swarm container discovery
         #9001 # Portainer
@@ -64,15 +66,17 @@
       "nixos" = {
         description = "NixOS";
         home = "/home/nixos";
+        hashedPassword = "$6$cNJ6ms0MkyhMejF8$YO0mSA8O2D1itNJTliQ/fnXnlonGH.nWqa76u.Wj4LhbTJdrx2rwA2QhJ1rAHdLS8CFpEfOvTD8DLyGoHD8tz0";
         extraGroups = [ "wheel" "networkmanager" "docker" "video" "storage" "gpio" ];
         isNormalUser = true;
-        openssh.authorizedKeys.keys = [ "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQDWKTvSQ2O9qNMyhg5EakyDNQVK9O3dDuPlH1Wfo3DkA0aGb14YfcGj07bQpdJ5RrebNSMwATxiEU0GuTazZqnjTtG5mP3R3Z1vQS2LTVEXyU6UiHatMqJxqerKshMJBVyLc2Rn4/c2Uj88I3NPnxqt4H/Xz4hbhNLOeuPtB9Arj/xzglc3BJQ14ctjxjkT41fkic+7VQUhq9VbbmOiC8Hs68T/cWk2QZaA/2QvF+3wPlhh27WJdfHX1xJrKYe20IV7JU5199LtStYCwOHMnHX2iTARWQFNYfsatyBMEGjbO6sFwDs9NWPjqA4s0IG/D2jWi8QkB/YgkN+7XDELE0S/rxT5hLOCuScv3ozL8pB1aWZirTuVodg5n/MJ/WcaM/J3Gg2phnGgPuqnjpDUdwQSQlcfFEmqqlZEhR5Ei5QJMxrlPtMRcZbZv6reLvllZUNM5xTOuxKUSkABcMUam8jx7q2qQcIg6nJGOO+Q85NTp0dKKn/AJ7SAJTar1K4X1VU= nixos@palladium" ];
+        openssh.authorizedKeys.keys = [ "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIGxtuyEOkf98MkoLPKvjBxIVIC4IrsZ5IKFoxQBxpUGe nixos@palladium" ];
       };
       "monitor" = {
         description = "Monitor";
         home = "/home/monitor";
+        hashedPassword = "$6$4LFq7jjaZKFiMUXn$tyu9JPZ3Skpg/HmjxaNk0jV6xO6T86iy6zjTGHAUp1PYu3Lv4JGSiaGzKRkGI4G7UT66Rg0nQ/eggMdplgqrV0";
         isNormalUser = true;
-        openssh.authorizedKeys.keys = [ "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQCygp+qM5kt3pTDQB7Et4s04iP7DCuQCD3qZxNzWqQwAi7wZUA6fChB/GhSuzfG6VmhIu2N6J+ZnuuyFeUOh+QykxyIZmki7q7sNhDsittIlGwPnEiInSB6m1W8MkpFKDIzPnFgn1usFeOYT2jYXYaOLlln6zKkXyphiiN5xJ68EJZw2mmx1ckqaGYqV1KfPwBAPsQhwZg5VHnc/kJjzbhTH1eqPbuArKfKhytJ9frXhWr2Dqvp8wXK+I6PXMaTrI+iN5zX3YtdGOnFY5eib0GmKQ0tYBVDWXOey5UZKqFeUf+CdXiSlsc82jOBkw4W4qkE5bck+2fOAiEy0HYiQqQ6VoJCZdh51nA6SEr46Zfx3vd9wViepaymHZmRo4yfVgujte3fOS0j0LSZVk/e6KtWLema/cx7bMmUCN6Wz5mj1KAPMHJnJBc3wkNSNOtbZrXlftjzehbl905nTY54wHpdBWnrafaijWVeer3gsMOHiPUuXCIi1KbncwRc6yEINdc= monitor@palladium" ];
+        openssh.authorizedKeys.keys = [ "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIFjoPX71x6n22+CfUk2skqBfT5cNFqrXLVCwcM8bpKwS root@palladium" ];
       };
     };
   };
