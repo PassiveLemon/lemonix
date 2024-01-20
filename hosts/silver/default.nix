@@ -29,6 +29,7 @@
       allowedTCPPorts = [
         22 # SSH
         #2375 2377 # Docker socket & Swarm
+        5500 # HTML Webserver for testing
         #7946 # Swarm container discovery
         #9001 # Portainer
       ];
