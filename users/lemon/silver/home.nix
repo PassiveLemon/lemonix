@@ -9,7 +9,7 @@
   home = {
     packages = with pkgs; [
       headsetcontrol
-      freecad prusa-slicer
+      freecad prusa-slicer openscad
 
       # Testing
       rsync syncthing

@@ -57,3 +57,4 @@ end
 click_to_hide.popup(systray_pop, nil, true)
 
 return { signal = signal }
+
