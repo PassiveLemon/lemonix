@@ -1,5 +1,5 @@
-local style = require "core.style"
-local common = require "core.common"
+local style = require("core.style")
+local common = require("core.common")
 
 style.background = { common.color "#222222" }
 style.background2 = { common.color "#292929" }
@@ -26,20 +26,25 @@ style.warn = { common.color "#ffa94d" }
 style.error = { common.color "#ff3333" }
 style.modified = { common.color "#1c7c9c" }
 
-style.syntax["normal"] = { common.color "#aaaaaa" }
-style.syntax["symbol"] = { common.color "#aaaaaa" }
-style.syntax["comment"] = { common.color "#8c8c8c" }
-style.syntax["keyword"] = { common.color "#cd61ec" }
-style.syntax["keyword2"] = { common.color "#F77483" }
-style.syntax["number"] = { common.color "#f7aa60" }
-style.syntax["literal"] = { common.color "#f7aa60" }
-style.syntax["string"] = { common.color "#93cb6b" }
-style.syntax["operator"] = { common.color "#53d2e0" }
-style.syntax["function"] = { common.color "#61b8ff" }
+style.syntax = {
+  ["normal"] = { common.color "#aaaaaa" },
+  ["symbol"] = { common.color "#aaaaaa" },
+  ["comment"] = { common.color "#8c8c8c" },
+  ["keyword"] = { common.color "#cd61ec" },
+  ["keyword2"] = { common.color "#F77483" },
+  ["number"] = { common.color "#f7aa60" },
+  ["literal"] = { common.color "#f7aa60" },
+  ["string"] = { common.color "#93cb6b" },
+  ["operator"] = { common.color "#53d2e0" },
+  ["function"] = { common.color "#61b8ff" },
+  ["function.call"] = { common.color "#61b8ff" },
+}
 
-style.log["INFO"]  = { icon = "i", color = style.text }
-style.log["WARN"]  = { icon = "!", color = style.warn }
-style.log["ERROR"] = { icon = "!", color = style.error }
+style.log = {
+  ["INFO"] = { icon = "i", color = style.text },
+  ["WARN"] = { icon = "!", color = style.warn },
+  ["ERROR"] = { icon = "!", color = style.error },
+}
 
 return style
 

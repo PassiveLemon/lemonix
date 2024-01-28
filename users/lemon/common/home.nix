@@ -8,7 +8,7 @@
     packages = with pkgs; [
       tym i3lock-fancy-rapid pcmanfm xarchiver gparted
       firefox master.webcord-vencord freetube authy
-      lite-xl rofi vscodium github-desktop imhex act
+      lite-xl rofi vscode python3 github-desktop imhex act
       obsidian libreoffice drawio
       old.easyeffects pavucontrol helvum mpv tauon feishin audacity easytag #soundux
       scrot libsForQt5.kdenlive haruna feh gimp (python3Packages.callPackage ../../../pkgs/animdl { }) #animdl
@@ -24,8 +24,8 @@
         source = ../../../common/dots/.config;
         recursive = true;
       };
-      ".vscode-oss/" = {
-        source = ../../../common/dots/.vscode-oss;
+      ".vscode/" = {
+        source = ../../../common/dots/.vscode;
         recursive = true;
       };
       ".xinitrc" = {

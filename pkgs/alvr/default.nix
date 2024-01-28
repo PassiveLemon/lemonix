@@ -4,10 +4,10 @@
 }:
 let
   pname = "alvr";
-  version = "20.6.0";
+  version = "20.6.1";
   src = fetchurl {
     url = "https://github.com/alvr-org/ALVR/releases/download/v${version}/ALVR-x86_64.AppImage";
-    hash = "sha256-LVKDJ5I77K4/QQLhP279QHLtrayLXgUSuCPA5TOdmYM=";
+    hash = "sha256-IYw3D18xUGWiFu74c4d8d4tohZztAD6mmZCYsDNxR+A=";
   };
 
   appimageContents = appimageTools.extractType2 { inherit pname version src; };
@@ -16,11 +16,11 @@ appimageTools.wrapType2 {
   inherit pname version src;
 
   extraInstallCommands = ''
-    mv $out/bin/${pname}-${version} $out/bin/${pname}
+    mv $out/bin/alvr-${version} $out/bin/alvr
 
     install -Dm444 ${appimageContents}/alvr.desktop -t $out/share/applications
     substituteInPlace $out/share/applications/alvr.desktop \
-      --replace 'Exec=alvr_dashboard' 'Exec=${pname}'
+      --replace 'Exec=alvr_dashboard' 'Exec=alvr'
     cp -r ${appimageContents}/usr/share/icons $out/share
   '';
 

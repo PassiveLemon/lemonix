@@ -24,5 +24,6 @@
   "files.insertFinalNewline": true,
   "html.autoClosingTags": false,
   "editor.smoothScrolling": true,
-  "workbench.smoothScrolling": true
+  "workbench.smoothScrolling": true,
+  "platformio-ide.useBuiltinPIOCore": false
 }

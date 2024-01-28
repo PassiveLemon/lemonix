@@ -8,7 +8,7 @@ in
 {
   options = {
     programs.alvr = {
-      enable = mkEnableOption (lib.mdDoc "ALVR");
+      enable = mkEnableOption (lib.mdDoc "Whether to enable ALVR, the VR desktop streamer.");
 
       package = mkPackageOption pkgs "alvr" { };
 
@@ -30,4 +30,6 @@ in
       allowedUDPPorts = [ 9943 9944 ];
     };
   };
+
+  meta.maintainers = with maintainers; [ passivelemon ];
 }

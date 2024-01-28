@@ -15,7 +15,7 @@
       rsync syncthing
 
       # Development
-      jq
+      jq jdk21
       dotnet-sdk
 
       # Custom

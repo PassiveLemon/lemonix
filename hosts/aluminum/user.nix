@@ -22,4 +22,5 @@
       IdleActionSec=60m
     '';
   };
+  blueman.enable = true;
 }

@@ -67,7 +67,7 @@
         description = "NixOS";
         home = "/home/nixos";
         hashedPassword = "$6$cNJ6ms0MkyhMejF8$YO0mSA8O2D1itNJTliQ/fnXnlonGH.nWqa76u.Wj4LhbTJdrx2rwA2QhJ1rAHdLS8CFpEfOvTD8DLyGoHD8tz0";
-        extraGroups = [ "wheel" "networkmanager" "docker" "video" "storage" "gpio" ];
+        extraGroups = [ "wheel" "video" "networkmanager" "storage" "docker" "gpio" ];
         isNormalUser = true;
         openssh.authorizedKeys.keys = [ "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIGxtuyEOkf98MkoLPKvjBxIVIC4IrsZ5IKFoxQBxpUGe nixos@palladium" ];
       };

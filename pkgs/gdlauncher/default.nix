@@ -16,11 +16,11 @@ appimageTools.wrapType2 {
   inherit pname version src;
 
   extraInstallCommands = ''
-    mv $out/bin/${pname}-${version} $out/bin/${pname}
+    mv $out/bin/gdlauncher-${version} $out/bin/gdlauncher
 
     install -Dm444 ${appimageContents}/gdlauncher.desktop -t $out/share/applications
     substituteInPlace $out/share/applications/gdlauncher.desktop \
-      --replace 'Exec=AppRun --no-sandbox %U' 'Exec=${pname}'
+      --replace 'Exec=AppRun --no-sandbox %U' 'Exec=gdlauncher'
     cp -r ${appimageContents}/usr/share/icons $out/share
   '';
 
