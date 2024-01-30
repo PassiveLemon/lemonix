@@ -1,12 +1,13 @@
 { inputs, outputs, pkgs, config, lib, ... }: {
   home.packages = with pkgs; [
+    wineWowPackages.stagingFull gamemode protonup-ng dxvk
     steam
     r2modman
-    lunar-client prismlauncher (callPackage ../../pkgs/gdlauncher-carbon-appimg { }) (callPackage ../../pkgs/gdlauncher { })
-    vinegar
-    yuzu-mainline
-    bottles lutris
-    wineWowPackages.stagingFull gamemode protonup-ng dxvk
+    lunar-client prismlauncher
+    inputs.lemonake.packages.${pkgs.system}.gdlauncher
+    inputs.lemonake.packages.${pkgs.system}.gdlauncher-carbon
+    #vinegar
+    bottles
     ludusavi
     #sidequest
   ];

@@ -33,7 +33,8 @@
       };
       bookmarks = [
         "file:///home/lemon/.local/share/Trash"
-        "file:///home/lemon/Documents/GitHub"
+        "file:///home/lemon"
+        "file:///home/lemon/Documents"
       ];
     };
   };

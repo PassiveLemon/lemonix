@@ -51,6 +51,7 @@ buildPythonApplication rec {
     #changelog = "https://github.com/theRealCarneiro/pulsemeeter/releases/tag/v${version}";
     mainProgram = "pulsemeeter";
     license = licenses.mit;
-    maintainers = with maintainers; [ ];
+    maintainers = with maintainers; [ passivelemon ];
+    broken = true;
   };
 }

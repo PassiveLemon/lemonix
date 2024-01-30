@@ -12,6 +12,10 @@
       url = "github:nix-community/home-manager";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    lemonake = {
+      url = "github:passivelemon/lemonake";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
     nixpkgs-f2k = {
       url = "github:moni-dz/nixpkgs-f2k";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -26,11 +30,10 @@
     };
   };
 
-  outputs = inputs:
-  with inputs;
+  outputs = { self, ... } @ inputs:
   let
     system = "x86_64-linux";
-    pkgs = import nixpkgs { inherit system; };
+    pkgs = import inputs.nixpkgs { inherit system; };
     specialArgs = { inherit self inputs; };
     extraSpecialArgs = specialArgs;
     config = {
@@ -62,57 +65,62 @@
   {
     nixosConfigurations = {
       # Desktop
-      "silver" = nixos.lib.nixosSystem {
+      "silver" = inputs.nixos.lib.nixosSystem {
         inherit system specialArgs;
         modules = [
           nixpkgs-overlays
-          nixos-hardware.nixosModules.common-cpu-amd-pstate
-          nixos-hardware.nixosModules.common-gpu-nvidia-nonprime
-          nixos-hardware.nixosModules.common-pc-ssd
+          inputs.nixos-hardware.nixosModules.common-cpu-amd-pstate
+          inputs.nixos-hardware.nixosModules.common-gpu-nvidia-nonprime
+          inputs.nixos-hardware.nixosModules.common-pc-ssd
           ./hosts/silver/default.nix
           ./hosts/silver/user.nix
         ];
       };
       # Laptop
-      "aluminum" = nixos.lib.nixosSystem {
+      "aluminum" = inputs.nixos.lib.nixosSystem {
         inherit system specialArgs;
         modules = [
           nixpkgs-overlays
-          nixos-hardware.nixosModules.common-cpu-intel
-          nixos-hardware.nixosModules.common-gpu-intel
-          nixos-hardware.nixosModules.common-pc-laptop-ssd
+          inputs.nixos-hardware.nixosModules.common-cpu-intel
+          inputs.nixos-hardware.nixosModules.common-gpu-intel
+          inputs.nixos-hardware.nixosModules.common-pc-laptop-ssd
           ./hosts/aluminum/default.nix
           ./hosts/aluminum/user.nix
         ];
       };
       # Raspberry Pi
-      "palladium" = nixos.lib.nixosSystem {
+      "palladium" = inputs.nixos.lib.nixosSystem {
         inherit system specialArgs;
         modules = [
           nixpkgs-overlays
-          nixos-hardware.nixosModules.common-pc-ssd
-          nixos-hardware.nixosModules.raspberry-pi-4
+          inputs.nixos-hardware.nixosModules.common-pc-ssd
+          inputs.nixos-hardware.nixosModules.raspberry-pi-4
           ./hosts/palladium/default.nix
         ];
       };
     };
     homeConfigurations = {
-      "lemon@silver" = home-manager.lib.homeManagerConfiguration {
+      "lemon@silver" = inputs.home-manager.lib.homeManagerConfiguration {
         inherit pkgs extraSpecialArgs;
         modules = [
           nixpkgs-overlays
           ./users/lemon/silver/home.nix
-          spicetify-nix.homeManagerModule
+          inputs.spicetify-nix.homeManagerModule
         ];
       };
-      "lemon@aluminum" = home-manager.lib.homeManagerConfiguration {
+      "lemon@aluminum" = inputs.home-manager.lib.homeManagerConfiguration {
         inherit pkgs extraSpecialArgs;
         modules = [
           nixpkgs-overlays
           ./users/lemon/aluminum/home.nix
-          spicetify-nix.homeManagerModule
+          inputs.spicetify-nix.homeManagerModule
         ];
       };
+    };
+
+    nixConfig = {
+      extra-substituters = [ "https://passivelemon.cachix.org" ];
+      extra-trusted-public-keys = [ "passivelemon.cachix.org-1:ScYjLCvvLi70S95SMMr8lMilpZHuafLP3CK/nZ9AaXM=" ];
     };
   };
 }

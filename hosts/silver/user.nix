@@ -2,7 +2,7 @@
   imports = [
     ../common/user.nix
     inputs.nix-gaming.nixosModules.pipewireLowLatency
-    ../../modules/nixos/alvr.nix
+    inputs.lemonake.nixosModules.alvr
   ];
 
   # Configs
@@ -21,9 +21,9 @@
     ''; # Headsetcontrol udev rule
   };
   programs = {
-    alvr = {
+    alvr = { # Module of lemonake
       enable = true;
-      package = pkgs.callPackage ../../pkgs/alvr { };
+      package = inputs.lemonake.packages.${pkgs.system}.alvr;
       openFirewall = true;
     };
   };

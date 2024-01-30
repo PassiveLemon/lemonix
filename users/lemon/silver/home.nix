@@ -2,27 +2,27 @@
   imports = [
     ../common/home.nix
     ./modules/customization.nix
+    ../../../modules/home-manager/3d-printing.nix
     ../../../modules/home-manager/gaming.nix
     ../../../modules/home-manager/picom.nix
   ];
 
   home = {
     packages = with pkgs; [
-      headsetcontrol
-      freecad prusa-slicer openscad
+      headsetcontrol #onthespot
 
       # Testing
       rsync syncthing
 
       # Development
-      jq jdk21
-      dotnet-sdk
+      nixpkgs-review jq jdk21 dotnet-sdk
 
       # Custom
-      (callPackage ../../../pkgs/xclicker { })
-      (callPackage ../../../pkgs/tilp2 { gfm = callPackage ../../../pkgs/gfm { }; })
-      (python3Packages.callPackage ../../../pkgs/pulsemeeter { })
-      (python3Packages.callPackage ../../../pkgs/poepyautopot { })
+      inputs.lemonake.packages.${pkgs.system}.animdl
+      inputs.lemonake.packages.${pkgs.system}.poepyautopot
+      inputs.lemonake.packages.${pkgs.system}.tilp2
+      inputs.lemonake.packages.${pkgs.system}.xclicker
+      #(python3Packages.callPackage ../../../pkgs/pulsemeeter { })
     ];
     file = {
       ".config/autostart/" = {
@@ -52,7 +52,6 @@
     mimeApps = {
       enable = true;
       defaultApplications = {
-        "text/x-gcode" = "userapp-prusa-slicer-GEUUG2.desktop";
         "x-scheme-handler/discord-409416265891971072" = "discord-409416265891971072.desktop";
       };
     };
