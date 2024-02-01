@@ -73,6 +73,7 @@
         "audio/opus" = "mpv.desktop";
         "audio/vorbis" = "mpv.desktop";
         "audio/wav" = "mpv.desktop";
+        "audio/x-opus+ogg" = "mpv.desktop";
         "image/bmp" = "feh.desktop";
         "image/gif" = "firefox.desktop";
         "image/heic" = "feh.desktop";
