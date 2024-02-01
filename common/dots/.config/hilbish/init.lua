@@ -59,6 +59,13 @@ promptua.setTheme {
   },
 }
 
+function table_find(table, value)
+  for i, v in ipairs(table) do
+    if v == value then
+      return i
+    end
+  end
+end
 
 function get_last_command()
   return hilbish.history.get(hilbish.history.size() - 1)
@@ -105,8 +112,34 @@ commander.register("nfu", function()
 	run_and_return("/etc/nixos/", "nix flake update")
 end)
 
-commander.register("fuck", function()
-	hilbish.run("thefuck " .. get_last_command())
+commander.register("fuck", function(args)
+  if #args == 0 then
+    hilbish.run("thefuck " .. get_last_command())
+  else
+    hilbish.run("thefuck " .. args[1])
+  end
+end)
+
+commander.register("nsp", function(args)
+  types = { "md5", "sha1", "sha256", "sha512" }
+
+  local type = args[1]
+  local url = args[2]
+
+  if #args < 2 then
+    hilbish.run("echo 'Not enough arguments: nhp (type) (url)'")
+    return 1
+  elseif #args > 2 then
+    hilbish.run("echo 'Too many arguments: nhp (type) (url)'")
+    return 1
+  end
+  if table_find(types, type) then
+    hilbish.run("nix store prefetch-file --hash-type " .. type .. " " .. url)
+    return 0
+  else
+    hilbish.run("echo 'Unrecognized type: '" .. type)
+    return 1
+  end
 end)
 
 promptua.init()
