@@ -13,7 +13,7 @@ in
     enabledExtensions = with spicePkgs.extensions; [
       adblock
       autoSkipVideo
-      genre
+      #genre https://github.com/the-argus/spicetify-nix/issues/50
       loopyLoop
       seekSong
       volumePercentage
