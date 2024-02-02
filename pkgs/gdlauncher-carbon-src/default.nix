@@ -93,8 +93,8 @@ stdenvNoCC.mkDerivation rec {
     homepage = "https://gdlauncher.com/";
     #changelog = "https://github.com/gorilla-devs/GDLauncher-Carbon/releases/tag/v${version}";
     license = licenses.bsl11;
-    mainProgram = "gdlauncher-carbon";
     maintainers = with maintainers; [ passivelemon ];
     platforms = [ "x86_64-linux" ];
+    mainProgram = "gdlauncher-carbon";
   };
 }

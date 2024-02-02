@@ -49,9 +49,9 @@ buildPythonApplication rec {
     description = "Replicating voicemeeter routing functionalities in linux with pulseaudio";
     homepage = "https://github.com/theRealCarneiro/pulsemeeter";
     #changelog = "https://github.com/theRealCarneiro/pulsemeeter/releases/tag/v${version}";
-    mainProgram = "pulsemeeter";
     license = licenses.mit;
     maintainers = with maintainers; [ passivelemon ];
+    mainProgram = "pulsemeeter";
     broken = true;
   };
 }
