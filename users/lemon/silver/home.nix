@@ -9,19 +9,22 @@
 
   home = {
     packages = with pkgs; [
-      headsetcontrol #onthespot
+      headsetcontrol
+      easytag #soundux #onthespot
 
       # Testing
       rsync syncthing
 
       # Development
-      nixpkgs-review jq jdk21 dotnet-sdk
+      act nvfetcher nixpkgs-review jq dotnet-sdk
 
       # Custom
       inputs.lemonake.packages.${pkgs.system}.animdl
       inputs.lemonake.packages.${pkgs.system}.poepyautopot
       inputs.lemonake.packages.${pkgs.system}.tilp2
       inputs.lemonake.packages.${pkgs.system}.xclicker
+
+      (callPackage ../../../pkgs/wlxoverlay { })
       #(python3Packages.callPackage ../../../pkgs/pulsemeeter { })
     ];
     file = {

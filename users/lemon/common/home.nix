@@ -1,16 +1,16 @@
 { inputs, outputs, pkgs, config, lib, ... }: {
   imports = [
     ./modules/customization.nix
-    #../../../modules/home-manager/spicetify.nix
+    ../../../modules/home-manager/spicetify.nix
   ];
 
   home = {
     packages = with pkgs; [
-      tym i3lock-fancy-rapid pcmanfm xarchiver gparted
+      tym rofi i3lock-fancy-rapid pcmanfm xarchiver gparted
       firefox master.webcord-vencord freetube authy
-      lite-xl rofi vscode python3 github-desktop imhex act
-      obsidian libreoffice drawio
-      old.easyeffects pavucontrol helvum mpv tauon feishin audacity easytag #soundux
+      lite-xl vscode github-desktop imhex
+      obsidian onlyoffice-bin drawio
+      old.easyeffects pavucontrol helvum mpv tauon feishin audacity
       scrot libsForQt5.kdenlive haruna feh gimp
       filezilla qbittorrent
       hilbish eza bat thefuck trashy fd ripgrep

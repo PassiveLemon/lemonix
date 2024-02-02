@@ -4,18 +4,18 @@
     steam
     r2modman
     lunar-client prismlauncher
-    inputs.lemonake.packages.${pkgs.system}.gdlauncher
     inputs.lemonake.packages.${pkgs.system}.gdlauncher-carbon
     #vinegar
     bottles
     ludusavi
-    #sidequest
+    sidequest
   ];
   xdg = {
     mimeApps = {
       defaultApplications = {
         "x-scheme-handler/ror2mm" = "r2modman.desktop";
         "x-scheme-handler/gdlauncher" = "gdlauncher.desktop";
+        "x-scheme-handler/sidequest" = "SideQuest.desktop";
       };
     };
   };

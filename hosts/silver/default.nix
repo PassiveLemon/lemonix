@@ -124,6 +124,7 @@
       package = config.boot.kernelPackages.nvidiaPackages.stable;
       modesetting.enable = true;
       powerManagement.enable = true;
+      nvidiaSettings = true;
     };
     opengl = {
       enable = true;
