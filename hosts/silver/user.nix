@@ -1,8 +1,8 @@
 { inputs, outputs, pkgs, config, lib, ... }: {
   imports = [
     ../common/user.nix
-    inputs.nix-gaming.nixosModules.pipewireLowLatency
     inputs.lemonake.nixosModules.alvr
+    inputs.nix-gaming.nixosModules.pipewireLowLatency
   ];
 
   # Configs
