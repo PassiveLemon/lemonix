@@ -8,11 +8,8 @@
   # Boot
   boot = {
     loader = {
-      systemd-boot.enable = false;
-      grub = {
-        enable = true;
-        gfxmodeEfi = "1920x1080";
-      };
+      grub.enable = false;
+      systemd-boot.enable = true;
     };
     kernelPackages = pkgs.linuxKernel.packages.linux_zen;
     kernelModules = [ "iwlwifi" "kvm-amd" ];
