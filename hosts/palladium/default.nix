@@ -1,7 +1,8 @@
 { inputs, outputs, pkgs, config, lib, ... }: {
   imports = [
-    ../common/default.nix
     ./hardware-configuration.nix
+    ../common/default.nix
+    ../../modules/nixos/ssh.nix
   ];
   
   # Boot
@@ -25,10 +26,8 @@
   # Networking
   networking = {
     hostName = "palladium";
-    networkmanager.enable = true;
     firewall = {
       allowedTCPPorts = [
-        22 # SSH
         53 # Pi-hole
         80 443 # Web traffic
         2375 #2377 # Docker socket & Swarm
@@ -90,21 +89,6 @@
 
   # Configs
   services = {
-    openssh = {
-      enable = true;
-      extraConfig = ''
-        AllowAgentForwarding no
-        AllowStreamLocalForwarding no
-        AllowTcpForwarding yes
-        AuthenticationMethods publickey
-        ChallengeResponseAuthentication no
-        KbdInteractiveAuthentication no
-        PasswordAuthentication no
-        PermitEmptyPasswords no
-        PermitRootLogin no
-        X11Forwarding no
-      '';
-    };
     udev.extraRules = ''
       SUBSYSTEM=="bcm2835-gpiomem", KERNEL=="gpiomem", GROUP="gpio", MODE="0660"
       SUBSYSTEM=="gpio", KERNEL=="gpiochip*", ACTION=="add", RUN+="${pkgs.bash}/bin/bash -c 'chown root:gpio  /sys/class/gpio/export /sys/class/gpio/unexport ; chmod 220 /sys/class/gpio/export /sys/class/gpio/unexport'"

@@ -1,7 +1,7 @@
 { inputs, outputs, pkgs, config, lib, ... }: {
   home.packages = with pkgs; [
-    freecad openscad
     prusa-slicer
+    freecad openscad
   ];
   xdg = {
     mimeApps = {

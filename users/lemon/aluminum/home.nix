@@ -29,36 +29,8 @@
     };
     stateVersion = "23.05";
   };
-
-  xsession = {
-    enable = true;
-    windowManager.awesome = {
-      enable = true;
-      package = inputs.nixpkgs-f2k.packages.${pkgs.system}.awesome-git;
-    };
-  };
-  services = {
-    flameshot = {
-      enable = true;
-      settings = {
-        General = {
-          disabledTrayIcon = true;
-        };
-      };
-    };
-  };
-  programs = {
-    home-manager.enable = true;
-    obs-studio = {
-      enable = true;
-      plugins = with pkgs.obs-studio-plugins; [ obs-pipewire-audio-capture ];
-    };
-  };
-  nixpkgs.config = {
-    allowUnfree = true;
-    allowUnfreePredicate = (_: true);
-    permittedInsecurePackages = [
-      "electron-24.8.6" # Feishin
-    ];
-  };
+  nixpkgs.config.permittedInsecurePackages = [
+    "electron-24.8.6" # Feishin
+    "electron-25.9.0"
+  ];
 }

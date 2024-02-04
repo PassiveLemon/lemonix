@@ -24,7 +24,7 @@
       inputs.lemonake.packages.${pkgs.system}.tilp2
       inputs.lemonake.packages.${pkgs.system}.xclicker
 
-      (callPackage ../../../pkgs/wlxoverlay { })
+      #(callPackage ../../../pkgs/wlxoverlay { })
       #(python3Packages.callPackage ../../../pkgs/pulsemeeter { })
     ];
     file = {
@@ -71,13 +71,9 @@
       };
     };
   };
-  nixpkgs.config = {
-    allowUnfree = true;
-    allowUnfreePredicate = (_: true);
-    permittedInsecurePackages = [
-      "electron-24.8.6" # Feishin
-      "electron-25.9.0"
-    ];
-  };
+  nixpkgs.config.permittedInsecurePackages = [
+    "electron-24.8.6" # Feishin
+    "electron-25.9.0"
+  ];
 }
 

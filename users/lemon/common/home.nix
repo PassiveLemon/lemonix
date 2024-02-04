@@ -64,7 +64,12 @@
     mimeApps = {
       enable = true;
       defaultApplications = {
-        "inode/directory" = "pcmanfm.desktop";
+        "application/x-extension-htm" = "firefox.desktop";
+        "application/x-extension-html" = "firefox.desktop";
+        "application/x-extension-shtml" = "firefox.desktop";
+        "application/x-extension-xht" = "firefox.desktop";
+        "application/x-extension-xhtml" = "firefox.desktop";
+        "application/xhtml+xml" = "firefox.desktop";
         "application/zip" = "xarchiver.desktop";
         "audio/flac" = "mpv.desktop";
         "audio/matroska" = "mpv.desktop";
@@ -81,6 +86,8 @@
         "image/jpeg" = "feh.desktop";
         "image/png" = "feh.desktop";
         "image/svg+xml" = "feh.desktop";
+        "inode/directory" = "pcmanfm.desktop";
+        "text/html" = "firefox.desktop";
         "video/matroska" = "org.kde.haruna.desktop";
         "video/mp4" = "org.kde.haruna.desktop";
         "video/mpeg" = "org.kde.haruna.desktop";
@@ -88,6 +95,9 @@
         "video/ogg" = "org.kde.haruna.desktop";
         "video/quicktime" = "org.kde.haruna.desktop";
         "video/webm" = "org.kde.haruna.desktop";
+        "x-scheme-handler/chrome" = "firefox.desktop";
+        "x-scheme-handler/http" = "firefox.desktop";
+        "x-scheme-handler/https" = "firefox.desktop";
       };
     };
     desktopEntries = {
@@ -100,6 +110,10 @@
         categories = [ "Application" ];
       };
     };
+  };
+  nixpkgs.config = {
+    allowUnfree = true;
+    allowUnfreePredicate = (_: true);
   };
 }
 

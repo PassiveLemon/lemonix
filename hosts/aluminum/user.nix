@@ -1,20 +1,11 @@
 { inputs, outputs, pkgs, config, lib, ... }: {
   imports = [
     ../common/user.nix
+    ../../modules/nixos/bluetooth.nix
   ];
 
   # Configs
   services = {
-    xserver = {
-      libinput = {
-        touchpad = {
-          buttonMapping = "1 1 3 4 5 6 7";
-          middleEmulation = false;
-          accelProfile = "flat";
-          naturalScrolling = true;
-        };
-      };
-    };
     logind.extraConfig = ''
       HandlePowerKey=suspend
       HandleLidSwitch=suspend-then-hibernate
@@ -22,5 +13,4 @@
       IdleActionSec=60m
     '';
   };
-  blueman.enable = true;
 }

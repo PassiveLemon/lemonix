@@ -21,6 +21,12 @@
           accelProfile = "flat";
           accelSpeed = "-0.5";
         };
+        touchpad = {
+          buttonMapping = "1 1 3 4 5 6 7";
+          middleEmulation = false;
+          accelProfile = "flat";
+          naturalScrolling = true;
+        };
       };
     };
     pipewire = {

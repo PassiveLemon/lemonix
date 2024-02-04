@@ -1,14 +1,16 @@
 { inputs, outputs, pkgs, config, lib, ... }: {
   imports = [
     ../common/user.nix
-    inputs.lemonake.nixosModules.alvr
+    ../../modules/nixos/bluetooth.nix
     inputs.nix-gaming.nixosModules.pipewireLowLatency
+    inputs.nix-gaming.nixosModules.steamCompat
+    ../../modules/nixos/steamvr.nix
   ];
 
   # Configs
   services = {
     pipewire = {
-      lowLatency = { # Module of Nix-gaming
+      lowLatency = { # Module of nix-gaming
         enable = true;
         quantum = 128;
         rate = 48000;
@@ -21,10 +23,11 @@
     ''; # Headsetcontrol udev rule
   };
   programs = {
-    alvr = { # Module of lemonake
+    steam = {
       enable = true;
-      package = inputs.lemonake.packages.${pkgs.system}.alvr;
-      openFirewall = true;
+      extraCompatPackages = with inputs.nix-gaming.packages.${pkgs.system}; [ # Module of nix-gaming
+        proton-ge northstar-proton faf-client-bin
+      ];
     };
   };
 }

@@ -1,7 +1,8 @@
 { inputs, outputs, pkgs, config, lib, ... }: {
   imports = [
-    ../common/default.nix
     ./hardware-configuration.nix
+    ../common/default.nix
+    ../../modules/nixos/ssh.nix
   ];
   
   # Boot
@@ -10,11 +11,7 @@
       systemd-boot.enable = false;
       grub = {
         enable = true;
-        efiSupport = true;
-        useOSProber = true;
-        device = "nodev";
         gfxmodeEfi = "1920x1080";
-        configurationLimit = 50;
       };
     };
     kernelPackages = pkgs.linuxKernel.packages.linux_zen;
@@ -24,10 +21,8 @@
   # Networking
   networking = {
     hostName = "silver";
-    networkmanager.enable = true;
     firewall = {
       allowedTCPPorts = [
-        22 # SSH
         #2375 2377 # Docker socket & Swarm
         5500 # HTML Webserver for testing
         #7946 # Swarm container discovery
@@ -86,23 +81,6 @@
   };
 
   # Configs
-  services = {
-    openssh = {
-      enable = true;
-      extraConfig = ''
-        AllowAgentForwarding no
-        AllowStreamLocalForwarding no
-        AllowTcpForwarding yes
-        AuthenticationMethods publickey
-        ChallengeResponseAuthentication no
-        KbdInteractiveAuthentication no
-        PasswordAuthentication no
-        PermitEmptyPasswords no
-        PermitRootLogin no
-        X11Forwarding no
-      '';
-    };
-  };
   virtualisation = {
     docker = { 
       enable = true;
@@ -131,7 +109,6 @@
       driSupport = true;
       driSupport32Bit = true;
     };
-    bluetooth.enable = true;
   };
 
   # Drives

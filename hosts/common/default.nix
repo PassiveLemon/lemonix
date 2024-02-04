@@ -4,7 +4,15 @@
     loader = {
       efi.canTouchEfiVariables = true;
       timeout = 3;
-      systemd-boot.enable = false;
+      grub = {
+        efiSupport = true;
+        useOSProber = true;
+        device = "nodev";
+        configurationLimit = 50;
+      };
+      systemd-boot = {
+        configurationLimit = 50;
+      };
     };
   };
 

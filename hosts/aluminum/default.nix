@@ -1,16 +1,14 @@
 { inputs, outputs, pkgs, config, lib, ... }: {
   imports = [
-    ../common/default.nix
     ./hardware-configuration.nix
+    ../common/default.nix
   ];
   
   # Boot
   boot = {
     loader = {
-      systemd-boot = {
-        enable = true;
-        configurationLimit = 50;
-      };
+      grub.enable = false;
+      systemd-boot.enable = true;
     };
     kernelPackages = pkgs.linuxKernel.packages.linux_zen;
     kernelModules = [ "rtl8821ce" ];
@@ -63,8 +61,8 @@
     opengl = {
       enable = true;
       driSupport = true;
+      driSupport32Bit = true;
     };
-    bluetooth.enable = true;
   };
   powerManagement.enable = true;
 
