@@ -13,7 +13,7 @@
       old.easyeffects pavucontrol helvum mpv tauon feishin audacity
       scrot libsForQt5.kdenlive haruna feh gimp
       filezilla qbittorrent
-      hilbish eza bat thefuck trashy fd ripgrep
+      hilbish eza bat thefuck trashy fd ripgrep python3
       pamixer playerctl appimage-run ventoy-bin
       libsForQt5.kruler localsend old.mullvad-vpn
     ];
