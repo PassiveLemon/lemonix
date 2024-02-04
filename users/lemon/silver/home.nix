@@ -23,8 +23,6 @@
       inputs.lemonake.packages.${pkgs.system}.poepyautopot
       inputs.lemonake.packages.${pkgs.system}.tilp2
       inputs.lemonake.packages.${pkgs.system}.xclicker
-
-      #(callPackage ../../../pkgs/wlxoverlay { })
       #(python3Packages.callPackage ../../../pkgs/pulsemeeter { })
     ];
     file = {
