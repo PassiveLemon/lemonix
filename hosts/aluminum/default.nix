@@ -2,9 +2,9 @@
   imports = [
     ./hardware-configuration.nix
     ../common/default.nix
+    ../../modules/nixos/swap.nix
   ];
   
-  # Boot
   boot = {
     loader = {
       grub.enable = false;
@@ -14,13 +14,11 @@
     kernelModules = [ "rtl8821ce" ];
   };
 
-  # Networking
   networking = {
     hostName = "aluminum";
     nameservers = [ "192.168.1.178" "1.1.1.1" ];
   };
 
-  # Users
   users = {
     users = {
       "lemon" = {
@@ -33,7 +31,6 @@
     };
   };
 
-  # Configs
   services = {
     thermald.enable = true;
     tlp = {

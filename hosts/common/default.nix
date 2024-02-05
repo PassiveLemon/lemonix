@@ -1,5 +1,4 @@
 { inputs, outputs, pkgs, config, lib, ... }: {
-  # Boot
   boot = {
     loader = {
       efi.canTouchEfiVariables = true;
@@ -16,20 +15,17 @@
     };
   };
 
-  # Locale
   time = { 
     timeZone = "America/New_York";
     hardwareClockInLocalTime = true;
   };
   i18n.defaultLocale = "en_US.UTF-8";
 
-  # Networking
   networking = {
     networkmanager.enable = true;
     firewall.enable = true;
   };
 
-  # Users
   users = {
     mutableUsers = false;
     users = {

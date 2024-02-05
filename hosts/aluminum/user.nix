@@ -4,7 +4,6 @@
     ../../modules/nixos/bluetooth.nix
   ];
 
-  # Configs
   services = {
     logind.extraConfig = ''
       HandlePowerKey=suspend

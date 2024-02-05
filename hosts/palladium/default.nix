@@ -5,7 +5,6 @@
     ../../modules/nixos/ssh.nix
   ];
   
-  # Boot
   boot = {
     loader = {
       systemd-boot.enable = false;
@@ -23,7 +22,6 @@
     kernelPackages = pkgs.linuxPackages_rpi4;
   };
 
-  # Networking
   networking = {
     hostName = "palladium";
     firewall = {
@@ -56,7 +54,6 @@
     nameservers = [ "1.1.1.1" ];
   };
 
-  # Users
   users = {
     groups = {
       "gpio" = { };
@@ -80,14 +77,12 @@
     };
   };
 
-  # Packages
   environment = {
     systemPackages = with pkgs; [
       libraspberrypi raspberrypi-eeprom
     ];
   };
 
-  # Configs
   services = {
     udev.extraRules = ''
       SUBSYSTEM=="bcm2835-gpiomem", KERNEL=="gpiomem", GROUP="gpio", MODE="0660"

@@ -2,10 +2,10 @@
   imports = [
     ./hardware-configuration.nix
     ../common/default.nix
+    ../../modules/nixos/swap.nix
     ../../modules/nixos/ssh.nix
   ];
   
-  # Boot
   boot = {
     loader = {
       grub.enable = false;
@@ -15,7 +15,6 @@
     kernelModules = [ "iwlwifi" "kvm-amd" ];
   };
 
-  # Networking
   networking = {
     hostName = "silver";
     firewall = {
@@ -47,7 +46,6 @@
     nameservers = [ "192.168.1.178" "1.1.1.1" ];
   };
 
-  # Users
   users = {
     users = {
       "lemon" = {
@@ -68,7 +66,6 @@
     };
   };
 
-  # Packages
   environment = {
     systemPackages = with pkgs; [
       nvtop-nvidia
@@ -77,7 +74,6 @@
     ];
   };
 
-  # Configs
   virtualisation = {
     docker = { 
       enable = true;
