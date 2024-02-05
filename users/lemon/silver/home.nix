@@ -23,7 +23,6 @@
       inputs.lemonake.packages.${pkgs.system}.poepyautopot
       inputs.lemonake.packages.${pkgs.system}.tilp2
       inputs.lemonake.packages.${pkgs.system}.xclicker
-      #(python3Packages.callPackage ../../../pkgs/pulsemeeter { })
     ];
     file = {
       ".config/autostart/" = {
