@@ -25,8 +25,8 @@ ruled.client.connect_signal("request::rules", function()
   ruled.client.append_rule({
     id = "floating",
     rule_any = {
-      instance = { "feh", "lxappearance", "authy desktop", "xarchiver", "kruler" },
-      class    = { "feh", "Lxappearance", "Authy Desktop", "Xarchiver", "kruler" },
+      instance = { "feh", "loupe", "lxappearance", "authy desktop", "xarchiver", "kruler" },
+      class    = { "feh", "loupe", "Lxappearance", "Authy Desktop", "Xarchiver", "kruler" },
       name     = { "Customize Look and Feel", "Twilio Authy", "KRuler", "Confirm File Replacing", "Copying files" },
       role     = { "pop-up", "GtkFileChooserDialog" },
     },

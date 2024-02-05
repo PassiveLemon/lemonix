@@ -1,12 +1,10 @@
 { inputs, outputs, pkgs, config, lib, ... }: {
-  # Packages
   environment.systemPackages = with pkgs; [
     xorg.xorgserver xorg.xinit xorg.xrandr xorg.xhost
     xorg.xf86videovesa xorg.xf86videofbdev xorg.xf86inputevdev xorg.xf86inputsynaptics xorg.xf86inputlibinput xorg.xf86videointel
-    networkmanagerapplet blueman
+    networkmanagerapplet
   ];
 
-  # Configs
   services = {
     xserver = {
       enable = true;
@@ -48,16 +46,13 @@
     gnome.gnome-keyring.enable = true;
   };
   programs = {
-    dconf.enable = true;
     seahorse.enable = true;
   };
-  qt = {
-    enable = true;
-    platformTheme = "gtk2";
-    style = "gtk2";
-  };
-  xdg.portal = {
-    enable = true;
-    config.common.default = [ "gtk" ];
+  hardware = {
+    opengl = {
+      enable = true;
+      driSupport = true;
+      driSupport32Bit = true;
+    };
   };
 }

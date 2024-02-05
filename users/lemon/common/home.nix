@@ -7,15 +7,15 @@
   home = {
     packages = with pkgs; [
       tym rofi i3lock-fancy-rapid pcmanfm xarchiver gparted
-      firefox master.webcord-vencord freetube authy
+      firefox master.webcord-vencord authy freetube
       lite-xl vscode github-desktop imhex
       obsidian onlyoffice-bin drawio
-      old.easyeffects pavucontrol helvum mpv tauon feishin audacity
-      scrot libsForQt5.kdenlive haruna feh gimp
+      pavucontrol old.easyeffects mpv helvum tauon feishin audacity
+      loupe feh gimp libsForQt5.kdenlive scrot
       filezilla qbittorrent
       hilbish eza bat thefuck trashy fd ripgrep python3
       pamixer playerctl appimage-run ventoy-bin
-      libsForQt5.kruler localsend old.mullvad-vpn
+      libsForQt5.kruler old.mullvad-vpn localsend
     ];
     username = "lemon";
     homeDirectory = "/home/lemon";
@@ -79,29 +79,31 @@
         "audio/vorbis" = "mpv.desktop";
         "audio/wav" = "mpv.desktop";
         "audio/x-opus+ogg" = "mpv.desktop";
-        "image/bmp" = "feh.desktop";
-        "image/gif" = "firefox.desktop";
-        "image/heic" = "feh.desktop";
-        "image/heif" = "feh.desktop";
-        "image/jpeg" = "feh.desktop";
-        "image/png" = "feh.desktop";
-        "image/svg+xml" = "feh.desktop";
+        "image/bmp" = "org.gnome.Loupe.desktop";
+        "image/gif" = "org.gnome.Loupe.desktop";
+        "image/heic" = "org.gnome.Loupe.desktop";
+        "image/heif" = "org.gnome.Loupe.desktop";
+        "image/jpeg" = "org.gnome.Loupe.desktop";
+        "image/png" = "org.gnome.Loupe.desktop";
+        "image/svg+xml" = "org.gnome.Loupe.desktop";
+        "image/webp" = "org.gnome.Loupe.desktop";
         "inode/directory" = "pcmanfm.desktop";
         "text/html" = "firefox.desktop";
-        "video/matroska" = "org.kde.haruna.desktop";
-        "video/mp4" = "org.kde.haruna.desktop";
-        "video/mpeg" = "org.kde.haruna.desktop";
-        "video/MPV" = "org.kde.haruna.desktop";
-        "video/ogg" = "org.kde.haruna.desktop";
-        "video/quicktime" = "org.kde.haruna.desktop";
-        "video/webm" = "org.kde.haruna.desktop";
+        "video/matroska" = "mpv.desktop";
+        "video/mp4" = "mpv.desktop";
+        "video/mpeg" = "mpv.desktop";
+        "video/MPV" = "mpv.desktop";
+        "video/ogg" = "mpv.desktop";
+        "video/quicktime" = "mpv.desktop";
+        "video/webm" = "mpv.desktop";
+        "video/x-matroska" = "mpv.desktop";
         "x-scheme-handler/chrome" = "firefox.desktop";
         "x-scheme-handler/http" = "firefox.desktop";
         "x-scheme-handler/https" = "firefox.desktop";
       };
     };
     desktopEntries = {
-      "discord" = { # Alias Discord to Webcord with CSS skin
+      "Discord" = { # Alias Discord to Webcord with CSS skin
         name = "Discord";
         exec = "webcord -- --add-css-theme=/home/lemon/.config/BetterDiscord/themes/Lemon.theme.css";
         icon = "/home/lemon/.icons/Papirus/64x64/apps/webcord.svg";
