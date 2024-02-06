@@ -59,7 +59,7 @@ promptua.setTheme {
   },
 }
 
-function table_find(table, value)
+local function find_in_table(table, value)
   for i, v in ipairs(table) do
     if v == value then
       return i
@@ -67,32 +67,32 @@ function table_find(table, value)
   end
 end
 
-function get_last_command()
+local function get_last_command()
   return hilbish.history.get(hilbish.history.size() - 1)
 end
 
-function test_file(file, callback)
+local function test_file(file, callback)
   if type(file) ~= "string" then
     return false
   end
   return os.rename(file, file) and true or false
 end
 
-local shell_check = function()
+local function shell_check()
   if test_file("shell.nix") then
     hilbish.run("nix-shell")
   end
 end
 
-function catch_register()
+local function catch_register()
   bait.catch("cd", shell_check)
 end
 
-function catch_release()
+local function catch_release()
   bait.release("cd", shell_check)
 end
 
-function run_and_return(dir, cmd)
+local function run_and_return(dir, cmd)
   catch_release() -- Needed to avoid shell checking when running the nix flake update (nfu) command
   hilbish.run("cd " .. dir)
   hilbish.run(cmd)
@@ -128,17 +128,17 @@ commander.register("nsp", function(args)
   local url = args[2]
 
   if #args < 2 then
-    hilbish.run("echo 'Not enough arguments: nhp (type) (url)'")
+    hilbish.run("echo 'Not enough arguments: nsp (hash-type) (url)'")
     return 1
   elseif #args > 2 then
-    hilbish.run("echo 'Too many arguments: nhp (type) (url)'")
+    hilbish.run("echo 'Too many arguments: nsp (hash-type) (url)'")
     return 1
   end
-  if table_find(types, type) then
+  if find_in_table(types, type) then
     hilbish.run("nix store prefetch-file --hash-type " .. type .. " " .. url)
     return 0
   else
-    hilbish.run("echo 'Unrecognized type: '" .. type)
+    hilbish.run("echo 'Unrecognized hash-type: '" .. type)
     return 1
   end
 end)
