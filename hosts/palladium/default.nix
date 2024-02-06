@@ -98,6 +98,16 @@
         };
       };
     };
+    create_ap = {
+      enable = true;
+      settings = {
+        INTERNET_IFACE = "end0";
+        WIFI_IFACE = "wlan0";
+        SSID = "Unknown Network";
+        PASSPHRASE = "kXP3@%p!k%N7KL!4#26Z3";
+        HIDDEN = 1;
+      };
+    };
   };
   virtualisation = {
     docker = { 
