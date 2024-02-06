@@ -46,6 +46,7 @@
     gnome.gnome-keyring.enable = true;
   };
   programs = {
+    dconf.enable = true;
     seahorse.enable = true;
   };
   hardware = {
