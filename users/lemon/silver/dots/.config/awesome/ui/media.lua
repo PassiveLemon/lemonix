@@ -222,7 +222,7 @@ local function art_image_updater(art_url)
     _updater(art_url)
   else
     -- If you run a playerctl command that changes the song, the command will exit but not always after changing the metadata information. This helps ensure that the new metadata is there before running the next command.
-    awful.spawn.easy_async_with_shell("sleep 0.05 && " .. playerctl .. " metadata mpris:artUrl", function(art_url)
+    awful.spawn.easy_async_with_shell("sleep 0.05 && " .. playerctl .. " metadata -f {{mpris:artUrl}}", function(art_url)
       _updater(art_url)
     end)
   end
@@ -257,21 +257,21 @@ local function metadata_updater(title_state, artist_state, album_state)
   if title_state then
     _title_updater(title_state)
   else
-    awful.spawn.easy_async_with_shell("sleep 0.05 && " .. playerctl .. " metadata xesam:title", function(title_state)
+    awful.spawn.easy_async_with_shell("sleep 0.05 && " .. playerctl .. " metadata -f {{xesam:title}}", function(title_state)
       _title_updater(title_state)
     end)
   end
   if artist_state then
     _artist_updater(artist_state)
   else
-    awful.spawn.easy_async_with_shell("sleep 0.05 && " .. playerctl .. " metadata xesam:artist", function(artist_state)
+    awful.spawn.easy_async_with_shell("sleep 0.05 && " .. playerctl .. " metadata -f {{xesam:artist}}", function(artist_state)
       _artist_updater(artist_state)
     end)
   end
   if album_state then
     _album_updater(album_state)
   else
-    awful.spawn.easy_async_with_shell("sleep 0.05 && " .. playerctl .. " metadata xesam:album", function(album_state)
+    awful.spawn.easy_async_with_shell("sleep 0.05 && " .. playerctl .. " metadata -f {{xesam:album}}", function(album_state)
       _album_updater(album_state)
     end)
   end
@@ -289,7 +289,7 @@ local function shuffle_updater(shuffle_state)
   if shuffle_state then
     _updater(shuffle_state)
   else
-    awful.spawn.easy_async_with_shell("sleep 0.05 && " .. playerctl .. " shuffle", function(shuffle_state)
+    awful.spawn.easy_async_with_shell("sleep 0.05 && " .. playerctl .. " metadata -f {{shuffle}}", function(shuffle_state)
       _updater(shuffle_state)
     end)
   end
@@ -306,7 +306,7 @@ local function toggle_updater(toggle_state)
   if toggle_state then
     _updater(toggle_state)
   else
-    awful.spawn.easy_async_with_shell("sleep 0.05 && " .. playerctl .. " status", function(toggle_state)
+    awful.spawn.easy_async_with_shell("sleep 0.05 && " .. playerctl .. " metadata -f {{status}}", function(toggle_state)
       _updater(toggle_state)
     end)
   end
@@ -325,33 +325,38 @@ local function loop_updater(loop_state)
   if loop_state then
     _updater(loop_state)
   else
-    awful.spawn.easy_async_with_shell("sleep 0.05 && " .. playerctl .. " loop", function(loop_state)
+    awful.spawn.easy_async_with_shell("sleep 0.05 && " .. playerctl .. " metadata -f {{loop}}", function(loop_state)
       _updater(loop_state)
     end)
   end
 end
 
---naughty = require("naughty")
+local position_set = true
+local slider_update = false
+local slider_self_update = true
 
 local function position_updater(position_state, current, length)
   local function _updater(position_state, current, length)
-    if length == "" then
+    if (current == "") or (length == "") then
       position.visible = false
     else
-      position.visible = true
-      if position_state then
-        awful.spawn(playerctl .. " position " .. h.round(((position_state * length) / (100000000)), 3))
+      if position_set == true then
+        if position_state then
+          awful.spawn(playerctl .. " position " .. h.round(((position_state * length) / 100), 3))
+        end
       end
-      --naughty.notify({ message = "test2" })
-      position:get_children_by_id("slider")[1]._private.value = h.round(((current * 100) / (length)), 3)
+      if slider_update == true then
+        slider_self_update = false
+        slider_update = false
+        position:get_children_by_id("slider")[1].value = h.round(((current / length) * 100), 3)
+      end
     end
   end
   if (current and length) then
     _updater(position_state, current, length)
   else
-    awful.spawn.easy_async(playerctl .. " position", function(current)
-      awful.spawn.easy_async(playerctl .. " metadata mpris:length", function(length)
-        --naughty.notify({ message = "test1" })
+    awful.spawn.easy_async(playerctl .. " metadata -f {{position}}", function(current)
+      awful.spawn.easy_async(playerctl .. " metadata -f {{mpris:length}}", function(length)
         _updater(position_state, current, length)
       end)
     end)
@@ -372,7 +377,7 @@ local function volume_updater(volume_state)
   if volume_state then
     _updater(volume_state)
   else
-    awful.spawn.easy_async(playerctl .. " volume", function(volume_state)
+    awful.spawn.easy_async(playerctl .. " metadata -f {{volume}}", function(volume_state)
       _updater(volume_state)
     end)
   end
@@ -507,16 +512,23 @@ loop:connect_signal("button::press", function()
 end)
 
 position:get_children_by_id("slider")[1]:connect_signal("property::value", function(slider, position_state)
-  slider.value = position_state
-  position_updater(position_state)
+  if slider_self_update == true then
+    slider.value = position_state
+    position_updater(position_state)
+  end
+  position_set = true
+  slider_update = false
+  slider_self_update = true
 end)
 
 volume:get_children_by_id("slider")[1]:connect_signal("property::value", function(slider, volume_state)
   slider.value = volume_state
-	awful.spawn(playerctl .. " volume " .. h.round(((volume_state) / (100)), 3))
+	awful.spawn(playerctl .. " volume " .. h.round((volume_state / 100), 3))
 end)
 
 awesome.connect_signal("signal::playerctl", function(art_url, title, artist, album, shuffle, status, loop, position, length, volume)
+  position_set = false
+  slider_update = true
   art_image_updater(art_url)
   metadata_updater(title, artist, album)
   shuffle_updater(shuffle)

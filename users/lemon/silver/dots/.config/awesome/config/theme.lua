@@ -59,16 +59,24 @@ theme.whited   = "#c6c6c6"
 theme.whitel   = "#e2e2e2"
 
 -- Links
-theme.bg_normal     = theme.bg0
-theme.bg_minimize   = theme.bg2
-theme.bg_focus      = theme.bg4
-theme.bg_urgent     = theme.redd
-theme.bg_systray    = theme.bg_normal
+theme.bg_normal      = theme.bg0
+theme.bg_minimize    = theme.bg2
+theme.bg_focus       = theme.bg4
+theme.bg_urgent      = theme.redd
 
-theme.fg_normal     = theme.fg0
-theme.fg_minimize   = theme.fg2
-theme.fg_focus      = theme.fg3
-theme.fg_urgent     = theme.fg3
+theme.fg_normal      = theme.fg0
+theme.fg_minimize    = theme.fg2
+theme.fg_focus       = theme.fg3
+theme.fg_urgent      = theme.fg3
+
+theme.ui_main_bg     = theme.bg0
+theme.ui_main_fg     = theme.fg0
+theme.ui_button_bg   = theme.bg1
+theme.ui_button_fg   = theme.fg0
+theme.ui_slider_bg   = theme.bg2
+theme.ui_slider_fg   = theme.fg0
+theme.ui_progress_bg = theme.bg2
+theme.ui_progress_fg = theme.fg0
 
 theme.border_width        = 3
 theme.border_color_normal = theme.blackd

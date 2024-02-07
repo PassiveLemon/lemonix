@@ -10,7 +10,7 @@ local click_to_hide = require("modules.click_to_hide")
 -- Powermenu
 --
 
-local lock = h.button({
+local lock_icon = h.button({
   margins = {
     top = b.margins,
     right = b.margins,
@@ -23,7 +23,7 @@ local lock = h.button({
   text = "",
   font = b.sysfont(24),
 })
-local poweroff = h.button({
+local poweroff_icon = h.button({
   margins = {
     top = b.margins,
     right = b.margins,
@@ -36,7 +36,7 @@ local poweroff = h.button({
   text = "󰐥",
   font = b.sysfont(27),
 })
-local restart = h.button({
+local restart_icon = h.button({
   margins = {
     top = b.margins,
     right = b.margins,
@@ -62,9 +62,9 @@ layout = wibox.layout.margin,
     layout = wibox.layout.align.vertical,
     {
       layout = wibox.layout.fixed.horizontal,
-      lock,
-      poweroff,
-      restart,
+      lock_icon,
+      poweroff_icon,
+      restart_icon,
     },
   },
 })
@@ -80,7 +80,8 @@ local prompt = h.text({
   y = 36,
   text = "Are you sure?",
 })
-local confirm_pow = h.button({
+
+local poweroff = h.button({
   margins = {
     top = b.margins,
     right = b.margins,
@@ -91,8 +92,18 @@ local confirm_pow = h.button({
   y = 56,
   shape = gears.shape.rounded_rect,
   text = "Poweroff",
+  toggle = false
 })
-local confirm_res = h.button({
+local poweroff_hover = gears.timer({
+  timeout = 1,
+  single_shot = true,
+  callback = function()
+    poweroff.toggle = true
+    poweroff:get_children_by_id("background")[1].fg = b.fg_focus
+  end,
+})
+
+local restart = h.button({
   margins = {
     top = b.margins,
     right = b.margins,
@@ -103,7 +114,17 @@ local confirm_res = h.button({
   y = 56,
   shape = gears.shape.rounded_rect,
   text = "Restart",
+  toggle = false
 })
+local restart_hover = gears.timer({
+  timeout = 1,
+  single_shot = true,
+  callback = function()
+    restart.toggle = true
+    restart:get_children_by_id("background")[1].fg = b.fg_focus
+  end,
+})
+
 local cancel = h.button({
   margins = {
     top = b.margins,
@@ -133,7 +154,7 @@ local poweroff_widget = wibox.widget({
     },
     {
       layout = wibox.layout.fixed.horizontal,
-      confirm_pow,
+      poweroff,
       cancel,
     },
   },
@@ -155,7 +176,7 @@ local restart_widget = wibox.widget({
     },
     {
       layout = wibox.layout.fixed.horizontal,
-      confirm_res,
+      restart,
       cancel,
     },
   },
@@ -172,35 +193,54 @@ local main = awful.popup({
 
 local function confirmed(command)
   main.visible = false
-  awful.spawn(command)
+  awful.spawn.with_shell(command)
 end
 
-cancel:connect_signal("button::press", function()
-  main.widget = powermenu_widget
-end)
-
-confirm_pow:connect_signal("button::press", function()
-  confirmed("systemctl poweroff")
-end)
-
-confirm_res:connect_signal("button::press", function()
-  confirmed("systemctl reboot")
-end)
-
-lock:connect_signal("button::press", function()
-  main.visible = false
-  awful.spawn.with_shell("\
+lock_icon:connect_signal("button::press", function()
+  confirmed("\
   playerctl pause; \
   i3lock-fancy-rapid 50 10 -n; \
   ")
 end)
 
-poweroff:connect_signal("button::press", function()
+poweroff_icon:connect_signal("button::press", function()
   main.widget = poweroff_widget
 end)
 
-restart:connect_signal("button::press", function()
+restart_icon:connect_signal("button::press", function()
   main.widget = restart_widget
+end)
+
+cancel:connect_signal("button::press", function()
+  main.widget = powermenu_widget
+end)
+
+poweroff:connect_signal("button::press", function()
+  if poweroff.toggle == true then
+    confirmed("systemctl poweroff")
+  end
+end)
+
+poweroff:connect_signal("mouse::enter", function()
+  poweroff_hover:again()
+end)
+poweroff:connect_signal("mouse::leave", function()
+  poweroff_hover:stop()
+  poweroff.toggle = false
+end)
+
+restart:connect_signal("button::press", function()
+  if restart.toggle == true then
+    confirmed("systemctl reboot")
+  end
+end)
+
+restart:connect_signal("mouse::enter", function()
+  restart_hover:again()
+end)
+restart:connect_signal("mouse::leave", function()
+  restart_hover:stop()
+  restart.toggle = false
 end)
 
 local function signal()
