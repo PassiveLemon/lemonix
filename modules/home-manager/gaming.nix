@@ -7,7 +7,6 @@
     #vinegar
     bottles
     ludusavi
-    sidequest
   ];
   xdg = {
     mimeApps = {
@@ -17,7 +16,6 @@
         "x-scheme-handler/gdlauncher" = "gdlauncher.desktop";
         "x-scheme-handler/modelsaber" = "BeatSaberModManager-url-modelsaber.desktop";
         "x-scheme-handler/ror2mm" = "r2modman.desktop";
-        "x-scheme-handler/sidequest" = "SideQuest.desktop";
       };
     };
   };

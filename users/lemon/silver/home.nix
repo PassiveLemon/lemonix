@@ -16,13 +16,16 @@
       rsync syncthing
 
       # Development
-      act nvfetcher nixpkgs-review jq dotnet-sdk
+      act nvfetcher nixpkgs-review jq dotnet-sdk_8
 
       # Custom
       inputs.lemonake.packages.${pkgs.system}.animdl
       inputs.lemonake.packages.${pkgs.system}.poepyautopot
       inputs.lemonake.packages.${pkgs.system}.tilp2
       inputs.lemonake.packages.${pkgs.system}.xclicker
+
+      (callPackage ../../../pkgs/envision { })
+      #(callPackage ../../../pkgs/adbforwarder { })
     ];
     file = {
       ".config/autostart/" = {
@@ -58,12 +61,12 @@
     desktopEntries = {
       "sd-comfyui" = {
         name = "sd-comfyui";
-        exec = "/home/lemon/Documents/GitHub/private/Scripts/ComfyUI.sh";
+        exec = "/home/lemon/.config/lemonscripts/ComfyUI.sh";
         terminal = true;
       };
       "sd-auto" = {
         name = "sd-auto";
-        exec = "/home/lemon/Documents/GitHub/private/Scripts/Auto.sh";
+        exec = "/home/lemon/.config/lemonscripts/Auto.sh";
         terminal = true;
       };
     };
