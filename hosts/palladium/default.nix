@@ -106,6 +106,7 @@
         SSID = "Unknown Network";
         PASSPHRASE = "kXP3@%p!k%N7KL!4#26Z3";
         HIDDEN = 1;
+        IEEE80211AC = 1;
       };
     };
   };
