@@ -342,7 +342,7 @@ local function position_updater(position_state, current, length)
     else
       if position_set == true then
         if position_state then
-          awful.spawn(playerctl .. " position " .. h.round(((position_state * length) / 100), 3))
+          awful.spawn(playerctl .. " position " .. h.round(((position_state * length) / 100000000), 3))
         end
       end
       if slider_update == true then
