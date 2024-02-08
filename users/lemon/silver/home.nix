@@ -59,14 +59,19 @@
       };
     };
     desktopEntries = {
-      "sd-comfyui" = {
-        name = "sd-comfyui";
-        exec = "/home/lemon/.config/lemonscripts/ComfyUI.sh";
+      "alvr-autoadb" = {
+        name = "alvr-autoadb";
+        exec = "/home/lemon/Documents/GitHub/private/Scripts/alvr-autoadb.sh";
+        terminal = false;
+      };
+      "sd-comfy" = {
+        name = "sd-comfy";
+        exec = "/home/lemon/Documents/GitHub/private/Scripts/sd-comfy.sh";
         terminal = true;
       };
       "sd-auto" = {
         name = "sd-auto";
-        exec = "/home/lemon/.config/lemonscripts/Auto.sh";
+        exec = "/home/lemon/Documents/GitHub/private/Scripts/sd-auto.sh";
         terminal = true;
       };
     };
