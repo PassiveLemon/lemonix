@@ -162,7 +162,7 @@ local volume = h.slider({
 })
 
 local playerctl = "playerctl -p spotify,tauon,Feishin -s"
-local art_dir = os.getenv("HOME") .. "/.cache/lemonix/mediamenu/"
+local art_dir = os.getenv("HOME") .. "/.cache/passivelemon/lemonix/media/"
 
 -- Display updating functions
 
