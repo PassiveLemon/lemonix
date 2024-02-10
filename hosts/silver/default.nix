@@ -82,7 +82,7 @@
       liveRestore = false;
       autoPrune = {
         enable = true;
-        dates = "monthly";
+        dates = "weekly";
       };
       daemon.settings = {
         hosts = [ "unix:///var/run/docker.sock" ];
@@ -95,7 +95,6 @@
       package = config.boot.kernelPackages.nvidiaPackages.stable;
       modesetting.enable = true;
       powerManagement.enable = true;
-      nvidiaSettings = true;
     };
     opengl = {
       enable = true;
