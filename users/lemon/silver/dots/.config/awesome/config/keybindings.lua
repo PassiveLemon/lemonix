@@ -1,6 +1,7 @@
 local awful = require("awful")
 local gears = require("gears")
 local b = require("beautiful")
+local wibox = require("wibox")
 local hotkeys_popup = require("awful.hotkeys_popup")
 
 local media = require("ui.media")
@@ -10,9 +11,65 @@ local crosshair = require("ui.crosshair")
 local caps = require("signal.caps")
 local volume = require("signal.volume")
 
+local bling = require("libraries.bling")
+
 --
 -- Keybindings
 --
+
+local app_launcher = bling.widget.app_launcher({
+  terminal = "tym",
+  border_color = b.border_color_active,
+  background = b.ui_main_bg,
+
+  prompt_height = 30,
+  prompt_margins = 0,
+  prompt_paddings = {
+    top = 8,
+    right = 8,
+    bottom = 4,
+    left = 8,
+  },
+  prompt_color = b.ui_main_bg,
+  prompt_text_halign = "left",
+  prompt_text_valign = "center",
+  prompt_icon = "",
+  prompt_font = b.sysfont(10),
+  prompt_text_color = b.ui_main_fg,
+  prompt_cursor_color = b.ui_main_fg,
+
+  apps_per_row = 15,
+  apps_per_column = 1,
+  apps_margin = {
+    top = 4,
+    right = 8,
+    bottom = 8,
+    left = 8,
+  },
+  apps_spacing = 8,
+
+  app_width = 290,
+  app_height = 24,
+  app_shape = gears.shape.rounded_bar,
+  app_normal_color = b.ui_button_bg,
+  app_normal_hover_color = b.bg_minimize,
+  app_selected_color = b.bg_minimize,
+  app_selected_hover_color = b.bg_focus,
+  app_content_padding = 1,
+  app_content_spacing = 0,
+  app_show_icon = true,
+  app_icon_halign = "left",
+  app_icon_width = 24,
+  app_icon_height = 24,
+  app_show_name = true,
+  app_name_layout = wibox.layout.fixed.horizontal,
+  app_name_generic_name_spacing = 0,
+  app_name_halign = "left",
+  app_name_font = b.sysfont(10),
+  app_name_normal_color = b.ui_button_fg,
+  app_name_selected_color = b.fg_focus,
+  app_show_generic_name = false,
+})
 
 super = "Mod4" -- Windows key
 
@@ -24,11 +81,8 @@ awful.keyboard.append_global_keybindings({
   awful.key({ super }, "Return", function() awful.spawn(terminal) end,
   { description = "|| open a terminal", group = "launcher" }),
 
-  awful.key({ super }, "space", function() awful.spawn("rofi -show drun -theme " .. os.getenv("HOME") .. "/.config/rofi/lemon.rasi -show-icons") end,
-  { description = "|| run rofi", group = "launcher" }),
-
-  awful.key({ super }, "t", function() launcher.signal() end,
-  { description = "|| run launcher", group = "launcher" }),
+  awful.key({ super }, "space", function() app_launcher:toggle() end,
+  { description = "|| run app launcher", group = "launcher" }),
 
   awful.key({ super }, "c", function() media.signal() end,
   { description = "|| run media player", group = "launcher" }),

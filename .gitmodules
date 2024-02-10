@@ -1,3 +1,3 @@
-[submodule "common/dots/.config/awesome/libraries/bling"]
-	path = common/dots/.config/awesome/libraries/bling
+[submodule "common/dots/.config/awesome/bling"]
+	path = common/dots/.config/awesome/bling
 	url = https://github.com/PassiveLemon/bling
