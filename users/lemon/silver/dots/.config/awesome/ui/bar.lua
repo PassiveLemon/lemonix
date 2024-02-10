@@ -8,7 +8,6 @@ local click_to_hide = require("modules.click_to_hide")
 
 local volume = require("signal.volume")
 local media = require("ui.media")
---local panel = require("ui.panel")
 
 --
 -- Wibar

@@ -6,7 +6,7 @@
 
   home = {
     packages = with pkgs; [
-      tym rofi i3lock-fancy-rapid gparted
+      tym i3lock-fancy-rapid gparted
       pcmanfm xarchiver ffmpegthumbnailer filezilla
       firefox master.webcord-vencord authy freetube
       lite-xl vscode github-desktop imhex
