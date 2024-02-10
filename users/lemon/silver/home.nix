@@ -25,7 +25,6 @@
       inputs.lemonake.packages.${pkgs.system}.xclicker
 
       (callPackage ../../../pkgs/envision { })
-      #(callPackage ../../../pkgs/adbforwarder { })
     ];
     file = {
       ".config/autostart/" = {
@@ -42,6 +41,10 @@
       };
       ".config/awesome/ui" = {
         source = ./dots/.config/awesome/ui;
+        recursive = true;
+      };
+      ".local/bin/passivelemon" = {
+        source = ./dots/.local/bin/passivelemon;
         recursive = true;
       };
     };
@@ -61,17 +64,17 @@
     desktopEntries = {
       "alvr-autoadb" = {
         name = "alvr-autoadb";
-        exec = "/home/lemon/Documents/GitHub/private/Scripts/alvr-autoadb.sh";
+        exec = "/home/lemon/.local/bin/passivelemon/alvr-autoadb.sh";
         terminal = false;
       };
       "sd-comfy" = {
         name = "sd-comfy";
-        exec = "/home/lemon/Documents/GitHub/private/Scripts/sd-comfy.sh";
+        exec = "/home/lemon/.local/bin/passivelemon/sd-comfy.sh";
         terminal = true;
       };
       "sd-auto" = {
         name = "sd-auto";
-        exec = "/home/lemon/Documents/GitHub/private/Scripts/sd-auto.sh";
+        exec = "/home/lemon/.local/bin/passivelemon/sd-auto.sh";
         terminal = true;
       };
     };
