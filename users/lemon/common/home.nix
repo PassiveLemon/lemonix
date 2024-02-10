@@ -21,15 +21,15 @@
     homeDirectory = "/home/lemon";
     file = {
       ".config/" = {
-        source = ../../../common/dots/.config;
+        source = ./dots/.config;
         recursive = true;
       };
       ".vscode/" = {
-        source = ../../../common/dots/.vscode;
+        source = ./dots/.vscode;
         recursive = true;
       };
       ".xinitrc" = {
-        source = ../../../common/dots/.xinitrc;
+        source = ./dots/.xinitrc;
       };
     };
   };
