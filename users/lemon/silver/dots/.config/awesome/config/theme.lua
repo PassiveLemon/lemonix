@@ -5,7 +5,6 @@ local naughty = require("naughty")
 local menubar_utils = require "menubar.utils"
 
 local theme_assets = require("beautiful.theme_assets")
-
 local themes_path = gears.filesystem.get_themes_dir()
 
 --
@@ -96,6 +95,11 @@ theme.useless_gap = 6
 theme.margins = 4
 
 theme.layout_dwindle = themes_path .. "default/layouts/dwindlew.png"
+
+-- Bling
+theme.parent_filter_list = { "firefox", "Pcmanfm", "Code", "WebCord" }
+theme.child_filter_list = { "Tym" }
+theme.swallowing_filter = true
 
 --
 -- Wallpaper & icons

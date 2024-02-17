@@ -3,6 +3,8 @@ local gears = require("gears")
 local b = require("beautiful")
 local ruled = require("ruled")
 
+local bling = require("libraries.bling")
+
 --
 -- Rules
 --
@@ -58,6 +60,9 @@ end)
 --
 -- Other
 --
+
+-- Bling
+bling.module.window_swallowing.start()
 
 -- Layout
 tag.connect_signal("request::default_layouts", function()
