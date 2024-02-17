@@ -1,4 +1,4 @@
-{ inputs, outputs, pkgs, config, lib, ... }: {
+{ inputs, pkgs, config, lib, ... }: {
   imports = [
     ../common/user.nix
     ../../modules/nixos/bluetooth.nix

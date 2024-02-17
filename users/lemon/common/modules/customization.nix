@@ -1,4 +1,4 @@
-{ inputs, outputs, pkgs, config, lib, ... }: {
+{ inputs, pkgs, config, lib, ... }: {
   home.packages = with pkgs; [
     lxappearance
     (nerdfonts.override { fonts = [ "FiraCode" "FiraMono" ]; })

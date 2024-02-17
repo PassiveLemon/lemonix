@@ -1,4 +1,4 @@
-{ inputs, outputs, pkgs, config, lib, ... }: {
+{ inputs, pkgs, config, lib, ... }: {
   swapDevices = [
     {
       device = "/var/lib/swapfile";

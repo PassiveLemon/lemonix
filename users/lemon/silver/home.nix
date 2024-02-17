@@ -1,4 +1,4 @@
-{ inputs, outputs, pkgs, config, lib, ... }: {
+{ inputs, pkgs, config, lib, ... }: {
   imports = [
     ../common/home.nix
     ./modules/customization.nix
@@ -14,6 +14,7 @@
 
       # Testing
       rsync syncthing
+      virt-manager pciutils
 
       # Development
       act nvfetcher nixpkgs-review jq dotnet-sdk_8
@@ -24,7 +25,7 @@
       inputs.lemonake.packages.${pkgs.system}.tilp2
       inputs.lemonake.packages.${pkgs.system}.xclicker
 
-      (callPackage ../../../pkgs/envision { })
+      #(callPackage ../../../pkgs/envision { })
     ];
     file = {
       ".config/autostart/" = {

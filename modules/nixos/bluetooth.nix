@@ -1,4 +1,4 @@
-{ inputs, outputs, pkgs, config, lib, ... }: {
+{ inputs, pkgs, config, lib, ... }: {
   services.blueman.enable = true;
   hardware.bluetooth.enable = true;
 }

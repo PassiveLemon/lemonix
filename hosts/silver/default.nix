@@ -1,4 +1,4 @@
-{ inputs, outputs, pkgs, config, lib, ... }: {
+{ inputs, pkgs, config, lib, ... }: {
   imports = [
     ./hardware-configuration.nix
     ../common/default.nix
@@ -69,8 +69,6 @@
   environment = {
     systemPackages = with pkgs; [
       nvtop-nvidia
-      # Required for the FS to complete its check and allow me to boot while on nixos-23.05
-      pkgs.unstable.e2fsprogs
     ];
   };
 

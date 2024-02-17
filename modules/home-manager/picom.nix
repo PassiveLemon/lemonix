@@ -1,7 +1,7 @@
-{ inputs, outputs, pkgs, config, lib, ... }: {
+{ inputs, pkgs, config, lib, ... }: {
   services.picom = {
     enable = true;
-    package = pkgs.picom-allusive;
+    package = pkgs.stable.picom-allusive;
     settings = {
       # Shadows
       shadow = true;

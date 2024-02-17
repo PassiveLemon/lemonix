@@ -1,11 +1,10 @@
-{ inputs, outputs, pkgs, config, lib, ... }: {
+{ inputs, pkgs, config, lib, ... }: {
   home.packages = with pkgs; [
-    wineWowPackages.stagingFull gamemode dxvk
+    gamemode dxvk
+    inputs.nix-gaming.packages.${pkgs.system}.viper
     r2modman
-    lunar-client prismlauncher
-    inputs.lemonake.packages.${pkgs.system}.gdlauncher-carbon
-    #vinegar
-    bottles
+    lunar-client prismlauncher inputs.lemonake.packages.${pkgs.system}.gdlauncher-carbon
+    bottles #vinegar wineWowPackages.stagingFull
     ludusavi
   ];
   xdg = {
