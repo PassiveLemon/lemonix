@@ -2,7 +2,7 @@ local awful = require("awful")
 local gears = require("gears")
 
 local function emit(use, use_perc, cache, cache_perc)
-  awesome.emit_signal('signal::memory', use, use_perc, cache, cache_perc)
+  awesome.emit_signal("signal::memory::data", use, use_perc, cache, cache_perc)
 end
 
 local function memory()
@@ -30,5 +30,3 @@ local memory_timer = gears.timer({
     memory()
   end,
 })
-
-return { memory = memory }

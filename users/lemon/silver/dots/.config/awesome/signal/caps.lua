@@ -4,7 +4,7 @@ local gears = require("gears")
 local caps_cache
 
 local function emit(caps)
-  awesome.emit_signal('signal::caps', caps)
+  awesome.emit_signal("signal::caps::state", caps)
 end
 
 local function caps_query()
@@ -14,6 +14,8 @@ local function caps_query()
     emit(caps)
   end)
 end
+
+caps_query()
 
 local function caps()
   if caps_cache == "on" then
@@ -33,6 +35,6 @@ local caps_query_timer = gears.timer({
   end,
 })
 
-caps_query()
-
-return { caps = caps }
+awesome.connect_signal("signal::caps::update", function()
+  caps_query()
+end)

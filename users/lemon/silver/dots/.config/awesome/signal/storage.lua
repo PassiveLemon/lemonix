@@ -2,7 +2,7 @@ local awful = require("awful")
 local gears = require("gears")
 
 local function emit(nvme0, nvme1, sda, sdb)
-  awesome.emit_signal('signal::storage', nvme0, nvme1, sda, sdb)
+  awesome.emit_signal("signal::storage::data", nvme0, nvme1, sda, sdb)
 end
 
 local function storage()
@@ -30,5 +30,3 @@ local storage_timer = gears.timer({
     storage()
   end,
 })
-
-return { storage = storage }

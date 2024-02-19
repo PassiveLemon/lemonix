@@ -11,7 +11,7 @@ local function emit(uptime, headset)
   if headset == nil then
     headset = headset_cache
   end
-  awesome.emit_signal('signal::other', uptime, headset)
+  awesome.emit_signal("signal::other::data", uptime, headset)
 end
 
 local function uptime()
@@ -48,8 +48,3 @@ local headset_timer = gears.timer({
     headset()
   end,
 })
-
-return { 
-  uptime = uptime,
-  headset = headset,
-}

@@ -51,7 +51,7 @@ local restart_icon = h.button({
 })
 
 local powermenu_widget = wibox.widget({
-layout = wibox.layout.margin,
+  widget = wibox.container.margin,
   margins = {
     top = b.margins,
     right = b.margins,
@@ -139,7 +139,7 @@ local cancel = h.button({
 })
 
 local poweroff_widget = wibox.widget({
-  layout = wibox.layout.margin,
+  widget = wibox.container.margin,
   margins = {
     top = b.margins,
     right = b.margins,
@@ -161,7 +161,7 @@ local poweroff_widget = wibox.widget({
 })
 
 local restart_widget = wibox.widget({
-  layout = wibox.layout.margin,
+  widget = wibox.container.margin,
   margins = {
     top = b.margins,
     right = b.margins,
@@ -188,6 +188,7 @@ local main = awful.popup({
   border_color = b.border_color_active,
   ontop = true,
   visible = false,
+  type = "dock",
   widget = powermenu_widget,
 })
 
@@ -197,10 +198,8 @@ local function confirmed(command)
 end
 
 lock_icon:connect_signal("button::press", function()
-  confirmed("\
-  playerctl pause; \
-  i3lock-fancy-rapid 50 10 -n; \
-  ")
+  main.visible = false
+  awesome.emit_signal('ui::lock::toggle')
 end)
 
 poweroff_icon:connect_signal("button::press", function()
@@ -243,14 +242,12 @@ restart:connect_signal("mouse::leave", function()
   restart.toggle = false
 end)
 
-local function signal()
+awesome.connect_signal("ui::power::toggle", function()
   main.widget = powermenu_widget
-  main.visible = not main.visible
   main.screen = awful.screen.focused()
+  main.visible = not main.visible
   h.unfocus()
-end
+end)
 
 click_to_hide.popup(main, nil, true)
-
-return { signal = signal }
 

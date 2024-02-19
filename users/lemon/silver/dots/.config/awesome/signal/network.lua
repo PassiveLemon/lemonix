@@ -2,7 +2,7 @@ local awful = require("awful")
 local gears = require("gears")
 
 local function emit(total)
-  awesome.emit_signal('signal::network', total)
+  awesome.emit_signal("signal::network::data", total)
 end
 
 local function total()
@@ -21,5 +21,3 @@ local total_timer = gears.timer({
     total()
   end,
 })
-
-return { total = total }

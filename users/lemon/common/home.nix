@@ -6,16 +6,15 @@
 
   home = {
     packages = with pkgs; [
-      tym i3lock-fancy-rapid gparted
-      pcmanfm xarchiver ffmpegthumbnailer filezilla
+      tym hilbish eza bat thefuck trashy fd ripgrep python3 imagemagick
       firefox master.webcord-vencord authy freetube
+      pcmanfm xarchiver ffmpegthumbnailer filezilla gparted
       lite-xl vscode github-desktop imhex
       obsidian onlyoffice-bin drawio
       pavucontrol old.easyeffects mpv helvum tauon feishin audacity
       loupe feh gimp libsForQt5.kdenlive scrot
-      hilbish eza bat thefuck trashy fd ripgrep python3
       pamixer playerctl appimage-run ventoy-bin
-      qbittorrent libsForQt5.kruler old.mullvad-vpn localsend
+      libsForQt5.kruler old.mullvad-vpn localsend
     ];
     username = "lemon";
     homeDirectory = "/home/lemon";

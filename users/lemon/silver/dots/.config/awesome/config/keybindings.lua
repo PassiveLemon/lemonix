@@ -4,13 +4,6 @@ local b = require("beautiful")
 local wibox = require("wibox")
 local hotkeys_popup = require("awful.hotkeys_popup")
 
-local media = require("ui.media")
-local power = require("ui.power")
-local resource = require("ui.resource")
-local crosshair = require("ui.crosshair")
-local caps = require("signal.caps")
-local volume = require("signal.volume")
-
 local bling = require("libraries.bling")
 
 --
@@ -84,45 +77,45 @@ awful.keyboard.append_global_keybindings({
   awful.key({ super }, "space", function() app_launcher:toggle() end,
   { description = "|| run app launcher", group = "launcher" }),
 
-  awful.key({ super }, "c", function() media.signal() end,
+  awful.key({ super }, "c", function() awesome.emit_signal("ui::media::toggle") end,
   { description = "|| run media player", group = "launcher" }),
 
-  awful.key({ super }, "v", function() power.signal() end,
+  awful.key({ super }, "v", function() awesome.emit_signal("ui::power::toggle") end,
   { description = "|| run powermenu", group = "launcher" }),
 
-  awful.key({ super }, "x", function() resource.signal() end,
+  awful.key({ super }, "x", function() awesome.emit_signal("ui::resource::toggle") end,
   { description = "|| run resource monitor", group = "launcher" }),
 
   -- Control
   awful.key({ }, "XF86AudioRaiseVolume", function()
     awful.spawn.easy_async("pamixer -i 1", function()
-      volume.volume()
+      awesome.emit_signal("signal::volume::update")
     end)
   end,
   { description = "|| increase volume", group = "control" }),
 
   awful.key({ }, "XF86AudioLowerVolume", function()
     awful.spawn.easy_async("pamixer -d 1", function()
-      volume.volume()
+      awesome.emit_signal("signal::volume::update")
     end)
   end,
   { description = "|| decrease volume", group = "control" }),
 
   awful.key({ }, "XF86AudioMute", function()
     awful.spawn.easy_async("pamixer -t", function()
-      volume.volume()
+      awesome.emit_signal("signal::volume::update")
     end)
   end,
   { description = "|| toggle mute", group = "control" }),
 
-  awful.key({ }, "XF86AudioNext", function() media.nexter() end,
+  awful.key({ }, "XF86AudioNext", function() awesome.emit_signal("ui::media::nexter") end, --@@FIX
   { description = "|| next media", group = "control" }),
 
-  awful.key({ }, "XF86AudioPrev", function() media.previouser() end,
-  { description = "|| previous media", group = "control" }),
-
-  awful.key({ }, "XF86AudioPlay", function() media.toggler() end,
+  awful.key({ }, "XF86AudioPlay", function() awesome.emit_signal("ui::media::toggler") end,
   { description = "|| toggle play", group = "control" }),
+
+  awful.key({ }, "XF86AudioPrev", function() awesome.emit_signal("ui::media::previouser") end,
+  { description = "|| previous media", group = "control" }),
 
   -- Utility
   awful.key({ super }, "s", hotkeys_popup.show_help,
@@ -137,7 +130,7 @@ awful.keyboard.append_global_keybindings({
     description = "|| enable crosshair",
     group       = "utility",
     on_press    = function(index)
-      crosshair.signal(index)
+      awesome.emit_signal("ui::crosshair::toggle", index)
     end,
   }),
 
@@ -186,9 +179,7 @@ awful.keyboard.append_global_keybindings({
   }),
 
   -- Misc
-  awful.key({ }, "Caps_Lock", function()
-    caps.caps()
-  end,
+  awful.key({ }, "Caps_Lock", function() awesome.emit_signal("signal::caps::update") end,
   { description = "|| caps lock", group = "misc" }),
 
   -- Client

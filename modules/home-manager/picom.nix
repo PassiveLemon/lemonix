@@ -59,9 +59,11 @@
         tooltip = { fade = false; };
         dock = {
           shadow = true;
+          animation = "none";
           clip-shadow-above = true;
         };
         desktop = {
+          shadow = false;
           animation = "none";
         };
         dnd = { shadow = true; };

@@ -5,8 +5,6 @@ local wibox = require("wibox")
 
 local h = require("helpers")
 local click_to_hide = require("modules.click_to_hide")
-local playerctl_signal = require("signal.playerctl")
-
 
 --
 -- Media player
@@ -400,7 +398,7 @@ end
 
 local function previouser()
   awful.spawn.easy_async(playerctl .. " previous", function()
-    playerctl_signal.metadata()
+    awesome.emit_signal("signal::playerctl::update")
   end)
 end
 
@@ -414,13 +412,13 @@ local function toggler()
       awful.spawn(playerctl .. " play")
       toggle:get_children_by_id("textbox")[1].text = "󰏤"
     end
-    playerctl_signal.metadata()
+    awesome.emit_signal("signal::playerctl::update")
   end)
 end
 
 local function nexter()
   awful.spawn.easy_async(playerctl .. " next", function()
-    playerctl_signal.metadata()
+    awesome.emit_signal("signal::playerctl::update")
   end)
 end
 
@@ -447,8 +445,9 @@ local main = awful.popup({
   ontop = true,
   visible = false,
   maximum_width = 548,
+  type = "dock",
   widget = {
-    layout = wibox.layout.margin,
+    widget = wibox.container.margin,
     margins = {
       top = b.margins,
       right = b.margins,
@@ -526,7 +525,7 @@ volume:get_children_by_id("slider")[1]:connect_signal("property::value", functio
 	awful.spawn(playerctl .. " volume " .. h.round((volume_state / 100), 3))
 end)
 
-awesome.connect_signal("signal::playerctl", function(art_url, title, artist, album, shuffle, status, loop, position, length, volume)
+awesome.connect_signal("signal::playerctl::metadata", function(art_url, title, artist, album, shuffle, status, loop, position, length, volume)
   position_set = false
   slider_update = true
   art_image_updater(art_url)
@@ -538,28 +537,22 @@ awesome.connect_signal("signal::playerctl", function(art_url, title, artist, alb
   volume_updater(volume)
 end)
 
-local function signal()
-  art_image_updater()
-  metadata_updater()
-  shuffle_updater()
-  toggle_updater()
-  loop_updater()
-  position_updater()
-  volume_updater()
-  main.visible = not main.visible
+awesome.connect_signal("ui::media::toggle", function()
+  awesome.emit_signal("signal::playerctl::update")
   main.screen = awful.screen.focused()
+  main.visible = not main.visible
   h.unfocus()
-end
+end)
+
+awesome.connect_signal("ui::media::nexter", function()
+  nexter()
+end)
+awesome.connect_signal("ui::media::toggler", function()
+  toggler()
+end)
+awesome.connect_signal("ui::media::previouser", function()
+  previouser()
+end)
 
 click_to_hide.popup(main, nil, true)
-
-return {
-  signal = signal,
-  metadata_updater = metadata_updater,
-  loop_updater = loop_updater,
-  position_updater = position_updater,
-  nexter = nexter,
-  toggler = toggler,
-  previouser = previouser,
-}
 

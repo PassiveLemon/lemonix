@@ -23,7 +23,7 @@ local cpu_use = h.text({
 local cpu_temp = h.text({
   halign = "left",
 })
-awesome.connect_signal("signal::cpu", function(use, temp)
+awesome.connect_signal("signal::cpu::data", function(use, temp)
 	cpu_use:get_children_by_id("textbox")[1].text = "Usage: " .. use .. "%"
   cpu_temp:get_children_by_id("textbox")[1].text = temp .. "C"
 end)
@@ -40,7 +40,7 @@ local gpu_temp = h.text({
 local gpu_mem = h.text({
   halign = "left",
 })
-awesome.connect_signal("signal::gpu", function(use, temp, mem)
+awesome.connect_signal("signal::gpu::data", function(use, temp, mem)
 	gpu_use:get_children_by_id("textbox")[1].text = "Usage: " .. use .. "%"
   gpu_temp:get_children_by_id("textbox")[1].text = temp .. "C"
   gpu_mem:get_children_by_id("textbox")[1].text = "Memory: " .. mem
@@ -61,7 +61,7 @@ local cache_use = h.text({
 local cache_use_perc = h.text({
   halign = "left",
 })
-awesome.connect_signal("signal::memory", function(use, use_perc, cache, cache_perc)
+awesome.connect_signal("signal::memory::data", function(use, use_perc, cache, cache_perc)
 	mem_use:get_children_by_id("textbox")[1].text = "Used: " .. use .. " GB"
   mem_use_perc:get_children_by_id("textbox")[1].text = use_perc .. "%"
   cache_use:get_children_by_id("textbox")[1].text = "Cache: " .. cache .. " GB"
@@ -83,7 +83,7 @@ local strg_free_sda = h.text({
 local strg_free_sdb = h.text({
   halign = "left",
 })
-awesome.connect_signal("signal::storage", function(nvme0, nvme1, sda, sdb)
+awesome.connect_signal("signal::storage::data", function(nvme0, nvme1, sda, sdb)
 	strg_free_nvme0:get_children_by_id("textbox")[1].text = "NVME0: " .. nvme0
   strg_free_nvme1:get_children_by_id("textbox")[1].text = "NVME1: " .. nvme1
   strg_free_sda:get_children_by_id("textbox")[1].text = "SDA: " .. sda
@@ -96,7 +96,7 @@ local network_text = h.text({
 local network_total = h.text({
   halign = "left",
 })
-awesome.connect_signal("signal::network", function(total)
+awesome.connect_signal("signal::network::data", function(total)
 	network_total:get_children_by_id("textbox")[1].text = "Dn/Up: " .. total
 end)
 
@@ -112,7 +112,7 @@ local devices_text = h.text({
 local headset_bat = h.text({
   halign = "left",
 })
-awesome.connect_signal("signal::other", function(uptime, headset)
+awesome.connect_signal("signal::other::data", function(uptime, headset)
 	uptime_time:get_children_by_id("textbox")[1].text = "" .. uptime
   headset_bat:get_children_by_id("textbox")[1].text = "HS BAT: " .. headset .. "%"
 end)
@@ -123,12 +123,13 @@ local main = awful.popup({
   border_color = b.border_color_active,
   ontop = true,
   visible = false,
+  type = "dock",
   widget = {
     layout = wibox.layout.align.horizontal,
     {
-      forced_width = 210,
-      margins = { top = 4, right = 2, bottom = 3, left = 6 },
       widget = wibox.container.margin,
+      margins = { top = 4, right = 2, bottom = 3, left = 6 },
+      forced_width = 210,
       {
         layout = wibox.layout.fixed.vertical,
         cpu_text,
@@ -150,9 +151,9 @@ local main = awful.popup({
       },
     },
     {
-      forced_width = 200,
-      margins = { top = 4, right = 2, bottom = 3, left = 2 },
       widget = wibox.container.margin,
+      margins = { top = 4, right = 2, bottom = 3, left = 2 },
+      forced_width = 200,
       {
         layout = wibox.layout.fixed.vertical,
         mem_text,
@@ -177,9 +178,9 @@ local main = awful.popup({
       },
     },
     {
-      forced_width = 155,
-      margins = { top = 4, right = 6, bottom = 3, left = 2 },
       widget = wibox.container.margin,
+      margins = { top = 4, right = 6, bottom = 3, left = 2 },
+      forced_width = 155,
       {
         layout = wibox.layout.fixed.vertical,
         network_text,
@@ -195,11 +196,9 @@ local main = awful.popup({
   },
 })
 
-local function signal()
-  main.visible = not main.visible
+awesome.connect_signal("ui::resource::toggle", function()
   main.screen = awful.screen.focused()
-end
+  main.visible = not main.visible
+end)
 
 click_to_hide.popup(main, nil, true)
-
-return { signal = signal }

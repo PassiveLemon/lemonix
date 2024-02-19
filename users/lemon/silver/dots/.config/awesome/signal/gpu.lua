@@ -2,7 +2,7 @@ local awful = require("awful")
 local gears = require("gears")
 
 local function emit(use, temp, mem)
-  awesome.emit_signal('signal::gpu', use, temp, mem)
+  awesome.emit_signal("signal::gpu::data", use, temp, mem)
 end
 
 local function gpu()
@@ -27,5 +27,3 @@ local gpu_timer = gears.timer({
     gpu()
   end,
 })
-
-return { gpu = gpu }
