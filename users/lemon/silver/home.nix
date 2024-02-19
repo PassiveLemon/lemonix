@@ -13,8 +13,8 @@
       easytag #soundux #onthespot
 
       # Testing
-      rsync syncthing
-      virt-manager pciutils
+      #rsync syncthing
+      #virt-manager pciutils
 
       # Development
       act nvfetcher nixpkgs-review jq dotnet-sdk_8
