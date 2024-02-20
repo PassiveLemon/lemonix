@@ -23,9 +23,7 @@ local function metadata()
     emit(art_url, title, artist, album, shuffle, status, loop, position, length, volume)
   end)
 end
-
 metadata()
-
 local playerctl_timer = gears.timer {
   timeout = 1,
   autostart = true,
@@ -36,5 +34,6 @@ local playerctl_timer = gears.timer {
 
 awesome.connect_signal("signal::playerctl::update", function()
   metadata()
+  playerctl_timer:again()
 end)
 

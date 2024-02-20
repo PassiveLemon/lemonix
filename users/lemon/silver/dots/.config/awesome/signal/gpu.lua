@@ -17,9 +17,7 @@ local function gpu()
     end)  
   end)
 end
-
 gpu()
-
 local gpu_timer = gears.timer({
   timeout = 1,
   autostart = true,

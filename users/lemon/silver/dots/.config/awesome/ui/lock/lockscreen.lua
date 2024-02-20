@@ -174,7 +174,7 @@ awful.screen.connect_for_each_screen(function(s)
   })
   awful.placement.centered(promptbox)
 
-  local visible = function(v)
+  local function visible(v)
     background.visible = v
     promptbox.visible = v
   end

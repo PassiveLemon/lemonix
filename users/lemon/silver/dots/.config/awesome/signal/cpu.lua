@@ -14,9 +14,7 @@ local function cpu()
     end)
   end)
 end
-
 cpu()
-
 local cpu_timer = gears.timer({
   timeout = 1,
   autostart = true,

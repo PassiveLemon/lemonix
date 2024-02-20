@@ -20,9 +20,7 @@ local function storage()
     end)
   end)
 end
-
 storage()
-
 local storage_timer = gears.timer({
   timeout = 60,
   autostart = true,

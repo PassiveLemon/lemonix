@@ -23,6 +23,7 @@ local lock_icon = h.button({
   text = "",
   font = b.sysfont(24),
 })
+
 local poweroff_icon = h.button({
   margins = {
     top = b.margins,
@@ -36,6 +37,7 @@ local poweroff_icon = h.button({
   text = "󰐥",
   font = b.sysfont(27),
 })
+
 local restart_icon = h.button({
   margins = {
     top = b.margins,

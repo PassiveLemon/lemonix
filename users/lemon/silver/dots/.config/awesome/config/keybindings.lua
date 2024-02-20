@@ -87,12 +87,12 @@ awful.keyboard.append_global_keybindings({
   { description = "|| run resource monitor", group = "launcher" }),
 
   -- Control
-  awful.key({ }, "XF86AudioRaiseVolume", function()
-    awful.spawn.easy_async("pamixer -i 1", function()
+  awful.key({ }, "XF86AudioMute", function()
+    awful.spawn.easy_async("pamixer -t", function()
       awesome.emit_signal("signal::volume::update")
     end)
   end,
-  { description = "|| increase volume", group = "control" }),
+  { description = "|| toggle mute", group = "control" }),
 
   awful.key({ }, "XF86AudioLowerVolume", function()
     awful.spawn.easy_async("pamixer -d 1", function()
@@ -101,21 +101,21 @@ awful.keyboard.append_global_keybindings({
   end,
   { description = "|| decrease volume", group = "control" }),
 
-  awful.key({ }, "XF86AudioMute", function()
-    awful.spawn.easy_async("pamixer -t", function()
+  awful.key({ }, "XF86AudioRaiseVolume", function()
+    awful.spawn.easy_async("pamixer -i 1", function()
       awesome.emit_signal("signal::volume::update")
     end)
   end,
-  { description = "|| toggle mute", group = "control" }),
+  { description = "|| increase volume", group = "control" }),
 
-  awful.key({ }, "XF86AudioNext", function() awesome.emit_signal("ui::media::nexter") end, --@@FIX
-  { description = "|| next media", group = "control" }),
+  awful.key({ }, "XF86AudioPrev", function() awesome.emit_signal("ui::media::previouser") end,
+  { description = "|| previous media", group = "control" }),
 
   awful.key({ }, "XF86AudioPlay", function() awesome.emit_signal("ui::media::toggler") end,
   { description = "|| toggle play", group = "control" }),
 
-  awful.key({ }, "XF86AudioPrev", function() awesome.emit_signal("ui::media::previouser") end,
-  { description = "|| previous media", group = "control" }),
+  awful.key({ }, "XF86AudioNext", function() awesome.emit_signal("ui::media::nexter") end,
+  { description = "|| next media", group = "control" }),
 
   -- Utility
   awful.key({ super }, "s", hotkeys_popup.show_help,

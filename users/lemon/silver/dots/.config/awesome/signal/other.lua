@@ -21,18 +21,7 @@ local function uptime()
     emit(uptime, nil)
   end)
 end
-
-local function headset()
-  awful.spawn.easy_async("headsetcontrol -c -b", function(headset)
-    local headset = headset:gsub("\n", "")
-    headset_cache = headset
-    emit(nil, headset)
-  end)
-end
-
 uptime()
-headset()
-
 local uptime_timer = gears.timer({
   timeout = 15,
   autostart = true,
@@ -41,6 +30,14 @@ local uptime_timer = gears.timer({
   end,
 })
 
+local function headset()
+  awful.spawn.easy_async("headsetcontrol -c -b", function(headset)
+    local headset = headset:gsub("\n", "")
+    headset_cache = headset
+    emit(nil, headset)
+  end)
+end
+headset()
 local headset_timer = gears.timer({
   timeout = 5,
   autostart = true,

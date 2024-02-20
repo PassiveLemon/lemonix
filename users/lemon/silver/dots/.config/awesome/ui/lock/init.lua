@@ -10,16 +10,15 @@ local wibox = require("wibox")
 local h = require("helpers")
 local pam = require("liblua_pam") -- Compile and link from https://github.com/RMTT/lua-pam/
 
-local function auth(password)
-  return pam.auth_current_user(password)
-end
-
 local function visible(v)
   awesome.emit_signal("ui::lock::screen", v)
 end
 
-local input = ""
+local function auth(password)
+  return pam.auth_current_user(password)
+end
 local function grab()
+  local input = ""
   local grabber = awful.keygrabber {
     auto_start = true,
     stop_event = "release",

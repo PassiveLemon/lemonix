@@ -18,6 +18,7 @@ local art_image = h.text({
     left = b.margins,
   },
 })
+
 local title = h.text({
   margins = {
     top = b.margins,
@@ -29,6 +30,7 @@ local title = h.text({
   y = 17,
   halign = "left",
 })
+
 local artist = h.text({
   margins = {
     right = b.margins,
@@ -39,6 +41,7 @@ local artist = h.text({
   y = 17,
   halign = "left",
 })
+
 local album = h.text({
   margins = {
     right = b.margins,
@@ -49,6 +52,7 @@ local album = h.text({
   y = 17,
   halign = "left",
 })
+
 local shuffle = h.button({
   margins = {
     top = b.margins,
@@ -62,6 +66,7 @@ local shuffle = h.button({
   text = "󰒞",
   font = b.sysfont(24),
 })
+
 local prev = h.button({
   margins = {
     top = b.margins,
@@ -75,6 +80,7 @@ local prev = h.button({
   text = "󰒮",
   font = b.sysfont(24),
 })
+
 local toggle = h.button({
   margins = {
     top = b.margins,
@@ -88,6 +94,7 @@ local toggle = h.button({
   text = "󰐊",
   font = b.sysfont(23),
 })
+
 local next = h.button({
   margins = {
     top = b.margins,
@@ -101,6 +108,7 @@ local next = h.button({
   text = "󰒭",
   font = b.sysfont(24)
 })
+
 local loop = h.button({
   margins = {
     top = b.margins,
@@ -134,6 +142,7 @@ local position = h.slider({
   bar_height = 6,
   bar_shape = gears.shape.rounded_rect,
 })
+
 local volume_icon = h.text({
   margins = {
     top = 3,
@@ -175,7 +184,6 @@ local function art_image_processor(art_dir, art_url_trim)
   artist:get_children_by_id("background")[1].forced_width = title:get_children_by_id("textbox")[1].width
   album:get_children_by_id("background")[1].forced_width = title:get_children_by_id("textbox")[1].width
 end
-
 local function art_image_locator(art_dir, client_cache_dir, art_url_trim, art_url)
   if client_cache_dir == nil then
     h.file_test(art_dir, art_url_trim, function(file_test)
@@ -194,7 +202,6 @@ local function art_image_locator(art_dir, client_cache_dir, art_url_trim, art_ur
     end)
   end
 end
-
 local function art_image_updater(art_url)
   local function _updater(art_url)
     if art_url == "" then
@@ -332,7 +339,6 @@ end
 local position_set = true
 local slider_update = false
 local slider_self_update = true
-
 local function position_updater(position_state, current, length)
   local function _updater(position_state, current, length)
     if (current == "") or (length == "") then

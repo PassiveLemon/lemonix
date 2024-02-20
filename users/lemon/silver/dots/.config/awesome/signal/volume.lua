@@ -14,9 +14,7 @@ local function volume()
     emit(value)
   end)
 end
-
 volume()
-
 local volume_timer = gears.timer({
   timeout = 1,
   autostart = true,
@@ -27,4 +25,5 @@ local volume_timer = gears.timer({
 
 awesome.connect_signal("signal::volume::update", function()
   volume()
+  volume_timer:again()
 end)

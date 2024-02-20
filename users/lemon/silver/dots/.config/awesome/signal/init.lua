@@ -1,3 +1,4 @@
+require("signal.caps")
 require("signal.cpu")
 require("signal.gpu")
 require("signal.memory")

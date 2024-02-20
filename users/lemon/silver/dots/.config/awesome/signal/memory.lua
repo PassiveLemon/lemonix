@@ -20,9 +20,7 @@ local function memory()
     end)
   end)
 end
-
 memory()
-
 local memory_timer = gears.timer({
   timeout = 3,
   autostart = true,

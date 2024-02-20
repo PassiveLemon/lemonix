@@ -11,9 +11,7 @@ local function total()
     emit(total)
   end)
 end
-
 total()
-
 local total_timer = gears.timer({
   timeout = 1,
   autostart = true,

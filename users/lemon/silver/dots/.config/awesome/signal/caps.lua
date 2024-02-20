@@ -14,9 +14,16 @@ local function caps_query()
     emit(caps)
   end)
 end
-
 caps_query()
+local caps_query_timer = gears.timer({
+  timeout = 0.5,
+  autostart = true,
+  callback = function()
+    caps_query()
+  end,
+})
 
+-- Nifty function to just make the caps signals much more responsive due to delays with detecting caps lock
 local function caps()
   if caps_cache == "on" then
     caps_cache = "off"
@@ -27,14 +34,7 @@ local function caps()
   end
 end
 
-local caps_query_timer = gears.timer({
-  timeout = 0.5,
-  autostart = true,
-  callback = function()
-    caps_query()
-  end,
-})
-
 awesome.connect_signal("signal::caps::update", function()
-  caps_query()
+  caps()
+  caps_query_timer:again()
 end)
