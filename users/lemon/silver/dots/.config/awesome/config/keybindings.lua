@@ -108,13 +108,13 @@ awful.keyboard.append_global_keybindings({
   end,
   { description = "|| increase volume", group = "control" }),
 
-  awful.key({ }, "XF86AudioPrev", function() awesome.emit_signal("ui::media::previouser") end,
+  awful.key({ }, "XF86AudioPrev", function() awesome.emit_signal("signal::playerctl::previous") end,
   { description = "|| previous media", group = "control" }),
 
-  awful.key({ }, "XF86AudioPlay", function() awesome.emit_signal("ui::media::toggler") end,
+  awful.key({ }, "XF86AudioPlay", function() awesome.emit_signal("signal::playerctl::toggle") end,
   { description = "|| toggle play", group = "control" }),
 
-  awful.key({ }, "XF86AudioNext", function() awesome.emit_signal("ui::media::nexter") end,
+  awful.key({ }, "XF86AudioNext", function() awesome.emit_signal("signal::playerctl::next") end,
   { description = "|| next media", group = "control" }),
 
   -- Utility

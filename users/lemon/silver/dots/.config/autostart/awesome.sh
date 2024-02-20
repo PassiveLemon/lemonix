@@ -8,7 +8,7 @@ headsetcontrol -l 0
 headsetcontrol -s 110
 
 # Other
-mkdir -p $HOME/.cache/lemonix/mediamenu/
+mkdir -p $HOME/.cache/passivelemon/lemonix/media/
 
 # Display
 sleep 0.5
