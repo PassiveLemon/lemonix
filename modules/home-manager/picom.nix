@@ -10,10 +10,11 @@
       shadow-offset-x = -7;
       shadow-offset-y = -7;
       shadow-exlude = [
-        "window_type = 'desktop'"
-        "window_type = 'dock'"
-        "class_g = 'firefox' && window_type = 'popup_menu'"
-        "class_g = 'firefox' && argb"
+        "class_i = 'Firefox' && window_type = 'utility'"
+        "class_i = 'Firefox' && window_type = 'popup_menu'"
+        "class_g ~= 'xdg-desktop-portal' && _NET_FRAME_EXTENTS@:c && window_type = 'dialog'"
+        "class_g ~= 'xdg-desktop-portal' && window_type = 'menu'"
+        "_NET_FRAME_EXTENTS@:c && WM_WINDOW_ROLE@:s = 'Popup'"
       ];
 
       # Fading
@@ -29,20 +30,11 @@
       #blur-strength = 3;
       #blur-kern = "3x3box";
       blur-background-exclude = [
-        "class_g != 'kitty' &&
-        window_type != 'tooltip' &&
-        window_type != 'menu' &&
-        window_type != 'popup_menu' &&
-        window_type != 'dropdown_menu' &&
-        window_type != 'splash' &&
-        window_type != 'combo'"
-        "window_type = 'desktop'"
-        "window_type = 'dock'"
-        "class_g = 'firefox' && window_type = 'popup_menu'"
-        "class_g = 'firefox' && argb"
-        "_NET_WM_WINDOW_TYPE:a = '_NET_WM_WINDOW_TYPE_NOTIFICATION'"
-        "_NET_WM_STATE@:32a *= '_NET_WM_STATE_HIDDEN'"
-        "_GTK_FRAME_EXTENTS@:c"
+        "class_i = 'Firefox' && window_type = 'utility'"
+        "class_i = 'Firefox' && window_type = 'popup_menu'"
+        "class_g ~= 'xdg-desktop-portal' && _NET_FRAME_EXTENTS@:c && window_type = 'dialog'"
+        "class_g ~= 'xdg-desktop-portal' && window_type = 'menu'"
+        "_NET_FRAME_EXTENTS@:c && WM_WINDOW_ROLE@:s = 'Popup'"
       ];
 
       # Other
@@ -58,17 +50,16 @@
       wintypes = {
         tooltip = { fade = false; };
         dock = {
-          shadow = true;
           animation = "none";
-          clip-shadow-above = true;
         };
         desktop = {
           shadow = false;
           animation = "none";
         };
         dnd = { shadow = true; };
-        popup_menu = { opacity = 1; };
-        dropdown_menu = { opacity = 1; };
+        popup_menu = { 
+          shadow = false;
+        };
         utility = { shadow = false; };
       };
       
