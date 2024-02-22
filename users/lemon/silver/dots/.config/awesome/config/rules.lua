@@ -3,7 +3,7 @@ local gears = require("gears")
 local b = require("beautiful")
 local ruled = require("ruled")
 
-local bling = require("libraries.bling")
+local h = require("helpers")
 
 --
 -- Rules
@@ -61,8 +61,12 @@ end)
 -- Other
 --
 
--- Bling
-bling.module.window_swallowing.start()
+local autostart = os.getenv("HOME") .. "/.config/autostart/"
+h.file_test(autostart, "awesome.sh", function(exists)
+  if exists then
+    awful.spawn.easy_async_with_shell("sh " .. autostart .. "awesome.sh")
+  end
+end)
 
 -- Layout
 tag.connect_signal("request::default_layouts", function()
