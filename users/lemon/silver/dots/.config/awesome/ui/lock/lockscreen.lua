@@ -15,14 +15,14 @@ awful.screen.connect_for_each_screen(function(s)
     horizontal_fit_policy = "fit",
     vertical_fit_policy = "fit",
   }
-  local function makeImage()
+  local function make_image()
     local cmd = "convert " .. b.wallpaper .. " -filter Gaussian -blur 0x6 ~/.cache/awesome/lock.jpg"
     awful.spawn.easy_async_with_shell(cmd, function()
       local blurwall = gears.filesystem.get_cache_dir() .. "lock.jpg"
       wallpaper.image = blurwall
     end)
   end
-  makeImage()
+  make_image()
 
   local overlay = wibox.widget {
     widget = wibox.container.background,
@@ -74,7 +74,7 @@ awful.screen.connect_for_each_screen(function(s)
     circle:get_children_by_id("arc")[1].colors = { not f and b.redd or b.fg }
     circle:get_children_by_id("arc")[1].value = not f and 100 or 0
   end
-  local function getRandom()
+  local function get_random()
     return math.random(0, 628) / 100
   end
   local reset_timer = gears.timer({
@@ -88,11 +88,11 @@ awful.screen.connect_for_each_screen(function(s)
     if #key == 1 then
       circle:get_children_by_id("arc")[1].colors = { b.greend }
       circle:get_children_by_id("arc")[1].value = 20
-      circle:get_children_by_id("arc")[1].start_angle = getRandom()
+      circle:get_children_by_id("arc")[1].start_angle = get_random()
     elseif key == "BackSpace" then
       circle:get_children_by_id("arc")[1].colors = { b.redd }
       circle:get_children_by_id("arc")[1].value = 20
-      circle:get_children_by_id("arc")[1].start_angle = getRandom()
+      circle:get_children_by_id("arc")[1].start_angle = get_random()
       if #input == 0 then
         circle:get_children_by_id("arc")[1].colors = { b.magentad }
         circle:get_children_by_id("arc")[1].value = 100
@@ -125,7 +125,7 @@ awful.screen.connect_for_each_screen(function(s)
     end
   end)
 
-  local promptbox = wibox({
+  local main = wibox({
     screen = s,
     width = 900,
     height = 800,
@@ -172,11 +172,11 @@ awful.screen.connect_for_each_screen(function(s)
       },
     },
   })
-  awful.placement.centered(promptbox)
+  awful.placement.centered(main)
 
   local function visible(v)
     background.visible = v
-    promptbox.visible = v
+    main.visible = v
   end
 
   awesome.connect_signal("ui::lock::screen", function(lockscreen)
