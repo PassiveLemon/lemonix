@@ -50,6 +50,7 @@
       wintypes = {
         tooltip = { fade = false; };
         dock = {
+          clip-shadow-above = true;
           animation = "none";
         };
         desktop = {
