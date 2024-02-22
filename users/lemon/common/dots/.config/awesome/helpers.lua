@@ -212,7 +212,11 @@ end
 function helpers.file_test(path, file, callback)
   awful.spawn.easy_async_with_shell("test -f " .. path .. file .. " && echo true || echo false", function(stdout)
     local stdout = stdout:gsub("\n", "")
-    callback(stdout)
+    if stdout == "true" then
+      callback(true)
+    else
+      callback(false)
+    end
   end)
 end
 
