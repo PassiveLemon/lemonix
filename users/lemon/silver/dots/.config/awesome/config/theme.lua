@@ -96,10 +96,9 @@ theme.margins = 4
 
 theme.layout_dwindle = themes_path .. "default/layouts/dwindlew.png"
 
--- Bling
-theme.parent_filter_list = { "firefox", "Pcmanfm", "Code", "WebCord" }
-theme.child_filter_list = { "Tym" }
-theme.swallowing_filter = true
+-- Media
+theme.playerctl_clients = "tauon,spotify,Feishin -s,%any"
+theme.playerctl_art_cache_dir = os.getenv("HOME") .. "/.cache/passivelemon/lemonix/media/"
 
 --
 -- Wallpaper & icons
