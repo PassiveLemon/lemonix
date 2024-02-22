@@ -10,7 +10,7 @@ local click_to_hide = require("modules.click_to_hide")
 -- Powermenu
 --
 
-local lock_icon = h.button({
+local lock_button = h.button({
   margins = {
     top = b.margins,
     right = b.margins,
@@ -24,7 +24,7 @@ local lock_icon = h.button({
   font = b.sysfont(24),
 })
 
-local poweroff_icon = h.button({
+local poweroff_button = h.button({
   margins = {
     top = b.margins,
     right = b.margins,
@@ -38,7 +38,7 @@ local poweroff_icon = h.button({
   font = b.sysfont(27),
 })
 
-local restart_icon = h.button({
+local restart_button = h.button({
   margins = {
     top = b.margins,
     right = b.margins,
@@ -64,14 +64,14 @@ local powermenu_widget = wibox.widget({
     layout = wibox.layout.align.vertical,
     {
       layout = wibox.layout.fixed.horizontal,
-      lock_icon,
-      poweroff_icon,
-      restart_icon,
+      lock_button,
+      poweroff_button,
+      restart_button,
     },
   },
 })
 
-local prompt = h.text({
+local prompt_text = h.text({
   margins = {
     top = b.margins,
     right = b.margins,
@@ -83,7 +83,7 @@ local prompt = h.text({
   text = "Are you sure?",
 })
 
-local poweroff = h.button({
+local poweroff_confirm_button = h.button({
   margins = {
     top = b.margins,
     right = b.margins,
@@ -94,18 +94,18 @@ local poweroff = h.button({
   y = 56,
   shape = gears.shape.rounded_rect,
   text = "Poweroff",
-  toggle = false
+  toggle = false,
 })
-local poweroff_hover = gears.timer({
+local poweroff_confirm_hover = gears.timer({
   timeout = 1,
   single_shot = true,
   callback = function()
-    poweroff.toggle = true
-    poweroff:get_children_by_id("background")[1].fg = b.fg_focus
+    poweroff_confirm_button.toggle = true
+    poweroff_confirm_button:get_children_by_id("background")[1].fg = b.fg_focus
   end,
 })
 
-local restart = h.button({
+local restart_confirm_button = h.button({
   margins = {
     top = b.margins,
     right = b.margins,
@@ -116,18 +116,18 @@ local restart = h.button({
   y = 56,
   shape = gears.shape.rounded_rect,
   text = "Restart",
-  toggle = false
+  toggle = false,
 })
-local restart_hover = gears.timer({
+local restart_confirm_hover = gears.timer({
   timeout = 1,
   single_shot = true,
   callback = function()
-    restart.toggle = true
-    restart:get_children_by_id("background")[1].fg = b.fg_focus
+    restart_confirm_button.toggle = true
+    restart_confirm_button:get_children_by_id("background")[1].fg = b.fg_focus
   end,
 })
 
-local cancel = h.button({
+local cancel_button = h.button({
   margins = {
     top = b.margins,
     right = b.margins,
@@ -152,12 +152,12 @@ local poweroff_widget = wibox.widget({
     layout = wibox.layout.align.vertical,
     {
       layout = wibox.layout.fixed.horizontal,
-      prompt,
+      prompt_text,
     },
     {
       layout = wibox.layout.fixed.horizontal,
-      poweroff,
-      cancel,
+      poweroff_confirm_button,
+      cancel_button,
     },
   },
 })
@@ -174,12 +174,12 @@ local restart_widget = wibox.widget({
     layout = wibox.layout.align.vertical,
     {
       layout = wibox.layout.fixed.horizontal,
-      prompt,
+      prompt_text,
     },
     {
       layout = wibox.layout.fixed.horizontal,
-      restart,
-      cancel,
+      restart_confirm_button,
+      cancel_button,
     },
   },
 })
@@ -199,49 +199,50 @@ local function confirmed(command)
   awful.spawn.with_shell(command)
 end
 
-lock_icon:connect_signal("button::press", function()
+lock_button:connect_signal("button::press", function()
   main.visible = false
   awesome.emit_signal('ui::lock::toggle')
+  awesome.emit_signal("signal::playerctl::pause")
 end)
 
-poweroff_icon:connect_signal("button::press", function()
+poweroff_button:connect_signal("button::press", function()
   main.widget = poweroff_widget
 end)
 
-restart_icon:connect_signal("button::press", function()
+restart_button:connect_signal("button::press", function()
   main.widget = restart_widget
 end)
 
-cancel:connect_signal("button::press", function()
+cancel_button:connect_signal("button::press", function()
   main.widget = powermenu_widget
 end)
 
-poweroff:connect_signal("button::press", function()
-  if poweroff.toggle == true then
+poweroff_confirm_button:connect_signal("button::press", function()
+  if poweroff_confirm_button.toggle == true then
     confirmed("systemctl poweroff")
   end
 end)
 
-poweroff:connect_signal("mouse::enter", function()
-  poweroff_hover:again()
+poweroff_confirm_button:connect_signal("mouse::enter", function()
+  poweroff_confirm_hover:again()
 end)
-poweroff:connect_signal("mouse::leave", function()
-  poweroff_hover:stop()
-  poweroff.toggle = false
+poweroff_confirm_button:connect_signal("mouse::leave", function()
+  poweroff_confirm_hover:stop()
+  poweroff_confirm_button.toggle = false
 end)
 
-restart:connect_signal("button::press", function()
-  if restart.toggle == true then
+restart_confirm_button:connect_signal("button::press", function()
+  if restart_confirm_button.toggle == true then
     confirmed("systemctl reboot")
   end
 end)
 
-restart:connect_signal("mouse::enter", function()
-  restart_hover:again()
+restart_confirm_button:connect_signal("mouse::enter", function()
+  restart_confirm_hover:again()
 end)
-restart:connect_signal("mouse::leave", function()
-  restart_hover:stop()
-  restart.toggle = false
+restart_confirm_button:connect_signal("mouse::leave", function()
+  restart_confirm_hover:stop()
+  restart_confirm_button.toggle = false
 end)
 
 awesome.connect_signal("ui::power::toggle", function()
