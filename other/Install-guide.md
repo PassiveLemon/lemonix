@@ -20,17 +20,15 @@ OK -> Should see a connection success line </br>
 > `quit` </br>
 
 # Partitioning </br>
-#### Replace sda with your drive name in lsblk. Ex: Desktop drive name is nvme0n1. </br>
+#### Replace sda with your drive name in lsblk. Ex: nvme0n1. </br>
 
 `parted /dev/sda -- mklabel gpt` </br>
 `parted /dev/sda -- mkpart primary 1GB -8GB` </br>
-`parted /dev/sda -- mkpart primary linux-swap -8GB 100%` (If you want swap) </br>
 `parted /dev/sda -- mkpart ESP fat32 1MB 512MB` </br>
 `parted /dev/sda -- set 3 esp on` </br>
 
 # Formatting
 `mkfs.ext4 -L lemonnixos /dev/sda1` </br>
-`mkswap -L swap /dev/sda2` (If you want swap) </br>
 `mkfs.fat -F 32 -n boot /dev/sda3` </br>
 
 # Installing </br>
@@ -39,12 +37,11 @@ OK -> Should see a connection success line </br>
 `mkdir -p /mnt/boot` </br>
 `mount /dev/disk/by-label/boot /mnt/boot` </br>
 
-`swapon /dev/sda2` (If you want swap) </br>
 `nixos-generate-config --root /mnt` </br>
 
 ## Settings </br>
 `nano /mnt/etc/nixos/configuration.nix` </br>
-`networking.networkmanager.enable = true` (if wifi is needed) </br>
+`networking.networkmanager.enable = true` (If WiF is needed) </br>
 `nix-shell -p git` </br>
 
 Find a temporary directory. </br>
@@ -53,24 +50,15 @@ Find a temporary directory. </br>
 `sudo cp /etc/nixos/hardware-configuration.nix ./hosts/silver/` </br>
 `sudo nixos-install --flake .#silver` </br>
 
-# Set root </br>
-> password </br>
-
+User passwords should automatically be set. </br>
 `reboot` </br>
-
-login: root </br>
-> password </br>
-
-Make sure to set user password: </br>
-`passwd lemon` </br>
-> password </br>
 
 # Cloning </br>
 The home drive should now be mounted in place. Cd to `~/Documents/GitHub/lemonix/`. </br>
 Otherwise, head to `~/Documents/GitHub/` and `git clone --recurse-submodules https://github.com/PassiveLemon/lemonix && cd lemonix`
 `bash ./other/Installer.sh`. It must be run from the root of the repository. </br>
 
-Hardware config should be in `/etc/nixos-backup/`. Copy that to `<lemonix>/hosts/silver/hardware-configuration.nix`. </br>
+Hardware config should be in `/etc/nixos-backup/` if needed. </br>
 
 `nix run home-manager/release-23.05 -- init --switch` </br>
 `home-manager switch --flake .#lemon@silver` </br>

@@ -10,12 +10,5 @@ sudo mkdir -p /etc/nixos/
 # Link this Git to /etc/nixos
 sudo ln -s ${PWD}/ /etc/nixos
 
-#echo "|| Awesome modules ||"
-#mkdir -p ${HOME}/.config/awesome/libraries/
-#cd ${HOME}/.config/awesome/libraries/
-#if [ ! -d "./awesome-wm-widgets/" ]; then
-#  git clone --depth 1 https://github.com/streetturtle/awesome-wm-widgets.git
-#fi
-
 echo "|| Dots installed. Maybe. ||"
 
