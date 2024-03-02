@@ -4,6 +4,8 @@ local b = require("beautiful")
 local wibox = require("wibox")
 local hotkeys_popup = require("awful.hotkeys_popup")
 
+local h = require("helpers")
+
 local bling = require("libraries.bling")
 
 --
@@ -186,6 +188,9 @@ awful.keyboard.append_global_keybindings({
   awful.keyboard.append_client_keybindings({
     awful.key({ super }, "Escape", function(c) c:kill() end,
     { description = "|| close", group = "client" }),
+
+    awful.key({ super }, "Tab",  function() h.unfocus() end,
+    { description = "|| unfocus", group = "client" }),
 
     awful.key({ super }, "f",  awful.client.floating.toggle,
     { description = "|| toggle floating", group = "client" }),
