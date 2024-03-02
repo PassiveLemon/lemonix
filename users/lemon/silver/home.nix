@@ -21,6 +21,7 @@
 
       # Custom
       inputs.lemonake.packages.${pkgs.system}.animdl
+      inputs.lemonake.packages.${pkgs.system}.hd2pystratmacro
       inputs.lemonake.packages.${pkgs.system}.poepyautopot
       inputs.lemonake.packages.${pkgs.system}.tilp2
       inputs.lemonake.packages.${pkgs.system}.xclicker
