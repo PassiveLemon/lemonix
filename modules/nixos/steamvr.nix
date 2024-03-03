@@ -2,17 +2,26 @@
   imports = [
     inputs.lemonake.nixosModules.alvr
     ./monado.nix
+    ./wivrn.nix
   ];
 
   environment.systemPackages = with pkgs; [
-    monado autoadb BeatSaberModManager
+    sidequest autoadb BeatSaberModManager
+    unstable.opencomposite
   ];
   services = {
     udev.packages = [
       pkgs.android-udev-rules
     ];
-    monado = { # Local import until it gets ported to 23.11 stable
+    wivrn = {
       enable = true;
+      package = pkgs.unstable.callPackage ../../pkgs/wivrn { };
+      openFirewall = true;
+      highPriority = true;
+      defaultRuntime = true;
+    };
+    monado = { # Local import until it gets ported to 23.11 stable
+      enable = false;
       highPriority = true;
       defaultRuntime = true;
     };

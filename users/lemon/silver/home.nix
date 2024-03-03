@@ -26,9 +26,7 @@
       inputs.lemonake.packages.${pkgs.system}.poepyautopot
       inputs.lemonake.packages.${pkgs.system}.tilp2
 
-      (callPackage ../../../pkgs/wivrn { })
       #(callPackage ../../../pkgs/gdlauncher-carbon-src { })
-      #(callPackage ../../../pkgs/envision { })
     ];
     file = {
       ".config/autostart/" = {
