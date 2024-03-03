@@ -11,6 +11,7 @@
     packages = with pkgs; [
       headsetcontrol
       easytag #soundux #onthespot
+      xclicker
 
       # Testing
       #rsync syncthing
@@ -24,8 +25,8 @@
       inputs.lemonake.packages.${pkgs.system}.hd2pystratmacro
       inputs.lemonake.packages.${pkgs.system}.poepyautopot
       inputs.lemonake.packages.${pkgs.system}.tilp2
-      inputs.lemonake.packages.${pkgs.system}.xclicker
 
+      #(callPackage ../../../pkgs/gdlauncher-carbon-src { })
       #(callPackage ../../../pkgs/envision { })
     ];
     file = {

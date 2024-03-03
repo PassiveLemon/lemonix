@@ -1,6 +1,6 @@
 { inputs, pkgs, config, lib, ... }: {
   home.packages = with pkgs; [
-    prusa-slicer super-slicer-latest
+    prusa-slicer #super-slicer
     freecad openscad
   ];
   xdg = {
