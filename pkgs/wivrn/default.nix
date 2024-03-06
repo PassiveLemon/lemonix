@@ -34,6 +34,7 @@
 }:
 let
   vendorMonado = monado.overrideAttrs rec {
+    # Version stated in CMakeList for WiVRn 0.11
     version = "57e937383967c7e7b38b5de71297c8f537a2489d";
 
     src = fetchgit {
@@ -60,6 +61,8 @@ stdenv.mkDerivation rec {
 
   nativeBuildInputs = [
     cmake
+    cudaPackages.cuda_nvcc
+    git
     pkg-config
     python3
   ];
@@ -68,12 +71,9 @@ stdenv.mkDerivation rec {
     avahi
     boost
     cudaPackages.cuda_cudart
-    cudaPackages.cuda_nvcc
-    cudaPackages.cudatoolkit
     eigen
     ffmpeg
     freetype
-    git
     glm
     glslang
     harfbuzz
@@ -87,7 +87,6 @@ stdenv.mkDerivation rec {
     spdlog
     systemd
     udev
-    vendorMonado
     vulkan-headers
     vulkan-loader
     vulkan-tools
@@ -97,13 +96,12 @@ stdenv.mkDerivation rec {
   ];
 
   cmakeFlags = [
-    "-DWIVRN_BUILD_CLIENT=OFF"
-    "-DCMAKE_BUILD_TYPE=RelWithDebInfo"
-    "-DFETCHCONTENT_FULLY_DISCONNECTED=ON"
-    "-DFETCHCONTENT_SOURCE_DIR_MONADO=${vendorMonado.src}"
-    "-DWIVRN_USE_VAAPI=ON"
-    "-DWIVRN_USE_X264=ON"
-    "-DWIVRN_USE_NVENC=OFF"
+    (lib.cmakeBool "WIVRN_BUILD_CLIENT" false)
+    (lib.cmakeBool "WIVRN_USE_VAAPI" true)
+    (lib.cmakeBool "WIVRN_USE_X264" true)
+    (lib.cmakeBool "WIVRN_USE_NVENC" false)
+    (lib.cmakeBool "FETCHCONTENT_FULLY_DISCONNECTED" true)
+    (lib.cmakeFeature "FETCHCONTENT_SOURCE_DIR_MONADO" "${vendorMonado.src}")
   ];
 
   postFixup = ''
@@ -111,7 +109,7 @@ stdenv.mkDerivation rec {
   '';
 
   meta = with lib; {
-    description = "An OpenXR streaming application to a standalone headset ";
+    description = "An OpenXR streaming application to a standalone headset";
     homepage = "https://github.com/Meumeu/WiVRn/";
     changelog = "https://github.com/Meumeu/WiVRn/releases/tag/v${version}";
     license = licenses.gpl3;
