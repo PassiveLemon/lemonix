@@ -1,7 +1,7 @@
 { lib
 , stdenv
 , fetchFromGitHub
-, fetchgit
+, fetchFromGitLab
 , avahi
 , boost
 , cmake
@@ -16,6 +16,8 @@
 , libdrm
 , libva
 , libpulseaudio
+, libX11
+, libXrandr
 , monado
 , nlohmann_json
 , onnxruntime
@@ -30,16 +32,17 @@
 , vulkan-loader
 , vulkan-tools
 , x264
-, xorg
 }:
 let
   vendorMonado = monado.overrideAttrs rec {
     # Version stated in CMakeList for WiVRn 0.11
     version = "57e937383967c7e7b38b5de71297c8f537a2489d";
 
-    src = fetchgit {
-      url = "https://gitlab.freedesktop.org/monado/monado.git";
-      rev = "${version}";
+    src = fetchFromGitLab {
+      domain = "gitlab.freedesktop.org";
+      owner = "monado";
+      repo = "monado";
+      rev = version;
       hash = "sha256-O/Td2WccTr4Fa8U64/lVfnidSIH5t3gWuFXCsEVf7bk=";
     };
 
@@ -79,6 +82,8 @@ stdenv.mkDerivation rec {
     harfbuzz
     libdrm
     libva
+    libX11
+    libXrandr
     libpulseaudio
     nlohmann_json
     onnxruntime
@@ -91,8 +96,6 @@ stdenv.mkDerivation rec {
     vulkan-loader
     vulkan-tools
     x264
-    xorg.libX11
-    xorg.libXrandr
   ];
 
   cmakeFlags = [
@@ -112,7 +115,7 @@ stdenv.mkDerivation rec {
     description = "An OpenXR streaming application to a standalone headset";
     homepage = "https://github.com/Meumeu/WiVRn/";
     changelog = "https://github.com/Meumeu/WiVRn/releases/tag/v${version}";
-    license = licenses.gpl3;
+    license = licenses.gpl3Only;
     maintainers = with maintainers; [ passivelemon ];
     platforms = [ "x86_64-linux" ];
     mainProgram = "wivrn-server";
