@@ -1,4 +1,8 @@
 { inputs, pkgs, config, lib, ... }: {
+  imports = [
+    ./steamvr.nix
+  ];
+
   home.packages = with pkgs; [
     gamemode dxvk
     inputs.nix-gaming.packages.${pkgs.system}.viper
@@ -7,6 +11,13 @@
     bottles #vinegar wineWowPackages.stagingFull
     ludusavi
   ];
+  services = {
+    steamvr.runtimeOverride = {
+      enable = true;
+      package = pkgs.opencomposite;
+      packageSubPath = "/lib/opencomposite";
+    };
+  };
   xdg = {
     mimeApps = {
       defaultApplications = {
