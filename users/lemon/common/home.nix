@@ -7,7 +7,7 @@
   home = {
     packages = with pkgs; [
       tym hilbish eza bat thefuck trashy fd ripgrep python3 imagemagick
-      firefox master.webcord-vencord authy freetube
+      firefox webcord-vencord authy freetube
       pcmanfm xarchiver ffmpegthumbnailer filezilla gparted
       lite-xl vscode github-desktop imhex
       obsidian onlyoffice-bin drawio
