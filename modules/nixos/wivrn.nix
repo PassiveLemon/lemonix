@@ -20,10 +20,7 @@ in
         runtime in a writable XDG_CONFIG_DIRS location like `~/.config.`
       '';
 
-      highPriority = mkEnableOption {
-        default = true;
-        description = mdDoc "high priority capability for wivrn-server";
-      };
+      highPriority = mkEnableOption "high priority capability for wivrn-server";
     };
   };
 
