@@ -4,7 +4,7 @@
     ../../modules/nixos/bluetooth.nix
     #inputs.nix-gaming.nixosModules.pipewireLowLatency
     inputs.nix-gaming.nixosModules.steamCompat
-    ../../modules/nixos/steamvr.nix
+    ../../modules/nixos/virtual-reality.nix
   ];
 
   # Configs
