@@ -28,14 +28,12 @@
       allowedTCPPorts = [
         53 # Pi-hole
         80 443 # Web traffic
-        2375 #2377 # Docker socket & Swarm
-        #7946 # Swarm container discovery
+        2375 2377 4789 7946 # Docker socket & Swarm
         #9001 # Portainer
       ];
-      #allowedUDPPorts = [
-        #4789 # Swarm overlay network
-        #7946 # Swarm container discovery
-      #];
+      allowedUDPPorts = [
+        4789 7946 # Docker Swarm
+      ];
       allowedTCPPortRanges = [
         { from = 40000; to = 44000; } # Docker containers
       ];

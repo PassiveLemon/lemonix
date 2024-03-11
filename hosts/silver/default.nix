@@ -19,15 +19,13 @@
     hostName = "silver";
     firewall = {
       allowedTCPPorts = [
-        #2375 2377 # Docker socket & Swarm
+        2375 2377 7946 # Docker socket & Swarm
         5500 # HTML Webserver for testing
-        #7946 # Swarm container discovery
         #9001 # Portainer
       ];
-      #allowedUDPPorts = [
-        #4789 # Swarm overlay network
-        #7946 # Swarm container discovery
-      #];
+      allowedUDPPorts = [
+        4789 7946 # Docker Swarm
+      ];
       allowedTCPPortRanges = [
         { from = 50000; to = 55000; } # Docker containers
       ];
