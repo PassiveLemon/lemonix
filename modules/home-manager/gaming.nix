@@ -1,4 +1,8 @@
-{ inputs, pkgs, config, lib, ... }: {
+{ inputs, pkgs, config, lib, ... }:
+let
+  wivrn = pkgs.callPackage ../../pkgs/wivrn { };
+in
+{
   imports = [
     ./steamvr.nix
   ];
@@ -12,10 +16,15 @@
     ludusavi
   ];
   services = {
-    steamvr.runtimeOverride = {
-      enable = true;
-      package = pkgs.opencomposite;
-      packageSubPath = "/lib/opencomposite";
+    steamvr = {
+      runtimeOverride = {
+        enable = true;
+        path = "${inputs.nixpkgs-xr.packages.${pkgs.system}.opencomposite}/lib/opencomposite";
+      };
+      activeRuntimeOverride = {
+        enable = true;
+        path = "${wivrn}/share/openxr/1/openxr_wivrn.json";
+      };
     };
   };
   xdg = {

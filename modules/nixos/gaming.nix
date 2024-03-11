@@ -20,6 +20,12 @@
     };
   };
   programs = {
+    steam = {
+      enable = true;
+      #extraCompatPackages = with inputs.nix-gaming.packages.${pkgs.system}; [
+      #  proton-ge northstar-proton faf-client-bin
+      #];
+    };
     adb.enable = true;
     alvr = { # Module of lemonake
       enable = true;
