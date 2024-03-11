@@ -10,7 +10,7 @@
   home = {
     packages = with pkgs; [
       headsetcontrol
-      easytag #soundux #onthespot
+      easytag #onthespot
       xclicker
 
       # Testing
