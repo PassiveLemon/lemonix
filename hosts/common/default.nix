@@ -64,6 +64,7 @@
     memoryPercent = 25;
     priority = 100;
   };
+  systemd.services.NetworkManager-wait-online.enable = false;
   documentation = {
     enable = false;
     doc.enable = false;
