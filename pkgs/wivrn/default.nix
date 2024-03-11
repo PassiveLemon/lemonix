@@ -62,6 +62,11 @@ stdenv.mkDerivation rec {
     hash = "sha256-E48JYhkBVZfb7S/FW0F8RbMtx4GIJwfXfs4KAF3gn8A=";
   };
 
+  patchPhase = ''
+    substituteInPlace ./server/CMakeLists.txt \
+      --replace "../../../" ""
+  '';
+
   nativeBuildInputs = [
     cmake
     cudaPackages.cuda_nvcc
@@ -107,17 +112,13 @@ stdenv.mkDerivation rec {
     (lib.cmakeFeature "FETCHCONTENT_SOURCE_DIR_MONADO" "${vendorMonado.src}")
   ];
 
-  postFixup = ''
-    substituteInPlace $out/share/openxr/1/openxr_wivrn.json --replace "../../../" "../../../../.."
-  '';
-
   meta = with lib; {
     description = "An OpenXR streaming application to a standalone headset";
     homepage = "https://github.com/Meumeu/WiVRn/";
     changelog = "https://github.com/Meumeu/WiVRn/releases/tag/v${version}";
     license = licenses.gpl3Only;
     maintainers = with maintainers; [ passivelemon ];
-    platforms = [ "x86_64-linux" ];
+    platforms = platforms.linux;
     mainProgram = "wivrn-server";
   };
 }
