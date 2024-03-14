@@ -49,6 +49,9 @@
       "docker_management" = {
         gid = 1200;
       };
+      "borg_management" = {
+        gid = 1201;
+      };
     };
     users = {
       "root" = {
@@ -63,7 +66,7 @@
         hashedPassword = "$6$J7q0.RZ88OJiQRkq$mQx2d32YHf6IXqZNMSv.o/sslQMgBAGIKID2aL6tLpN6XFpXp2Fda5p1Yi78H/cXOolBPIuXEQPzxhmKp5qWc0";
         extraGroups = [
           "wheel" "video" "audio" "networkmanager" "storage" "docker" "kvm" "libvirtd" 
-          "docker_management"
+          "docker_management" "borg_management"
         ];
         isNormalUser = true;
         openssh.authorizedKeys.keys = [ "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIDHteP0JhNBJOlom+X8PY8s0FXPdUY4VcV6PgPPzXIKi lemon@silver" ];
@@ -79,7 +82,7 @@
       "docker" = {
         uid = 1102;
         description = "Docker";
-        home = "/home/docker";
+        home = "/var/empty";
         hashedPassword = "!";
         extraGroups = [ "docker_management" ];
         isNormalUser = true;
@@ -89,7 +92,7 @@
         description = "Borg";
         home = "/home/borg";
         hashedPassword = "$6$ZfEb26naaa.Sx5XE$EuCvgHvdXN68flpvEh0hfeqSbAZUzf7Q5zGjiGXuxk8owgePS8OK477LA740Gm1iOabOBSZa4CZP3fL3JgG.I0";
-        extraGroups = [ "docker_management" ];
+        extraGroups = [ "borg_management" "docker_management" ];
         isNormalUser = true;
         openssh.authorizedKeys.keys = [
           "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIOH57JnHLmW6Al34ksW1zb0TJq7IY9mZLN7kBiFR0dYi borg@silver"

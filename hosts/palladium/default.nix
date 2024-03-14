@@ -58,6 +58,9 @@
       "docker_management" = {
         gid = 1200;
       };
+      "borg_management" = {
+        gid = 1201;
+      };
     };
     users = {
       "root" = {
@@ -72,7 +75,7 @@
         hashedPassword = "$6$cNJ6ms0MkyhMejF8$YO0mSA8O2D1itNJTliQ/fnXnlonGH.nWqa76u.Wj4LhbTJdrx2rwA2QhJ1rAHdLS8CFpEfOvTD8DLyGoHD8tz0";
         extraGroups = [
           "wheel" "video" "networkmanager" "storage" "docker" "gpio"
-          "docker_management"
+          "docker_management" "borg_management"
         ];
         isNormalUser = true;
         openssh.authorizedKeys.keys = [
@@ -101,7 +104,7 @@
         description = "Borg";
         home = "/home/borg";
         hashedPassword = "$6$H.OMKehp89SXUJcD$UppHgGDwiKk727vZ67YGpyqRNfwXJP6Zgx953CBqJLSbhMVQfVlqPyg5YJ7JBrUJAA5jNrTCFLNxSXqfBnz0J.";
-        extraGroups = [ "docker_management" ];
+        extraGroups = [ "borg_management" "docker_management" ];
         isNormalUser = true;
         openssh.authorizedKeys.keys = [ "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIL2l60AJF1l0HPUYcHSUfxQgSRrwEWTke0ByWJnUvrBu borg@palladium" ];
       };
