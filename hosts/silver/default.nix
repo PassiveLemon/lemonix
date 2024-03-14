@@ -45,21 +45,56 @@
   };
 
   users = {
+    groups = {
+      "docker_management" = {
+        gid = 1200;
+      };
+    };
     users = {
+      "root" = {
+        home = "/root";
+        hashedPassword = "!";
+        openssh.authorizedKeys.keys = [ "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIElxtrdcStwa3bBpK9WxyyQq/x27oqhDbVlOPoLkbfRH root@silver" ];
+      };
       "lemon" = {
+        uid = 1100;
         description = "Lemon";
         home = "/home/lemon";
         hashedPassword = "$6$J7q0.RZ88OJiQRkq$mQx2d32YHf6IXqZNMSv.o/sslQMgBAGIKID2aL6tLpN6XFpXp2Fda5p1Yi78H/cXOolBPIuXEQPzxhmKp5qWc0";
-        extraGroups = [ "wheel" "video" "audio" "networkmanager" "storage" "docker" "kvm" "libvirtd" ];
+        extraGroups = [
+          "wheel" "video" "audio" "networkmanager" "storage" "docker" "kvm" "libvirtd" 
+          "docker_management"
+        ];
         isNormalUser = true;
         openssh.authorizedKeys.keys = [ "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIDHteP0JhNBJOlom+X8PY8s0FXPdUY4VcV6PgPPzXIKi lemon@silver" ];
       };
       "monitor" = {
+        uid = 1101;
         description = "Monitor";
         home = "/home/monitor";
         hashedPassword = "$6$0XNvp3iEh8YJqrVr$43U1A.yN9kdw4CZJ9YpJYuEzyUzLYbOWIIDpK54bJdlhaXMl5P0Y3eicO/MEZSKBGQpTfzlFDVQFesIRKHLXN0";
         isNormalUser = true;
         openssh.authorizedKeys.keys = [ "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAII7MCTB+V/YSqbRZIWlAsh5uPAfBToG3Pg8JsYgnIKg2 monitor@silver" ];
+      };
+      "docker" = {
+        uid = 1102;
+        description = "Docker";
+        home = "/home/docker";
+        hashedPassword = "!";
+        extraGroups = [ "docker_management" ];
+        isNormalUser = true;
+      };
+      "borg" = {
+        uid = 1103;
+        description = "Borg";
+        home = "/home/borg";
+        hashedPassword = "$6$ZfEb26naaa.Sx5XE$EuCvgHvdXN68flpvEh0hfeqSbAZUzf7Q5zGjiGXuxk8owgePS8OK477LA740Gm1iOabOBSZa4CZP3fL3JgG.I0";
+        extraGroups = [ "docker_management" ];
+        isNormalUser = true;
+        openssh.authorizedKeys.keys = [
+          "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIOH57JnHLmW6Al34ksW1zb0TJq7IY9mZLN7kBiFR0dYi borg@silver"
+          "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIL2l60AJF1l0HPUYcHSUfxQgSRrwEWTke0ByWJnUvrBu borg@palladium"
+        ];
       };
     };
   };
@@ -70,6 +105,38 @@
     ];
   };
 
+  services.borgbackup.jobs = {
+    "lemon-silver" = {
+      paths = [
+        "/home/lemon/Documents"
+        "/home/lemon/Pictures"
+        "/home/lemon/Videos"
+        "/home/lemon/Music"
+        "/home/lemon/.local/share/gdlauncher_carbon/data/instances"
+      ];
+      repo = "ssh://borg@127.0.0.1/home/BACKUPDRIVE/BorgBackups";
+      encryption = {
+        mode = "repokey";
+        passCommand = "cat /home/borg/borgbackup";
+      };
+      environment.BORG_RSH = "ssh -i /home/borg/.ssh/id_ed25519";
+      compression = "auto,zstd";
+      startAt = "daily";
+    };
+    "docker-silver" = {
+      paths = [
+        "/home/docker"
+      ];
+      repo = "ssh://borg@127.0.0.1/home/BACKUPDRIVE/BorgBackups";
+      encryption = {
+        mode = "repokey";
+        passCommand = "cat /home/borg/borgbackup";
+      };
+      environment.BORG_RSH = "ssh -i /home/borg/.ssh/id_ed25519";
+      compression = "auto,zstd";
+      startAt = "weekly";
+    };
+  };
   virtualisation = {
     docker = { 
       enable = true;

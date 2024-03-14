@@ -55,22 +55,55 @@
   users = {
     groups = {
       "gpio" = { };
+      "docker_management" = {
+        gid = 1200;
+      };
     };
     users = {
+      "root" = {
+        home = "/root";
+        hashedPassword = "!";
+        openssh.authorizedKeys.keys = [ "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIN3A5SuYn6X5rutaWKMHuxs6w7nRbbPCKZDLLGap7R1s root@palladium" ];
+      };
       "nixos" = {
+        uid = 1100;
         description = "NixOS";
         home = "/home/nixos";
         hashedPassword = "$6$cNJ6ms0MkyhMejF8$YO0mSA8O2D1itNJTliQ/fnXnlonGH.nWqa76u.Wj4LhbTJdrx2rwA2QhJ1rAHdLS8CFpEfOvTD8DLyGoHD8tz0";
-        extraGroups = [ "wheel" "video" "networkmanager" "storage" "docker" "gpio" ];
+        extraGroups = [
+          "wheel" "video" "networkmanager" "storage" "docker" "gpio"
+          "docker_management"
+        ];
         isNormalUser = true;
-        openssh.authorizedKeys.keys = [ "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIGxtuyEOkf98MkoLPKvjBxIVIC4IrsZ5IKFoxQBxpUGe nixos@palladium" ];
+        openssh.authorizedKeys.keys = [
+          "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIGxtuyEOkf98MkoLPKvjBxIVIC4IrsZ5IKFoxQBxpUGe nixos@palladium"
+          "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIDHteP0JhNBJOlom+X8PY8s0FXPdUY4VcV6PgPPzXIKi lemon@silver"
+        ];
       };
       "monitor" = {
+        uid = 1101;
         description = "Monitor";
         home = "/home/monitor";
         hashedPassword = "$6$4LFq7jjaZKFiMUXn$tyu9JPZ3Skpg/HmjxaNk0jV6xO6T86iy6zjTGHAUp1PYu3Lv4JGSiaGzKRkGI4G7UT66Rg0nQ/eggMdplgqrV0";
         isNormalUser = true;
         openssh.authorizedKeys.keys = [ "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIFjoPX71x6n22+CfUk2skqBfT5cNFqrXLVCwcM8bpKwS root@palladium" ];
+      };
+      "docker" = {
+        uid = 1102;
+        description = "Docker";
+        home = "/home/docker";
+        hashedPassword = "!";
+        extraGroups = [ "docker_management" ];
+        isNormalUser = true;
+      };
+      "borg" = {
+        uid = 1103;
+        description = "Borg";
+        home = "/home/borg";
+        hashedPassword = "$6$H.OMKehp89SXUJcD$UppHgGDwiKk727vZ67YGpyqRNfwXJP6Zgx953CBqJLSbhMVQfVlqPyg5YJ7JBrUJAA5jNrTCFLNxSXqfBnz0J.";
+        extraGroups = [ "docker_management" ];
+        isNormalUser = true;
+        openssh.authorizedKeys.keys = [ "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIL2l60AJF1l0HPUYcHSUfxQgSRrwEWTke0ByWJnUvrBu borg@palladium" ];
       };
     };
   };
@@ -82,6 +115,21 @@
   };
 
   services = {
+    borgbackup.jobs = {
+      "nixos-palladium" = {
+        paths = [
+          "/home/docker"
+        ];
+        repo = "ssh://borg@192.168.1.177/home/BACKUPDRIVE/BorgBackups";
+        encryption = {
+          mode = "repokey";
+          passCommand = "cat /home/borg/borgbackup";
+        };
+        environment.BORG_RSH = "ssh -i /home/borg/.ssh/id_ed25519";
+        compression = "auto,zstd";
+        startAt = "weekly";
+      };
+    };
     udev.extraRules = ''
       SUBSYSTEM=="bcm2835-gpiomem", KERNEL=="gpiomem", GROUP="gpio", MODE="0660"
       SUBSYSTEM=="gpio", KERNEL=="gpiochip*", ACTION=="add", RUN+="${pkgs.bash}/bin/bash -c 'chown root:gpio  /sys/class/gpio/export /sys/class/gpio/unexport ; chmod 220 /sys/class/gpio/export /sys/class/gpio/unexport'"

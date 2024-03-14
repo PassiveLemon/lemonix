@@ -14,7 +14,7 @@ in
       openFirewall = mkEnableOption "the default ports in the firewall for the WiVRn server";
 
       defaultRuntime = mkEnableOption ''
-        WiVRn Monado as the default OpenXR runtime on the system.
+        WiVRn Monado as the default OpenXR runtime on the system. The config can be found at `/etc/xdg/openxr/1/active_runtime.json`.
 
         Note that applications can bypass this option by setting an active
         runtime in a writable XDG_CONFIG_DIRS location like `~/.config.`
