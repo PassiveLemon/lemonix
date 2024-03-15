@@ -30,7 +30,7 @@
       };
       environment.BORG_RSH = "ssh -i /home/borg/.ssh/id_ed25519";
       compression = "auto,zstd";
-      startAt = "weekly";
+      startAt = "Sat 01:01:00";
     };
   };
 }
