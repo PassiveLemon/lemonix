@@ -54,13 +54,7 @@
     devmon.enable = true;
     journald.extraConfig = "SystemMaxUse=1G";
   };
-  hardware = {
-    opengl = {
-      enable = true;
-      driSupport = true;
-      driSupport32Bit = true;
-    };
-  };
+
   powerManagement.enable = true;
 
   # Drives

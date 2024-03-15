@@ -32,6 +32,7 @@
       };
     };
   };
+
   xsession = {
     enable = true;
     windowManager = {
@@ -41,6 +42,7 @@
       };
     };
   };
+
   services = {
     flameshot = {
       enable = true;
@@ -51,6 +53,7 @@
       };
     };
   };
+
   programs = {
     home-manager.enable = true;
     obs-studio = {
@@ -58,6 +61,7 @@
       plugins = with pkgs.obs-studio-plugins; [ obs-pipewire-audio-capture ];
     };
   };
+
   xdg = {
     mime.enable = true;
     mimeApps = {
@@ -101,6 +105,7 @@
         "x-scheme-handler/https" = "firefox.desktop";
       };
     };
+  
     desktopEntries = {
       "Discord" = { # Alias Discord to Webcord with CSS skin
         name = "Discord";
@@ -112,6 +117,7 @@
       };
     };
   };
+
   nixpkgs.config = {
     allowUnfree = true;
     allowUnfreePredicate = (_: true);

@@ -15,6 +15,7 @@ in
     bottles #vinegar wineWowPackages.stagingFull
     ludusavi
   ];
+
   services = {
     steamvr = {
       runtimeOverride = {
@@ -27,6 +28,7 @@ in
       };
     };
   };
+
   xdg = {
     mimeApps = {
       defaultApplications = {

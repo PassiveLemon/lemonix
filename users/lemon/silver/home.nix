@@ -48,9 +48,11 @@
     };
     stateVersion = "23.05";
   };
+
   services = {
     megasync.enable = true;
   };
+
   xdg = {
     mime.enable = true;
     mimeApps = {
@@ -77,10 +79,13 @@
       };
     };
   };
-  nixpkgs.config.permittedInsecurePackages = [
-    "electron-24.8.6" # Feishin
-    "electron-25.9.0"
-    "freeimage-unstable-2021-11-01"
-  ];
+
+  nixpkgs = {
+    config.permittedInsecurePackages = [
+      "electron-24.8.6" # Feishin
+      "electron-25.9.0"
+      "freeimage-unstable-2021-11-01"
+    ];
+  };
 }
 

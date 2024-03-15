@@ -14,6 +14,7 @@
       };
     };
   };
+
   gtk = {
     enable = true;
     theme = {
@@ -54,10 +55,12 @@
       ];
     };
   };
+
   qt = {
     enable = true;
     platformTheme = "gtk3";
   };
+
   xdg.portal = {
     enable = true;
     config.common.default = [ "gtk" ];

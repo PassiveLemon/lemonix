@@ -3,6 +3,7 @@
     prusa-slicer #super-slicer
     freecad openscad
   ];
+
   xdg = {
     mimeApps = {
       defaultApplications = {

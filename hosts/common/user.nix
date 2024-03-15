@@ -45,15 +45,9 @@
     mullvad-vpn.enable = true;
     gnome.gnome-keyring.enable = true;
   };
+
   programs = {
     dconf.enable = true;
     seahorse.enable = true;
-  };
-  hardware = {
-    opengl = {
-      enable = true;
-      driSupport = true;
-      driSupport32Bit = true;
-    };
   };
 }

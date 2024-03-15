@@ -3,8 +3,10 @@
     ./hardware-configuration.nix
     ../common/default.nix
     ../../modules/nixos/ssh.nix
+    ./modules/docker.nix
+    ./modules/borg.nix
   ];
-  
+
   boot = {
     loader = {
       systemd-boot.enable = false;
@@ -24,20 +26,6 @@
 
   networking = {
     hostName = "palladium";
-    firewall = {
-      allowedTCPPorts = [
-        53 # Pi-hole
-        80 443 # Web traffic
-        2375 2377 4789 7946 # Docker socket & Swarm
-        #9001 # Portainer
-      ];
-      allowedUDPPorts = [
-        4789 7946 # Docker Swarm
-      ];
-      allowedTCPPortRanges = [
-        { from = 40000; to = 44000; } # Docker containers
-      ];
-    };
     interfaces = {
       "end0" = {
         ipv4.addresses = [{
@@ -55,12 +43,6 @@
   users = {
     groups = {
       "gpio" = { };
-      "docker_management" = {
-        gid = 1200;
-      };
-      "borg_management" = {
-        gid = 1201;
-      };
     };
     users = {
       "root" = {
@@ -91,23 +73,6 @@
         isNormalUser = true;
         openssh.authorizedKeys.keys = [ "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIFjoPX71x6n22+CfUk2skqBfT5cNFqrXLVCwcM8bpKwS root@palladium" ];
       };
-      "docker" = {
-        uid = 1102;
-        description = "Docker";
-        home = "/home/docker";
-        hashedPassword = "!";
-        extraGroups = [ "docker_management" ];
-        isNormalUser = true;
-      };
-      "borg" = {
-        uid = 1103;
-        description = "Borg";
-        home = "/home/borg";
-        hashedPassword = "$6$H.OMKehp89SXUJcD$UppHgGDwiKk727vZ67YGpyqRNfwXJP6Zgx953CBqJLSbhMVQfVlqPyg5YJ7JBrUJAA5jNrTCFLNxSXqfBnz0J.";
-        extraGroups = [ "borg_management" "docker_management" ];
-        isNormalUser = true;
-        openssh.authorizedKeys.keys = [ "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIL2l60AJF1l0HPUYcHSUfxQgSRrwEWTke0ByWJnUvrBu borg@palladium" ];
-      };
     };
   };
 
@@ -118,35 +83,11 @@
   };
 
   services = {
-    borgbackup.jobs = {
-      "nixos-palladium" = {
-        paths = [
-          "/home/docker"
-        ];
-        repo = "ssh://borg@192.168.1.177/home/BACKUPDRIVE/BorgBackups";
-        encryption = {
-          mode = "repokey";
-          passCommand = "cat /home/borg/borgbackup";
-        };
-        environment.BORG_RSH = "ssh -i /home/borg/.ssh/id_ed25519";
-        compression = "auto,zstd";
-        startAt = "weekly";
-      };
-    };
     udev.extraRules = ''
       SUBSYSTEM=="bcm2835-gpiomem", KERNEL=="gpiomem", GROUP="gpio", MODE="0660"
       SUBSYSTEM=="gpio", KERNEL=="gpiochip*", ACTION=="add", RUN+="${pkgs.bash}/bin/bash -c 'chown root:gpio  /sys/class/gpio/export /sys/class/gpio/unexport ; chmod 220 /sys/class/gpio/export /sys/class/gpio/unexport'"
       SUBSYSTEM=="gpio", KERNEL=="gpio*", ACTION=="add",RUN+="${pkgs.bash}/bin/bash -c 'chown root:gpio /sys%p/active_low /sys%p/direction /sys%p/edge /sys%p/value ; chmod 660 /sys%p/active_low /sys%p/direction /sys%p/edge /sys%p/value'"
     '';
-    logrotate = {
-      enable = true;
-      settings = {
-        "/home/docker/Containers/Networking/Traefik/logs/access.log" = {
-          frequency = "daily";
-          rotate = 7;
-        };
-      };
-    };
     create_ap = {
       enable = true;
       settings = {
@@ -159,20 +100,7 @@
       };
     };
   };
-  virtualisation = {
-    docker = { 
-      enable = true;
-      enableOnBoot = true;
-      liveRestore = false;
-      autoPrune = {
-        enable = true;
-        dates = "weekly";
-      };
-      daemon.settings = {
-        hosts = [ "unix:///var/run/docker.sock" "tcp://0.0.0.0:2375" ];
-      };
-    };
-  };
+
   hardware = {
     raspberry-pi."4".apply-overlays-dtmerge.enable = true;
     deviceTree = {

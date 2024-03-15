@@ -7,6 +7,7 @@
   environment.systemPackages = with pkgs; [
     xrgears sidequest autoadb BeatSaberModManager
   ];
+
   services = {
     udev.packages = [
       pkgs.android-udev-rules
@@ -19,6 +20,7 @@
       defaultRuntime = true;
     };
   };
+
   programs = {
     steam = {
       enable = true;

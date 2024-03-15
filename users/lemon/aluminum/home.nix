@@ -29,8 +29,11 @@
     };
     stateVersion = "23.05";
   };
-  nixpkgs.config.permittedInsecurePackages = [
-    "electron-24.8.6" # Feishin
-    "electron-25.9.0"
-  ];
+
+  nixpkgs = {
+    config.permittedInsecurePackages = [
+      "electron-24.8.6" # Feishin
+      "electron-25.9.0"
+    ];
+  };
 }

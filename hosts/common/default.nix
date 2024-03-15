@@ -50,22 +50,37 @@
     devmon.enable = true;
     journald.extraConfig = "SystemMaxUse=1G";
   };
+
   security = {
     sudo.execWheelOnly = true;
     rtkit.enable = true;
   };
+
   zramSwap = {
     enable = true;
     memoryPercent = 25;
     priority = 100;
   };
-  systemd.services.NetworkManager-wait-online.enable = false;
+
+  systemd = {
+    services.NetworkManager-wait-online.enable = false;
+  };
+
   documentation = {
     enable = false;
     doc.enable = false;
     man.enable = false;
     dev.enable = false;
   };
+
+  hardware = {
+    opengl = {
+      enable = true;
+      driSupport = true;
+      driSupport32Bit = true;
+    };
+  };
+
   nix = {
     settings = {
       experimental-features = [ "nix-command" "flakes" ];
@@ -77,6 +92,7 @@
       options = "--delete-older-than 14d";
     };
   };
+
   nixpkgs.config = {
     allowUnfree = true;
     allowUnfreePredicate = (_: true);

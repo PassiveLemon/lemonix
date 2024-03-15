@@ -100,7 +100,7 @@ local function run_and_return(dir, cmd)
   catch_register()
 end
 
-hilbish.alias("ls", "eza -Fl --group-directories-first")
+hilbish.alias("ls", "eza -lg --group-directories-first") -- -F is current broken
 hilbish.alias("cat", "bat --theme=Lemon")
 hilbish.alias("pc", 'python -ic "from __future__ import division; from math import *"')
 hilbish.alias("tp", "trash put")
