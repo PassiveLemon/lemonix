@@ -66,7 +66,6 @@
       "Z /home/docker 770 docker docker_management - -"
       "Z /home/docker/Containers 770 docker docker_management - -"
 
-      "Z /home/docker/Containers/Networking/PiHole/pihole 770 999 1000 - -"
       "z /home/docker/Containers/Networking/Traefik/acme.json 600 docker docker_management - -"
     ];
   };
