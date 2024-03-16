@@ -63,8 +63,8 @@
 
   systemd = {
     tmpfiles.rules = [
-      "Z /home/docker 750 docker docker_management - -"
-      "Z /home/docker/Containers 750 docker docker_management - -"
+      "Z /home/docker 770 docker docker_management - -"
+      "Z /home/docker/Containers 770 docker docker_management - -"
     ];
   };
 }

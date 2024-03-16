@@ -50,9 +50,9 @@
 
   systemd = {
     tmpfiles.rules = [
-      "Z /home/docker 750 docker docker_management - -"
-      "Z /home/docker/Containers 750 docker docker_management - -"
-      "Z /home/BACKUPDRIVE/Docker 750 docker docker_management - -"
+      "Z /home/docker 770 docker docker_management - -"
+      "Z /home/docker/Containers 770 docker docker_management - -"
+      "Z /home/BACKUPDRIVE/Docker 770 docker docker_management - -"
 
       "Z /home/HDD2TBEXT4/Media 770 docker docker_management - -"
       "Z /home/HDD2TBEXT4/Media2 770 docker docker_management - -"
