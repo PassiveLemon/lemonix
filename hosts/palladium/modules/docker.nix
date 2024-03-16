@@ -4,8 +4,8 @@
       allowedTCPPorts = [
         53 # Pi-hole
         80 443 # Web traffic
-        2375 2377 4789 7946 # Docker socket & Swarm
-        #9001 # Portainer
+        2377 4789 7946 # Docker socket & Swarm
+        9001 # Portainer
       ];
       allowedUDPPorts = [
         4789 7946 # Docker Swarm
@@ -56,7 +56,7 @@
         dates = "weekly";
       };
       daemon.settings = {
-        hosts = [ "unix:///var/run/docker.sock" "tcp://0.0.0.0:2375" ];
+        hosts = [ "unix:///var/run/docker.sock" ];
       };
     };
   };

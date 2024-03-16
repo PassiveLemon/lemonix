@@ -2,8 +2,7 @@
   networking = {
     firewall = {
       allowedTCPPorts = [
-        2375 2377 7946 # Docker socket & Swarm
-        #9001 # Portainer
+        2377 7946 # Docker socket & Swarm
       ];
       allowedUDPPorts = [
         4789 7946 # Docker Swarm
