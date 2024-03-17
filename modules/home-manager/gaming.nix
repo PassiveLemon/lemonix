@@ -4,7 +4,7 @@ let
 in
 {
   imports = [
-    ./steamvr.nix
+    inputs.lemonake.homeManagerModules.steamvr
   ];
 
   home.packages = with pkgs; [
