@@ -53,14 +53,12 @@ stdenv.mkDerivation (finalAttrs: {
   };
 
   # The library path to the OpenXR runtime requires a relative path from the config file to the binary in the nix store
-  # The config file is usually located at ~/.config/openxr/1/ but the wivrn module puts it at /etc/xdg/openxr/1/
   # The CMakeList has relative directory paths that cause malformation of the path. https://github.com/Meumeu/WiVRn/issues/47
   # What it is: ../../..//nix/store/...
-  # What it should be: ../../../../nix/store/...
-  # Details about the required path here (Section 3): https://monado.freedesktop.org/valve-index-setup.html
+  # What it should be: /nix/store/...
   patchPhase = ''
     substituteInPlace ./server/CMakeLists.txt \
-      --replace "../../../" "../../../.."
+      --replace "../../../" ""
   '';
 
   nativeBuildInputs = [
