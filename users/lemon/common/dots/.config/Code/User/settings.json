@@ -25,5 +25,8 @@
   "html.autoClosingTags": false,
   "editor.smoothScrolling": true,
   "workbench.smoothScrolling": true,
-  "platformio-ide.useBuiltinPIOCore": false
+  "platformio-ide.useBuiltinPIOCore": false,
+  "python.analysis.diagnosticSeverityOverrides": {
+    "reportMissingImports": "none"
+  }
 }
