@@ -8,6 +8,7 @@ in
   ];
 
   home.packages = with pkgs; [
+    protonup-ng
     gamemode dxvk
     inputs.nix-gaming.packages.${pkgs.system}.viper
     r2modman
