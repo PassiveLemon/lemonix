@@ -13,16 +13,13 @@
       easytag #onthespot
       xclicker
 
-      # Development
-      act nvfetcher nixpkgs-review jq dotnet-sdk_8
-
-      # Custom
       inputs.lemonake.packages.${pkgs.system}.animdl
       inputs.lemonake.packages.${pkgs.system}.hd2pystratmacro
       inputs.lemonake.packages.${pkgs.system}.poepyautopot
       inputs.lemonake.packages.${pkgs.system}.tilp2
 
-      #(callPackage ../../../pkgs/gdlauncher-carbon-src { })
+      # Development
+      act nvfetcher nixpkgs-review jq dotnet-sdk_8
     ];
     file = {
       ".config/autostart/" = {

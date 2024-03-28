@@ -27,6 +27,8 @@
   "workbench.smoothScrolling": true,
   "platformio-ide.useBuiltinPIOCore": false,
   "python.analysis.diagnosticSeverityOverrides": {
-    "reportMissingImports": "none"
-  }
+    "reportMissingImports": "none",
+    "reportMissingModuleSource": "none"
+  },
+  "liveServer.settings.donotShowInfoMsg": true
 }
