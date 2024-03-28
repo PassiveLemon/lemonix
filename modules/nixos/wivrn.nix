@@ -51,7 +51,11 @@ in
         description = "WiVRn XR runtime service module";
         requires = [ "wivrn.socket" ];
         unitConfig.ConditionUser = "!root";
-        environment = cfg.monadoEnvironment;
+        environment = cfg.monadoEnvironment // {
+          XRT_COMPOSITOR_LOG = if builtins.hasAttr "XRT_COMPOSITOR_LOG" cfg.monadoEnvironment then cfg.monadoEnvironment.XRT_COMPOSITOR_LOG else "debug";
+          XRT_PRINT_OPTIONS = if builtins.hasAttr "XRT_PRINT_OPTIONS" cfg.monadoEnvironment then cfg.monadoEnvironment.XRT_PRINT_OPTIONS else "on";
+          IPC_EXIT_ON_DISCONNECT = if builtins.hasAttr "IPC_EXIT_ON_DISCONNECT" cfg.monadoEnvironment then cfg.monadoEnvironment.IPC_EXIT_ON_DISCONNECT else "off";
+        };
         serviceConfig = {
           ExecStart =
             if cfg.highPriority
