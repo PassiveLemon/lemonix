@@ -23,7 +23,7 @@ in
       highPriority = mkEnableOption "high priority capability for wivrn-server" // { default = true; };
 
       monadoEnvironment = mkOption {
-        type = types.attrsOf types.str;
+        type = with types; attrsOf (nullOr (oneOf [ str path package ]));
         description = mdDoc "Environment variables passed to Monado.";
         # Default options
         # https://gitlab.freedesktop.org/monado/monado/-/blob/4548e1738591d0904f8db4df8ede652ece889a76/src/xrt/targets/service/monado.in.service#L12
@@ -51,11 +51,11 @@ in
         description = "WiVRn XR runtime service module";
         requires = [ "wivrn.socket" ];
         unitConfig.ConditionUser = "!root";
-        environment = cfg.monadoEnvironment // {
-          XRT_COMPOSITOR_LOG = if builtins.hasAttr "XRT_COMPOSITOR_LOG" cfg.monadoEnvironment then cfg.monadoEnvironment.XRT_COMPOSITOR_LOG else "debug";
-          XRT_PRINT_OPTIONS = if builtins.hasAttr "XRT_PRINT_OPTIONS" cfg.monadoEnvironment then cfg.monadoEnvironment.XRT_PRINT_OPTIONS else "on";
-          IPC_EXIT_ON_DISCONNECT = if builtins.hasAttr "IPC_EXIT_ON_DISCONNECT" cfg.monadoEnvironment then cfg.monadoEnvironment.IPC_EXIT_ON_DISCONNECT else "off";
-        };
+        environment = {
+          XRT_COMPOSITOR_LOG = "debug";
+          XRT_PRINT_OPTIONS = "on";
+          IPC_EXIT_ON_DISCONNECT = "off";
+        } // cfg.monadoEnvironment;
         serviceConfig = {
           ExecStart =
             if cfg.highPriority
