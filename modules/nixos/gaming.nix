@@ -5,16 +5,19 @@
   ];
 
   environment.systemPackages = with pkgs; [
-    xrgears sidequest autoadb BeatSaberModManager
+    sidequest autoadb
+    xrgears
+    BeatSaberModManager
   ];
 
   services = {
-    udev.packages = [
-      pkgs.android-udev-rules
+    udev.packages = with pkgs; [
+      android-udev-rules
     ];
     wivrn = {
       enable = true;
       package = pkgs.unstable.callPackage ../../pkgs/wivrn { };
+      hardwarePackage = pkgs.unstable.xr-hardware;
       openFirewall = true;
       highPriority = true;
       defaultRuntime = true;
@@ -36,4 +39,8 @@
       openFirewall = true;
     };
   };
+
+  hardware.opengl.extraPackages = with pkgs; [ 
+    (callPackage ../../pkgs/monado-vulkan-layers { })
+  ];
 }
