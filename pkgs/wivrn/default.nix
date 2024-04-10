@@ -14,6 +14,7 @@
 , glslang
 , harfbuzz
 , libdrm
+, libGL
 , libva
 , libpulseaudio
 , libX11
@@ -52,8 +53,8 @@ stdenv.mkDerivation (finalAttrs: {
     hash = "sha256-+RTHS9ShicuzhiAVAXf38V6k4SVr+Bc2xUjpRWZoB0c=";
   };
 
-  # The library path to the OpenXR runtime requires a relative path from the config file to the binary in the nix store
-  # The CMakeList has relative directory paths that cause malformation of the path. https://github.com/Meumeu/WiVRn/issues/47
+  # The library path to the OpenXR runtime requires a relative path from the config file to the binary in the nix store.
+  # The CMakeList has relative directory paths that cause malformation of the path. https://github.com/Meumeu/WiVRn/issues/47.
   # What it is: ../../..//nix/store/...
   # What we want: /nix/store/...
   patchPhase = ''
@@ -80,6 +81,7 @@ stdenv.mkDerivation (finalAttrs: {
     glslang
     harfbuzz
     libdrm
+    libGL
     libva
     libX11
     libXrandr
@@ -102,6 +104,7 @@ stdenv.mkDerivation (finalAttrs: {
     (lib.cmakeBool "WIVRN_USE_VAAPI" true)
     (lib.cmakeBool "WIVRN_USE_X264" true)
     (lib.cmakeBool "WIVRN_USE_NVENC" false)
+    #(lib.cmakeBool "WIVRN_OPENXR_INSTALL_ABSOLUTE_RUNTIME_PATH" true) # Uncomment once this option gets released and remove the patch as it won't be needed.
     (lib.cmakeBool "FETCHCONTENT_FULLY_DISCONNECTED" true)
     (lib.cmakeFeature "FETCHCONTENT_SOURCE_DIR_MONADO" "${finalAttrs.monadoSrc}")
   ];
