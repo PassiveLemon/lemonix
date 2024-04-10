@@ -131,7 +131,7 @@ local position_slider = h.slider({
     left = b.margins,
   },
   x = 532,
-  y = 16, 
+  y = 16,
   max = 100,
   handle_width = 16,
   bar_height = 6,
@@ -144,7 +144,7 @@ local volume_icon = h.text({
     right = 5,
     bottom = 3,
   },
-  x = 18, 
+  x = 18,
   y = 15,
   text = "󰕾",
   font = b.sysfont(14),
@@ -268,7 +268,7 @@ local main = awful.popup({
     },
     {
       layout = wibox.layout.fixed.vertical,
-      { 
+      {
         layout = wibox.layout.fixed.horizontal,
         art_image_box,
         {

@@ -6,15 +6,15 @@ local promptua = require('promptua')
 hilbish.opts.greeting = false
 hilbish.opts.motd = false
 
-promptua.setConfig {
+promptua.setConfig({
   prompt = {
     icon    = "",
     success = "",
     fail    = "",
   },
-}
+})
 
-promptua.setTheme {
+promptua.setTheme({
   { 
     separator = "┃ ",
     format    = "@style@icon@info",
@@ -57,7 +57,7 @@ promptua.setTheme {
     separator = ">= ",
     format    = "@style@icon@info",
   },
-}
+})
 
 local function find_in_table(table, value)
   for i, v in ipairs(table) do

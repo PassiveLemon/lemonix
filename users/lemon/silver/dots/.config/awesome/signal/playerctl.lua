@@ -137,7 +137,6 @@ local function play_pauser(option)
   playerctl_timer:start()
 end
 
-local naughty = require("naughty")
 local function nexter()
   playerctl_timer:stop()
   awful.spawn.spawn(playerctl_cmd .. "next")

@@ -1,4 +1,3 @@
-local awful = require("awful")
 local b = require("beautiful")
 b.init(os.getenv("HOME") .. "/.config/awesome/config/theme.lua")
 

@@ -3,8 +3,6 @@ local gears = require("gears")
 local b = require("beautiful")
 local wibox = require("wibox")
 
-local h = require("helpers")
-
 awful.screen.connect_for_each_screen(function(s)
   local wallpaper = wibox.widget {
     id = "bg",
@@ -182,7 +180,7 @@ awful.screen.connect_for_each_screen(function(s)
   awesome.connect_signal("ui::lock::screen", function(lockscreen)
     if lockscreen == true then
       visible(true)
-    else 
+    else
       visible(false)
     end
   end)

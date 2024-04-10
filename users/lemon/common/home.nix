@@ -105,7 +105,7 @@
         "x-scheme-handler/https" = "firefox.desktop";
       };
     };
-  
+
     desktopEntries = {
       "Discord" = { # Alias Discord to Webcord with CSS skin
         name = "Discord";

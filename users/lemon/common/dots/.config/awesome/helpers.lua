@@ -195,7 +195,7 @@ end
 
 function helpers.watch(com, time, conf)
   local watch = helpers.text(conf)
-  awful.widget.watch(com, time, function(widget, stdout)
+  awful.widget.watch(com, time, function(_, stdout)
     watch:get_children_by_id("textbox")[1].markup = stdout:gsub("\n", "")
   end)
   return watch

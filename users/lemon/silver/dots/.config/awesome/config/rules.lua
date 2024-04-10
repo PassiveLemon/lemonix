@@ -1,6 +1,4 @@
 local awful = require("awful")
-local gears = require("gears")
-local b = require("beautiful")
 local ruled = require("ruled")
 
 local h = require("helpers")

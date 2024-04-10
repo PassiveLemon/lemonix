@@ -1,34 +1,33 @@
 {
   "editor.bracketPairColorization.enabled": false,
+  "editor.fontFamily": "'FiraCode Nerd Font Ret', 'monospace', monospace",
+  "editor.fontLigatures": false,
   "editor.minimap.enabled": false,
   "editor.tabSize": 2,
+  "editor.smoothScrolling": true,
   "security.workspace.trust.untrustedFiles": "open",
   "update.mode": "none",
   "workbench.colorTheme": "lemon-color-theme",
   "workbench.iconTheme": "material-icon-theme",
   "workbench.startupEditor": "none",
+  "workbench.smoothScrolling": true,
   "workbench.welcomePage.extraAnnouncements": false,
-  "color-manager.autoStartIntellisense": true,
-  "editor.fontFamily": "'FiraCode Nerd Font Ret', 'monospace', monospace",
-  "editor.fontLigatures": false,
   "emmet.excludeLanguages": [
     "html",
     "markdown"
   ],
+  "html.autoClosingTags": false,
+  "python.analysis.diagnosticSeverityOverrides": {
+    "reportMissingImports": "none",
+    "reportMissingModuleSource": "none"
+  },
+  "platformio-ide.useBuiltinPIOCore": false,
   "indentRainbow.colors": [
     "rgba(255,0,0,0.12)",
     "rgba(255,165,0,0.12)",
     "rgba(60,179,113,0.12)",
     "rgba(0,0,255,0.12)"
   ],
-  "files.insertFinalNewline": true,
-  "html.autoClosingTags": false,
-  "editor.smoothScrolling": true,
-  "workbench.smoothScrolling": true,
-  "platformio-ide.useBuiltinPIOCore": false,
-  "python.analysis.diagnosticSeverityOverrides": {
-    "reportMissingImports": "none",
-    "reportMissingModuleSource": "none"
-  },
+  "color-manager.autoStartIntellisense": true,
   "liveServer.settings.donotShowInfoMsg": true
 }

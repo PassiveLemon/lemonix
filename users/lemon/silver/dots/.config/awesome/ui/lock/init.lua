@@ -3,11 +3,7 @@
 require("ui.lock.lockscreen")
 
 local awful = require("awful")
-local gears = require("gears")
-local b = require("beautiful")
-local wibox = require("wibox")
 
-local h = require("helpers")
 local pam = require("liblua_pam") -- Compile and link from https://github.com/RMTT/lua-pam/
 
 local function visible(v)

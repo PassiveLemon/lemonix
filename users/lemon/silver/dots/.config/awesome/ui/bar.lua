@@ -4,7 +4,6 @@ local b = require("beautiful")
 local wibox = require("wibox")
 
 local h = require("helpers")
-local click_to_hide = require("modules.click_to_hide")
 
 --
 -- Wibar
@@ -14,15 +13,11 @@ screen.connect_signal("request::desktop_decoration", function(s)
   awful.tag({ "1", "2", "3", "4" }, s, awful.layout.layouts[1])
 
   -- Space
-  local sep1 = h.text({
-    text = " ",
-  })
-
-  local sep2 = h.text({
+  local sep = h.text({
     bg = b.bg2,
     text = " ",
   })
-  
+
   -- CPU
   local cpu_icon = h.text({
     margins = {
@@ -40,7 +35,7 @@ screen.connect_signal("request::desktop_decoration", function(s)
     bg = b.bg2,
     halign = "left",
   })
-  awesome.connect_signal("signal::cpu::data", function(use, temp)
+  awesome.connect_signal("signal::cpu::data", function(use, _)
     cpu_text:get_children_by_id("textbox")[1].text = use .. "%"
   end)
 
@@ -61,7 +56,7 @@ screen.connect_signal("request::desktop_decoration", function(s)
     bg = b.bg2,
     halign = "left",
   })
-  awesome.connect_signal("signal::memory::data", function(use, use_perc, cache, cache_perc)
+  awesome.connect_signal("signal::memory::data", function(_, use_perc, _, _)
     memory_text:get_children_by_id("textbox")[1].text = use_perc .. "%"
   end)
 
@@ -100,15 +95,15 @@ screen.connect_signal("request::desktop_decoration", function(s)
     elseif value < "33" then
       volume_icon:get_children_by_id("textbox")[1].text = "󰕿"
       volume_icon:get_children_by_id("textbox")[1].font = b.sysfont(9)
-      volume_text:get_children_by_id("textbox")[1].text = value .. ""
+      volume_text:get_children_by_id("textbox")[1].text = tostring(value)
     elseif value < "67" then
       volume_icon:get_children_by_id("textbox")[1].text = "󰖀"
       volume_icon:get_children_by_id("textbox")[1].font = b.sysfont(13)
-      volume_text:get_children_by_id("textbox")[1].text = value .. ""
+      volume_text:get_children_by_id("textbox")[1].text = tostring(value)
     else
       volume_icon:get_children_by_id("textbox")[1].text = "󰕾"
       volume_icon:get_children_by_id("textbox")[1].font = b.sysfont(15)
-      volume_text:get_children_by_id("textbox")[1].text = value .. ""
+      volume_text:get_children_by_id("textbox")[1].text = tostring(value)
     end
   end)
 
@@ -157,7 +152,7 @@ screen.connect_signal("request::desktop_decoration", function(s)
         forced_height = 24,
         {
           layout = wibox.layout.fixed.horizontal,
-          sep2,
+          sep,
           wibox.widget.systray,
         },
       },
@@ -190,10 +185,10 @@ screen.connect_signal("request::desktop_decoration", function(s)
         forced_height = 24,
         {
           layout = wibox.layout.fixed.horizontal,
-          sep2,
+          sep,
           cpu_icon,
           cpu_text,
-          sep2,
+          sep,
         },
       },
     },
@@ -217,10 +212,10 @@ screen.connect_signal("request::desktop_decoration", function(s)
         forced_height = 24,
         {
           layout = wibox.layout.fixed.horizontal,
-          sep2,
+          sep,
           memory_icon,
           memory_text,
-          sep2,
+          sep,
         },
       },
     },
@@ -264,11 +259,11 @@ screen.connect_signal("request::desktop_decoration", function(s)
         forced_height = 24,
         {
           layout = wibox.layout.fixed.horizontal,
-          sep2,
+          sep,
           volume_icon,
           wifi_icon,
           caps_icon,
-          sep2,
+          sep,
         },
       },
     },
@@ -292,13 +287,13 @@ screen.connect_signal("request::desktop_decoration", function(s)
         forced_height = 24,
         {
           layout = wibox.layout.fixed.horizontal,
-          sep2,
+          sep,
           {
             widget = wibox.widget.textclock,
             format = "%a %b %-d",
             halign = "left",
           },
-          sep2,
+          sep,
         },
       },
     },
@@ -322,13 +317,13 @@ screen.connect_signal("request::desktop_decoration", function(s)
         forced_height = 24,
         {
           layout = wibox.layout.fixed.horizontal,
-          sep2,
+          sep,
           {
             widget = wibox.widget.textclock,
             format = "%-I:%M %p",
             halign = "left",
           },
-          sep2,
+          sep,
         },
       },
     },
@@ -357,12 +352,12 @@ screen.connect_signal("request::desktop_decoration", function(s)
         bg = b.bg2,
         {
           layout = wibox.layout.fixed.horizontal,
-          sep2,
+          sep,
           {
             id = "text_role",
             widget = wibox.widget.textbox,
           },
-          sep2,
+          sep,
         },
       },
     },
@@ -395,7 +390,7 @@ screen.connect_signal("request::desktop_decoration", function(s)
           widget = wibox.widget.imagebox,
         },
       },
-      create_callback = function(self, c, index)
+      create_callback = function(self, c)
         self:get_children_by_id("imagebox")[1].image = c.theme_icon
       end,
     },
@@ -461,9 +456,9 @@ screen.connect_signal("request::desktop_decoration", function(s)
               forced_height = 24,
               {
                 layout = wibox.layout.fixed.horizontal,
-                sep2,
+                sep,
                 s.tasklist,
-                sep2,
+                sep,
               },
             },
           },

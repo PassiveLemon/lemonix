@@ -14,7 +14,7 @@ local function gpu()
         local mem = mem:gsub("\n", "")
         emit(use, temp, mem)
       end)
-    end)  
+    end)
   end)
 end
 gpu()

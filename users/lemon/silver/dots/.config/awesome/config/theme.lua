@@ -1,7 +1,6 @@
 local awful = require("awful")
 local gears = require("gears")
 local wibox = require("wibox")
-local naughty = require("naughty")
 local menubar_utils = require "menubar.utils"
 
 local theme_assets = require("beautiful.theme_assets")
@@ -97,7 +96,7 @@ theme.margins = 4
 theme.layout_dwindle = themes_path .. "default/layouts/dwindlew.png"
 
 -- Media
-theme.playerctl_clients = "tauon,spotify,Feishin -s,%any"
+theme.playerctl_clients = "tauon,spotify,Feishin -s"
 theme.playerctl_art_cache_dir = os.getenv("HOME") .. "/.cache/passivelemon/lemonix/media/"
 
 --
