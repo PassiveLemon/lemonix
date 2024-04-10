@@ -40,7 +40,7 @@
     };
   };
 
-  hardware.opengl.extraPackages = with pkgs; [ 
+  hardware.opengl.extraPackages = with pkgs; [
     (callPackage ../../pkgs/monado-vulkan-layers { })
   ];
 }
