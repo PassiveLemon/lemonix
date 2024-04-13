@@ -15,7 +15,7 @@ in
     lunar-client prismlauncher
     inputs.lemonake.packages.${pkgs.system}.gdlauncher-carbon
     #(callPackage ../../pkgs/gdlauncher-dw { })
-    bottles #vinegar wineWowPackages.stagingFull
+    bottles
     ludusavi
   ];
 
