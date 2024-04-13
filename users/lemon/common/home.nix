@@ -7,7 +7,7 @@
   home = {
     packages = with pkgs; [
       tym hilbish eza bat thefuck trashy fd ripgrep python3 imagemagick
-      firefox webcord-vencord freetube teams-for-linux #authy
+      firefox webcord-vencord freetube teams-for-linux
       pcmanfm xarchiver ffmpegthumbnailer filezilla gparted
       lite-xl vscode github-desktop imhex
       obsidian onlyoffice-bin drawio
@@ -56,6 +56,12 @@
 
   programs = {
     home-manager.enable = true;
+    discocss = { # Broken
+      enable = false;
+      discordAlias = true;
+      discordPackage = pkgs.webcord-vencord;
+      css = builtins.readFile(./dots/.config/BetterDiscord/themes/Lemon.theme.css);
+    };
     obs-studio = {
       enable = true;
       plugins = with pkgs.obs-studio-plugins; [ obs-pipewire-audio-capture ];
@@ -107,7 +113,7 @@
     };
 
     desktopEntries = {
-      "Discord" = { # Alias Discord to Webcord with CSS skin
+      "Discord" = { # Alias Discord to Webcord with CSS theme. Currently broken
         name = "Discord";
         exec = "webcord -- --add-css-theme=/home/lemon/.config/BetterDiscord/themes/Lemon.theme.css";
         icon = "/home/lemon/.icons/Papirus/64x64/apps/webcord.svg";
