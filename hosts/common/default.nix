@@ -15,7 +15,7 @@
     };
   };
 
-  time = { 
+  time = {
     timeZone = "America/New_York";
     hardwareClockInLocalTime = true;
   };

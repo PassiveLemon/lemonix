@@ -4,7 +4,7 @@
     ../common/default.nix
     ../../modules/nixos/swap.nix
   ];
-  
+
   boot = {
     loader = {
       grub.enable = false;

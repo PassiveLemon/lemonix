@@ -59,12 +59,12 @@
             animation = "none";
           };
           dnd = { shadow = true; };
-          popup_menu = { 
+          popup_menu = {
             shadow = false;
           };
           utility = { shadow = false; };
         };
-        
+
         # Animations
         animations = true;
         #animation-for-transient-window = "zoom";
