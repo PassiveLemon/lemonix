@@ -68,3 +68,7 @@ awesome.connect_signal("ui::lock::toggle", function()
   visible(true)
   grab()
 end)
+
+-- Lock by default
+visible(true)
+grab()

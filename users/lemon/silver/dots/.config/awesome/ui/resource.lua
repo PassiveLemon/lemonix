@@ -113,7 +113,13 @@ local headset_bat = h.text({
 })
 awesome.connect_signal("signal::other::data", function(uptime, headset)
 	uptime_time:get_children_by_id("textbox")[1].text = "" .. uptime
-  headset_bat:get_children_by_id("textbox")[1].text = "HS BAT: " .. headset .. "%"
+  if headset == "-2" then
+    headset_bat:get_children_by_id("textbox")[1].text = "HS BAT: Not found"
+  elseif headset == "-1" then
+    headset_bat:get_children_by_id("textbox")[1].text = "HS BAT: Charging"
+  else
+    headset_bat:get_children_by_id("textbox")[1].text = "HS BAT: " .. headset .. "%"
+  end
 end)
 
 local main = awful.popup({
