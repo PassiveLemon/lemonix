@@ -10,7 +10,7 @@
   home = {
     packages = with pkgs; [
       headsetcontrol
-      easytag #onthespot
+      easytag onthespot
       xclicker
 
       inputs.lemonake.packages.${pkgs.system}.animdl
