@@ -28,10 +28,6 @@
       url = "github:fufexan/nix-gaming";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-    spicetify-nix = {
-      url = "github:the-argus/spicetify-nix";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
   };
 
   outputs = { self, ... } @ inputs:
@@ -109,7 +105,6 @@
         modules = [
           nixpkgs-overlays
           ./users/lemon/silver/home.nix
-          inputs.spicetify-nix.homeManagerModule
         ];
       };
       "lemon@aluminum" = inputs.home-manager.lib.homeManagerConfiguration {
@@ -117,7 +112,6 @@
         modules = [
           nixpkgs-overlays
           ./users/lemon/aluminum/home.nix
-          inputs.spicetify-nix.homeManagerModule
         ];
       };
     };
