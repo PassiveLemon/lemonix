@@ -40,11 +40,4 @@
       headsetcontrol
     ];
   };
-
-  systemd = {
-    services.autorandr = {
-      after = [ "graphical.target" ];
-      wantedBy = [ "graphical.target" ];
-    };
-  };
 }
