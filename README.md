@@ -8,13 +8,13 @@ These are my dotfiles for my NixOS system. I like using Lua so a lot of the conf
 - AwesomeWM configuration:
   - Bar + Systray under NixOS icon
   - Lockscreen + PAM authentication
-  - Media menu
+  - Media player
   - Powermenu
   - Resource monitor
   - Wacky little crosshairs for games
   - Playerctl signal
 - Tym terminal with Hilbish as the terminal shell.
-- Custom color theme for Discord, VSCode, and GTK.
+- Custom color theme for Discord, VSCode, and Obsidian.
 - Volantes Cursors
 - Papirus Icons
 

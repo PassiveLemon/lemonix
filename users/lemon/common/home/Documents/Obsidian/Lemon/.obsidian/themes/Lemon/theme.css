@@ -1,0 +1,74 @@
+:root {
+	--input-focus-border-color: Highlight;
+	--input-focus-outline: 2px solid Canvas;
+	--input-unfocused-border-color: transparent;
+	--input-disabled-border-color: transparent;
+	--input-hover-border-color: black;
+}
+
+body {
+	--radius-s: 4px;
+	--radius-m: 4px;
+	--radius-l: 4px;
+	--input-radius: 4px;
+	--tab-radius-active: 4px;
+	--checkbox-radius: 4px;
+	--toggle-radius: 100px;
+	--toggle-thumb-radius: 100px;
+	--slider-thumb-radius: 100px;
+}
+
+svg * {
+	stroke-linecap: square;
+	stroke-linejoin: miter;
+}
+
+.workspace-tab-header.is-active::before, .workspace-tab-header.is-active::after {
+	display: none;
+}
+
+.menu {
+	padding: var(--size-2-1);
+}
+
+.menu-item {
+	padding: var(--size-4-1) var(--size-4-2);
+}
+
+.menu-separator {
+	margin: var(--size-2-1) calc(var(--size-2-1) * -1);
+}
+
+.theme-dark {
+  --background-primary: #222222;
+  --background-secondary: #272727;
+	--text-normal: #dcdcdc;
+	--text-accent: #dcdcdc;
+	--text-selection: #444444;
+	--icon-color: #aaaaaa;
+	--icon-color-hover: #dcdcdc;
+	--icon-color-active: #dcdcdc;
+	--icon-color-focused: #dcdcdc;
+	--scrollbar-bg: #79797966;
+	--scrollbar-thumb-bg: #646464b3;
+	--scrollbar-active-thumb-bg: #bfbfbf66;
+	--divider-color: #343434;
+	--indentation-guide-color: #383838;
+
+	--color-red: #f05d6b;
+	--color-orange: #f8932f;
+	--color-yellow: #eac56f;
+	--color-green: #93cb6b;
+	--color-cyan: #53d2e0;
+	--color-blue: #61b8ff;
+	--color-purple: #cd61ec;
+	--color-pink: #f46faf;
+
+	--titlebar-background-focused: #222222;
+	--titlebar-background: #222222;
+	--titlebar-text-color: #aaaaaa;
+	--titlebar-text-color-focused: #dcdcdc;
+	--ribbon-background: #222222;
+	--status-bar-background: #272727;
+	--status-bar-text-color: #aaaaaa;
+}
