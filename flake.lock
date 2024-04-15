@@ -85,11 +85,11 @@
         "nixpkgs-lib": "nixpkgs-lib"
       },
       "locked": {
-        "lastModified": 1706569497,
-        "narHash": "sha256-oixb0IDb5eZYw6BaVr/R/1pSoMh4rfJHkVnlgeRIeZs=",
+        "lastModified": 1712014858,
+        "narHash": "sha256-sB4SWl2lX95bExY2gMFG5HIzvva5AVMJd4Igm+GpZNw=",
         "owner": "hercules-ci",
         "repo": "flake-parts",
-        "rev": "60c614008eed1d0383d21daac177a3e036192ed8",
+        "rev": "9126214d0a59633752a136528f5f3b9aa8565b7d",
         "type": "github"
       },
       "original": {
@@ -208,22 +208,6 @@
         "type": "github"
       }
     },
-    "leixb": {
-      "locked": {
-        "lastModified": 1712595559,
-        "narHash": "sha256-Oo0NBvliHtzfFkjPsOGZynfRNsLeD+WNCzq5SB5y9Q0=",
-        "owner": "leixb",
-        "repo": "nixpkgs",
-        "rev": "d86bb2df3b029cc5e7d2652efa6b81a561a310b3",
-        "type": "github"
-      },
-      "original": {
-        "owner": "leixb",
-        "ref": "headsetcontrol300",
-        "repo": "nixpkgs",
-        "type": "github"
-      }
-    },
     "lemonake": {
       "inputs": {
         "flake-parts": "flake-parts",
@@ -232,11 +216,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1712780895,
-        "narHash": "sha256-FpwXbfenNsREcXOc51FgB1+fb3vktAwXzTjlg8ka1TI=",
+        "lastModified": 1713046224,
+        "narHash": "sha256-LLcEctBN5PUMDi5Re6BVWkk0BWLaaYqVlqp/T637FH0=",
         "owner": "passivelemon",
         "repo": "lemonake",
-        "rev": "fa598c808241dd69c169906e16aeabda27a5e17c",
+        "rev": "10b5381ab45eaf6fe0d47e261d106d9fccb452ab",
         "type": "github"
       },
       "original": {
@@ -247,11 +231,11 @@
     },
     "master": {
       "locked": {
-        "lastModified": 1713045617,
-        "narHash": "sha256-ZftPw9IetdLXrj0/irphYIPWWXhtucmbC1o0KdZl6u0=",
+        "lastModified": 1713050870,
+        "narHash": "sha256-E6UM+xa8dBA4EH4ewZ5dY2wFeUgAi2hyfAhnda59wnk=",
         "owner": "nixos",
         "repo": "nixpkgs",
-        "rev": "3a8f6f641a88c3631856ea0584241c3c808c5e81",
+        "rev": "c2706c7ae7c07618ebd8acd37ec5018e79ca7d36",
         "type": "github"
       },
       "original": {
@@ -393,11 +377,11 @@
     "nixpkgs-lib": {
       "locked": {
         "dir": "lib",
-        "lastModified": 1703961334,
-        "narHash": "sha256-M1mV/Cq+pgjk0rt6VxoyyD+O8cOUiai8t9Q6Yyq4noY=",
+        "lastModified": 1711703276,
+        "narHash": "sha256-iMUFArF0WCatKK6RzfUJknjem0H9m4KgorO/p3Dopkk=",
         "owner": "NixOS",
         "repo": "nixpkgs",
-        "rev": "b0d36bd0a420ecee3bc916c91886caca87c894e9",
+        "rev": "d8fe5e6c92d0d190646fb9f1056741a229980089",
         "type": "github"
       },
       "original": {
@@ -499,69 +483,6 @@
         "type": "github"
       }
     },
-    "ondsel-appimage-aarch64-linux": {
-      "flake": false,
-      "locked": {
-        "narHash": "sha256-+5t+JbblTb8psKjLB/urN34ZsLnOSLuTGVzAiOmmWJg=",
-        "type": "file",
-        "url": "https://github.com/Ondsel-Development/FreeCAD/releases/download/2024.1.0/Ondsel_ES_2024.1.0.35694-Linux-aarch64.AppImage"
-      },
-      "original": {
-        "type": "file",
-        "url": "https://github.com/Ondsel-Development/FreeCAD/releases/download/2024.1.0/Ondsel_ES_2024.1.0.35694-Linux-aarch64.AppImage"
-      }
-    },
-    "ondsel-appimage-x86_64-linux": {
-      "flake": false,
-      "locked": {
-        "narHash": "sha256-VB/JmEdDhyOZNqPTWN7DyGXyxYO8BQYbo5nj+rHWByY=",
-        "type": "file",
-        "url": "https://github.com/Ondsel-Development/FreeCAD/releases/download/2024.1.0/Ondsel_ES_2024.1.0.35694-Linux-x86_64.AppImage"
-      },
-      "original": {
-        "type": "file",
-        "url": "https://github.com/Ondsel-Development/FreeCAD/releases/download/2024.1.0/Ondsel_ES_2024.1.0.35694-Linux-x86_64.AppImage"
-      }
-    },
-    "ondsel-feedstock": {
-      "flake": false,
-      "locked": {
-        "lastModified": 1709583214,
-        "narHash": "sha256-H5LbcK5iXS+QFhMayvCDSfXk2ulc6BJXWVwv97nPH9o=",
-        "owner": "Ondsel-Development",
-        "repo": "freecad-feedstock",
-        "rev": "386fab80c8aaa3bb1b9454aee8695c959d642bac",
-        "type": "github"
-      },
-      "original": {
-        "owner": "Ondsel-Development",
-        "repo": "freecad-feedstock",
-        "type": "github"
-      }
-    },
-    "ondsel-nix": {
-      "inputs": {
-        "nixpkgs": [
-          "nixpkgs"
-        ],
-        "ondsel-appimage-aarch64-linux": "ondsel-appimage-aarch64-linux",
-        "ondsel-appimage-x86_64-linux": "ondsel-appimage-x86_64-linux",
-        "ondsel-feedstock": "ondsel-feedstock"
-      },
-      "locked": {
-        "lastModified": 1710165992,
-        "narHash": "sha256-Nk/bndskmQJCiyqkhQJOEffZAL6hAP/B1efETSjxOWE=",
-        "owner": "pinpox",
-        "repo": "ondsel-nix",
-        "rev": "4a9755b94488d38400cdd10ec3fa9fe30d6140af",
-        "type": "github"
-      },
-      "original": {
-        "owner": "pinpox",
-        "repo": "ondsel-nix",
-        "type": "github"
-      }
-    },
     "parts": {
       "inputs": {
         "nixpkgs-lib": "nixpkgs-lib_3"
@@ -583,7 +504,6 @@
     "root": {
       "inputs": {
         "home-manager": "home-manager",
-        "leixb": "leixb",
         "lemonake": "lemonake",
         "master": "master",
         "nix-gaming": "nix-gaming",
@@ -593,7 +513,6 @@
         "nixpkgs": "nixpkgs",
         "nixpkgs-f2k": "nixpkgs-f2k",
         "nixpkgs-xr": "nixpkgs-xr",
-        "ondsel-nix": "ondsel-nix",
         "spicetify-nix": "spicetify-nix"
       }
     },
