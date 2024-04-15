@@ -10,6 +10,13 @@ local click_to_hide = require("modules.click_to_hide")
 -- Media player
 --
 
+local xdg_cache_home = os.getenv("HOME") .. "/.cache/passivelemon/lemonix/media/"
+h.dir_test(xdg_cache_home, function(exists)
+  if not exists then
+    awful.spawn.easy_async_with_shell("mkdir -p " .. xdg_cache_home)
+  end
+end)
+
 local art_image_box = h.text({
   margins = {
     top = b.margins,

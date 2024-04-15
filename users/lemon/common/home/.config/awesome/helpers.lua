@@ -220,4 +220,15 @@ function helpers.file_test(path, file, callback)
   end)
 end
 
+function helpers.dir_test(path, callback)
+  awful.spawn.easy_async_with_shell("test -d " .. path .. " && echo true || echo false", function(stdout)
+    local stdout = stdout:gsub("\n", "")
+    if stdout == "true" then
+      callback(true)
+    else
+      callback(false)
+    end
+  end)
+end
+
 return helpers
