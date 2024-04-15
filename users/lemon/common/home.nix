@@ -6,14 +6,23 @@
 
   home = {
     packages = with pkgs; [
-      tym hilbish eza bat thefuck trashy fd ripgrep python3 imagemagick
-      firefox webcord-vencord freetube teams-for-linux
-      pcmanfm xarchiver ffmpegthumbnailer filezilla gparted
-      lite-xl vscode github-desktop imhex
+      # Terminal
+      tym hilbish eza bat thefuck trashy fd ripgrep pamixer playerctl imagemagick appimage-run ventoy-bin
+      # Browsing
+      firefox freetube
+      # Communication
+      webcord-vencord srain teams-for-linux
+      # File/storage management
+      pcmanfm ffmpegthumbnailer xarchiver filezilla gparted
+      # Development
+      lite-xl vscode github-desktop imhex python3
+      # Office
       obsidian onlyoffice-bin drawio
-      pavucontrol old.easyeffects mpv helvum tauon feishin audacity
-      loupe feh gimp libsForQt5.kdenlive scrot
-      pamixer playerctl appimage-run ventoy-bin
+      # Audio
+      pavucontrol old.easyeffects helvum tauon feishin audacity
+      # Image/Video
+      loupe mpv flameshot gimp feh libsForQt5.kdenlive scrot
+      # Miscellaneous
       libsForQt5.kruler old.mullvad-vpn localsend
     ];
     username = "lemon";
@@ -43,17 +52,6 @@
       awesome = {
         enable = true;
         package = inputs.nixpkgs-f2k.packages.${pkgs.system}.awesome-luajit-git;
-      };
-    };
-  };
-
-  services = {
-    flameshot = {
-      enable = true;
-      settings = {
-        "General" = {
-          disabledTrayIcon = true;
-        };
       };
     };
   };
