@@ -1,8 +1,8 @@
 { config, pkgs, lib, ... }:
 
 let
+  inherit (lib) mkAliasOptionModule mkIf mkEnableOption mkPackageOption mkOption mkDefault types getExe' maintainers;
   cfg = config.services.wivrn;
-  inherit (lib) mkIf mkEnableOption mkPackageOption mkOption mkDefault mdDoc types getExe' maintainers;
 in
 {
   options = {
@@ -21,20 +21,12 @@ in
       '' // { default = true; };
 
       highPriority = mkEnableOption "high priority capability for wivrn-server" // { default = true; };
-
-      monadoEnvironment = mkOption {
-        type = with types; attrsOf (nullOr (oneOf [ str path package ]));
-        description = mdDoc "Environment variables passed to Monado.";
-        # Default options
-        # https://gitlab.freedesktop.org/monado/monado/-/blob/4548e1738591d0904f8db4df8ede652ece889a76/src/xrt/targets/service/monado.in.service#L12
-        default = {
-          XRT_COMPOSITOR_LOG = "debug";
-          XRT_PRINT_OPTIONS = "on";
-          IPC_EXIT_ON_DISCONNECT = "off";
-        };
-      };
     };
   };
+
+  imports = [
+    (mkAliasOptionModule [ "services" "wivrn" "monadoEnvironment" ] [ "systemd" "user" "services" "wivrn" "environment" ])
+  ];
 
   config = mkIf cfg.enable {
     security.wrappers."wivrn-server" = mkIf cfg.highPriority {
@@ -51,11 +43,6 @@ in
         description = "WiVRn XR runtime service module";
         requires = [ "wivrn.socket" ];
         unitConfig.ConditionUser = "!root";
-        environment = {
-          XRT_COMPOSITOR_LOG = "debug";
-          XRT_PRINT_OPTIONS = "on";
-          IPC_EXIT_ON_DISCONNECT = "off";
-        } // cfg.monadoEnvironment;
         serviceConfig = {
           ExecStart =
             if cfg.highPriority
@@ -82,7 +69,14 @@ in
     };
 
     services = {
-      udev.packages = with pkgs; [ unstable.xr-hardware ];
+      wivrn.monadoEnvironment = {
+        # Default options
+        # https://gitlab.freedesktop.org/monado/monado/-/blob/4548e1738591d0904f8db4df8ede652ece889a76/src/xrt/targets/service/monado.in.service#L12
+        XRT_COMPOSITOR_LOG = mkDefault "debug";
+        XRT_PRINT_OPTIONS = mkDefault "on";
+        IPC_EXIT_ON_DISCONNECT = mkDefault "off";
+      };
+      udev.packages = with pkgs; [ unstable.xr-hardware ]; # WiVRn can be used with some wired headsets
       avahi = {
         enable = true;
         publish = {

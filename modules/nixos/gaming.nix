@@ -17,7 +17,6 @@
     wivrn = {
       enable = true;
       package = pkgs.unstable.callPackage ../../pkgs/wivrn { };
-      hardwarePackage = pkgs.unstable.xr-hardware;
       openFirewall = true;
       highPriority = true;
       defaultRuntime = true;
@@ -29,7 +28,7 @@
       enable = true;
       # Until the change gets ported to stable
       #extraCompatPackages = with inputs.nix-gaming.packages.${pkgs.system}; [
-      #  proton-ge northstar-proton faf-client-bin
+      #  proton-ge
       #];
     };
     adb.enable = true;
