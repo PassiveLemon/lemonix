@@ -1,3 +1,3 @@
-[submodule "users/lemon/common/dots/.config/awesome/libraries/bling"]
-	path = users/lemon/common/dots/.config/awesome/libraries/bling
+[submodule "users/lemon/common/home/.config/awesome/libraries/bling"]
+	path = users/lemon/common/home/.config/awesome/libraries/bling
 	url = https://github.com/BlingCorp/bling
