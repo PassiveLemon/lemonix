@@ -57,6 +57,13 @@
 
   powerManagement.enable = true;
 
+  nix = {
+    settings = {
+      cores = 3;
+      max-jobs = 1;
+    };
+  };
+
   # Drives
   # 128 GB Internal (Root)
 

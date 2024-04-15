@@ -21,7 +21,7 @@
       "cgroup_enable=memory"
       "cgroup_memory=1"
     ];
-    kernelPackages = pkgs.linuxPackages_rpi4;
+    kernelPackages = pkgs.linuxKernel.packages.linux_rpi4;
   };
 
   networking = {
@@ -108,6 +108,13 @@
       filter = "*rpi-4-*.dtb";
     };
     enableRedistributableFirmware = true;
+  };
+
+  nix = {
+    settings = {
+      cores = 3;
+      max-jobs = 1;
+    };
   };
 
   # Drives

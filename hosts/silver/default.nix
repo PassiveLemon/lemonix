@@ -86,6 +86,13 @@
     };
   };
 
+  nix = {
+    settings = {
+      cores = 10;
+      max-jobs = 1;
+    };
+  };
+
   # Drives
   # 500 GB Crucial (Root)
 
