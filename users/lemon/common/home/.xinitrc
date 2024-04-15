@@ -9,5 +9,8 @@ if command -v dbus-update-activation-environment >/dev/null 2>&1; then
   dbus-update-activation-environment DISPLAY XAUTHORITY
 fi
 
-exec awesome
-exec autorandr Default
+systemctl --user start nixos-fake-graphical-session.target
+
+awesome
+
+systemctl --user stop nixos-fake-graphical-session.target
