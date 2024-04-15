@@ -23,23 +23,23 @@
     ];
     file = {
       ".config/autostart/" = {
-        source = ./dots/.config/autostart;
+        source = ./home/.config/autostart;
         recursive = true;
       };
       ".config/awesome/config" = {
-        source = ./dots/.config/awesome/config;
+        source = ./home/.config/awesome/config;
         recursive = true;
       };
       ".config/awesome/signal" = {
-        source = ./dots/.config/awesome/signal;
+        source = ./home/.config/awesome/signal;
         recursive = true;
       };
       ".config/awesome/ui" = {
-        source = ./dots/.config/awesome/ui;
+        source = ./home/.config/awesome/ui;
         recursive = true;
       };
       ".local/bin/passivelemon" = {
-        source = ./dots/.local/bin/passivelemon;
+        source = ./home/.local/bin/passivelemon;
         recursive = true;
       };
     };

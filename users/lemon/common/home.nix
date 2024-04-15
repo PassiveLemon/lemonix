@@ -20,15 +20,19 @@
     homeDirectory = "/home/lemon";
     file = {
       ".config/" = {
-        source = ./dots/.config;
+        source = ./home/.config;
         recursive = true;
       };
       ".vscode/" = {
-        source = ./dots/.vscode;
+        source = ./home/.vscode;
         recursive = true;
       };
       ".xinitrc" = {
-        source = ./dots/.xinitrc;
+        source = ./home/.xinitrc;
+      };
+      "Documents" = {
+        source = ./home/Documents;
+        recursive = true;
       };
     };
   };
@@ -113,10 +117,10 @@
     };
 
     desktopEntries = {
-      "Discord" = { # Alias Discord to Webcord with CSS theme. Currently broken
+      "Discord" = { # Alias Discord to Webcord with CSS theme. Theme is currently broken
         name = "Discord";
-        exec = "webcord -- --add-css-theme=/home/lemon/.config/BetterDiscord/themes/Lemon.theme.css";
-        icon = "/home/lemon/.icons/Papirus/64x64/apps/webcord.svg";
+        exec = "webcord";
+        icon = "${pkgs.papirus-icon-theme}/share/icons/Papirus/64x64/apps/webcord.svg";
         terminal = false;
         type = "Application";
         categories = [ "Application" ];

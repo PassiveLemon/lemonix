@@ -15,7 +15,7 @@ promptua.setConfig({
 })
 
 promptua.setTheme({
-  { 
+  {
     separator = "┃ ",
     format    = "@style@icon@info",
   },
@@ -24,7 +24,7 @@ promptua.setTheme({
     style     = "yellow",
     format    = "@style@icon@info",
   },
-  { 
+  {
     separator = "┃ ",
     format    = "@style@icon@info",
   },
@@ -33,7 +33,7 @@ promptua.setTheme({
     style     = "blue",
     format    = "@style@icon@info",
   },
-  { 
+  {
     separator = "┃ ",
     format    = "@style@icon@info",
   },

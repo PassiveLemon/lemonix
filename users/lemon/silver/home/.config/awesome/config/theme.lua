@@ -64,7 +64,7 @@ theme.bg_urgent      = theme.redd
 
 theme.fg_normal      = theme.fg0
 theme.fg_minimize    = theme.fg2
-theme.fg_focus       = theme.fg3
+theme.fg_focus       = theme.fg1
 theme.fg_urgent      = theme.fg3
 
 theme.ui_main_bg     = theme.bg0
