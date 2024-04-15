@@ -233,8 +233,8 @@ screen.connect_signal("request::desktop_decoration", function(s)
     text = "󰎈",
     bg_focus = b.bg4,
   })
-  awesome.connect_signal("signal::playerctl::metadata", function(_, _, _, _, _, status)
-    if status == "Playing" then
+  awesome.connect_signal("signal::playerctl::metadata", function(metadata_table)
+    if metadata_table.status == "Playing" then
       pill_music.visible = true
     else
       pill_music.visible = false
