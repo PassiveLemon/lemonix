@@ -10,11 +10,9 @@ in
   home.packages = with pkgs; [
     protonup-ng
     gamemode dxvk
-    inputs.nix-gaming.packages.${pkgs.system}.viper
     r2modman
     lunar-client prismlauncher
-    inputs.lemonake.packages.${pkgs.system}.gdlauncher-carbon
-    #(callPackage ../../pkgs/gdlauncher-dw { })
+    inputs.lemonake.packages.${pkgs.system}.gdlauncher-carbon-unstable
     bottles
     ludusavi
   ];

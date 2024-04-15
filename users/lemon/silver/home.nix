@@ -10,6 +10,7 @@
   home = {
     packages = with pkgs; [
       headsetcontrol
+      guitarix
       easytag onthespot
       xclicker
 
