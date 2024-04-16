@@ -96,7 +96,7 @@ theme.margins = 4
 theme.layout_dwindle = themes_path .. "default/layouts/dwindlew.png"
 
 -- Media
-theme.playerctl_clients = "tauon,spotify,Feishin -s"
+theme.playerctl_players = "tauon,spotify,Feishin -s"
 theme.playerctl_art_cache_dir = os.getenv("HOME") .. "/.cache/passivelemon/lemonix/media/"
 
 --

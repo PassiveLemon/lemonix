@@ -5,18 +5,29 @@ local b = require("beautiful")
 local h = require("helpers")
 
 local metadata = { }
-local playerctl_cmd = "playerctl "
+local playerctl_cmd = "playerctl " -- This doesn't change. It gets the metadata of the song and active player.
+local playerctl_cmder = "playerctl " -- This one does change. It is used to control playerctl and can be overridden.
 
 local function emit()
   awesome.emit_signal("signal::playerctl::metadata", metadata)
 end
 
-local function playerctl_clients()
-  if b.playerctl_clients then
-    playerctl_cmd = "playerctl -p '" .. b.playerctl_clients .. "' "
+if b.playerctl_players then
+  playerctl_cmd = "playerctl -p '" .. b.playerctl_players .. "' "
+  playerctl_cmder = "playerctl -p '" .. b.playerctl_players .. "' "
+end
+
+local function playerctl_players(override)
+  if override then
+    if override == "%all%" then
+      playerctl_cmder = "playerctl --all-players "
+    else
+      playerctl_cmder = "playerctl -p '" .. override .. "' "
+    end
+  elseif b.playerctl_players then
+    playerctl_cmder = "playerctl -p '" .. b.playerctl_players .. "' "
   end
 end
-playerctl_clients()
 
 local function art_image_locator(client_cache_dir, art_url_trim)
   local art_cache_dir = b.playerctl_art_cache_dir
@@ -43,16 +54,16 @@ local function art_image_locator(client_cache_dir, art_url_trim)
 end
 local function art_image_fetch()
   -- By means of the highest priority client, we define the art file name (trim) by grabbing a unique part of the url and a client cache directory if supported.
-  if metadata.player_name == "Feishin" then
+  if metadata.player_name == "tauon" then
+    local art_url_trim = metadata.art_url:gsub(".*/", "")
+    local client_cache_dir = os.getenv("HOME") .. "/.cache/TauonMusicBox/export/"
+    art_image_locator(client_cache_dir, art_url_trim)
+  elseif metadata.player_name == "Feishin" then
     local art_url_trim = metadata.art_url:match("?id=(.*)&u=Lemon")
     art_image_locator(nil, art_url_trim)
   elseif metadata.player_name == "spotify" then
     local art_url_trim = metadata.art_url:gsub(".*/", "")
     art_image_locator(nil, art_url_trim)
-  elseif metadata.player_name == "tauon" then
-    local art_url_trim = metadata.art_url:gsub(".*/", "")
-    local client_cache_dir = os.getenv("HOME") .. "/.cache/TauonMusicBox/export/"
-    art_image_locator(client_cache_dir, art_url_trim)
   end
 end
 
@@ -76,7 +87,7 @@ local function metadata_fetch(position_zero)
     metadata.position = stdout:match("position_(.*)volume_") or ""
     metadata.volume = stdout:match("volume_(.*)") or ""
     -- Override
-    if position_zero then -- Just sets the position to the lowest value a 0-100 slider can actually show so it doesn't fallback to an nil value.
+    if position_zero then -- Just sets the position to the lowest value a 0-100 slider can actually show so it doesn't fallback to a nil value.
       metadata.position = (metadata.length / 525)
     end
     -- Only run art_image_fetch() if metadata has not been cached yet or the song has changed. Detected by comparing old and new stdouts for media metadata.
@@ -102,10 +113,10 @@ local playerctl_timer = gears.timer({
 local function shuffler()
   playerctl_timer:stop()
   if metadata.shuffle == "true" then
-    awful.spawn.spawn(playerctl_cmd .. "shuffle off")
+    awful.spawn.spawn(playerctl_cmder .. "shuffle off")
     metadata.shuffle = "false"
   elseif metadata.shuffle == "false" then
-    awful.spawn.spawn(playerctl_cmd .. "shuffle on")
+    awful.spawn.spawn(playerctl_cmder .. "shuffle on")
     metadata.shuffle = "true"
   end
   emit()
@@ -114,7 +125,7 @@ end
 
 local function previouser()
   playerctl_timer:stop()
-  awful.spawn.spawn(playerctl_cmd .. "previous")
+  awful.spawn.spawn(playerctl_cmder .. "previous")
   metadata_fetch(true)
   playerctl_timer:start()
 end
@@ -122,10 +133,10 @@ end
 local function toggler()
   playerctl_timer:stop()
   if metadata.status == "Playing" then
-    awful.spawn.spawn(playerctl_cmd .. "pause")
+    awful.spawn.spawn(playerctl_cmder .. "pause")
     metadata.status = "Paused"
   elseif metadata.status == "Paused" then
-    awful.spawn.spawn(playerctl_cmd .. "play")
+    awful.spawn.spawn(playerctl_cmder .. "play")
     metadata.status = "Playing"
   end
   emit()
@@ -133,13 +144,13 @@ local function toggler()
 end
 local function play_pauser(option)
   playerctl_timer:stop()
-  awful.spawn.spawn(playerctl_cmd .. option)
+  awful.spawn.spawn(playerctl_cmder .. option)
   playerctl_timer:start()
 end
 
 local function nexter()
   playerctl_timer:stop()
-  awful.spawn.spawn(playerctl_cmd .. "next")
+  awful.spawn.spawn(playerctl_cmder .. "next")
   metadata_fetch(true)
   playerctl_timer:start()
 end
@@ -147,13 +158,13 @@ end
 local function looper()
   playerctl_timer:stop()
   if metadata.loop == "None" then
-    awful.spawn.spawn(playerctl_cmd .. "loop Playlist")
+    awful.spawn.spawn(playerctl_cmder .. "loop Playlist")
     metadata.loop = "Playlist"
   elseif metadata.loop == "Playlist" then
-    awful.spawn.spawn(playerctl_cmd .. "loop Track")
+    awful.spawn.spawn(playerctl_cmder .. "loop Track")
     metadata.loop = "Track"
   elseif metadata.loop == "Track" then
-    awful.spawn.spawn(playerctl_cmd .. "loop None")
+    awful.spawn.spawn(playerctl_cmder .. "loop None")
     metadata.loop = "None"
   end
   emit()
@@ -162,13 +173,13 @@ end
 
 local function positioner(position_new)
   playerctl_timer:stop()
-  awful.spawn(playerctl_cmd .. "position " .. h.round(((position_new * metadata.length) / 100000000), 3))
+  awful.spawn(playerctl_cmder .. "position " .. h.round(((position_new * metadata.length) / 100000000), 3))
   playerctl_timer:start()
 end
 
 local function volumer(volume_new)
   playerctl_timer:stop()
-  awful.spawn(playerctl_cmd .. "volume " .. h.round((volume_new / 100), 3))
+  awful.spawn(playerctl_cmder .. "volume " .. h.round((volume_new / 100), 3))
   playerctl_timer:start()
 end
 
@@ -178,36 +189,45 @@ awesome.connect_signal("signal::playerctl::update", function()
   playerctl_timer:start()
 end)
 
-awesome.connect_signal("signal::playerctl::shuffle", function()
+awesome.connect_signal("signal::playerctl::shuffle", function(player_override)
+  playerctl_players(player_override)
   shuffler()
 end)
 
-awesome.connect_signal("signal::playerctl::previous", function()
+awesome.connect_signal("signal::playerctl::previous", function(player_override)
+  playerctl_players(player_override)
   previouser()
 end)
 
-awesome.connect_signal("signal::playerctl::toggle", function()
+awesome.connect_signal("signal::playerctl::toggle", function(player_override)
+  playerctl_players(player_override)
   toggler()
 end)
-awesome.connect_signal("signal::playerctl::pause", function()
+awesome.connect_signal("signal::playerctl::pause", function(player_override)
+  playerctl_players(player_override)
   play_pauser("pause")
 end)
-awesome.connect_signal("signal::playerctl::play", function()
+awesome.connect_signal("signal::playerctl::play", function(player_override)
+  playerctl_players(player_override)
   play_pauser("play")
 end)
 
-awesome.connect_signal("signal::playerctl::next", function()
+awesome.connect_signal("signal::playerctl::next", function(player_override)
+  playerctl_players(player_override)
   nexter()
 end)
 
-awesome.connect_signal("signal::playerctl::loop", function()
+awesome.connect_signal("signal::playerctl::loop", function(player_override)
+  playerctl_players(player_override)
   looper()
 end)
 
-awesome.connect_signal("signal::playerctl::position", function(position_new)
+awesome.connect_signal("signal::playerctl::position", function(position_new, player_override)
+  playerctl_players(player_override)
   positioner(position_new)
 end)
 
-awesome.connect_signal("signal::playerctl::volume", function(volume_new)
+awesome.connect_signal("signal::playerctl::volume", function(volume_new, player_override)
+  playerctl_players(player_override)
   volumer(volume_new)
 end)

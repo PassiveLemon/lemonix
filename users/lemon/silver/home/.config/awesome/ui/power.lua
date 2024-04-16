@@ -202,7 +202,7 @@ end
 lock_button:connect_signal("button::press", function()
   main.visible = false
   awesome.emit_signal('ui::lock::toggle')
-  awesome.emit_signal("signal::playerctl::pause")
+  awesome.emit_signal("signal::playerctl::pause", "%all%")
 end)
 
 poweroff_button:connect_signal("button::press", function()
