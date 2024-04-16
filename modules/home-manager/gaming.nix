@@ -15,16 +15,19 @@ in
     inputs.lemonake.packages.${pkgs.system}.gdlauncher-carbon-unstable
     bottles
     ludusavi
+
+    # Testing
+    inputs.envision.packages.${pkgs.system}.envision
   ];
 
   services = {
     steamvr = {
       runtimeOverride = {
-        enable = true;
+        enable = false;
         path = "${inputs.nixpkgs-xr.packages.${pkgs.system}.opencomposite}/lib/opencomposite";
       };
       activeRuntimeOverride = {
-        enable = true;
+        enable = false;
         path = "${wivrn}/share/openxr/1/openxr_wivrn.json";
       };
     };
