@@ -8,10 +8,10 @@
         4789 7946 # Docker Swarm
       ];
       allowedTCPPortRanges = [
-        { from = 50000; to = 55000; } # Docker containers
+        { from = 50000; to = 56000; } # Docker containers
       ];
       allowedUDPPortRanges = [
-        { from = 50000; to = 55000; } # Docker containers
+        { from = 50000; to = 56000; } # Docker containers
       ];
     };
   };
@@ -56,14 +56,11 @@
       "Z /home/docker/Containers 770 docker docker_management - -"
       "Z /home/BACKUPDRIVE/Docker 770 docker docker_management - -"
 
-      "Z /home/docker/Containers/Media/Invidious 777 docker docker_management - -"
-
       "Z /home/HDD2TBEXT4/Media 770 docker docker_management - -"
       "Z /home/HDD2TBEXT4/Media2 770 docker docker_management - -"
       "Z /home/HDD2TBEXT4/Downloads/JDownloader 770 docker docker_management - -"
-      "Z /home/HDD2TBEXT4/Downloads/Torrent 770 docker docker_management - -"
-      "Z /home/HDD2TBEXT4/Downloads/Incomplete/Torrent 770 docker docker_management - -"
-      "Z /home/HDD2TBEXT4/Downloads/Incomplete/Soulseek 770 docker docker_management - -"
+
+      #"Z /home/docker/Containers/Media/Invidious 777 docker docker_management - -"
     ];
   };
 }
