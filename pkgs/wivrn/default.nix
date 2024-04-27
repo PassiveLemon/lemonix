@@ -35,32 +35,23 @@
 }:
 stdenv.mkDerivation (finalAttrs: {
   pname = "wivrn";
-  version = "0.13";
+  version = "0.14.1";
 
   src = fetchFromGitHub {
     owner = "meumeu";
     repo = "wivrn";
     rev = "v${finalAttrs.version}";
-    hash = "sha256-Xg2LRwPh0DbvrwPHno646TndM+JVoRz7I8DIM4c7uHs=";
+    hash = "sha256-dnc9UNETDzT+sqo9bSTP1qZs/7kWftDo50yRgP94Mh4=";
   };
 
   monadoSrc = fetchFromGitLab {
     domain = "gitlab.freedesktop.org";
     owner = "monado";
     repo = "monado";
-    # Version stated in CMakeList for WiVRn 0.13
+    # Version stated in CMakeList for WiVRn 0.14.1
     rev = "ffb71af26f8349952f5f820c268ee4774613e200";
     hash = "sha256-+RTHS9ShicuzhiAVAXf38V6k4SVr+Bc2xUjpRWZoB0c=";
   };
-
-  # The library path to the OpenXR runtime requires a relative path from the config file to the binary in the nix store.
-  # The CMakeList has relative directory paths that cause malformation of the path. https://github.com/Meumeu/WiVRn/issues/47.
-  # What it is: ../../..//nix/store/...
-  # What we want: /nix/store/...
-  patchPhase = ''
-    substituteInPlace ./server/CMakeLists.txt \
-      --replace "../../../" ""
-  '';
 
   nativeBuildInputs = [
     cmake
@@ -104,7 +95,7 @@ stdenv.mkDerivation (finalAttrs: {
     (lib.cmakeBool "WIVRN_USE_VAAPI" true)
     (lib.cmakeBool "WIVRN_USE_X264" true)
     (lib.cmakeBool "WIVRN_USE_NVENC" false)
-    #(lib.cmakeBool "WIVRN_OPENXR_INSTALL_ABSOLUTE_RUNTIME_PATH" true) # Uncomment once this option gets released and remove the patch as it won't be needed.
+    (lib.cmakeBool "WIVRN_OPENXR_INSTALL_ABSOLUTE_RUNTIME_PATH" true)
     (lib.cmakeBool "FETCHCONTENT_FULLY_DISCONNECTED" true)
     (lib.cmakeFeature "FETCHCONTENT_SOURCE_DIR_MONADO" "${finalAttrs.monadoSrc}")
   ];

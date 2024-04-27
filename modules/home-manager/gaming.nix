@@ -23,11 +23,11 @@ in
   services = {
     steamvr = {
       runtimeOverride = {
-        enable = false;
+        enable = true;
         path = "${inputs.nixpkgs-xr.packages.${pkgs.system}.opencomposite}/lib/opencomposite";
       };
       activeRuntimeOverride = {
-        enable = false;
+        enable = true;
         path = "${wivrn}/share/openxr/1/openxr_wivrn.json";
       };
     };
