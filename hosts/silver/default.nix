@@ -35,7 +35,7 @@
     };
     enableIPv6 = false;
     defaultGateway = "192.168.1.1";
-    nameservers = [ "192.168.1.178" "1.1.1.1" ];
+    nameservers = [ "192.168.1.177" "1.1.1.1" "9.9.9.9" ];
   };
 
   users = {

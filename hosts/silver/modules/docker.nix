@@ -2,10 +2,12 @@
   networking = {
     firewall = {
       allowedTCPPorts = [
-        2377 7946 # Docker socket & Swarm
+        53 # DNS
+        80 443 # Web traffic
+        #2377 7946 # Docker socket & Swarm
       ];
       allowedUDPPorts = [
-        4789 7946 # Docker Swarm
+        #4789 7946 # Docker Swarm
       ];
       allowedTCPPortRanges = [
         { from = 50000; to = 56000; } # Docker containers
@@ -60,6 +62,7 @@
       "Z /home/HDD2TBEXT4/Media2 770 docker docker_management - -"
       "Z /home/HDD2TBEXT4/Downloads/JDownloader 770 docker docker_management - -"
 
+      "z /home/docker/Containers/Networking/Traefik/acme.json 600 docker docker_management - -"
       #"Z /home/docker/Containers/Media/Invidious 777 docker docker_management - -"
     ];
   };

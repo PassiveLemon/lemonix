@@ -95,15 +95,16 @@
         ];
       };
       # Raspberry Pi
-      "palladium" = inputs.nixos.lib.nixosSystem {
-        inherit system specialArgs;
-        modules = [
-          nixpkgs-overlays
-          inputs.nixos-hardware.nixosModules.common-pc-ssd
-          inputs.nixos-hardware.nixosModules.raspberry-pi-4
-          ./hosts/palladium/default.nix
-        ];
-      };
+      # The fucking storage drive died so it's out of commission.
+      #"palladium" = inputs.nixos.lib.nixosSystem {
+      #  inherit system specialArgs;
+      #  modules = [
+      #    nixpkgs-overlays
+      #    inputs.nixos-hardware.nixosModules.common-pc-ssd
+      #    inputs.nixos-hardware.nixosModules.raspberry-pi-4
+      #    ./hosts/palladium/default.nix
+      #  ];
+      #};
     };
     homeConfigurations = {
       "lemon@silver" = inputs.home-manager.lib.homeManagerConfiguration {
