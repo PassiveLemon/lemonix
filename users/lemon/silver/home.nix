@@ -13,7 +13,6 @@
       guitarix
       easytag #onthespot
       xclicker
-      ciscoPacketTracer8
 
       (callPackage ../../../pkgs/onthespot { })
 
@@ -21,6 +20,8 @@
       inputs.lemonake.packages.${pkgs.system}.hd2pystratmacro
       inputs.lemonake.packages.${pkgs.system}.poepyautopot
       inputs.lemonake.packages.${pkgs.system}.tilp2
+
+      zed-editor
 
       # Development
       act nvfetcher nixpkgs-review jq dotnet-sdk_8
