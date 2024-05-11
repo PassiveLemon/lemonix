@@ -112,7 +112,7 @@
         "x-scheme-handler/https" = "firefox.desktop";
       };
     };
-
+    configFile."mimeapps.list".force = true;
     desktopEntries = {
       "Discord" = { # Alias Discord to Webcord with CSS theme. Theme is currently broken
         name = "Discord";
@@ -125,9 +125,11 @@
     };
   };
 
-  nixpkgs.config = {
-    allowUnfree = true;
-    allowUnfreePredicate = (_: true);
+  nixpkgs = {
+    config = {
+      allowUnfree = true;
+      allowUnfreePredicate = (_: true);
+    };
   };
 }
 
