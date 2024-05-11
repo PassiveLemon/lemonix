@@ -2,10 +2,10 @@
 , stdenv
 , fetchFromGitHub
 , fetchFromGitLab
+, fetchpatch
 , avahi
 , boost
 , cmake
-, cudaPackages
 , eigen
 , ffmpeg
 , freetype
@@ -22,6 +22,7 @@
 , nlohmann_json
 , onnxruntime
 , openxr-loader
+, pipewire
 , pkg-config
 , python3
 , shaderc
@@ -44,18 +45,49 @@ stdenv.mkDerivation (finalAttrs: {
     hash = "sha256-dnc9UNETDzT+sqo9bSTP1qZs/7kWftDo50yRgP94Mh4=";
   };
 
-  monadoSrc = fetchFromGitLab {
-    domain = "gitlab.freedesktop.org";
-    owner = "monado";
-    repo = "monado";
+  monadoSrc = stdenv.mkDerivation (finalAttrs: {
+    pname = "monado";
     # Version stated in CMakeList for WiVRn 0.14.1
-    rev = "ffb71af26f8349952f5f820c268ee4774613e200";
-    hash = "sha256-+RTHS9ShicuzhiAVAXf38V6k4SVr+Bc2xUjpRWZoB0c=";
-  };
+    version = "ffb71af26f8349952f5f820c268ee4774613e200";
+
+    src = fetchFromGitLab {
+      domain = "gitlab.freedesktop.org";
+      owner = "monado";
+      repo = "monado";
+      rev = finalAttrs.version;
+      hash = "sha256-+RTHS9ShicuzhiAVAXf38V6k4SVr+Bc2xUjpRWZoB0c=";
+    };
+
+    patches = [
+      (fetchpatch {
+        name = "0001-c-multi-disable-dropping-of-old-frames.patch";
+        url = "https://raw.githubusercontent.com/Meumeu/WiVRn/master/patches/monado/0001-c-multi-disable-dropping-of-old-frames.patch";
+        hash = "sha256-/m0idwukz1jEGkoZ1KDwXQXxbqdbVq4I7F6clnHp+YM=";
+      })
+      (fetchpatch {
+        name = "0002-ipc-server-Always-listen-to-stdin.patch";
+        url = "https://raw.githubusercontent.com/Meumeu/WiVRn/master/patches/monado/0002-ipc-server-Always-listen-to-stdin.patch";
+        hash = "sha256-hAZffrYu3I3RcvQ62IwedKa5DyvJ3Ws6ghbnGgEVxVw=";
+      })
+      (fetchpatch {
+        name = "0003-c-multi-Don-t-log-frame-time-diff.patch";
+        url = "https://raw.githubusercontent.com/Meumeu/WiVRn/master/patches/monado/0003-c-multi-Don-t-log-frame-time-diff.patch";
+        hash = "sha256-jZWS1IBo1/PyUpRfMt2A8/8f3zcFn3f9wAxMRgLA+cE=";
+      })
+    ];
+
+    postPatch = ''
+      substituteInPlace CMakeLists.txt \
+        --replace "add_subdirectory(doc)" ""
+    '';
+
+    dontBuild = true;
+
+    installPhase = "cp -r . $out";
+  });
 
   nativeBuildInputs = [
     cmake
-    cudaPackages.cuda_nvcc
     git
     pkg-config
     python3
@@ -64,7 +96,6 @@ stdenv.mkDerivation (finalAttrs: {
   buildInputs = [
     avahi
     boost
-    cudaPackages.cuda_cudart
     eigen
     ffmpeg
     freetype
@@ -80,6 +111,7 @@ stdenv.mkDerivation (finalAttrs: {
     nlohmann_json
     onnxruntime
     openxr-loader
+    pipewire
     shaderc
     spdlog
     systemd
@@ -94,7 +126,7 @@ stdenv.mkDerivation (finalAttrs: {
     (lib.cmakeBool "WIVRN_BUILD_CLIENT" false)
     (lib.cmakeBool "WIVRN_USE_VAAPI" true)
     (lib.cmakeBool "WIVRN_USE_X264" true)
-    (lib.cmakeBool "WIVRN_USE_NVENC" false)
+    (lib.cmakeBool "WIVRN_USE_NVENC" true)
     (lib.cmakeBool "WIVRN_OPENXR_INSTALL_ABSOLUTE_RUNTIME_PATH" true)
     (lib.cmakeBool "FETCHCONTENT_FULLY_DISCONNECTED" true)
     (lib.cmakeFeature "FETCHCONTENT_SOURCE_DIR_MONADO" "${finalAttrs.monadoSrc}")
