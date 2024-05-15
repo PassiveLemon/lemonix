@@ -2,6 +2,7 @@
 
 # Hardware
 headsetcontrol -l 0 -s 110
+xset s off -dpms
 
 # Programs
 pgrep -x picom > /dev/null || picom -b &

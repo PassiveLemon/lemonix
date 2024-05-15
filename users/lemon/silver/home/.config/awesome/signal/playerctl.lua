@@ -59,7 +59,7 @@ local function art_image_fetch()
     local client_cache_dir = os.getenv("HOME") .. "/.cache/TauonMusicBox/export/"
     art_image_locator(client_cache_dir, art_url_trim)
   elseif metadata.player_name == "Feishin" then
-    local art_url_trim = metadata.art_url:match("?id=(.*)&u=Lemon")
+    local art_url_trim = metadata.art_url:match("?id=(.*)&u=")
     art_image_locator(nil, art_url_trim)
   elseif metadata.player_name == "spotify" then
     local art_url_trim = metadata.art_url:gsub(".*/", "")
