@@ -47,22 +47,31 @@
     };
     nixpkgs-overlays = ({ inputs, outputs, config, system, ... }: {
       nixpkgs.overlays = [
-        (final: _prev: {
+        (final: prev: {
+          # Overlay use of a package on the previous nixos-(stable) branch
           old = import inputs.nixos-old {
             system = final.system;
             config = final.config;
           };
+          # Overlay use of a package on the nixos-(stable) branch
           stable = import inputs.nixos {
             system = final.system;
             config = final.config;
           };
+          # Overlay use of a package on the nixpkgs-unstable branch
           unstable = import inputs.nixpkgs {
             system = final.system;
             config = final.config;
           };
+          # Overlay use of a package on the master branch
           master = import inputs.master {
             system = final.system;
             config = final.config;
+          };
+          # Overlay use of broken package
+          broken = import inputs.nixpkgs {
+            system = final.system;
+            config = final.config // { allowBroken = true; };
           };
         })
       ];
@@ -106,6 +115,7 @@
       #  ];
       #};
     };
+
     homeConfigurations = {
       "lemon@silver" = inputs.home-manager.lib.homeManagerConfiguration {
         inherit pkgs extraSpecialArgs;
