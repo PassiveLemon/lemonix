@@ -26,10 +26,9 @@
   programs = {
     steam = {
       enable = true;
-      # Until the change gets ported to stable
-      #extraCompatPackages = with inputs.nix-gaming.packages.${pkgs.system}; [
-      #  proton-ge
-      #];
+      extraCompatPackages = with pkgs; [
+        proton-ge-bin
+      ];
     };
     adb.enable = true;
     alvr = { # Module of lemonake
@@ -39,7 +38,9 @@
     };
   };
 
-  hardware.opengl.extraPackages = with pkgs; [
-    (unstable.callPackage ../../pkgs/monado-vulkan-layers { })
-  ];
+  hardware = {
+    opengl.extraPackages = with pkgs; [
+      (unstable.callPackage ../../pkgs/monado-vulkan-layers { })
+    ];
+  };
 }
