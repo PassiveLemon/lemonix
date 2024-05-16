@@ -40,7 +40,7 @@
 
         # Other
         daemon = true;
-        backend = "xrender";
+        backend = "glx";
         vsync = false;
         use-damage = true;
         log-level = "INFO";
@@ -51,17 +51,15 @@
         wintypes = {
           tooltip = { fade = false; };
           dock = {
-            clip-shadow-above = true;
             animation = "none";
+            clip-shadow-above = true;
           };
           desktop = {
-            shadow = false;
             animation = "none";
+            shadow = false;
           };
           dnd = { shadow = true; };
-          popup_menu = {
-            shadow = false;
-          };
+          popup_menu = { shadow = false; };
           utility = { shadow = false; };
         };
 
