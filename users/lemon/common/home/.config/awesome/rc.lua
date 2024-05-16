@@ -8,5 +8,5 @@ visual_editor = "code"
 editor_cmd = terminal .. " -e " .. editor
 
 require("config")
-require("ui")
 require("signal")
+require("ui")
