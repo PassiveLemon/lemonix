@@ -8,6 +8,11 @@ local pam = require("liblua_pam") -- Compile and link from https://github.com/RM
 
 local function visible(v)
   awesome.emit_signal("ui::lock::screen", v)
+  if v then
+    awful.spawn.with_shell("xset s on +dpms")
+  else
+    awful.spawn.with_shell("xset s off -dpms")
+  end
 end
 
 local function auth(password)
@@ -15,7 +20,7 @@ local function auth(password)
 end
 local function grab()
   local input = ""
-  local grabber = awful.keygrabber {
+  local grabber = awful.keygrabber({
     auto_start = true,
     stop_event = "release",
     mask_event_callback = true,
@@ -60,7 +65,7 @@ local function grab()
         end
       end
     end
-  }
+  })
   grabber:start()
 end
 
