@@ -169,6 +169,14 @@ awful.screen.connect_for_each_screen(function(s)
   awful.placement.centered(main)
 
   awesome.connect_signal("ui::lock::state", function(state)
-    main.visible = state
+    if state then
+      -- What should happen when the lockscreen is enabled
+      main.visible = true
+      awful.spawn.with_shell("xset s on +dpms")
+    else
+      -- What should happen when the lockscreen is disabled
+      main.visible = false
+      awful.spawn.with_shell("xset s off -dpms")
+    end
   end)
 end)

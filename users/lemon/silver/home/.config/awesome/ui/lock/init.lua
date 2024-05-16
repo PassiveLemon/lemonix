@@ -62,21 +62,10 @@ local function grab()
   grabber:start()
 end
 
-local function visible(v)
-  awesome.emit_signal("ui::lock::state", v)
-  if v then
-    -- What should happen when the lockscreen is enabled
-    grab()
-    awful.spawn.with_shell("xset s on +dpms")
-  else
-    -- What should happen when the lockscreen is disabled
-    awful.spawn.with_shell("xset s off -dpms")
-  end
-end
-
 awesome.connect_signal("ui::lock::toggle", function()
-  visible(true)
+  awesome.emit_signal("ui::lock::state", true)
+  grab()
 end)
 
 -- Lock by default
-visible(true)
+awesome.emit_signal('ui::lock::toggle')
