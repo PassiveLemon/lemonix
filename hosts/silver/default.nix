@@ -109,9 +109,13 @@
 
   nix = {
     settings = {
-      cores = 10;
+      cores = 8;
       max-jobs = 1;
     };
+  };
+
+  nixpkgs = {
+    config.cudaSupport = true;
   };
 
   # Drives
