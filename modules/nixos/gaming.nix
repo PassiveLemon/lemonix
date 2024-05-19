@@ -40,7 +40,7 @@
 
   hardware = {
     opengl.extraPackages = with pkgs; [
-      (unstable.callPackage ../../pkgs/monado-vulkan-layers { })
+      inputs.lemonake.packages.${pkgs.system}.monado-vulkan-layers
     ];
   };
 }
