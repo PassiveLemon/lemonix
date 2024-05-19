@@ -36,18 +36,18 @@
 }:
 stdenv.mkDerivation (finalAttrs: {
   pname = "wivrn";
-  version = "0.14.1";
+  version = "0.15";
 
   src = fetchFromGitHub {
     owner = "meumeu";
     repo = "wivrn";
     rev = "v${finalAttrs.version}";
-    hash = "sha256-dnc9UNETDzT+sqo9bSTP1qZs/7kWftDo50yRgP94Mh4=";
+    hash = "sha256-RVRbL9hqy9pMKjvzwaP+9HGEfdpAhmlnnvqZsEGxlCw=";
   };
 
   monadoSrc = stdenv.mkDerivation (finalAttrs: {
     pname = "monado";
-    # Version stated in CMakeList for WiVRn 0.14.1
+    # Version stated in CMakeList for WiVRn 0.15
     version = "ffb71af26f8349952f5f820c268ee4774613e200";
 
     src = fetchFromGitLab {
