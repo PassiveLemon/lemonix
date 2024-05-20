@@ -22,6 +22,7 @@
 , libpulseaudio
 , libX11
 , libXrandr
+, nix-update-script
 , nlohmann_json
 , onnxruntime
 , openxr-loader
@@ -37,57 +38,55 @@
 , vulkan-tools
 , x264
 }:
-stdenv.mkDerivation (finalAttrs: {
-  pname = "wivrn";
-  version = "0.15";
+let
+  wivrnVersion = "0.15";
 
-  src = fetchFromGitHub {
+  wivrnSrc = fetchFromGitHub {
     owner = "meumeu";
     repo = "wivrn";
-    rev = "v${finalAttrs.version}";
+    rev = "v${wivrnVersion}";
     hash = "sha256-RVRbL9hqy9pMKjvzwaP+9HGEfdpAhmlnnvqZsEGxlCw=";
   };
 
-  monadoSrc = stdenv.mkDerivation (finalAttrs: {
+  monadoVersion = builtins.head (builtins.elemAt (builtins.split
+    "monado\n +GIT_TAG +([A-Za-z0-9]+)"
+    (builtins.readFile (wivrnSrc + "/CMakeLists.txt"))
+  ) 1);
+
+  monado = stdenv.mkDerivation {
     pname = "monado";
-    # Version stated in CMakeList for WiVRn 0.15
-    version = "ffb71af26f8349952f5f820c268ee4774613e200";
+    version = monadoVersion;
 
     src = fetchFromGitLab {
       domain = "gitlab.freedesktop.org";
       owner = "monado";
       repo = "monado";
-      rev = finalAttrs.version;
+      rev = monadoVersion;
       hash = "sha256-+RTHS9ShicuzhiAVAXf38V6k4SVr+Bc2xUjpRWZoB0c=";
     };
 
     patches = [
-      (fetchpatch {
-        name = "0001-c-multi-disable-dropping-of-old-frames.patch";
-        url = "https://raw.githubusercontent.com/Meumeu/WiVRn/master/patches/monado/0001-c-multi-disable-dropping-of-old-frames.patch";
-        hash = "sha256-/m0idwukz1jEGkoZ1KDwXQXxbqdbVq4I7F6clnHp+YM=";
-      })
-      (fetchpatch {
-        name = "0002-ipc-server-Always-listen-to-stdin.patch";
-        url = "https://raw.githubusercontent.com/Meumeu/WiVRn/master/patches/monado/0002-ipc-server-Always-listen-to-stdin.patch";
-        hash = "sha256-hAZffrYu3I3RcvQ62IwedKa5DyvJ3Ws6ghbnGgEVxVw=";
-      })
-      (fetchpatch {
-        name = "0003-c-multi-Don-t-log-frame-time-diff.patch";
-        url = "https://raw.githubusercontent.com/Meumeu/WiVRn/master/patches/monado/0003-c-multi-Don-t-log-frame-time-diff.patch";
-        hash = "sha256-jZWS1IBo1/PyUpRfMt2A8/8f3zcFn3f9wAxMRgLA+cE=";
-      })
+      (wivrnSrc + "/patches/monado/0001-c-multi-disable-dropping-of-old-frames.patch")
+      (wivrnSrc + "/patches/monado/0002-ipc-server-Always-listen-to-stdin.patch")
+      (wivrnSrc + "/patches/monado/0003-c-multi-Don-t-log-frame-time-diff.patch")
     ];
 
     postPatch = ''
-      substituteInPlace CMakeLists.txt \
-        --replace "add_subdirectory(doc)" ""
+      substituteInPlace CMakeLists.txt --replace "add_subdirectory(doc)" ""
     '';
 
     dontBuild = true;
 
-    installPhase = "cp -r . $out";
-  });
+    installPhase = ''
+      cp -r . $out
+    '';
+  };
+in
+stdenv.mkDerivation {
+  pname = "wivrn";
+  version = wivrnVersion;
+
+  src = wivrnSrc;
 
   nativeBuildInputs = [
     cmake
@@ -130,22 +129,27 @@ stdenv.mkDerivation (finalAttrs: {
   ];
 
   cmakeFlags = [
-    (lib.cmakeBool "WIVRN_BUILD_CLIENT" false)
     (lib.cmakeBool "WIVRN_USE_VAAPI" true)
     (lib.cmakeBool "WIVRN_USE_X264" true)
     (lib.cmakeBool "WIVRN_USE_NVENC" cudaSupport)
+    (lib.cmakeBool "WIVRN_USE_SYSTEMD" true)
+    (lib.cmakeBool "WIVRN_USE_PIPEWIRE" true)
+    (lib.cmakeBool "WIVRN_USE_PULSEAUDIO" true)
+    (lib.cmakeBool "WIVRN_BUILD_CLIENT" false)
     (lib.cmakeBool "WIVRN_OPENXR_INSTALL_ABSOLUTE_RUNTIME_PATH" true)
     (lib.cmakeBool "FETCHCONTENT_FULLY_DISCONNECTED" true)
-    (lib.cmakeFeature "FETCHCONTENT_SOURCE_DIR_MONADO" "${finalAttrs.monadoSrc}")
+    (lib.cmakeFeature "FETCHCONTENT_SOURCE_DIR_MONADO" "${monado}")
   ];
+
+  passthru.updateScript = nix-update-script { };
 
   meta = with lib; {
     description = "An OpenXR streaming application to a standalone headset";
     homepage = "https://github.com/Meumeu/WiVRn/";
-    changelog = "https://github.com/Meumeu/WiVRn/releases/tag/v${version}";
+    changelog = "https://github.com/Meumeu/WiVRn/releases/tag/v${wivrnVersion}";
     license = licenses.gpl3Only;
     maintainers = with maintainers; [ passivelemon ];
     platforms = platforms.linux;
     mainProgram = "wivrn-server";
   };
-})
+}
