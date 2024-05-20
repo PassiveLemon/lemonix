@@ -1,6 +1,7 @@
 { inputs, pkgs, config, lib, ... }:
 let
   wivrn = pkgs.callPackage ../../pkgs/wivrn { };
+  opencomp = pkgs.callPackage ../../pkgs/opencomposite { };
 in
 {
   imports = [
@@ -16,15 +17,21 @@ in
     bottles
     ludusavi
 
-    # Testing
+    # VR
     inputs.envision.packages.${pkgs.system}.envision
+    wlx-overlay-s
+    sidequest autoadb
+    xrgears
+    BeatSaberModManager
   ];
 
   services = {
     steamvr = {
       runtimeOverride = {
         enable = true;
-        path = "${inputs.nixpkgs-xr.packages.${pkgs.system}.opencomposite}/lib/opencomposite";
+        # The Nix package for OpenComposite just doesn't work so I'm using Envision's build
+        #path = "${opencomp}/lib/opencomposite";
+        path = "/home/lemon/.local/share/envision/eb7732c3-e27c-4a93-bbd3-6fcd2f68f909/opencomposite/build";
       };
       activeRuntimeOverride = {
         enable = true;

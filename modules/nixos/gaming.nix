@@ -4,12 +4,6 @@
     ./wivrn.nix
   ];
 
-  environment.systemPackages = with pkgs; [
-    sidequest autoadb
-    xrgears
-    BeatSaberModManager
-  ];
-
   services = {
     udev.packages = with pkgs; [
       android-udev-rules
@@ -20,6 +14,11 @@
       openFirewall = true;
       highPriority = true;
       defaultRuntime = true;
+      monadoEnvironment = {
+        XRT_COMPOSITOR_COMPUTE = "1";
+        XRT_COMPOSITOR_LOG = "debug";
+        XRT_LOG = "debug";
+      };
     };
   };
 
