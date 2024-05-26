@@ -8,22 +8,25 @@ in
     inputs.lemonake.homeManagerModules.steamvr
   ];
 
-  home.packages = with pkgs; [
-    protonup-ng
-    gamemode dxvk
-    r2modman
-    lunar-client prismlauncher
-    inputs.lemonake.packages.${pkgs.system}.gdlauncher-carbon-unstable
-    bottles
-    ludusavi
+  home = {
+    packages = with pkgs; [
+      protonup-ng
+      gamemode dxvk
+      r2modman
+      lunar-client prismlauncher
+      inputs.lemonake.packages.${pkgs.system}.gdlauncher-carbon-unstable
+      bottles
+      ludusavi
 
-    # VR
-    inputs.envision.packages.${pkgs.system}.envision
-    wlx-overlay-s
-    sidequest autoadb
-    xrgears
-    BeatSaberModManager
-  ];
+      # VR
+      inputs.envision.packages.${pkgs.system}.envision
+      wlx-overlay-s
+      sidequest autoadb
+      xrgears
+      BeatSaberModManager
+      opencomposite-helper
+    ];
+  };
 
   services = {
     steamvr = {
