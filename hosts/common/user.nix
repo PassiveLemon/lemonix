@@ -51,5 +51,6 @@
   programs = {
     dconf.enable = true;
     seahorse.enable = true;
+    nix-ld.enable = true;
   };
 }
