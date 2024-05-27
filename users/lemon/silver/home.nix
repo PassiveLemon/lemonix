@@ -24,7 +24,10 @@
       zed-editor
 
       # Development
-      act nvfetcher nixpkgs-review jq dotnet-sdk_8
+      jq dotnet-sdk_8
+      act
+      nvfetcher nixpkgs-review
+      trivy snyk grype
     ];
     file = {
       ".config/autostart/" = {
