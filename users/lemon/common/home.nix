@@ -14,7 +14,7 @@
       # File/storage management
       pcmanfm ffmpegthumbnailer xarchiver filezilla gparted
       # Development
-      lite-xl vscode github-desktop imhex python3
+      lite-xl vscode github-desktop imhex
       # Office
       obsidian onlyoffice-bin drawio
       # Audio
@@ -22,7 +22,7 @@
       # Image/Video
       loupe mpv flameshot gimp feh libsForQt5.kdenlive scrot
       # Miscellaneous
-      libsForQt5.kruler old.mullvad-vpn localsend
+      libqalculate libsForQt5.kruler old.mullvad-vpn localsend
     ];
     username = "lemon";
     homeDirectory = "/home/lemon";
