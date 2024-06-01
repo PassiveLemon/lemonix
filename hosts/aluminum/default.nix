@@ -11,12 +11,12 @@
       systemd-boot.enable = true;
     };
     kernelPackages = pkgs.linuxKernel.packages.linux_zen;
-    kernelModules = [ "rtl8821ce" ];
+    kernelModules = [ "iwlwifi" ];
   };
 
   networking = {
     hostName = "aluminum";
-    nameservers = [ "192.168.1.178" "1.1.1.1" ];
+    nameservers = [ "192.168.1.177" "1.1.1.1" ];
   };
 
   users = {
@@ -32,6 +32,7 @@
   };
 
   services = {
+    fwupd.enable = true;
     thermald.enable = true;
     tlp = {
       enable = true;
@@ -59,7 +60,7 @@
 
   nix = {
     settings = {
-      cores = 3;
+      cores = 8;
       max-jobs = 1;
     };
   };
@@ -67,5 +68,5 @@
   # Drives
   # 128 GB Internal (Root)
 
-  system.stateVersion = "23.05";
+  system.stateVersion = "23.11";
 }

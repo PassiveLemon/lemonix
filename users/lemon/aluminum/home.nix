@@ -7,7 +7,6 @@
   home = {
     packages = with pkgs; [
       brightnessctl
-      cloudflare-warp
     ];
     file = {
       ".config/autostart/" = {
@@ -27,7 +26,7 @@
         recursive = true;
       };
     };
-    stateVersion = "23.05";
+    stateVersion = "23.11";
   };
 
   services = {

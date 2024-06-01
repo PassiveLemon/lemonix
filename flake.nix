@@ -91,14 +91,15 @@
           ./hosts/silver/user.nix
         ];
       };
-      # Laptop
+      # Framework Laptop
       "aluminum" = inputs.nixos.lib.nixosSystem {
         inherit system specialArgs;
         modules = [
           nixpkgs-overlays
-          inputs.nixos-hardware.nixosModules.common-cpu-intel
-          inputs.nixos-hardware.nixosModules.common-gpu-intel
+          inputs.nixos-hardware.nixosModules.common-cpu-amd-pstate
+          inputs.nixos-hardware.nixosModules.common-cpu-amd-raphael-igpu
           inputs.nixos-hardware.nixosModules.common-pc-laptop-ssd
+          inputs.nixos-hardware.nixosModules.framework-13-7040-amd
           ./hosts/aluminum/default.nix
           ./hosts/aluminum/user.nix
         ];
