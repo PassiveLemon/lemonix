@@ -47,7 +47,7 @@
               primary = true;
               position = "0x0";
               mode = "1920x1080";
-              rate = "60.01";
+              rate = "60.00";
               gamma = "1.0:0.92:0.92";
             };
           };
