@@ -1,7 +1,7 @@
 local awful = require("awful")
-local gears = require("gears")
-local b = require("beautiful")
 local ruled = require("ruled")
+
+local h = require("helpers")
 
 --
 -- Rules
@@ -21,12 +21,12 @@ ruled.client.connect_signal("request::rules", function()
     },
   })
 
--- Always floating clients
+  -- Always floating clients
   ruled.client.append_rule({
     id = "floating",
     rule_any = {
-      instance = { "feh", "lxappearance", "authy desktop", "xarchiver", "kruler" },
-      class    = { "feh", "Lxappearance", "Authy Desktop", "Xarchiver", "kruler" },
+      instance = { "feh", "loupe", "lxappearance", "authy desktop", "xarchiver", "kruler" },
+      class    = { "feh", "loupe", "Lxappearance", "Authy Desktop", "Xarchiver", "kruler" },
       name     = { "Customize Look and Feel", "Twilio Authy", "KRuler", "Confirm File Replacing", "Copying files" },
       role     = { "pop-up", "GtkFileChooserDialog" },
     },
@@ -36,13 +36,11 @@ ruled.client.connect_signal("request::rules", function()
       placement = awful.placement.centered+awful.placement.no_offscreen,
     },
   })
-end)
 
---
--- Apps
---
+  --
+  -- Specifics
+  --
 
-ruled.client.connect_signal("request::rules", function()
   ruled.client.append_rule({
     rule = {
       instance = "kruler",
@@ -60,6 +58,13 @@ end)
 --
 -- Other
 --
+
+local autostart = os.getenv("HOME") .. "/.config/autostart/"
+h.file_test(autostart, "awesome.sh", function(exists)
+  if exists then
+    awful.spawn.easy_async_with_shell("sh " .. autostart .. "awesome.sh")
+  end
+end)
 
 -- Layout
 tag.connect_signal("request::default_layouts", function()
