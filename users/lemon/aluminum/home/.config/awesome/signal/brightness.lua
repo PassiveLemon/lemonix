@@ -14,9 +14,7 @@ local function brightness()
     end)
   end)
 end
-
 brightness()
-
 local brightness_timer = gears.timer({
   timeout = 2,
   autostart = true,
@@ -25,4 +23,7 @@ local brightness_timer = gears.timer({
   end,
 })
 
-return { brightness = brightness }
+awesome.connect_signal("signal::brightness::update", function()
+  brightness()
+  brightness_timer:again()
+end)
