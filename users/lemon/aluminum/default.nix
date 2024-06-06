@@ -1,7 +1,8 @@
 { inputs, pkgs, config, lib, ... }: {
   imports = [
-    ../common/home.nix
+    ../common/default.nix
     ./modules/customization.nix
+    ../../../modules/home-manager/gaming/desktop.nix
   ];
 
   home = {

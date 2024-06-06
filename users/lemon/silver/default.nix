@@ -1,9 +1,10 @@
 { inputs, pkgs, config, lib, ... }: {
   imports = [
-    ../common/home.nix
+    ../common/default.nix
     ./modules/customization.nix
     ../../../modules/home-manager/3d-printing.nix
-    ../../../modules/home-manager/gaming.nix
+    ../../../modules/home-manager/gaming/desktop.nix
+    ../../../modules/home-manager/gaming/vr.nix
     ../../../modules/home-manager/picom.nix
   ];
 

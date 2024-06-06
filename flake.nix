@@ -38,8 +38,6 @@
 
   outputs = { self, ... } @ inputs:
   let
-    system = "x86_64-linux";
-    pkgs = import inputs.nixpkgs { inherit system; };
     specialArgs = { inherit self inputs; };
     extraSpecialArgs = specialArgs;
     config = {
@@ -68,7 +66,7 @@
             system = final.system;
             config = final.config;
           };
-          # Overlay use of broken package
+          # Overlay use of a broken package
           broken = import inputs.nixpkgs {
             system = final.system;
             config = final.config // { allowBroken = true; };
@@ -81,19 +79,20 @@
     nixosConfigurations = {
       # Desktop
       "silver" = inputs.nixos.lib.nixosSystem {
-        inherit system specialArgs;
+        inherit specialArgs;
+        system = "x86_64-linux";
         modules = [
           nixpkgs-overlays
           inputs.nixos-hardware.nixosModules.common-cpu-amd-pstate
           inputs.nixos-hardware.nixosModules.common-gpu-nvidia-nonprime
           inputs.nixos-hardware.nixosModules.common-pc-ssd
           ./hosts/silver/default.nix
-          ./hosts/silver/user.nix
         ];
       };
       # Framework Laptop
       "aluminum" = inputs.nixos.lib.nixosSystem {
-        inherit system specialArgs;
+        inherit specialArgs;
+        system = "x86_64-linux";
         modules = [
           nixpkgs-overlays
           inputs.nixos-hardware.nixosModules.common-cpu-amd-pstate
@@ -101,13 +100,13 @@
           inputs.nixos-hardware.nixosModules.common-pc-laptop-ssd
           inputs.nixos-hardware.nixosModules.framework-13-7040-amd
           ./hosts/aluminum/default.nix
-          ./hosts/aluminum/user.nix
         ];
       };
       # Raspberry Pi
       # The fucking storage drive died so it's out of commission.
       #"palladium" = inputs.nixos.lib.nixosSystem {
-      #  inherit system specialArgs;
+      #  inherit specialArgs;
+      #  system = "aarch64-linux";
       #  modules = [
       #    nixpkgs-overlays
       #    inputs.nixos-hardware.nixosModules.common-pc-ssd
@@ -119,17 +118,19 @@
 
     homeConfigurations = {
       "lemon@silver" = inputs.home-manager.lib.homeManagerConfiguration {
-        inherit pkgs extraSpecialArgs;
+        inherit extraSpecialArgs;
+        pkgs = import inputs.nixpkgs { system = "x86_64-linux"; };
         modules = [
           nixpkgs-overlays
-          ./users/lemon/silver/home.nix
+          ./users/lemon/silver/default.nix
         ];
       };
       "lemon@aluminum" = inputs.home-manager.lib.homeManagerConfiguration {
-        inherit pkgs extraSpecialArgs;
+        inherit extraSpecialArgs;
+        pkgs = import inputs.nixpkgs { system = "aarch64-linux"; };
         modules = [
           nixpkgs-overlays
-          ./users/lemon/aluminum/home.nix
+          ./users/lemon/aluminum/default.nix
         ];
       };
     };
