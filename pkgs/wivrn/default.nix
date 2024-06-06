@@ -3,7 +3,7 @@
 , stdenv
 , fetchFromGitHub
 , fetchFromGitLab
-, fetchpatch
+, applyPatches
 , avahi
 , boost
 , cmake
@@ -38,55 +38,48 @@
 , vulkan-tools
 , x264
 }:
-let
-  wivrnVersion = "0.15";
+stdenv.mkDerivation (finalAttrs: {
+  pname = "wivrn";
+  version = "0.15";
 
-  wivrnSrc = fetchFromGitHub {
+  src = fetchFromGitHub {
     owner = "meumeu";
     repo = "wivrn";
-    rev = "v${wivrnVersion}";
+    rev = "v${finalAttrs.version}";
     hash = "sha256-RVRbL9hqy9pMKjvzwaP+9HGEfdpAhmlnnvqZsEGxlCw=";
   };
 
-  monadoVersion = builtins.head (builtins.elemAt (builtins.split
-    "monado\n +GIT_TAG +([A-Za-z0-9]+)"
-    (builtins.readFile (wivrnSrc + "/CMakeLists.txt"))
-  ) 1);
-
-  monado = stdenv.mkDerivation {
-    pname = "monado";
-    version = monadoVersion;
-
+  monado = applyPatches {
     src = fetchFromGitLab {
       domain = "gitlab.freedesktop.org";
       owner = "monado";
       repo = "monado";
-      rev = monadoVersion;
+      rev = "ffb71af26f8349952f5f820c268ee4774613e200";
       hash = "sha256-+RTHS9ShicuzhiAVAXf38V6k4SVr+Bc2xUjpRWZoB0c=";
     };
 
     patches = [
-      (wivrnSrc + "/patches/monado/0001-c-multi-disable-dropping-of-old-frames.patch")
-      (wivrnSrc + "/patches/monado/0002-ipc-server-Always-listen-to-stdin.patch")
-      (wivrnSrc + "/patches/monado/0003-c-multi-Don-t-log-frame-time-diff.patch")
+      ("${finalAttrs.src}/patches/monado/0001-c-multi-disable-dropping-of-old-frames.patch")
+      ("${finalAttrs.src}/patches/monado/0002-ipc-server-Always-listen-to-stdin.patch")
+      ("${finalAttrs.src}/patches/monado/0003-c-multi-Don-t-log-frame-time-diff.patch")
     ];
 
     postPatch = ''
       substituteInPlace CMakeLists.txt --replace "add_subdirectory(doc)" ""
     '';
-
-    dontBuild = true;
-
-    installPhase = ''
-      cp -r . $out
-    '';
   };
-in
-stdenv.mkDerivation {
-  pname = "wivrn";
-  version = wivrnVersion;
 
-  src = wivrnSrc;
+  postUnpack = ''
+    # Let's make sure our monado source revision matches what is used by WiVRn upstream
+    ourMonadoRev="${finalAttrs.monado.src.rev}"
+    theirMonadoRev=$(grep -A1 "https://gitlab.freedesktop.org/monado/monado" ${finalAttrs.src.name}/CMakeLists.txt | tail -n1 | sed 's/.*GIT_TAG\s*//')
+    if [ ! "$theirMonadoRev" == "$ourMonadoRev" ]; then
+      echo "Our Monado source revision doesn't match CMakeLists.txt." >&2
+      echo "  theirs: $theirMonadoRev" >&2
+      echo "    ours: $ourMonadoRev" >&2
+      return 1
+    fi
+  '';
 
   nativeBuildInputs = [
     cmake
@@ -138,7 +131,7 @@ stdenv.mkDerivation {
     (lib.cmakeBool "WIVRN_BUILD_CLIENT" false)
     (lib.cmakeBool "WIVRN_OPENXR_INSTALL_ABSOLUTE_RUNTIME_PATH" true)
     (lib.cmakeBool "FETCHCONTENT_FULLY_DISCONNECTED" true)
-    (lib.cmakeFeature "FETCHCONTENT_SOURCE_DIR_MONADO" "${monado}")
+    (lib.cmakeFeature "FETCHCONTENT_SOURCE_DIR_MONADO" "${finalAttrs.monado}")
   ];
 
   passthru.updateScript = nix-update-script { };
@@ -146,10 +139,10 @@ stdenv.mkDerivation {
   meta = with lib; {
     description = "An OpenXR streaming application to a standalone headset";
     homepage = "https://github.com/Meumeu/WiVRn/";
-    changelog = "https://github.com/Meumeu/WiVRn/releases/tag/v${wivrnVersion}";
+    changelog = "https://github.com/Meumeu/WiVRn/releases/tag/v${finalAttrs.version}";
     license = licenses.gpl3Only;
     maintainers = with maintainers; [ passivelemon ];
     platforms = platforms.linux;
     mainProgram = "wivrn-server";
   };
-}
+})
