@@ -14,19 +14,19 @@
       displayManager = {
         startx.enable = true;
       };
-      libinput = {
-        enable = true;
-        mouse = {
-          middleEmulation = false;
-          accelProfile = "flat";
-          accelSpeed = "-0.5";
-        };
-        touchpad = {
-          buttonMapping = "1 1 3 4 5 6 7";
-          middleEmulation = false;
-          accelProfile = "flat";
-          naturalScrolling = true;
-        };
+    };
+    libinput = {
+      enable = true;
+      mouse = {
+        middleEmulation = false;
+        accelProfile = "flat";
+        accelSpeed = "-0.5";
+      };
+      touchpad = {
+        buttonMapping = "1 1 3 4 5 6 7";
+        middleEmulation = false;
+        accelProfile = "flat";
+        naturalScrolling = true;
       };
     };
     pipewire = {
@@ -41,7 +41,7 @@
     printing.enable = true;
     avahi = {
       enable = true;
-      nssmdns = true;
+      nssmdns4 = true;
       openFirewall = true;
     };
     mullvad-vpn.enable = true;

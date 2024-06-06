@@ -3,7 +3,7 @@
 
   inputs = {
     nixos-old.url = "github:nixos/nixpkgs/nixos-23.05";
-    nixos.url = "github:nixos/nixpkgs/nixos-23.11";
+    nixos.url = "github:nixos/nixpkgs/nixos-24.05";
     nixpkgs.url = "github:nixos/nixpkgs/nixpkgs-unstable";
     master.url = "github:nixos/nixpkgs";
     nixos-hardware.url = "github:nixos/nixos-hardware";
@@ -46,22 +46,22 @@
     nixpkgs-overlays = ({ inputs, outputs, config, system, ... }: {
       nixpkgs.overlays = [
         (final: prev: {
-          # Overlay use of a package on the previous nixos-(stable) branch
+          # Overlay use of a package on a previous nixos-(stable) branch. Only used for packages that are broken or removed in newer branches.
           old = import inputs.nixos-old {
             system = final.system;
             config = final.config;
           };
-          # Overlay use of a package on the nixos-(stable) branch
+          # Overlay use of a package on the nixos-(stable) branch. Mainly used for the system part of the setup.
           stable = import inputs.nixos {
             system = final.system;
             config = final.config;
           };
-          # Overlay use of a package on the nixpkgs-unstable branch
+          # Overlay use of a package on the nixpkgs-unstable branch. Mainly used for the user part of the setup.
           unstable = import inputs.nixpkgs {
             system = final.system;
             config = final.config;
           };
-          # Overlay use of a package on the master branch
+          # Overlay use of a package on the master branch. Only used for packages that are not yet in the unstable or stable branch.
           master = import inputs.master {
             system = final.system;
             config = final.config;

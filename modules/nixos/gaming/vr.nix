@@ -1,6 +1,5 @@
 { inputs, pkgs, config, lib, ... }: {
   imports = [
-    inputs.lemonake.nixosModules.alvr
     ./wivrn.nix
   ];
 

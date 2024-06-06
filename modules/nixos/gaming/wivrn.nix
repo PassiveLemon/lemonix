@@ -76,7 +76,7 @@ in
         XRT_PRINT_OPTIONS = mkDefault "on";
         IPC_EXIT_ON_DISCONNECT = mkDefault "off";
       };
-      udev.packages = with pkgs; [ unstable.xr-hardware ]; # WiVRn can be used with some wired headsets
+      udev.packages = with pkgs; [ xr-hardware ]; # WiVRn can be used with some wired headsets
       avahi = {
         enable = true;
         publish = {
