@@ -5,10 +5,9 @@ echo "|| Setting up config... ||"
 if [ ! -f "/etc/nixos-backup/" ]; then
   sudo mv /etc/nixos/ /etc/nixos-backup/
 fi
-sudo mkdir -p /etc/nixos/
 
 # Link this Git to /etc/nixos
-sudo ln -s ${PWD}/ /etc/nixos
+sudo ln -s ${PWD} /etc/nixos
 
 echo "|| Dots installed. Maybe. ||"
 

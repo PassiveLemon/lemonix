@@ -10,7 +10,7 @@
     ];
     wivrn = {
       enable = true;
-      package = pkgs.unstable.callPackage ../../pkgs/wivrn { };
+      package = pkgs.unstable.callPackage ../../../pkgs/wivrn { };
       openFirewall = true;
       highPriority = true;
       defaultRuntime = true;
@@ -23,12 +23,6 @@
   };
 
   programs = {
-    steam = {
-      enable = true;
-      extraCompatPackages = with pkgs; [
-        proton-ge-bin
-      ];
-    };
     adb.enable = true;
     alvr = { # Module of lemonake
       enable = true;
