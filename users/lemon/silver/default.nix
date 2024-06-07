@@ -47,6 +47,10 @@
         source = ./home/.config/awesome/ui;
         recursive = true;
       };
+      ".config/awesome/liblua_pam.so" = {
+        source = ./home/.config/awesome/liblua_pam.so;
+        recursive = true;
+      };
       ".local/bin/passivelemon" = {
         source = ./home/.local/bin/passivelemon;
         recursive = true;

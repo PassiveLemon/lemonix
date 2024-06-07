@@ -1,4 +1,5 @@
 require("signal.brightness")
+require("signal.caps")
 require("signal.cpu")
 require("signal.memory")
 require("signal.network")

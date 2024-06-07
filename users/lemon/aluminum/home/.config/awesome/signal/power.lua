@@ -29,7 +29,6 @@ local function ac()
     emit(ac, nil, nil, nil)
   end)
 end
-
 local function battery()
   awful.spawn.easy_async("cat /sys/class/power_supply/BAT1/current_now", function(use)
     local use = use:gsub("\n", "")
@@ -45,10 +44,8 @@ local function battery()
     end)
   end)
 end
-
 ac()
 battery()
-
 local power_timer = gears.timer({
   timeout = 5,
   autostart = true,
@@ -57,8 +54,3 @@ local power_timer = gears.timer({
     battery()
   end,
 })
-
-return {
-  ac = ac,
-  battery = battery,
-}

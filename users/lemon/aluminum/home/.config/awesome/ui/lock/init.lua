@@ -4,7 +4,7 @@ require("ui.lock.lockscreen")
 
 local awful = require("awful")
 
-local pam = require("libraries.liblua-pam.build.lua_pam") -- Compile and link from https://github.com/RMTT/lua-pam/. `nix-shell -p cmake lua linux-pam`
+local pam = require("liblua_pam") -- Compile and link from https://github.com/RMTT/lua-pam/. `nix-shell -p cmake lua linux-pam`
 
 --
 -- Lockscreen function

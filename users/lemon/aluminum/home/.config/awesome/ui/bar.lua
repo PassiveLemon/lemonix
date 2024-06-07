@@ -4,29 +4,20 @@ local b = require("beautiful")
 local wibox = require("wibox")
 
 local h = require("helpers")
-local click_to_hide = require("modules.click_to_hide")
-
-local volume = require("signal.volume")
-local media = require("ui.media")
-local panel = require("ui.panel")
 
 --
 -- Wibar
 --
 
 screen.connect_signal("request::desktop_decoration", function(s)
-  awful.tag({ "1", "2", "3", }, s, awful.layout.layouts[1])
+  awful.tag({ "1", "2", "3", "4" }, s, awful.layout.layouts[1])
 
   -- Space
-  local sep1 = h.text({
-    text = " ",
-  })
-
-  local sep2 = h.text({
+  local sep = h.text({
     bg = b.bg2,
     text = " ",
   })
-  
+
   -- CPU
   local cpu_icon = h.text({
     margins = {
@@ -44,7 +35,7 @@ screen.connect_signal("request::desktop_decoration", function(s)
     bg = b.bg2,
     halign = "left",
   })
-  awesome.connect_signal("signal::cpu", function(use, temp)
+  awesome.connect_signal("signal::cpu::data", function(use, _)
     cpu_text:get_children_by_id("textbox")[1].text = use .. "%"
   end)
 
@@ -65,7 +56,7 @@ screen.connect_signal("request::desktop_decoration", function(s)
     bg = b.bg2,
     halign = "left",
   })
-  awesome.connect_signal("signal::memory", function(use, use_perc, cache, cache_perc)
+  awesome.connect_signal("signal::memory::data", function(_, use_perc, _, _)
     memory_text:get_children_by_id("textbox")[1].text = use_perc .. "%"
   end)
 
@@ -77,7 +68,7 @@ screen.connect_signal("request::desktop_decoration", function(s)
     bg = b.bg2,
     markup = 'A<span underline="single">a</span>',
   })
-  awesome.connect_signal("signal::caps", function(caps)
+  awesome.connect_signal("signal::caps::state", function(caps)
     if caps == "on" then
       caps_icon:get_children_by_id("textbox")[1].markup = '<span underline="single">A</span>a'
     else
@@ -104,15 +95,15 @@ screen.connect_signal("request::desktop_decoration", function(s)
     elseif value < "33" then
       volume_icon:get_children_by_id("textbox")[1].text = "󰕿"
       volume_icon:get_children_by_id("textbox")[1].font = b.sysfont(9)
-      volume_text:get_children_by_id("textbox")[1].text = value .. ""
+      volume_text:get_children_by_id("textbox")[1].text = tostring(value)
     elseif value < "67" then
       volume_icon:get_children_by_id("textbox")[1].text = "󰖀"
       volume_icon:get_children_by_id("textbox")[1].font = b.sysfont(13)
-      volume_text:get_children_by_id("textbox")[1].text = value .. ""
+      volume_text:get_children_by_id("textbox")[1].text = tostring(value)
     else
       volume_icon:get_children_by_id("textbox")[1].text = "󰕾"
       volume_icon:get_children_by_id("textbox")[1].font = b.sysfont(15)
-      volume_text:get_children_by_id("textbox")[1].text = value .. ""
+      volume_text:get_children_by_id("textbox")[1].text = tostring(value)
     end
   end)
 
@@ -213,7 +204,7 @@ screen.connect_signal("request::desktop_decoration", function(s)
 
   local pill_systray = wibox.widget({
     visible = false,
-    layout = wibox.layout.margin,
+    widget = wibox.container.margin,
     margins = {
       right = 2,
       left = 2,
@@ -230,7 +221,7 @@ screen.connect_signal("request::desktop_decoration", function(s)
         forced_height = 24,
         {
           layout = wibox.layout.fixed.horizontal,
-          sep2,
+          sep,
           wibox.widget.systray,
         },
       },
@@ -246,7 +237,7 @@ screen.connect_signal("request::desktop_decoration", function(s)
   })
 
   local pill_cpu = wibox.widget({
-    layout = wibox.layout.margin,
+    widget = wibox.container.margin,
     margins = {
       right = 2,
       left = 2,
@@ -263,17 +254,17 @@ screen.connect_signal("request::desktop_decoration", function(s)
         forced_height = 24,
         {
           layout = wibox.layout.fixed.horizontal,
-          sep2,
+          sep,
           cpu_icon,
           cpu_text,
-          sep2,
+          sep,
         },
       },
     },
   })
 
   local pill_memory = wibox.widget({
-    layout = wibox.layout.margin,
+    widget = wibox.container.margin,
     margins = {
       right = 2,
       left = 2,
@@ -290,10 +281,10 @@ screen.connect_signal("request::desktop_decoration", function(s)
         forced_height = 24,
         {
           layout = wibox.layout.fixed.horizontal,
-          sep2,
+          sep,
           memory_icon,
           memory_text,
-          sep2,
+          sep,
         },
       },
     },
@@ -317,10 +308,10 @@ screen.connect_signal("request::desktop_decoration", function(s)
         forced_height = 24,
         {
           layout = wibox.layout.fixed.horizontal,
-          sep2,
+          sep,
           light_icon,
           light_text,
-          sep2,
+          sep,
         },
       },
     },
@@ -344,11 +335,11 @@ screen.connect_signal("request::desktop_decoration", function(s)
         forced_height = 24,
         {
           layout = wibox.layout.fixed.horizontal,
-          sep2,
+          sep,
           battery_icon,
           battery_text,
           battery_etr,
-          sep2,
+          sep,
         },
       },
     },
@@ -366,8 +357,8 @@ screen.connect_signal("request::desktop_decoration", function(s)
     text = "󰎈",
     bg_focus = b.bg4,
   })
-  awesome.connect_signal("signal::playerctl", function(_, _, _, _, _, status)
-    if status == "Playing" then
+  awesome.connect_signal("signal::playerctl::metadata", function(metadata_table)
+    if metadata_table.status == "Playing" then
       pill_music.visible = true
     else
       pill_music.visible = false
@@ -375,7 +366,7 @@ screen.connect_signal("request::desktop_decoration", function(s)
   end)
 
   local pill_utils = wibox.widget({
-    layout = wibox.layout.margin,
+    widget = wibox.container.margin,
     margins = {
       right = 2,
       left = 2,
@@ -392,18 +383,18 @@ screen.connect_signal("request::desktop_decoration", function(s)
         forced_height = 24,
         {
           layout = wibox.layout.fixed.horizontal,
-          sep2,
+          sep,
           volume_icon,
           wifi_icon,
           caps_icon,
-          sep2,
+          sep,
         },
       },
     },
   })
 
   local pill_date = wibox.widget({
-    layout = wibox.layout.margin,
+    widget = wibox.container.margin,
     margins = {
       right = 2,
       left = 2,
@@ -420,19 +411,20 @@ screen.connect_signal("request::desktop_decoration", function(s)
         forced_height = 24,
         {
           layout = wibox.layout.fixed.horizontal,
-          sep2,
-          h.watch("date +'%a %b %-d'", 60, {
-            bg = b.bg2,
+          sep,
+          {
+            widget = wibox.widget.textclock,
+            format = "%a %b %-d",
             halign = "left",
-          }),
-          sep2,
+          },
+          sep,
         },
       },
     },
   })
 
   local pill_time = wibox.widget({
-    layout = wibox.layout.margin,
+    widget = wibox.container.margin,
     margins = {
       right = 4,
       left = 2,
@@ -449,12 +441,13 @@ screen.connect_signal("request::desktop_decoration", function(s)
         forced_height = 24,
         {
           layout = wibox.layout.fixed.horizontal,
-          sep2,
-          h.watch("date +'%-I:%M %p'", 3, {
-            bg = b.bg2,
+          sep,
+          {
+            widget = wibox.widget.textclock,
+            format = "%-I:%M %p",
             halign = "left",
-          }),
-          sep2,
+          },
+          sep,
         },
       },
     },
@@ -483,12 +476,12 @@ screen.connect_signal("request::desktop_decoration", function(s)
         bg = b.bg2,
         {
           layout = wibox.layout.fixed.horizontal,
-          sep2,
+          sep,
           {
             id = "text_role",
             widget = wibox.widget.textbox,
           },
-          sep2,
+          sep,
         },
       },
     },
@@ -521,7 +514,7 @@ screen.connect_signal("request::desktop_decoration", function(s)
           widget = wibox.widget.imagebox,
         },
       },
-      create_callback = function(self, c, index)
+      create_callback = function(self, c)
         self:get_children_by_id("imagebox")[1].image = c.theme_icon
       end,
     },
@@ -610,7 +603,7 @@ screen.connect_signal("request::desktop_decoration", function(s)
 
   volume_icon:connect_signal("button::press", function()
     awful.spawn.easy_async("pamixer -t", function()
-      volume.volume()
+      awesome.emit_signal("signal::volume::update")
     end)
   end)
 
@@ -629,6 +622,6 @@ screen.connect_signal("request::desktop_decoration", function(s)
   end)
 
   pill_music:connect_signal("button::press", function()
-    media.signal()
+    awesome.emit_signal("ui::media::toggle")
   end)
 end)

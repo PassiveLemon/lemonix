@@ -1,13 +1,13 @@
 local awful = require("awful")
 local gears = require("gears")
 
-local uptime_cache
+local uptime_cache = "N/A"
 
 local function emit(uptime, headset)
   if uptime == nil then
     uptime = uptime_cache
   end
-  awesome.emit_signal('signal::other', uptime)
+  awesome.emit_signal("signal::other::data", uptime)
 end
 
 local function uptime()
@@ -17,9 +17,7 @@ local function uptime()
     emit(uptime, nil)
   end)
 end
-
 uptime()
-
 local uptime_timer = gears.timer({
   timeout = 15,
   autostart = true,
@@ -27,5 +25,3 @@ local uptime_timer = gears.timer({
     uptime()
   end,
 })
-
-return { uptime = uptime }

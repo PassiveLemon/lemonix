@@ -2,7 +2,7 @@ local awful = require("awful")
 local gears = require("gears")
 
 local function emit(use, temp)
-  awesome.emit_signal('signal::cpu', use, temp)
+  awesome.emit_signal("signal::cpu::data", use, temp)
 end
 
 local function cpu()
@@ -14,9 +14,7 @@ local function cpu()
     end)
   end)
 end
-
 cpu()
-
 local cpu_timer = gears.timer({
   timeout = 1,
   autostart = true,
@@ -24,5 +22,3 @@ local cpu_timer = gears.timer({
     cpu()
   end,
 })
-
-return { cpu = cpu }
