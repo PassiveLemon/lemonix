@@ -40,6 +40,7 @@
     docker = {
       enable = true;
       enableOnBoot = true;
+      enableNvidia = true;
       liveRestore = false;
       autoPrune = {
         enable = true;
