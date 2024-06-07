@@ -51,7 +51,6 @@
 
   powerManagement = {
     enable = true;
-    powertop.enable = true;
   };
 
   nix = {
