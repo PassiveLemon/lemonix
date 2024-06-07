@@ -4,7 +4,9 @@
     (nerdfonts.override { fonts = [ "FiraCode" "FiraMono" ]; })
   ];
 
-  fonts.fontconfig.enable = true;
+  fonts = {
+    fontconfig.enable = true;
+  };
 
   dconf = {
     enable = true;
