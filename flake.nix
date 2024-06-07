@@ -136,8 +136,15 @@
     };
 
     nixConfig = {
-      extra-substituters = [ "https://passivelemon.cachix.org" ];
-      extra-trusted-public-keys = [ "passivelemon.cachix.org-1:ScYjLCvvLi70S95SMMr8lMilpZHuafLP3CK/nZ9AaXM=" ];
+      extra-substituters = [
+        "https://nix-community.cachix.org"
+        "https://passivelemon.cachix.org"
+      ];
+      extra-trusted-public-keys = [
+        "nix-community.cachix.org-1:mB9FSh9qf2dCimDSUo8Zy7bkq5CX+/rkCWyvRCYg3Fs="
+        "passivelemon.cachix.org-1:ScYjLCvvLi70S95SMMr8lMilpZHuafLP3CK/nZ9AaXM="
+      ];
+      extra-experimental-features = [ "nix-command" "flakes" ];
     };
   };
 }
