@@ -127,7 +127,7 @@
       };
       "lemon@aluminum" = inputs.home-manager.lib.homeManagerConfiguration {
         inherit extraSpecialArgs;
-        pkgs = import inputs.nixpkgs { system = "aarch64-linux"; };
+        pkgs = import inputs.nixpkgs { system = "x86_64-linux"; };
         modules = [
           nixpkgs-overlays
           ./users/lemon/aluminum/default.nix

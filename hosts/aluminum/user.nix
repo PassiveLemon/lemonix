@@ -5,7 +5,7 @@
   ];
 
   services = {
-    xserver.logind.extraConfig = ''
+    logind.extraConfig = ''
       HandlePowerKey=suspend-then-hibernate
       HandlePowerKeyLongPress=poweroff
       HandleLidSwitch=suspend-then-hibernate
