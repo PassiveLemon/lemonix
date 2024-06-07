@@ -76,14 +76,16 @@
               position = "1920x0";
               mode = "1920x1080";
               rate = "143.85";
+              dpi = "96";
               gamma = "1.0:0.92:0.92";
             };
             "DP-2" = {
-              enable = true;
+              enable = false; # Currently malfunctional so it's getting replaced.
               primary = false;
               position = "0x0";
               mode = "1920x1080";
               rate = "143.85";
+              dpi = "96";
               gamma = "1.0:0.92:0.92";
             };
           };
