@@ -30,7 +30,13 @@
       };
       environment.BORG_RSH = "ssh -i /home/borg/.ssh/id_ed25519";
       compression = "auto,zstd";
-      startAt = "Sat 01:01:00";
+      startAt = "daily";
+      prune.keep = {
+        within = "1d";
+        daily = 7;
+        weekly = 4;
+        monthly = -1;
+      };
     };
   };
 }

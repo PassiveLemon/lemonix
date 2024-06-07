@@ -22,8 +22,8 @@ in
     steamvr = {
       runtimeOverride = {
         enable = true;
-        path = "${pkgs.opencomposite}/lib/opencomposite";
-        #path = "/home/lemon/.local/share/envision/eb7732c3-e27c-4a93-bbd3-6fcd2f68f909/opencomposite/build";
+        #path = "${pkgs.unstable.opencomposite}/lib/opencomposite";
+        path = "/home/lemon/.local/share/envision/eb7732c3-e27c-4a93-bbd3-6fcd2f68f909/opencomposite/build";
       };
       activeRuntimeOverride = {
         enable = true;

@@ -40,7 +40,6 @@
     docker = {
       enable = true;
       enableOnBoot = true;
-      enableNvidia = true;
       liveRestore = false;
       autoPrune = {
         enable = true;
@@ -50,6 +49,10 @@
         hosts = [ "unix:///var/run/docker.sock" ];
       };
     };
+  };
+
+  hardware = {
+    nvidia-container-toolkit.enable = true;
   };
 
   systemd = {

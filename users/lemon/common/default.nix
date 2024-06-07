@@ -18,11 +18,11 @@
       # Office
       obsidian onlyoffice-bin drawio
       # Audio
-      pavucontrol old.easyeffects helvum tauon feishin audacity
+      pavucontrol easyeffects helvum tauon feishin audacity
       # Image/Video
       loupe mpv flameshot gimp feh libsForQt5.kdenlive scrot
       # Miscellaneous
-      libqalculate libsForQt5.kruler old.mullvad-vpn localsend
+      libqalculate libsForQt5.kruler mullvad-vpn localsend
     ];
     username = "lemon";
     homeDirectory = "/home/lemon";
@@ -131,5 +131,7 @@
       allowUnfreePredicate = (_: true);
     };
   };
+
+  news.display = "silent";
 }
 

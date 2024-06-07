@@ -2,7 +2,7 @@
   services = {
     picom = {
       enable = true;
-      package = pkgs.stable.picom-allusive;
+      package = pkgs.old.picom-allusive;
       settings = {
         # Shadows
         shadow = true;
