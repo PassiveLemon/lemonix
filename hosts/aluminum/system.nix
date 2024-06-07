@@ -49,7 +49,9 @@
     thermald.enable = true;
   };
 
-  powerManagement.enable = true;
+  powerManagement = {
+    enable = true;
+  };
 
   nix = {
     settings = {
