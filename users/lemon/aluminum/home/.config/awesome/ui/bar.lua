@@ -96,7 +96,7 @@ screen.connect_signal("request::desktop_decoration", function(s)
   local volume_text = h.text({
     halign = "left",
   })
-  awesome.connect_signal("signal::volume", function(value)
+  awesome.connect_signal("signal::volume::value", function(value)
     if value == "Muted" then
       volume_icon:get_children_by_id("textbox")[1].text = "󰝟"
       volume_icon:get_children_by_id("textbox")[1].font = b.sysfont(17)
@@ -154,18 +154,24 @@ screen.connect_signal("request::desktop_decoration", function(s)
     halign = "left",
   })
   awesome.connect_signal("signal::power", function(ac, use, now, full)
-    battery_text:get_children_by_id("textbox")[1].text = h.round(((now / full) * 100), 0) .. "%"
-    if ac == "1" and use == "0" then
-      battery_etr:get_children_by_id("textbox")[1].text = "Full"
-    elseif ac == "1" then
-      battery_etr:get_children_by_id("textbox")[1].text = "Charging"
-    else
+    local function estimate_time_remaining()
       local _etr = h.round(((now / use) / 2), 1)
       if _etr < 1 then
         battery_etr:get_children_by_id("textbox")[1].text = (_etr * 60) .. " mins"
       else
         battery_etr:get_children_by_id("textbox")[1].text = _etr .. " hours"
       end
+    end
+    if ac == "0" then
+      battery_text:get_children_by_id("textbox")[1].text = h.round(((now / full) * 100), 0) .. "%"
+      estimate_time_remaining()
+      battery_etr.visible = true
+    elseif ac == "1" and not (now == full) then
+      battery_text:get_children_by_id("textbox")[1].text = "Charging"
+      battery_etr.visible = false
+    elseif ac == "1" and (now == full) then
+      battery_text:get_children_by_id("textbox")[1].text = "Full"
+      battery_etr.visible = false
     end
   end)
 

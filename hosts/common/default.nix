@@ -74,13 +74,6 @@
     dev.enable = false;
   };
 
-  hardware = {
-    opengl = {
-      enable = true;
-      driSupport = true;
-    };
-  };
-
   nix = {
     settings = {
       experimental-features = [ "nix-command" "flakes" ];

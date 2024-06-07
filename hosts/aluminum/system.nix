@@ -16,44 +16,37 @@
 
   networking = {
     hostName = "aluminum";
-    nameservers = [ "192.168.1.177" "1.1.1.1" ];
+    nameservers = [ "192.168.1.177" "1.1.1.1" "9.9.9.9" ];
   };
 
   users = {
     users = {
+      "root" = {
+        home = "/root";
+        hashedPassword = "!";
+      };
       "lemon" = {
+        uid = 1100;
         description = "Lemon";
         home = "/home/lemon";
         hashedPassword = "$6$cVhBvZ0RiacmsWNS$4vT6O9R9Bo62kXCQVBSsqVtbpiNbwuI6Eb4fE.2.EVYGuoNEjy16ZWwZfHom6JQSOau20K92U3sZjbPo07XSa.";
-        extraGroups = [ "wheel" "video" "audio" "networkmanager" "storage" ];
+        extraGroups = [
+          "wheel" "video" "audio" "networkmanager" "storage" "docker" "kvm" "libvirtd"
+        ];
         isNormalUser = true;
       };
     };
   };
 
+  environment = {
+    systemPackages = with pkgs; [
+      nvtopPackages.amd
+    ];
+  };
+
   services = {
     fwupd.enable = true;
     thermald.enable = true;
-    tlp = {
-      enable = true;
-      settings = {
-        CPU_SCALING_GOVERNOR_ON_AC = "performance";
-        CPU_SCALING_GOVERNOR_ON_BAT = "powersave";
-        CPU_ENERGY_PERF_POLICY_ON_AC = "performance";
-        CPU_ENERGY_PERF_POLICY_ON_BAT = "powersave";
-        CPU_MIN_PERF_ON_AC = 0;
-        CPU_MAX_PERF_ON_AC = 100;
-        CPU_MIN_PERF_ON_BAT = 0;
-        CPU_MAX_PERF_ON_BAT = 40;
-      };
-    };
-    udisks2 = {
-      enable = true;
-      mountOnMedia = true;
-    };
-    gvfs.enable = true;
-    devmon.enable = true;
-    journald.extraConfig = "SystemMaxUse=1G";
   };
 
   powerManagement.enable = true;

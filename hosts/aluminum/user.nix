@@ -5,11 +5,16 @@
   ];
 
   services = {
-    logind.extraConfig = ''
-      HandlePowerKey=suspend
+    xserver.dpi = 200;
+      logind.extraConfig = ''
+      HandlePowerKey=suspend-then-hibernate
+      HandlePowerKeyLongPress=poweroff
       HandleLidSwitch=suspend-then-hibernate
-      IdleAction=ignore
-      IdleActionSec=60m
+      HandleLidSwitchExternalPower=suspend-then-hibernate
+      HandleLidSwitchDocked=suspend-then-hibernate
+      HoldoffTimeoutSec=5s
+      IdleAction=suspend
+      IdleActionSec=300s
     '';
   };
 }

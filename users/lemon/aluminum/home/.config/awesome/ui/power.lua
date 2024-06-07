@@ -176,12 +176,12 @@ restart:connect_signal("button::press", function()
   main.widget = restart_widget
 end)
 
-local function signal()
+awesome.connect_signal("ui::power::toggle", function()
   main.widget = powermenu_widget
   main.visible = not main.visible
   main.screen = awful.screen.focused()
   h.unfocus()
-end
+end)
 
 click_to_hide.popup(main, nil, true)
 

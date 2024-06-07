@@ -129,32 +129,39 @@ super = "Mod4" -- Windows key
 
 awful.keyboard.append_global_keybindings({
   awful.key({ super, "Control" }, "r", awesome.restart,
-  awful.key({ super, "Control" }, "r", awesome.restart,
   { description = "|| reload awesome", group = "awesome" }),
 
   -- Launcher
-  awful.key({ super }, "Return", function() awful.spawn(terminal) end,
   awful.key({ super }, "Return", function() awful.spawn(terminal) end,
   { description = "|| open a terminal", group = "launcher" }),
 
   awful.key({ super }, "space", function() app_launcher:toggle() end,
   { description = "|| run app launcher", group = "launcher" }),
-  awful.key({ super }, "space", function() app_launcher:toggle() end,
-  { description = "|| run app launcher", group = "launcher" }),
 
-  awful.key({ super }, "c", function() awesome.emit_signal("ui::media::toggle") end,
   awful.key({ super }, "c", function() awesome.emit_signal("ui::media::toggle") end,
   { description = "|| run media player", group = "launcher" }),
 
   awful.key({ super }, "v", function() awesome.emit_signal("ui::power::toggle") end,
-  awful.key({ super }, "v", function() awesome.emit_signal("ui::power::toggle") end,
   { description = "|| run powermenu", group = "launcher" }),
 
-  awful.key({ super }, "x", function() awesome.emit_signal("ui::resource::toggle") end,
   awful.key({ super }, "x", function() awesome.emit_signal("ui::resource::toggle") end,
   { description = "|| run resource monitor", group = "launcher" }),
 
   -- Control
+  awful.key({ }, "XF86MonBrightnessUp", function()
+    awful.spawn.easy_async("brightnessctl set 3%+", function()
+      awesome.emit_signal("signal::brightness::update")
+    end)
+  end,
+  { description = "|| increase brightness", group = "control" }),
+
+  awful.key({ }, "XF86MonBrightnessDown", function()
+    awful.spawn.easy_async("brightnessctl set 3%-", function()
+      awesome.emit_signal("signal::brightness::update")
+    end)
+  end,
+  { description = "|| decrease brightness", group = "control" }),
+
   awful.key({ }, "XF86AudioMute", function()
     awful.spawn.easy_async("pamixer -t", function()
       awesome.emit_signal("signal::volume::update")

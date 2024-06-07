@@ -23,7 +23,7 @@ local function emit(ac, use, now, full)
 end
 
 local function ac()
-  awful.spawn.easy_async("cat /sys/class/power_supply/AC0/online", function(ac)
+  awful.spawn.easy_async("cat /sys/class/power_supply/ACAD/online", function(ac)
     local ac = ac:gsub("\n", "")
     ac_cache = ac
     emit(ac, nil, nil, nil)
@@ -31,11 +31,11 @@ local function ac()
 end
 
 local function battery()
-  awful.spawn.easy_async("cat /sys/class/power_supply/BAT0/power_now", function(use)
+  awful.spawn.easy_async("cat /sys/class/power_supply/BAT1/current_now", function(use)
     local use = use:gsub("\n", "")
-    awful.spawn.easy_async("cat /sys/class/power_supply/BAT0/energy_now", function(now)
+    awful.spawn.easy_async("cat /sys/class/power_supply/BAT1/charge_now", function(now)
       local now = now:gsub("\n", "")
-      awful.spawn.easy_async("cat /sys/class/power_supply/BAT0/energy_full", function(full)
+      awful.spawn.easy_async("cat /sys/class/power_supply/BAT1/charge_full", function(full)
         local full = full:gsub("\n", "")
         use_cache = use
         now_cache = now
