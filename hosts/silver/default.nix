@@ -1,8 +1,9 @@
 { inputs, pkgs, config, lib, ... }: {
   imports = [
     ./system.nix
-    ../../modules/nixos/swap.nix
     ../../modules/nixos/ssh.nix
+    ../../modules/nixos/swap.nix
+    ../../modules/nixos/zram.nix
     ./modules/docker.nix
     ./modules/borg.nix
 

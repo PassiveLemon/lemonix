@@ -57,12 +57,6 @@
     rtkit.enable = true;
   };
 
-  zramSwap = {
-    enable = true;
-    memoryPercent = 25;
-    priority = 100;
-  };
-
   systemd = {
     services.NetworkManager-wait-online.enable = false;
   };
