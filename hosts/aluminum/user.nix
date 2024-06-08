@@ -16,6 +16,7 @@
       IdleActionSec=300s
     '';
   };
+
   systemd = {
     sleep.extraConfig = "HibernateDelaySec=1h";
   };
