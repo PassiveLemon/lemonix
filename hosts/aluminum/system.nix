@@ -2,7 +2,6 @@
   imports = [
     ./hardware-configuration.nix
     ../common/default.nix
-    ../../modules/nixos/swap.nix
   ];
 
   boot = {
