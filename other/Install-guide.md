@@ -25,27 +25,33 @@ OK -> Should see a connection success line
 ```
 
 # Partitioning (Will eventually be replaced with Disko)
-#### Replace `sda` with your drive name in lsblk. Ex: `nvme0n1`.
+In this example, we create a 1 GiB FAT32 ESP partition at the front (With space to align to blocks), a 16GiB Swap partition at the end, and the rest will be EXT4. This way if we install more RAM and need to increase our swap, we can just shrink the end of the EXT4 partition.
+
+In the case of a laptop that uses hibernate, set the swap partition to be at least the size of installed RAM. Otherwise, systems that do not need hibernation can simply use a swap file from `modules/nixos/swap.nix`.
 ```
-parted /dev/sda -- mklabel gpt
-parted /dev/sda -- mkpart primary 1GiB 100%
-parted /dev/sda -- mkpart ESP fat32 1MiB 1GiB
-parted /dev/sda -- set 2 esp on
+parted /dev/nvme0n1 -- mklabel gpt
+parted /dev/nvme0n1 -- mkpart ESP fat32 1MiB 1GiB
+parted /dev/nvme0n1 -- mkpart primary 1GiB -16GiB
+parted /dev/nvme0n1 -- mkpart primary linux-swap -16GiB 100%
+parted /dev/nvme0n1 -- set 1 esp on
 ```
-- What we do is create a 1 GiB FAT32 ESP partition at the front and the rest will be EXT4.
+- Replace `nvme0n1` with your drive name if needed. Ex: sda, mmcblk, etc.
 
 # Formatting
 ```
-mkfs.ext4 -L lemonixos /dev/sda1
-mkfs.fat -F 32 -n boot /dev/sda2
+mkfs.fat -F 32 -n boot /dev/nvme0n1p1
+mkfs.ext4 -L nixos /dev/nvme0n1p2
+mkswap -L swap /dev/nvme0n1p3
 ```
 
 # Generating
 ```
-mount /dev/disk/by-label/lemonixos /mnt
-
 mkdir -p /mnt/boot
 mount /dev/disk/by-label/boot /mnt/boot
+
+mount /dev/disk/by-label/nixos /mnt
+
+swapon /dev/disk/by-label/swap
 
 nixos-generate-config --root /mnt
 ```
@@ -61,7 +67,8 @@ nano /mnt/etc/nixos/configuration.nix
 Find a temporary directory:
 ```
 nix-shell -p git
-git clone https://github.com/PassiveLemon/lemonix && cd lemonix
+git clone https://github.com/PassiveLemon/lemonix
+cd lemonix
 
 cp /etc/nixos/hardware-configuration.nix ./hosts/silver/
 nixos-install --flake .#silver
@@ -71,10 +78,11 @@ reboot
 -  May need to `git add` the hardware config if there wasn't one already there.
 
 # Finishing touches
-The home drive should now be mounted in place. Head to `~/Documents/GitHub/`
+You should be able to log in now. Head to `~/Documents/GitHub/` or wherever you want to store your GitHub repos/projects.
 
 ```
-git clone --recurse-submodules https://github.com/PassiveLemon/lemonix && cd lemonix
+git clone --recurse-submodules https://github.com/PassiveLemon/lemonix
+cd lemonix
 
 bash ./other/installer.sh
 ```
@@ -83,11 +91,14 @@ bash ./other/installer.sh
 Hardware config should be in `/etc/nixos-backup/` if needed.
 
 Perform any manual tasks. Ex:
-- Git clones to the appropriate locations like AWM libraries. (Until I can figure out a solution to this)
+- Git clones to the appropriate locations like AWM libraries (Until I can figure out a solution to this)
 - Lanzaboote `sbctl create-keys` `sbctl enroll-keys`
+- Bat theme cache build
 
 ```
 nix run home-manager/release-24.05 -- init --switch
 home-manager switch --flake .#lemon@silver
 reboot
 ```
+
+The system should be set up and ready for use. The only thing left after this is stuff that isn't managed by Nix, such as web logins, application settings, etc.

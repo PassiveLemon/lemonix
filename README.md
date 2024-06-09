@@ -14,7 +14,7 @@ These are my dotfiles for my NixOS system. I like using Lua so a lot of the conf
   - Wacky little crosshairs for games
   - Playerctl signal
 - Tym terminal with Hilbish as the terminal shell.
-- Custom color theme for Discord, VSCode, and Obsidian.
+- Custom color theme for Discord, VSCode, and Obsidian. (GTK WIP)
 - Volantes Cursors
 - Papirus Icons
 
@@ -26,5 +26,8 @@ These are my dotfiles for my NixOS system. I like using Lua so a lot of the conf
 - Images currently may or may not be updated. </br>
 
 ## Install </br>
-You can try to use the Installer.sh script and follow the guide in /other but I will not guarantee that it works because stuff changes so much and I don't often remember to update it. It's also designed for MY use case so you will have to modify stuff to get it to work in your case (Usernames, partitions, etc). <b>I WILL NOT help with this.</b> Issues are still welcome but please do not open any regarding installation. </br>
+There is an install script and install guide in [/other](https://github.com/passivelemon/lemonix/tree/master/other) to aid in installation.
+
+> [!WARNING]
+> This Nix configuration and install items are designed for MY use case. <b>I WILL NOT help with this and I am not responsible for any data loss that occurs from improper installation.</b> Issues are still welcome but please do not open any regarding installation.
 
