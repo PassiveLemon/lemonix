@@ -1,9 +1,6 @@
 { inputs, pkgs, config, lib, ... }: {
-  imports = [
-    ../../modules/nixos/lanzaboote.nix
-  ];
-
   lemonix = {
+    lanzaboote.enable = true;
     bluetooth.enable = true;
     gaming = {
       enable = true;

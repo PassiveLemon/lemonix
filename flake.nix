@@ -9,7 +9,7 @@
     nixos-hardware.url = "github:nixos/nixos-hardware";
 
     lanzaboote = {
-      url = "github:nix-community/lanzaboote/v0.3.0";
+      url = "github:nix-community/lanzaboote/v0.4.0";
       inputs.nixpkgs.follows = "nixpkgs";
     };
     home-manager = {

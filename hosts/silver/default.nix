@@ -1,11 +1,11 @@
 { inputs, pkgs, config, lib, ... }: {
   imports = [
-    ../../modules/nixos/lanzaboote.nix
     ./modules/docker.nix
     ./modules/borg.nix
   ];
 
   lemonix = {
+    lanzaboote.enable = true;
     bluetooth.enable = true;
     ssh.enable = true;
     swap = {

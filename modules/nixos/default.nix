@@ -12,6 +12,7 @@ in
   imports = [
     ./bluetooth.nix
     ./gaming.nix
+    ./lanzaboote.nix
     ./ssh.nix
     ./swap.nix
   ];
