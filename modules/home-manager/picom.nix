@@ -1,6 +1,17 @@
-{ inputs, pkgs, config, lib, ... }: {
-  services = {
-    picom = {
+{ config, pkgs, lib, ... }:
+let
+  inherit (lib) mkIf mkEnableOption;
+  cfg = config.lemonix.picom;
+in
+{
+  options = {
+    lemonix.picom = {
+      enable = mkEnableOption "picom";
+    };
+  };
+
+  config = mkIf cfg.enable {
+    services.picom = {
       enable = true;
       package = pkgs.old.picom-allusive;
       settings = {

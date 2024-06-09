@@ -1,9 +1,18 @@
-{ inputs, pkgs, config, lib, ... }: {
-  services = {
-    blueman.enable = true;
+{ config, pkgs, lib, ... }:
+let
+  inherit (lib) mkIf mkEnableOption;
+  cfg = config.lemonix.bluetooth;
+in
+{
+  options = {
+    lemonix.bluetooth = {
+      enable = mkEnableOption "bluetooth";
+    };
   };
 
-  hardware = {
-    bluetooth.enable = true;
+  config = mkIf cfg.enable {
+    services.blueman.enable = true;
+
+    hardware.bluetooth.enable = true;
   };
 }

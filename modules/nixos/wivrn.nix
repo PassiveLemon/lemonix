@@ -1,7 +1,6 @@
 { config, pkgs, lib, ... }:
-
 let
-  inherit (lib) mkAliasOptionModule mkIf mkEnableOption mkPackageOption mkOption mkDefault types getExe' maintainers;
+  inherit (lib) mkAliasOptionModule mkIf mkEnableOption mkPackageOption mkDefault getExe' maintainers;
   cfg = config.services.wivrn;
 in
 {

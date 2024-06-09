@@ -1,10 +1,13 @@
 { inputs, pkgs, config, lib, ... }: {
   imports = [
-    ./system.nix
     ../../modules/nixos/lanzaboote.nix
-
-    ./user.nix
-    ../../modules/nixos/bluetooth.nix
-    ../../modules/nixos/gaming/desktop.nix
   ];
+
+  lemonix = {
+    bluetooth.enable = true;
+    gaming = {
+      enable = true;
+      vr.enable = true;
+    };
+  };
 }

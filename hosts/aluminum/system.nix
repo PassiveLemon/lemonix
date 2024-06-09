@@ -1,7 +1,7 @@
 { inputs, pkgs, config, lib, ... }: {
   imports = [
     ./hardware-configuration.nix
-    ../common/default.nix
+    ../common/system.nix
   ];
 
   boot = {
@@ -62,7 +62,7 @@
   };
 
   # Drives
-  # 128 GB Internal (Root)
+  # 1 TB Crucial (Root)
 
   system.stateVersion = "23.11";
 }

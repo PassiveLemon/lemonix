@@ -1,7 +1,7 @@
 { inputs, pkgs, config, lib, ... }: {
   imports = [
     ./hardware-configuration.nix
-    ../common/default.nix
+    ../common/system.nix
   ];
 
   boot = {

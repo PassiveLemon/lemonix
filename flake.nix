@@ -90,7 +90,10 @@
           inputs.nixos-hardware.nixosModules.common-cpu-amd-pstate
           inputs.nixos-hardware.nixosModules.common-gpu-nvidia-nonprime
           inputs.nixos-hardware.nixosModules.common-pc-ssd
+          ./hosts/common/default.nix
           ./hosts/silver/default.nix
+          ./hosts/silver/system.nix
+          ./hosts/silver/user.nix
         ];
       };
       # Framework Laptop
@@ -103,7 +106,10 @@
           inputs.nixos-hardware.nixosModules.common-cpu-amd-raphael-igpu
           inputs.nixos-hardware.nixosModules.common-pc-laptop-ssd
           inputs.nixos-hardware.nixosModules.framework-13-7040-amd
+          ./hosts/common/default.nix
           ./hosts/aluminum/default.nix
+          ./hosts/aluminum/system.nix
+          ./hosts/aluminum/user.nix
         ];
       };
       # Raspberry Pi
@@ -115,7 +121,9 @@
       #    nixpkgs-overlays
       #    inputs.nixos-hardware.nixosModules.common-pc-ssd
       #    inputs.nixos-hardware.nixosModules.raspberry-pi-4
+      #    ./hosts/common/default.nix
       #    ./hosts/palladium/default.nix
+      #    ./hosts/palladium/system.nix
       #  ];
       #};
     };
@@ -126,7 +134,9 @@
         pkgs = import inputs.nixpkgs { system = "x86_64-linux"; };
         modules = [
           nixpkgs-overlays
+          ./users/lemon/common/default.nix
           ./users/lemon/silver/default.nix
+          ./users/lemon/silver/home.nix
         ];
       };
       "lemon@aluminum" = inputs.home-manager.lib.homeManagerConfiguration {
@@ -134,7 +144,9 @@
         pkgs = import inputs.nixpkgs { system = "x86_64-linux"; };
         modules = [
           nixpkgs-overlays
+          ./users/lemon/common/default.nix
           ./users/lemon/aluminum/default.nix
+          ./users/lemon/aluminum/home.nix
         ];
       };
     };
