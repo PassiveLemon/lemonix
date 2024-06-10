@@ -107,6 +107,7 @@ hilbish.alias("tr", "trash restore")
 hilbish.alias("rm", "trash")
 hilbish.alias("nrs", "sudo nixos-rebuild switch")
 hilbish.alias("hms", "home-manager switch --flake ~/Documents/GitHub/lemonix#" .. hilbish.user .. "@" .. hilbish.host)
+hilbish.alias("npr", "nixpkgs-review rev --print-result HEAD")
 
 commander.register("nfu", function()
 	run_and_return("/etc/nixos/", "nix flake update")
