@@ -1,22 +1,25 @@
 { config, pkgs, lib, ... }:
 let
-  inherit (lib) mkIf mkEnableOption mkOption types;
-  cfg = config.lemonix.swap;
+  inherit (lib) mkIf mkEnableOption mkOption types assertMsg pathExists;
+  cfg = config.lemonix;
 in
+
 {
   options = {
     lemonix.swap = {
       enable = mkEnableOption "swap";
-
       size = mkOption {
         type = types.int;
         description = "The size of the swapfile in GiB.";
         default = 16;
       };
-
+      device = mkOption {
+        type = types.path;
+        description = "The device to use for swap. Setting this will ignore any swapfile configuration.";
+        default = "/var/lib/swapfile";
+      };
       zram = {
         enable = mkEnableOption "zram swap";
-
         memoryPercent = mkOption {
           type = types.int;
           description = "The percent of RAM to use as zram swap.";
@@ -27,18 +30,30 @@ in
   };
 
   config = {
-    swapDevices = mkIf cfg.enable [
+    warnings = mkIf ((cfg.swap.device == "/var/lib/swapfile") && cfg.system.hibernation.enable) [
+      "Hibernation may not work with a swap file, specify a swap partition with config.lemonix.swap.device instead."
+    ];
+    assertions = [
       {
-        device = "/var/lib/swapfile";
-        size = (cfg.size * 1024);
-        priority = 50;
-        randomEncryption.enable = true;
+        assertion = !(cfg.swap.zram.enable && cfg.system.hibernation.enable);
+        message = "Zram swap cannot be used with hibernation.";
       }
     ];
 
-    zramSwap = mkIf cfg.zram.enable {
+    boot.resumeDevice = mkIf (cfg.swap.enable && (cfg.swap.device != "/var/lib/swapfile")) cfg.swap.device;
+
+    swapDevices = mkIf (cfg.swap.enable && (cfg.swap.device == "/var/lib/swapfile")) [
+      {
+        device = "/var/lib/swapfile";
+        size = (cfg.swap.size * 1024);
+        priority = 50;
+        randomEncryption.enable = !cfg.system.hibernation.enable;
+      }
+    ];
+
+    zramSwap = mkIf cfg.swap.zram.enable {
       enable = true;
-      memoryPercent = cfg.zram.memoryPercent;
+      memoryPercent = cfg.swap.zram.memoryPercent;
       priority = 100;
     };
   };

@@ -6,11 +6,10 @@ in
 {
   options = {
     lemonix.gaming = {
-      enable = mkEnableOption "desktop gaming";
-
-      vr = {
-        enable = mkEnableOption "vr gaming";
-      };
+      enable = mkEnableOption "gaming modules";
+      desktop.enable = mkEnableOption "desktop gaming";
+      vr.enable = mkEnableOption "vr gaming";
+      streaming.enable = mkEnableOption "game streaming";
     };
   };
 
@@ -18,8 +17,8 @@ in
     ./wivrn.nix
   ];
 
-  config = mkMerge [
-    (mkIf cfg.enable {
+  config = mkIf cfg.enable (mkMerge [
+    (mkIf cfg.desktop.enable {
       programs.steam = {
         enable = true;
         extraCompatPackages = with pkgs; [
@@ -54,5 +53,21 @@ in
         inputs.lemonake.packages.${pkgs.system}.monado-vulkan-layers
       ];
     })
-  ];
+    (mkIf cfg.streaming.enable {
+      services.sunshine = {
+        enable = true;
+        autoStart = true;
+        capSysAdmin = true;
+        openFirewall = true;
+        settings = {
+          port = 46777;
+        };
+        applications = {
+          apps = [
+
+          ];
+        };
+      };
+    })
+  ]);
 }

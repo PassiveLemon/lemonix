@@ -2,17 +2,14 @@
 let
   inherit (lib) mkIf mkEnableOption mkMerge;
   cfg = config.lemonix.gaming;
-  wivrn = pkgs.callPackage ../../pkgs/wivrn { };
-  opencomp = pkgs.callPackage ../../pkgs/opencomposite { };
 in
 {
   options = {
     lemonix.gaming = {
-      enable = mkEnableOption "desktop gaming";
-
-      vr = {
-        enable = mkEnableOption "vr gaming";
-      };
+      enable = mkEnableOption "gaming modules";
+      desktop.enable = mkEnableOption "desktop gaming";
+      vr.enable = mkEnableOption "vr gaming";
+      streaming.enable = mkEnableOption "game streaming";
     };
   };
 
@@ -20,8 +17,8 @@ in
     inputs.lemonake.homeManagerModules.steamvr
   ];
 
-  config = mkMerge [
-    (mkIf cfg.enable {
+  config = mkIf cfg.enable (mkMerge [
+    (mkIf cfg.desktop.enable {
       home.packages = with pkgs; [
         protonup-ng
         gamemode dxvk
@@ -47,16 +44,17 @@ in
         #(callPackage ../../pkgs/vr-video-player { })
       ];
 
-      services.steamvr = {
+      services.steamvr = let
+        wivrn = pkgs.callPackage ../../pkgs/wivrn { };
+        opencomp = pkgs.callPackage ../../pkgs/opencomposite { };
+      in {
         runtimeOverride = {
           enable = true;
-          #path = "/home/lemon/.local/share/Steam/steamapps/common/SteamVR";
           #path = "${pkgs.unstable.opencomposite}/lib/opencomposite";
           path = "${opencomp}/lib/opencomposite";
         };
         activeRuntimeOverride = {
           enable = true;
-          #path = "/home/lemon/.local/share/Steam/steamapps/common/SteamVR/steamxr_linux64.json";
           path = "${wivrn}/share/openxr/1/openxr_wivrn.json";
         };
       };
@@ -67,5 +65,10 @@ in
         "x-scheme-handler/modelsaber" = "BeatSaberModManager-url-modelsaber.desktop";
       };
     })
-  ];
+    (mkIf cfg.streaming.enable {
+      home.packages = with pkgs; [
+        moonlight
+      ];
+    })
+  ]);
 }

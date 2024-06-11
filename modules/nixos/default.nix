@@ -6,6 +6,12 @@ in
 {
   options = {
     lemonix = {
+      system = {
+        mobile.enable = mkEnableOption "mobile configuration";
+        server.enable = mkEnableOption "server configuration";
+        hibernation.enable = mkEnableOption "hibernation configuration";
+        headless.enable = mkEnableOption "headless configuration";
+      };
     };
   };
 
@@ -16,4 +22,6 @@ in
     ./ssh.nix
     ./swap.nix
   ];
+
+  config = { };
 }

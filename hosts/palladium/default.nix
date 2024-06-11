@@ -6,5 +6,6 @@
 
   lemonix = {
     ssh.enable = true;
+    system.headless = true;
   };
 }

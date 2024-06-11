@@ -12,7 +12,6 @@
     kernelPackages = pkgs.linuxKernel.packages.linux_zen;
     kernelModules = [ "iwlwifi" ];
     kernelParams = [ "mem_sleep_default=deep" ];
-    resumeDevice = "/dev/nvme0n1p3";
   };
 
   networking = {
