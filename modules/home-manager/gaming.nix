@@ -1,8 +1,9 @@
 { inputs, pkgs, config, lib, ... }:
 let
-  inherit (lib) mkIf mkEnableOption recursiveUpdate;
+  inherit (lib) mkIf mkEnableOption mkMerge;
   cfg = config.lemonix.gaming;
   wivrn = pkgs.callPackage ../../pkgs/wivrn { };
+  opencomp = pkgs.callPackage ../../pkgs/opencomposite { };
 in
 {
   options = {
@@ -19,47 +20,52 @@ in
     inputs.lemonake.homeManagerModules.steamvr
   ];
 
-  config = recursiveUpdate (mkIf cfg.enable {
-    home.packages = with pkgs; [
-      protonup-ng
-      gamemode dxvk
-      r2modman
-      lunar-client prismlauncher
-      inputs.lemonake.packages.${pkgs.system}.gdlauncher-carbon-unstable
-      bottles
-      ludusavi
-    ];
+  config = mkMerge [
+    (mkIf cfg.enable {
+      home.packages = with pkgs; [
+        protonup-ng
+        gamemode dxvk
+        r2modman
+        lunar-client prismlauncher
+        inputs.lemonake.packages.${pkgs.system}.gdlauncher-carbon-unstable
+        bottles
+        ludusavi
+      ];
 
-    xdg.mimeApps.defaultApplications = {
-      "x-scheme-handler/gdlauncher" = "gdlauncher.desktop";
-      "x-scheme-handler/ror2mm" = "r2modman.desktop";
-    };
-  }) (mkIf cfg.vr.enable {
-    home.packages = with pkgs; [
-      inputs.envision.packages.${pkgs.system}.envision
-      wlx-overlay-s
-      sidequest autoadb
-      xrgears
-      BeatSaberModManager
-      opencomposite-helper
-    ];
-
-    services.steamvr = {
-      runtimeOverride = {
-        enable = true;
-        #path = "${pkgs.unstable.opencomposite}/lib/opencomposite";
-        path = "/home/lemon/.local/share/envision/eb7732c3-e27c-4a93-bbd3-6fcd2f68f909/opencomposite/build";
+      xdg.mimeApps.defaultApplications = {
+        "x-scheme-handler/gdlauncher" = "gdlauncher.desktop";
+        "x-scheme-handler/ror2mm" = "r2modman.desktop";
       };
-      activeRuntimeOverride = {
-        enable = true;
-        path = "${wivrn}/share/openxr/1/openxr_wivrn.json";
-      };
-    };
+    })
+    (mkIf cfg.vr.enable {
+      home.packages = with pkgs; [
+        master.wlx-overlay-s
+        sidequest autoadb
+        BeatSaberModManager
+        xrgears
+        #(callPackage ../../pkgs/sphvr { gulkan = pkgs.callPackage ../../pkgs/sphvr/gulkan.nix { }; })
+        #(callPackage ../../pkgs/vr-video-player { })
+      ];
 
-    xdg.mimeApps.defaultApplications = {
-      "x-scheme-handler/beatsaver" = "BeatSaberModManager-url-beatsaver.desktop";
-      "x-scheme-handler/bsplaylist" = "BeatSaberModManager-url-bsplaylist.desktop";
-      "x-scheme-handler/modelsaber" = "BeatSaberModManager-url-modelsaber.desktop";
-    };
-  });
+      services.steamvr = {
+        runtimeOverride = {
+          enable = true;
+          #path = "/home/lemon/.local/share/Steam/steamapps/common/SteamVR";
+          #path = "${pkgs.unstable.opencomposite}/lib/opencomposite";
+          path = "${opencomp}/lib/opencomposite";
+        };
+        activeRuntimeOverride = {
+          enable = true;
+          #path = "/home/lemon/.local/share/Steam/steamapps/common/SteamVR/steamxr_linux64.json";
+          path = "${wivrn}/share/openxr/1/openxr_wivrn.json";
+        };
+      };
+
+      xdg.mimeApps.defaultApplications = {
+        "x-scheme-handler/beatsaver" = "BeatSaberModManager-url-beatsaver.desktop";
+        "x-scheme-handler/bsplaylist" = "BeatSaberModManager-url-bsplaylist.desktop";
+        "x-scheme-handler/modelsaber" = "BeatSaberModManager-url-modelsaber.desktop";
+      };
+    })
+  ];
 }
