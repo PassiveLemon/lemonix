@@ -5,16 +5,18 @@
   ];
 
   services = {
-    logind.extraConfig = ''
-      HandlePowerKey=suspend-then-hibernate
-      HandlePowerKeyLongPress=poweroff
-      HandleLidSwitch=suspend-then-hibernate
-      HandleLidSwitchExternalPower=suspend-then-hibernate
-      HandleLidSwitchDocked=suspend-then-hibernate
-      HoldoffTimeoutSec=5s
-      IdleAction=suspend
-      IdleActionSec=300s
-    '';
+    logind = {
+      powerKey = "suspend-then-hibernate";
+      powerKeyLongPress = "poweroff";
+      lidSwitch = "suspend-then-hibernate";
+      lidSwitchExternalPower = "suspend-then-hibernate";
+      lidSwitchDocked = "suspend-then-hibernate";
+      extraConfig = ''
+        HoldoffTimeoutSec=5s
+        IdleAction=suspend
+        IdleActionSec=300s
+      '';
+    };
   };
 
   systemd = {
