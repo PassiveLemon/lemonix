@@ -18,6 +18,6 @@
   };
 
   systemd = {
-    sleep.extraConfig = "HibernateDelaySec=1h";
+    sleep.extraConfig = "HibernateDelaySec=2h";
   };
 }

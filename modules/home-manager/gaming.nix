@@ -67,7 +67,7 @@ in
     })
     (mkIf cfg.streaming.enable {
       home.packages = with pkgs; [
-        moonlight
+        moonlight-qt
       ];
     })
   ]);
