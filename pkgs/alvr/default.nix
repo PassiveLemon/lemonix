@@ -14,6 +14,8 @@
 , libxkbcommon
 , nix-update-script
 , openssl
+, pipewire
+, pulseaudio
 , vulkan-loader
 , wayland
 , x264
@@ -51,15 +53,17 @@ stdenv.mkDerivation (finalAttrs: {
   runtimeDependencies = [
     brotli
     ffmpeg
-    openssl
     libdrm
     libGL
     libxkbcommon
+    openssl
+    pipewire
+    pulseaudio
     wayland
     x264
     xorg.libX11
-    xorg.libXcursor
     xorg.libxcb
+    xorg.libXcursor
     xorg.libXi
   ];
 
@@ -81,8 +85,8 @@ stdenv.mkDerivation (finalAttrs: {
     homepage = "https://github.com/alvr-org/ALVR/";
     changelog = "https://github.com/alvr-org/ALVR/releases/tag/v${finalAttrs.version}";
     license = licenses.mit;
-    mainProgram = "alvr_dashboard";
     maintainers = with maintainers; [ passivelemon ];
     platforms = platforms.linux;
+    mainProgram = "alvr_dashboard";
   };
 })
