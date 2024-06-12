@@ -47,6 +47,7 @@
   services = {
     fwupd.enable = true;
     thermald.enable = true;
+    upower.enable = true;
   };
 
   powerManagement = {

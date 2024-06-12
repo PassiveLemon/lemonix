@@ -11,11 +11,6 @@
       lidSwitch = "suspend-then-hibernate";
       lidSwitchExternalPower = "suspend-then-hibernate";
       lidSwitchDocked = "suspend-then-hibernate";
-      extraConfig = ''
-        HoldoffTimeoutSec=5s
-        IdleAction=suspend
-        IdleActionSec=300s
-      '';
     };
   };
 
