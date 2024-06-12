@@ -59,14 +59,6 @@ in
         autoStart = true;
         capSysAdmin = true;
         openFirewall = true;
-        settings = {
-          port = 46777;
-        };
-        applications = {
-          apps = [
-
-          ];
-        };
       };
     })
   ]);
