@@ -144,9 +144,6 @@ awful.keyboard.append_global_keybindings({
   awful.key({ super }, "v", function() awesome.emit_signal("ui::power::toggle") end,
   { description = "|| run powermenu", group = "launcher" }),
 
-  awful.key({ super }, "x", function() awesome.emit_signal("ui::resource::toggle") end,
-  { description = "|| run resource monitor", group = "launcher" }),
-
   -- Control
   awful.key({ }, "XF86MonBrightnessUp", function()
     awful.spawn.easy_async("brightnessctl set 3%+", function()
@@ -270,7 +267,7 @@ awful.keyboard.append_global_keybindings({
 
     awful.key({ super }, "n", function(c) c.minimized = true end,
     { description = "|| minimize", group = "client" }),
-  
+
     awful.key({ super }, "m",
       function(c)
           c.fullscreen = not c.fullscreen

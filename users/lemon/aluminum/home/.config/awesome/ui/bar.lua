@@ -39,27 +39,6 @@ screen.connect_signal("request::desktop_decoration", function(s)
     cpu_text:get_children_by_id("textbox")[1].text = use .. "%"
   end)
 
-  -- Memory
-  local memory_icon = h.text({
-    margins = {
-      right = 3,
-      bottom = 2,
-    },
-    bg = b.bg2,
-    text = "",
-    font = b.sysfont(15),
-  })
-  local memory_text = h.text({
-    margins = {
-      left = 3,
-    },
-    bg = b.bg2,
-    halign = "left",
-  })
-  awesome.connect_signal("signal::memory::data", function(_, use_perc, _, _)
-    memory_text:get_children_by_id("textbox")[1].text = use_perc .. "%"
-  end)
-
   -- Caps lock
   local caps_icon = h.text({
     margins = {
@@ -118,7 +97,7 @@ screen.connect_signal("request::desktop_decoration", function(s)
     font = b.sysfont(14),
   })
 
-  -- Battery
+  -- Power
   local battery_icon = h.text({
     margins = {
       right = 3,
@@ -224,7 +203,6 @@ screen.connect_signal("request::desktop_decoration", function(s)
       },
     },
   })
-
   local pill_systray_hider = gears.timer({
     timeout = 2,
     single_shot = true,
@@ -254,33 +232,6 @@ screen.connect_signal("request::desktop_decoration", function(s)
           sep,
           cpu_icon,
           cpu_text,
-          sep,
-        },
-      },
-    },
-  })
-
-  local pill_memory = wibox.widget({
-    widget = wibox.container.margin,
-    margins = {
-      right = 2,
-      left = 2,
-    },
-    {
-      widget = wibox.container.place,
-      valign = "center",
-      halign = "center",
-      forced_height = 24,
-      {
-        widget = wibox.container.background,
-        bg = b.bg2,
-        shape = gears.shape.rounded_bar,
-        forced_height = 24,
-        {
-          layout = wibox.layout.fixed.horizontal,
-          sep,
-          memory_icon,
-          memory_text,
           sep,
         },
       },

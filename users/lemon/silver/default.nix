@@ -5,7 +5,11 @@
       desktop.enable = true;
       vr.enable = true;
     };
-    picom.enable = true;
+    picom = {
+      enable = true;
+      shadows.enable = true;
+      animations.enable = true;
+    };
     printing.enable = true;
   };
 }

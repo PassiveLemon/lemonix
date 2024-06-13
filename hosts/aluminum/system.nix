@@ -11,7 +11,7 @@
     };
     kernelPackages = pkgs.linuxKernel.packages.linux_zen;
     kernelModules = [ "iwlwifi" ];
-    kernelParams = [ "mem_sleep_default=deep" ];
+    kernelParams = [ "mem_sleep_default=deep" "nmi_watchdog=0" ];
   };
 
   networking = {
@@ -41,6 +41,7 @@
   environment = {
     systemPackages = with pkgs; [
       nvtopPackages.amd
+      powertop
     ];
   };
 
@@ -52,6 +53,7 @@
 
   powerManagement = {
     enable = true;
+    powertop.enable = true;
   };
 
   nix = {

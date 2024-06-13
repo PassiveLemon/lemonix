@@ -16,7 +16,7 @@ local function volume()
 end
 volume()
 local volume_timer = gears.timer({
-  timeout = 1,
+  timeout = 3,
   autostart = true,
   callback = function()
     volume()
