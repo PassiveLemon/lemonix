@@ -1,7 +1,9 @@
 { config, pkgs, lib, ... }:
 let
-  inherit (lib) mkAliasOptionModule mkIf mkEnableOption mkPackageOption mkDefault getExe' maintainers;
+  inherit (lib) mkAliasOptionModule mkIf mkEnableOption mkPackageOption mkOption mkDefault optionalString getExe' maintainers;
   cfg = config.services.wivrn;
+  configFormat = pkgs.formats.json { };
+  configFile = configFormat.generate "config.json" cfg.config.json;
 in
 {
   options = {
@@ -20,6 +22,40 @@ in
       '' // { default = true; };
 
       highPriority = mkEnableOption "high priority capability for wivrn-server" // { default = true; };
+
+      config = {
+        enable = mkEnableOption "configuration for WiVRn";
+        json = mkOption {
+          type = configFormat.type;
+          description = ''
+            Configuration for WiVRn. The attributes are serialized to JSON in config.json.
+            See https://github.com/Meumeu/WiVRn/blob/master/docs/configuration.md
+          '';
+          default = { };
+          example = {
+            scale = 1.0;
+            bitrate = 100000000;
+            encoders = [
+              {
+                encoder = "nvenc";
+                codec = "h264";
+                width = 0.5;
+                height = 1.0;
+                offset_x = 0.0;
+                offset_y = 0.0;
+              }
+              {
+                encoder = "nvenc";
+                codec = "h264";
+                width = 0.5;
+                height = 1.0;
+                offset_x = 0.5;
+                offset_y = 0.0;
+              }
+            ];
+          };
+        };
+      };
     };
   };
 
@@ -40,30 +76,52 @@ in
     systemd.user = {
       services.wivrn = {
         description = "WiVRn XR runtime service module";
-        requires = [ "wivrn.socket" ];
         unitConfig.ConditionUser = "!root";
         serviceConfig = {
-          ExecStart =
+          ExecStart = (
             if cfg.highPriority
-            then "${config.security.wrapperDir}/wivrn-server"
-            else getExe' cfg.package "wivrn-server";
+            then"${config.security.wrapperDir}/wivrn-server"
+            else getExe' cfg.package "wivrn-server"
+          ) + optionalString cfg.config.enable " -f ${configFile}";
           Restart = "no";
+          # Hardening options
+          BindPaths = [
+            "/run/user/%U"
+            "%h/.config/wivrn"
+          ];
+          CapabilityBoundingSet = [
+            "CAP_SETPCAP"
+            "CAP_SYS_ADMIN"
+            "CAP_SYS_NICE"
+          ];
+          KeyringMode = "private";
+          LockPersonality = true;
+          MemoryDenyWriteExecute = true;
+          PrivateTmp = true;
+          ProcSubset = "pid";
+          ProtectControlGroups = true;
+          ProtectClock = true;
+          ProtectHome = "tmpfs";
+          ProtectHostname = true;
+          ProtectKernelLogs = true;
+          ProtectKernelModules = true;
+          ProtectKernelTunables = true;
+          ProtectProc = "invisible";
+          ProtectSystem = "strict";
+          RestrictAddressFamilies= [
+            "AF_UNIX"
+            "AF_INET"
+            "AF_INET6"
+            "AF_NETLINK"
+          ];
+          RestrictNamespaces = true;
+          RestrictRealtime = true;
+          RestrictSUIDSGID = true;
         };
-        restartTriggers = [ cfg.package ];
-        wantedBy = [ "sockets.target" ];
-      };
-
-      sockets.wivrn = {
-        description = "WiVRn XR service module connection socket";
-        unitConfig.ConditionUser = "!root";
-        socketConfig = {
-          ListenStream = "%t/wivrn_comp_ipc";
-          RemoveOnStop = true;
-          # If WiVRn crashes while starting up, we want to close incoming OpenXR connections
-          FlushPending = true;
-        };
-        restartTriggers = [ cfg.package ];
-        wantedBy = [ "sockets.target" ];
+        restartTriggers = [
+          cfg.package
+          configFile
+        ];
       };
     };
 
@@ -75,7 +133,10 @@ in
         XRT_PRINT_OPTIONS = mkDefault "on";
         IPC_EXIT_ON_DISCONNECT = mkDefault "off";
       };
-      udev.packages = with pkgs; [ xr-hardware ]; # WiVRn can be used with some wired headsets
+      udev.packages = with pkgs; [
+        android-udev-rules
+        xr-hardware # WiVRn can be used with some wired headsets
+      ];
       avahi = {
         enable = true;
         publish = {

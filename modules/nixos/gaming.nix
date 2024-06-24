@@ -28,9 +28,6 @@ in
     })
     (mkIf cfg.vr.enable {
       services = {
-        udev.packages = with pkgs; [
-          android-udev-rules
-        ];
         wivrn = {
           enable = true;
           package = pkgs.callPackage ../../pkgs/wivrn { };
@@ -38,9 +35,43 @@ in
           highPriority = true;
           defaultRuntime = true;
           monadoEnvironment = {
-            XRT_COMPOSITOR_COMPUTE = "1";
-            XRT_COMPOSITOR_LOG = "debug";
-            XRT_LOG = "debug";
+            XRT_LOG = "warning";
+            XRT_COMPOSITOR_LOG = "warning";
+            XRT_PRINT_OPTIONS = "off";
+            PROBER_LOG = "warning";
+          };
+          config = {
+            enable = true;
+            json = {
+              scale = 1.0;
+              bitrate = 100000000;
+              scale = 0.9;
+              bitrate = 120000000;
+              encoders = [
+                {
+                  encoder = "nvenc";
+                  codec = "h264";
+                  width = 0.5;
+                  height = 1.0;
+                  offset_x = 0.5;
+                  offset_x = 0.0;
+                  offset_y = 0.0;
+                  group = 0;
+                }
+                {
+                  encoder = "nvenc";
+                  codec = "h264";
+                  width = 0.5;
+                  height = 1.0;
+                  offset_x = 0.0;
+                  offset_x = 0.5;
+                  offset_y = 0.0;
+                  group = 0;
+                }
+              ];
+              application = [ "wlx-overlay-s" ];
+              tcp_only = true;
+            };
           };
         };
       };

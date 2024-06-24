@@ -41,13 +41,13 @@
 }:
 stdenv.mkDerivation (finalAttrs: {
   pname = "wivrn";
-  version = "0.15";
+  version = "0.16";
 
   src = fetchFromGitHub {
     owner = "meumeu";
     repo = "wivrn";
     rev = "v${finalAttrs.version}";
-    hash = "sha256-RVRbL9hqy9pMKjvzwaP+9HGEfdpAhmlnnvqZsEGxlCw=";
+    hash = "sha256-6qBx/DwzEU4f4JiyfOH7aaBwM4tP93TekgFqpgoQHMI=";
   };
 
   monado = applyPatches {
@@ -55,8 +55,8 @@ stdenv.mkDerivation (finalAttrs: {
       domain = "gitlab.freedesktop.org";
       owner = "monado";
       repo = "monado";
-      rev = "ffb71af26f8349952f5f820c268ee4774613e200";
-      hash = "sha256-+RTHS9ShicuzhiAVAXf38V6k4SVr+Bc2xUjpRWZoB0c=";
+      rev = "598080453545c6bf313829e5780ffb7dde9b79dc";
+      hash = "sha256-9LsKvIXAQpr+rpv8gDr4YfoNN+MSkXfccbIwLrWcIXg=";
     };
 
     patches = [
@@ -64,10 +64,6 @@ stdenv.mkDerivation (finalAttrs: {
       ("${finalAttrs.src}/patches/monado/0002-ipc-server-Always-listen-to-stdin.patch")
       ("${finalAttrs.src}/patches/monado/0003-c-multi-Don-t-log-frame-time-diff.patch")
     ];
-
-    postPatch = ''
-      substituteInPlace CMakeLists.txt --replace "add_subdirectory(doc)" ""
-    '';
   };
 
   postUnpack = ''

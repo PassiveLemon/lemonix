@@ -103,11 +103,6 @@
       };
     };
     desktopEntries = {
-      "alvr-autoadb" = {
-        name = "alvr-autoadb";
-        exec = "/home/lemon/.local/bin/passivelemon/alvr-autoadb.sh";
-        terminal = false;
-      };
       "sd-comfy" = {
         name = "sd-comfy";
         exec = "/home/lemon/.local/bin/passivelemon/sd-comfy.sh";
