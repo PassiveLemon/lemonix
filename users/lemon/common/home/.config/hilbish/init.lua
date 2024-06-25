@@ -108,7 +108,7 @@ hilbish.alias("rm", "trash")
 hilbish.alias("nrs", "sudo nixos-rebuild switch")
 hilbish.alias("hms", "home-manager switch --flake ~/Documents/GitHub/lemonix#" .. hilbish.user .. "@" .. hilbish.host)
 hilbish.alias("npr", "nixpkgs-review rev --print-result HEAD")
-hilbish.alias("wvn", "adb reverse tcp:9757 tcp:9757 ; adb shell am start -a android.intent.action.VIEW -d 'wivrn://localhost' org.meumeu.wivrn ; wivrn-server")
+hilbish.alias("wvn", "adb reverse tcp:9757 tcp:9757 ; adb shell am start -a android.intent.action.VIEW -d 'wivrn://localhost' org.meumeu.wivrn")
 
 commander.register("nfu", function()
 	run_and_return("/etc/nixos/", "nix flake update")
