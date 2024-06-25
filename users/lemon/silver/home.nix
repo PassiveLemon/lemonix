@@ -95,13 +95,6 @@
   };
 
   xdg = {
-    mime.enable = true;
-    mimeApps = {
-      enable = true;
-      defaultApplications = {
-        "x-scheme-handler/discord-409416265891971072" = "discord-409416265891971072.desktop";
-      };
-    };
     desktopEntries = {
       "sd-comfy" = {
         name = "sd-comfy";

@@ -10,7 +10,7 @@
       # Browsing
       firefox freetube
       # Communication
-      webcord-vencord srain teams-for-linux
+      webcord-vencord vesktop srain teams-for-linux
       # File/storage management
       pcmanfm ffmpegthumbnailer xarchiver filezilla gparted
       # Development
@@ -57,12 +57,6 @@
 
   programs = {
     home-manager.enable = true;
-    discocss = { # Broken
-      enable = false;
-      discordAlias = true;
-      discordPackage = pkgs.webcord-vencord;
-      css = builtins.readFile(./dots/.config/BetterDiscord/themes/Lemon.theme.css);
-    };
     obs-studio = {
       enable = true;
       plugins = with pkgs.obs-studio-plugins; [ obs-pipewire-audio-capture ];
@@ -114,10 +108,11 @@
     };
     configFile."mimeapps.list".force = true;
     desktopEntries = {
-      "Discord" = { # Alias Discord to Webcord with CSS theme. Theme is currently broken
+      "Discord" = { # Alias Discord to Webcord with CSS theme. Theme is currently broken.
+        # Temporarily aliased to Vesktop until Webcord starts working again.
         name = "Discord";
-        exec = "webcord";
-        icon = "${pkgs.papirus-icon-theme}/share/icons/Papirus/64x64/apps/webcord.svg";
+        exec = "vesktop";
+        icon = "${pkgs.papirus-icon-theme}/share/icons/Papirus/64x64/apps/discord.svg";
         terminal = false;
         type = "Application";
         categories = [ "Application" ];
