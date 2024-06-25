@@ -1,9 +1,23 @@
 { config, pkgs, lib, ... }:
 let
-  inherit (lib) mkAliasOptionModule mkIf mkEnableOption mkPackageOption mkOption mkDefault optionalString getExe' maintainers;
+  inherit (lib) mkAliasOptionModule mkIf mkEnableOption mkPackageOption mkOption mkDefault optionalString getExe literalExpression maintainers;
   cfg = config.services.wivrn;
   configFormat = pkgs.formats.json { };
-  configFile = configFormat.generate "config.json" cfg.config.json;
+  # For the application option to work with systemd PATH, we find the store binary path of
+  # the package, concat all of the following strings, and then update the application attribute.
+  # Application can either be a package or a list.
+  applicationBinary = (
+    if builtins.isList cfg.config.json.application
+    then (builtins.head cfg.config.json.application)
+    else cfg.config.json.application
+  );
+  applicationStrings = builtins.tail cfg.config.json.application;
+  applicationConcat = (
+    if builtins.isList cfg.config.json.application
+    then builtins.concatStringsSep " " ([ (getExe applicationBinary) ] ++ applicationStrings)
+    else (getExe applicationBinary)
+  );
+  configFile = configFormat.generate "config.json" (cfg.config.json // { application = applicationConcat; });
 in
 {
   options = {
@@ -15,7 +29,8 @@ in
       openFirewall = mkEnableOption "the default ports in the firewall for the WiVRn server";
 
       defaultRuntime = mkEnableOption ''
-        WiVRn Monado as the default OpenXR runtime on the system. The config can be found at `/etc/xdg/openxr/1/active_runtime.json`.
+        WiVRn Monado as the default OpenXR runtime on the system.
+        The config can be found at `/etc/xdg/openxr/1/active_runtime.json`.
 
         Note that applications can bypass this option by setting an active
         runtime in a writable XDG_CONFIG_DIRS location like `~/.config`
@@ -29,31 +44,31 @@ in
           type = configFormat.type;
           description = ''
             Configuration for WiVRn. The attributes are serialized to JSON in config.json.
+
+            Note that the application option must be either a package or a
+            list with package as the first element.
+
             See https://github.com/Meumeu/WiVRn/blob/master/docs/configuration.md
           '';
           default = { };
-          example = {
-            scale = 1.0;
-            bitrate = 100000000;
-            encoders = [
-              {
-                encoder = "nvenc";
-                codec = "h264";
-                width = 0.5;
-                height = 1.0;
-                offset_x = 0.0;
-                offset_y = 0.0;
-              }
-              {
-                encoder = "nvenc";
-                codec = "h264";
-                width = 0.5;
-                height = 1.0;
-                offset_x = 0.5;
-                offset_y = 0.0;
-              }
-            ];
-          };
+          example = literalExpression ''
+            {
+              scale = 0.8;
+              bitrate = 100000000;
+              encoders = [
+                {
+                  encoder = "nvenc";
+                  codec = "h264";
+                  width = 1.0;
+                  height = 1.0;
+                  offset_x = 0.0;
+                  offset_y = 0.0;
+                }
+              ];
+              application = [ pkgs.wlx-overlay-s ];
+              tcp_only = true;
+            }
+          '';
         };
       };
     };
@@ -68,9 +83,9 @@ in
       setuid = false;
       owner = "root";
       group = "root";
-      # cap_sys_nice needed for asynchronous reprojection
+      # We need cap_sys_nice for asynchronous reprojection
       capabilities = "cap_sys_nice+eip";
-      source = getExe' cfg.package "wivrn-server";
+      source = getExe cfg.package;
     };
 
     systemd.user = {
@@ -80,14 +95,13 @@ in
         serviceConfig = {
           ExecStart = (
             if cfg.highPriority
-            then"${config.security.wrapperDir}/wivrn-server"
-            else getExe' cfg.package "wivrn-server"
+            then "${config.security.wrapperDir}/wivrn-server"
+            else getExe cfg.package
           ) + optionalString cfg.config.enable " -f ${configFile}";
           Restart = "no";
           # Hardening options
           BindPaths = [
             "/run/user/%U"
-            "%h/.config/wivrn"
           ];
           CapabilityBoundingSet = [
             "CAP_SETPCAP"
@@ -101,7 +115,7 @@ in
           ProcSubset = "pid";
           ProtectControlGroups = true;
           ProtectClock = true;
-          ProtectHome = "tmpfs";
+          ProtectHome = "read-only";
           ProtectHostname = true;
           ProtectKernelLogs = true;
           ProtectKernelModules = true;
@@ -118,6 +132,8 @@ in
           RestrictRealtime = true;
           RestrictSUIDSGID = true;
         };
+        # We need to add the application to PATH so WiVRn can find it
+        path = [ applicationBinary ];
         restartTriggers = [
           cfg.package
           configFile
@@ -128,14 +144,15 @@ in
     services = {
       wivrn.monadoEnvironment = {
         # Default options
-        # https://gitlab.freedesktop.org/monado/monado/-/blob/4548e1738591d0904f8db4df8ede652ece889a76/src/xrt/targets/service/monado.in.service#L12
+        # https://gitlab.freedesktop.org/monado/monado/-/blob/598080453545c6bf313829e5780ffb7dde9b79dc/src/xrt/targets/service/monado.in.service#L12
         XRT_COMPOSITOR_LOG = mkDefault "debug";
         XRT_PRINT_OPTIONS = mkDefault "on";
         IPC_EXIT_ON_DISCONNECT = mkDefault "off";
       };
+      # WiVRn can be used with some wired headsets so we include xr-hardware
       udev.packages = with pkgs; [
         android-udev-rules
-        xr-hardware # WiVRn can be used with some wired headsets
+        xr-hardware
       ];
       avahi = {
         enable = true;

@@ -43,17 +43,14 @@ in
           config = {
             enable = true;
             json = {
-              scale = 1.0;
+              scale = 0.8;
               bitrate = 100000000;
-              scale = 0.9;
-              bitrate = 120000000;
               encoders = [
                 {
                   encoder = "nvenc";
                   codec = "h264";
                   width = 0.5;
                   height = 1.0;
-                  offset_x = 0.5;
                   offset_x = 0.0;
                   offset_y = 0.0;
                   group = 0;
@@ -63,13 +60,12 @@ in
                   codec = "h264";
                   width = 0.5;
                   height = 1.0;
-                  offset_x = 0.0;
                   offset_x = 0.5;
                   offset_y = 0.0;
                   group = 0;
                 }
               ];
-              application = [ "wlx-overlay-s" ];
+              application = pkgs.master.wlx-overlay-s;
               tcp_only = true;
             };
           };
