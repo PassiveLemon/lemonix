@@ -36,9 +36,9 @@ in
     })
     (mkIf cfg.vr.enable {
       home.packages = with pkgs; [
-        master.wlx-overlay-s
+        wlx-overlay-s
         sidequest autoadb
-        BeatSaberModManager
+        beatsabermodmanager
         xrgears
         #(callPackage ../../pkgs/sphvr { gulkan = pkgs.callPackage ../../pkgs/sphvr/gulkan.nix { }; })
         #(callPackage ../../pkgs/vr-video-player { })
