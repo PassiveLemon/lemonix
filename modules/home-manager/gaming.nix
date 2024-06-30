@@ -45,7 +45,7 @@ in
       ];
 
       services.steamvr = let
-        wivrn = pkgs.callPackage ../../pkgs/wivrn { };
+        wivrn = pkgs.callPackage ../../pkgs/wivrn-personal { };
         opencomp = pkgs.callPackage ../../pkgs/opencomposite { };
       in {
         runtimeOverride = {

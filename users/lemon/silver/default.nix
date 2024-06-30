@@ -10,6 +10,10 @@
       shadows.enable = true;
       animations.enable = true;
     };
-    printing.enable = true;
+    modeling = {
+      enable = true;
+      design.enable = true;
+      printing.enable = true;
+    };
   };
 }
