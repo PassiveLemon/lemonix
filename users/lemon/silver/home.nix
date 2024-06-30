@@ -8,10 +8,7 @@
     packages = with pkgs; [
       headsetcontrol
       guitarix
-      easytag #onthespot
-      xclicker
-
-      (callPackage ../../../pkgs/onthespot { })
+      easytag onthespot
 
       inputs.lemonake.packages.${pkgs.system}.animdl
       inputs.lemonake.packages.${pkgs.system}.hd2pystratmacro

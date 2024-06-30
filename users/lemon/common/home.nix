@@ -22,7 +22,7 @@
       # Image/Video
       loupe mpv flameshot gimp feh libsForQt5.kdenlive scrot
       # Miscellaneous
-      libqalculate libsForQt5.kruler mullvad-vpn localsend
+      libqalculate libsForQt5.kruler mullvad-vpn localsend xclicker
     ];
     username = "lemon";
     homeDirectory = "/home/lemon";
