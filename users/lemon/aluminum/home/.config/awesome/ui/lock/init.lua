@@ -31,11 +31,16 @@ local function grab()
     },
     keypressed_callback = function(_, _, key, _)
       if #key == 1 then
-        awesome.emit_signal("ui::lock::keypress", key, input, nil)
-        if input == nil then
-          input = key
+        if #input < 32 then
+          awesome.emit_signal("ui::lock::keypress", key, input, nil)
+          if input == nil then
+            input = key
+          end
+          input = input .. key
+        else
+          -- Doesn't actually backspace, we just use this so we can get the color
+          awesome.emit_signal("ui::lock::keypress", "BackSpace", "", nil)
         end
-        input = input .. key
       elseif key == "BackSpace" then
         awesome.emit_signal("ui::lock::keypress", key, input, nil)
         input = input:sub(1, -2)
@@ -49,8 +54,8 @@ local function grab()
         if auth(input) then
           awesome.emit_signal("ui::lock::keypress", key, input, true)
           awesome.emit_signal("ui::lock::state", false)
-          self:stop()
           input = ""
+          self:stop()
         else
           awesome.emit_signal("ui::lock::keypress", key, input, false)
           awesome.emit_signal("ui::lock::state", true)
