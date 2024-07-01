@@ -14,6 +14,7 @@ in
   };
 
   imports = [
+    inputs.lemonake.nixosModules.autoadb
     ./wivrn.nix
   ];
 
@@ -28,6 +29,10 @@ in
     })
     (mkIf cfg.vr.enable {
       services = {
+        autoadb = {
+          enable = true;
+          command = "adb reverse tcp:9757 tcp:9757 && adb shell am start -a android.intent.action.VIEW -d 'wivrn://localhost' org.meumeu.wivrn";
+        };
         wivrn = {
           enable = true;
           package = pkgs.callPackage ../../pkgs/wivrn { };
@@ -70,10 +75,6 @@ in
             };
           };
         };
-      };
-
-      programs = {
-        adb.enable = true;
       };
 
       hardware.opengl.extraPackages = with pkgs; [

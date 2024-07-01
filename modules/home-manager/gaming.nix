@@ -37,7 +37,7 @@ in
     (mkIf cfg.vr.enable {
       home.packages = with pkgs; [
         wlx-overlay-s
-        sidequest autoadb
+        sidequest
         beatsabermodmanager
         xrgears
         #(callPackage ../../pkgs/sphvr { gulkan = pkgs.callPackage ../../pkgs/sphvr/gulkan.nix { }; })
