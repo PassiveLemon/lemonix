@@ -10,16 +10,14 @@ let
   applicationExists = builtins.hasAttr "application" cfg.config.json;
   applicationListNotEmpty = (
     if builtins.isList cfg.config.json.application
-    then if builtins.length cfg.config.json.application == 0
-      then false
-      else true
+    then (builtins.length cfg.config.json.application) != 0
     else true
   );
   applicationCheck = applicationExists && applicationListNotEmpty;
 
   applicationBinary = (
     if builtins.isList cfg.config.json.application
-    then (builtins.head cfg.config.json.application)
+    then builtins.head cfg.config.json.application
     else cfg.config.json.application
   );
   applicationStrings = builtins.tail cfg.config.json.application;
@@ -113,7 +111,6 @@ in
     systemd.user = {
       services.wivrn = {
         description = "WiVRn XR runtime service module";
-        unitConfig.ConditionUser = "!root";
         serviceConfig = {
           ExecStart = (
             if cfg.highPriority

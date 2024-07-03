@@ -35,7 +35,7 @@ stdenv.mkDerivation (finalAttrs: {
     owner = "alvr-org";
     repo = "ALVR";
     rev = "v${finalAttrs.version}";
-    hash = "sha256-znIRSax4thuBIpxW8BNqJSUYgIeY8g06qA9P/i8awvQ=";
+    hash = "sha256-HRXBagh6NClm0269ip0SlhOWCoI8CQXEtr7veSRgvwE=";
   };
 
   nativeBuildInputs = [
