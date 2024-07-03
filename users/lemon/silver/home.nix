@@ -18,7 +18,7 @@
       zed-editor
 
       # Development
-      jq dotnet-sdk_8
+      jq
       act
       nvfetcher nixpkgs-review
       trivy snyk grype
@@ -54,7 +54,6 @@
 
   services = {
     autorandr.enable = true;
-    megasync.enable = true;
   };
 
   programs = {
