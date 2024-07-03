@@ -15,6 +15,7 @@ in
 
   imports = [
     inputs.lemonake.homeManagerModules.steamvr
+    inputs.lemonake.homeManagerModules.tmodloader-dotnetfix
   ];
 
   config = mkIf cfg.enable (mkMerge [
@@ -33,6 +34,8 @@ in
         "x-scheme-handler/gdlauncher" = "gdlauncher.desktop";
         "x-scheme-handler/ror2mm" = "r2modman.desktop";
       };
+
+      programs.tmodloader-dotnetfix.enable = true;
     })
     (mkIf cfg.vr.enable {
       home.packages = with pkgs; [
@@ -46,12 +49,10 @@ in
 
       services.steamvr = let
         wivrn = pkgs.callPackage ../../pkgs/wivrn-personal { };
-        opencomp = pkgs.callPackage ../../pkgs/opencomposite { };
       in {
         runtimeOverride = {
           enable = true;
-          #path = "${pkgs.unstable.opencomposite}/lib/opencomposite";
-          path = "${opencomp}/lib/opencomposite";
+          path = "${pkgs.unstable.opencomposite}/lib/opencomposite";
         };
         activeRuntimeOverride = {
           enable = true;
