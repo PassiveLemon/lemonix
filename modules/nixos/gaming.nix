@@ -35,9 +35,9 @@ in
         };
         wivrn = {
           enable = true;
-          package = pkgs.callPackage ../../pkgs/wivrn { };
-          openFirewall = true;
-          highPriority = true;
+          package = pkgs.callPackage ../../pkgs/wivrn-personal { };
+          openFirewall = false;
+          highPriority = false;
           defaultRuntime = true;
           monadoEnvironment = {
             XRT_LOG = "warning";
@@ -75,6 +75,11 @@ in
             };
           };
         };
+      };
+
+      programs.alvr = {
+        enable = true;
+        package = pkgs.callPackage ../../pkgs/alvr { };
       };
 
       hardware.opengl.extraPackages = with pkgs; [
