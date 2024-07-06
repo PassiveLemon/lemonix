@@ -1,7 +1,10 @@
 local awful = require("awful")
+local gears = require("gears")
 local ruled = require("ruled")
 
 local h = require("helpers")
+
+local lfs = require("lfs")
 
 --
 -- Rules
@@ -59,12 +62,13 @@ end)
 -- Other
 --
 
+-- Autostart files
 local autostart = os.getenv("HOME") .. "/.config/autostart/"
-h.file_test(autostart, "awesome.sh", function(exists)
-  if exists then
-    awful.spawn.easy_async_with_shell("sh " .. autostart .. "awesome.sh")
+for item in lfs.dir(autostart) do
+  if item ~= "." and item ~= ".." then
+    awful.spawn.easy_async_with_shell("sh " .. autostart .. item)
   end
-end)
+end
 
 -- Layout
 tag.connect_signal("request::default_layouts", function()

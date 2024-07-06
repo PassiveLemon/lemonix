@@ -51,6 +51,9 @@
       awesome = {
         enable = true;
         package = inputs.nixpkgs-f2k.packages.${pkgs.system}.awesome-luajit-git;
+        luaModules = with pkgs; [
+          luajitPackages.luafilesystem
+        ];
       };
     };
   };

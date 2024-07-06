@@ -24,8 +24,12 @@
       trivy snyk grype
     ];
     file = {
-      ".config/autostart/" = {
-        source = ./home/.config/autostart;
+      ".config/autostart/hardware.sh" = {
+        source = ./home/.config/autostart/hardware.sh;
+        recursive = true;
+      };
+      ".config/autostart/programs.sh" = {
+        source = ./home/.config/autostart/programs.sh;
         recursive = true;
       };
       ".config/awesome/config" = {

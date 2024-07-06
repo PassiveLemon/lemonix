@@ -1,6 +1,6 @@
 #!/bin/sh
 
-# Programs
 pgrep -x picom > /dev/null || picom -b &
+pgrep -x easyeffects > /dev/null || easyeffects --gapplication-service &
 pgrep -x nm-applet > /dev/null || nm-applet &
-pgrep -x blueman-applet > /dev/null || blueman-applet &
+

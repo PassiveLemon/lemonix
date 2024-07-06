@@ -9,8 +9,8 @@
       brightnessctl
     ];
     file = {
-      ".config/autostart/" = {
-        source = ./home/.config/autostart;
+      ".config/autostart/programs.sh" = {
+        source = ./home/.config/autostart/programs.sh;
         recursive = true;
       };
       ".config/awesome/config" = {
