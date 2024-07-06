@@ -60,9 +60,9 @@ stdenv.mkDerivation (finalAttrs: {
     };
 
     patches = [
-      ("${finalAttrs.src}/patches/monado/0001-c-multi-disable-dropping-of-old-frames.patch")
-      ("${finalAttrs.src}/patches/monado/0002-ipc-server-Always-listen-to-stdin.patch")
-      ("${finalAttrs.src}/patches/monado/0003-c-multi-Don-t-log-frame-time-diff.patch")
+      "${finalAttrs.src}/patches/monado/0001-c-multi-disable-dropping-of-old-frames.patch"
+      "${finalAttrs.src}/patches/monado/0002-ipc-server-Always-listen-to-stdin.patch"
+      "${finalAttrs.src}/patches/monado/0003-c-multi-Don-t-log-frame-time-diff.patch"
     ];
   };
 

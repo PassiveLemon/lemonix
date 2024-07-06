@@ -1,6 +1,6 @@
 { config, pkgs, lib, ... }:
 let
-  inherit (lib) mkAliasOptionModule mkIf mkEnableOption mkPackageOption mkOption mkDefault optional optionalString optionalAttrs isDerivation getExe literalExpression maintainers;
+  inherit (lib) mkAliasOptionModule mkIf mkEnableOption mkPackageOption mkOption mkDefault optional optionalString optionalAttrs isDerivation recursiveUpdate getExe literalExpression types maintainers;
   cfg = config.services.wivrn;
   configFormat = pkgs.formats.json { };
 
@@ -29,7 +29,7 @@ let
     then builtins.concatStringsSep " " ([ (getExe applicationBinary) ] ++ applicationStrings)
     else (getExe applicationBinary)
   );
-  applicationUpdate = cfg.config.json // optionalAttrs applicationCheck { application = applicationConcat; };
+  applicationUpdate = recursiveUpdate cfg.config.json (optionalAttrs applicationCheck { application = applicationConcat; });
   configFile = configFormat.generate "config.json" applicationUpdate;
 in
 {
@@ -50,6 +50,16 @@ in
       '' // { default = true; };
 
       highPriority = mkEnableOption "high priority capability for asynchronous reprojection" // { default = true; };
+
+      monadoEnvironment = mkOption {
+        type = types.attrs;
+        description = "Environment variables to be passed to the Monado environment.";
+        default = {
+          XRT_COMPOSITOR_LOG = "debug";
+          XRT_PRINT_OPTIONS = "on";
+          IPC_EXIT_ON_DISCONNECT = "off";
+        };
+      };
 
       config = {
         enable = mkEnableOption "configuration for WiVRn";
@@ -87,10 +97,6 @@ in
     };
   };
 
-  imports = [
-    (mkAliasOptionModule [ "services" "wivrn" "monadoEnvironment" ] [ "systemd" "user" "services" "wivrn" "environment" ])
-  ];
-
   config = mkIf cfg.enable {
     assertions = [
       (mkIf applicationCheck {
@@ -111,6 +117,13 @@ in
     systemd.user = {
       services.wivrn = {
         description = "WiVRn XR runtime service module";
+        environment = {
+          # Default options
+          # https://gitlab.freedesktop.org/monado/monado/-/blob/598080453545c6bf313829e5780ffb7dde9b79dc/src/xrt/targets/service/monado.in.service#L12
+          XRT_COMPOSITOR_LOG = "debug";
+          XRT_PRINT_OPTIONS = "on";
+          IPC_EXIT_ON_DISCONNECT = "off";
+        } // cfg.monadoEnvironment;
         serviceConfig = {
           ExecStart = (
             if cfg.highPriority
@@ -129,13 +142,6 @@ in
     };
 
     services = {
-      wivrn.monadoEnvironment = {
-        # Default options
-        # https://gitlab.freedesktop.org/monado/monado/-/blob/598080453545c6bf313829e5780ffb7dde9b79dc/src/xrt/targets/service/monado.in.service#L12
-        XRT_COMPOSITOR_LOG = mkDefault "debug";
-        XRT_PRINT_OPTIONS = mkDefault "on";
-        IPC_EXIT_ON_DISCONNECT = mkDefault "off";
-      };
       # WiVRn can be used with some wired headsets so we include xr-hardware
       udev.packages = with pkgs; [
         android-udev-rules

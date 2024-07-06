@@ -48,7 +48,7 @@ in
           config = {
             enable = true;
             json = {
-              scale = 0.8;
+              scale = 0.5;
               bitrate = 100000000;
               encoders = [
                 {
