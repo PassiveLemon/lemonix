@@ -45,7 +45,7 @@
       "root" = {
         home = "/root";
         hashedPassword = "!";
-        openssh.authorizedKeys.keys = [ "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIN3A5SuYn6X5rutaWKMHuxs6w7nRbbPCKZDLLGap7R1s root@palladium" ];
+        openssh.authorizedKeys.keys = [ "will need to be changed" ];
       };
       "nixos" = {
         uid = 1100;
@@ -68,7 +68,7 @@
         home = "/home/monitor";
         hashedPassword = "$6$4LFq7jjaZKFiMUXn$tyu9JPZ3Skpg/HmjxaNk0jV6xO6T86iy6zjTGHAUp1PYu3Lv4JGSiaGzKRkGI4G7UT66Rg0nQ/eggMdplgqrV0";
         isNormalUser = true;
-        openssh.authorizedKeys.keys = [ "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIFjoPX71x6n22+CfUk2skqBfT5cNFqrXLVCwcM8bpKwS root@palladium" ];
+        openssh.authorizedKeys.keys = [ "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIFjoPX71x6n22+CfUk2skqBfT5cNFqrXLVCwcM8bpKwS monitor@palladium" ];
       };
     };
   };

@@ -40,7 +40,7 @@
       "root" = {
         home = "/root";
         hashedPassword = "!";
-        openssh.authorizedKeys.keys = [ "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIElxtrdcStwa3bBpK9WxyyQq/x27oqhDbVlOPoLkbfRH root@silver" ];
+        openssh.authorizedKeys.keys = [ "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIPbedW5DDGCzGpbym2f0Ex+efnyfzFfHRPAhDFY9ZI5K root@silver" ];
       };
       "lemon" = {
         uid = 1100;

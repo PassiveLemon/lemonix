@@ -5,6 +5,7 @@
   ];
 
   lemonix = {
+    agenix.enable = true;
     lanzaboote.enable = true;
     bluetooth.enable = true;
     ssh.enable = true;

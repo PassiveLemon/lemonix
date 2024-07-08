@@ -16,6 +16,7 @@ in
   };
 
   imports = [
+    ./agenix.nix
     ./bluetooth.nix
     ./gaming.nix
     ./lanzaboote.nix

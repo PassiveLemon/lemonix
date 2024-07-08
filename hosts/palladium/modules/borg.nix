@@ -18,15 +18,43 @@
     };
   };
 
+  age.secrets = {
+    borgbackup = {
+      file = ../../../secrets/borgbackup.age;
+      mode = "770";
+      owner = "1103";
+      group = "1201";
+    };
+  };
+
   services.borgbackup.jobs = {
-    "nixos-palladium" = {
+    "docker-local" = {
       paths = [
         "/home/docker"
       ];
-      repo = "ssh://borg@192.168.1.177/home/BACKUPDRIVE/BorgBackups";
+      repo = "ssh://borg@192.168.1.177/home/BACKUPDRIVE/BorgBackups/palladium";
       encryption = {
         mode = "repokey";
-        passCommand = "cat /home/borg/borgbackup";
+        passCommand = "cat ${config.age.secrets.borgbackup.path}";
+      };
+      environment.BORG_RSH = "ssh -i /home/borg/.ssh/id_ed25519";
+      compression = "auto,zstd";
+      startAt = "daily";
+      prune.keep = {
+        within = "1d";
+        daily = 7;
+        weekly = 4;
+        monthly = -1;
+      };
+    };
+    "docker-remote" = {
+      paths = [
+        "/home/docker"
+      ];
+      repo = "ssh://u412758@u412758.your-storagebox.de:23/home/BorgBackups/palladium";
+      encryption = {
+        mode = "repokey";
+        passCommand = "cat ${config.age.secrets.borgbackup.path}";
       };
       environment.BORG_RSH = "ssh -i /home/borg/.ssh/id_ed25519";
       compression = "auto,zstd";

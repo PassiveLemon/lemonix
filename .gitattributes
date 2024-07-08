@@ -5,3 +5,6 @@
 *.sh text eol=lf
 *.lua text eol=lf
 *.nix text eol=lf
+
+# Binary
+**/*.age binary
