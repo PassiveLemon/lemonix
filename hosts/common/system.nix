@@ -61,6 +61,10 @@
     services.NetworkManager-wait-online.enable = false;
   };
 
+  powerManagement = {
+    enable = true;
+  };
+
   documentation = {
     enable = false;
     doc.enable = false;
