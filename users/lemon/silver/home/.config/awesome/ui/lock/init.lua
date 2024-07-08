@@ -37,8 +37,11 @@ local function grab()
             input = key
           end
           input = input .. key
+        elseif #input > 33 then
+          -- Doesn't actually enter escape, we just use this so we can show colors
+          awesome.emit_signal("ui::lock::keypress", "Escape", "", nil)
+          input = ""
         else
-          -- Doesn't actually backspace, we just use this so we can get the color
           awesome.emit_signal("ui::lock::keypress", "BackSpace", "", nil)
         end
       elseif key == "BackSpace" then

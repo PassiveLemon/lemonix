@@ -34,8 +34,6 @@ in
         "x-scheme-handler/gdlauncher" = "gdlauncher.desktop";
         "x-scheme-handler/ror2mm" = "r2modman.desktop";
       };
-
-      programs.tmodloader-dotnetfix.enable = true;
     })
     (mkIf cfg.vr.enable {
       home.packages = with pkgs; [
