@@ -20,7 +20,7 @@ in
         {
           daemon = true;
           backend = "glx";
-          vsync = false;
+          vsync = true;
           use-damage = true;
           log-level = "INFO";
           xrender-sync-fence = true;
