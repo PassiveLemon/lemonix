@@ -24,5 +24,9 @@ in
     ./swap.nix
   ];
 
-  config = { };
+  config = {
+    systemd.services.nix-gc = mkIf cfg.system.mobile.enable {
+      unitConfig.ConditionACPower = true;
+    };
+  };
 }

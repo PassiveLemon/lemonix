@@ -58,7 +58,19 @@
   };
 
   systemd = {
-    services.NetworkManager-wait-online.enable = false;
+    services = {
+      NetworkManager-wait-online.enable = false;
+      "nix-daemon".serviceConfig = {
+        Slice = "nix-daemon.slice";
+        OOMScoreAdjust = 1000;
+      };
+    };
+    # System likes to hang during expensive builds so we apply some limits
+    slices."nix-daemon".sliceConfig = {
+      CPUQuuota = "80%";
+      ManagedOOMMemoryPressure = "kill";
+      ManagedOOMMemoryPressureLimit = "80%";
+    };
   };
 
   powerManagement = {
