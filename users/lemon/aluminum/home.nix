@@ -33,13 +33,8 @@
     stateVersion = "23.11";
   };
 
-  services = {
-    autorandr.enable = true;
-  };
-
   programs = {
     autorandr = {
-      enable = true;
       profiles = {
         "Default" = {
           fingerprint = {
