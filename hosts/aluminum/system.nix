@@ -67,7 +67,7 @@
         CPU_MIN_PERF_ON_BAT = 0;
         CPU_MAX_PERF_ON_BAT = 80;
 
-        START_CHARGE_THRESH_BAT0 = 70; # 60 and below it starts to charge
+        START_CHARGE_THRESH_BAT0 = 70;
         STOP_CHARGE_THRESH_BAT0 = 90;
       };
     };
