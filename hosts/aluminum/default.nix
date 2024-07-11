@@ -8,7 +8,7 @@
     };
     swap = {
       enable = true;
-      device = "/dev/nvme0n1p3";
+      device = "/dev/nvme0n1p5";
     };
     system.hibernation.enable = true;
   };

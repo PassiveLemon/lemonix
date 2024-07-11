@@ -25,14 +25,14 @@ OK -> Should see a connection success line
 ```
 
 # Partitioning (Will eventually be replaced with Disko)
-In this example, we create a 1 GiB FAT32 ESP partition at the front (With space to align to blocks), a 16GiB Swap partition at the end, and the rest will be EXT4. This way if we install more RAM and need to increase our swap, we can just shrink the end of the EXT4 partition.
+In this example, we create a 1 GiB FAT32 ESP partition at the front (With space to align to blocks), a 24 GiB swap partition at the end, and the rest will be EXT4. This way if we install more RAM and need to increase our swap, we can just shrink the end of the EXT4 partition. For Swap, I like to do the amount of system memory * 1.5, so 16 GiB of memory gives us 24 GiB of swap.
 
 In the case of a laptop that uses hibernate, set the swap partition to be at least the size of installed RAM. Otherwise, systems that do not need hibernation can simply use a swap file from `modules/nixos/swap.nix`.
 ```
 parted /dev/nvme0n1 -- mklabel gpt
 parted /dev/nvme0n1 -- mkpart ESP fat32 1MiB 1GiB
-parted /dev/nvme0n1 -- mkpart primary 1GiB -16GiB
-parted /dev/nvme0n1 -- mkpart primary linux-swap -16GiB 100%
+parted /dev/nvme0n1 -- mkpart primary 1GiB -24GiB
+parted /dev/nvme0n1 -- mkpart primary linux-swap -24GiB 100%
 parted /dev/nvme0n1 -- set 1 esp on
 ```
 - Replace `nvme0n1` with your drive name if needed. Ex: sda, mmcblk, etc.
