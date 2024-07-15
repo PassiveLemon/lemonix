@@ -7,6 +7,7 @@
 , autoAddDriverRunpath
 , avahi
 , boost
+, cli11
 , cmake
 , cudaPackages ? { }
 , cudaSupport ? config.cudaSupport
@@ -41,13 +42,13 @@
 }:
 stdenv.mkDerivation (finalAttrs: {
   pname = "wivrn";
-  version = "0.16";
+  version = "0.17";
 
   src = fetchFromGitHub {
     owner = "meumeu";
     repo = "wivrn";
     rev = "v${finalAttrs.version}";
-    hash = "sha256-6qBx/DwzEU4f4JiyfOH7aaBwM4tP93TekgFqpgoQHMI=";
+    hash = "sha256-wG758cLhUUjiA3iVV4xal3CXVMoE/SNOEtzUWphNYuk=";
   };
 
   monado = applyPatches {
@@ -55,8 +56,8 @@ stdenv.mkDerivation (finalAttrs: {
       domain = "gitlab.freedesktop.org";
       owner = "monado";
       repo = "monado";
-      rev = "598080453545c6bf313829e5780ffb7dde9b79dc";
-      hash = "sha256-9LsKvIXAQpr+rpv8gDr4YfoNN+MSkXfccbIwLrWcIXg=";
+      rev = "28cb225be12a8a55c221f22103c235aff6de3883";
+      hash = "sha256-lFy0VvaLD4Oyu2TZJnaIWjuaJUZjGGDJS0VsRfIUpcc=";
     };
 
     patches = [
@@ -92,6 +93,7 @@ stdenv.mkDerivation (finalAttrs: {
   buildInputs = [
     avahi
     boost
+    cli11
     eigen
     ffmpeg
     freetype

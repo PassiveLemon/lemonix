@@ -21,7 +21,7 @@ in
   config = mkIf cfg.enable (mkMerge [
     (mkIf cfg.desktop.enable {
       home.packages = with pkgs; [
-        protonup-ng
+        protonup-ng protontricks
         gamemode dxvk
         r2modman
         lunar-client prismlauncher
@@ -37,9 +37,8 @@ in
     })
     (mkIf cfg.vr.enable {
       home.packages = with pkgs; [
-        wlx-overlay-s
         sidequest
-        beatsabermodmanager
+        nexusmods-app beatsabermodmanager
         xrgears
         #(callPackage ../../pkgs/sphvr { gulkan = pkgs.callPackage ../../pkgs/sphvr/gulkan.nix { }; })
         #(callPackage ../../pkgs/vr-video-player { })

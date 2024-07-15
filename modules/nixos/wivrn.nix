@@ -49,7 +49,7 @@ in
         runtime in a writable XDG_CONFIG_DIRS location like `~/.config`
       '' // { default = true; };
 
-      highPriority = mkEnableOption "high priority capability for asynchronous reprojection" // { default = true; };
+      autoStart = mkEnableOption "start the service by default";
 
       monadoEnvironment = mkOption {
         type = types.attrs;
@@ -105,39 +105,64 @@ in
       })
     ];
 
-    security.wrappers."wivrn-server" = mkIf cfg.highPriority {
-      setuid = false;
-      owner = "root";
-      group = "root";
-      # We need cap_sys_nice for asynchronous reprojection
-      capabilities = "cap_sys_nice+eip";
-      source = getExe cfg.package;
-    };
-
     systemd.user = {
-      services.wivrn = {
-        description = "WiVRn XR runtime service module";
-        environment = {
-          # Default options
-          # https://gitlab.freedesktop.org/monado/monado/-/blob/598080453545c6bf313829e5780ffb7dde9b79dc/src/xrt/targets/service/monado.in.service#L12
-          XRT_COMPOSITOR_LOG = "debug";
-          XRT_PRINT_OPTIONS = "on";
-          IPC_EXIT_ON_DISCONNECT = "off";
-        } // cfg.monadoEnvironment;
-        serviceConfig = {
-          ExecStart = (
-            if cfg.highPriority
-            then "${config.security.wrapperDir}/wivrn-server"
-            else getExe cfg.package
-          ) + optionalString cfg.config.enable " -f ${configFile}";
-          Restart = "no";
+      services = {
+        # The WiVRn server runs in a hardened service and starts the applications in a different service
+        wivrn = {
+          description = "WiVRn XR runtime service";
+          environment = {
+            # Default options
+            # https://gitlab.freedesktop.org/monado/monado/-/blob/598080453545c6bf313829e5780ffb7dde9b79dc/src/xrt/targets/service/monado.in.service#L12
+            XRT_COMPOSITOR_LOG = "debug";
+            XRT_PRINT_OPTIONS = "on";
+            IPC_EXIT_ON_DISCONNECT = "off";
+          } // cfg.monadoEnvironment;
+          serviceConfig = {
+            ExecStart = (
+              (getExe cfg.package)
+              + " --systemd"
+              + optionalString cfg.config.enable " -f ${configFile}"
+            );
+            # Hardening options
+            CapabilityBoundingSet = [ "CAP_SYS_NICE" ];
+            AmbientCapabilities = [ "CAP_SYS_NICE" ];
+            LockPersonality = true;
+            NoNewPrivileges = true;
+            PrivateTmp = true;
+            ProtectClock = true;
+            ProtectControlGroups = true;
+            ProtectKernelLogs = true;
+            ProtectKernelModules = true;
+            ProtectKernelTunables = true;
+            ProtectProc = "invisible";
+            ProtectSystem = "strict";
+            RemoveIPC = true;
+            RestrictNamespaces = true;
+            RestrictSUIDSGID = true;
+          };
+          wantedBy = mkIf cfg.autoStart [ "default.target" ];
+          restartTriggers = [
+            cfg.package
+            configFile
+          ];
         };
-        # We need to add the application to PATH so WiVRn can find it
-        path = [ applicationPath ];
-        restartTriggers = [
-          cfg.package
-          configFile
-        ];
+        wivrn-application = {
+          description = "WiVRn application service";
+          requires = [ "wivrn.service" ];
+          serviceConfig = {
+            ExecStart = (
+              (getExe cfg.package)
+              + " --application"
+              + optionalString cfg.config.enable " -f ${configFile}"
+            );
+            Restart = "on-failure";
+            RestartSec = 0;
+            PrivateTmp = true;
+          };
+          wantedBy = mkIf cfg.autoStart [ "default.target" ];
+          # We need to add the application to PATH so WiVRn can find it
+          path = [ applicationPath ];
+        };
       };
     };
 
@@ -162,7 +187,10 @@ in
     };
 
     environment = {
-      systemPackages = [ cfg.package ];
+      systemPackages = [
+        cfg.package
+        applicationPath
+      ];
       pathsToLink = [ "/share/openxr" ];
       etc."xdg/openxr/1/active_runtime.json" = mkIf cfg.defaultRuntime {
         source = "${cfg.package}/share/openxr/1/openxr_wivrn.json";
