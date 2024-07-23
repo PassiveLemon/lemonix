@@ -18,7 +18,6 @@
     firewall = {
       allowedTCPPorts = [
         5500 # HTML Webserver for testing
-        6881 # qBittorrent
       ];
     };
     interfaces = {

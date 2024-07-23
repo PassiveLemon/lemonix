@@ -44,7 +44,6 @@
       nssmdns4 = true;
       openFirewall = true;
     };
-    mullvad-vpn.enable = true;
     gnome.gnome-keyring.enable = true;
   };
 

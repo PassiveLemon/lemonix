@@ -20,7 +20,7 @@
       # Development
       jq
       act
-      nvfetcher nixpkgs-review
+      nvfetcher nixpkgs-review nixfmt-rfc-style
       trivy snyk grype
     ];
     file = {
@@ -67,7 +67,7 @@
           config = {
             "DP-0" = {
               enable = true;
-              primary = false;
+              primary = true;
               position = "1920x0";
               mode = "1920x1080";
               rate = "143.85";
@@ -76,7 +76,7 @@
             };
             "DP-2" = {
               enable = true;
-              primary = true;
+              primary = false;
               position = "0x0";
               mode = "1920x1080";
               rate = "143.85";
@@ -106,9 +106,6 @@
 
   nixpkgs = {
     config.permittedInsecurePackages = [
-      "electron-24.8.6" # Feishin
-      "electron-25.9.0"
-      "freeimage-unstable-2021-11-01"
     ];
   };
 }

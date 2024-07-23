@@ -15,7 +15,8 @@ in
   config = mkIf cfg.enable (mkMerge [
     (mkIf cfg.design.enable {
       home.packages = with pkgs; [
-        freecad openscad blender
+        # Freecad has a build failure
+        master.freecad openscad blender
       ];
 
       xdg.mimeApps.defaultApplications = {
