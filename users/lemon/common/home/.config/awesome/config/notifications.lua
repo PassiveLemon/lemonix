@@ -4,6 +4,8 @@ local wibox = require("wibox")
 local ruled = require("ruled")
 local naughty = require("naughty")
 
+local dpi = b.xresources.apply_dpi
+
 --
 -- Notifications
 --
@@ -23,20 +25,20 @@ ruled.notification.connect_signal("request::rules", function()
   })
 end)
 
-b.notification_margin = 8
-b.notification_border_width = 2
+b.notification_margin = (b.margins * 2)
+b.notification_border_width = dpi(2)
 b.notification_border_color = b.border_color_active
 b.notification_max_height = b.notification_icon_size
-b.notification_icon_size = 64
+b.notification_icon_size = dpi(64)
 
 naughty.config.defaults.timeout = 3
 naughty.config.defaults.screen = awful.screen.focused()
 naughty.config.defaults.ontop = true
-naughty.config.defaults.margin = 8
-naughty.config.defaults.border_width = 2
+naughty.config.defaults.margin = (b.margins * 2)
+naughty.config.defaults.border_width = dpi(2)
 naughty.config.defaults.position = "bottom_right"
 
-naughty.config.padding = 12
+naughty.config.padding = dpi(12)
 
 naughty.connect_signal("request::display", function(n)
   naughty.layout.box({
@@ -48,23 +50,23 @@ naughty.connect_signal("request::display", function(n)
 			widget = naughty.container.background,
       {
         widget = wibox.container.margin,
-        left = 4,
-        right = 4,
-        top = 4,
-        bottom = 4,
+        left = b.margins,
+        right = b.margins,
+        top = b.margins,
+        bottom = b.margins,
         {
           layout = wibox.layout.align.horizontal,
           {
             widget = wibox.container.margin,
-            left = 4,
-            right = 4,
-            top = 4,
-            bottom = 4,
+            left = b.margins,
+            right = b.margins,
+            top = b.margins,
+            bottom = b.margins,
             {
               widget = wibox.container.constraint,
               strategy = "max",
-              width = 89,
-              height = 89,
+              width = dpi(89),
+              height = dpi(89),
               naughty.widget.icon,
             },
           },
@@ -73,16 +75,16 @@ naughty.connect_signal("request::display", function(n)
             {
               widget = wibox.container.constraint,
               strategy = "max",
-              width = 400,
+              width = dpi(400),
               {
                 widget = wibox.container.margin,
-                left = 4,
-                right = 4,
-                top = 4,
-                bottom = 4,
+                left = b.margins,
+                right = b.margins,
+                top = b.margins,
+                bottom = b.margins,
                 {
                   layout = wibox.layout.align.horizontal,
-                  forced_height = 15,
+                  forced_height = dpi(15),
                   naughty.widget.title,
                 },
               },
@@ -90,17 +92,17 @@ naughty.connect_signal("request::display", function(n)
             {
               widget = wibox.container.constraint,
               strategy = "max",
-              width = 400,
+              width = dpi(400),
               {
                 widget = wibox.container.constraint,
                 strategy = "max",
-                height = 200,
+                height = dpi(200),
                 {
                   widget = wibox.container.margin,
-                  left = 4,
-                  right = 4,
-                  top = 0,
-                  bottom = 4,
+                  left = b.margins,
+                  right = b.margins,
+                  top = b.margins,
+                  bottom = b.margins,
                   naughty.widget.message,
                 },
               },
@@ -116,7 +118,7 @@ end)
 naughty.connect_signal("request::display_error", function(message, startup)
   naughty.notification({
     urgency = "critical",
-    title = "Oops, an error happened" .. (startup and " during startup!" or "!"),
+    title = "Oops, an error happened" .. ((startup and " during startup!") or "!"),
     message = message,
   })
 end)

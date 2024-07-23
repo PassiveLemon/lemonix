@@ -3,33 +3,36 @@ local gears = require("gears")
 local b = require("beautiful")
 local wibox = require("wibox")
 
+local h = require("helpers")
+
+local dpi = b.xresources.apply_dpi
+
 --
 -- Lockscreen visual
 --
 
-local wallpaper = wibox.widget({
-  id = "imagebox",
-  widget = wibox.widget.imagebox,
-  image = b.wallpaper,
-  forced_width = 2256,
-  forced_height = 1504,
-  horizontal_fit_policy = "fit",
-  vertical_fit_policy = "fit",
-})
-local function make_image()
-  local cmd = "convert " .. b.wallpaper .. " -filter Gaussian -blur 0x6 -fill 222222c1 -colorize 50% ~/.cache/awesome/lock.jpg"
-  awful.spawn.easy_async_with_shell(cmd, function()
-    local blurwall = gears.filesystem.get_cache_dir() .. "lock.jpg"
-    wallpaper.image = blurwall
-  end)
+awful.spawn.with_shell("convert " .. b.wallpaper .. " -filter Gaussian -blur 0x6 -fill 222222c1 -colorize 50% " .. gears.filesystem.get_cache_dir() .. "lock.jpg")
+lockscreen_wallpaper = gears.filesystem.get_cache_dir() .. "lock.jpg"
+
+if not h.is_file(lockscreen_wallpaper) then
+  lockscreen_wallpaper = b.wallpaper
 end
-make_image()
 
 local function get_random()
   return math.random(0, 628) / 100
 end
 
 awful.screen.connect_for_each_screen(function(s)
+  local wallpaper = wibox.widget({
+    id = "imagebox",
+    widget = wibox.widget.imagebox,
+    image = lockscreen_wallpaper,
+    forced_width = s.geometry.width,
+    forced_height = s.geometry.height,
+    horizontal_fit_policy = "fit",
+    vertical_fit_policy = "fit",
+  })
+
   local circle = wibox.widget({
     id = "bg",
     widget = wibox.container.background,
@@ -42,12 +45,12 @@ awful.screen.connect_for_each_screen(function(s)
       min_value = 0,
       value = 0,
       rounded_edge = false,
-      thickness = 8,
+      thickness = dpi(8),
       start_angle = 4,
       bg = b.fg,
       colors = { b.fg },
-      forced_width = 280,
-      forced_height = 280,
+      forced_width = dpi(180),
+      forced_height = dpi(180),
     },
   })
 
@@ -98,7 +101,7 @@ awful.screen.connect_for_each_screen(function(s)
     markup = " ",
     valign = "center",
     halign = "center",
-    font = b.sysfont(14),
+    font = b.sysfont(dpi(14)),
   })
   awesome.connect_signal("signal::caps::state", function(caps)
     if caps == "on" then
@@ -110,10 +113,10 @@ awful.screen.connect_for_each_screen(function(s)
 
   local main = wibox({
     screen = s,
-    width = 2256,
-    height = 1504,
+    width = s.geometry.width,
+    height = s.geometry.height,
     ontop = true,
-    visible = false,
+    visible = true,
     type = "desktop",
     widget = {
       layout = wibox.layout.stack,
@@ -126,21 +129,21 @@ awful.screen.connect_for_each_screen(function(s)
           {
             widget = wibox.container.margin,
             margins = {
-              top = 200,
+              top = dpi(200),
             },
             {
               layout = wibox.layout.fixed.vertical,
-              spacing = 5,
+              spacing = dpi(5),
               {
                 widget = wibox.widget.textclock,
-                font = b.sysfont(120),
+                font = b.sysfont(dpi(120)),
                 format = "%-I:%M %p",
                 halign = "center",
                 valign = "center",
               },
               {
                 widget = wibox.widget.textclock,
-                font = b.sysfont(28),
+                font = b.sysfont(dpi(28)),
                 format = "%a %b %-d",
                 halign = "center",
                 valign = "center",
@@ -154,7 +157,7 @@ awful.screen.connect_for_each_screen(function(s)
           {
             widget = wibox.container.margin,
             margins = {
-              bottom = 200,
+              bottom = dpi(200),
             },
             {
               layout = wibox.layout.stack,

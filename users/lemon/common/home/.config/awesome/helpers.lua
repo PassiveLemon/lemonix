@@ -3,6 +3,12 @@ local gears = require("gears")
 local b = require("beautiful")
 local wibox = require("wibox")
 
+local dpi = b.xresources.apply_dpi
+
+--
+-- Helpers
+--
+
 local helpers = { }
 
 function helpers.text(conf)
@@ -11,10 +17,10 @@ function helpers.text(conf)
     id = "margin",
     widget = wibox.container.margin,
     margins = {
-      top = conf.margins and conf.margins.top or 0,
-      right = conf.margins and conf.margins.right or 0,
-      bottom = conf.margins and conf.margins.bottom or 0,
-      left = conf.margins and conf.margins.left or 0,
+      top = conf.margins and conf.margins.top or dpi(0),
+      right = conf.margins and conf.margins.right or dpi(0),
+      bottom = conf.margins and conf.margins.bottom or dpi(0),
+      left = conf.margins and conf.margins.left or dpi(0),
     },
     {
       id = "background",
@@ -33,7 +39,7 @@ function helpers.text(conf)
           forced_height = conf.y,
           markup = conf.markup,
           text = conf.text,
-          font = conf.font or b.sysfont(10),
+          font = conf.font or b.sysfont(dpi(10)),
           halign = conf.halign or "center",
           valign = conf.valign or "center",
         },
@@ -56,10 +62,10 @@ function helpers.button(conf)
     id = "margin",
     widget = wibox.container.margin,
     margins = {
-      top = conf.margins and conf.margins.top or 0,
-      right = conf.margins and conf.margins.right or 0,
-      bottom = conf.margins and conf.margins.bottom or 0,
-      left = conf.margins and conf.margins.left or 0,
+      top = conf.margins and conf.margins.top or dpi(0),
+      right = conf.margins and conf.margins.right or dpi(0),
+      bottom = conf.margins and conf.margins.bottom or dpi(0),
+      left = conf.margins and conf.margins.left or dpi(0),
     },
     {
       id = "background",
@@ -76,7 +82,7 @@ function helpers.button(conf)
           widget = wibox.widget.textbox,
           markup = conf.markup,
           text = conf.text,
-          font = conf.font or b.sysfont(10),
+          font = conf.font or b.sysfont(dpi(10)),
           halign = conf.halign or "center",
           valign = conf.valign or "center",
         },
@@ -111,10 +117,10 @@ function helpers.slider(conf)
     id = "margin",
     widget = wibox.container.margin,
     margins = {
-      top = conf.margins and conf.margins.top or 0,
-      right = conf.margins and conf.margins.right or 0,
-      bottom = conf.margins and conf.margins.bottom or 0,
-      left = conf.margins and conf.margins.left or 0,
+      top = conf.margins and conf.margins.top or dpi(0),
+      right = conf.margins and conf.margins.right or dpi(0),
+      bottom = conf.margins and conf.margins.bottom or dpi(0),
+      left = conf.margins and conf.margins.left or dpi(0),
     },
     {
       id = "background",
@@ -130,7 +136,7 @@ function helpers.slider(conf)
         maximum = conf.max,
         handle_shape = conf.handle_shape or gears.shape.circle,
         handle_color = conf.handle_color or b.ui_slider_fg,
-        handle_width = 0,
+        handle_width = dpi(0),
         bar_height = conf.bar_height,
         bar_shape = conf.bar_shape,
         bar_color = conf.bar_color or b.ui_slider_bg,
@@ -143,7 +149,7 @@ function helpers.slider(conf)
     slider:get_children_by_id("slider")[1].bar_active_color = conf.bar_active_color or b.fg0
   end)
   slider:get_children_by_id("background")[1]:connect_signal("mouse::leave", function()
-    slider:get_children_by_id("slider")[1].handle_width = 0
+    slider:get_children_by_id("slider")[1].handle_width = dpi(0)
     slider:get_children_by_id("slider")[1].bar_active_color = conf.bar_active_color or b.fg0
   end)
   return slider
@@ -155,10 +161,10 @@ function helpers.progressbar(conf)
     id = "margin",
     widget = wibox.container.margin,
     margins = {
-      top = conf.margins and conf.margins.top or 0,
-      right = conf.margins and conf.margins.right or 0,
-      bottom = conf.margins and conf.margins.bottom or 0,
-      left = conf.margins and conf.margins.left or 0,
+      top = conf.margins and conf.margins.top or dpi(0),
+      right = conf.margins and conf.margins.right or dpi(0),
+      bottom = conf.margins and conf.margins.bottom or dpi(0),
+      left = conf.margins and conf.margins.left or dpi(0),
     },
     {
       id = "background",
@@ -175,10 +181,10 @@ function helpers.progressbar(conf)
         shape = conf.shape,
         max_value = conf.max,
         margins = {
-          top = conf.progmargins.top or 0,
-          right = conf.progmargins.right or 0,
-          bottom = conf.progmargins.bottom or 0,
-          left = conf.progmargins.left or 0,
+          top = conf.progmargins.top or dpi(0),
+          right = conf.progmargins.right or dpi(0),
+          bottom = conf.progmargins.bottom or dpi(0),
+          left = conf.progmargins.left or dpi(0),
         },
         forced_width = conf.forced_width,
         forced_height = conf.forced_height,
@@ -209,6 +215,10 @@ function helpers.unfocus()
   end
 end
 
+function helpers.is_file(file)
+  return gears.filesystem.file_readable(file)
+end
+
 function helpers.file_test(path, file, callback)
   awful.spawn.easy_async_with_shell("test -f " .. path .. file .. " && echo true || echo false", function(stdout)
     local stdout = stdout:gsub("\n", "")
@@ -218,6 +228,10 @@ function helpers.file_test(path, file, callback)
       callback(false)
     end
   end)
+end
+
+function helpers.is_dir(dir)
+  return gears.filesystem.is_dir(dir)
 end
 
 function helpers.dir_test(path, callback)

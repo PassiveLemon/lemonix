@@ -13,10 +13,10 @@
         source = ./home/.config/autostart/programs.sh;
         recursive = true;
       };
-      ".config/awesome/config" = {
-        source = ./home/.config/awesome/config;
-        recursive = true;
-      };
+      #".config/awesome/config" = {
+      #  source = ./home/.config/awesome/config;
+      #  recursive = true;
+      #};
       ".config/awesome/signal" = {
         source = ./home/.config/awesome/signal;
         recursive = true;

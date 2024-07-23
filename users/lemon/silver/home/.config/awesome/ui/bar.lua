@@ -5,6 +5,8 @@ local wibox = require("wibox")
 
 local h = require("helpers")
 
+local dpi = b.xresources.apply_dpi
+
 --
 -- Wibar
 --
@@ -21,16 +23,16 @@ screen.connect_signal("request::desktop_decoration", function(s)
   -- CPU
   local cpu_icon = h.text({
     margins = {
-      right = 3,
-      bottom = 2,
+      right = dpi(3),
+      bottom = dpi(2),
     },
     bg = b.bg2,
     text = "",
-    font = b.sysfont(15),
+    font = b.sysfont(dpi(15)),
   })
   local cpu_text = h.text({
     margins = {
-      left = 3,
+      left = dpi(3),
     },
     bg = b.bg2,
     halign = "left",
@@ -42,16 +44,16 @@ screen.connect_signal("request::desktop_decoration", function(s)
   -- Memory
   local memory_icon = h.text({
     margins = {
-      right = 3,
-      bottom = 2,
+      right = dpi(3),
+      bottom = dpi(2),
     },
     bg = b.bg2,
     text = "",
-    font = b.sysfont(15),
+    font = b.sysfont(dpi(15)),
   })
   local memory_text = h.text({
     margins = {
-      left = 3,
+      left = dpi(3),
     },
     bg = b.bg2,
     halign = "left",
@@ -63,7 +65,7 @@ screen.connect_signal("request::desktop_decoration", function(s)
   -- Caps lock
   local caps_icon = h.text({
     margins = {
-      left = 3,
+      left = dpi(3),
     },
     bg = b.bg2,
     markup = 'A<span underline="single">a</span>',
@@ -79,7 +81,7 @@ screen.connect_signal("request::desktop_decoration", function(s)
   -- Volume
   local volume_icon = h.text({
     margins = {
-      right = 3,
+      right = dpi(3),
     },
     bg = b.bg2,
     text = "󰖀",
@@ -90,19 +92,19 @@ screen.connect_signal("request::desktop_decoration", function(s)
   awesome.connect_signal("signal::volume::value", function(value)
     if value == "Muted" then
       volume_icon:get_children_by_id("textbox")[1].text = "󰝟"
-      volume_icon:get_children_by_id("textbox")[1].font = b.sysfont(17)
+      volume_icon:get_children_by_id("textbox")[1].font = b.sysfont(dpi(17))
       volume_text:get_children_by_id("textbox")[1].text = "Muted"
     elseif value < "33" then
       volume_icon:get_children_by_id("textbox")[1].text = "󰕿"
-      volume_icon:get_children_by_id("textbox")[1].font = b.sysfont(9)
+      volume_icon:get_children_by_id("textbox")[1].font = b.sysfont(dpi(9))
       volume_text:get_children_by_id("textbox")[1].text = tostring(value)
     elseif value < "67" then
       volume_icon:get_children_by_id("textbox")[1].text = "󰖀"
-      volume_icon:get_children_by_id("textbox")[1].font = b.sysfont(13)
+      volume_icon:get_children_by_id("textbox")[1].font = b.sysfont(dpi(13))
       volume_text:get_children_by_id("textbox")[1].text = tostring(value)
     else
       volume_icon:get_children_by_id("textbox")[1].text = "󰕾"
-      volume_icon:get_children_by_id("textbox")[1].font = b.sysfont(15)
+      volume_icon:get_children_by_id("textbox")[1].font = b.sysfont(dpi(15))
       volume_text:get_children_by_id("textbox")[1].text = tostring(value)
     end
   end)
@@ -110,26 +112,26 @@ screen.connect_signal("request::desktop_decoration", function(s)
   -- Internet
   local wifi_icon = h.text({
     margins = {
-      right = 3,
-      left = 3,
+      right = dpi(3),
+      left = dpi(3),
     },
     bg = b.bg2,
     text = "󰤨",
-    font = b.sysfont(14),
+    font = b.sysfont(dpi(14)),
   })
 
   -- Pills
   local pill_nixos = h.button({
     margins = {
-      right = 2,
-      left = 4,
+      right = dpi(2),
+      left = dpi(4),
     },
-    x = 24,
-    y = 24,
+    x = dpi(24),
+    y = dpi(24),
     bg = b.bg2,
     shape = gears.shape.circle,
     text = "",
-    font = b.sysfont(16),
+    font = b.sysfont(dpi(16)),
     bg_focus = b.bg4,
   })
 
@@ -137,19 +139,19 @@ screen.connect_signal("request::desktop_decoration", function(s)
     visible = false,
     widget = wibox.container.margin,
     margins = {
-      right = 2,
-      left = 2,
+      right = dpi(2),
+      left = dpi(2),
     },
     {
       widget = wibox.container.place,
       valign = "center",
       halign = "center",
-      forced_height = 24,
+      forced_height = dpi(24),
       {
         widget = wibox.container.background,
         bg = b.bg2,
         shape = gears.shape.rounded_bar,
-        forced_height = 24,
+        forced_height = dpi(24),
         {
           layout = wibox.layout.fixed.horizontal,
           sep,
@@ -170,19 +172,19 @@ screen.connect_signal("request::desktop_decoration", function(s)
   local pill_cpu = wibox.widget({
     widget = wibox.container.margin,
     margins = {
-      right = 2,
-      left = 2,
+      right = dpi(2),
+      left = dpi(2),
     },
     {
       widget = wibox.container.place,
       valign = "center",
       halign = "center",
-      forced_height = 24,
+      forced_height = dpi(24),
       {
         widget = wibox.container.background,
         bg = b.bg2,
         shape = gears.shape.rounded_bar,
-        forced_height = 24,
+        forced_height = dpi(24),
         {
           layout = wibox.layout.fixed.horizontal,
           sep,
@@ -197,19 +199,19 @@ screen.connect_signal("request::desktop_decoration", function(s)
   local pill_memory = wibox.widget({
     widget = wibox.container.margin,
     margins = {
-      right = 2,
-      left = 2,
+      right = dpi(2),
+      left = dpi(2),
     },
     {
       widget = wibox.container.place,
       valign = "center",
       halign = "center",
-      forced_height = 24,
+      forced_height = dpi(24),
       {
         widget = wibox.container.background,
         bg = b.bg2,
         shape = gears.shape.rounded_bar,
-        forced_height = 24,
+        forced_height = dpi(24),
         {
           layout = wibox.layout.fixed.horizontal,
           sep,
@@ -223,11 +225,11 @@ screen.connect_signal("request::desktop_decoration", function(s)
 
   local pill_music = h.button({
     margins = {
-      right = 2,
-      left = 2,
+      right = dpi(2),
+      left = dpi(2),
     },
-    x = 24,
-    y = 24,
+    x = dpi(24),
+    y = dpi(24),
     bg = b.bg2,
     shape = gears.shape.circle,
     text = "󰎈",
@@ -244,19 +246,19 @@ screen.connect_signal("request::desktop_decoration", function(s)
   local pill_utils = wibox.widget({
     widget = wibox.container.margin,
     margins = {
-      right = 2,
-      left = 2,
+      right = dpi(2),
+      left = dpi(2),
     },
     {
       widget = wibox.container.place,
       valign = "center",
       halign = "center",
-      forced_height = 24,
+      forced_height = dpi(24),
       {
         widget = wibox.container.background,
         bg = b.bg2,
         shape = gears.shape.rounded_bar,
-        forced_height = 24,
+        forced_height = dpi(24),
         {
           layout = wibox.layout.fixed.horizontal,
           sep,
@@ -272,19 +274,19 @@ screen.connect_signal("request::desktop_decoration", function(s)
   local pill_date = wibox.widget({
     widget = wibox.container.margin,
     margins = {
-      right = 2,
-      left = 2,
+      right = dpi(2),
+      left = dpi(2),
     },
     {
       widget = wibox.container.place,
       valign = "center",
       halign = "center",
-      forced_height = 24,
+      forced_height = dpi(24),
       {
         widget = wibox.container.background,
         bg = b.bg2,
         shape = gears.shape.rounded_bar,
-        forced_height = 24,
+        forced_height = dpi(24),
         {
           layout = wibox.layout.fixed.horizontal,
           sep,
@@ -302,19 +304,19 @@ screen.connect_signal("request::desktop_decoration", function(s)
   local pill_time = wibox.widget({
     widget = wibox.container.margin,
     margins = {
-      right = 4,
-      left = 2,
+      right = dpi(4),
+      left = dpi(2),
     },
     {
       widget = wibox.container.place,
       valign = "center",
       halign = "center",
-      forced_height = 24,
+      forced_height = dpi(24),
       {
         widget = wibox.container.background,
         bg = b.bg2,
         shape = gears.shape.rounded_bar,
-        forced_height = 24,
+        forced_height = dpi(24),
         {
           layout = wibox.layout.fixed.horizontal,
           sep,
@@ -340,13 +342,13 @@ screen.connect_signal("request::desktop_decoration", function(s)
     },
     layout = {
       layout = wibox.layout.fixed.horizontal,
-      spacing = 0,
+      spacing = dpi(0),
     },
     widget_template = {
       widget = wibox.container.place,
       valign = "center",
       halign = "center",
-      forced_height = 24,
+      forced_height = dpi(24),
       {
         widget = wibox.container.background,
         bg = b.bg2,
@@ -375,14 +377,14 @@ screen.connect_signal("request::desktop_decoration", function(s)
     },
     layout = {
       layout = wibox.layout.fixed.horizontal,
-      spacing = 0,
+      spacing = dpi(0),
     },
     widget_template = {
       widget = wibox.container.place,
       valign = "center",
       halign = "center",
-      forced_height = 20,
-      forced_width = 20,
+      forced_height = dpi(20),
+      forced_width = dpi(20),
       {
         widget = wibox.container.place,
         {
@@ -400,8 +402,8 @@ screen.connect_signal("request::desktop_decoration", function(s)
   s.wibar = awful.wibar({
     position = "top",
     screen = s,
-    height = 32,
-    border_width = 0,
+    height = dpi(32),
+    border_width = dpi(0),
     type = "dock",
     widget = {
       layout = wibox.layout.align.horizontal,
@@ -413,19 +415,19 @@ screen.connect_signal("request::desktop_decoration", function(s)
         {
           widget = wibox.container.margin,
           margins = {
-            right = 2,
-            left = 2,
+            right = dpi(2),
+            left = dpi(2),
           },
           {
             widget = wibox.container.place,
             valign = "center",
             halign = "center",
-            forced_height = 24,
+            forced_height = dpi(24),
             {
               widget = wibox.container.background,
               bg = b.bg2,
               shape = gears.shape.rounded_bar,
-              forced_height = 24,
+              forced_height = dpi(24),
               {
                 layout = wibox.layout.fixed.horizontal,
                 s.taglist,
@@ -441,19 +443,19 @@ screen.connect_signal("request::desktop_decoration", function(s)
         {
           widget = wibox.container.margin,
           margins = {
-            right = 2,
-            left = 2,
+            right = dpi(2),
+            left = dpi(2),
           },
           {
             widget = wibox.container.place,
             valign = "center",
             halign = "center",
-            forced_height = 24,
+            forced_height = dpi(24),
             {
               widget = wibox.container.background,
               bg = b.bg2,
               shape = gears.shape.rounded_bar,
-              forced_height = 24,
+              forced_height = dpi(24),
               {
                 layout = wibox.layout.fixed.horizontal,
                 sep,

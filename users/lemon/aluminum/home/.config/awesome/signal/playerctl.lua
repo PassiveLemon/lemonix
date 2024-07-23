@@ -35,21 +35,17 @@ local function art_image_locator(client_cache_dir, art_url_trim)
     art_cache_dir = "/tmp/passivelemon/lemonix/media/"
   end
   if not client_cache_dir then
-    h.file_test(art_cache_dir, art_url_trim, function(exists)
-      if exists then
-        metadata.art_image = gears.surface.load_uncached(art_cache_dir .. art_url_trim)
-        emit()
-      else
-        awful.spawn.with_shell("curl -Lso " .. art_cache_dir .. art_url_trim .. ' "' .. metadata.art_url .. '"')
-      end
-    end)
+    if h.is_file(art_cache_dir .. art_url_trim) then
+      metadata.art_image = gears.surface.load_uncached(art_cache_dir .. art_url_trim)
+      emit()
+    else
+      awful.spawn.with_shell("curl -Lso " .. art_cache_dir .. art_url_trim .. ' "' .. metadata.art_url .. '"')
+    end
   else
-    h.file_test(client_cache_dir, art_url_trim, function(exists)
-      if exists then
-        metadata.art_image = gears.surface.load_uncached(client_cache_dir .. art_url_trim)
-        emit()
-      end
-    end)
+    if h.is_file(client_cache_dir .. art_url_trim) then
+      metadata.art_image = gears.surface.load_uncached(client_cache_dir .. art_url_trim)
+      emit()
+    end
   end
 end
 local function art_image_fetch()
