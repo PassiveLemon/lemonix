@@ -21,9 +21,11 @@
         source = ./home/.config/awesome/signal;
         recursive = true;
       };
-      ".config/awesome/ui" = {
-        source = ./home/.config/awesome/ui;
-        recursive = true;
+      ".config/awesome/ui/init.lua" = {
+        source = ./home/.config/awesome/ui/init.lua;
+      };
+      ".config/awesome/ui/bar.lua" = {
+        source = ./home/.config/awesome/ui/bar.lua;
       };
       ".config/awesome/liblua_pam.so" = {
         source = ./home/.config/awesome/liblua_pam.so;
@@ -47,7 +49,7 @@
               position = "0x0";
               mode = "2256x1504";
               rate = "60.00";
-              dpi = 144;
+              dpi = 120;
               gamma = "1.0:0.92:0.92";
             };
           };
