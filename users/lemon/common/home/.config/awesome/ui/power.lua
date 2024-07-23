@@ -6,6 +6,8 @@ local wibox = require("wibox")
 local h = require("helpers")
 local click_to_hide = require("modules.click_to_hide")
 
+local dpi = b.xresources.apply_dpi
+
 --
 -- Powermenu
 --
@@ -17,11 +19,11 @@ local lock_button = h.button({
     bottom = b.margins,
     left = b.margins,
   },
-  x = 100,
-  y = 100,
+  x = dpi(100),
+  y = dpi(100),
   shape = gears.shape.rounded_rect,
   text = "",
-  font = b.sysfont(24),
+  font = b.sysfont(dpi(24)),
 })
 
 local poweroff_button = h.button({
@@ -31,11 +33,11 @@ local poweroff_button = h.button({
     bottom = b.margins,
     left = b.margins,
   },
-  x = 100,
-  y = 100,
+  x = dpi(100),
+  y = dpi(100),
   shape = gears.shape.rounded_rect,
   text = "󰐥",
-  font = b.sysfont(27),
+  font = b.sysfont(dpi(27)),
 })
 
 local restart_button = h.button({
@@ -45,11 +47,11 @@ local restart_button = h.button({
     bottom = b.margins,
     left = b.margins,
   },
-  x = 100,
-  y = 100,
+  x = dpi(100),
+  y = dpi(100),
   shape = gears.shape.rounded_rect,
   text = "󰑓",
-  font = b.sysfont(31),
+  font = b.sysfont(dpi(31)),
 })
 
 local powermenu_widget = wibox.widget({
@@ -78,8 +80,8 @@ local prompt_text = h.text({
     bottom = b.margins,
     left = b.margins,
   },
-  x = 308,
-  y = 36,
+  x = dpi(308),
+  y = dpi(36),
   text = "Are you sure?",
 })
 
@@ -90,8 +92,8 @@ local poweroff_confirm_button = h.button({
     bottom = b.margins,
     left = b.margins,
   },
-  x = 100,
-  y = 56,
+  x = dpi(100),
+  y = dpi(56),
   shape = gears.shape.rounded_rect,
   text = "Poweroff",
   toggle = false,
@@ -112,8 +114,8 @@ local restart_confirm_button = h.button({
     bottom = b.margins,
     left = b.margins,
   },
-  x = 100,
-  y = 56,
+  x = dpi(100),
+  y = dpi(56),
   shape = gears.shape.rounded_rect,
   text = "Restart",
   toggle = false,
@@ -134,8 +136,8 @@ local cancel_button = h.button({
     bottom = b.margins,
     left = b.margins,
   },
-  x = 208,
-  y = 56,
+  x = dpi(208),
+  y = dpi(56),
   shape = gears.shape.rounded_rect,
   text = "Cancel",
 })
@@ -186,7 +188,7 @@ local restart_widget = wibox.widget({
 
 local main = awful.popup({
   placement = awful.placement.centered,
-  border_width = 3,
+  border_width = dpi(3),
   border_color = b.border_color_active,
   ontop = true,
   visible = false,

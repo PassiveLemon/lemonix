@@ -6,16 +6,16 @@ local wibox = require("wibox")
 local h = require("helpers")
 local click_to_hide = require("modules.click_to_hide")
 
+local dpi = b.xresources.apply_dpi
+
 --
 -- Media player
 --
 
 local xdg_cache_home = os.getenv("HOME") .. "/.cache/passivelemon/lemonix/media/"
-h.dir_test(xdg_cache_home, function(exists)
-  if not exists then
-    awful.spawn.easy_async_with_shell("mkdir -p " .. xdg_cache_home)
-  end
-end)
+if not h.is_dir(xdg_cache_home) then
+  gears.filesystem.make_directories(xdg_cache_home)
+end
 
 local art_image_box = h.text({
   margins = {
@@ -33,8 +33,8 @@ local title_text = h.text({
     bottom = b.margins,
     left = b.margins,
   },
-  x = 532,
-  y = 17,
+  x = dpi(532),
+  y = dpi(17),
   halign = "left",
 })
 
@@ -44,8 +44,8 @@ local artist_text = h.text({
     bottom = b.margins,
     left = b.margins,
   },
-  x = 532,
-  y = 17,
+  x = dpi(532),
+  y = dpi(17),
   halign = "left",
 })
 
@@ -55,8 +55,8 @@ local album_text = h.text({
     bottom = b.margins,
     left = b.margins,
   },
-  x = 532,
-  y = 17,
+  x = dpi(532),
+  y = dpi(17),
   halign = "left",
 })
 
@@ -67,11 +67,11 @@ local shuffle_button = h.button({
     bottom = b.margins,
     left = b.margins,
   },
-  x = 100,
-  y = 100,
+  x = dpi(100),
+  y = dpi(100),
   shape = gears.shape.rounded_rect,
   text = "󰒞",
-  font = b.sysfont(24),
+  font = b.sysfont(dpi(24)),
 })
 
 local prev_button = h.button({
@@ -81,11 +81,11 @@ local prev_button = h.button({
     bottom = b.margins,
     left = b.margins,
   },
-  x = 100,
-  y = 100,
+  x = dpi(100),
+  y = dpi(100),
   shape = gears.shape.rounded_rect,
   text = "󰒮",
-  font = b.sysfont(24),
+  font = b.sysfont(dpi(24)),
 })
 
 local toggle_button = h.button({
@@ -95,11 +95,11 @@ local toggle_button = h.button({
     bottom = b.margins,
     left = b.margins,
   },
-  x = 100,
-  y = 100,
+  x = dpi(100),
+  y = dpi(100),
   shape = gears.shape.rounded_rect,
   text = "󰐊",
-  font = b.sysfont(23),
+  font = b.sysfont(dpi(23)),
 })
 
 local next_button = h.button({
@@ -109,11 +109,11 @@ local next_button = h.button({
     bottom = b.margins,
     left = b.margins,
   },
-  x = 100,
-  y = 100,
+  x = dpi(100),
+  y = dpi(100),
   shape = gears.shape.rounded_rect,
   text = "󰒭",
-  font = b.sysfont(24)
+  font = b.sysfont(dpi(24))
 })
 
 local loop_button = h.button({
@@ -123,11 +123,11 @@ local loop_button = h.button({
     bottom = b.margins,
     left = b.margins,
   },
-  x = 100,
-  y = 100,
+  x = dpi(100),
+  y = dpi(100),
   shape = gears.shape.rounded_rect,
   text = "󰑗",
-  font = b.sysfont(26),
+  font = b.sysfont(dpi(26)),
 })
 
 local position_slider = h.slider({
@@ -137,24 +137,24 @@ local position_slider = h.slider({
     bottom = b.margins,
     left = b.margins,
   },
-  x = 532,
-  y = 16,
+  x = dpi(532),
+  y = dpi(16),
   max = 100,
-  handle_width = 16,
-  bar_height = 6,
+  handle_width = dpi(16),
+  bar_height = dpi(6),
   bar_shape = gears.shape.rounded_rect,
 })
 
 local volume_icon = h.text({
   margins = {
-    top = 3,
-    right = 5,
-    bottom = 3,
+    top = dpi(3),
+    right = dpi(5),
+    bottom = dpi(3),
   },
-  x = 18,
-  y = 15,
+  x = dpi(18),
+  y = dpi(15),
   text = "󰕾",
-  font = b.sysfont(14),
+  font = b.sysfont(dpi(14)),
 })
 local volume_slider = h.slider({
   margins = {
@@ -162,23 +162,23 @@ local volume_slider = h.slider({
     right = b.margins,
     bottom = b.margins,
   },
-  x = 513,
-  y = 16,
+  x = dpi(513),
+  y = dpi(16),
   max = 100,
-  handle_width = 16,
-  bar_height = 6,
+  handle_width = dpi(16),
+  bar_height = dpi(6),
   bar_shape = gears.shape.rounded_rect,
 })
 
 local metadata = { }
 
 local function art_image_updater()
-  local image_dyn_height = ((title_text:get_children_by_id("background")[1].forced_height * 3) + 8)
+  local image_dyn_height = ((title_text:get_children_by_id("background")[1].forced_height * 3) + (b.margins * 2))
   art_image_box:get_children_by_id("background")[1].forced_width = image_dyn_height
   art_image_box:get_children_by_id("background")[1].forced_height = image_dyn_height
   art_image_box:get_children_by_id("imagebox")[1].image = metadata.art_image
   art_image_box.visible = true
-  title_text:get_children_by_id("background")[1].forced_width = (532 - 8 - image_dyn_height)
+  title_text:get_children_by_id("background")[1].forced_width = (dpi(532) - (b.margins * 2) - image_dyn_height)
   artist_text:get_children_by_id("background")[1].forced_width = title_text:get_children_by_id("textbox")[1].width
   album_text:get_children_by_id("background")[1].forced_width = title_text:get_children_by_id("textbox")[1].width
 end
@@ -259,11 +259,11 @@ end
 
 local main = awful.popup({
   placement = awful.placement.centered,
-  border_width = 3,
+  border_width = dpi(3),
   border_color = b.border_color_active,
   ontop = true,
   visible = false,
-  maximum_width = 548,
+  maximum_width = dpi(548),
   type = "dock",
   widget = {
     widget = wibox.container.margin,

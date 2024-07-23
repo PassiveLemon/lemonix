@@ -5,8 +5,9 @@ local wibox = require("wibox")
 local hotkeys_popup = require("awful.hotkeys_popup")
 
 local h = require("helpers")
-
 local bling = require("libraries.bling")
+
+local dpi = b.xresources.apply_dpi
 
 --
 -- Keybindings
@@ -17,50 +18,50 @@ local app_launcher = bling.widget.app_launcher({
   border_color = b.border_color_active,
   background = b.ui_main_bg,
 
-  prompt_height = 30,
-  prompt_margins = 0,
+  prompt_height = dpi(30),
+  prompt_margins = dpi(0),
   prompt_paddings = {
-    top = 8,
-    right = 8,
-    bottom = 4,
-    left = 8,
+    top = dpi(8),
+    right = dpi(8),
+    bottom = dpi(4),
+    left = dpi(8),
   },
   prompt_color = b.ui_main_bg,
   prompt_text_halign = "left",
   prompt_text_valign = "center",
   prompt_icon = "",
-  prompt_font = b.sysfont(10),
+  prompt_font = b.sysfont(dpi(10)),
   prompt_text_color = b.ui_main_fg,
   prompt_cursor_color = b.ui_main_fg,
 
   apps_per_row = 15,
   apps_per_column = 1,
   apps_margin = {
-    top = 4,
-    right = 8,
-    bottom = 8,
-    left = 8,
+    top = dpi(4),
+    right = dpi(8),
+    bottom = dpi(8),
+    left = dpi(8),
   },
-  apps_spacing = 8,
+  apps_spacing = dpi(8),
 
-  app_width = 290,
-  app_height = 24,
+  app_width = dpi(290),
+  app_height = dpi(24),
   app_shape = gears.shape.rounded_bar,
   app_normal_color = b.ui_button_bg,
   app_normal_hover_color = b.bg_minimize,
   app_selected_color = b.bg_minimize,
   app_selected_hover_color = b.bg_focus,
-  app_content_padding = 1,
-  app_content_spacing = 0,
+  app_content_padding = dpi(1),
+  app_content_spacing = dpi(0),
   app_show_icon = true,
   app_icon_halign = "left",
-  app_icon_width = 24,
-  app_icon_height = 24,
+  app_icon_width = dpi(24),
+  app_icon_height = dpi(24),
   app_show_name = true,
   app_name_layout = wibox.layout.fixed.horizontal,
-  app_name_generic_name_spacing = 0,
+  app_name_generic_name_spacing = dpi(0),
   app_name_halign = "left",
-  app_name_font = b.sysfont(10),
+  app_name_font = b.sysfont(dpi(10)),
   app_name_normal_color = b.ui_button_fg,
   app_name_selected_color = b.fg_focus,
   app_show_generic_name = false,
@@ -89,6 +90,20 @@ awful.keyboard.append_global_keybindings({
   { description = "|| run resource monitor", group = "launcher" }),
 
   -- Control
+  awful.key({ }, "XF86MonBrightnessUp", function()
+    awful.spawn.easy_async("brightnessctl set 3%+", function()
+      awesome.emit_signal("signal::brightness::update")
+    end)
+  end,
+  { description = "|| increase brightness", group = "control" }),
+
+  awful.key({ }, "XF86MonBrightnessDown", function()
+    awful.spawn.easy_async("brightnessctl set 3%-", function()
+      awesome.emit_signal("signal::brightness::update")
+    end)
+  end,
+  { description = "|| decrease brightness", group = "control" }),
+
   awful.key({ }, "XF86AudioMute", function()
     awful.spawn.easy_async("pamixer -t", function()
       awesome.emit_signal("signal::volume::update")
@@ -171,7 +186,7 @@ awful.keyboard.append_global_keybindings({
     description = "|| move focused client to tag",
     group       = "tag",
     on_press    = function(index)
-      if client.focus then  
+      if client.focus then
         local tag = client.focus.screen.tags[index]
         if tag then
           client.focus:move_to_tag(tag)
@@ -197,7 +212,7 @@ awful.keyboard.append_global_keybindings({
 
     awful.key({ super }, "n", function(c) c.minimized = true end,
     { description = "|| minimize", group = "client" }),
-  
+
     awful.key({ super }, "m",
       function(c)
           c.fullscreen = not c.fullscreen

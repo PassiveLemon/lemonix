@@ -5,6 +5,8 @@ local wibox = require("wibox")
 local h = require("helpers")
 local click_to_hide = require("modules.click_to_hide")
 
+local dpi = b.xresources.apply_dpi
+
 --
 -- Resource monitor
 --
@@ -124,7 +126,7 @@ end)
 
 local main = awful.popup({
   placement = awful.placement.centered,
-  border_width = 3,
+  border_width = dpi(3),
   border_color = b.border_color_active,
   ontop = true,
   visible = false,
@@ -133,8 +135,8 @@ local main = awful.popup({
     layout = wibox.layout.align.horizontal,
     {
       widget = wibox.container.margin,
-      margins = { top = 4, right = 2, bottom = 3, left = 6 },
-      forced_width = 210,
+      margins = { top = dpi(4), right = dpi(2), bottom = dpi(3), left = dpi(6) },
+      forced_width = dpi(210),
       {
         layout = wibox.layout.fixed.vertical,
         cpu_text,
@@ -157,8 +159,8 @@ local main = awful.popup({
     },
     {
       widget = wibox.container.margin,
-      margins = { top = 4, right = 2, bottom = 3, left = 2 },
-      forced_width = 200,
+      margins = { top = dpi(4), right = dpi(2), bottom = dpi(3), left = dpi(2) },
+      forced_width = dpi(200),
       {
         layout = wibox.layout.fixed.vertical,
         mem_text,
@@ -184,8 +186,8 @@ local main = awful.popup({
     },
     {
       widget = wibox.container.margin,
-      margins = { top = 4, right = 6, bottom = 3, left = 2 },
-      forced_width = 155,
+      margins = { top = dpi(4), right = dpi(6), bottom = dpi(3), left = dpi(2) },
+      forced_width = dpi(155),
       {
         layout = wibox.layout.fixed.vertical,
         network_text,

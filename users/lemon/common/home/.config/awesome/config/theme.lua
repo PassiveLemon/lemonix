@@ -1,10 +1,13 @@
 local awful = require("awful")
 local gears = require("gears")
+local b = require("beautiful")
 local wibox = require("wibox")
-local menubar_utils = require "menubar.utils"
+local menubar_utils = require("menubar.utils")
 
-local theme_assets = require("beautiful.theme_assets")
-local themes_path = gears.filesystem.get_themes_dir()
+b.init(gears.filesystem.get_configuration_dir() .. "config/theme.lua")
+
+--b.xresources.set_dpi(144)
+local dpi = b.xresources.apply_dpi
 
 --
 -- Theme
@@ -19,9 +22,9 @@ end
 function theme.cusfont(font, size)
   return font .. " " .. size
 end
-theme.font          = theme.sysfont(10)
-theme.taglist_font  = theme.sysfont(10)
-theme.tasklist_font = theme.sysfont(10)
+theme.font          = theme.sysfont(dpi(10))
+theme.taglist_font  = theme.sysfont(dpi(10))
+theme.tasklist_font = theme.sysfont(dpi(10))
 
 -- Mono
 theme.bg0      = "#222222"
@@ -76,24 +79,19 @@ theme.ui_slider_fg   = theme.fg0
 theme.ui_progress_bg = theme.bg2
 theme.ui_progress_fg = theme.fg0
 
-theme.border_width        = 3
+theme.border_width        = dpi(3)
 theme.border_color_normal = theme.blackd
 theme.border_color_active = theme.blackl
 
 theme.tasklist_fg_minimize       = theme.fg_focus
 theme.tasklist_disable_task_name = true
-theme.tasklist_spacing           = 1
-
-theme.taglist_squares_sel = theme_assets.taglist_squares_sel(0, theme.fg_normal)
-theme.taglist_squares_unsel = theme_assets.taglist_squares_unsel(0, theme.fg_normal)
+theme.tasklist_spacing           = dpi(1)
 
 theme.bg_systray = theme.bg2
 
-theme.useless_gap = 6
+theme.useless_gap = dpi(6)
 
-theme.margins = 4
-
-theme.layout_dwindle = themes_path .. "default/layouts/dwindlew.png"
+theme.margins = dpi(4)
 
 -- Media
 theme.playerctl_players = "tauon,spotify,Feishin"

@@ -1,10 +1,12 @@
 local awful = require("awful")
 local gears = require("gears")
+local b = require("beautiful")
 local ruled = require("ruled")
 
 local h = require("helpers")
-
 local lfs = require("lfs")
+
+local dpi = b.xresources.apply_dpi
 
 --
 -- Rules
@@ -51,9 +53,9 @@ ruled.client.connect_signal("request::rules", function()
       name     = "KRuler",
     },
     properties = {
-      width = 1920,
-      height = 75,
-      border_width = 0,
+      width = awful.screen.focused().geometry.width,
+      height = dpi(75),
+      border_width = dpi(0),
     },
   })
 end)
@@ -66,7 +68,7 @@ end)
 local autostart = os.getenv("HOME") .. "/.config/autostart/"
 for item in lfs.dir(autostart) do
   if item ~= "." and item ~= ".." then
-    awful.spawn.easy_async_with_shell("sh " .. autostart .. item)
+    awful.spawn.with_shell("sh " .. autostart .. item)
   end
 end
 
