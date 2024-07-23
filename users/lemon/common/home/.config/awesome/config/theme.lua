@@ -6,7 +6,6 @@ local menubar_utils = require("menubar.utils")
 
 b.init(gears.filesystem.get_configuration_dir() .. "config/theme.lua")
 
---b.xresources.set_dpi(144)
 local dpi = b.xresources.apply_dpi
 
 --
