@@ -47,9 +47,9 @@ in
 
         Note that applications can bypass this option by setting an active
         runtime in a writable XDG_CONFIG_DIRS location like `~/.config`
-      '' // { default = true; };
+      '';
 
-      autoStart = mkEnableOption "start the service by default";
+      autoStart = mkEnableOption "starting the service by default";
 
       monadoEnvironment = mkOption {
         type = types.attrs;
@@ -99,10 +99,10 @@ in
 
   config = mkIf cfg.enable {
     assertions = [
-      (mkIf applicationCheck {
-        assertion = isDerivation applicationBinary;
+      {
+        assertion = !applicationCheck || isDerivation applicationBinary;
         message = "The application in WiVRn configuration is not a package. Please ensure that the application is a package or that a package is the first element in the list.";
-      })
+      }
     ];
 
     systemd.user = {
@@ -146,7 +146,7 @@ in
             configFile
           ];
         };
-        wivrn-application = {
+        wivrn-application = mkIf applicationCheck {
           description = "WiVRn application service";
           requires = [ "wivrn.service" ];
           serviceConfig = {
@@ -159,7 +159,6 @@ in
             RestartSec = 0;
             PrivateTmp = true;
           };
-          wantedBy = mkIf cfg.autoStart [ "default.target" ];
           # We need to add the application to PATH so WiVRn can find it
           path = [ applicationPath ];
         };
