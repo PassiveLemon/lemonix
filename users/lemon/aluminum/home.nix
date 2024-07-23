@@ -13,12 +13,8 @@
         source = ./home/.config/autostart/programs.sh;
         recursive = true;
       };
-      #".config/awesome/config" = {
-      #  source = ./home/.config/awesome/config;
-      #  recursive = true;
-      #};
-      ".config/awesome/signal" = {
-        source = ./home/.config/awesome/signal;
+      ".config/awesome/signal/init.lua" = {
+        source = ./home/.config/awesome/signal/init.lua;
         recursive = true;
       };
       ".config/awesome/ui/init.lua" = {

@@ -32,17 +32,18 @@
         source = ./home/.config/autostart/programs.sh;
         recursive = true;
       };
-      ".config/awesome/config" = {
-        source = ./home/.config/awesome/config;
+      ".config/awesome/signal/init.lua" = {
+        source = ./home/.config/awesome/signal/init.lua;
         recursive = true;
       };
-      ".config/awesome/signal" = {
-        source = ./home/.config/awesome/signal;
-        recursive = true;
+      ".config/awesome/ui/init.lua" = {
+        source = ./home/.config/awesome/ui/init.lua;
       };
-      ".config/awesome/ui" = {
-        source = ./home/.config/awesome/ui;
-        recursive = true;
+      ".config/awesome/ui/bar.lua" = {
+        source = ./home/.config/awesome/ui/bar.lua;
+      };
+      ".config/awesome/ui/crosshair.lua" = {
+        source = ./home/.config/awesome/ui/crosshair.lua;
       };
       ".config/awesome/liblua_pam.so" = {
         source = ./home/.config/awesome/liblua_pam.so;
