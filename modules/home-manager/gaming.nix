@@ -45,11 +45,11 @@ in
       ];
 
       services.steamvr = let
-        wivrn = pkgs.callPackage ../../pkgs/wivrn-personal { };
+        wivrn = pkgs.callPackage ../../pkgs/wivrn { };
       in {
         runtimeOverride = {
           enable = true;
-          path = "${pkgs.unstable.opencomposite}/lib/opencomposite";
+          path = "${inputs.nixpkgs-xr.packages.${pkgs.system}.opencomposite}/lib/opencomposite";
         };
         activeRuntimeOverride = {
           enable = true;
