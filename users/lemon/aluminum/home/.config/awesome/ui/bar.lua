@@ -23,8 +23,8 @@ screen.connect_signal("request::desktop_decoration", function(s)
   -- CPU
   local cpu_icon = h.text({
     margins = {
-      right = 3,
-      bottom = 2,
+      right = dpi(3),
+      bottom = dpi(2),
     },
     bg = b.bg2,
     text = "",
@@ -533,9 +533,9 @@ screen.connect_signal("request::desktop_decoration", function(s)
               forced_height = dpi(24),
               {
                 layout = wibox.layout.fixed.horizontal,
-                sep2,
+                sep,
                 s.tasklist,
-                sep2,
+                sep,
               },
             },
           },
