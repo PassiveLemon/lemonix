@@ -103,8 +103,9 @@ theme.playerctl_art_cache_dir = os.getenv("HOME") .. "/.cache/passivelemon/lemon
 theme.icon_theme = "Papirus"
 
 client.connect_signal("property::class", function(c)
-  if not c.class then return end
-  c.theme_icon = menubar_utils.lookup_icon(string.lower(c.class)) or c.icon
+  if c.class then
+    c.theme_icon = menubar_utils.lookup_icon(string.lower(c.class)) or c.icon
+  end
 end)
 
 theme.wallpaper = os.getenv("HOME") .. "/.wallpaper-image"
