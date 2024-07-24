@@ -1,8 +1,11 @@
 local awful = require("awful")
 local gears = require("gears")
 local b = require("beautiful")
+local naughty = require("naughty")
 
 local h = require("helpers")
+
+local dpi = b.xresources.apply_dpi
 
 local metadata = { }
 local playerctl_cmd = "playerctl " -- This doesn't change. It gets the metadata of the song and active player.
@@ -63,6 +66,15 @@ local function art_image_fetch()
   end
 end
 
+local function track_notification()
+  naughty.notification({
+    icon = metadata.art_image,
+    icon_size = 100,
+    title = metadata.title,
+    message = "By " .. metadata.artist .. "\nOn " .. metadata.album,
+  })
+end
+
 local function metadata_fetch(position_zero)
   awful.spawn.easy_async(playerctl_cmd .. "metadata -f 'artUrl_{{mpris:artUrl}}title_{{xesam:title}}artist_{{xesam:artist}}album_{{xesam:album}}length_{{mpris:length}}playerName_{{playerName}}shuffle_{{shuffle}}status_{{status}}loop_{{loop}}position_{{position}}volume_{{volume}}'", function(stdout)
     stdout = stdout:gsub("\n", "")
@@ -90,6 +102,7 @@ local function metadata_fetch(position_zero)
     if not metadata.raw_stdout or metadata.raw_stdout:match("artUrl_(.*)shuffle_") ~= stdout:match("artUrl_(.*)shuffle_") then
       metadata.raw_stdout = stdout
       art_image_fetch()
+      track_notification()
     else
       metadata.raw_stdout = stdout
       emit()
