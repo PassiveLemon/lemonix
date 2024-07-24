@@ -77,6 +77,23 @@
     powertop.enable = true;
   };
 
+  systemd = {
+    services."wifi-reset" = {
+      description = "Fix WiFi after hibernation";
+      serviceConfig = {
+        Type = "oneshot";
+        ExecStart = pkgs.writeScript "wifireset.sh" ''
+          #!${pkgs.runtimeShell}
+          modprobe -r mt7921e
+          modprobe mt7921e
+        '';
+      };
+      wantedBy = [ "hibernate.target" ];
+      after = [ "hibernate.target" ];
+      path = [ pkgs.kmod ];
+    };
+  };
+
   nix = {
     settings = {
       cores = 8;
