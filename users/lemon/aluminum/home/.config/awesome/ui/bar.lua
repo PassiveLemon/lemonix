@@ -125,22 +125,22 @@ screen.connect_signal("request::desktop_decoration", function(s)
     bg = b.bg2,
     halign = "left",
   })
-  awesome.connect_signal("signal::power", function(ac, use, now, full)
-    local function estimate_time_remaining()
-      local _etr = h.round((now / use), 1)
-      if _etr < 1 then
-        battery_etr:get_children_by_id("textbox")[1].text = (_etr * 60) .. " mins"
-      else
+  awesome.connect_signal("signal::power", function(ac, perc, time)
+    battery_text:get_children_by_id("textbox")[1].text = perc .. "%"
+    if not ac then
+      battery_etr.visible = true
+      local _etr = h.round((time / 3600), 1)
+      if _etr > 1 then
         battery_etr:get_children_by_id("textbox")[1].text = _etr .. " hours"
+      else
+        battery_etr:get_children_by_id("textbox")[1].text = _etr .. " minutes"
       end
-    end
-    battery_text:get_children_by_id("textbox")[1].text = h.round(((now / full) * 100), 0) .. "%"
-    if ac == "0" then
-      estimate_time_remaining()
-    elseif ac == "1" and not (now == full) then
+    elseif ac and not (perc >= 99) then
+      battery_etr.visible = true
       battery_etr:get_children_by_id("textbox")[1].text = "Charging"
-    elseif ac == "1" and (now == full) then
-      battery_etr:get_children_by_id("textbox")[1].text = "Full"
+    elseif ac and (perc >= 99) then
+      battery_etr.visible = false
+      battery_etr:get_children_by_id("textbox")[1].text = ""
     end
   end)
 
