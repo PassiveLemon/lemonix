@@ -16,6 +16,7 @@ end
 
 local function grab()
   local input = ""
+  local input_count = 0
   local grabber = awful.keygrabber({
     auto_start = true,
     stop_event = "release",
@@ -31,38 +32,48 @@ local function grab()
     },
     keypressed_callback = function(_, _, key, _)
       if #key == 1 then
-        if #input < 32 then
-          awesome.emit_signal("ui::lock::keypress", key, input, nil)
+        if input_count < 32 then
+          awesome.emit_signal("ui::lock::keypress", key, input_count, nil)
           if input == nil then
             input = key
           end
           input = input .. key
-        elseif #input > 33 then
+          input_count = input_count + 1
+        elseif input_count > 33 then
           -- Doesn't actually enter escape, we just use this so we can show colors
-          awesome.emit_signal("ui::lock::keypress", "Escape", "", nil)
+          awesome.emit_signal("ui::lock::keypress", "Escape", 0, nil)
           input = ""
+          input_count = 0
         else
-          awesome.emit_signal("ui::lock::keypress", "BackSpace", "", nil)
+          awesome.emit_signal("ui::lock::keypress", "BackSpace", 0, nil)
         end
       elseif key == "BackSpace" then
-        awesome.emit_signal("ui::lock::keypress", key, input, nil)
+        awesome.emit_signal("ui::lock::keypress", key, input_count, nil)
         input = input:sub(1, -2)
+        if input_count > 0 then
+          input_count = input_count - 1
+        end
       elseif key == "Escape" then
-        awesome.emit_signal("ui::lock::keypress", key, input, nil)
+        awesome.emit_signal("ui::lock::keypress", key, 0, nil)
         input = ""
+        input_count = 0
+      elseif key == "Return" then
+        awesome.emit_signal("ui::lock::keypress", key, 0, nil)
       end
     end,
     keyreleased_callback = function(self, _, key, _)
       if key == "Return" then
         if auth(input) then
-          awesome.emit_signal("ui::lock::keypress", key, input, true)
+          awesome.emit_signal("ui::lock::keypress", key, input_count, true)
           awesome.emit_signal("ui::lock::state", false)
           input = ""
+          input_count = 0
           self:stop()
         else
-          awesome.emit_signal("ui::lock::keypress", key, input, false)
+          awesome.emit_signal("ui::lock::keypress", key, input_count, false)
           awesome.emit_signal("ui::lock::state", true)
           input = ""
+          input_count = 0
         end
       end
     end

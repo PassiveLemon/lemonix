@@ -76,7 +76,7 @@ awful.screen.connect_for_each_screen(function(s)
       circle:get_children_by_id("arcchart")[1].colors = { b.redd }
       circle:get_children_by_id("arcchart")[1].value = 20
       circle:get_children_by_id("arcchart")[1].start_angle = get_random()
-      if #input == 0 then
+      if not input then
         circle:get_children_by_id("arcchart")[1].colors = { b.magentad }
         circle:get_children_by_id("arcchart")[1].value = 100
       end
@@ -84,12 +84,15 @@ awful.screen.connect_for_each_screen(function(s)
       circle:get_children_by_id("arcchart")[1].colors = { b.magentad }
       circle:get_children_by_id("arcchart")[1].value = 100
     elseif key == "Return" then
-      if auth then
-        circle:get_children_by_id("arcchart")[1].bg = b.greend
+      if auth == nil then
+        circle:get_children_by_id("arcchart")[1].colors = { b.magentad }
+        circle:get_children_by_id("arcchart")[1].value = 100
+      elseif auth then
         circle:get_children_by_id("arcchart")[1].colors = { b.greend }
-      else
-        circle:get_children_by_id("arcchart")[1].bg = b.redd
+        circle:get_children_by_id("arcchart")[1].value = 100
+      elseif not auth then
         circle:get_children_by_id("arcchart")[1].colors = { b.redd }
+        circle:get_children_by_id("arcchart")[1].value = 100
       end
     end
     reset_timer:again()
