@@ -42,6 +42,9 @@
       ".config/awesome/ui/bar.lua" = {
         source = ./home/.config/awesome/ui/bar.lua;
       };
+      ".config/awesome/ui/resource.lua" = {
+        source = ./home/.config/awesome/ui/resource.lua;
+      };
       ".config/awesome/ui/crosshair.lua" = {
         source = ./home/.config/awesome/ui/crosshair.lua;
       };

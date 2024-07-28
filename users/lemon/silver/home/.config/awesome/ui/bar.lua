@@ -37,7 +37,7 @@ screen.connect_signal("request::desktop_decoration", function(s)
     bg = b.bg2,
     halign = "left",
   })
-  awesome.connect_signal("signal::cpu::data", function(use, _)
+  awesome.connect_signal("signal::resource::cpu::data", function(use, _)
     cpu_text:get_children_by_id("textbox")[1].text = use .. "%"
   end)
 
@@ -58,8 +58,8 @@ screen.connect_signal("request::desktop_decoration", function(s)
     bg = b.bg2,
     halign = "left",
   })
-  awesome.connect_signal("signal::memory::data", function(_, use_perc, _, _)
-    memory_text:get_children_by_id("textbox")[1].text = use_perc .. "%"
+  awesome.connect_signal("signal::resource::memory::data", function(free_mem_table)
+    memory_text:get_children_by_id("textbox")[1].text = h.round(((free_mem_table[2] / free_mem_table[1]) * 100), 0) .. "%"
   end)
 
   -- Caps lock
@@ -70,7 +70,7 @@ screen.connect_signal("request::desktop_decoration", function(s)
     bg = b.bg2,
     markup = 'A<span underline="single">a</span>',
   })
-  awesome.connect_signal("signal::caps::state", function(caps)
+  awesome.connect_signal("signal::peripheral::caps::state", function(caps)
     if caps == "on" then
       caps_icon:get_children_by_id("textbox")[1].markup = '<span underline="single">A</span>a'
     else
@@ -89,7 +89,7 @@ screen.connect_signal("request::desktop_decoration", function(s)
   local volume_text = h.text({
     halign = "left",
   })
-  awesome.connect_signal("signal::volume::value", function(value)
+  awesome.connect_signal("signal::peripheral::volume::value", function(value)
     if value == "Muted" then
       volume_icon:get_children_by_id("textbox")[1].text = "󰝟"
       volume_icon:get_children_by_id("textbox")[1].font = b.sysfont(dpi(17))
@@ -478,7 +478,7 @@ screen.connect_signal("request::desktop_decoration", function(s)
 
   volume_icon:connect_signal("button::press", function()
     awful.spawn.easy_async("pamixer -t", function()
-      awesome.emit_signal("signal::volume::update")
+      awesome.emit_signal("signal::peripheral::volume::update")
     end)
   end)
 

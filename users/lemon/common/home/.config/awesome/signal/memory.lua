@@ -1,23 +1,27 @@
 local awful = require("awful")
 local gears = require("gears")
 
-local function emit(use, use_perc, cache, cache_perc)
-  awesome.emit_signal("signal::memory::data", use, use_perc, cache, cache_perc)
+local h = require("helpers")
+
+-- free_mem_table
+-- (total) (used) (free) (shared) (buff/cache) (available)
+
+local function emit(free_mem_table)
+  awesome.emit_signal("signal::resource::memory::data", free_mem_table)
+end
+
+local function normalize(value)
+  return h.round((tonumber(value) / 1000), 1)
 end
 
 local function memory()
-  awful.spawn.easy_async_with_shell([[sh -c "free -m | grep 'Mem:' | awk '{printf \"%0.1f/%0.0f\", (\$3/1000), (\$2/1000)}'"]], function(use)
-    local use = use:gsub("\n", "")
-    awful.spawn.easy_async_with_shell([[sh -c "free -m | grep 'Mem:' | awk '{printf \"%0.0f\", ((\$3/\$2)*100)}'"]], function(use_perc)
-      local use_perc = use_perc:gsub("\n", "")
-      awful.spawn.easy_async_with_shell([[sh -c "free -m | grep 'Mem:' | awk '{printf \"%0.1f/%0.0f\", (\$6/1000), (\$2/1000)}'"]], function(cache)
-        local cache = cache:gsub("\n", "")
-        awful.spawn.easy_async_with_shell([[sh -c "free -m | grep 'Mem:' | awk '{printf \"%0.0f\", ((\$6/\$2)*100)}'"]], function(cache_perc)
-          local cache_perc = cache_perc:gsub("\n", "")
-          emit(use, use_perc, cache, cache_perc)
-        end)
-      end)
-    end)
+  local free_mem_table = { }
+  awful.spawn.easy_async_with_shell("free -m | grep 'Mem:'", function(free_raw)
+    local free_raw = free_raw:gsub("\n", "")
+    for number in free_raw:gmatch("%d+") do
+      table.insert(free_mem_table, normalize(number))
+    end
+    emit(free_mem_table)
   end)
 end
 memory()

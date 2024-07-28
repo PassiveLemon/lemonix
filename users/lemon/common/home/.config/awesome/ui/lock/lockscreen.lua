@@ -76,7 +76,7 @@ awful.screen.connect_for_each_screen(function(s)
       circle:get_children_by_id("arcchart")[1].colors = { b.redd }
       circle:get_children_by_id("arcchart")[1].value = 20
       circle:get_children_by_id("arcchart")[1].start_angle = get_random()
-      if not input then
+      if input == 0 then
         circle:get_children_by_id("arcchart")[1].colors = { b.magentad }
         circle:get_children_by_id("arcchart")[1].value = 100
       end

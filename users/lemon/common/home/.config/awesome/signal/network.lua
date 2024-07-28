@@ -1,21 +1,49 @@
 local awful = require("awful")
 local gears = require("gears")
 
-local function emit(total)
-  awesome.emit_signal("signal::network::data", total)
+local lfs = require("lfs")
+
+-- network_stats_dict
+--             |read                                                                   |write
+-- adapter = { (bytes) (packets) (errs) (drop) (fifo) (frame) (compressed) (multicast) (bytes) (packets) (errs) (drop) (fifo) (colls) (carrier) (compressed) }
+
+local function emit(network_stats_dict)
+  awesome.emit_signal("signal::resource::network::data", network_stats_dict)
 end
 
-local function total()
-  awful.spawn.easy_async_with_shell([[sh -c 'ip -s link show enp7s0 | awk '\''/RX:/{getline; rx=$1} /TX:/{getline; tx=$1} END{printf "%sB/%sB\n", convert(rx), convert(tx)} function convert(val) {suffix="BKMGTPE"; for(i=1; val>1024; i++) val/=1024; return int(val+0.5) substr(suffix, i, 1)}'\']], function(total)
-    total = total:gsub("\n", "")
-    emit(total)
+local function adapter_stats_table(adapter_stats)
+  local stats_table = { }
+  for number in adapter_stats:gmatch("%d+") do
+    table.insert(stats_table, number)
+  end
+  return stats_table
+end
+
+local function network()
+  local network_stats_dict = { }
+  -- We iterate over each network adapter in /sys/class/net and filter them by a pattern
+  -- Then iterate over the matches, get a table of the adapter stats, and then add that key value pair to a table for use elsewhere
+  for adapter in lfs.dir("/sys/class/net") do
+    if adapter:match("enp.(d*)s.(d*)") or adapter:match("wlp.(d*)s.(d*)") then
+      awful.spawn.easy_async_with_shell("ip -s link show ".. adapter .. " | grep 'state UP'", function(_, _, _, code)
+        if code == 0 then
+          awful.spawn.easy_async_with_shell("cat /proc/net/dev | grep " .. adapter, function(adapter_stats)
+            local adapter_stats = adapter_stats:gsub("\n", ""):gsub(adapter .. ":", "")
+            network_stats_dict[adapter] = adapter_stats_table(adapter_stats)
+          end)
+        end
+      end)
+    end
+  end
+  awful.spawn.easy_async_with_shell("sleep 5", function()
+    emit(network_stats_dict)
   end)
 end
-total()
+network()
 local total_timer = gears.timer({
-  timeout = 1,
+  timeout = 60,
   autostart = true,
   callback = function()
-    total()
+    network()
   end,
 })

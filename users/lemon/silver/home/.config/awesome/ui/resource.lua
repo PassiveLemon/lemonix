@@ -24,7 +24,7 @@ local cpu_use = h.text({
 local cpu_temp = h.text({
   halign = "left",
 })
-awesome.connect_signal("signal::cpu::data", function(use, temp)
+awesome.connect_signal("signal::resource::cpu::data", function(use, temp)
 	cpu_use:get_children_by_id("textbox")[1].text = "Usage: " .. use .. "%"
   cpu_temp:get_children_by_id("textbox")[1].text = temp .. "C"
 end)
@@ -41,10 +41,10 @@ local gpu_temp = h.text({
 local gpu_mem = h.text({
   halign = "left",
 })
-awesome.connect_signal("signal::gpu::data", function(use, temp, mem)
-	gpu_use:get_children_by_id("textbox")[1].text = "Usage: " .. use .. "%"
-  gpu_temp:get_children_by_id("textbox")[1].text = temp .. "C"
-  gpu_mem:get_children_by_id("textbox")[1].text = "Memory: " .. mem
+awesome.connect_signal("signal::resource::gpu::data", function(nvidia_smi_table)
+	gpu_use:get_children_by_id("textbox")[1].text = "Usage: " .. nvidia_smi_table[1] .. "%"
+  gpu_temp:get_children_by_id("textbox")[1].text = nvidia_smi_table[2] .. "C"
+  gpu_mem:get_children_by_id("textbox")[1].text = "Memory: " .. h.round((nvidia_smi_table[4] / 1024), 1) .. "/" .. h.round((nvidia_smi_table[3] / 1024), 1) .. " GiB " .. h.round(((nvidia_smi_table[4] / nvidia_smi_table[3]) * 100), 0) .. "%"
 end)
 
 local mem_text = h.text({
@@ -62,11 +62,11 @@ local cache_use = h.text({
 local cache_use_perc = h.text({
   halign = "left",
 })
-awesome.connect_signal("signal::memory::data", function(use, use_perc, cache, cache_perc)
-	mem_use:get_children_by_id("textbox")[1].text = "Used: " .. use .. " GB"
-  mem_use_perc:get_children_by_id("textbox")[1].text = use_perc .. "%"
-  cache_use:get_children_by_id("textbox")[1].text = "Cache: " .. cache .. " GB"
-  cache_use_perc:get_children_by_id("textbox")[1].text = cache_perc .. "%"
+awesome.connect_signal("signal::resource::memory::data", function(free_mem_table)
+	mem_use:get_children_by_id("textbox")[1].text = "Used: " .. free_mem_table[2] .. "/" .. free_mem_table[1] .. " GB"
+  mem_use_perc:get_children_by_id("textbox")[1].text = h.round(((free_mem_table[2] / free_mem_table[1]) * 100), 0) .. "%"
+  cache_use:get_children_by_id("textbox")[1].text = "Cache: " .. free_mem_table[6] .. "/" .. free_mem_table[1] .. " GB"
+  cache_use_perc:get_children_by_id("textbox")[1].text = h.round(((free_mem_table[6] / free_mem_table[1]) * 100), 0) .. "%"
 end)
 
 local strg_text = h.text({
@@ -84,11 +84,19 @@ local strg_free_sda = h.text({
 local strg_free_sdb = h.text({
   halign = "left",
 })
-awesome.connect_signal("signal::storage::data", function(nvme0, nvme1, sda, sdb)
-	strg_free_nvme0:get_children_by_id("textbox")[1].text = "NVME0: " .. nvme0
-  strg_free_nvme1:get_children_by_id("textbox")[1].text = "NVME1: " .. nvme1
-  strg_free_sda:get_children_by_id("textbox")[1].text = "SDA: " .. sda
-  strg_free_sdb:get_children_by_id("textbox")[1].text = "SDB: " .. sdb
+-- We normalize each value into gigabytes and round to the nearest integer. The values are in kilobytes already
+local function normalize_storage(value)
+  return h.round((value / 10^6), 0)
+end
+awesome.connect_signal("signal::resource::storage::data", function(storage_stats_dict)
+  local nvme0n1 = storage_stats_dict["nvme0n1"]
+  local nvme1n1 = storage_stats_dict["nvme1n1"]
+  local sda = storage_stats_dict["sda"]
+  local sdb = storage_stats_dict["sdb"]
+	strg_free_nvme0:get_children_by_id("textbox")[1].text = "NVME0: " .. normalize_storage(nvme0n1[3]) .. "/" .. normalize_storage(nvme0n1[2]) .. " GB " .. nvme0n1[5]
+  strg_free_nvme1:get_children_by_id("textbox")[1].text = "NVME1: " .. normalize_storage(nvme1n1[3]) .. "/" .. normalize_storage(nvme1n1[2]) .. " GB " .. nvme1n1[5]
+  strg_free_sda:get_children_by_id("textbox")[1].text = "SDA: " .. normalize_storage(sda[3]) .. "/" .. normalize_storage(sda[2]) .. " GB " .. sda[5]
+  strg_free_sdb:get_children_by_id("textbox")[1].text = "SDB: " .. normalize_storage(sdb[3]) .. "/" .. normalize_storage(sdb[2]) .. " GB " .. sdb[5]
 end)
 
 local network_text = h.text({
@@ -97,8 +105,13 @@ local network_text = h.text({
 local network_total = h.text({
   halign = "left",
 })
-awesome.connect_signal("signal::network::data", function(total)
-	network_total:get_children_by_id("textbox")[1].text = "Dn/Up: " .. total
+-- We normalize each value into gigabytes and round to the nearest integer
+local function normalize_network(value)
+  return h.round((value / 10^9), 0)
+end
+awesome.connect_signal("signal::resource::network::data", function(network_stats_dict)
+  local enp7s0 = network_stats_dict["enp7s0"]
+	network_total:get_children_by_id("textbox")[1].text = "Dn/Up: " .. normalize_network(enp7s0[1]) .. "/" .. normalize_network(enp7s0[9]) .. " GB"
 end)
 
 local uptime_text = h.text({
@@ -113,8 +126,19 @@ local devices_text = h.text({
 local headset_bat = h.text({
   halign = "left",
 })
-awesome.connect_signal("signal::other::data", function(uptime, headset)
-	uptime_time:get_children_by_id("textbox")[1].text = "" .. uptime
+local function uptime(uptime_days, uptime_hours)
+  if (uptime_days > 0) and (uptime_hours > 1) then
+    return uptime_days .. " days " .. uptime_hours .. " hours"
+  elseif (uptime_days > 0) and (uptime_hours < 1) then
+    return uptime_days .. " days"
+  else
+    return uptime_hours .. " hours"
+  end
+end
+awesome.connect_signal("signal::miscellaneous::uptime", function(uptime_days, uptime_hours)
+	uptime_time:get_children_by_id("textbox")[1].text = uptime(uptime_days, uptime_hours)
+end)
+awesome.connect_signal("signal::peripheral::headset", function(headset)
   if headset == "-2" then
     headset_bat:get_children_by_id("textbox")[1].text = "HS BAT: Not found"
   elseif headset == "-1" then

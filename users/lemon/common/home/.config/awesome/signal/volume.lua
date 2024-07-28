@@ -2,7 +2,7 @@ local awful = require("awful")
 local gears = require("gears")
 
 local function emit(value)
-  awesome.emit_signal("signal::volume::value", value)
+  awesome.emit_signal("signal::peripheral::volume::value", value)
 end
 
 local function volume()
@@ -16,7 +16,7 @@ local function volume()
 end
 volume()
 local volume_timer = gears.timer({
-  timeout = 1,
+  timeout = 2,
   autostart = true,
   callback = function()
     volume()

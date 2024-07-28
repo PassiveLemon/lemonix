@@ -1,47 +1,26 @@
 local awful = require("awful")
 local gears = require("gears")
 
-local uptime_cache = "N/A"
-local headset_cache = "N/A"
+local h = require("helpers")
 
-local function emit(uptime, headset)
-  if uptime == nil then
-    uptime = uptime_cache
-  end
-  if headset == nil then
-    headset = headset_cache
-  end
-  awesome.emit_signal("signal::other::data", uptime, headset)
+local function emit(uptime_days, uptime_hours)
+  awesome.emit_signal("signal::miscellaneous::uptime", uptime_days, uptime_hours)
 end
 
 local function uptime()
-  awful.spawn.easy_async_with_shell([[sh -c "uptime | awk -F'( |,|:)+' '{if (\$6 >= 1) {print \$6, \"days\", \$8, \"hours\"} else {print \$8, \"hours\"}}'"]], function(uptime)
-    local uptime = uptime:gsub("\n", "")
-    uptime_cache = uptime
-    emit(uptime, nil)
+  awful.spawn.easy_async_with_shell("cat /proc/uptime | awk '{print $1}'", function(uptime_raw)
+    local uptime_raw = uptime_raw:gsub("\n", "")
+    local uptime = h.round((uptime_raw / 3600), 1)
+    local uptime_days = math.floor(uptime / 24)
+    local uptime_hours = math.fmod(uptime, 24)
+    emit(uptime_days, uptime_hours)
   end)
 end
 uptime()
 local uptime_timer = gears.timer({
-  timeout = 15,
+  timeout = 1,
   autostart = true,
   callback = function()
     uptime()
-  end,
-})
-
-local function headset()
-  awful.spawn.easy_async("headsetcontrol -c -b", function(headset)
-    local headset = headset:gsub("\n", "")
-    headset_cache = headset
-    emit(nil, headset)
-  end)
-end
-headset()
-local headset_timer = gears.timer({
-  timeout = 5,
-  autostart = true,
-  callback = function()
-    headset()
   end,
 })

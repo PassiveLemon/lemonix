@@ -219,30 +219,23 @@ function helpers.is_file(file)
   return gears.filesystem.file_readable(file)
 end
 
-function helpers.file_test(path, file, callback)
-  awful.spawn.easy_async_with_shell("test -f " .. path .. file .. " && echo true || echo false", function(stdout)
-    local stdout = stdout:gsub("\n", "")
-    if stdout == "true" then
-      callback(true)
-    else
-      callback(false)
-    end
-  end)
-end
-
 function helpers.is_dir(dir)
   return gears.filesystem.is_dir(dir)
 end
 
-function helpers.dir_test(path, callback)
-  awful.spawn.easy_async_with_shell("test -d " .. path .. " && echo true || echo false", function(stdout)
-    local stdout = stdout:gsub("\n", "")
-    if stdout == "true" then
-      callback(true)
-    else
-      callback(false)
+function helpers.dump_table(table)
+  if type(table) == "table" then
+    local s = "{ "
+    for k, v in pairs(table) do
+      if type(k) ~= "number" then
+        k = '"' .. k .. '"'
+      end
+      s = s .. "[" .. k .. "] = " .. helpers.dump_table(v) .. ","
     end
-  end)
+    return s .. "} "
+  else
+    return tostring(table)
+  end
 end
 
 return helpers

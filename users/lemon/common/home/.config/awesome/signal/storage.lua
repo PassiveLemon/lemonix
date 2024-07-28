@@ -1,23 +1,44 @@
 local awful = require("awful")
 local gears = require("gears")
 
-local function emit(nvme0, nvme1, sda, sdb)
-  awesome.emit_signal("signal::storage::data", nvme0, nvme1, sda, sdb)
+-- storage_stats_dict
+-- device = { (filesystem) (1k-blocks) (used) (available) (use%) (mounted on) }
+
+local function emit(storage_stats_dict)
+  awesome.emit_signal("signal::resource::storage::data", storage_stats_dict)
+end
+
+local function device_stats_table(device_stats)
+  local stats_table = { }
+  for number in device_stats:gmatch("%S+") do
+    table.insert(stats_table, number)
+  end
+  return stats_table
 end
 
 local function storage()
-  awful.spawn.easy_async_with_shell([[sh -c "df -h /dev/nvme0n1p1 | awk 'NR==2 {split(\$3, used, \"G\"); split(\$2, total, \"G\"); print used[1] \"/\" total[1] \" GiB \" int((used[1]/total[1])*100) \"%\"}'"]], function(nvme0)
-    local nvme0 = nvme0:gsub("\n", "")
-    awful.spawn.easy_async_with_shell([[sh -c "df -h /dev/nvme1n1p1 | awk 'NR==2 {split(\$3, used, \"G\"); split(\$2, total, \"G\"); print used[1] \"/\" total[1] \" GiB \" int((used[1]/total[1])*100) \"%\"}'"]], function(nvme1)
-      local nvme1 = nvme1:gsub("\n", "")
-      awful.spawn.easy_async_with_shell([[sh -c "df -h /dev/sda1 | awk 'NR==2 {split(\$3, used, \"T\"); split(\$2, total, \"T\"); print used[1] \"/\" total[1] \" TiB \" int((used[1]/total[1])*100) \"%\"}'"]], function(sda)
-        local sda = sda:gsub("\n", "")
-        awful.spawn.easy_async_with_shell([[sh -c "df -h /dev/sdb1 | awk 'NR==2 {split(\$3, used, \"G\"); split(\$2, total, \"G\"); print used[1] \"/\" total[1] \" GiB \" int((used[1]/total[1])*100) \"%\"}'"]], function(sdb)
-          local sdb = sdb:gsub("\n", "")
-          emit(nvme0, nvme1, sda, sdb)
-        end)
+  local storage_stats_dict = { }
+  -- We iterate over each storage device in /sys/block and filter them by a pattern
+  -- Then iterate over the matches, get a table of the first partition stats, and then add that key value pair to a table for use elsewhere
+  for device in lfs.dir("/sys/block") do
+    if device:match("nvme.(d*)n.(d*)") then
+      awful.spawn.easy_async_with_shell("df /dev/".. device .. "p1 | grep '/dev'", function(device_stats, _, _, code)
+        if code == 0 then
+          local device_stats = device_stats:gsub("\n", "")
+          storage_stats_dict[device] = device_stats_table(device_stats)
+        end
       end)
-    end)
+    elseif device:match("sd.(l*)") then
+      awful.spawn.easy_async_with_shell("df /dev/".. device .. "1 | grep '/dev'", function(device_stats, _, _, code)
+        if code == 0 then
+          local device_stats = device_stats:gsub("\n", "")
+          storage_stats_dict[device] = device_stats_table(device_stats)
+        end
+      end)
+    end
+  end
+  awful.spawn.easy_async_with_shell("sleep 5", function()
+    emit(storage_stats_dict)
   end)
 end
 storage()

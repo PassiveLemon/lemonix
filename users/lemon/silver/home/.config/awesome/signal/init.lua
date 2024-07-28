@@ -1,6 +1,7 @@
 require("signal.caps")
 require("signal.cpu")
 require("signal.gpu")
+require("signal.headset")
 require("signal.memory")
 require("signal.network")
 require("signal.other")

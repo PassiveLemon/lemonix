@@ -4,7 +4,7 @@ local gears = require("gears")
 local caps_cache
 
 local function emit(caps)
-  awesome.emit_signal("signal::caps::state", caps)
+  awesome.emit_signal("signal::peripheral::caps::state", caps)
 end
 
 local function caps_query()
