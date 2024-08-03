@@ -1,0 +1,6 @@
+{
+    "device": "alsa_output.pci-0000_08_00.1.hdmi-stereo",
+    "device-description": "GA104 High Definition Audio Controller Digital Stereo (HDMI)",
+    "device-profile": "hdmi-output-0",
+    "preset-name": "Raw"
+}

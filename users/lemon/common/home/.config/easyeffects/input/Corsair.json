@@ -1,7 +1,7 @@
 {
     "input": {
         "blocklist": [],
-        "crystalizer": {
+        "crystalizer#0": {
             "band0": {
                 "bypass": false,
                 "intensity": 0.0,
@@ -71,7 +71,7 @@
             "input-gain": 0.0,
             "output-gain": 0.0
         },
-        "deesser": {
+        "deesser#0": {
             "bypass": false,
             "detection": "RMS",
             "f1-freq": 6000.0,
@@ -88,7 +88,7 @@
             "sc-listen": false,
             "threshold": -18.0
         },
-        "loudness": {
+        "loudness#0": {
             "bypass": false,
             "clipping": false,
             "clipping-range": 6.0,
@@ -99,9 +99,9 @@
             "volume": 0.0
         },
         "plugins_order": [
-            "loudness",
-            "crystalizer",
-            "deesser"
+            "loudness#0",
+            "crystalizer#0",
+            "deesser#0"
         ]
     }
 }
