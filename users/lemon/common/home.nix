@@ -15,6 +15,7 @@
       pcmanfm ffmpegthumbnailer xarchiver filezilla gparted
       # Development
       lite-xl vscode github-desktop imhex
+      shellcheck luajitPackages.luacheck python312Packages.flake8
       # Office
       obsidian onlyoffice-bin drawio
       # Audio
@@ -29,6 +30,26 @@
     file = {
       ".config/" = {
         source = ./home/.config;
+        recursive = true;
+      };
+      ".config/awesome/libraries/bling" = {
+        source = inputs.awesomewm-bling;
+        recursive = true;
+      };
+      ".config/lite-xl/libraries/widget" = {
+        source = inputs.lite-xl-widget;
+        recursive = true;
+      };
+      ".config/lite-xl/plugins/editorconfig" = {
+        source = inputs.lite-xl-plugins + "/plugins/editorconfig";
+        recursive = true;
+      };
+      ".config/lite-xl/plugins/lintplus" = {
+        source = inputs.lite-xl-lintplus;
+        recursive = true;
+      };
+      ".config/lite-xl/plugins/evergreen" = {
+        source = inputs.lite-xl-evergreen;
         recursive = true;
       };
       ".vscode/" = {

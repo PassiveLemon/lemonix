@@ -1,3 +1,12 @@
 [submodule "users/lemon/common/home/.config/awesome/libraries/bling"]
 	path = users/lemon/common/home/.config/awesome/libraries/bling
 	url = https://github.com/BlingCorp/bling
+[submodule "users/lemon/common/home/.config/lite-xl/libraries/widget"]
+	path = users/lemon/common/home/.config/lite-xl/libraries/widget
+	url = https://github.com/lite-xl/lite-xl-widgets
+[submodule "users/lemon/common/home/.config/lite-xl/plugins/lintplus"]
+	path = users/lemon/common/home/.config/lite-xl/plugins/lintplus
+	url = https://github.com/liquidev/lintplus
+[submodule "users/lemon/common/home/.config/lite-xl/plugins/evergreen"]
+	path = users/lemon/common/home/.config/lite-xl/plugins/evergreen
+	url = https://github.com/Evergreen-lxl/Evergreen.lxl
