@@ -61,6 +61,13 @@ in
         };
       };
 
+      extraPackages = mkOption {
+        type = types.listOf types.package;
+        description = "Packages to add to the wivrn-application service $PATH.";
+        default = [ ];
+        example = literalExpression "[ pkgs.bash pkgs.procps ]";
+      };
+
       config = {
         enable = mkEnableOption "configuration for WiVRn";
         json = mkOption {
@@ -160,7 +167,7 @@ in
             PrivateTmp = true;
           };
           # We need to add the application to PATH so WiVRn can find it
-          path = [ applicationPath ];
+          path = [ applicationPath ] ++ cfg.extraPackages;
         };
       };
     };
@@ -198,3 +205,4 @@ in
   };
   meta.maintainers = with maintainers; [ passivelemon ];
 }
+

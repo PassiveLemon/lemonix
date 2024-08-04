@@ -48,6 +48,11 @@ in
             XRT_PRINT_OPTIONS = "off";
             PROBER_LOG = "warning";
           };
+          extraPackages = [
+            pkgs.linuxKernel.packages.linux_zen.nvidia_x11
+            pkgs.procps
+            pkgs.bash
+          ];
           config = {
             enable = true;
             json = {
@@ -94,3 +99,4 @@ in
     })
   ]);
 }
+
