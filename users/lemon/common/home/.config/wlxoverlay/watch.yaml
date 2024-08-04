@@ -1,0 +1,140 @@
+width: 0.115
+
+size: [400, 170]
+
+elements:
+  # Background
+  - type: Panel
+    rect: [0, 0, 400, 170]
+    bg_color: "#222222"
+
+  # Settings button
+  - type: Button
+    rect: [4, 130, 36, 36]
+    font_size: 16
+    bg_color: "#cd61ec"
+    fg_color: "#222222"
+    text: "S"
+    click_up:
+      - type: Window
+        target: settings
+        action: ShowUi
+      - type: Window
+        target: settings
+        action: Destroy
+
+  # Keyboard button
+  - type: Button
+    rect: [44, 130, 60, 36]
+    font_size: 16
+    bg_color: "#61b8ff"
+    fg_color: "#222222"
+    text: "Kbd"
+    click_up:
+      - type: Overlay
+        target: "kbd"
+        action: ToggleVisible
+    long_click_up:
+      - type: Overlay
+        target: "kbd"
+        action: Reset
+    right_up:
+      - type: Overlay
+        target: "kbd"
+        action: ToggleImmovable
+    middle_up:
+      - type: Overlay
+        target: "kbd"
+        action: ToggleInteraction
+    scroll_up:
+      - type: Overlay
+        target: "kbd"
+        action:
+          Opacity: { delta: 0.025 }
+    scroll_down:
+      - type: Overlay
+        target: "kbd"
+        action:
+          Opacity: { delta: -0.025 }
+
+  # Overlays
+  - type: OverlayList
+    rect: [106, 128, 292, 40]
+    font_size: 16
+    bg_color: "#303030"
+    fg_color: "#dcdcdc"
+    layout: Horizontal
+    click_up: ToggleVisible
+    long_click_up: Reset
+    right_up: ToggleImmovable
+    middle_up: ToggleInteraction
+    scroll_up:
+      Opacity: { delta: 0.025 }
+    scroll_down:
+      Opacity: { delta: -0.025 }
+
+  # Local clock
+  - type: Label
+    rect: [4, 40, 200, 50]
+    font_size: 36
+    fg_color: "#aaaaaa"
+    source: Clock
+    format: "%I:%M %p"
+
+  # Local date
+  - type: Label
+    rect: [4, 68, 200, 50]
+    font_size: 20
+    fg_color: "#aaaaaa"
+    source: Clock
+    format: "%a %b %-d"
+
+  # IPD
+  #- type: Label
+  #  rect: [4, 99, 200, 50]
+  #  font_size: 24
+  #  fg_color: "#93cb6b"
+  #  source: Timer
+  #  format: "%H:%M"
+  - type: Label
+    rect: [4, 99, 200, 50]
+    font_size: 24
+    fg_color: "#93cb6b"
+    source: Ipd
+
+  # Batteries
+  - type: BatteryList
+    rect: [4, 106, 392, 30]
+    font_size: 16
+    fg_color: "#aaaaaa"
+    fg_color_low: "#f05d6b"
+    fg_color_charging: "#93cb6b"
+    num_devices: 9
+    layout: Horizontal
+    low_threshold: 20
+
+  # Uptime
+  - type: Label
+    rect: [266, 28, 200, 50]
+    font_size: 24
+    fg_color: "#aaaaaa"
+    source: Timer
+    format: "%H:%M:%S"
+
+  # CPU usage
+  - type: Label
+    rect: [285, 48, 200, 50]
+    font_size: 16
+    fg_color: "#aaaaaa"
+    source: Exec
+    command: [ "bash", "-c", "top -bn1 | grep '%Cpu' | awk '{print \"CPU: \" int(100-$8)\"%\"}'" ]
+    interval: 2
+
+  # GPU usage
+  - type: Label
+    rect: [285, 68, 200, 50]
+    font_size: 16
+    fg_color: "#aaaaaa"
+    source: Exec
+    command: [ "bash", "-c", "nvidia-smi --query-gpu=utilization.gpu --format=csv,noheader,nounits | awk '{print \"GPU: \" $1\"%\"}'" ]
+    interval: 2
