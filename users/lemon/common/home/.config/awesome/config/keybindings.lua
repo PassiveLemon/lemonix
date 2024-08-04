@@ -92,35 +92,35 @@ awful.keyboard.append_global_keybindings({
   -- Control
   awful.key({ }, "XF86MonBrightnessUp", function()
     awful.spawn.easy_async("brightnessctl set 3%+", function()
-      awesome.emit_signal("signal::brightness::update")
+      awesome.emit_signal("signal::peripheral::brightness::update")
     end)
   end,
   { description = "|| increase brightness", group = "control" }),
 
   awful.key({ }, "XF86MonBrightnessDown", function()
     awful.spawn.easy_async("brightnessctl set 3%-", function()
-      awesome.emit_signal("signal::brightness::update")
+      awesome.emit_signal("signal::peripheral::brightness::update")
     end)
   end,
   { description = "|| decrease brightness", group = "control" }),
 
   awful.key({ }, "XF86AudioMute", function()
     awful.spawn.easy_async("pamixer -t", function()
-      awesome.emit_signal("signal::volume::update")
+      awesome.emit_signal("signal::peripheral::volume::update")
     end)
   end,
   { description = "|| toggle mute", group = "control" }),
 
   awful.key({ }, "XF86AudioLowerVolume", function()
     awful.spawn.easy_async("pamixer -d 1", function()
-      awesome.emit_signal("signal::volume::update")
+      awesome.emit_signal("signal::peripheral::volume::update")
     end)
   end,
   { description = "|| decrease volume", group = "control" }),
 
   awful.key({ }, "XF86AudioRaiseVolume", function()
     awful.spawn.easy_async("pamixer -i 1", function()
-      awesome.emit_signal("signal::volume::update")
+      awesome.emit_signal("signal::peripheral::volume::update")
     end)
   end,
   { description = "|| increase volume", group = "control" }),
@@ -196,7 +196,7 @@ awful.keyboard.append_global_keybindings({
   }),
 
   -- Misc
-  awful.key({ }, "Caps_Lock", function() awesome.emit_signal("signal::caps::update") end,
+  awful.key({ }, "Caps_Lock", function() awesome.emit_signal("signal::peripheral::caps::update") end,
   { description = "|| caps lock", group = "misc" }),
 
   -- Client
@@ -233,7 +233,7 @@ awful.keyboard.append_global_keybindings({
 -- Mouse keybinds
 --
 
-client.connect_signal( "request::default_mousebindings", function()
+client.connect_signal("request::default_mousebindings", function()
   awful.mouse.append_client_mousebindings({
     awful.button({ }, 1, function(c)
       c:activate({ context = "mouse_click" })
@@ -259,3 +259,4 @@ awful.keyboard.append_client_keybindings({
   awful.key({ }, "home-manager switch --flake ~/Documents/GitHub/lemonix/#lemon@silver", function() end,
   { description = "|| rebuild home-manager", group = "other" }),
 })
+

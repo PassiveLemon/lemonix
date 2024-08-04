@@ -7,17 +7,27 @@ local h = require("helpers")
 
 local dpi = b.xresources.apply_dpi
 
-local metadata = { }
-local playerctl_cmd = "playerctl " -- This doesn't change. It gets the metadata of the song and active player.
-local playerctl_cmder = "playerctl " -- This one does change. It is used to control playerctl and can be overridden.
+-- metadata = {
+--   (raw_stdout)
+--   media = { (art_url) (title) (artist) (album) (length) (art_image) }
+--   client = { (client_name) (shuffle) (status) (loop) (position) (volume) }
+-- }
+
+local metadata = {
+  raw_stdout = "",
+  media = { },
+  client = { }
+}
+local playerctl_cmd = "playerctl " -- This doesn't change. It gets the metadata of the song and active player
+local playerctl_cmder = "playerctl " -- This one does change. It is used to control playerctl and can be overridden
 
 local function emit()
   awesome.emit_signal("signal::playerctl::metadata", metadata)
 end
 
-if b.playerctl_players then
-  playerctl_cmd = "playerctl -p '" .. b.playerctl_players .. "' "
-  playerctl_cmder = "playerctl -p '" .. b.playerctl_players .. "' "
+if b.playerctl.players then
+  playerctl_cmd = "playerctl -p '" .. b.playerctl.players .. "' "
+  playerctl_cmder = "playerctl -p '" .. b.playerctl.players .. "' "
 end
 
 local function playerctl_players(override)
@@ -27,52 +37,53 @@ local function playerctl_players(override)
     else
       playerctl_cmder = "playerctl -p '" .. override .. "' "
     end
-  elseif b.playerctl_players then
-    playerctl_cmder = "playerctl -p '" .. b.playerctl_players .. "' "
+  elseif b.playerctl.players then
+    playerctl_cmder = "playerctl -p '" .. b.playerctl.players .. "' "
   end
 end
 
 local function art_image_locator(client_cache_dir, art_url_trim)
-  local art_cache_dir = b.playerctl_art_cache_dir
-  if not art_cache_dir then -- We set a fallback directory if user does not define one.
+  local art_cache_dir = b.playerctl.art_cache_dir
+  if not art_cache_dir then -- We set a fallback directory if user does not define one
     art_cache_dir = "/tmp/passivelemon/lemonix/media/"
   end
   if not client_cache_dir then
     if h.is_file(art_cache_dir .. art_url_trim) then
-      metadata.art_image = gears.surface.load_uncached(art_cache_dir .. art_url_trim)
-      emit()
+      metadata.media.art_image = gears.surface.load_uncached(art_cache_dir .. art_url_trim)
     else
-      awful.spawn.with_shell("curl -Lso " .. art_cache_dir .. art_url_trim .. ' "' .. metadata.art_url .. '"')
+      awful.spawn.with_shell("curl -Lso " .. art_cache_dir .. art_url_trim .. ' "' .. metadata.media.art_url .. '"')
     end
   else
     if h.is_file(client_cache_dir .. art_url_trim) then
-      metadata.art_image = gears.surface.load_uncached(client_cache_dir .. art_url_trim)
-      emit()
+      metadata.media.art_image = gears.surface.load_uncached(client_cache_dir .. art_url_trim)
     end
   end
 end
+
 local function art_image_fetch()
-  -- By means of the highest priority client, we define the art file name (trim) by grabbing a unique part of the url and a client cache directory if supported.
-  if metadata.player_name == "tauon" then
-    local art_url_trim = metadata.art_url:gsub(".*/", "")
+  -- By means of the highest priority client, we define the art file name (trim) by grabbing a unique part of the url and a client cache directory if supported
+  if metadata.client.player_name == "tauon" then
+    local art_url_trim = metadata.media.art_url:gsub(".*/", "")
     local client_cache_dir = os.getenv("HOME") .. "/.cache/TauonMusicBox/export/"
     art_image_locator(client_cache_dir, art_url_trim)
-  elseif metadata.player_name == "Feishin" then
-    local art_url_trim = metadata.art_url:match("?id=(.*)&u=")
+  elseif metadata.client.player_name == "Feishin" then
+    local art_url_trim = metadata.media.art_url:match("?id=(.*)&u=")
     art_image_locator(nil, art_url_trim)
-  elseif metadata.player_name == "spotify" then
-    local art_url_trim = metadata.art_url:gsub(".*/", "")
+  elseif metadata.client.player_name == "spotify" then
+    local art_url_trim = metadata.media.art_url:gsub(".*/", "")
     art_image_locator(nil, art_url_trim)
   end
 end
 
 local function track_notification()
-  naughty.notification({
-    icon = metadata.art_image,
-    icon_size = 100,
-    title = metadata.title,
-    message = "By " .. metadata.artist .. "\nOn " .. metadata.album,
-  })
+  if (b.playerctl.notifications) and (metadata.raw_stdout ~= "") then
+    naughty.notification({
+      icon = metadata.media.art_image,
+      icon_size = 100,
+      title = metadata.media.title,
+      message = "By " .. metadata.media.artist .. "\nOn " .. metadata.media.album,
+    })
+  end
 end
 
 local function metadata_fetch(position_zero)
@@ -82,33 +93,32 @@ local function metadata_fetch(position_zero)
       stdout = ""
     end
     -- Media metadata
-    metadata.art_url = stdout:match("artUrl_(.*)title_") or ""
-    metadata.title = stdout:match("title_(.*)artist_") or ""
-    metadata.artist = stdout:match("artist_(.*)album_") or ""
-    metadata.album = stdout:match("album_(.*)length_") or ""
-    metadata.length = stdout:match("length_(.*)playerName_") or ""
+    metadata.media.art_url = stdout:match("artUrl_(.*)title_") or ""
+    metadata.media.title = stdout:match("title_(.*)artist_") or ""
+    metadata.media.artist = stdout:match("artist_(.*)album_") or ""
+    metadata.media.album = stdout:match("album_(.*)length_") or ""
+    metadata.media.length = stdout:match("length_(.*)playerName_") or ""
     -- Client metadata
-    metadata.player_name = stdout:match("playerName_(.*)shuffle_") or ""
-    metadata.shuffle = stdout:match("shuffle_(.*)status_") or ""
-    metadata.status = stdout:match("status_(.*)loop_") or ""
-    metadata.loop = stdout:match("loop_(.*)position_") or ""
-    metadata.position = stdout:match("position_(.*)volume_") or ""
-    metadata.volume = stdout:match("volume_(.*)") or ""
+    metadata.client.player_name = stdout:match("playerName_(.*)shuffle_") or ""
+    metadata.client.shuffle = stdout:match("shuffle_(.*)status_") or ""
+    metadata.client.status = stdout:match("status_(.*)loop_") or ""
+    metadata.client.loop = stdout:match("loop_(.*)position_") or ""
+    metadata.client.position = stdout:match("position_(.*)volume_") or ""
+    metadata.client.volume = stdout:match("volume_(.*)") or ""
     -- Override
-    if position_zero then -- Just sets the position to the lowest value a 0-100 slider can actually show so it doesn't fallback to a nil value.
-      metadata.position = (metadata.length / 525)
+    if position_zero then -- Just sets the position to the lowest value a 0-100 slider can actually show so it doesn't fallback to a nil value
+      metadata.client.position = (metadata.media.length / 525)
     end
-    -- Only run art_image_fetch() if metadata has not been cached yet or the song has changed. Detected by comparing old and new stdouts for media metadata.
-    if not metadata.raw_stdout or metadata.raw_stdout:match("artUrl_(.*)shuffle_") ~= stdout:match("artUrl_(.*)shuffle_") then
-      metadata.raw_stdout = stdout
+    -- Fetch art image and send notification when the media metadata changes
+    if (metadata.raw_stdout:match("artUrl_(.*)playerName_") ~= stdout:match("artUrl_(.*)playerName_")) or (not metadata.raw_stdout) then
       art_image_fetch()
       track_notification()
-    else
-      metadata.raw_stdout = stdout
-      emit()
     end
+    metadata.raw_stdout = stdout
+    emit()
   end)
 end
+
 metadata_fetch(true)
 
 local playerctl_timer = gears.timer({
@@ -121,12 +131,12 @@ local playerctl_timer = gears.timer({
 
 local function shuffler()
   playerctl_timer:stop()
-  if metadata.shuffle == "true" then
+  if metadata.client.shuffle == "true" then
     awful.spawn.spawn(playerctl_cmder .. "shuffle off")
-    metadata.shuffle = "false"
-  elseif metadata.shuffle == "false" then
+    metadata.client.shuffle = "false"
+  elseif metadata.client.shuffle == "false" then
     awful.spawn.spawn(playerctl_cmder .. "shuffle on")
-    metadata.shuffle = "true"
+    metadata.client.shuffle = "true"
   end
   emit()
   playerctl_timer:start()
@@ -141,16 +151,17 @@ end
 
 local function toggler()
   playerctl_timer:stop()
-  if metadata.status == "Playing" then
+  if metadata.client.status == "Playing" then
     awful.spawn.spawn(playerctl_cmder .. "pause")
-    metadata.status = "Paused"
-  elseif metadata.status == "Paused" then
+    metadata.client.status = "Paused"
+  elseif metadata.client.status == "Paused" then
     awful.spawn.spawn(playerctl_cmder .. "play")
-    metadata.status = "Playing"
+    metadata.client.status = "Playing"
   end
   emit()
   playerctl_timer:start()
 end
+
 local function play_pauser(option)
   playerctl_timer:stop()
   awful.spawn.spawn(playerctl_cmder .. option)
@@ -166,15 +177,15 @@ end
 
 local function looper()
   playerctl_timer:stop()
-  if metadata.loop == "None" then
+  if metadata.client.loop == "None" then
     awful.spawn.spawn(playerctl_cmder .. "loop Playlist")
-    metadata.loop = "Playlist"
-  elseif metadata.loop == "Playlist" then
+    metadata.client.loop = "Playlist"
+  elseif metadata.client.loop == "Playlist" then
     awful.spawn.spawn(playerctl_cmder .. "loop Track")
-    metadata.loop = "Track"
-  elseif metadata.loop == "Track" then
+    metadata.client.loop = "Track"
+  elseif metadata.client.loop == "Track" then
     awful.spawn.spawn(playerctl_cmder .. "loop None")
-    metadata.loop = "None"
+    metadata.client.loop = "None"
   end
   emit()
   playerctl_timer:start()
@@ -182,7 +193,7 @@ end
 
 local function positioner(position_new)
   playerctl_timer:stop()
-  awful.spawn(playerctl_cmder .. "position " .. h.round(((position_new * metadata.length) / 100000000), 3))
+  awful.spawn(playerctl_cmder .. "position " .. h.round(((position_new * metadata.media.length) / 100000000), 3))
   playerctl_timer:start()
 end
 
@@ -240,3 +251,4 @@ awesome.connect_signal("signal::playerctl::volume", function(volume_new, player_
   playerctl_players(player_override)
   volumer(volume_new)
 end)
+

@@ -12,7 +12,9 @@ local dpi = b.xresources.apply_dpi
 -- Theme
 --
 
-local theme = { }
+local theme = {
+  playerctl = { }
+}
 
 -- Font
 function theme.sysfont(size)
@@ -93,8 +95,9 @@ theme.useless_gap = dpi(6)
 theme.margins = dpi(4)
 
 -- Media
-theme.playerctl_players = "tauon,spotify,Feishin"
-theme.playerctl_art_cache_dir = os.getenv("HOME") .. "/.cache/passivelemon/lemonix/media/"
+theme.playerctl.players = "tauon,spotify,Feishin"
+theme.playerctl.art_cache_dir = os.getenv("HOME") .. "/.cache/passivelemon/lemonix/media/"
+theme.playerctl.notifications = true
 
 --
 -- Wallpaper & icons

@@ -23,7 +23,8 @@ local brightness_timer = gears.timer({
   end,
 })
 
-awesome.connect_signal("signal::brightness::update", function()
+awesome.connect_signal("signal::peripheral::brightness::update", function()
   brightness()
   brightness_timer:again()
 end)
+

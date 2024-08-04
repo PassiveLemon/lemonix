@@ -170,13 +170,16 @@ local volume_slider = h.slider({
   bar_shape = gears.shape.rounded_rect,
 })
 
-local metadata = { }
+local metadata = {
+  media = { },
+  client = { }
+}
 
 local function art_image_updater()
   local image_dyn_height = ((title_text:get_children_by_id("background")[1].forced_height * 3) + (b.margins * 2))
   art_image_box:get_children_by_id("background")[1].forced_width = image_dyn_height
   art_image_box:get_children_by_id("background")[1].forced_height = image_dyn_height
-  art_image_box:get_children_by_id("imagebox")[1].image = metadata.art_image
+  art_image_box:get_children_by_id("imagebox")[1].image = metadata.media.art_image
   art_image_box.visible = true
   title_text:get_children_by_id("background")[1].forced_width = (dpi(532) - (b.margins * 2) - image_dyn_height)
   artist_text:get_children_by_id("background")[1].forced_width = title_text:get_children_by_id("textbox")[1].width
@@ -184,7 +187,7 @@ local function art_image_updater()
 end
 
 local function metadata_updater()
-  if metadata.title == "" then
+  if metadata.media.title == "" then
     art_image_box.visible = false
     artist_text.visible = false
     album_text.visible = false
@@ -193,66 +196,66 @@ local function metadata_updater()
     volume_slider.visible = false
     title_text:get_children_by_id("textbox")[1].text = "No media found"
   else
-    title_text:get_children_by_id("textbox")[1].text = metadata.title
-    if metadata.artist == "" then
+    title_text:get_children_by_id("textbox")[1].text = metadata.media.title
+    if metadata.media.artist == "" then
       artist_text.visible = false
     else
       artist_text.visible = true
-      artist_text:get_children_by_id("textbox")[1].text = "By " .. metadata.artist
+      artist_text:get_children_by_id("textbox")[1].text = "By " .. metadata.media.artist
     end
-    if metadata.album == "" then
+    if metadata.media.album == "" then
       album_text.visible = false
     else
       album_text.visible = true
-      album_text:get_children_by_id("textbox")[1].text = "On " .. metadata.album
+      album_text:get_children_by_id("textbox")[1].text = "On " .. metadata.media.album
     end
   end
 end
 
 local function shuffle_updater()
-  if metadata.shuffle == "true" then
+  if metadata.client.shuffle == "true" then
     shuffle_button:get_children_by_id("textbox")[1].text = "󰒝"
-  elseif metadata.shuffle == "false" then
+  elseif metadata.client.shuffle == "false" then
     shuffle_button:get_children_by_id("textbox")[1].text = "󰒞"
   end
 end
 
 local function toggle_updater()
-  if metadata.status == "Playing" then
+  if metadata.client.status == "Playing" then
     toggle_button:get_children_by_id("textbox")[1].text = "󰏤"
-  elseif metadata.status == "Paused" then
+  elseif metadata.client.status == "Paused" then
     toggle_button:get_children_by_id("textbox")[1].text = "󰐊"
   end
 end
 
 local function loop_updater()
-  if metadata.loop == "None" then
+  if metadata.client.loop == "None" then
     loop_button:get_children_by_id("textbox")[1].text = "󰑗"
-  elseif metadata.loop == "Playlist" then
+  elseif metadata.client.loop == "Playlist" then
     loop_button:get_children_by_id("textbox")[1].text = "󰑖"
-  elseif metadata.loop == "Track" then
+  elseif metadata.client.loop == "Track" then
     loop_button:get_children_by_id("textbox")[1].text = "󰑘"
   end
 end
 
 local function position_updater()
-  if (metadata.position == "") or (metadata.length == "") then
+  if (metadata.client.position == "") or (metadata.media.length == "") then
     position_slider.visible = false
   else
     position_slider.visible = true
-    position_slider:get_children_by_id("slider")[1]._private.value = h.round(((metadata.position / metadata.length) * 100), 3)
+    position_slider:get_children_by_id("slider")[1]._private.value = h.round(((metadata.client.position / metadata.media.length) * 100), 3)
     position_slider:emit_signal("widget::redraw_needed")
   end
 end
 
 local function volume_updater()
-  if metadata.volume == "" then
+  if metadata.client.volume == "" then
     volume_slider.visible = false
     volume_icon.visible = false
   else
     volume_slider.visible = true
     volume_icon.visible = true
-    volume_slider:get_children_by_id("slider")[1]._private.value = h.round((metadata.volume * 100), 3)
+    volume_slider:get_children_by_id("slider")[1]._private.value = h.round((metadata.client.volume * 100), 3)
     volume_slider:emit_signal("widget::redraw_needed")
   end
 end
@@ -310,9 +313,9 @@ local main = awful.popup({
 })
 
 shuffle_button:connect_signal("button::press", function()
-  if metadata.shuffle == "On" then
+  if metadata.client.shuffle == "On" then
     shuffle_button:get_children_by_id("textbox")[1].text = "󰒞"
-  elseif metadata.shuffle == "Off" then
+  elseif metadata.client.shuffle == "Off" then
     shuffle_button:get_children_by_id("textbox")[1].text = "󰒝"
   end
   awesome.emit_signal("signal::playerctl::shuffle")
@@ -323,9 +326,9 @@ prev_button:connect_signal("button::press", function()
 end)
 
 toggle_button:connect_signal("button::press", function()
-  if metadata.state == "Playing" then
+  if metadata.client.state == "Playing" then
     toggle_button:get_children_by_id("textbox")[1].text = "󰐊"
-  elseif metadata.state == "Paused" then
+  elseif metadata.client.state == "Paused" then
     toggle_button:get_children_by_id("textbox")[1].text = "󰏤"
   end
   awesome.emit_signal("signal::playerctl::toggle")
@@ -336,11 +339,11 @@ next_button:connect_signal("button::press", function()
 end)
 
 loop_button:connect_signal("button::press", function()
-  if metadata.loop == "None" then
+  if metadata.client.loop == "None" then
     loop_button:get_children_by_id("textbox")[1].text = "󰑖"
-  elseif metadata.loop == "Playlist" then
+  elseif metadata.client.loop == "Playlist" then
     loop_button:get_children_by_id("textbox")[1].text = "󰑘"
-  elseif metadata.loop == "Track" then
+  elseif metadata.client.loop == "Track" then
     loop_button:get_children_by_id("textbox")[1].text = "󰑗"
   end
   awesome.emit_signal("signal::playerctl::loop")

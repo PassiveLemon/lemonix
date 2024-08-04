@@ -23,7 +23,8 @@ local volume_timer = gears.timer({
   end,
 })
 
-awesome.connect_signal("signal::volume::update", function()
+awesome.connect_signal("signal::peripheral::volume::update", function()
   volume()
   volume_timer:again()
 end)
+

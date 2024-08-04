@@ -106,7 +106,7 @@ awful.screen.connect_for_each_screen(function(s)
     halign = "center",
     font = b.sysfont(dpi(14)),
   })
-  awesome.connect_signal("signal::caps::state", function(caps)
+  awesome.connect_signal("signal::peripheral::caps::state", function(caps)
     if caps == "on" then
       caps_lock.markup = "Caps lock"
     else
