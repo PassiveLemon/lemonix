@@ -160,3 +160,4 @@ function RootView:open_doc(doc)
     return view
   end
 end
+

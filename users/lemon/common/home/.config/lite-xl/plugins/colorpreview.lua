@@ -86,3 +86,4 @@ function DocView:draw_line_text(line, x, y)
   end
   return lh
 end
+

@@ -54,3 +54,4 @@ command.add("core.docview!", {
 keymap.add {
   ["ctrl+alt+k"] = "color-picker:open"
 }
+

@@ -12,7 +12,7 @@ These are my dotfiles for my NixOS system. This is configuration for the stuff I
   - Wacky little crosshairs for games
   - Playerctl and system resource signals
 - Tym terminal with Hilbish as the terminal shell.
-- Custom color theme for Discord, VSCode, and Obsidian. (GTK WIP)
+- Custom color theme for Discord, VSCode, Lite-XL, and Obsidian. (GTK WIP)
 - Volantes Cursors
 - Papirus Icons
 - Common configuration for a variety of programs.

@@ -40,7 +40,7 @@ config.plugins.treeview = {
 lintplus.load({"luacheck", "python", "shellcheck"})
 
 -- Open documents by default
-local default_path = "/home/lemon/Documents"
+local default_path = "/home/lemon/Documents/GitHub"
 if not core.switched_to_default_dir then
   core.switched_to_default_dir = true
   if core.project_dir ~= default_path then

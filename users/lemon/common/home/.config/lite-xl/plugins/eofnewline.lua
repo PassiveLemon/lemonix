@@ -1,4 +1,4 @@
--- mod-version:3
+-- mod-version:3 -- lite-xl 2.0
 local core = require "core"
 local command = require "core.command"
 local Doc = require "core.doc"
@@ -27,3 +27,4 @@ function Doc:save(...)
     eof_newline(self)
     save(self, ...)
 end
+

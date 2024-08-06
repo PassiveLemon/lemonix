@@ -119,3 +119,4 @@ keymap.add {
   ["ctrl+backspace"]       = "autoinsert:delete-to-previous-word-start",
   ["ctrl+shift+backspace"] = "autoinsert:delete-to-previous-word-start",
 }
+
