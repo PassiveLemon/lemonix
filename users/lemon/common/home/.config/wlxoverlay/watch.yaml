@@ -6,11 +6,13 @@ elements:
   # Background
   - type: Panel
     rect: [0, 0, 400, 170]
+    corner_radius: 4
     bg_color: "#222222"
 
   # Settings button
   - type: Button
     rect: [4, 130, 36, 36]
+    corner_radius: 4
     font_size: 16
     bg_color: "#cd61ec"
     fg_color: "#222222"
@@ -26,6 +28,7 @@ elements:
   # Keyboard button
   - type: Button
     rect: [44, 130, 60, 36]
+    corner_radius: 4
     font_size: 16
     bg_color: "#61b8ff"
     fg_color: "#222222"
@@ -60,6 +63,7 @@ elements:
   # Overlays
   - type: OverlayList
     rect: [106, 128, 292, 40]
+    corner_radius: 4
     font_size: 16
     bg_color: "#303030"
     fg_color: "#dcdcdc"
@@ -76,6 +80,7 @@ elements:
   # Local clock
   - type: Label
     rect: [4, 40, 200, 50]
+    corner_radius: 4
     font_size: 36
     fg_color: "#aaaaaa"
     source: Clock
@@ -84,20 +89,16 @@ elements:
   # Local date
   - type: Label
     rect: [4, 68, 200, 50]
+    corner_radius: 4
     font_size: 20
     fg_color: "#aaaaaa"
     source: Clock
     format: "%a %b %-d"
 
   # IPD
-  #- type: Label
-  #  rect: [4, 99, 200, 50]
-  #  font_size: 24
-  #  fg_color: "#93cb6b"
-  #  source: Timer
-  #  format: "%H:%M"
   - type: Label
     rect: [4, 99, 200, 50]
+    corner_radius: 4
     font_size: 24
     fg_color: "#93cb6b"
     source: Ipd
@@ -105,6 +106,7 @@ elements:
   # Batteries
   - type: BatteryList
     rect: [4, 106, 392, 30]
+    corner_radius: 4
     font_size: 16
     fg_color: "#aaaaaa"
     fg_color_low: "#f05d6b"
@@ -116,6 +118,7 @@ elements:
   # Uptime
   - type: Label
     rect: [266, 28, 200, 50]
+    corner_radius: 4
     font_size: 24
     fg_color: "#aaaaaa"
     source: Timer
@@ -124,6 +127,7 @@ elements:
   # CPU usage
   - type: Label
     rect: [285, 48, 200, 50]
+    corner_radius: 4
     font_size: 16
     fg_color: "#aaaaaa"
     source: Exec
@@ -133,8 +137,10 @@ elements:
   # GPU usage
   - type: Label
     rect: [285, 68, 200, 50]
+    corner_radius: 4
     font_size: 16
     fg_color: "#aaaaaa"
     source: Exec
     command: [ "bash", "-c", "nvidia-smi --query-gpu=utilization.gpu --format=csv,noheader,nounits | awk '{print \"GPU: \" $1\"%\"}'" ]
     interval: 2
+

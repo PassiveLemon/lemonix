@@ -8,10 +8,12 @@ elements:
   # Background
   - type: Panel
     rect: [0, 0, 600, 544]
+    corner_radius: 4
     bg_color: "#222222"
 
   - type: Label
     rect: [10, 35, 600, 70]
+    corner_radius: 4
     font_size: 22
     fg_color: "#aaaaaa"
     source: Static
@@ -19,6 +21,7 @@ elements:
 
   - type: Button
     rect: [200, 0, 80, 45]
+    corner_radius: 4
     font_size: 20
     bg_color: "#f05d6b"
     fg_color: "#222222"
@@ -31,6 +34,7 @@ elements:
 
   - type: Button
     rect: [440, 0, 40, 40]
+    corner_radius: 4
     font_size: 16
     bg_color: "#f05d6b"
     fg_color: "#222222"
@@ -42,12 +46,14 @@ elements:
 
   - type: Panel
     rect: [10, 53, 460, 2]
+    corner_radius: 4
     bg_color: "#aaaaaa"
 
   # Watch
 
   - type: Label
     rect: [10, 88, 570, 24]
+    corner_radius: 4
     font_size: 18
     fg_color: "#aaaaaa"
     source: Static
@@ -55,6 +61,7 @@ elements:
 
   - type: Button
     rect: [10, 100, 220, 35]
+    corner_radius: 4
     font_size: 16
     bg_color: "#353535"
     fg_color: "#dcdcdc"
@@ -65,6 +72,7 @@ elements:
 
   - type: Button
     rect: [10, 150, 220, 35]
+    corner_radius: 4
     font_size: 16
     bg_color: "#353535"
     fg_color: "#dcdcdc"
@@ -75,6 +83,7 @@ elements:
 
   - type: Button
     rect: [250, 100, 220, 35]
+    corner_radius: 4
     font_size: 16
     bg_color: "#353535"
     fg_color: "#dcdcdc"
@@ -93,6 +102,7 @@ elements:
 
   - type: Button
     rect: [250, 150, 220, 35]
+    corner_radius: 4
     font_size: 16
     bg_color: "#353535"
     fg_color: "#dcdcdc"
@@ -111,12 +121,14 @@ elements:
 
   - type: Panel
     rect: [10, 200, 460, 2]
+    corner_radius: 4
     bg_color: "#aaaaaa"
 
   # Behavior
 
   - type: Label
     rect: [10, 232, 570, 24]
+    corner_radius: 4
     font_size: 18
     fg_color: "#aaaaaa"
     source: Static
@@ -124,6 +136,7 @@ elements:
 
   - type: Button
     rect: [10, 245, 220, 35]
+    corner_radius: 4
     font_size: 16
     bg_color: "#353535"
     fg_color: "#dcdcdc"
@@ -134,6 +147,7 @@ elements:
 
   - type: Button
     rect: [10, 295, 220, 35]
+    corner_radius: 4
     font_size: 16
     bg_color: "#353535"
     fg_color: "#dcdcdc"
@@ -146,6 +160,7 @@ elements:
 
   - type: Label
     rect: [250, 232, 90, 24]
+    corner_radius: 4
     font_size: 18
     fg_color: "#aaaaaa"
     source: Static
@@ -153,6 +168,7 @@ elements:
 
   - type: Button
     rect: [250, 245, 220, 35]
+    corner_radius: 4
     font_size: 16
     bg_color: "#353535"
     fg_color: "#dcdcdc"
@@ -163,6 +179,7 @@ elements:
 
   - type: Button
     rect: [250, 295, 220, 35]
+    corner_radius: 4
     font_size: 16
     bg_color: "#353535"
     fg_color: "#dcdcdc"
@@ -173,12 +190,14 @@ elements:
 
   - type: Panel
     rect: [10, 345, 460, 2]
+    corner_radius: 4
     bg_color: "#aaaaaa"
 
   # Notifications
 
   - type: Label
     rect: [10, 378, 90, 24]
+    corner_radius: 4
     font_size: 18
     fg_color: "#aaaaaa"
     source: Static
@@ -186,6 +205,7 @@ elements:
 
   - type: Button
     rect: [10, 390, 220, 35]
+    corner_radius: 4
     font_size: 16
     bg_color: "#353535"
     fg_color: "#dcdcdc"
@@ -196,6 +216,7 @@ elements:
 
   - type: Button
     rect: [10, 440, 220, 35]
+    corner_radius: 4
     font_size: 16
     bg_color: "#353535"
     fg_color: "#dcdcdc"
@@ -208,6 +229,7 @@ elements:
 
   - type: Label
     rect: [250, 378, 90, 24]
+    corner_radius: 4
     font_size: 18
     fg_color: "#aaaaaa"
     source: Static
@@ -215,6 +237,7 @@ elements:
 
   - type: Button
     rect: [250, 390, 220, 35]
+    corner_radius: 4
     font_size: 16
     bg_color: "#353535"
     fg_color: "#dcdcdc"
@@ -227,6 +250,7 @@ elements:
 
   - type: Button
     rect: [250, 440, 220, 35]
+    corner_radius: 4
     font_size: 16
     bg_color: "#353535"
     fg_color: "#dcdcdc"
@@ -236,3 +260,4 @@ elements:
         action: PersistLayout
       - type: Toast
         message: Saved. You will see this layout on next startup.
+
