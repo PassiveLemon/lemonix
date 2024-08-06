@@ -1,9 +1,7 @@
 local awful = require("awful")
-local gears = require("gears")
 local b = require("beautiful")
 local ruled = require("ruled")
 
-local h = require("helpers")
 local lfs = require("lfs")
 
 local dpi = b.xresources.apply_dpi
@@ -30,9 +28,9 @@ ruled.client.connect_signal("request::rules", function()
   ruled.client.append_rule({
     id = "floating",
     rule_any = {
-      instance = { "feh", "loupe", "lxappearance", "authy desktop", "xarchiver", "kruler" },
-      class    = { "feh", "loupe", "Lxappearance", "Authy Desktop", "Xarchiver", "kruler" },
-      name     = { "Customize Look and Feel", "Twilio Authy", "KRuler", "Confirm File Replacing", "Copying files" },
+      instance = { "feh", "loupe", "lxappearance", "xarchiver", "kruler" },
+      class    = { "feh", "loupe", "Lxappearance", "Xarchiver", "kruler" },
+      name     = { "Customize Look and Feel", "KRuler", "Confirm File Replacing", "Copying files" },
       role     = { "pop-up", "GtkFileChooserDialog" },
     },
     properties = {
@@ -85,5 +83,6 @@ end)
 
 -- Enable sloppy focus, so that focus follows mouse.
 client.connect_signal("mouse::enter", function(c)
-  c:activate { context = "mouse_enter", raise = false }
+  c:activate({ context = "mouse_enter", raise = false })
 end)
+

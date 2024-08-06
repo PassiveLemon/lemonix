@@ -26,19 +26,20 @@ ruled.notification.connect_signal("request::rules", function()
 end)
 
 b.notification_margin = (b.margins * 2)
-b.notification_border_width = dpi(2)
+b.notification_border_width = b.border_width
 b.notification_border_color = b.border_color_active
-b.notification_max_height = b.notification_icon_size
 b.notification_icon_size = dpi(64)
+b.notification_max_height = b.notification_icon_size
+b.notification_spacing = dpi(4)
+
+naughty.config.padding = dpi(12)
 
 naughty.config.defaults.timeout = 3
 naughty.config.defaults.screen = awful.screen.focused()
 naughty.config.defaults.ontop = true
 naughty.config.defaults.margin = (b.margins * 2)
-naughty.config.defaults.border_width = dpi(2)
+naughty.config.defaults.border_width = b.border_width
 naughty.config.defaults.position = "bottom_right"
-
-naughty.config.padding = dpi(12)
 
 naughty.connect_signal("request::display", function(n)
   naughty.layout.box({
@@ -122,3 +123,4 @@ naughty.connect_signal("request::display_error", function(message, startup)
     message = message,
   })
 end)
+

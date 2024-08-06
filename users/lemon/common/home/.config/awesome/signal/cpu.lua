@@ -34,7 +34,7 @@ local function cpu()
     end
     awful.spawn.easy_async_with_shell("cat /sys/class/hwmon/" .. hwmon_list[1] .. "/temp1_input", function(temp)
       local temp = temp:gsub("\n", "")
-      temp_norm = h.round((temp / 1000), 1)
+      local temp_norm = h.round((temp / 1000), 1)
       emit(use, temp_norm)
     end)
     hwmon_list = { }
@@ -48,3 +48,4 @@ local cpu_timer = gears.timer({
     cpu()
   end,
 })
+

@@ -1,8 +1,6 @@
 local awful = require("awful")
 local gears = require("gears")
 
-local headset_cache = "N/A"
-
 local function emit(headset)
   awesome.emit_signal("signal::peripheral::headset", headset)
 end
@@ -21,3 +19,4 @@ local headset_timer = gears.timer({
     headset()
   end,
 })
+

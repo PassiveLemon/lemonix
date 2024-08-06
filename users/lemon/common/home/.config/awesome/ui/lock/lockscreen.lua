@@ -12,7 +12,7 @@ local dpi = b.xresources.apply_dpi
 --
 
 awful.spawn.with_shell("convert " .. b.wallpaper .. " -filter Gaussian -blur 0x6 -fill 222222c1 -colorize 50% " .. gears.filesystem.get_cache_dir() .. "lock.jpg")
-lockscreen_wallpaper = gears.filesystem.get_cache_dir() .. "lock.jpg"
+local lockscreen_wallpaper = gears.filesystem.get_cache_dir() .. "lock.jpg"
 
 if not h.is_file(lockscreen_wallpaper) then
   lockscreen_wallpaper = b.wallpaper
@@ -186,3 +186,4 @@ awful.screen.connect_for_each_screen(function(s)
     end
   end)
 end)
+

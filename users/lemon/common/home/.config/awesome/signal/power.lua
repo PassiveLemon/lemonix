@@ -1,4 +1,3 @@
-local awful = require("awful")
 local gears = require("gears")
 
 local lgi = require("lgi")
@@ -39,3 +38,4 @@ local power_timer = gears.timer({
     power()
   end,
 })
+

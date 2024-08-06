@@ -5,8 +5,6 @@ local naughty = require("naughty")
 
 local h = require("helpers")
 
-local dpi = b.xresources.apply_dpi
-
 -- metadata = {
 --   (raw_stdout)
 --   media = { (art_url) (title) (artist) (album) (length) (art_image) }
