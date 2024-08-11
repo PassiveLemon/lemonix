@@ -3,18 +3,18 @@
     firewall = {
       allowedTCPPorts = [
         53 # DNS
-        80 443 # Web traffic
+        #80 443 # Web traffic
         #2377 7946 # Docker socket & Swarm
       ];
-      allowedUDPPorts = [
-        #4789 7946 # Docker Swarm
-      ];
-      allowedTCPPortRanges = [
-        { from = 50000; to = 56000; } # Docker containers
-      ];
-      allowedUDPPortRanges = [
-        { from = 50000; to = 56000; } # Docker containers
-      ];
+      #allowedUDPPorts = [
+      #  #4789 7946 # Docker Swarm
+      #];
+      #allowedTCPPortRanges = [
+      #  #{ from = 50000; to = 56000; } # Docker containers
+      #];
+      #allowedUDPPortRanges = [
+      #  #{ from = 50000; to = 56000; } # Docker containers
+      #];
     };
   };
 
@@ -40,7 +40,6 @@
     docker = {
       enable = true;
       enableOnBoot = true;
-      enableNvidia = true;
       liveRestore = false;
       autoPrune = {
         enable = true;

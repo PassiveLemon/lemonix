@@ -2,17 +2,17 @@
   networking = {
     firewall = {
       allowedTCPPorts = [
-        53 # Pi-hole
-        80 443 # Web traffic
-        2377 4789 7946 # Docker socket & Swarm
-        9001 # Portainer
+        53 # DNS
+        #80 443 # Web traffic
+        #2377 4789 7946 # Docker socket & Swarm
+        #9001 # Portainer
       ];
-      allowedUDPPorts = [
-        4789 7946 # Docker Swarm
-      ];
-      allowedTCPPortRanges = [
-        { from = 40000; to = 44000; } # Docker containers
-      ];
+      #allowedUDPPorts = [
+      #  #4789 7946 # Docker Swarm
+      #];
+      #allowedTCPPortRanges = [
+      #  #{ from = 40000; to = 44000; } # Docker containers
+      #];
     };
   };
 

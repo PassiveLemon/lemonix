@@ -16,7 +16,8 @@
 
   networking = {
     hostName = "aluminum";
-    nameservers = [ "192.168.1.177" "1.1.1.1" "9.9.9.9" ];
+    enableIPv6 = false;
+    nameservers = [ "1.1.1.1" "9.9.9.9" ];
   };
 
   users = {
