@@ -8,6 +8,11 @@
     agenix.enable = true;
     lanzaboote.enable = true;
     bluetooth.enable = true;
+    gaming = {
+      enable = true;
+      desktop.enable = true;
+      vr.enable = true;
+    };
     ssh.enable = true;
     swap = {
       enable = true;
@@ -17,11 +22,6 @@
         memoryPercent = 25;
       };
     };
-    gaming = {
-      enable = true;
-      desktop.enable = true;
-      vr.enable = true;
-      streaming.enable = true;
-    };
   };
 }
+
