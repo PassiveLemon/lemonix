@@ -72,58 +72,51 @@ end)
 local strg_text = h.text({
   text = "Storage",
 })
-local strg_free_nvme0 = h.text({
+local strg_drives = h.text({
   halign = "left",
 })
-local strg_free_nvme1 = h.text({
-  halign = "left",
-})
-local strg_free_sda = h.text({
-  halign = "left",
-})
-local strg_free_sdb = h.text({
-  halign = "left",
-})
--- We normalize each value into gigabytes and round to the nearest integer. The values are in kilobytes already
-local function normalize_storage(value)
-  return h.round((value / 10^6), 0)
+
+local function normalize_data(value, place)
+  return h.round((value / 10^place), 0)
+end
+local function sort_table(t)
+  local a = { }
+  for k in pairs(t) do
+    table.insert(a, k)
+  end
+  table.sort(a)
+  return a
 end
 awesome.connect_signal("signal::resource::storage::data", function(storage_stats_dict)
-  local nvme0n1 = storage_stats_dict["nvme0n1"]
-  local nvme1n1 = storage_stats_dict["nvme1n1"]
-  local sda = storage_stats_dict["sda"]
-  local sdb = storage_stats_dict["sdb"]
-	strg_free_nvme0:get_children_by_id("textbox")[1].text = "NVME0: " .. normalize_storage(nvme0n1[3]) .. "/" .. normalize_storage(nvme0n1[2]) .. " GB " .. nvme0n1[5]
-  strg_free_nvme1:get_children_by_id("textbox")[1].text = "NVME1: " .. normalize_storage(nvme1n1[3]) .. "/" .. normalize_storage(nvme1n1[2]) .. " GB " .. nvme1n1[5]
-  strg_free_sda:get_children_by_id("textbox")[1].text = "SDA: " .. normalize_storage(sda[3]) .. "/" .. normalize_storage(sda[2]) .. " GB " .. sda[5]
-  strg_free_sdb:get_children_by_id("textbox")[1].text = "SDB: " .. normalize_storage(sdb[3]) .. "/" .. normalize_storage(sdb[2]) .. " GB " .. sdb[5]
+  local lined_text = ""
+  local sorted = sort_table(storage_stats_dict)
+  for _, v in pairs(sorted) do
+    lined_text = lined_text .. v .. ": " .. normalize_data(storage_stats_dict[v][3], 6) .. "/"
+    .. normalize_data(storage_stats_dict[v][2], 6) .. " GB " .. storage_stats_dict[v][5] .. "\n"
+  end
+  strg_drives:get_children_by_id("textbox")[1].text = lined_text:gsub("\n%C*$", "")
 end)
 
 local network_text = h.text({
   text = "Network",
 })
-local network_total = h.text({
+local network_adapters = h.text({
   halign = "left",
 })
--- We normalize each value into gigabytes and round to the nearest integer
-local function normalize_network(value)
-  return h.round((value / 10^9), 0)
-end
 awesome.connect_signal("signal::resource::network::data", function(network_stats_dict)
-  local enp7s0 = network_stats_dict["enp7s0"]
-	network_total:get_children_by_id("textbox")[1].text = "Dn/Up: " .. normalize_network(enp7s0[1]) .. "/" .. normalize_network(enp7s0[9]) .. " GB"
+  local lined_text = ""
+  local sorted = sort_table(network_stats_dict)
+  for _, v in pairs(sorted) do
+    lined_text = lined_text .. v .. ": " .. normalize_data(network_stats_dict[v][1], 9) .. "/"
+    .. normalize_data(network_stats_dict[v][9], 9) .. " GB\n"
+  end
+  network_adapters:get_children_by_id("textbox")[1].text = lined_text:gsub("\n%C*$", "")
 end)
 
 local uptime_text = h.text({
   text = "Uptime",
 })
 local uptime_time = h.text({
-  halign = "left",
-})
-local devices_text = h.text({
-  text = "Devices",
-})
-local headset_bat = h.text({
   halign = "left",
 })
 local function uptime(uptime_days, uptime_hours)
@@ -138,6 +131,13 @@ end
 awesome.connect_signal("signal::miscellaneous::uptime", function(uptime_days, uptime_hours)
 	uptime_time:get_children_by_id("textbox")[1].text = uptime(uptime_days, uptime_hours)
 end)
+
+local devices_text = h.text({
+  text = "Devices",
+})
+local headset_bat = h.text({
+  halign = "left",
+})
 awesome.connect_signal("signal::peripheral::headset", function(headset)
   if headset == "-2" then
     headset_bat:get_children_by_id("textbox")[1].text = "HS BAT: Not found"
@@ -202,10 +202,7 @@ local main = awful.popup({
         },
         space,
         strg_text,
-        strg_free_nvme0,
-        strg_free_nvme1,
-        strg_free_sda,
-        strg_free_sdb,
+        strg_drives,
       },
     },
     {
@@ -215,7 +212,7 @@ local main = awful.popup({
       {
         layout = wibox.layout.fixed.vertical,
         network_text,
-        network_total,
+        network_adapters,
         space,
         uptime_text,
         uptime_time,
@@ -233,3 +230,4 @@ awesome.connect_signal("ui::resource::toggle", function()
 end)
 
 click_to_hide.popup(main, nil, true)
+
