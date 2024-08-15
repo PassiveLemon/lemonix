@@ -72,6 +72,7 @@
         STOP_CHARGE_THRESH_BAT0 = 90;
       };
     };
+    tailscale.enable = true;
   };
 
   powerManagement = {
@@ -107,3 +108,4 @@
 
   system.stateVersion = "23.11";
 }
+

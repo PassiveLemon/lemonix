@@ -70,6 +70,7 @@
   };
 
   services = {
+    tailscale.enable = true;
     #create_ap = {
     #  enable = true;
     #  settings = {
