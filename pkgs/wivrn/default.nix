@@ -42,13 +42,13 @@
 }:
 stdenv.mkDerivation (finalAttrs: {
   pname = "wivrn";
-  version = "bc59c10b93ddf641bad2e2deda36f5608b9c2fb6";
+  version = "0.18";
 
   src = fetchFromGitHub {
     owner = "meumeu";
     repo = "wivrn";
-    rev = "${finalAttrs.version}";
-    hash = "sha256-YElkOTuFProTLCBK20kFlz+8B0jEU5HHJHLgC68uawI=";
+    rev = "v${finalAttrs.version}";
+    hash = "sha256-JFiDjx2iQfBDD1yRWHPx0UiIAqEk8+nzf967o/HXYqs=";
   };
 
   monado = applyPatches {
@@ -84,6 +84,7 @@ stdenv.mkDerivation (finalAttrs: {
   nativeBuildInputs = [
     cmake
     git
+    glslang
     pkg-config
     python3
   ] ++ lib.optionals cudaSupport [
@@ -98,7 +99,6 @@ stdenv.mkDerivation (finalAttrs: {
     ffmpeg
     freetype
     glm
-    glslang
     harfbuzz
     libdrm
     libGL

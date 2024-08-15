@@ -1,6 +1,6 @@
 { config, pkgs, lib, ... }:
 let
-  inherit (lib) mkAliasOptionModule mkIf mkEnableOption mkPackageOption mkOption mkDefault optional optionalString optionalAttrs isDerivation recursiveUpdate getExe literalExpression types maintainers;
+  inherit (lib) mkIf mkEnableOption mkPackageOption mkOption optionalString optionalAttrs isDerivation recursiveUpdate getExe literalExpression types maintainers;
   cfg = config.services.wivrn;
   configFormat = pkgs.formats.json { };
 
