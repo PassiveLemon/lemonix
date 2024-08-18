@@ -45,7 +45,7 @@ stdenv.mkDerivation (finalAttrs: {
   version = "0.18";
 
   src = fetchFromGitHub {
-    owner = "meumeu";
+    owner = "wivrn";
     repo = "wivrn";
     rev = "v${finalAttrs.version}";
     hash = "sha256-JFiDjx2iQfBDD1yRWHPx0UiIAqEk8+nzf967o/HXYqs=";
