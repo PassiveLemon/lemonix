@@ -1,42 +1,82 @@
 -- mod-version:3
 local syntax = require "core.syntax"
 
-syntax.add {
-  name = "Containerfile",
-  files = { "^Containerfile$", "^Dockerfile$", "%.[cC]ontainerfile$", "%.[dD]ockerfile$" },
-  comment = "#",
-  patterns = {
-    { pattern = "#.*\n", type = "comment" },
+local function merge_tables(a, b)
+  for _, v in pairs(b) do
+    table.insert(a, v)
+  end
+end
 
-    -- Functions
-    { pattern = { "%[", "%]" }, type = "string" },
-
-    -- Literals
-    { pattern = "%sas%s", type = "literal" },
-    { pattern = "--platform=", type = "literal" },
-    { pattern = "--chown=", type = "literal" },
-
-    -- Symbols
-    { pattern = "[%a_][%w_]*", type = "symbol" },
-  },
-  symbols = {
-    ["FROM"] = "keyword",
-    ["ARG"] = "keyword2",
-    ["ENV"] = "keyword2",
-    ["RUN"] = "keyword2",
-    ["ADD"] = "keyword2",
-    ["COPY"] = "keyword2",
-    ["WORKDIR"] = "keyword2",
-    ["USER"] = "keyword2",
-    ["LABEL"] = "keyword2",
-    ["EXPOSE"] = "keyword2",
-    ["VOLUME"] = "keyword2",
-    ["ONBUILD"] = "keyword2",
-    ["STOPSIGNAL"] = "keyword2",
-    ["HEALTHCHECK"] = "keyword2",
-    ["SHELL"] = "keyword2",
-    ["ENTRYPOINT"] = "function",
-    ["CMD"] = "function",
-  },
+local default_symbols = {
+  ["FROM"]    = "keyword",
+  ["AS"]      = "keyword",
+  ["ARG"]     = "keyword",
+  ["ENV"]     = "keyword",
+  ["RUN"]     = "keyword",
+  ["ADD"]     = "keyword",
+  ["COPY"]    = "keyword",
+  ["WORKDIR"] = "keyword",
+  ["USER"]    = "keyword",
+  ["LABEL"]   = "keyword",
+  ["EXPOSE"]  = "keyword",
+  ["VOLUME"]      = "keyword",
+  ["ONBUILD"]     = "keyword",
+  ["STOPSIGNAL"]  = "keyword",
+  ["HEALTHCHECK"] = "keyword",
+  ["SHELL"]       = "keyword",
+  ["ENTRYPOINT"]  = "keyword",
+  ["CMD"]         = "keyword",
 }
+
+local default_patterns = { }
+
+local string_interpolation = {
+  { pattern = { "%${", "}" }, type = "keyword2", syntax = {
+    patterns = default_patterns,
+    symbols = default_symbols,
+  }},
+  { pattern = "[%S][%w]*", type = "string" },
+}
+
+merge_tables(default_patterns, {
+  { pattern = "#.*", type = "comment" },
+
+  -- Interpolation
+  { pattern = { "%${", "}" }, type = "keyword2", syntax = {
+    patterns = default_patterns,
+    symbols = default_symbols,
+  }},
+  { pattern = { '"', '"', "\\" }, type = "string", syntax = {
+    patterns = string_interpolation,
+    symbols = { },
+  }},
+  { pattern = { "'", "'" }, type = "string", syntax = {
+    patterns = string_interpolation,
+    symbols = { },
+  }},
+
+  -- Symbols
+  { pattern = "=",  type = "normal" },
+  { pattern = "\\", type = "function" },
+
+  -- Other patterns
+  { -- Match FROM with a platform
+    pattern = "FROM%s*()--platform()=()[%S][%w]*()%s*.-%s*():",
+    type = { "keyword", "keyword2", "normal", "keyword2", "literal", "normal" },
+  },
+  { -- Match FROM
+    pattern = "FROM()%s*.-%s*():",
+    type = { "keyword", "literal", "normal" },
+  },
+  -- Everything else
+  { pattern = "[%S][%w]*", type = "keyword2" },
+})
+
+syntax.add({
+  name = "Containerfile",
+  files = { "Containerfile", "Dockerfile", "^Containerfile$", "^Dockerfile$", "%.[cC]ontainerfile$", "%.[dD]ockerfile$" },
+  comment = "#",
+  patterns = default_patterns,
+  symbols = default_symbols,
+})
 

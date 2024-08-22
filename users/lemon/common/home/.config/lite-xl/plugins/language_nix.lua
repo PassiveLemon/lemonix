@@ -28,7 +28,7 @@ local default_symbols = {
 local default_patterns = { }
 
 local string_interpolation = {
-  { pattern = {"%${", "}"}, type = "keyword", syntax = {
+  { pattern = { "%${", "}" }, type = "keyword", syntax = {
     patterns = default_patterns,
     symbols = default_symbols,
   }},
@@ -36,25 +36,28 @@ local string_interpolation = {
 }
 
 merge_tables(default_patterns, {
-  { pattern = "#.*",          type = "comment" },
-  { pattern = {"/%*", "%*/"}, type = "comment" },
-  { pattern = "-?%.?%d+",     type = "number"  },
+  -- Comments
+  { pattern = "#.*",            type = "comment" },
+  { pattern = { "/%*", "%*/" }, type = "comment" },
 
-  -- interpolation
-  { pattern = {"%${", "}"}, type = "keyword", syntax = {
+  -- Numeric
+  { pattern = "-?%.?%d+",       type = "number" },
+
+  -- Interpolation
+  { pattern = { "%${", "}" }, type = "keyword", syntax = {
     patterns = default_patterns,
     symbols = default_symbols,
   }},
-  { pattern = {'"', '"', '\\'}, type = "string", syntax = {
+  { pattern = { '"', '"', '\\' }, type = "string", syntax = {
     patterns = string_interpolation,
     symbols = { },
   }},
-  { pattern = {"''", "''"}, type = "string", syntax = {
+  { pattern = { "''", "''" }, type = "string", syntax = {
     patterns = string_interpolation,
     symbols = { },
   }},
 
-  -- operators
+  -- Operators
   { pattern = "[%+%-%?!>%*]", type = "normal" },
   { pattern = "/ ",           type = "normal" },
   { pattern = "< ",           type = "normal" },
@@ -67,26 +70,26 @@ merge_tables(default_patterns, {
   { pattern = ">=",           type = "normal" },
   { pattern = "<=",           type = "normal" },
 
-  -- paths
+  -- Paths
   { pattern = "%.?%.?/[^%s%[%]%(%){};,:]+", type = "string" },
   { pattern = "~/[^%s%[%]%(%){};,:]+",      type = "string" },
-  { pattern = {"<", ">"},                   type = "string" },
+  { pattern = { "<", ">" },                 type = "string" },
 
-  -- every other symbol
-  { -- match variables/attribute keys
-    --pattern = "%s*()%w+%g*()%s*()=()%s*",
+  -- Other patterns
+  { -- Match variables/attribute keys
     pattern = "%s*()[%w%-%_%.]*()%s*()=()%s*",
     type = { "normal", "literal", "normal", "normal", "normal" }
   },
-  {
+  { -- Match inherits with a namespace
     pattern = "inherit()%s*%(()%w+()%)()%s*.-%s*();",
-    type = { "keyword", "normal", "keyword2", "normal", "literal", "normal", },
+    type = { "keyword", "normal", "keyword2", "normal", "literal", "normal" },
   },
-  {
+  { -- Match inherits
     pattern = "inherit()%s*.-%s*();",
-    type = { "keyword", "literal", "normal", },
+    type = { "keyword", "literal", "normal" },
   },
-  { pattern = "%S+%s*[,:]",        type = "normal"   },
+  { pattern = "%S+%s*[,:]",        type = "normal" },
+  -- Everything else
   { pattern = "[%a%-%_][%w%-%_]*", type = "keyword2" },
 })
 
@@ -97,12 +100,12 @@ merge_tables(default_patterns, {
 
 -- Some way to represent repeated value.value, like ([%w].[%w])+
 
-syntax.add {
+syntax.add({
   name = "Nix",
-  files = {"%.nix$"},
+  files = { "%.nix$" },
   comment = "#",
-  block_comment = {"/*", "*/"},
+  block_comment = { "/*", "*/" },
   patterns = default_patterns,
   symbols = default_symbols,
-}
+})
 

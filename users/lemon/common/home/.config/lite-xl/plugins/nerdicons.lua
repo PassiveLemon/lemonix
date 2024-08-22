@@ -60,7 +60,6 @@ local map = nerdfonts_symbols.utf8
 local chevron_width = icon_font:get_width(map["oct-chevron_down"])
 local previous_scale = SCALE
 
-
 local extension_icons = {
   [".lua"]         = { "#42a5f5", "seti-lua"                 },
   [".md"]          = { "#42a5f5", "dev-markdown"             },
@@ -128,7 +127,6 @@ local extension_icons = {
   [".pem"]         = { "#f7ca39", "md-key"                   },
 }
 
-
 local known_filenames_icons = {
   [".gitignore"]           = { "#f05032", "seti-git"             },
   [".gitmodules"]          = { "#f05032", "seti-git"             },
@@ -136,14 +134,14 @@ local known_filenames_icons = {
   [".mailmap"]             = { "#f05032", "seti-git"             },
   [".editorconfig"]        = { "#fefefe", "seti-editorconfig"    },
   [".luacheckrc"]          = { "#42a5f5", "seti-lua"             },
-  ["readme.md"]            = { "#42a5f5", "md-information"       },
-  ["license"]              = { "#f05032", "md-certificate"       },
-  ["copying"]              = { "#f05032", "md-certificate"       },
+  ["README.md"]            = { "#42a5f5", "md-information"       },
+  ["LICENSE"]              = { "#f05032", "md-certificate"       },
+  ["COPYING"]              = { "#f05032", "md-certificate"       },
   ["PKGBUILD"]             = { "#6d8ccc", "md-package"           },
   ["makefile"]             = { "#f7ca39", "seti-makefile"        },
   ["cmakelists.txt"]       = { "#cc3e55", "md-triangle_outline"  },
-  ["manifest.in"]          = { "#3572A5", "md-language_python"   },
-  ["dockerfile"]           = { "#2496ef", "linux-docker"         },
+  ["MANIFEST.in"]          = { "#3572A5", "md-language_python"   },
+  ["Dockerfile"]           = { "#2496ef", "linux-docker"         },
   ["docker-compose.yml"]   = { "#2496ef", "linux-docker"         },
   ["docker-compose.yaml"]  = { "#2496ef", "linux-docker"         },
 }

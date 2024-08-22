@@ -4,45 +4,45 @@ local syntax = require "core.syntax"
 local yaml_bracket_list = {
   patterns = {
     -- comments
-    { pattern = { "#", "\n"},                  type = "comment"  },
+    { pattern = { "#", "\n"},       type = "comment" },
     -- strings
-    { pattern = { '"', '"', '\\' },            type = "string"   },
-    { pattern = { "'", "'", '\\' },            type = "string"   },
+    { pattern = { '"', '"', '\\' }, type = "string" },
+    { pattern = { "'", "'", '\\' }, type = "string" },
     -- keys
     {
       pattern = "[%w%d]+%g+()%s*():()%s",
       type = { "keyword2", "normal", "operator", "normal" }
     },
     -- variables
-    { pattern = "%$%a%w+",                     type = "keyword"  },
-    { pattern = "%$%{%{.-%}%}",                type = "keyword"  },
+    { pattern = "%$%a%w+",                     type = "keyword" },
+    { pattern = "%$%{%{.-%}%}",                type = "keyword" },
     -- numeric place holders
-    { pattern = "%-?%.inf",                    type = "number"   },
-    { pattern = "%.NaN",                       type = "number"   },
+    { pattern = "%-?%.inf",                    type = "number" },
+    { pattern = "%.NaN",                       type = "number" },
     -- numbers
-    { pattern = "[%+%-]?0%d+",                 type = "number"   },
-    { pattern = "[%+%-]?0x%x+",                type = "number"   },
-    { pattern = "[%+%-]?%d+[,%.eE:%+%d]*%d+",  type = "number"   },
-    { pattern = "[%+%-]?%d+",                  type = "number"   },
+    { pattern = "[%+%-]?0%d+",                 type = "number" },
+    { pattern = "[%+%-]?0x%x+",                type = "number" },
+    { pattern = "[%+%-]?%d+[,%.eE:%+%d]*%d+",  type = "number" },
+    { pattern = "[%+%-]?%d+",                  type = "number" },
     -- others
     { pattern = ",",                           type = "operator" },
-    { pattern = "%w+",                         type = "string"   },
+    { pattern = "%w+",                         type = "string" },
     {
       pattern = "[_%(%)%*@~`!%%%^&=%+%-\\;%.><%?/%s]+",
       type = "string"
-    }
+    },
   },
-  symbols = {}
+  symbols = { }
 }
 
-syntax.add {
+syntax.add({
   name = "YAML",
   files = { "%.yml$", "%.yaml$" },
   comment = "#",
   space_handling = false,
   patterns = {
-  --- rules that start with spaces first and those taking precedence
-    -- parent and child keys
+  --- Rules that start with spaces first and those taking precedence
+    -- Parent and child keys
     {
       pattern = "^[%w%d]+%g+%s*%f[:]",
       type = "keyword2"
@@ -51,7 +51,7 @@ syntax.add {
       pattern = "^%s+[%w%d]+%g+%s*%f[:]",
       type = "keyword2"
     },
-    -- bracket lists after key declaration
+    -- Bracket lists after key declaration
     {
       pattern = { ":%s+%[", "%]" },
       syntax = yaml_bracket_list, type = "operator"
@@ -60,17 +60,17 @@ syntax.add {
       pattern = { ":%s+{", "}" },
       syntax = yaml_bracket_list, type = "operator"
     },
-    -- child key
+    -- Child key
     {
       pattern = "^%s+()[%w%d]+%g+()%s*():()%s",
       type = { "normal", "keyword2", "normal", "operator", "normal" }
     },
-    -- child list element
+    -- Child list element
     {
       pattern = "^%s+()%-()%s+()[%w%d]+%g+()%s*():()%s",
       type = { "normal", "normal", "normal", "keyword2", "normal", "normal", "normal" }
     },
-    -- unkeyed bracket lists
+    -- Unkeyed bracket lists
     {
       pattern = { "^%s*%[", "%]" },
       syntax = yaml_bracket_list, type = "operator"
@@ -87,15 +87,15 @@ syntax.add {
       pattern = { "^%s*%-%s*{", "}" },
       syntax = yaml_bracket_list, type = "operator"
     },
-    -- rule to optimize space handling
-    { pattern = "%s+",                         type = "normal"   },
-  --- all the other rules
-    -- comments
-    { pattern = { "#", "\n"},                  type = "comment"  },
-    -- strings
-    { pattern = { '"', '"', '\\' },            type = "string"   },
-    { pattern = { "'", "'", '\\' },            type = "string"   },
-    -- extra bracket lists rules on explicit type
+    -- Rule to optimize space handling
+    { pattern = "%s+",              type = "normal" },
+  --- All the other rules
+    -- Comments
+    { pattern = { "#", "\n"},       type = "comment" },
+    -- Strings
+    { pattern = { '"', '"', '\\' }, type = "string" },
+    { pattern = { "'", "'", '\\' }, type = "string" },
+    -- Extra bracket lists rules on explicit type
     {
       pattern = { "!!%w+%s+%[", "%]"},
       syntax = yaml_bracket_list, type = "operator"
@@ -104,53 +104,55 @@ syntax.add {
       pattern = { "!!%w+%s+{", "}"},
       syntax = yaml_bracket_list, type = "operator"
     },
-    -- numeric place holders
-    { pattern = "%-?%.inf",                    type = "number"   },
-    { pattern = "%.NaN",                       type = "number"   },
-    -- parent list element
+    -- Numeric place holders
+    { pattern = "%-?%.inf", type = "number" },
+    { pattern = "%.NaN",    type = "number" },
+    -- Parent list element
     {
       pattern = "^%-()%s+()[%w%d]+%g+()%s*():()%s",
       type = { "operator", "normal", "keyword2", "normal", "operator", "normal" }
     },
-    -- key label
+    -- Key label
     {
       pattern = "%&()%g+",
       type = { "keyword", "literal" }
     },
-    -- key elements expansion
-    { pattern = "<<",                          type = "literal"  },
+    -- Key elements expansion
+    { pattern = "<<", type = "literal" },
     {
       pattern = "%*()[%w%d_]+",
       type = { "keyword", "literal" }
     },
-    -- explicit data types
-    { pattern = "!!%g+",                       type = "keyword"  },
-    -- parent key
+    -- Explicit data types
+    { pattern = "!!%g+", type = "keyword" },
+    -- Parent key
     {
       pattern = "^[%w%d]+%g+()%s*():()%s",
       type = { "literal", "normal", "operator", "normal" }
     },
-    -- variables
-    { pattern = "%$%a%w+",                     type = "keyword"  },
-    { pattern = "%$%{%{.-%}%}",                type = "keyword"  },
-    -- numbers
-    { pattern = "[%+%-]?0%d+",                 type = "number"   },
-    { pattern = "[%+%-]?0x%x+",                type = "number"   },
-    { pattern = "[%+%-]?%d+[,%.eE:%+%d]*%d+",  type = "number"   },
-    { pattern = "[%+%-]?%d+",                  type = "number"   },
-    -- special operators
-    { pattern = "[%*%|%!>%%]",                 type = "keyword"  },
-    { pattern = "[%-%$:%?]+",                  type = "normal"   },
+    -- Variables
+    { pattern = "%$%a%w+",                    type = "keyword" },
+    { pattern = "%$%{%{.-%}%}",               type = "keyword" },
+    -- Numbers
+    { pattern = "[%+%-]?0%d+",                type = "number" },
+    { pattern = "[%+%-]?0x%x+",               type = "number" },
+    { pattern = "[%+%-]?%d+[,%.eE:%+%d]*%d+", type = "number" },
+    { pattern = "[%+%-]?%d+",                 type = "number" },
+    -- Special operators
+    { pattern = "[%*%|%!>%%]",                type = "keyword" },
+    { pattern = "[%-%$:%?]+",                 type = "normal" },
     -- Everything else as a string
-    { pattern = "%d+%.?%d*[^%d%.]",            type = "string"   },
-    { pattern = "[%d%a_][%g_]*",               type = "string"   },
-    { pattern = "%p+",                         type = "string"   }
+    { pattern = "%d+%.?%d*[^%d%.]",           type = "string" },
+    { pattern = "[%d%a_][%g_]*",              type = "string" },
+    { pattern = "%p+",                        type = "string" },
   },
   symbols = {
+    ["True"]  = "number",
+    ["False"] = "number",
     ["true"]  = "number",
     ["false"] = "number",
     ["y"]     = "number",
-    ["n"]     = "number"
-  }
-}
+    ["n"]     = "number",
+  },
+})
 
