@@ -9,6 +9,7 @@
       headsetcontrol
       guitarix
       easytag onthespot
+      mangal
 
       inputs.lemonake.packages.${pkgs.system}.animdl
       inputs.lemonake.packages.${pkgs.system}.hd2pystratmacro

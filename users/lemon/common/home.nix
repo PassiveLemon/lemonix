@@ -8,7 +8,7 @@
       # Terminal
       tym hilbish eza bat thefuck trashy fd ripgrep pamixer playerctl imagemagick appimage-run ventoy-bin
       # Browsing
-      firefox freetube
+      firefox
       # Communication
       webcord-vencord vesktop srain teams-for-linux
       # File/storage management
@@ -23,7 +23,7 @@
       # Image/Video
       loupe mpv flameshot gimp feh libsForQt5.kdenlive scrot
       # Miscellaneous
-      libqalculate libsForQt5.kruler mullvad-vpn localsend xclicker
+      libqalculate libsForQt5.kruler localsend xclicker
     ];
     username = "lemon";
     homeDirectory = "/home/lemon";
