@@ -39,6 +39,7 @@
   virtualisation = {
     docker = {
       enable = true;
+      enableNvidia = true; # Keeping this enabled until they finally fix the deprecation
       enableOnBoot = true;
       liveRestore = false;
       autoPrune = {
@@ -66,7 +67,11 @@
       "Z /home/HDD2TBEXT4/Downloads/JDownloader 770 docker docker_management - -"
 
       "z /home/docker/Containers/Networking/Traefik/acme.json 600 docker docker_management - -"
-      #"Z /home/docker/Containers/Media/Invidious 777 docker docker_management - -"
+
+      "Z /home/docker/Containers/Media/Invidious/postgresdata 770 999 docker_management - -"
+      "Z /home/docker/Containers/Media/Kaizoku/db 770 70 docker_management - -"
+      "Z /home/BACKUPDRIVE/Docker/Containers/Media/BitMagnet 770 70 docker_management - -"
     ];
   };
 }
+
