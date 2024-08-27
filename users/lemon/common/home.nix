@@ -1,6 +1,7 @@
 { inputs, pkgs, config, lib, ... }: {
   imports = [
     ./modules/customization.nix
+    inputs.nixcord.homeManagerModules.nixcord
   ];
 
   home = {
@@ -10,7 +11,7 @@
       # Browsing
       firefox
       # Communication
-      webcord-vencord vesktop srain teams-for-linux
+      srain teams-for-linux
       # File/storage management
       pcmanfm ffmpegthumbnailer xarchiver filezilla gparted
       # Development
@@ -90,6 +91,58 @@
       enable = true;
       plugins = with pkgs.obs-studio-plugins; [ obs-pipewire-audio-capture ];
     };
+    nixcord = {
+      enable = true;
+      config = {
+        frameless = true;
+        disableMinSize = true;
+        themeLinks = [
+          "https://raw.githubusercontent.com/PassiveLemon/lemonix/master/users/lemon/common/home/.config/Vencord/themes/Lemon.theme.css"
+        ];
+        plugins = {
+          anonymiseFileNames = {
+            enable = true;
+            anonymiseByDefault = true;
+          };
+          betterRoleContext.enable = true;
+          clearURLs.enable = true;
+          crashHandler.enable = true;
+          fakeNitro.enable = true;
+          fixSpotifyEmbeds.enable = true;
+          fixYoutubeEmbeds.enable = true;
+          imageZoom = {
+            enable = true;
+            saveZoomValues = false;
+            size = 800.0;
+          };
+          messageClickActions = {
+            enable = true;
+            requireModifier = true;
+          };
+          messageLinkEmbeds.enable = true;
+          messageLogger = {
+            enable = true;
+            collapseDeleted = true;
+            ignoreBots = true;
+            ignoreSelf = true;
+          };
+          moreCommands.enable = true;
+          moreKaomoji.enable = true;
+          noReplyMention.enable = true;
+          normalizeMessageLinks.enable = true;
+          roleColorEverywhere.enable = true;
+          shikiCodeblocks = {
+            enable = true;
+            theme = "https://raw.githubusercontent.com/PassiveLemon/lemonix/master/users/lemon/common/home/.vscode/extensions/lemon-color-theme/themes/lemon-color-theme.json";
+          };
+          showConnections.enable = true;
+          validReply.enable = true;
+          viewIcons.enable = true;
+          voiceMessages.enable = true;
+          youtubeAdblock.enable = true;
+        };
+      };
+    };
   };
 
   xdg = {
@@ -136,17 +189,6 @@
       };
     };
     configFile."mimeapps.list".force = true;
-    desktopEntries = {
-      "Discord" = { # Alias Discord to Webcord with CSS theme. Theme is currently broken.
-        # Temporarily aliased to Vesktop until Webcord starts working again.
-        name = "Discord";
-        exec = "vesktop";
-        icon = "${pkgs.papirus-icon-theme}/share/icons/Papirus/64x64/apps/discord.svg";
-        terminal = false;
-        type = "Application";
-        categories = [ "Application" ];
-      };
-    };
   };
 
   nixpkgs = {

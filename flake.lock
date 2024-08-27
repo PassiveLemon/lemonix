@@ -518,6 +518,21 @@
         "type": "github"
       }
     },
+    "nixcord": {
+      "locked": {
+        "lastModified": 1724565972,
+        "narHash": "sha256-f+MKjI/+D3Ok3i943aChK6ty28JePsCXpiMtsfKV5lk=",
+        "owner": "kaylorben",
+        "repo": "nixcord",
+        "rev": "b07dadc8822890dd60b603c2b6451c6f38526e24",
+        "type": "github"
+      },
+      "original": {
+        "owner": "kaylorben",
+        "repo": "nixcord",
+        "type": "github"
+      }
+    },
     "nixos": {
       "locked": {
         "lastModified": 1721226092,
@@ -798,6 +813,7 @@
         "lite-xl-widget": "lite-xl-widget",
         "master": "master",
         "nix-gaming": "nix-gaming",
+        "nixcord": "nixcord",
         "nixos": "nixos",
         "nixos-hardware": "nixos-hardware",
         "nixos-old": "nixos-old",
