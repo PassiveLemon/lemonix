@@ -22,7 +22,7 @@
       # Audio
       pavucontrol easyeffects helvum tauon feishin audacity
       # Image/Video
-      loupe mpv flameshot gimp feh libsForQt5.kdenlive scrot
+      loupe mpv flameshot gimp feh libsForQt5.kdenlive scrot krita
       # Miscellaneous
       libqalculate libsForQt5.kruler localsend xclicker
     ];

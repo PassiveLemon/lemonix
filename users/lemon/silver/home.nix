@@ -19,10 +19,9 @@
       zed-editor
 
       # Development
-      jq
-      act
-      nvfetcher nixpkgs-review nixfmt-rfc-style
-      trivy snyk grype
+      act dive trivy
+      nixpkgs-review nixfmt-rfc-style
+      nvfetcher
     ];
     file = {
       ".config/autostart/hardware.sh" = {
