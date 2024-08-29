@@ -56,6 +56,12 @@
     nvidia-container-toolkit.enable = true;
   };
 
+  services = {
+    cron.systemCronJobs = [
+      "0 2 * * * root docker restart invidious"
+    ];
+  };
+
   systemd = {
     tmpfiles.rules = [
       "Z /home/docker 770 docker docker_management - -"
