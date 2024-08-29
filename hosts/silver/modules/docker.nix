@@ -75,7 +75,6 @@
       "z /home/docker/Containers/Networking/Traefik/acme.json 600 docker docker_management - -"
 
       "Z /home/docker/Containers/Media/Invidious/postgresdata 770 999 docker_management - -"
-      "Z /home/docker/Containers/Media/Kaizoku/db 770 70 docker_management - -"
       "Z /home/BACKUPDRIVE/Docker/Containers/Media/BitMagnet 770 70 docker_management - -"
     ];
   };
