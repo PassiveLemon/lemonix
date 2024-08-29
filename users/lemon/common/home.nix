@@ -122,12 +122,12 @@
           messageLinkEmbeds.enable = true;
           messageLogger = {
             enable = true;
-            collapseDeleted = true;
             ignoreBots = true;
             ignoreSelf = true;
           };
           moreCommands.enable = true;
           moreKaomoji.enable = true;
+          noBlockedMessages.enable = true;
           noReplyMention.enable = true;
           normalizeMessageLinks.enable = true;
           roleColorEverywhere.enable = true;
