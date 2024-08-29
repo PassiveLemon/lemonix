@@ -8,5 +8,7 @@
     udev.packages = with pkgs; [
       headsetcontrol
     ];
+    flatpak.enable = true;
   };
 }
+
