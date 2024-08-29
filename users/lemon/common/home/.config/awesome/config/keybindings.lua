@@ -89,6 +89,12 @@ awful.keyboard.append_global_keybindings({
   awful.key({ super }, "x", function() awesome.emit_signal("ui::resource::toggle") end,
   { description = "|| run resource monitor", group = "launcher" }),
 
+  awful.key({ super }, "l", function()
+    awesome.emit_signal('ui::lock::toggle')
+    awesome.emit_signal("signal::playerctl::pause", "%all%")
+  end,
+  { description = "|| lock display", group = "launcher" }),
+
   -- Control
   awful.key({ }, "XF86MonBrightnessUp", function()
     awful.spawn.easy_async("brightnessctl set 3%+", function()
