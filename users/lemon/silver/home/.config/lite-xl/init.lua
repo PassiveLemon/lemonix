@@ -10,11 +10,11 @@ core.reload_module("colors.lemon")
 style.font = renderer.font.load(USERDIR .. "/fonts/FiraCodeNerdFont-Retina.ttf", 14 * SCALE)
 style.code_font = renderer.font.load(USERDIR .. "/fonts/FiraCodeNerdFontMono-Retina.ttf", 14 * SCALE)
 
-keymap.add_direct {
+keymap.add_direct({
 	["ctrl+shift+r"] = "core:restart",
 	["ctrl+shift+space"] = "exterm:open-terminal",
 	["ctrl+shift+x"] = "open-file-location:open-file-location",
-}
+})
 
 config.fps = 144
 config.animation_rate = 1.0

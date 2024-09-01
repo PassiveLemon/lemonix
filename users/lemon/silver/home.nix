@@ -52,6 +52,9 @@
         source = ./home/.config/awesome/liblua_pam.so;
         recursive = true;
       };
+      ".config/lite-xl/init.lua" = {
+        source = ./home/.config/lite-xl/init.lua;
+      };
       ".local/bin/passivelemon" = {
         source = ./home/.local/bin/passivelemon;
         recursive = true;

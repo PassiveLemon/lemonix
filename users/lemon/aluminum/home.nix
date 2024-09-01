@@ -27,6 +27,9 @@
         source = ./home/.config/awesome/liblua_pam.so;
         recursive = true;
       };
+      ".config/lite-xl/init.lua" = {
+        source = ./home/.config/lite-xl/init.lua;
+      };
     };
     stateVersion = "23.11";
   };
