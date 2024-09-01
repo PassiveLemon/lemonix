@@ -61,6 +61,10 @@
       url = "github:evergreen-lxl/evergreen.lxl";
       flake = false;
     };
+    lite-xl-treeview-extender = {
+      url = "github:juliardi/lite-xl-treeview-extender";
+      flake = false;
+    };
 
     # Temp
     #niri = {

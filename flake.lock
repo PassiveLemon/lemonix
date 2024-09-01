@@ -466,6 +466,22 @@
         "type": "github"
       }
     },
+    "lite-xl-treeview-extender": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1703123728,
+        "narHash": "sha256-87tS3XRgXWYkiaAE13wazoFWezcX96DQp+8xKjBvgR4=",
+        "owner": "juliardi",
+        "repo": "lite-xl-treeview-extender",
+        "rev": "6163ffb90a8187c8ee1bd24a7da5b6145b06d2e8",
+        "type": "github"
+      },
+      "original": {
+        "owner": "juliardi",
+        "repo": "lite-xl-treeview-extender",
+        "type": "github"
+      }
+    },
     "lite-xl-widget": {
       "flake": false,
       "locked": {
@@ -810,6 +826,7 @@
         "lite-xl-evergreen": "lite-xl-evergreen",
         "lite-xl-lintplus": "lite-xl-lintplus",
         "lite-xl-plugins": "lite-xl-plugins",
+        "lite-xl-treeview-extender": "lite-xl-treeview-extender",
         "lite-xl-widget": "lite-xl-widget",
         "master": "master",
         "nix-gaming": "nix-gaming",
