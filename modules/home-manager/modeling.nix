@@ -16,7 +16,7 @@ in
     (mkIf cfg.design.enable {
       home.packages = with pkgs; [
         # Freecad has a build failure
-        master.freecad openscad blender
+        master.freecad openscad blender #kicad
       ];
 
       xdg.mimeApps.defaultApplications = {
@@ -30,3 +30,4 @@ in
     })
   ]);
 }
+
