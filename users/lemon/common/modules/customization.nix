@@ -1,8 +1,17 @@
 { inputs, pkgs, config, lib, ... }: {
-  home.packages = with pkgs; [
-    lxappearance
-    (nerdfonts.override { fonts = [ "FiraCode" "FiraMono" ]; })
-  ];
+  home = {
+    packages = with pkgs; [
+      lxappearance
+      (nerdfonts.override { fonts = [ "FiraCode" "FiraMono" ]; })
+    ];
+    pointerCursor = {
+      name = "volantes_cursors";
+      package = pkgs.volantes-cursors;
+      gtk.enable = true;
+      x11.enable = true;
+      size = lib.mkDefault 16;
+    };
+  };
 
   fonts = {
     fontconfig.enable = true;
@@ -28,9 +37,9 @@
       package = pkgs.papirus-icon-theme;
     };
     cursorTheme = {
-      name = "volantes_cursors";
-      package = pkgs.volantes-cursors;
-      size = 16;
+      name = config.home.pointerCursor.name;
+      package = config.home.pointerCursor.package;
+      size = config.home.pointerCursor.size;
     };
     font = {
       name = "Fira Sans Medium";
@@ -69,3 +78,4 @@
     extraPortals = with pkgs; [ xdg-desktop-portal-gtk ];
   };
 }
+

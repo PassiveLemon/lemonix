@@ -11,11 +11,9 @@
     file = {
       ".config/autostart/programs.sh" = {
         source = ./home/.config/autostart/programs.sh;
-        recursive = true;
       };
       ".config/awesome/signal/init.lua" = {
         source = ./home/.config/awesome/signal/init.lua;
-        recursive = true;
       };
       ".config/awesome/ui/init.lua" = {
         source = ./home/.config/awesome/ui/init.lua;
@@ -25,12 +23,12 @@
       };
       ".config/awesome/liblua_pam.so" = {
         source = ./home/.config/awesome/liblua_pam.so;
-        recursive = true;
       };
       ".config/lite-xl/init.lua" = {
         source = ./home/.config/lite-xl/init.lua;
       };
     };
+    pointerCursor.size = 32;
     stateVersion = "23.11";
   };
 
@@ -57,12 +55,9 @@
     };
   };
 
-  xsession = {
-    windowManager.awesome.noArgb = true;
-  };
-
   nixpkgs = {
     config.permittedInsecurePackages = [
     ];
   };
 }
+
