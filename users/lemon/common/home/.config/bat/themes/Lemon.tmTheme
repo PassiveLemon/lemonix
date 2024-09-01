@@ -2,6 +2,7 @@
 <!--
 	Red: #f05d6b
 	Green: #93cb6b
+	Orange: #f7aa60
 	Yellow: #eac56f
 	Blue: #61b8ff
 	Purple: #cd61ec
@@ -97,7 +98,7 @@
 			<key>settings</key>
 			<dict>
 				<key>foreground</key>
-				<string></string>
+				<string>#aaaaaa</string>
 			</dict>
 		</dict>
 		<dict>
@@ -108,7 +109,7 @@
 			<key>settings</key>
 			<dict>
 				<key>foreground</key>
-				<string></string>
+				<string>#aaaaaa</string>
 			</dict>
 		</dict>
 		<dict>
@@ -196,7 +197,7 @@
 			<key>settings</key>
 			<dict>
 				<key>foreground</key>
-				<string>#61b8ff</string>
+				<string>#53d2e0</string>
 			</dict>
 		</dict>
 		<dict>
@@ -218,7 +219,7 @@
 			<key>settings</key>
 			<dict>
 				<key>foreground</key>
-				<string>#eac56f</string>
+				<string>#f7aa60</string>
 			</dict>
 		</dict>
 		<dict>
@@ -229,7 +230,7 @@
 			<key>settings</key>
 			<dict>
 				<key>foreground</key>
-				<string>#eac56f</string>
+				<string>#f7aa60</string>
 			</dict>
 		</dict>
 		<dict>
@@ -240,7 +241,7 @@
 			<key>settings</key>
 			<dict>
 				<key>foreground</key>
-				<string>#eac56f</string>
+				<string>#f7aa60</string>
 			</dict>
 		</dict>
 		<dict>
@@ -251,7 +252,7 @@
 			<key>settings</key>
 			<dict>
 				<key>foreground</key>
-				<string>#eac56f</string>
+				<string>#f7aa60</string>
 			</dict>
 		</dict>
 		<dict>
@@ -273,7 +274,7 @@
 			<key>settings</key>
 			<dict>
 				<key>foreground</key>
-				<string>#eac56f</string>
+				<string>#f7aa60</string>
 			</dict>
 		</dict>
 		<dict>
@@ -284,7 +285,7 @@
 			<key>settings</key>
 			<dict>
 				<key>foreground</key>
-				<string>#eac56f</string>
+				<string>#aaaaaa</string>
 			</dict>
 		</dict>
 		<dict>
@@ -654,3 +655,4 @@
 	</array>
 </dict>
 </plist>
+
