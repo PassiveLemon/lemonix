@@ -27,6 +27,9 @@
         middleEmulation = false;
         accelProfile = "flat";
         naturalScrolling = true;
+        additionalOptions = ''
+          Option "ScrollPixelDistance" "50"
+        '';
       };
     };
     pipewire = {
