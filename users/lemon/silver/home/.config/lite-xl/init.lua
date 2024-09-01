@@ -13,6 +13,7 @@ style.code_font = renderer.font.load(USERDIR .. "/fonts/FiraCodeNerdFontMono-Ret
 keymap.add_direct({
 	["ctrl+shift+r"] = "core:restart",
 	["ctrl+shift+space"] = "exterm:open-terminal",
+	["ctrl+shift+t"] = "terminal:toggle-drawer",
 	["ctrl+shift+x"] = "open-file-location:open-file-location",
 })
 
@@ -27,7 +28,7 @@ config.ignore_files = {
 
 config.plugins.exterm = {
   executable = "tym",
-  keymap = nil,
+  keymap = "ctrl+shift+space",
 }
 
 config.plugins.treeview = {
