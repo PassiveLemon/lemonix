@@ -7,7 +7,7 @@
   home = {
     packages = with pkgs; [
       # Terminal
-      tym hilbish eza bat thefuck trashy fd ripgrep pamixer playerctl imagemagick appimage-run ventoy-bin
+      tym hilbish eza bat thefuck trashy fd ripgrep pamixer nix-output-monitor playerctl imagemagick appimage-run ventoy-bin jq
       # Browsing
       firefox
       # Communication
@@ -51,6 +51,10 @@
       };
       ".config/lite-xl/plugins/evergreen" = {
         source = inputs.lite-xl-evergreen;
+        recursive = true;
+      };
+      ".config/lite-xl/plugins/treeview-extender" = {
+        source = inputs.lite-xl-treeview-extender;
         recursive = true;
       };
       ".vscode/" = {
