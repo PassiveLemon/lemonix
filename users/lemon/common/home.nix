@@ -1,4 +1,4 @@
-{ inputs, pkgs, config, lib, ... }: {
+{ inputs, outputs, pkgs, config, lib, ... }: {
   imports = [
     ./modules/customization.nix
     inputs.nixcord.homeManagerModules.nixcord
@@ -200,6 +200,9 @@
       allowUnfree = true;
       allowUnfreePredicate = (_: true);
     };
+    overlays = [
+      outputs.overlays.packages
+    ];
   };
 
   news.display = "silent";

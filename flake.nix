@@ -28,10 +28,6 @@
       url = "github:moni-dz/nixpkgs-f2k";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-    nix-gaming = {
-      url = "github:fufexan/nix-gaming";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
     agenix = {
       url = "github:ryantm/agenix";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -75,42 +71,9 @@
 
   outputs = { self, ... } @ inputs:
   let
-    specialArgs = { inherit self inputs; };
+    inherit (self) outputs;
+    specialArgs = { inherit self inputs outputs; };
     extraSpecialArgs = specialArgs;
-    config = {
-      allowUnfree = true;
-    };
-    nixpkgs-overlays = ({ inputs, outputs, config, system, ... }: {
-      nixpkgs.overlays = [
-        (final: prev: {
-          # Overlay use of a package on a previous nixos-(stable) branch. Only used for packages that are broken or removed in newer branches.
-          old = import inputs.nixos-old {
-            system = final.system;
-            config = final.config;
-          };
-          # Overlay use of a package on the nixos-(stable) branch. Mainly used for the system part of the setup.
-          stable = import inputs.nixos {
-            system = final.system;
-            config = final.config;
-          };
-          # Overlay use of a package on the nixpkgs-unstable branch. Mainly used for the user part of the setup.
-          unstable = import inputs.nixpkgs {
-            system = final.system;
-            config = final.config;
-          };
-          # Overlay use of a package on the master branch. Only used for packages that are not yet in the unstable or stable branch.
-          master = import inputs.master {
-            system = final.system;
-            config = final.config;
-          };
-          # Overlay use of a broken package
-          broken = import inputs.nixpkgs {
-            system = final.system;
-            config = final.config // { allowBroken = true; };
-          };
-        })
-      ];
-    });
   in
   {
     nixosConfigurations = {
@@ -119,7 +82,6 @@
         inherit specialArgs;
         system = "x86_64-linux";
         modules = [
-          nixpkgs-overlays
           inputs.nixos-hardware.nixosModules.common-cpu-amd-pstate
           inputs.nixos-hardware.nixosModules.common-gpu-nvidia-nonprime
           inputs.nixos-hardware.nixosModules.common-pc-ssd
@@ -134,7 +96,6 @@
         inherit specialArgs;
         system = "x86_64-linux";
         modules = [
-          nixpkgs-overlays
           inputs.nixos-hardware.nixosModules.common-cpu-amd-pstate
           inputs.nixos-hardware.nixosModules.common-cpu-amd-raphael-igpu
           inputs.nixos-hardware.nixosModules.common-pc-laptop-ssd
@@ -151,7 +112,6 @@
       #  inherit specialArgs;
       #  system = "aarch64-linux";
       #  modules = [
-      #    nixpkgs-overlays
       #    inputs.nixos-hardware.nixosModules.common-pc-ssd
       #    inputs.nixos-hardware.nixosModules.raspberry-pi-4
       #    ./hosts/common/default.nix
@@ -166,7 +126,6 @@
         inherit extraSpecialArgs;
         pkgs = import inputs.nixpkgs { system = "x86_64-linux"; };
         modules = [
-          nixpkgs-overlays
           ./users/lemon/common/default.nix
           ./users/lemon/silver/default.nix
           ./users/lemon/silver/home.nix
@@ -176,13 +135,14 @@
         inherit extraSpecialArgs;
         pkgs = import inputs.nixpkgs { system = "x86_64-linux"; };
         modules = [
-          nixpkgs-overlays
           ./users/lemon/common/default.nix
           ./users/lemon/aluminum/default.nix
           ./users/lemon/aluminum/home.nix
         ];
       };
     };
+
+    overlays = import ./overlays { inherit inputs outputs; };
 
     nixConfig = {
       extra-substituters = [

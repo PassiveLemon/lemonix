@@ -1,4 +1,4 @@
-{ inputs, pkgs, config, lib, ... }: {
+{ inputs, outputs, pkgs, config, lib, ... }: {
   boot = {
     loader = {
       efi.canTouchEfiVariables = true;
@@ -102,5 +102,9 @@
       allowUnfree = true;
       allowUnfreePredicate = (_: true);
     };
+    overlays = [
+      outputs.overlays.packages
+    ];
   };
 }
+
