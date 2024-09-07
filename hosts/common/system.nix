@@ -67,7 +67,7 @@
     };
     # System likes to hang during expensive builds so we apply some limits
     slices."nix-daemon".sliceConfig = {
-      CPUQuuota = "80%";
+      CPUQuota = "80%";
       ManagedOOMMemoryPressure = "kill";
       ManagedOOMMemoryPressureLimit = "80%";
     };
