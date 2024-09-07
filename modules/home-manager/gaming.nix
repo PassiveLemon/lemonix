@@ -15,7 +15,6 @@ in
 
   imports = [
     inputs.lemonake.homeManagerModules.steamvr
-    inputs.lemonake.homeManagerModules.tmodloader-dotnetfix
   ];
 
   config = mkIf cfg.enable (mkMerge [
@@ -24,6 +23,7 @@ in
         protonup-ng protontricks
         gamemode dxvk
         r2modman
+        heroic
         lunar-client prismlauncher
         inputs.lemonake.packages.${pkgs.system}.gdlauncher-carbon-unstable
         bottles
@@ -44,16 +44,14 @@ in
         #(callPackage ../../pkgs/vr-video-player { })
       ];
 
-      services.steamvr = let
-        wivrn = pkgs.callPackage ../../pkgs/wivrn { };
-      in {
+      services.steamvr = {
         runtimeOverride = {
           enable = true;
           path = "${inputs.nixpkgs-xr.packages.${pkgs.system}.opencomposite}/lib/opencomposite";
         };
         activeRuntimeOverride = {
           enable = true;
-          path = "${wivrn}/share/openxr/1/openxr_wivrn.json";
+          path = "${inputs.lemonake.packages.${pkgs.system}.wivrn-git}/share/openxr/1/openxr_wivrn.json";
         };
       };
 
@@ -70,3 +68,4 @@ in
     })
   ]);
 }
+

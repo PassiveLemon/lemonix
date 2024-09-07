@@ -17,6 +17,8 @@
       # Development
       lite-xl vscode github-desktop imhex
       shellcheck luajitPackages.luacheck python312Packages.flake8
+      nixpkgs-review nixfmt-rfc-style
+      nvfetcher
       # Office
       obsidian onlyoffice-bin drawio
       # Audio

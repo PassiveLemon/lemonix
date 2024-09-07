@@ -7,21 +7,13 @@
   home = {
     packages = with pkgs; [
       headsetcontrol
-      guitarix
       easytag onthespot
-      #mangal
 
-      inputs.lemonake.packages.${pkgs.system}.animdl
+      act dive trivy
+
       inputs.lemonake.packages.${pkgs.system}.hd2pystratmacro
       inputs.lemonake.packages.${pkgs.system}.poepyautopot
       inputs.lemonake.packages.${pkgs.system}.tilp2
-
-      zed-editor
-
-      # Development
-      act dive trivy
-      nixpkgs-review nixfmt-rfc-style
-      nvfetcher
     ];
     file = {
       ".config/autostart/hardware.sh" = {

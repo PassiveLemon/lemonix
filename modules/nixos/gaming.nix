@@ -38,7 +38,7 @@ in
         };
         wivrn = {
           enable = true;
-          package = pkgs.callPackage ../../pkgs/wivrn { };
+          package = inputs.lemonake.packages.${pkgs.system}.wivrn-git;
           openFirewall = false;
           defaultRuntime = true;
           autoStart = true;
@@ -86,7 +86,7 @@ in
       };
 
       hardware.opengl.extraPackages = with pkgs; [
-        inputs.lemonake.packages.${pkgs.system}.monado-vulkan-layers
+        inputs.lemonake.packages.${pkgs.system}.monado-vulkan-layers-git
       ];
     })
     (mkIf cfg.streaming.enable {
