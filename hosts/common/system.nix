@@ -10,7 +10,7 @@
         configurationLimit = 50;
       };
       systemd-boot = {
-        consoleMode = "max";
+        consoleMode = "auto";
         configurationLimit = 50;
       };
     };
