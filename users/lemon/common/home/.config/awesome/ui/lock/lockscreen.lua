@@ -115,7 +115,7 @@ awful.spawn.easy_async_with_shell("convert " .. b.wallpaper .. " -filter Gaussia
       width = s.geometry.width,
       height = s.geometry.height,
       ontop = true,
-      visible = true,
+      visible = false,
       type = "desktop",
       widget = {
         layout = wibox.layout.stack,

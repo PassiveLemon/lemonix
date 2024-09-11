@@ -4,6 +4,7 @@ require("ui.lock.lockscreen")
 
 local awful = require("awful")
 
+local h = require("helpers")
 local pam = require("liblua_pam") -- Compile and link from https://github.com/RMTT/lua-pam/. `nix-shell -p cmake lua linux-pam`
 
 --
@@ -86,5 +87,10 @@ awesome.connect_signal("ui::lock::toggle", function()
   grab()
 end)
 
--- Lock by default
-awesome.emit_signal('ui::lock::toggle')
+-- Startup locking behavior
+if h.is_file(os.getenv("HOME") .. "/.cache/passivelemon/loginauth") then
+  os.remove(os.getenv("HOME") .. "/.cache/passivelemon/loginauth")
+else
+  awesome.emit_signal('ui::lock::toggle')
+end
+

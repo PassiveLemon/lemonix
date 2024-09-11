@@ -30,6 +30,9 @@
       ".config/lite-xl/init.lua" = {
         source = ./home/.config/lite-xl/init.lua;
       };
+      ".bash_profile" = {
+        source = ./home/.bash_profile;
+      };
     };
     pointerCursor.size = 32;
     stateVersion = "23.11";
