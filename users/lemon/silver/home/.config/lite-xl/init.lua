@@ -12,7 +12,7 @@ style.code_font = renderer.font.load(USERDIR .. "/fonts/FiraCodeNerdFontMono-Ret
 
 keymap.add_direct({
 	["ctrl+shift+r"] = "core:restart",
-	["ctrl+shift+c"] = "core:find-command",
+	-- ["ctrl+shift+c"] = "core:find-command",
 	["ctrl+shift+t"] = "terminal:toggle-drawer",
 	["ctrl+shift+x"] = "open-file-location:open-file-location",
 })
