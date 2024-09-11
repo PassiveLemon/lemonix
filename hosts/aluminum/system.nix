@@ -11,7 +11,18 @@
     };
     kernelPackages = pkgs.linuxKernel.packages.linux_zen;
     kernelModules = [ "iwlwifi" ];
-    kernelParams = [ "mem_sleep_default=deep" "nmi_watchdog=0" ];
+    kernelParams = [
+      "mem_sleep_default=deep"
+      "nmi_watchdog=0"
+      "quiet"
+      "splash"
+      #"vga=current"
+      "systemd.show_status=auto"
+      "rd.udev.log_level=3"
+    ];
+    plymouth.enable = true;
+    consoleLogLevel = 0;
+    initrd.verbose = false;
   };
 
   networking = {
@@ -76,22 +87,19 @@
   };
 
   powerManagement = {
-    powertop.enable = true;
+    powertop.enable = false;
   };
 
   systemd = {
-    services."wifi-reset" = {
+    services.wifi-reset = {
       description = "Fix WiFi after hibernation";
-      serviceConfig = {
-        Type = "oneshot";
-        ExecStart = pkgs.writeScript "wifireset.sh" ''
-          #!${pkgs.runtimeShell}
-          modprobe -r mt7921e
-          modprobe mt7921e
-        '';
-      };
-      wantedBy = [ "hibernate.target" ];
-      after = [ "hibernate.target" ];
+      serviceConfig.Type = "oneshot";
+      script = ''
+        modprobe -r mt7921e
+        modprobe mt7921e
+      '';
+      wantedBy = [ "post-resume.target" ];
+      after = [ "post-resume.target" ];
       path = [ pkgs.kmod ];
     };
   };
