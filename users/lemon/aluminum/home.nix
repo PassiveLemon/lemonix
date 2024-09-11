@@ -12,6 +12,9 @@
       ".config/autostart/programs.sh" = {
         source = ./home/.config/autostart/programs.sh;
       };
+      ".config/awesome/config/init.lua" = {
+        source = ./home/.config/awesome/config/init.lua;
+      };
       ".config/awesome/signal/init.lua" = {
         source = ./home/.config/awesome/signal/init.lua;
       };
