@@ -17,9 +17,9 @@ in
 
   imports = [
     ./gaming.nix
-    ./picom.nix
     ./modeling.nix
   ];
 
   config = { };
 }
+

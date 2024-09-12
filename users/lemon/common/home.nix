@@ -88,6 +88,10 @@
 
   services = {
     autorandr.enable = true;
+    picom = {
+      enable = true;
+      package = (pkgs.callPackage ../../../pkgs/picom { });
+    };
   };
 
   programs = {
