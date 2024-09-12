@@ -63,13 +63,20 @@ end)
 --
 
 -- Autostart files
-local autostart = os.getenv("HOME") .. "/.config/autostart/"
-for item in lfs.dir(autostart) do
+local autostartdir = os.getenv("HOME") .. "/.config/autostart/"
+for item in lfs.dir(autostartdir) do
   if item ~= "." and item ~= ".." then
-    awful.spawn.with_shell("sh " .. autostart .. item)
+    awful.spawn.with_shell("sh " .. autostartdir .. item)
   end
 end
 
+-- Cleanup serverauth files
+local homedir = os.getenv("HOME") .. "/"
+for item in lfs.dir(homedir) do
+  if item:match("%.serverauth%.%d+") then
+    awful.spawn.with_shell("rm " .. homedir .. item)
+  end
+end
 -- Layout
 tag.connect_signal("request::default_layouts", function()
   awful.layout.append_default_layouts({

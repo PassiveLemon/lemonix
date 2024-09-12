@@ -154,7 +154,7 @@ local main = awful.popup({
   border_color = b.border_color_active,
   ontop = true,
   visible = false,
-  type = "dock",
+  type = "popup_menu",
   widget = {
     layout = wibox.layout.align.horizontal,
     {

@@ -4,6 +4,8 @@ local b = require("beautiful")
 local wibox = require("wibox")
 local menubar_utils = require("menubar.utils")
 
+local h = require("helpers")
+
 b.init(gears.filesystem.get_configuration_dir() .. "config/theme.lua")
 
 local dpi = b.xresources.apply_dpi
@@ -112,6 +114,10 @@ client.connect_signal("property::class", function(c)
 end)
 
 theme.wallpaper = os.getenv("HOME") .. "/.wallpaper-image"
+if not h.is_file(os.getenv("HOME") .. "/.lockscreen-image") then
+  awful.spawn.with_shell("convert " .. theme.wallpaper .. " -filter Gaussian -blur 0x6 -fill 222222c1 -colorize 50% " .. gears.filesystem.get_cache_dir() .. ".lockscreen-image")
+end
+theme.lockscreen = os.getenv("HOME") .. "/.lockscreen-image"
 
 screen.connect_signal("request::wallpaper", function(s)
   awful.wallpaper({

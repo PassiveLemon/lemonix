@@ -15,6 +15,7 @@ local dpi = b.xresources.apply_dpi
 
 local app_launcher = bling.widget.app_launcher({
   terminal = "tym",
+  type = "popup",
   border_color = b.border_color_active,
   background = b.ui_main_bg,
 
