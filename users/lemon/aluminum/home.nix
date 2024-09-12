@@ -7,6 +7,7 @@
   home = {
     packages = with pkgs; [
       brightnessctl
+      fusuma
     ];
     file = {
       ".config/autostart/programs.sh" = {

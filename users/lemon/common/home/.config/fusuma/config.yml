@@ -1,0 +1,7 @@
+swipe:
+  4:
+    left:
+      command: "awesome-client 'require(\"awful\").tag.viewidx(1)'"
+    right:
+      command: "awesome-client 'require(\"awful\").tag.viewidx(-1)'"
+
