@@ -25,7 +25,7 @@ in
         r2modman
         heroic
         lunar-client prismlauncher
-        inputs.lemonake.packages.${pkgs.system}.gdlauncher-carbon-unstable
+        inputs.lemonake.packages.${pkgs.system}.gdlauncher-carbon
         bottles
         ludusavi
       ];
@@ -45,12 +45,27 @@ in
       ];
 
       services.steamvr = {
-        runtimeOverride = {
+        openvrRuntimeOverride = {
           enable = true;
-          path = "${inputs.nixpkgs-xr.packages.${pkgs.system}.opencomposite}/lib/opencomposite";
+          config = "json";
+          json = {
+            config = [
+              "${config.home.homeDirectory}/.local/share/Steam/config"
+            ];
+            external_drivers = [ ];
+            jsonid = "vrpathreg";
+            log = [
+              "${config.home.homeDirectory}/.local/share/Steam/logs"
+            ];
+            runtime = [
+              "${pkgs.opencomposite}/lib/opencomposite"
+            ];
+            version = 1;
+          };
         };
-        activeRuntimeOverride = {
+        openxrRuntimeOverride = {
           enable = true;
+          config = "path";
           path = "${inputs.lemonake.packages.${pkgs.system}.wivrn-git}/share/openxr/1/openxr_wivrn.json";
         };
       };
