@@ -72,7 +72,7 @@ stdenv.mkDerivation (finalAttrs: {
   postUnpack = ''
     # Let's make sure our monado source revision matches what is used by WiVRn upstream
     ourMonadoRev="${finalAttrs.monado.src.rev}"
-    theirMonadoRev=$(grep -A1 "https://gitlab.freedesktop.org/monado/monado" ${finalAttrs.src.name}/CMakeLists.txt | tail -n1 | sed 's/.*GIT_TAG\s*//')
+    theirMonadoRev=$(grep "GIT_TAG" ${finalAttrs.src.name}/CMakeLists.txt | awk '{print $2}')
     if [ ! "$theirMonadoRev" == "$ourMonadoRev" ]; then
       echo "Our Monado source revision doesn't match CMakeLists.txt." >&2
       echo "  theirs: $theirMonadoRev" >&2
