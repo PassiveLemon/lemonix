@@ -62,14 +62,6 @@ end)
 -- Other
 --
 
--- Autostart files
-local autostartdir = os.getenv("HOME") .. "/.config/autostart/"
-for item in lfs.dir(autostartdir) do
-  if item ~= "." and item ~= ".." then
-    awful.spawn.with_shell("sh " .. autostartdir .. item)
-  end
-end
-
 -- Cleanup serverauth files
 local homedir = os.getenv("HOME") .. "/"
 for item in lfs.dir(homedir) do
