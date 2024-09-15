@@ -1,4 +1,4 @@
-require("config.user)"
+require("config.user")
 require("config.theme")
 require("config.keybindings")
 require("config.notifications")
