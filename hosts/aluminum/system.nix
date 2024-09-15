@@ -93,14 +93,22 @@
   systemd = {
     services.wifi-reset = {
       description = "Fix WiFi after hibernation";
-      serviceConfig.Type = "oneshot";
+      serviceConfig = {
+        Type = "oneshot";
+        ExecStartPre = "/run/current-system/sw/bin/sleep 5";
+      };
       script = ''
-        modprobe -r mt7921e
-        modprobe mt7921e
+        systemctl restart NetworkManager
+
+        # nmcli radio wifi off
+        # nmcli radio wifi on
+        
+        # modprobe -r mt7921e
+        # modprobe mt7921e
       '';
       wantedBy = [ "post-resume.target" ];
       after = [ "post-resume.target" ];
-      path = [ pkgs.kmod ];
+      path = [ pkgs.systemd pkgs.networkmanager pkgs.kmod ];
     };
   };
 
