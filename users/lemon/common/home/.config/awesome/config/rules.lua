@@ -30,7 +30,7 @@ ruled.client.connect_signal("request::rules", function()
     rule_any = {
       instance = { "feh", "loupe", "lxappearance", "xarchiver", "kruler" },
       class    = { "feh", "loupe", "Lxappearance", "Xarchiver", "kruler" },
-      name     = { "Customize Look and Feel", "KRuler", "Confirm File Replacing", "Copying files" },
+      name     = { "Customize Look and Feel", "KRuler", "Confirm File Replacing", "Copying files", "Steam Settings", "Friends List" },
       role     = { "pop-up", "GtkFileChooserDialog" },
     },
     properties = {

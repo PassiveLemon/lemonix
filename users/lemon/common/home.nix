@@ -7,7 +7,7 @@
   home = {
     packages = with pkgs; [
       # Terminal
-      tym hilbish eza bat thefuck trashy fd ripgrep pamixer nix-output-monitor playerctl imagemagick appimage-run ventoy-bin jq
+      tym hilbish comma eza bat thefuck trashy fd ripgrep pamixer nix-output-monitor playerctl imagemagick appimage-run ventoy-bin jq
       # Browsing
       firefox
       # Communication

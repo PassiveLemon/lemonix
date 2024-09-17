@@ -5,6 +5,7 @@ local promptua = require('promptua')
 
 hilbish.opts.greeting = false
 hilbish.opts.motd = false
+hilbish.opts.tips = false
 
 promptua.setConfig({
   prompt = {
@@ -71,33 +72,10 @@ local function get_last_command()
   return hilbish.history.get(hilbish.history.size() - 1)
 end
 
-local function test_file(file, callback)
-  if type(file) ~= "string" then
-    return false
-  end
-  return os.rename(file, file) and true or false
-end
-
-local function shell_check()
-  if test_file("shell.nix") then
-    hilbish.run("nix-shell")
-  end
-end
-
-local function catch_register()
-  bait.catch("cd", shell_check)
-end
-
-local function catch_release()
-  bait.release("cd", shell_check)
-end
-
 local function run_and_return(dir, cmd)
-  catch_release() -- Needed to avoid shell checking when running the nix flake update (nfu) command
   hilbish.run("cd " .. dir)
   hilbish.run(cmd)
   hilbish.run("cd -")
-  catch_register()
 end
 
 hilbish.alias("ls", "eza -lg --group-directories-first") -- -F is current broken
@@ -108,6 +86,7 @@ hilbish.alias("rm", "trash")
 hilbish.alias("nrs", "sudo nixos-rebuild switch")
 hilbish.alias("hms", "home-manager switch --flake ~/Documents/GitHub/lemonix#" .. hilbish.user .. "@" .. hilbish.host)
 hilbish.alias("npr", "nixpkgs-review rev --print-result HEAD")
+hilbish.alias("comma", ",")
 
 commander.register("nfu", function()
 	run_and_return("/etc/nixos/", "nix flake update")
@@ -144,4 +123,4 @@ commander.register("nsp", function(args)
 end)
 
 promptua.init()
-catch_register()
+
