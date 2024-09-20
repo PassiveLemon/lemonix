@@ -16,7 +16,6 @@
       "nmi_watchdog=0"
       "quiet"
       "splash"
-      #"vga=current"
       "systemd.show_status=auto"
       "rd.udev.log_level=3"
     ];
@@ -79,15 +78,19 @@
         CPU_MIN_PERF_ON_BAT = 0;
         CPU_MAX_PERF_ON_BAT = 80;
 
+        CPU_BOOST_ON_AC = 1;
+        CPU_BOOST_ON_BAT = 0;
+
+        CPU_HWP_DYN_BOOST_ON_AC = 1;
+        CPU_HWP_DYN_BOOST_ON_BAT = 0;
+
         START_CHARGE_THRESH_BAT0 = 70;
         STOP_CHARGE_THRESH_BAT0 = 90;
+
+        DEVICES_TO_DISABLE_ON_STARTUP = "bluetooth";
       };
     };
     tailscale.enable = true;
-  };
-
-  powerManagement = {
-    powertop.enable = false;
   };
 
   systemd = {

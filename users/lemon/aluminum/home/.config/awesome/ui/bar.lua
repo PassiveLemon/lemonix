@@ -106,8 +106,8 @@ screen.connect_signal("request::desktop_decoration", function(s)
       bottom = dpi(2),
     },
     bg = b.bg2,
-    text = "",
-    font = b.sysfont(dpi(16)),
+    text = "󰁹",
+    font = b.sysfont(dpi(10)),
   })
   local battery_text = h.text({
     margins = {
@@ -128,6 +128,27 @@ screen.connect_signal("request::desktop_decoration", function(s)
   awesome.connect_signal("signal::power", function(ac, perc, time)
     battery_text:get_children_by_id("textbox")[1].text = perc .. "%"
     if not ac then
+      if perc > 90 then
+        battery_icon:get_children_by_id("textbox")[1].text = "󰁹"
+      elseif perc < 90 then
+        battery_icon:get_children_by_id("textbox")[1].text = "󰂂"
+      elseif perc < 80 then
+        battery_icon:get_children_by_id("textbox")[1].text = "󰂁"
+      elseif perc < 70 then
+        battery_icon:get_children_by_id("textbox")[1].text = "󰂀"
+      elseif perc < 60 then
+        battery_icon:get_children_by_id("textbox")[1].text = "󰁿"
+      elseif perc < 50 then
+        battery_icon:get_children_by_id("textbox")[1].text = "󰁾"
+      elseif perc < 40 then
+        battery_icon:get_children_by_id("textbox")[1].text = "󰁽"
+      elseif perc < 30 then
+        battery_icon:get_children_by_id("textbox")[1].text = "󰁼"
+      elseif perc < 20 then
+        battery_icon:get_children_by_id("textbox")[1].text = "󰁻"
+      elseif perc < 10 then
+        battery_icon:get_children_by_id("textbox")[1].text = "󰁺"
+      end
       battery_etr.visible = true
       local _etr = h.round((time / 3600), 1)
       if _etr > 1 then
@@ -135,12 +156,9 @@ screen.connect_signal("request::desktop_decoration", function(s)
       else
         battery_etr:get_children_by_id("textbox")[1].text = _etr .. " minutes"
       end
-    elseif ac and not (perc >= 99) then
-      battery_etr.visible = true
-      battery_etr:get_children_by_id("textbox")[1].text = "Charging"
-    elseif ac and (perc >= 99) then
+    else
+      battery_icon:get_children_by_id("textbox")[1].text = "󰂄"
       battery_etr.visible = false
-      battery_etr:get_children_by_id("textbox")[1].text = ""
     end
   end)
 
@@ -575,3 +593,4 @@ screen.connect_signal("request::desktop_decoration", function(s)
     awesome.emit_signal("ui::media::toggle")
   end)
 end)
+
