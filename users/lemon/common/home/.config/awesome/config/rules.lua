@@ -30,7 +30,7 @@ ruled.client.connect_signal("request::rules", function()
     rule_any = {
       instance = { "feh", "loupe", "lxappearance", "xarchiver", "kruler" },
       class    = { "feh", "loupe", "Lxappearance", "Xarchiver", "kruler" },
-      name     = { "Customize Look and Feel", "KRuler", "Confirm File Replacing", "Copying files", "Steam Settings", "Friends List" },
+      name     = { "Customize Look and Feel", "KRuler", "Confirm File Replacing", "Copying files", "Steam Settings", "Friends List", "Recordings & Screenshots" },
       role     = { "pop-up", "GtkFileChooserDialog" },
     },
     properties = {
@@ -69,6 +69,7 @@ for item in lfs.dir(homedir) do
     awful.spawn.with_shell("rm " .. homedir .. item)
   end
 end
+
 -- Layout
 tag.connect_signal("request::default_layouts", function()
   awful.layout.append_default_layouts({

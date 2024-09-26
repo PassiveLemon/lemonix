@@ -7,13 +7,15 @@
   home = {
     packages = with pkgs; [
       # Terminal
-      tym hilbish comma eza bat thefuck trashy fd ripgrep pamixer nix-output-monitor playerctl imagemagick appimage-run ventoy-bin jq
+      tym hilbish comma fend thefuck trashy pamixer playerctl caffeine-ng imagemagick appimage-run ventoy-bin
+      eza bat fd ripgrep jq nix-output-monitor
       # Browsing
       firefox
       # Communication
       srain teams-for-linux
       # File/storage management
-      pcmanfm ffmpegthumbnailer xarchiver filezilla gparted
+      pcmanfm xarchiver filezilla gparted
+      ffmpegthumbnailer
       # Development
       lite-xl vscode github-desktop imhex
       shellcheck luajitPackages.luacheck python312Packages.flake8
@@ -22,11 +24,14 @@
       # Office
       obsidian onlyoffice-bin drawio
       # Audio
-      pavucontrol easyeffects helvum tauon feishin audacity
+      pavucontrol easyeffects helvum tauon audacity
       # Image/Video
-      loupe mpv flameshot gimp feh libsForQt5.kdenlive scrot krita
+      loupe flameshot gimp scrot krita
+      mpv libsForQt5.kdenlive
       # Miscellaneous
-      libqalculate libsForQt5.kruler localsend xclicker
+      localsend xclicker libsForQt5.kruler
+      
+      inputs.lemonake.packages.${pkgs.system}.picom-tag
     ];
     username = "lemon";
     homeDirectory = "/home/lemon";
@@ -88,10 +93,6 @@
 
   services = {
     autorandr.enable = true;
-    picom = {
-      enable = true;
-      package = (pkgs.callPackage ../../../pkgs/picom { });
-    };
   };
 
   programs = {
@@ -160,6 +161,9 @@
     mimeApps = {
       enable = true;
       defaultApplications = {
+        "application/pdf" = "onlyoffice-desktopeditors.desktop";
+        "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" = "onlyoffice-desktopeditors.desktop";
+        "application/vnd.openxmlformats-officedocument.wordprocessingml.document" = "onlyoffice-desktopeditors.desktop";
         "application/x-extension-htm" = "firefox.desktop";
         "application/x-extension-html" = "firefox.desktop";
         "application/x-extension-shtml" = "firefox.desktop";

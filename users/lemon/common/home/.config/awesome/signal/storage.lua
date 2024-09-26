@@ -37,7 +37,7 @@ local function storage()
       end)
     end
   end
-  awful.spawn.easy_async_with_shell("sleep 5", function()
+  awful.spawn.easy_async("sleep 5", function()
     emit(storage_stats_dict)
   end)
 end
@@ -49,3 +49,4 @@ local storage_timer = gears.timer({
     storage()
   end,
 })
+

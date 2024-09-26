@@ -25,14 +25,14 @@ local function cpu()
     -- We iterate over each hwmon in /sys/class/hwmon, add certain ones to a list, and take the first element
     -- Sometimes hwmons can shift around so this will always at least get one of them, if any exist at all
     for hwmon in lfs.dir("/sys/class/hwmon/") do
-      awful.spawn.easy_async_with_shell("cat /sys/class/hwmon/" .. hwmon .. "/name", function(name)
+      awful.spawn.easy_async("cat /sys/class/hwmon/" .. hwmon .. "/name", function(name)
         local name = name:gsub("\n", "")
         if hwmon_names[name] then
           table.insert(hwmon_list, hwmon)
         end
       end)
     end
-    awful.spawn.easy_async_with_shell("cat /sys/class/hwmon/" .. hwmon_list[1] .. "/temp1_input", function(temp)
+    awful.spawn.easy_async("cat /sys/class/hwmon/" .. hwmon_list[1] .. "/temp1_input", function(temp)
       local temp = temp:gsub("\n", "")
       local temp_norm = h.round((temp / 1000), 1)
       emit(use, temp_norm)
