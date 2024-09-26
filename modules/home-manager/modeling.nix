@@ -15,12 +15,11 @@ in
   config = mkIf cfg.enable (mkMerge [
     (mkIf cfg.design.enable {
       home.packages = with pkgs; [
-        # Freecad has a build failure
-        master.freecad openscad blender #kicad
+        freecad openscad blender #kicad
       ];
 
       xdg.mimeApps.defaultApplications = {
-        "text/x-gcode" = "userapp-prusa-slicer-GEUUG2.desktop";
+        "text/x-gcode" = "PrusaGcodeviewer.desktop";
       };
     })
     (mkIf cfg.printing.enable {

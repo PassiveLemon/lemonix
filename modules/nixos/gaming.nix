@@ -33,7 +33,7 @@ in
           enable = true;
           command = ''
             adb reverse tcp:9757 tcp:9757
-            adb shell am start -a android.intent.action.VIEW -d "wivrn://localhost" org.meumeu.wivrn
+            adb shell am start -a android.intent.action.VIEW -d "wivrn+tcp://localhost" org.meumeu.wivrn
           '';
         };
         wivrn = {
@@ -66,7 +66,6 @@ in
                   height = 1.0;
                   offset_x = 0.0;
                   offset_y = 0.0;
-                  group = 0;
                 }
                 {
                   encoder = "nvenc";
@@ -75,11 +74,9 @@ in
                   height = 1.0;
                   offset_x = 0.5;
                   offset_y = 0.0;
-                  group = 0;
                 }
               ];
               application = inputs.nixpkgs-xr.packages.${pkgs.system}.wlx-overlay-s;
-              tcp_only = true;
             };
           };
         };
