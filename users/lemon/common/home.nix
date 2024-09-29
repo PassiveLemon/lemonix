@@ -8,7 +8,7 @@
     packages = with pkgs; [
       # Terminal
       tym hilbish comma fend thefuck trashy pamixer playerctl caffeine-ng imagemagick appimage-run ventoy-bin
-      eza bat fd ripgrep jq nix-output-monitor
+      eza bat fd ripgrep jq nh
       # Browsing
       firefox
       # Communication
