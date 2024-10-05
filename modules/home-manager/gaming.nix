@@ -58,7 +58,7 @@ in
               "${config.home.homeDirectory}/.local/share/Steam/logs"
             ];
             runtime = [
-              "${pkgs.opencomposite}/lib/opencomposite"
+              "${inputs.lemonake.packages.${pkgs.system}.opencomposite-git}/lib/opencomposite"
             ];
             version = 1;
           };
