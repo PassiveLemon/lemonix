@@ -6,49 +6,80 @@
 , applyPatches
 , autoAddDriverRunpath
 , avahi
+, bluez
 , boost
+, cjson
 , cli11
 , cmake
 , cudaPackages ? { }
 , cudaSupport ? config.cudaSupport
+, dbus
+# depthai
+, doxygen
 , eigen
+, elfutils
 , ffmpeg
 , freetype
 , git
+, glib
 , glm
 , glslang
+, gst_all_1
 , harfbuzz
-, libdrm
+, hidapi
+# leapsdk
+# leapv2
 , libGL
-, libva
-, libpulseaudio
 , libX11
 , libXrandr
+, libbsd
+, libdrm
+, libdwg
+, libjpeg
+, libmd
+, libpulseaudio
+#, librealsense
+, libsurvive
+, libunwind
+, libusb1
+, libuvc
+, libva
 , nix-update-script
 , nlohmann_json
 , onnxruntime
+, opencv4
+, openhmd
+, openvr
 , openxr-loader
+, orc
+# percetto
 , pipewire
 , pkg-config
 , python3
+, qtbase
+, qttools
+, SDL2
 , shaderc
 , spdlog
 , systemd
 , udev
 , vulkan-headers
 , vulkan-loader
-, vulkan-tools
+, wayland
+, wayland-protocols
+, wayland-scanner
+, wrapQtAppsHook
 , x264
 }:
 stdenv.mkDerivation (finalAttrs: {
   pname = "wivrn";
-  version = "0.18";
+  version = "6946d5144a8af5164622d45bb1bc100bf87f640e";
 
   src = fetchFromGitHub {
     owner = "wivrn";
     repo = "wivrn";
-    rev = "v${finalAttrs.version}";
-    hash = "sha256-JFiDjx2iQfBDD1yRWHPx0UiIAqEk8+nzf967o/HXYqs=";
+    rev = "${finalAttrs.version}";
+    hash = "sha256-GJOBUPtarTVRMHKjdw2igltX0EgIh+IXXfjMHl2DoJg=";
   };
 
   monado = applyPatches {
@@ -56,15 +87,17 @@ stdenv.mkDerivation (finalAttrs: {
       domain = "gitlab.freedesktop.org";
       owner = "monado";
       repo = "monado";
-      rev = "dfc602288ab05131584a3f2be18031a13fccd061";
-      hash = "sha256-4HZs3cgqOWWpXQb5kfG513f7+znO0hJvAbj2rxrqmeI=";
+      rev = "01806a3ffa62a2440da83d94e7a9297645d9d95a";
+      hash = "sha256-FDWBaT6QaeYZozWHK8c5+GBC+2qQyfUstM+ANt+8POU=";
     };
 
     patches = [
-      "${finalAttrs.src}/patches/monado/0001-c-multi-disable-dropping-of-old-frames.patch"
-      "${finalAttrs.src}/patches/monado/0002-ipc-server-Always-listen-to-stdin.patch"
-      "${finalAttrs.src}/patches/monado/0003-c-multi-Don-t-log-frame-time-diff.patch"
+      ./force-enable-steamvr_lh.patch
     ];
+
+    postPatch = ''
+      ${finalAttrs.src}/patches/apply.sh ${finalAttrs.src}/patches/monado
+    '';
   };
 
   strictDeps = true;
@@ -83,10 +116,13 @@ stdenv.mkDerivation (finalAttrs: {
 
   nativeBuildInputs = [
     cmake
+    doxygen
     git
+    glib
     glslang
     pkg-config
     python3
+    wrapQtAppsHook
   ] ++ lib.optionals cudaSupport [
     autoAddDriverRunpath
   ];
@@ -94,42 +130,69 @@ stdenv.mkDerivation (finalAttrs: {
   buildInputs = [
     avahi
     boost
+    bluez
+    cjson
     cli11
+    dbus
     eigen
+    elfutils
     ffmpeg
     freetype
+    glib
     glm
+    gst_all_1.gst-plugins-base
+    gst_all_1.gstreamer
     harfbuzz
+    hidapi
+    libbsd
     libdrm
+    libdwg
     libGL
+    libjpeg
+    libmd
+    #librealsense
+    libsurvive
+    libunwind
+    libusb1
+    libuvc
     libva
     libX11
     libXrandr
     libpulseaudio
     nlohmann_json
-    onnxruntime
+    opencv4
+    openhmd
+    openvr
     openxr-loader
+    onnxruntime
+    orc
     pipewire
+    qtbase
+    qttools
+    SDL2
     shaderc
     spdlog
     systemd
     udev
     vulkan-headers
     vulkan-loader
-    vulkan-tools
+    wayland
+    wayland-protocols
+    wayland-scanner
     x264
   ] ++ lib.optionals cudaSupport [
     cudaPackages.cudatoolkit
   ];
 
   cmakeFlags = [
+    (lib.cmakeBool "WIVRN_USE_NVENC" cudaSupport)
     (lib.cmakeBool "WIVRN_USE_VAAPI" true)
     (lib.cmakeBool "WIVRN_USE_X264" true)
-    (lib.cmakeBool "WIVRN_USE_NVENC" cudaSupport)
-    (lib.cmakeBool "WIVRN_USE_SYSTEMD" true)
     (lib.cmakeBool "WIVRN_USE_PIPEWIRE" true)
     (lib.cmakeBool "WIVRN_USE_PULSEAUDIO" true)
+    (lib.cmakeBool "WIVRN_USE_SYSTEMD" true)
     (lib.cmakeBool "WIVRN_BUILD_CLIENT" false)
+    (lib.cmakeBool "WIVRN_BUILD_DASHBOARD" true)
     (lib.cmakeBool "WIVRN_OPENXR_INSTALL_ABSOLUTE_RUNTIME_PATH" true)
     (lib.cmakeBool "FETCHCONTENT_FULLY_DISCONNECTED" true)
     (lib.cmakeFeature "FETCHCONTENT_SOURCE_DIR_MONADO" "${finalAttrs.monado}")
