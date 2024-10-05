@@ -61,12 +61,6 @@
       url = "github:juliardi/lite-xl-treeview-extender";
       flake = false;
     };
-
-    # Temp
-    #niri = {
-    #  url = "github:sodiboo/niri-flake";
-    #  inputs.nixpkgs.follows = "nixpkgs";
-    #};
   };
 
   outputs = { self, ... } @ inputs:
@@ -148,12 +142,10 @@
       extra-substituters = [
         "https://nix-community.cachix.org"
         "https://passivelemon.cachix.org"
-        #"https://niri.cachix.org"
       ];
       extra-trusted-public-keys = [
         "nix-community.cachix.org-1:mB9FSh9qf2dCimDSUo8Zy7bkq5CX+/rkCWyvRCYg3Fs="
         "passivelemon.cachix.org-1:ScYjLCvvLi70S95SMMr8lMilpZHuafLP3CK/nZ9AaXM="
-        #"niri.cachix.org-1:Wv0OmO7PsuocRKzfDoJ3mulSl7Z6oezYhGhR+3W2964="
       ];
     };
   };
