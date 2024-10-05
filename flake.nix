@@ -155,7 +155,6 @@
         "passivelemon.cachix.org-1:ScYjLCvvLi70S95SMMr8lMilpZHuafLP3CK/nZ9AaXM="
         #"niri.cachix.org-1:Wv0OmO7PsuocRKzfDoJ3mulSl7Z6oezYhGhR+3W2964="
       ];
-      extra-experimental-features = [ "nix-command" "flakes" ];
     };
   };
 }
