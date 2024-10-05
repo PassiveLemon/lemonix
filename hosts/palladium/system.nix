@@ -107,13 +107,6 @@
     enableRedistributableFirmware = true;
   };
 
-  nix = {
-    settings = {
-      cores = 3;
-      max-jobs = 1;
-    };
-  };
-
   # Drives
   # 32 GB SD (Root)
 
@@ -128,3 +121,4 @@
 
   system.stateVersion = "23.05";
 }
+

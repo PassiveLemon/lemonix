@@ -115,13 +115,6 @@
     };
   };
 
-  nix = {
-    settings = {
-      cores = 8;
-      max-jobs = 1;
-    };
-  };
-
   # Drives
   # 1 TB Crucial (Root)
 

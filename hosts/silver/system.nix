@@ -102,13 +102,6 @@
     };
   };
 
-  nix = {
-    settings = {
-      cores = 4;
-      max-jobs = 2;
-    };
-  };
-
   nixpkgs = {
     config.cudaSupport = true;
   };

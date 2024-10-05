@@ -22,7 +22,7 @@ in
         enable = mkEnableOption "zram swap";
         memoryPercent = mkOption {
           type = types.int;
-          description = "The percent of RAM to use as zram swap.";
+          description = "The percent of system memory to use as zram swap.";
           default = 25;
         };
       };
@@ -31,12 +31,12 @@ in
 
   config = {
     warnings = mkIf ((cfg.swap.device == "/var/lib/swapfile") && cfg.system.hibernation.enable) [
-      "Hibernation may not work with a swap file, specify a swap partition with config.lemonix.swap.device instead."
+      "lemonix: Hibernation may not work with a swap file, specify a swap partition with config.lemonix.swap.device instead."
     ];
     assertions = [
       {
         assertion = !(cfg.swap.zram.enable && cfg.system.hibernation.enable);
-        message = "Zram swap cannot be used with hibernation.";
+        message = "lemonix: Zram swap cannot be used with hibernation.";
       }
     ];
 
@@ -58,3 +58,4 @@ in
     };
   };
 }
+
