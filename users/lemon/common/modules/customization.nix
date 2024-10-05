@@ -2,6 +2,7 @@
   home = {
     packages = with pkgs; [
       lxappearance
+      shared-mime-info
       (nerdfonts.override { fonts = [ "FiraCode" "FiraMono" ]; })
     ];
     pointerCursor = {
@@ -20,6 +21,9 @@
   dconf = {
     enable = true;
     settings = {
+      "org/gtk/settings/file-chooser" = {
+        sort-directories-first = true;
+      };
       "org/gnome/desktop/interface" = {
         color-scheme = "prefer-dark";
       };
@@ -70,6 +74,7 @@
   qt = {
     enable = true;
     platformTheme.name = "gtk3";
+    style.name = "gtk2";
   };
 
   xdg.portal = {
