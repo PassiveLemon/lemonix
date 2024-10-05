@@ -78,7 +78,7 @@ local function run_and_return(dir, cmd)
   hilbish.run("cd -")
 end
 
-hilbish.alias("ls", "eza -lg --group-directories-first") -- -F is current broken
+hilbish.alias("ls", "eza -lgF --group-directories-first")
 hilbish.alias("cat", "bat --theme=Lemon")
 hilbish.alias("tp", "trash put")
 hilbish.alias("tr", "trash restore")
