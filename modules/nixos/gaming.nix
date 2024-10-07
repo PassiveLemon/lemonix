@@ -36,9 +36,12 @@ in
             adb shell am start -a android.intent.action.VIEW -d "wivrn+tcp://localhost" org.meumeu.wivrn
           '';
         };
-        wivrn = {
+        wivrn = let
+          # Overriden until I somehow fix the cudaSupport stuff
+          wivrnPackage = inputs.lemonake.packages.${pkgs.system}.wivrn-git.override { cudaSupport = true; };
+        in {
           enable = true;
-          package = inputs.lemonake.packages.${pkgs.system}.wivrn-git;
+          package = wivrnPackage;
           openFirewall = false;
           defaultRuntime = true;
           autoStart = true;
@@ -49,14 +52,22 @@ in
             PROBER_LOG = "warning";
           };
           extraPackages = [
-            pkgs.linuxKernel.packages.linux_zen.nvidia_x11
+            # Commented out until they fix the build
+            # pkgs.linuxKernel.packages.linux_zen.nvidia_x11
+            (config.boot.kernelPackages.nvidiaPackages.mkDriver {
+              version = "555.58.02";
+              sha256_64bit = "sha256-xctt4TPRlOJ6r5S54h5W6PT6/3Zy2R4ASNFPu8TSHKM=";
+              sha256_aarch64 = "sha256-wb20isMrRg8PeQBU96lWJzBMkjfySAUaqt4EgZnhyF8=";
+              openSha256 = "sha256-8hyRiGB+m2hL3c9MDA/Pon+Xl6E788MZ50WrrAGUVuY=";
+              settingsSha256 = "sha256-ZpuVZybW6CFN/gz9rx+UJvQ715FZnAOYfHn5jt5Z2C8=";
+              persistencedSha256 = "sha256-a1D7ZZmcKFWfPjjH1REqPM5j/YLWKnbkP9qfRyIyxAw=";
+            })
             pkgs.procps
             pkgs.bash
           ];
           config = {
             enable = true;
             json = {
-              scale = 0.5;
               bitrate = 100000000;
               encoders = [
                 {

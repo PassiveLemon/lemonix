@@ -44,7 +44,7 @@ in
         #(callPackage ../../pkgs/vr-video-player { })
       ];
 
-      services.steamvr = {
+      programs.steamvr = {
         openvrRuntimeOverride = {
           enable = true;
           config = "json";
@@ -63,10 +63,13 @@ in
             version = 1;
           };
         };
-        openxrRuntimeOverride = {
+        openxrRuntimeOverride = let
+          # Overriden until I somehow fix the cudaSupport stuff
+          wivrnPackage = inputs.lemonake.packages.${pkgs.system}.wivrn-git.override { cudaSupport = true; };
+        in {
           enable = true;
           config = "path";
-          path = "${inputs.lemonake.packages.${pkgs.system}.wivrn-git}/share/openxr/1/openxr_wivrn.json";
+          path = "${wivrnPackage}/share/openxr/1/openxr_wivrn.json";
         };
       };
 
