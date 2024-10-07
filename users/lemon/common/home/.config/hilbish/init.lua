@@ -85,20 +85,20 @@ hilbish.alias("npr", "nixpkgs-review rev --print-result HEAD")
 hilbish.alias("comma", ",")
 
 commander.register("nb", function(args)
-  if #args > 1 then
-    hilbish.run("echo 'Too many arguments: nb (installable)'")
-    return 1
-  end
   if (args[1] == "--help") or (args[1] == "-h") then
     hilbish.run("nix build --help")
     return 0
   end
 
   args_str = ""
-  if string.find(tostring(args[1]), "#") then
-    args_str = tostring(args[1])
-  else
-    args_str = ".#" .. tostring((args[1] or ""))
+  if #args > 0 then
+    for k, _ in pairs(args) do
+      if string.find(tostring(args[k]), "#") then
+        args_str = tostring(args[k])
+      else
+        args_str = ".#" .. tostring((args[k] or ""))
+      end
+    end
   end
 
   hilbish.run("nix build " .. args_str)
@@ -106,7 +106,7 @@ end)
 
 commander.register("nd", function(args)
   if #args > 1 then
-    hilbish.run("echo 'Too many arguments: nd (devShell)'")
+    hilbish.run("echo 'Too many arguments: nd (installable)'")
     return 1
   end
   if (args[1] == "--help") or (args[1] == "-h") then
@@ -145,10 +145,6 @@ commander.register("nfu", function(args)
 end)
 
 commander.register("nr", function(args)
-  if #args > 1 then
-    hilbish.run("echo 'Too many arguments: nr (installable)'")
-    return 1
-  end
   if (args[1] == "--help") or (args[1] == "-h") then
     hilbish.run("nix run --help")
     return 0
@@ -160,25 +156,31 @@ commander.register("nr", function(args)
   else
     args_str = ".#" .. tostring((args[1] or ""))
   end
+  args_str = args_str .. " -- "
+  for k, _ in pairs(args) do
+    if k > 1 then
+      args_str = args_str .. " " .. tostring(args[k])
+    end
+  end
 
   hilbish.run("nix run " .. args_str)
 end)
 
 commander.register("ns", function(args)
-  if #args > 1 then
-    hilbish.run("echo 'Too many arguments: ns (installable)'")
-    return 1
-  end
   if (args[1] == "--help") or (args[1] == "-h") then
     hilbish.run("nix shell --help")
     return 0
   end
 
   args_str = ""
-  if string.find(tostring(args[1]), "#") then
-    args_str = tostring(args[1])
-  else
-    args_str = ".#" .. tostring((args[1] or ""))
+  if #args > 0 then
+    for k, _ in pairs(args) do
+      if string.find(tostring(args[k]), "#") then
+        args_str = tostring(args[k])
+      else
+        args_str = ".#" .. tostring((args[k] or ""))
+      end
+    end
   end
 
   hilbish.run("nix shell " .. args_str)
