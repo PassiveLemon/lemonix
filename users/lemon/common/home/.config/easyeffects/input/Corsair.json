@@ -99,9 +99,9 @@
             "volume": 0.0
         },
         "plugins_order": [
-            "loudness#0",
             "crystalizer#0",
-            "deesser#0"
+            "deesser#0",
+            "loudness#0"
         ]
     }
 }

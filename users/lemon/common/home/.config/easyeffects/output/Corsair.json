@@ -387,9 +387,9 @@
             "split-channels": false
         },
         "plugins_order": [
-            "crossfeed#0",
             "equalizer#0",
-            "bass_enhancer#0"
+            "bass_enhancer#0",
+            "crossfeed#0"
         ]
     }
 }
