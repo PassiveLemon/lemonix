@@ -171,10 +171,12 @@ awful.screen.connect_for_each_screen(function(s)
     if state then
       -- What should happen when the lockscreen is enabled
       main.visible = true
+      awful.spawn.with_shell("pamixer -m")
       awful.spawn.with_shell("xset s on +dpms")
     else
       -- What should happen when the lockscreen is disabled
       main.visible = false
+      awful.spawn.with_shell("pamixer -u")
       awful.spawn.with_shell("xset s off -dpms")
     end
   end)
