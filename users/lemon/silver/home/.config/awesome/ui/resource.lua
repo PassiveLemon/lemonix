@@ -139,9 +139,9 @@ local headset_bat = h.text({
   halign = "left",
 })
 awesome.connect_signal("signal::peripheral::headset", function(headset)
-  if headset == "-2" then
+  if headset == -2 then
     headset_bat:get_children_by_id("textbox")[1].text = "HS BAT: Not found"
-  elseif headset == "-1" then
+  elseif headset == -1 then
     headset_bat:get_children_by_id("textbox")[1].text = "HS BAT: Charging"
   else
     headset_bat:get_children_by_id("textbox")[1].text = "HS BAT: " .. headset .. "%"

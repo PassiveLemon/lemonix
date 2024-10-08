@@ -10,6 +10,9 @@ local naughty = require("naughty")
 -- command: str -> the command which should return an integer of the current item battery
 -- example -> awesome.emit_signal("signal::battery::subscribe", true, "Headset", 20, "headsetcontrol -c -b")
 
+-- signal::battery::status::(name) (connect)
+-- (percent)
+
 -- signal::battery::status (connect)
 -- (name) (percent)
 
@@ -24,10 +27,10 @@ local function subscribe(action, name, percent, command)
 
   if action then
     subscribers[name] = {
-      ["name"] = name,
-      ["notify"] = true,
-      ["percent"] = percent,
-      ["command"] = command
+      name = name,
+      notify = true,
+      percent = percent,
+      command = command
     }
   else
     subscribers[name] = nil
@@ -35,20 +38,20 @@ local function subscribe(action, name, percent, command)
 end
 
 local function check(subscriber)
-  awful.spawn.easy_async_with_shell(subscriber["command"], function(stdout)
+  awful.spawn.easy_async_with_shell(subscriber.command, function(stdout)
     local stdout = tonumber(stdout)
 
-    awesome.emit_signal(("signal::battery::status::" .. subscriber["name"]), stdout)
-    awesome.emit_signal("signal::battery::status", subscriber["name"], stdout)
+    awesome.emit_signal(("signal::battery::status::" .. subscriber.name), stdout)
+    awesome.emit_signal("signal::battery::status", subscriber.name, stdout)
     
-    if subscriber["notify"] and stdout >= 0 and stdout <= subscriber["percent"] then
+    if subscriber.notify and stdout >= 0 and stdout <= subscriber.percent then
       naughty.notification({
-        title = subscriber["name"] .. " battery low (" .. tostring(subscriber["percent"]) .. "%)",
+        title = subscriber.name .. " battery low (" .. tostring(subscriber.percent) .. "%)",
         timeout = 7
       })
-      subscriber["notify"] = false
-    elseif stdout > subscriber["percent"] then
-      subscriber["notify"] = true
+      subscriber.notify = false
+    elseif stdout > subscriber.percent then
+      subscriber.notify = true
     end
   end)
 end
