@@ -22,11 +22,11 @@
       ".config/awesome/config/user.lua" = {
         source = ./home/.config/awesome/config/user.lua;
       };
-      ".config/awesome/config/headsetcontrol.lua" = {
-        source = ./home/.config/awesome/config/headsetcontrol.lua;
-      };
       ".config/awesome/signal/init.lua" = {
         source = ./home/.config/awesome/signal/init.lua;
+      };
+      ".config/awesome/signal/headsetcontrol.lua" = {
+        source = ./home/.config/awesome/signal/headsetcontrol.lua;
       };
       ".config/awesome/ui/init.lua" = {
         source = ./home/.config/awesome/ui/init.lua;
