@@ -94,7 +94,7 @@ commander.register("nb", function(args)
   if #args > 0 then
     for k, _ in pairs(args) do
       if string.find(tostring(args[k]), "#") then
-        args_str = tostring(args[k])
+        args_str = args_str .. tostring(args[k])
       else
         args_str = ".#" .. tostring((args[k] or ""))
       end
@@ -176,7 +176,7 @@ commander.register("ns", function(args)
   if #args > 0 then
     for k, _ in pairs(args) do
       if string.find(tostring(args[k]), "#") then
-        args_str = tostring(args[k])
+        args_str = args_str .. tostring(args[k])
       else
         args_str = ".#" .. tostring((args[k] or ""))
       end
