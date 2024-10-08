@@ -4,7 +4,7 @@ local lgi = require("lgi")
 local upower = lgi.require("UPowerGlib")
 
 local function emit(ac, perc, time)
-  awesome.emit_signal('signal::power', ac, perc, time)
+  awesome.emit_signal("signal::power", ac, perc, time)
 end
 
 local devices = upower.Client():get_devices()

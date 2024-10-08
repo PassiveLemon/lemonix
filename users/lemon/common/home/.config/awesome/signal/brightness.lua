@@ -2,7 +2,7 @@ local awful = require("awful")
 local gears = require("gears")
 
 local function emit(cur, max)
-  awesome.emit_signal('signal::peripheral::brightness', cur, max)
+  awesome.emit_signal("signal::peripheral::brightness", cur, max)
 end
 
 local function brightness()
