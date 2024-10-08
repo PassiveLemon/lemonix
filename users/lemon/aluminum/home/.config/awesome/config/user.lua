@@ -10,5 +10,4 @@ awful.spawn.with_shell("autorandr -l Default")
 awful.spawn.with_shell("pidof -q fusuma || fusuma -d")
 awful.spawn.with_shell("pidof -q picom || picom --realtime -b")
 awful.spawn.with_shell("pidof -q nm-applet || nm-applet")
-awful.spawn.with_shell("pidof -q blueman-applet || blueman-applet")
 
