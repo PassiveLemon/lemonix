@@ -28,9 +28,9 @@ ruled.client.connect_signal("request::rules", function()
   ruled.client.append_rule({
     id = "floating",
     rule_any = {
-      instance = { "feh", "loupe", "lxappearance", "xarchiver", "kruler" },
-      class    = { "feh", "loupe", "Lxappearance", "Xarchiver", "kruler" },
-      name     = { "Customize Look and Feel", "KRuler", "Confirm File Replacing", "Copying files", "Steam Settings", "Friends List", "Recordings & Screenshots" },
+      instance = { "loupe", "xarchiver", "nm-connection-editor", ".blueman-manager-wrapped", "lxappearance", "kruler" },
+      class    = { "loupe", "Xarchiver", "Nm-connection-editor", ".blueman-manager-wrapped", "Lxappearance", "kruler" },
+      name     = { "Confirm File Replacing", "Copying files", "Steam Settings", "Friends List", "Recordings & Screenshots" },
       role     = { "pop-up", "GtkFileChooserDialog" },
     },
     properties = {
