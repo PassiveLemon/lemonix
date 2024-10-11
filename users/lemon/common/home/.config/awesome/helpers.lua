@@ -29,6 +29,7 @@ function helpers.text(conf)
       forced_height = conf.y,
       bg = conf.bg or b.ui_main_bg,
       fg = conf.fg or b.ui_main_fg,
+      shape = conf.shape,
       {
         -- Allow use of either text or image. Kind of pointless to make 2 separate ones.
         layout = wibox.layout.stack,
@@ -239,3 +240,4 @@ function helpers.dump_table(table)
 end
 
 return helpers
+

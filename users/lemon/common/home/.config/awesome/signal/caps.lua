@@ -35,7 +35,8 @@ local function caps()
 end
 
 awesome.connect_signal("signal::peripheral::caps::update", function()
+  caps_query_timer:stop()
   caps()
-  caps_query_timer:again()
+  caps_query_timer:start()
 end)
 

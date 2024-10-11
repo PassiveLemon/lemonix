@@ -87,7 +87,7 @@ end
 local function metadata_fetch(position_zero)
   awful.spawn.easy_async(playerctl_cmd .. "metadata -f 'artUrl_{{mpris:artUrl}}title_{{xesam:title}}artist_{{xesam:artist}}album_{{xesam:album}}length_{{mpris:length}}playerName_{{playerName}}shuffle_{{shuffle}}status_{{status}}loop_{{loop}}position_{{position}}volume_{{volume}}'", function(stdout)
     stdout = stdout:gsub("\n", "")
-    if stdout == "No player could handle this command" then
+    if stdout == "No player could handle this command" or stdout == "No players found" then
       stdout = ""
     end
     -- Media metadata

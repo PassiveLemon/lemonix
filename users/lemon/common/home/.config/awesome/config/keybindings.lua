@@ -81,11 +81,8 @@ awful.keyboard.append_global_keybindings({
   awful.key({ super }, "space", function() app_launcher:toggle() end,
   { description = "|| run app launcher", group = "launcher" }),
 
-  awful.key({ super }, "c", function() awesome.emit_signal("ui::media::toggle") end,
-  { description = "|| run media player", group = "launcher" }),
-
-  awful.key({ super }, "v", function() awesome.emit_signal("ui::power::toggle") end,
-  { description = "|| run powermenu", group = "launcher" }),
+  awful.key({ super }, "c", function() awesome.emit_signal("ui::control::toggle") end,
+  { description = "|| run control panel", group = "launcher" }),
 
   awful.key({ super }, "x", function() awesome.emit_signal("ui::resource::toggle") end,
   { description = "|| run resource monitor", group = "launcher" }),

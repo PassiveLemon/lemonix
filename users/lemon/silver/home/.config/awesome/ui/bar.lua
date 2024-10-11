@@ -90,15 +90,15 @@ screen.connect_signal("request::desktop_decoration", function(s)
     halign = "left",
   })
   awesome.connect_signal("signal::peripheral::volume::value", function(value)
-    if value == "Muted" then
+    if value == -1 then
       volume_icon:get_children_by_id("textbox")[1].text = "󰝟"
       volume_icon:get_children_by_id("textbox")[1].font = b.sysfont(dpi(17))
       volume_text:get_children_by_id("textbox")[1].text = "Muted"
-    elseif value < "33" then
+    elseif value < 33 then
       volume_icon:get_children_by_id("textbox")[1].text = "󰕿"
       volume_icon:get_children_by_id("textbox")[1].font = b.sysfont(dpi(9))
       volume_text:get_children_by_id("textbox")[1].text = tostring(value)
-    elseif value < "67" then
+    elseif value < 67 then
       volume_icon:get_children_by_id("textbox")[1].text = "󰖀"
       volume_icon:get_children_by_id("textbox")[1].font = b.sysfont(dpi(13))
       volume_text:get_children_by_id("textbox")[1].text = tostring(value)
@@ -500,3 +500,4 @@ screen.connect_signal("request::desktop_decoration", function(s)
     awesome.emit_signal("ui::media::toggle")
   end)
 end)
+

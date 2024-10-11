@@ -7,9 +7,11 @@ end
 
 local function volume()
   awful.spawn.easy_async("pamixer --get-volume-human", function(value)
-    value = value:gsub("\n", "")
+    value = value:gsub("\n", ""):gsub("%%", "")
     if value == "muted" then
-      value = "Muted"
+      value = -1
+    else
+      value = tonumber(value)
     end
     emit(value)
   end)
@@ -24,7 +26,14 @@ local volume_timer = gears.timer({
 })
 
 awesome.connect_signal("signal::peripheral::volume::update", function()
+  volume_timer:stop()
   volume()
-  volume_timer:again()
+  volume_timer:start()
+end)
+
+awesome.connect_signal("signal::peripheral::volume", function(volume_new)
+  volume_timer:stop()
+  awful.spawn("pamixer --set-volume " .. volume_new)
+  volume_timer:start()
 end)
 

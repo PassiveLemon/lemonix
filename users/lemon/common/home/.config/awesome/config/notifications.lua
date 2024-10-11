@@ -31,8 +31,12 @@ b.notification_border_color = b.border_color_active
 b.notification_icon_size = dpi(64)
 b.notification_max_height = b.notification_icon_size
 b.notification_spacing = dpi(4)
+-- b.notification_shape = function(cr, w, h)
+--   gears.shape.rounded_rect(cr, w, h, 12)
+-- end
 
 naughty.config.padding = dpi(12)
+--naughty.config.spacing = dpi(12)
 
 naughty.config.defaults.timeout = 3
 naughty.config.defaults.screen = awful.screen.focused()
@@ -40,6 +44,7 @@ naughty.config.defaults.ontop = true
 naughty.config.defaults.margin = (b.margins * 2)
 naughty.config.defaults.border_width = b.border_width
 naughty.config.defaults.position = "bottom_right"
+--naughty.config.defaults.shape = gears.shape.rounded_rect
 
 naughty.connect_signal("request::display", function(n)
   naughty.layout.box({
@@ -49,6 +54,7 @@ naughty.connect_signal("request::display", function(n)
 		widget_template = {
 			id = "background_role",
 			widget = naughty.container.background,
+			--shape = gears.shape.rounded_rect,
       {
         widget = wibox.container.margin,
         left = b.margins,

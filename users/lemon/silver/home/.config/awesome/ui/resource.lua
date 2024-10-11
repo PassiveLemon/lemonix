@@ -148,86 +148,93 @@ awesome.connect_signal("signal::peripheral::headset", function(headset)
   end
 end)
 
-local main = awful.popup({
-  placement = awful.placement.centered,
-  border_width = dpi(3),
-  border_color = b.border_color_active,
-  ontop = true,
-  visible = false,
-  type = "popup_menu",
-  widget = {
-    layout = wibox.layout.align.horizontal,
-    {
-      widget = wibox.container.margin,
-      margins = { top = dpi(4), right = dpi(2), bottom = dpi(3), left = dpi(6) },
-      forced_width = dpi(210),
-      {
-        layout = wibox.layout.fixed.vertical,
-        cpu_text,
-        {
-          layout = wibox.layout.fixed.horizontal,
-          cpu_use,
-          space,
-          cpu_temp,
-        },
-        space,
-        gpu_text,
-        {
-          layout = wibox.layout.fixed.horizontal,
-          gpu_use,
-          space,
-          gpu_temp,
-        },
-        gpu_mem,
-      },
-    },
-    {
-      widget = wibox.container.margin,
-      margins = { top = dpi(4), right = dpi(2), bottom = dpi(3), left = dpi(2) },
-      forced_width = dpi(200),
-      {
-        layout = wibox.layout.fixed.vertical,
-        mem_text,
-        {
-          layout = wibox.layout.fixed.horizontal,
-          mem_use,
-          space,
-          mem_use_perc,
-        },
-        {
-          layout = wibox.layout.fixed.horizontal,
-          cache_use,
-          space,
-          cache_use_perc,
-        },
-        space,
-        strg_text,
-        strg_drives,
-      },
-    },
-    {
-      widget = wibox.container.margin,
-      margins = { top = dpi(4), right = dpi(6), bottom = dpi(3), left = dpi(2) },
-      forced_width = dpi(155),
-      {
-        layout = wibox.layout.fixed.vertical,
-        network_text,
-        network_adapters,
-        space,
-        uptime_text,
-        uptime_time,
-        space,
-        devices_text,
-        headset_bat,
-      },
-    },
-  },
-})
 
-awesome.connect_signal("ui::resource::toggle", function()
-  main.screen = awful.screen.focused()
-  main.visible = not main.visible
+awful.screen.connect_for_each_screen(function(s)
+  local main = awful.popup({
+    placement = awful.placement.centered,
+    border_width = dpi(3),
+    border_color = b.border_color_active,
+    ontop = true,
+    visible = false,
+    screen = s,
+    type = "popup_menu",
+    widget = {
+      layout = wibox.layout.align.horizontal,
+      {
+        widget = wibox.container.margin,
+        margins = { top = dpi(4), right = dpi(2), bottom = dpi(3), left = dpi(6) },
+        forced_width = dpi(210),
+        {
+          layout = wibox.layout.fixed.vertical,
+          cpu_text,
+          {
+            layout = wibox.layout.fixed.horizontal,
+            cpu_use,
+            space,
+            cpu_temp,
+          },
+          space,
+          gpu_text,
+          {
+            layout = wibox.layout.fixed.horizontal,
+            gpu_use,
+            space,
+            gpu_temp,
+          },
+          gpu_mem,
+        },
+      },
+      {
+        widget = wibox.container.margin,
+        margins = { top = dpi(4), right = dpi(2), bottom = dpi(3), left = dpi(2) },
+        forced_width = dpi(200),
+        {
+          layout = wibox.layout.fixed.vertical,
+          mem_text,
+          {
+            layout = wibox.layout.fixed.horizontal,
+            mem_use,
+            space,
+            mem_use_perc,
+          },
+          {
+            layout = wibox.layout.fixed.horizontal,
+            cache_use,
+            space,
+            cache_use_perc,
+          },
+          space,
+          strg_text,
+          strg_drives,
+        },
+      },
+      {
+        widget = wibox.container.margin,
+        margins = { top = dpi(4), right = dpi(6), bottom = dpi(3), left = dpi(2) },
+        forced_width = dpi(155),
+        {
+          layout = wibox.layout.fixed.vertical,
+          network_text,
+          network_adapters,
+          space,
+          uptime_text,
+          uptime_time,
+          space,
+          devices_text,
+          headset_bat,
+        },
+      },
+    },
+  })
+
+  awesome.connect_signal("ui::resource::toggle", function()
+    if main.screen.index == awful.screen.focused().index then
+      main.visible = not main.visible
+    else
+      main.visible = false
+    end
+  end)
+
+  click_to_hide.popup(main, nil, true)
 end)
-
-click_to_hide.popup(main, nil, true)
 

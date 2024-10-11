@@ -7,9 +7,9 @@ end
 
 local function brightness()
   awful.spawn.easy_async("brightnessctl get", function(cur)
-    local cur = cur:gsub("\n", "")
+    local cur = tonumber(cur:gsub("\n", ""))
     awful.spawn.easy_async("brightnessctl max", function(max)
-      local max = max:gsub("\n", "")
+      local max = tonumber(max:gsub("\n", ""))
       emit(cur, max)
     end)
   end)
@@ -24,7 +24,14 @@ local brightness_timer = gears.timer({
 })
 
 awesome.connect_signal("signal::peripheral::brightness::update", function()
+  brightness_timer:stop()
   brightness()
-  brightness_timer:again()
+  brightness_timer:start()
+end)
+
+awesome.connect_signal("signal::peripheral::brightness", function(brightness_new)
+  brightness_timer:stop()
+  awful.spawn("brightnessctl set " .. brightness_new)
+  brightness_timer:start()
 end)
 
