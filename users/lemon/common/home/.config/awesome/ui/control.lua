@@ -119,6 +119,15 @@ local poweroff_button = h.button({
   shape = gears.shape.circle,
   text = "󰐥",
   font = b.sysfont(dpi(14)),
+  toggle = false,
+})
+local poweroff_hover_timer = gears.timer({
+  timeout = 1,
+  single_shot = true,
+  callback = function()
+    poweroff_button.toggle = true
+    poweroff_button:get_children_by_id("background")[1].fg = b.fg_focus
+  end,
 })
 
 local restart_button = h.button({
@@ -133,6 +142,15 @@ local restart_button = h.button({
   shape = gears.shape.circle,
   text = "󰑓",
   font = b.sysfont(dpi(18)),
+  toggle = false,
+})
+local restart_hover_timer = gears.timer({
+  timeout = 1,
+  single_shot = true,
+  callback = function()
+    restart_button.toggle = true
+    restart_button:get_children_by_id("background")[1].fg = b.fg_focus
+  end,
 })
 
 local power_button = h.button({
@@ -152,36 +170,76 @@ local power_button = h.button({
 local power_menu_button_group = wibox.widget({
   visible = false,
   layout = wibox.layout.fixed.horizontal,
-  lock_button,
   poweroff_button,
   restart_button,
+  lock_button,
   cancel_button,
 })
 
-cancel_button:connect_signal("button::press", function()
-  require("naughty").notify({ title = "cancel" })
+local function power_menu_button_group_hide()
   power_menu_button_group.visible = false
   power_button.visible = true
   volume_bar:get_children_by_id("background")[1].forced_width = dpi(total_width - (b.margins * 4) - 32)
+end
+
+local function power_menu_button_group_show()
+  volume_bar:get_children_by_id("background")[1].forced_width = dpi(total_width - (b.margins * 4) - (32 * 4) - (b.margins * 6))
+  power_button.visible = false
+  power_menu_button_group.visible = true
+end
+
+local power_menu_button_group_hover_timer = gears.timer({
+  timeout = 3,
+  single_shot = true,
+  callback = function()
+    power_menu_button_group_hide()
+  end,
+})
+power_menu_button_group:connect_signal("mouse::enter", function()
+  power_menu_button_group_hover_timer:stop()
+end)
+power_menu_button_group:connect_signal("mouse::leave", function()
+  power_menu_button_group_hover_timer:again()
+end)
+
+cancel_button:connect_signal("button::press", function()
+  power_menu_button_group_hide()
 end)
 
 lock_button:connect_signal("button::press", function()
-  require("naughty").notify({ title = "lock" })
+  awesome.emit_signal('ui::lock::toggle')
+  awesome.emit_signal("signal::playerctl::pause", "%all%")
 end)
 
+poweroff_button:connect_signal("mouse::enter", function()
+  poweroff_hover_timer:again()
+end)
+poweroff_button:connect_signal("mouse::leave", function()
+  poweroff_hover_timer:stop()
+  poweroff_button.toggle = false
+end)
 poweroff_button:connect_signal("button::press", function()
-  require("naughty").notify({ title = "poweroff" })
+  if poweroff_button.toggle then
+    awful.spawn("systemctl poweroff")
+  end
 end)
 
+restart_button:connect_signal("mouse::enter", function()
+  restart_hover_timer:again()
+end)
+restart_button:connect_signal("mouse::leave", function()
+  restart_hover_timer:stop()
+  restart_button.toggle = false
+end)
 restart_button:connect_signal("button::press", function()
-  require("naughty").notify({ title = "restart" })
+  if restart_button.toggle then
+    awful.spawn("systemctl reboot")
+  end
 end)
 
 power_button:connect_signal("button::press", function()
   require("naughty").notify({ title = "power" })
-  volume_bar:get_children_by_id("background")[1].forced_width = dpi(total_width - (b.margins * 4) - (32 * 4) - (b.margins * 6))
-  power_button.visible = false
-  power_menu_button_group.visible = true
+  power_menu_button_group_show()
 end)
 
 local brightness_icon = h.text({
