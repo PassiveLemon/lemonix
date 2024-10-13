@@ -97,6 +97,7 @@ awful.keyboard.append_global_keybindings({
   awful.key({ }, "XF86MonBrightnessUp", function()
     awful.spawn.easy_async("brightnessctl set 3%+", function()
       awesome.emit_signal("signal::peripheral::brightness::update")
+      awesome.emit_signal("ui::control::notification::brightness")
     end)
   end,
   { description = "|| increase brightness", group = "control" }),
@@ -104,6 +105,7 @@ awful.keyboard.append_global_keybindings({
   awful.key({ }, "XF86MonBrightnessDown", function()
     awful.spawn.easy_async("brightnessctl set 3%-", function()
       awesome.emit_signal("signal::peripheral::brightness::update")
+      awesome.emit_signal("ui::control::notification::brightness")
     end)
   end,
   { description = "|| decrease brightness", group = "control" }),
@@ -111,6 +113,7 @@ awful.keyboard.append_global_keybindings({
   awful.key({ }, "XF86AudioMute", function()
     awful.spawn.easy_async("pamixer -t", function()
       awesome.emit_signal("signal::peripheral::volume::update")
+      awesome.emit_signal("ui::control::notification::volume")
     end)
   end,
   { description = "|| toggle mute", group = "control" }),
@@ -118,6 +121,7 @@ awful.keyboard.append_global_keybindings({
   awful.key({ }, "XF86AudioLowerVolume", function()
     awful.spawn.easy_async("pamixer -d 1", function()
       awesome.emit_signal("signal::peripheral::volume::update")
+      awesome.emit_signal("ui::control::notification::volume")
     end)
   end,
   { description = "|| decrease volume", group = "control" }),
@@ -125,6 +129,7 @@ awful.keyboard.append_global_keybindings({
   awful.key({ }, "XF86AudioRaiseVolume", function()
     awful.spawn.easy_async("pamixer -i 1", function()
       awesome.emit_signal("signal::peripheral::volume::update")
+      awesome.emit_signal("ui::control::notification::volume")
     end)
   end,
   { description = "|| increase volume", group = "control" }),

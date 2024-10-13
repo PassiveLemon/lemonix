@@ -238,7 +238,6 @@ restart_button:connect_signal("button::press", function()
 end)
 
 power_button:connect_signal("button::press", function()
-  require("naughty").notify({ title = "power" })
   power_menu_button_group_show()
 end)
 
