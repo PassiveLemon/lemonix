@@ -178,7 +178,7 @@ screen.connect_signal("request::desktop_decoration", function(s)
     bg = b.bg2,
     halign = "left",
   })
-  awesome.connect_signal("signal::peripheral::brightness", function(cur, max)
+  awesome.connect_signal("signal::peripheral::brightness::value", function(cur, max)
     light_text:get_children_by_id("textbox")[1].text = tostring(h.round(((cur / max) * 100), 0)) .. "%"
   end)
 
