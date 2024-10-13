@@ -556,6 +556,19 @@ awful.screen.connect_for_each_screen(function(s)
       },
     },
   })
+  local main_timer = gears.timer({
+    timeout = 5,
+    single_shot = true,
+    callback = function()
+      main.visible = false
+    end,
+  })
+  main:connect_signal("mouse::enter", function()
+    main_timer:stop()
+  end)
+  main:connect_signal("mouse::leave", function()
+    main_timer:again()
+  end)
 
   awesome.connect_signal("ui::control::toggle", function()
     awesome.emit_signal("signal::playerctl::update")
@@ -564,6 +577,7 @@ awful.screen.connect_for_each_screen(function(s)
     else
       main.visible = false
     end
+    main_timer:again()
   end)
 
   click_to_hide.popup(main, nil, true)
