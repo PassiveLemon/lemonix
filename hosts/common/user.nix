@@ -1,4 +1,4 @@
-{ inputs, pkgs, config, lib, ... }: {
+{ pkgs, ... }: {
   environment = {
     systemPackages = with pkgs; [
       xorg.xorgserver xorg.xinit xorg.xrandr xorg.xhost

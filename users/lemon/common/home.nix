@@ -1,4 +1,4 @@
-{ inputs, outputs, pkgs, config, lib, ... }: {
+{ inputs, outputs, pkgs, ... }: {
   imports = [
     ./modules/customization.nix
     inputs.nixcord.homeManagerModules.nixcord

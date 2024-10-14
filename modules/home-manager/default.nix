@@ -1,7 +1,7 @@
-{ config, pkgs, lib, ... }:
+{ lib, ... }:
 let
-  inherit (lib) mkIf mkEnableOption;
-  cfg = config.lemonix;
+  inherit (lib) mkEnableOption;
+  #cfg = config.lemonix;
 in
 {
   options = {
@@ -19,7 +19,5 @@ in
     ./gaming.nix
     ./modeling.nix
   ];
-
-  config = { };
 }
 

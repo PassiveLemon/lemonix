@@ -1,4 +1,4 @@
-{ inputs, pkgs, config, lib, ... }: {
+{ pkgs, ... }: {
   imports = [
     ../common/user.nix
   ];

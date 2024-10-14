@@ -1,4 +1,4 @@
-{ inputs, pkgs, config, lib, ... }: {
+{ inputs, pkgs, ... }: {
   imports = [
     ../common/home.nix
     ./modules/customization.nix

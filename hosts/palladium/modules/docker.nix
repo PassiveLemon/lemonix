@@ -1,4 +1,4 @@
-{ inputs, pkgs, config, lib, ... }: {
+{ ... }: {
   networking = {
     firewall = {
       allowedTCPPorts = [
@@ -70,3 +70,4 @@
     ];
   };
 }
+

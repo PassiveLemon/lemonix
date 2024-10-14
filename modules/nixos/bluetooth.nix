@@ -1,4 +1,4 @@
-{ config, pkgs, lib, ... }:
+{ config, lib, ... }:
 let
   inherit (lib) mkIf mkEnableOption;
   cfg = config.lemonix.bluetooth;
@@ -16,3 +16,4 @@ in
     hardware.bluetooth.enable = true;
   };
 }
+

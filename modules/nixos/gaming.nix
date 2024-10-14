@@ -93,7 +93,7 @@ in
         };
       };
 
-      hardware.opengl.extraPackages = with pkgs; [
+      hardware.opengl.extraPackages = [
         inputs.lemonake.packages.${pkgs.system}.monado-vulkan-layers-git
       ];
     })

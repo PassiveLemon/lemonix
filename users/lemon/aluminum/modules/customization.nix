@@ -1,4 +1,4 @@
-{ inputs, pkgs, config, lib, ... }: {
+{ ... }: {
   gtk = {
     gtk3 = {
       bookmarks = [
@@ -7,3 +7,4 @@
     };
   };
 }
+

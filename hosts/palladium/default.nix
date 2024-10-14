@@ -1,4 +1,4 @@
-{ inputs, pkgs, config, lib, ... }: {
+{ ... }: {
   imports = [
     ./modules/docker.nix
     ./modules/borg.nix
@@ -16,7 +16,6 @@
     };
     agenix.enable = true;
     ssh.enable = true;
-    system.headless = true;
     swap = {
       enable = false;
       zram = {

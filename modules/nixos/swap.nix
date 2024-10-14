@@ -1,6 +1,6 @@
-{ config, pkgs, lib, ... }:
+{ config, lib, ... }:
 let
-  inherit (lib) mkIf mkEnableOption mkOption types assertMsg pathExists;
+  inherit (lib) mkIf mkEnableOption mkOption types;
   cfg = config.lemonix;
 in
 

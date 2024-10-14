@@ -1,4 +1,4 @@
-{ inputs, pkgs, config, lib, ... }: {
+{ config, ... }: {
   users = {
     groups = {
       "borg_management" = {
@@ -68,3 +68,4 @@
     };
   };
 }
+
