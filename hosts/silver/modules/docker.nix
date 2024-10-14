@@ -40,7 +40,6 @@
   virtualisation = {
     docker = {
       enable = true;
-      enableNvidia = true; # Keeping this enabled until they finally fix the deprecation
       enableOnBoot = true;
       liveRestore = false;
       autoPrune = {
