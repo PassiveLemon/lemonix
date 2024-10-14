@@ -448,6 +448,22 @@
         "type": "github"
       }
     },
+    "lite-xl-lsp": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1717264903,
+        "narHash": "sha256-IOjQvWKrt/jUFPCU7T8l8mBSWjYn2CqfVQGVZr9NOTg=",
+        "owner": "lite-xl",
+        "repo": "lite-xl-lsp",
+        "rev": "21faf00bdcb59e5b81ae8b1018d262cbf84efc81",
+        "type": "github"
+      },
+      "original": {
+        "owner": "lite-xl",
+        "repo": "lite-xl-lsp",
+        "type": "github"
+      }
+    },
     "lite-xl-plugins": {
       "flake": false,
       "locked": {
@@ -791,6 +807,7 @@
         "lemonake": "lemonake",
         "lite-xl-evergreen": "lite-xl-evergreen",
         "lite-xl-lintplus": "lite-xl-lintplus",
+        "lite-xl-lsp": "lite-xl-lsp",
         "lite-xl-plugins": "lite-xl-plugins",
         "lite-xl-treeview-extender": "lite-xl-treeview-extender",
         "lite-xl-widget": "lite-xl-widget",
@@ -895,3 +912,4 @@
   "root": "root",
   "version": 7
 }
+

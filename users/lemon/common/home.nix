@@ -19,6 +19,7 @@
       # Development
       lite-xl vscode github-desktop imhex
       shellcheck luajitPackages.luacheck python312Packages.flake8
+      nil pyright lua-language-server bash-language-server dockerfile-language-server-nodejs yaml-language-server
       nixpkgs-review nixfmt-rfc-style
       nvfetcher
       # Office
@@ -62,6 +63,10 @@
       };
       ".config/lite-xl/plugins/treeview-extender" = {
         source = inputs.lite-xl-treeview-extender;
+        recursive = true;
+      };
+      ".config/lite-xl/plugins/lsp" = {
+        source = inputs.lite-xl-lsp;
         recursive = true;
       };
       ".vscode/" = {

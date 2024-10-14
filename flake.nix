@@ -61,6 +61,10 @@
       url = "github:juliardi/lite-xl-treeview-extender";
       flake = false;
     };
+    lite-xl-lsp = {
+      url = "github:lite-xl/lite-xl-lsp";
+      flake = false;
+    };
   };
 
   outputs = { self, ... } @ inputs:

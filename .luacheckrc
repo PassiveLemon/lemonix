@@ -1,7 +1,7 @@
 std = "min"
 
--- Ignore errors for undefined AWM libraries
 read_globals = {
+  -- AWM
   "awesome",
   "awful",
   "gears",
@@ -11,9 +11,19 @@ read_globals = {
 }
 
 globals = {
+  -- AWM
   "screen",
   "mouse",
   "root",
-  "client"
+  "client",
+
+  -- Lite-XL
+  "renderer",
+  "SCALE",
+  "USERDIR",
+  "PLATFORM",
+
+  -- Hilbish
+  hilbish
 }
 

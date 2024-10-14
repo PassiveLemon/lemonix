@@ -4,6 +4,7 @@ local config = require("core.config")
 local style = require("core.style")
 
 local lintplus = require("plugins.lintplus")
+local lspconfig = require("plugins.lsp.config")
 
 core.reload_module("colors.lemon")
 
@@ -39,7 +40,14 @@ config.plugins.treeview = {
   animate_scroll_to_focused_file = true,
 }
 
-lintplus.load({"luacheck", "python", "shellcheck"})
+lintplus.load({ "luacheck", "python", "shellcheck" })
+
+lspconfig.bashls.setup()
+lspconfig.dockerls.setup()
+lspconfig.nillsp.setup()
+lspconfig.pyright.setup()
+lspconfig.sumneko_lua.setup()
+lspconfig.yamlls.setup()
 
 -- Open documents by default
 local default_path = "/home/lemon/Documents/GitHub"
