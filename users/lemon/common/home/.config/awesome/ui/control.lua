@@ -4,6 +4,7 @@ local b = require("beautiful")
 local wibox = require("wibox")
 
 local h = require("helpers")
+local user = require("config.user")
 local click_to_hide = require("modules.click_to_hide")
 
 local dpi = b.xresources.apply_dpi
@@ -303,7 +304,7 @@ local brightness_bar = wibox.widget({
   },
 })
 
-if not has_brightness then
+if not user.has_brightness then
   brightness_bar.visible = false
 end
 
