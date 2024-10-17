@@ -208,14 +208,6 @@ function helpers.watch(com, time, conf)
   return watch
 end
 
-function helpers.unfocus()
-  client.focus = nil
-  client.focus = awful.client.next(0)
-  if client.focus then
-    client.focus:raise()
-  end
-end
-
 function helpers.is_file(file)
   return gears.filesystem.file_readable(file)
 end

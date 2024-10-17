@@ -1,6 +1,6 @@
 local core = require("core")
-local keymap = require("core.keymap")
 local config = require("core.config")
+local keymap = require("core.keymap")
 local style = require("core.style")
 
 local lintplus = require("plugins.lintplus")
@@ -46,8 +46,13 @@ lspconfig.bashls.setup()
 lspconfig.dockerls.setup()
 lspconfig.nillsp.setup()
 lspconfig.pyright.setup()
-lspconfig.sumneko_lua.setup()
 lspconfig.yamlls.setup()
+lspconfig.sumneko_lua.setup({
+  name = "lua-language-server",
+  language = "lua",
+  file_patterns = { "%.lua$" },
+  command = { "lua-language-server", "--configpath", "/home/lemon/Documents/GitHub/lemonix/.luarc.json" }
+})
 
 -- Open documents by default
 local default_path = "/home/lemon/Documents/GitHub"

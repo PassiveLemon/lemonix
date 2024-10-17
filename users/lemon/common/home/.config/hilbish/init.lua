@@ -1,5 +1,3 @@
-local lunacolors = require('lunacolors')
-local bait  = require('bait')
 local commander = require 'commander'
 local promptua = require('promptua')
 
@@ -46,7 +44,7 @@ promptua.setTheme({
   { separator = "\n" },
   {
 		provider = 'prompt.failSuccess',
-		style = function(info)
+		style = function()
 			if hilbish.exitCode == 0 then
 				return 'bold green'
 			else
@@ -90,7 +88,7 @@ commander.register("nb", function(args)
     return 0
   end
 
-  args_str = ""
+  local args_str = ""
   if #args > 0 then
     for k, _ in pairs(args) do
       if string.find(tostring(args[k]), "#") then
@@ -114,7 +112,7 @@ commander.register("nd", function(args)
     return 0
   end
 
-  args_str = ""
+  local args_str = ""
   if string.find(tostring(args[1]), "#") then
     args_str = tostring(args[1])
   else
@@ -134,7 +132,7 @@ commander.register("nfu", function(args)
     return 0
   end
 
-  args_str = ""
+  local args_str = ""
   if string.find(tostring(args[1]), "#") then
     args_str = tostring(args[1])
   else
@@ -150,7 +148,7 @@ commander.register("nr", function(args)
     return 0
   end
 
-  args_str = ""
+  local args_str = ""
   if string.find(tostring(args[1]), "#") then
     args_str = tostring(args[1])
   else
@@ -172,7 +170,7 @@ commander.register("ns", function(args)
     return 0
   end
 
-  args_str = ""
+  local args_str = ""
   if #args > 0 then
     for k, _ in pairs(args) do
       if string.find(tostring(args[k]), "#") then
@@ -187,7 +185,7 @@ commander.register("ns", function(args)
 end)
 
 commander.register("nsp", function(args)
-  types = { "md5", "sha1", "sha256", "sha512" }
+  local types = { "md5", "sha1", "sha256", "sha512" }
 
   local type = args[1]
   local url = args[2]

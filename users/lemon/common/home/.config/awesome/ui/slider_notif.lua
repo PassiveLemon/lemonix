@@ -183,26 +183,27 @@ awful.screen.connect_for_each_screen(function(s)
     main_timer:again()
   end)
 
-  awesome.connect_signal("ui::control::notification::volume", function()
-    volume_bar.visible = true
-    brightness_bar.visible = false
-    if main.screen.index == awful.screen.focused().index then
+  local function show_control(state, volume_state, brightness_state)
+    volume_bar.visible = volume_state
+    brightness_bar.visible = brightness_state
+    if state == true then
+      main.visible = true
+    elseif state == false then
+      main.visible = false
+    elseif main.screen.index == awful.screen.focused().index then
       main.visible = true
     else
       main.visible = false
     end
     main_timer:again()
+  end
+
+  awesome.connect_signal("ui::control::notification::volume", function(state)
+    show_control(state, true, false)
   end)
 
-  awesome.connect_signal("ui::control::notification::brightness", function()
-    volume_bar.visible = false
-    brightness_bar.visible = true
-    if main.screen.index == awful.screen.focused().index then
-      main.visible = true
-    else
-      main.visible = false
-    end
-    main_timer:again()
+  awesome.connect_signal("ui::control::notification::brightness", function(state)
+    show_control(state, false, true)
   end)
 end)
 

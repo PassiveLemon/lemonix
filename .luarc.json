@@ -1,0 +1,26 @@
+{
+  "$schema": "https://raw.githubusercontent.com/sumneko/vscode-lua/master/setting/schema.json",
+  "Lua.diagnostics.globals": [
+    // AWM
+    "awesome",
+    "awful",
+    "gears",
+    "naughty",
+    "tag",
+    "wibox",
+    "screen",
+    "mouse",
+    "root",
+    "client",
+
+    // Lite-XL
+    "renderer",
+    "SCALE",
+    "USERDIR",
+    "PLATFORM",
+
+    // Hilbish
+    "hilbish"
+  ]
+}
+

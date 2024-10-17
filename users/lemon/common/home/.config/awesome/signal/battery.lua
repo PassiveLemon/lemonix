@@ -43,7 +43,7 @@ local function check(subscriber)
 
     awesome.emit_signal(("signal::battery::status::" .. subscriber.name), stdout)
     awesome.emit_signal("signal::battery::status", subscriber.name, stdout)
-    
+
     if subscriber.notify and stdout >= 0 and stdout <= subscriber.percent then
       naughty.notification({
         title = subscriber.name .. " battery low (" .. tostring(subscriber.percent) .. "%)",

@@ -24,6 +24,6 @@ globals = {
   "PLATFORM",
 
   -- Hilbish
-  hilbish
+  "hilbish"
 }
 

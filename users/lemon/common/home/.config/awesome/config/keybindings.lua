@@ -4,7 +4,6 @@ local b = require("beautiful")
 local wibox = require("wibox")
 local hotkeys_popup = require("awful.hotkeys_popup")
 
-local h = require("helpers")
 local bling = require("libraries.bling")
 
 local dpi = b.xresources.apply_dpi
@@ -68,26 +67,29 @@ local app_launcher = bling.widget.app_launcher({
   app_show_generic_name = false,
 })
 
-super = "Mod4" -- Windows key
+SUPER = "Mod4" -- Windows key
 
 awful.keyboard.append_global_keybindings({
-  awful.key({ super, "Control" }, "r", awesome.restart,
+  awful.key({ SUPER, "Control" }, "r", awesome.restart,
   { description = "|| reload awesome", group = "awesome" }),
 
   -- Launcher
-  awful.key({ super }, "Return", function() awful.spawn(terminal) end,
+  awful.key({ SUPER }, "Return", function() awful.spawn(terminal) end,
   { description = "|| open a terminal", group = "launcher" }),
 
-  awful.key({ super }, "space", function() app_launcher:toggle() end,
+  awful.key({ SUPER }, "space", function() app_launcher:toggle() end,
   { description = "|| run app launcher", group = "launcher" }),
 
-  awful.key({ super }, "c", function() awesome.emit_signal("ui::control::toggle") end,
+  awful.key({ SUPER }, "c", function()
+    awesome.emit_signal("ui::control::notification::volume", false)
+    awesome.emit_signal("ui::control::toggle")
+  end,
   { description = "|| run control panel", group = "launcher" }),
 
-  awful.key({ super }, "x", function() awesome.emit_signal("ui::resource::toggle") end,
+  awful.key({ SUPER }, "x", function() awesome.emit_signal("ui::resource::toggle") end,
   { description = "|| run resource monitor", group = "launcher" }),
 
-  awful.key({ super }, "l", function()
+  awful.key({ SUPER }, "l", function()
     awesome.emit_signal('ui::lock::toggle')
     awesome.emit_signal("signal::playerctl::pause", "%all%")
   end,
@@ -97,6 +99,7 @@ awful.keyboard.append_global_keybindings({
   awful.key({ }, "XF86MonBrightnessUp", function()
     awful.spawn.easy_async("brightnessctl set 3%+", function()
       awesome.emit_signal("signal::peripheral::brightness::update")
+      awesome.emit_signal("ui::control::toggle", false)
       awesome.emit_signal("ui::control::notification::brightness")
     end)
   end,
@@ -105,6 +108,7 @@ awful.keyboard.append_global_keybindings({
   awful.key({ }, "XF86MonBrightnessDown", function()
     awful.spawn.easy_async("brightnessctl set 3%-", function()
       awesome.emit_signal("signal::peripheral::brightness::update")
+      awesome.emit_signal("ui::control::toggle", false)
       awesome.emit_signal("ui::control::notification::brightness")
     end)
   end,
@@ -113,6 +117,7 @@ awful.keyboard.append_global_keybindings({
   awful.key({ }, "XF86AudioMute", function()
     awful.spawn.easy_async("pamixer -t", function()
       awesome.emit_signal("signal::peripheral::volume::update")
+      awesome.emit_signal("ui::control::toggle", false)
       awesome.emit_signal("ui::control::notification::volume")
     end)
   end,
@@ -121,6 +126,7 @@ awful.keyboard.append_global_keybindings({
   awful.key({ }, "XF86AudioLowerVolume", function()
     awful.spawn.easy_async("pamixer -d 1", function()
       awesome.emit_signal("signal::peripheral::volume::update")
+      awesome.emit_signal("ui::control::toggle", false)
       awesome.emit_signal("ui::control::notification::volume")
     end)
   end,
@@ -129,6 +135,7 @@ awful.keyboard.append_global_keybindings({
   awful.key({ }, "XF86AudioRaiseVolume", function()
     awful.spawn.easy_async("pamixer -i 1", function()
       awesome.emit_signal("signal::peripheral::volume::update")
+      awesome.emit_signal("ui::control::toggle", false)
       awesome.emit_signal("ui::control::notification::volume")
     end)
   end,
@@ -144,14 +151,14 @@ awful.keyboard.append_global_keybindings({
   { description = "|| next media", group = "control" }),
 
   -- Utility
-  awful.key({ super }, "s", hotkeys_popup.show_help,
+  awful.key({ SUPER }, "s", hotkeys_popup.show_help,
   { description = "|| show help", group = "utility" }),
 
   awful.key({ }, "Print", function() awful.spawn("flameshot gui") end,
   { description = "|| flameshot", group = "utility" }),
 
   awful.key({
-    modifiers   = { super, "Mod1" },
+    modifiers   = { SUPER, "Mod1" },
     keygroup    = "numrow",
     description = "|| enable crosshair",
     group       = "utility",
@@ -162,7 +169,7 @@ awful.keyboard.append_global_keybindings({
 
   -- Tag
   awful.key({
-    modifiers   = { super },
+    modifiers   = { SUPER },
     keygroup    = "numrow",
     description = "|| switch to tag",
     group       = "tag",
@@ -176,7 +183,7 @@ awful.keyboard.append_global_keybindings({
   }),
 
   awful.key({
-    modifiers   = { super, "Control" },
+    modifiers   = { SUPER, "Control" },
     keygroup    = "numrow",
     description = "|| toggle tag",
     group       = "tag",
@@ -190,7 +197,7 @@ awful.keyboard.append_global_keybindings({
   }),
 
   awful.key({
-    modifiers = { super, "Shift" },
+    modifiers = { SUPER, "Shift" },
     keygroup    = "numrow",
     description = "|| move focused client to tag",
     group       = "tag",
@@ -210,26 +217,26 @@ awful.keyboard.append_global_keybindings({
 
   -- Client
   awful.keyboard.append_client_keybindings({
-    awful.key({ super }, "Escape", function(c) c:kill() end,
+    awful.key({ SUPER }, "Escape", function(c) c:kill() end,
     { description = "|| close", group = "client" }),
 
-    awful.key({ super }, "Tab",  function() h.unfocus() end,
+    awful.key({ SUPER }, "Tab",  function() client.focus = nil end,
     { description = "|| unfocus", group = "client" }),
 
-    awful.key({ super }, "f",  awful.client.floating.toggle,
+    awful.key({ SUPER }, "f",  awful.client.floating.toggle,
     { description = "|| toggle floating", group = "client" }),
 
-    awful.key({ super }, "n", function(c) c.minimized = true end,
+    awful.key({ SUPER }, "n", function(c) c.minimized = true end,
     { description = "|| minimize", group = "client" }),
 
-    awful.key({ super }, "m",
+    awful.key({ SUPER }, "m",
       function(c)
-          c.fullscreen = not c.fullscreen
-          c:raise()
+        c.fullscreen = not c.fullscreen
+        c:raise()
       end,
     { description = "|| toggle fullscreen", group = "client" }),
 
-    awful.key({ super, "Control" }, "m",
+    awful.key({ SUPER, "Control" }, "m",
       function (c)
         c.maximized = not c.maximized
         c:raise()
@@ -247,10 +254,10 @@ client.connect_signal("request::default_mousebindings", function()
     awful.button({ }, 1, function(c)
       c:activate({ context = "mouse_click" })
     end),
-    awful.button({ super }, 1, function(c)
+    awful.button({ SUPER }, 1, function(c)
       c:activate({ context = "mouse_click", action = "mouse_move" })
     end),
-    awful.button({ super }, 3, function(c)
+    awful.button({ SUPER }, 3, function(c)
       if c.floating then
         c:activate({ context = "mouse_click", action = "mouse_resize" })
       end

@@ -1,4 +1,4 @@
--- Mostly from https://github.com/chadcat7/crystal/blob/aura/ui/lock/init.lua/
+-- Credit to https://github.com/chadcat7/crystal/blob/aura/ui/lock/init.lua/
 
 require("ui.lock.lockscreen")
 
@@ -82,15 +82,20 @@ local function grab()
   grabber:start()
 end
 
-awesome.connect_signal("ui::lock::toggle", function()
+local function toggle_lock()
   awesome.emit_signal("ui::lock::state", true)
+  client.focus = nil
   grab()
+end
+
+awesome.connect_signal("ui::lock::toggle", function()
+  toggle_lock()
 end)
 
--- Startup locking behavior
+-- Don't require auth if login handoff from the .bash_profile script is present
 if h.is_file(os.getenv("HOME") .. "/.cache/passivelemon/loginauth") then
   os.remove(os.getenv("HOME") .. "/.cache/passivelemon/loginauth")
 else
-  awesome.emit_signal('ui::lock::toggle')
+  toggle_lock()
 end
 

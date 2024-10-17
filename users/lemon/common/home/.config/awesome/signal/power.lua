@@ -25,9 +25,9 @@ end
 
 local function power()
   update_devices()
-  ac = get_device("line_power_ACAD").online
-  perc = get_device("battery_BAT1").percentage
-  time = get_device("battery_BAT1").time_to_empty
+  local ac = get_device("line_power_ACAD").online
+  local perc = get_device("battery_BAT1").percentage
+  local time = get_device("battery_BAT1").time_to_empty
   emit(ac, perc, time)
 end
 power()

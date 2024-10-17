@@ -570,9 +570,13 @@ awful.screen.connect_for_each_screen(function(s)
     main_timer:again()
   end)
 
-  awesome.connect_signal("ui::control::toggle", function()
+  awesome.connect_signal("ui::control::toggle", function(state)
     awesome.emit_signal("signal::playerctl::update")
-    if main.screen.index == awful.screen.focused().index then
+    if state == true then
+      main.visible = true
+    elseif state == false then
+      main.visible = false
+    elseif main.screen.index == awful.screen.focused().index then
       main.visible = not main.visible
     else
       main.visible = false

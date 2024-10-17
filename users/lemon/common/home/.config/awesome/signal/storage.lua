@@ -1,6 +1,8 @@
 local awful = require("awful")
 local gears = require("gears")
 
+local lfs = require("lfs")
+
 -- storage_stats_dict
 -- device = { (filesystem) (1k-blocks) (used) (available) (use%) (mounted on) }
 
