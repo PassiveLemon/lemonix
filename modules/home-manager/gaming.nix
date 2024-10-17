@@ -40,8 +40,6 @@ in
         sidequest
         nexusmods-app beatsabermodmanager
         xrgears
-        #(callPackage ../../pkgs/sphvr { gulkan = pkgs.callPackage ../../pkgs/sphvr/gulkan.nix { }; })
-        #(callPackage ../../pkgs/vr-video-player { })
       ];
 
       programs.steamvr = {
