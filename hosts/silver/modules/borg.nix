@@ -39,6 +39,7 @@
         "/home/lemon/Music"
         "/home/lemon/.config"
         "/home/lemon/.local/share/gdlauncher_carbon/data/instances"
+        "/home/HDD2TBEXT4/Media/Music"
         "/home/BACKUPDRIVE/ManualBackups"
       ];
       repo = "ssh://borg@127.0.0.1/home/BACKUPDRIVE/BorgBackups/silver";
