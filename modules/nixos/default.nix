@@ -39,7 +39,7 @@ in
   ];
 
   config = {
-    warnings = mkIf (cfg.system.hibernation.enable && cfg.swap.enable) [
+    warnings = mkIf (cfg.system.hibernation.enable && !cfg.swap.enable) [
       "lemonix: Hibernation is enabled but swap is not. Hibernation will not work."
     ];
   
