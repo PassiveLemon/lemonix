@@ -67,7 +67,7 @@ local volume_bar = wibox.widget({
   {
     id = "background",
     widget = wibox.container.background,
-    forced_width = dpi(total_width - (b.margins * 4) - 32),
+    forced_width = (dpi(total_width) - (b.margins * 4) - dpi(32)),
     forced_height = dpi(32),
     bg = b.bg1,
     fg = b.ui_main_fg,
@@ -180,11 +180,11 @@ local power_menu_button_group = wibox.widget({
 local function power_menu_button_group_hide()
   power_menu_button_group.visible = false
   power_button.visible = true
-  volume_bar:get_children_by_id("background")[1].forced_width = dpi(total_width - (b.margins * 4) - 32)
+  volume_bar:get_children_by_id("background")[1].forced_width = (dpi(total_width) - (b.margins * 4) - dpi(32))
 end
 
 local function power_menu_button_group_show()
-  volume_bar:get_children_by_id("background")[1].forced_width = dpi(total_width - (b.margins * 4) - (32 * 4) - (b.margins * 6))
+  volume_bar:get_children_by_id("background")[1].forced_width = (dpi(total_width) - (b.margins * 4) - (dpi(32) * 4) - (b.margins * 6))
   power_button.visible = false
   power_menu_button_group.visible = true
 end
@@ -291,7 +291,7 @@ local brightness_bar = wibox.widget({
   {
     id = "background",
     widget = wibox.container.background,
-    forced_width = dpi(total_width - (b.margins * 4)),
+    forced_width = (dpi(total_width) - (b.margins * 4)),
     forced_height = dpi(32),
     bg = b.bg1,
     fg = b.ui_main_fg,
@@ -453,7 +453,7 @@ local media_player_bar = wibox.widget({
   {
     id = "background",
     widget = wibox.container.background,
-    forced_width = dpi(total_width - (b.margins * 4)),
+    forced_width = (dpi(total_width) - (b.margins * 4)),
     forced_height = dpi(130),
     bg = b.bg1,
     fg = b.ui_main_fg,

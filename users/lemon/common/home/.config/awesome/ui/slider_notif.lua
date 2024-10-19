@@ -64,7 +64,7 @@ local volume_bar = wibox.widget({
   {
     id = "background",
     widget = wibox.container.background,
-    forced_width = dpi(total_width - (b.margins * 4) - 32),
+    forced_width = (dpi(total_width) - (b.margins * 4)),
     forced_height = dpi(32),
     bg = b.bg1,
     fg = b.ui_main_fg,
@@ -126,7 +126,7 @@ local brightness_bar = wibox.widget({
   {
     id = "background",
     widget = wibox.container.background,
-    forced_width = dpi(total_width - (b.margins * 4)),
+    forced_width = (dpi(total_width) - (b.margins * 4)),
     forced_height = dpi(32),
     bg = b.bg1,
     fg = b.ui_main_fg,
