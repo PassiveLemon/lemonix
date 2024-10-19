@@ -14,8 +14,8 @@ in
   };
 
   imports = [
+    inputs.lemonake.nixosModules.wivrn
     inputs.lemonake.nixosModules.autoadb
-    ./wivrn.nix
   ];
 
   config = mkIf cfg.enable (mkMerge [
@@ -33,12 +33,12 @@ in
           enable = true;
           command = ''
             adb reverse tcp:9757 tcp:9757
-            adb shell am start -a android.intent.action.VIEW -d "wivrn+tcp://localhost" org.meumeu.wivrn
+            adb shell am start -a android.intent.action.VIEW -d "wivrn+tcp://localhost" org.meumeu.wivrn.github
           '';
         };
         wivrn = let
           # Overriden until I somehow fix the cudaSupport stuff
-          wivrnPackage = inputs.lemonake.packages.${pkgs.system}.wivrn-git.override { cudaSupport = true; };
+          wivrnPackage = inputs.lemonake.packages.${pkgs.system}.wivrn.override { cudaSupport = true; };
         in {
           enable = true;
           package = wivrnPackage;
@@ -74,17 +74,28 @@ in
                   encoder = "nvenc";
                   codec = "h264";
                   width = 0.5;
-                  height = 1.0;
-                  offset_x = 0.0;
-                  offset_y = 0.0;
+                  height = 0.25;
+                  offset_x = 0;
+                  offset_y = 0;
+                  group = 0;
                 }
                 {
                   encoder = "nvenc";
                   codec = "h264";
                   width = 0.5;
-                  height = 1.0;
+                  height = 0.75;
+                  offset_x = 0;
+                  offset_y = 0.25;
+                  group = 0;
+                }
+                {
+                  encoder = "nvenc";
+                  codec = "h264";
+                  width = 0.5;
+                  height = 1;
                   offset_x = 0.5;
-                  offset_y = 0.0;
+                  offset_y = 0;
+                  group = 0;
                 }
               ];
               application = inputs.nixpkgs-xr.packages.${pkgs.system}.wlx-overlay-s;

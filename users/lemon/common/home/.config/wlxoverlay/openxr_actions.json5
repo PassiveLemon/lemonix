@@ -76,11 +76,11 @@
       right: "/user/hand/right/input/thumbstick/y"
     },
     show_hide: {
-      // triple_click?
       double_click: true,
       left: "/user/hand/left/input/menu/click",
     },
     space_drag: {
+      triple_click: true,
       left: "/user/hand/left/input/menu/click",
     },
     click_modifier_right: {
