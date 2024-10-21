@@ -4,6 +4,7 @@ local b = require("beautiful")
 local wibox = require("wibox")
 
 local h = require("helpers")
+local user = require("config.user")
 
 local dpi = b.xresources.apply_dpi
 
@@ -16,7 +17,6 @@ screen.connect_signal("request::desktop_decoration", function(s)
 
   -- Space
   local sep = h.text({
-    bg = b.bg2,
     text = " ",
   })
 
@@ -26,7 +26,6 @@ screen.connect_signal("request::desktop_decoration", function(s)
       right = dpi(3),
       bottom = dpi(2),
     },
-    bg = b.bg2,
     text = "",
     font = b.sysfont(dpi(15)),
   })
@@ -34,7 +33,6 @@ screen.connect_signal("request::desktop_decoration", function(s)
     margins = {
       left = dpi(3),
     },
-    bg = b.bg2,
     halign = "left",
   })
   awesome.connect_signal("signal::resource::cpu::data", function(use, _)
@@ -47,7 +45,6 @@ screen.connect_signal("request::desktop_decoration", function(s)
       right = dpi(3),
       bottom = dpi(2),
     },
-    bg = b.bg2,
     text = "",
     font = b.sysfont(dpi(15)),
   })
@@ -55,7 +52,6 @@ screen.connect_signal("request::desktop_decoration", function(s)
     margins = {
       left = dpi(3),
     },
-    bg = b.bg2,
     halign = "left",
   })
   awesome.connect_signal("signal::resource::memory::data", function(free_mem_table)
@@ -67,7 +63,6 @@ screen.connect_signal("request::desktop_decoration", function(s)
     margins = {
       left = dpi(3),
     },
-    bg = b.bg2,
     markup = 'A<span underline="single">a</span>',
   })
   awesome.connect_signal("signal::peripheral::caps::state", function(caps)
@@ -83,7 +78,6 @@ screen.connect_signal("request::desktop_decoration", function(s)
     margins = {
       right = dpi(3),
     },
-    bg = b.bg2,
     text = "󰖀",
   })
   local volume_text = h.text({
@@ -115,10 +109,88 @@ screen.connect_signal("request::desktop_decoration", function(s)
       right = dpi(3),
       left = dpi(3),
     },
-    bg = b.bg2,
+
     text = "󰤨",
     font = b.sysfont(dpi(14)),
   })
+
+  -- Power
+  local battery_icon = h.text({
+    margins = {
+      right = dpi(3),
+      bottom = dpi(2),
+    },
+    text = "󰁹",
+    font = b.sysfont(dpi(10)),
+  })
+  local battery_text = h.text({
+    margins = {
+      right = dpi(3),
+      left = dpi(3),
+    },
+    halign = "left",
+  })
+  local battery_etr = h.text({
+    margins = {
+      right = dpi(3),
+      left = dpi(3),
+    },
+    halign = "left",
+  })
+  awesome.connect_signal("signal::power", function(ac, perc, time)
+    battery_text:get_children_by_id("textbox")[1].text = perc .. "%"
+    if not ac then
+      if perc > 90 then
+        battery_icon:get_children_by_id("textbox")[1].text = "󰁹"
+      elseif perc < 90 then
+        battery_icon:get_children_by_id("textbox")[1].text = "󰂂"
+      elseif perc < 80 then
+        battery_icon:get_children_by_id("textbox")[1].text = "󰂁"
+      elseif perc < 70 then
+        battery_icon:get_children_by_id("textbox")[1].text = "󰂀"
+      elseif perc < 60 then
+        battery_icon:get_children_by_id("textbox")[1].text = "󰁿"
+      elseif perc < 50 then
+        battery_icon:get_children_by_id("textbox")[1].text = "󰁾"
+      elseif perc < 40 then
+        battery_icon:get_children_by_id("textbox")[1].text = "󰁽"
+      elseif perc < 30 then
+        battery_icon:get_children_by_id("textbox")[1].text = "󰁼"
+      elseif perc < 20 then
+        battery_icon:get_children_by_id("textbox")[1].text = "󰁻"
+      elseif perc < 10 then
+        battery_icon:get_children_by_id("textbox")[1].text = "󰁺"
+      end
+      battery_etr.visible = true
+      local _etr = h.round((time / 3600), 1)
+      if _etr > 1 then
+        battery_etr:get_children_by_id("textbox")[1].text = _etr .. " hours"
+      else
+        battery_etr:get_children_by_id("textbox")[1].text = _etr .. " minutes"
+      end
+    else
+      battery_icon:get_children_by_id("textbox")[1].text = "󰂄"
+      battery_etr.visible = false
+    end
+  end)
+
+  -- Brightness
+  local light_icon = h.text({
+    margins = {
+      right = dpi(3),
+    },
+    text = "󰌵",
+  })
+  local light_text = h.text({
+    margins = {
+      right = dpi(3),
+      left = dpi(3),
+    },
+    halign = "left",
+  })
+  awesome.connect_signal("signal::peripheral::brightness::value", function(cur, max)
+    light_text:get_children_by_id("textbox")[1].text = tostring(h.round(((cur / max) * 100), 0)) .. "%"
+  end)
 
   -- Pills
   local pill_nixos = h.button({
@@ -128,11 +200,9 @@ screen.connect_signal("request::desktop_decoration", function(s)
     },
     x = dpi(24),
     y = dpi(24),
-    bg = b.bg2,
     shape = gears.shape.circle,
     text = "",
     font = b.sysfont(dpi(16)),
-    bg_focus = b.bg4,
   })
 
   local pill_systray = wibox.widget({
@@ -149,7 +219,7 @@ screen.connect_signal("request::desktop_decoration", function(s)
       forced_height = dpi(24),
       {
         widget = wibox.container.background,
-        bg = b.bg2,
+        bg = b.bg_secondary,
         shape = gears.shape.rounded_bar,
         forced_height = dpi(24),
         {
@@ -182,7 +252,7 @@ screen.connect_signal("request::desktop_decoration", function(s)
       forced_height = dpi(24),
       {
         widget = wibox.container.background,
-        bg = b.bg2,
+        bg = b.bg_secondary,
         shape = gears.shape.rounded_bar,
         forced_height = dpi(24),
         {
@@ -209,7 +279,7 @@ screen.connect_signal("request::desktop_decoration", function(s)
       forced_height = dpi(24),
       {
         widget = wibox.container.background,
-        bg = b.bg2,
+        bg = b.bg_secondary,
         shape = gears.shape.rounded_bar,
         forced_height = dpi(24),
         {
@@ -223,6 +293,67 @@ screen.connect_signal("request::desktop_decoration", function(s)
     },
   })
 
+  local pill_brightness = wibox.widget({
+    layout = wibox.layout.margin,
+    margins = {
+      right = dpi(2),
+      left = dpi(2),
+    },
+    {
+      widget = wibox.container.place,
+      valign = "center",
+      halign = "center",
+      forced_height = dpi(24),
+      {
+        widget = wibox.container.background,
+        bg = b.bg_secondary,
+        shape = gears.shape.rounded_bar,
+        forced_height = dpi(24),
+        {
+          layout = wibox.layout.fixed.horizontal,
+          sep,
+          light_icon,
+          light_text,
+          sep,
+        },
+      },
+    },
+  })
+  if not user.has_brightness then
+    pill_brightness.visible = false
+  end
+
+  local pill_battery = wibox.widget({
+    layout = wibox.layout.margin,
+    margins = {
+      right = dpi(2),
+      left = dpi(2),
+    },
+    {
+      widget = wibox.container.place,
+      valign = "center",
+      halign = "center",
+      forced_height = dpi(24),
+      {
+        widget = wibox.container.background,
+        bg = b.bg_secondary,
+        shape = gears.shape.rounded_bar,
+        forced_height = dpi(24),
+        {
+          layout = wibox.layout.fixed.horizontal,
+          sep,
+          battery_icon,
+          battery_text,
+          battery_etr,
+          sep,
+        },
+      },
+    },
+  })
+  if not user.has_battery then
+    pill_battery.visible = false
+  end
+
   local pill_music = h.button({
     margins = {
       right = dpi(2),
@@ -230,10 +361,8 @@ screen.connect_signal("request::desktop_decoration", function(s)
     },
     x = dpi(24),
     y = dpi(24),
-    bg = b.bg2,
     shape = gears.shape.circle,
     text = "󰎈",
-    bg_focus = b.bg4,
   })
   awesome.connect_signal("signal::playerctl::metadata", function(metadata_table)
     if metadata_table.status == "Playing" then
@@ -256,7 +385,7 @@ screen.connect_signal("request::desktop_decoration", function(s)
       forced_height = dpi(24),
       {
         widget = wibox.container.background,
-        bg = b.bg2,
+        bg = b.bg_secondary,
         shape = gears.shape.rounded_bar,
         forced_height = dpi(24),
         {
@@ -284,7 +413,7 @@ screen.connect_signal("request::desktop_decoration", function(s)
       forced_height = dpi(24),
       {
         widget = wibox.container.background,
-        bg = b.bg2,
+        bg = b.bg_secondary,
         shape = gears.shape.rounded_bar,
         forced_height = dpi(24),
         {
@@ -314,7 +443,7 @@ screen.connect_signal("request::desktop_decoration", function(s)
       forced_height = dpi(24),
       {
         widget = wibox.container.background,
-        bg = b.bg2,
+        bg = b.bg_secondary,
         shape = gears.shape.rounded_bar,
         forced_height = dpi(24),
         {
@@ -351,7 +480,7 @@ screen.connect_signal("request::desktop_decoration", function(s)
       forced_height = dpi(24),
       {
         widget = wibox.container.background,
-        bg = b.bg2,
+        bg = b.bg_secondary,
         {
           layout = wibox.layout.fixed.horizontal,
           sep,
@@ -400,10 +529,13 @@ screen.connect_signal("request::desktop_decoration", function(s)
 
   -- Bar
   s.wibar = awful.wibar({
-    position = "top",
-    screen = s,
+    width = dpi(1920),
     height = dpi(32),
+    bg = b.bg_primary,
+    fg = b.fg_primary,
     border_width = dpi(0),
+    screen = s,
+    position = "top",
     type = "dock",
     widget = {
       layout = wibox.layout.align.horizontal,
@@ -425,7 +557,7 @@ screen.connect_signal("request::desktop_decoration", function(s)
             forced_height = dpi(24),
             {
               widget = wibox.container.background,
-              bg = b.bg2,
+              bg = b.bg_secondary,
               shape = gears.shape.rounded_bar,
               forced_height = dpi(24),
               {
@@ -437,6 +569,8 @@ screen.connect_signal("request::desktop_decoration", function(s)
         },
         pill_cpu,
         pill_memory,
+        pill_brightness,
+        pill_battery,
       },
       { -- Center
         layout = wibox.layout.flex.horizontal,
@@ -453,7 +587,7 @@ screen.connect_signal("request::desktop_decoration", function(s)
             forced_height = dpi(24),
             {
               widget = wibox.container.background,
-              bg = b.bg2,
+              bg = b.bg_secondary,
               shape = gears.shape.rounded_bar,
               forced_height = dpi(24),
               {

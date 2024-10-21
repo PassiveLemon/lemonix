@@ -9,6 +9,7 @@ user.visual_editor = "lite-xl"
 user.editor_cmd = user.terminal .. " -e " .. user.editor
 user.super = "Mod4" -- Windows key
 user.has_brightness = true
+user.has_battery = true
 
 awful.spawn.with_shell("autorandr -l Default")
 awful.spawn.with_shell("pidof -q xss-lock || xss-lock awesome-client 'awesome.emit_signal(\"ui::lock::toggle\")' &")

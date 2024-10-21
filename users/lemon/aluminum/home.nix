@@ -22,9 +22,6 @@
       ".config/awesome/ui/init.lua" = {
         source = ./home/.config/awesome/ui/init.lua;
       };
-      ".config/awesome/ui/bar.lua" = {
-        source = ./home/.config/awesome/ui/bar.lua;
-      };
       ".config/awesome/liblua_pam.so" = {
         source = ./home/.config/awesome/liblua_pam.so;
       };

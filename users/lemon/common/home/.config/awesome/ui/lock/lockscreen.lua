@@ -27,7 +27,7 @@ awful.screen.connect_for_each_screen(function(s)
   local circle = wibox.widget({
     id = "bg",
     widget = wibox.container.background,
-    bg = b.bg,
+    bg = b.bg_primary,
     shape = gears.shape.circle,
     {
       id = "arcchart",
@@ -38,16 +38,16 @@ awful.screen.connect_for_each_screen(function(s)
       rounded_edge = false,
       thickness = dpi(8),
       start_angle = 0,
-      bg = b.fg,
-      colors = { b.fg },
+      bg = b.fg_primary,
+      colors = { b.fg_primary },
       forced_width = dpi(180),
       forced_height = dpi(180),
     },
   })
 
   local function reset()
-    circle:get_children_by_id("arcchart")[1].bg = b.fg
-    circle:get_children_by_id("arcchart")[1].colors = { b.fg }
+    circle:get_children_by_id("arcchart")[1].bg = b.fg_primary
+    circle:get_children_by_id("arcchart")[1].colors = { b.fg_primary }
     circle:get_children_by_id("arcchart")[1].value = 0
   end
   local reset_timer = gears.timer({
@@ -60,29 +60,29 @@ awful.screen.connect_for_each_screen(function(s)
 
   awesome.connect_signal("ui::lock::keypress", function(key, input, auth)
     if #key == 1 then
-      circle:get_children_by_id("arcchart")[1].colors = { b.greend }
+      circle:get_children_by_id("arcchart")[1].colors = { b.green }
       circle:get_children_by_id("arcchart")[1].value = 20
       circle:get_children_by_id("arcchart")[1].start_angle = get_random()
     elseif key == "BackSpace" then
-      circle:get_children_by_id("arcchart")[1].colors = { b.redd }
+      circle:get_children_by_id("arcchart")[1].colors = { b.red }
       circle:get_children_by_id("arcchart")[1].value = 20
       circle:get_children_by_id("arcchart")[1].start_angle = get_random()
       if input == 0 then
-        circle:get_children_by_id("arcchart")[1].colors = { b.magentad }
+        circle:get_children_by_id("arcchart")[1].colors = { b.magenta }
         circle:get_children_by_id("arcchart")[1].value = 100
       end
     elseif key == "Escape" then
-      circle:get_children_by_id("arcchart")[1].colors = { b.magentad }
+      circle:get_children_by_id("arcchart")[1].colors = { b.magenta }
       circle:get_children_by_id("arcchart")[1].value = 100
     elseif key == "Return" then
       if auth == nil then
-        circle:get_children_by_id("arcchart")[1].colors = { b.magentad }
+        circle:get_children_by_id("arcchart")[1].colors = { b.magenta }
         circle:get_children_by_id("arcchart")[1].value = 100
       elseif auth then
-        circle:get_children_by_id("arcchart")[1].colors = { b.greend }
+        circle:get_children_by_id("arcchart")[1].colors = { b.green }
         circle:get_children_by_id("arcchart")[1].value = 100
       elseif not auth then
-        circle:get_children_by_id("arcchart")[1].colors = { b.redd }
+        circle:get_children_by_id("arcchart")[1].colors = { b.red }
         circle:get_children_by_id("arcchart")[1].value = 100
       end
     end
@@ -106,9 +106,9 @@ awful.screen.connect_for_each_screen(function(s)
   end)
 
   local main = wibox({
-    screen = s,
     width = s.geometry.width,
     height = s.geometry.height,
+    screen = s,
     ontop = true,
     visible = false,
     type = "desktop",

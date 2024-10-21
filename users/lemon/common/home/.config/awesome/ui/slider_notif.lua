@@ -18,7 +18,6 @@ local volume_icon = h.text({
   },
   x = dpi(18),
   y = dpi(15),
-  bg = b.bg1,
   text = "󰕾",
   font = b.sysfont(dpi(14)),
 })
@@ -30,7 +29,6 @@ local volume_slider = h.slider({
   },
   x = dpi(total_width),
   y = dpi(16),
-  bg = b.bg1,
   max = 100,
   handle_width = dpi(16),
   bar_height = dpi(6),
@@ -66,8 +64,7 @@ local volume_bar = wibox.widget({
     widget = wibox.container.background,
     forced_width = (dpi(total_width) - (b.margins * 4)),
     forced_height = dpi(32),
-    bg = b.bg1,
-    fg = b.ui_main_fg,
+    bg = b.bg_secondary,
     shape = gears.shape.rounded_bar,
     {
       layout = wibox.layout.fixed.horizontal,
@@ -86,7 +83,6 @@ local brightness_icon = h.text({
   },
   x = dpi(18),
   y = dpi(15),
-  bg = b.bg1,
   text = "",
   font = b.sysfont(dpi(14)),
 })
@@ -98,7 +94,6 @@ local brightness_slider = h.slider({
   },
   x = dpi(total_width),
   y = dpi(16),
-  bg = b.bg1,
   max = 100,
   handle_width = dpi(16),
   bar_height = dpi(6),
@@ -128,8 +123,7 @@ local brightness_bar = wibox.widget({
     widget = wibox.container.background,
     forced_width = (dpi(total_width) - (b.margins * 4)),
     forced_height = dpi(32),
-    bg = b.bg1,
-    fg = b.ui_main_fg,
+    bg = b.bg_secondary,
     shape = gears.shape.rounded_bar,
     {
       layout = wibox.layout.fixed.horizontal,
@@ -143,11 +137,13 @@ awful.screen.connect_for_each_screen(function(s)
   local main = awful.popup({
     x = dpi(s.geometry.x + 12),
     y = dpi(32 + 12),
+    bg = b.bg_primary,
+    fg = b.fg_primary,
     border_width = dpi(3),
     border_color = b.border_color_active,
+    screen = s,
     ontop = true,
     visible = false,
-    screen = s,
     type = "popup_menu",
     widget = {
       widget = wibox.container.margin,
