@@ -11,6 +11,13 @@ user.super = "Mod4" -- Windows key
 user.has_brightness = true
 user.has_battery = true
 
+user.bar = {
+  cpu = true,
+  memory = false,
+  brightness = true,
+  battery = true,
+}
+
 awful.spawn.with_shell("autorandr -l Default")
 awful.spawn.with_shell("pidof -q xss-lock || xss-lock awesome-client 'awesome.emit_signal(\"ui::lock::toggle\")' &")
 awful.spawn.with_shell("pidof -q fusuma || fusuma -d")

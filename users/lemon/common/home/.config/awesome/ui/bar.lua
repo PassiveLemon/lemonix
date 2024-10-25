@@ -265,6 +265,9 @@ screen.connect_signal("request::desktop_decoration", function(s)
       },
     },
   })
+  if not user.bar.cpu then
+    pill_cpu.visible = false
+  end
 
   local pill_memory = wibox.widget({
     widget = wibox.container.margin,
@@ -292,6 +295,9 @@ screen.connect_signal("request::desktop_decoration", function(s)
       },
     },
   })
+  if not user.bar.memory then
+    pill_memory.visible = false
+  end
 
   local pill_brightness = wibox.widget({
     layout = wibox.layout.margin,
@@ -319,7 +325,7 @@ screen.connect_signal("request::desktop_decoration", function(s)
       },
     },
   })
-  if not user.has_brightness then
+  if not user.bar.brightness then
     pill_brightness.visible = false
   end
 
@@ -350,7 +356,7 @@ screen.connect_signal("request::desktop_decoration", function(s)
       },
     },
   })
-  if not user.has_battery then
+  if not user.bar.battery then
     pill_battery.visible = false
   end
 
@@ -529,7 +535,7 @@ screen.connect_signal("request::desktop_decoration", function(s)
 
   -- Bar
   s.wibar = awful.wibar({
-    width = dpi(1920),
+    width = s.geometry.width,
     height = dpi(32),
     bg = b.bg_primary,
     fg = b.fg_primary,
