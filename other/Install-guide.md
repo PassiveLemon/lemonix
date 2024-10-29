@@ -1,4 +1,5 @@
 #### This is pretty much just a guide for myself. You can use it yourself if you want I guess.
+#### Replace `silver` or `lemon` with the appropriate host and/or user.
 # Root
 ```
 sudo -i
@@ -24,7 +25,7 @@ OK -> Should see a connection success line
 > quit
 ```
 
-# Partitioning (Will eventually be replaced with Disko)
+# Partitioning
 In this example, we create a 1 GiB FAT32 ESP partition at the front (With space to align to blocks), a 24 GiB swap partition at the end, and the rest will be EXT4. This way if we install more RAM and need to increase our swap, we can just shrink the end of the EXT4 partition. For Swap, I like to do the amount of system memory * 1.5, so 16 GiB of memory gives us 24 GiB of swap.
 
 In the case of a laptop that uses hibernate, set the swap partition to be at least the size of installed RAM. Otherwise, systems that do not need hibernation can simply use a swap file from `modules/nixos/swap.nix`.
@@ -57,12 +58,11 @@ nixos-generate-config --root /mnt
 ```
 
 ## Setting up NixOS configuration
-#### Replace `silver` with the appropriate host.
 If WiFi is needed:
 ```
 nano /mnt/etc/nixos/configuration.nix
 ```
-> `networking.networkmanager.enable = true`
+> add: `networking.networkmanager.enable = true`
 
 Find a temporary directory:
 ```
@@ -91,7 +91,7 @@ bash ./other/installer.sh
 Hardware config should be in `/etc/nixos-backup/` if needed.
 
 Perform any manual tasks. Ex:
-- Git clones to the appropriate locations like AWM libraries (Until I can figure out a solution to this)
+- Setting any files
 - Lanzaboote `sbctl create-keys` `sbctl enroll-keys`
 - Bat theme cache build
 
@@ -102,3 +102,4 @@ reboot
 ```
 
 The system should be set up and ready for use. The only thing left after this is stuff that isn't managed by Nix, such as web logins, application settings, etc.
+

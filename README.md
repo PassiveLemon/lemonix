@@ -1,30 +1,26 @@
-# lemonix </br>
+# lemonix
 
 These are my dotfiles for my NixOS system. This is configuration for the stuff I use on a daily basis, so things will ALWAYS be changing. This is for my own organization and preservation so I will NOT guarantee compatibility on other systems. </br>
 
-## Overview </br>
-- NixOS system flake with Home-Manager.
+## Overview
+- NixOS flake with Home-Manager, designed for multiple hosts and users.
 - Extensible modules for NixOS and Home-Manager.
 - AwesomeWM configuration:
-  - Bar + systray under NixOS icon
   - Lockscreen + PAM authentication (Supports fprintd)
-  - Media player, powermenu, resource monitor
-  - Wacky little crosshairs for games
-  - Playerctl and system resource signals
-- Tym terminal with Hilbish as the terminal shell.
-- Custom color theme for Discord, VSCode, Lite-XL, and Obsidian. (GTK WIP)
-- Volantes Cursors
-- Papirus Icons
-- Common configuration for a variety of programs.
+  - Bar + systray under NixOS icon
+  - Control menu with sliders, powermenu, and a media player.
+  - Playerctl and various signals for resources, peripherals, and other miscellany.
+- Tym terminal with Hilbish shell.
+- Custom color theme for Lite-XL, Discord, and Obsidian. (GTK may or may not happen)
+- Papirus Icons and Volantes Cursors.
+- Configuration for a variety of programs.
 
 ## Gallery
-<img src="other/Desktop-lock.png"> </br>
-<img src="other/Desktop-empty.png"> </br>
-<img src="other/Desktop-media.png"> </br>
-- Powermenu and resource monitor not shown.</br>
-- Images currently may or may not be updated. </br>
+<img src="other/Desktop-lock.png">
+<img src="other/Desktop-1.png">
+- Images updated Oct 29, 2024.
 
-## Install </br>
+## Install
 There is an install script and install guide in [/other](https://github.com/passivelemon/lemonix/tree/master/other) to aid in installation.
 
 > [!WARNING]

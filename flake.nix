@@ -106,7 +106,7 @@
         ];
       };
       # Raspberry Pi
-      # The fucking storage drive died so it's out of commission.
+      # SD card died and will be offline for the foreseeable future.
       #"palladium" = inputs.nixos.lib.nixosSystem {
       #  inherit specialArgs;
       #  system = "aarch64-linux";
@@ -142,17 +142,6 @@
     };
 
     overlays = import ./overlays { inherit inputs outputs; };
-
-    nixConfig = {
-      extra-substituters = [
-        "https://nix-community.cachix.org"
-        "https://passivelemon.cachix.org"
-      ];
-      extra-trusted-public-keys = [
-        "nix-community.cachix.org-1:mB9FSh9qf2dCimDSUo8Zy7bkq5CX+/rkCWyvRCYg3Fs="
-        "passivelemon.cachix.org-1:ScYjLCvvLi70S95SMMr8lMilpZHuafLP3CK/nZ9AaXM="
-      ];
-    };
   };
 }
 
