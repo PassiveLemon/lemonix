@@ -9,7 +9,7 @@
       headsetcontrol
       easytag onthespot
 
-      act dive trivy
+      lazydocker act dive trivy
 
       inputs.lemonake.packages.${pkgs.system}.hd2pystratmacro
       inputs.lemonake.packages.${pkgs.system}.poepyautopot

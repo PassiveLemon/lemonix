@@ -2,20 +2,8 @@
   networking = {
     firewall = {
       allowedTCPPorts = [
-        #53 # DNS
-        #80 443 # Web traffic
-        #2377 7946 # Docker socket & Swarm
         54384 # LiveSync
       ];
-      # allowedUDPPorts = [
-      #   #4789 7946 # Docker Swarm
-      # ];
-      # allowedTCPPortRanges = [
-      #   #{ from = 50000; to = 56000; } # Docker containers
-      # ];
-      # allowedUDPPortRanges = [
-      #   #{ from = 50000; to = 56000; } # Docker containers
-      # ];
     };
   };
 
