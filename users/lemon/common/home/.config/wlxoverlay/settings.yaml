@@ -28,9 +28,9 @@ elements:
     text: "Exit"
     click_down:
       - type: Exec
-        command: [ "pkill", "-f", "wlx-overlay-s" ]
+        command: [ "systemctl", "--user", "restart", "wivrn" ]
       - type: Toast
-        message: "Killing WlxOverlay"
+        message: "Killing WiVRn"
 
   - type: Button
     rect: [440, 0, 40, 40]

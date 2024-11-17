@@ -33,25 +33,28 @@ in
           enable = true;
           command = ''
             adb reverse tcp:9757 tcp:9757
-            adb shell am start -a android.intent.action.VIEW -d "wivrn+tcp://localhost" org.meumeu.wivrn.github
+            adb shell monkey -p org.meumeu.wivrn.github 1
           '';
         };
         wivrn = let
           # Overriden until I somehow fix the cudaSupport stuff
           wivrnPackage = inputs.lemonake.packages.${pkgs.system}.wivrn.override { cudaSupport = true; };
+          # wivrnPackage = inputs.lemonake.packages.${pkgs.system}.wivrn;
         in {
           enable = true;
           package = wivrnPackage;
           openFirewall = false;
           defaultRuntime = true;
           autoStart = true;
+          highPriority = true;
           monadoEnvironment = {
             XRT_LOG = "warning";
             XRT_COMPOSITOR_LOG = "warning";
             XRT_PRINT_OPTIONS = "off";
             PROBER_LOG = "warning";
           };
-          extraPackages = [
+          extraServerFlags = [ "--no-publish-service" ];
+          extraPackages = with pkgs; [
             # Commented out until they fix the build
             # pkgs.linuxKernel.packages.linux_zen.nvidia_x11
             (config.boot.kernelPackages.nvidiaPackages.mkDriver {
@@ -62,8 +65,10 @@ in
               settingsSha256 = "sha256-ZpuVZybW6CFN/gz9rx+UJvQ715FZnAOYfHn5jt5Z2C8=";
               persistencedSha256 = "sha256-a1D7ZZmcKFWfPjjH1REqPM5j/YLWKnbkP9qfRyIyxAw=";
             })
-            pkgs.procps
-            pkgs.bash
+            systemd
+            bash
+            procps
+            gawk
           ];
           config = {
             enable = true;
@@ -99,13 +104,18 @@ in
                 }
               ];
               application = inputs.nixpkgs-xr.packages.${pkgs.system}.wlx-overlay-s;
+              tcp_only = true;
             };
           };
         };
       };
 
-      hardware.opengl.extraPackages = [
+      # Wlx-overlay-s config has some stuff that needs it
+      # systemd.user.services.wivrn.serviceConfig.ProtectProc = lib.mkForce "default";
+
+      hardware.opengl.extraPackages = with pkgs; [
         inputs.lemonake.packages.${pkgs.system}.monado-vulkan-layers-git
+        vulkan-validation-layers
       ];
     })
     (mkIf cfg.streaming.enable {
