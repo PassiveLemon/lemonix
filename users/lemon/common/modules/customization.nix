@@ -67,6 +67,8 @@
       bookmarks = [
         "file:///home/lemon/.local/share/Trash"
         "file:///home/lemon/Documents"
+        "file:///home/lemon/Downloads"
+        "file:///home/lemon/Shared"
       ];
     };
   };
