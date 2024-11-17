@@ -258,7 +258,7 @@ local brightness_slider = h.slider({
   },
   x = dpi(total_width),
   y = dpi(16),
-  max = 100,
+  max = 255,
   handle_width = dpi(16),
   bar_height = dpi(6),
   bar_shape = gears.shape.rounded_rect,
