@@ -7,8 +7,9 @@
     };
     modeling = {
       enable = true;
-      design.enable = true;
+      cad.enable = true;
       printing.enable = true;
+      avatar.enable = true;
     };
   };
 }
