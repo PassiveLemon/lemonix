@@ -2,8 +2,8 @@
   description = "Lemon's NixOS";
 
   inputs = {
-    nixos-old.url = "github:nixos/nixpkgs/nixos-23.11";
-    nixos.url = "github:nixos/nixpkgs/nixos-24.05";
+    nixos-old.url = "github:nixos/nixpkgs/nixos-24.05";
+    nixos.url = "github:nixos/nixpkgs/nixos-24.11";
     nixpkgs.url = "github:nixos/nixpkgs/nixpkgs-unstable";
     master.url = "github:nixos/nixpkgs";
     nixos-hardware.url = "github:nixos/nixos-hardware";
