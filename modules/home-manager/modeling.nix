@@ -17,8 +17,7 @@ in
     (mkIf cfg.cad.enable {
       home.packages = with pkgs; [
         freecad openscad
-        ## https://github.com/NixOS/nixpkgs/issues/353961
-        #blender
+        blender
       ];
     })
     (mkIf cfg.printing.enable {
@@ -32,7 +31,7 @@ in
     })
     (mkIf cfg.avatar.enable {
       home.packages = with pkgs; [
-        #blender
+        blender
         unityhub
         inputs.lemonake.packages.${pkgs.system}.alcom
       ];
