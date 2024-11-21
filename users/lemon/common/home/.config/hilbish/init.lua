@@ -1,5 +1,5 @@
-local commander = require 'commander'
-local promptua = require('promptua')
+local commander = require("commander")
+local promptua = require("promptua")
 
 hilbish.opts.greeting = false
 hilbish.opts.motd = false
@@ -75,6 +75,7 @@ hilbish.alias("cat", "bat --theme=Lemon")
 hilbish.alias("tp", "trash put")
 hilbish.alias("tr", "trash restore")
 hilbish.alias("rm", "trash")
+hilbish.alias("rm -r", "trash")
 hilbish.alias("nrs", "sudo nixos-rebuild switch")
 hilbish.alias("nos", "nh os switch ~/Documents/GitHub/lemonix")
 hilbish.alias("hms", "home-manager switch --flake ~/Documents/GitHub/lemonix#" .. hilbish.user .. "@" .. hilbish.host)
@@ -139,7 +140,7 @@ commander.register("nfu", function(args)
     args_str = ".#" .. tostring((args[1] or ""))
   end
 
-  hilbish.run("nix flake update " .. args_str)
+  hilbish.run("nix flake update --flake " .. args_str)
 end)
 
 commander.register("nr", function(args)

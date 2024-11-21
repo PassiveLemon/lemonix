@@ -7,17 +7,17 @@
   home = {
     packages = with pkgs; [
       # Terminal
-      tym hilbish comma fend thefuck trashy pamixer playerctl caffeine-ng imagemagick appimage-run ventoy-bin
+      tym hilbish comma fend thefuck trashy pamixer playerctl imagemagick appimage-run ventoy-bin
       eza bat fd ripgrep jq nh
       # Browsing
       firefox
       # Communication
-      srain teams-for-linux
+      srain
       # File/storage management
       pcmanfm xarchiver filezilla gparted
       ffmpegthumbnailer
       # Development
-      lite-xl vscode github-desktop imhex
+      lite-xl vscode github-desktop
       shellcheck luajitPackages.luacheck python312Packages.flake8
       nil pyright lua-language-server bash-language-server dockerfile-language-server-nodejs yaml-language-server
       nixpkgs-review nixfmt-rfc-style
