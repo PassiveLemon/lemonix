@@ -2,6 +2,9 @@
 let
   inherit (lib) mkIf mkEnableOption mkMerge;
   cfg = config.lemonix.gaming;
+  # Overriden until I somehow fix the cudaSupport stuff
+  wivrnPackage = inputs.lemonake.packages.${pkgs.system}.wivrn-git.override { cudaSupport = true; };
+  # wivrnPackage = inputs.lemonake.packages.${pkgs.system}.wivrn;
 in
 {
   options = {
@@ -61,13 +64,17 @@ in
             version = 1;
           };
         };
-        openxrRuntimeOverride = let
-          # Overriden until I somehow fix the cudaSupport stuff
-          wivrnPackage = inputs.lemonake.packages.${pkgs.system}.wivrn.override { cudaSupport = true; };
-        in {
+        openxrRuntimeOverride = {
           enable = true;
           config = "path";
           path = "${wivrnPackage}/share/openxr/1/openxr_wivrn.json";
+        };
+        helperScript = {
+          enable = true;
+          openvrRuntime = "opencomposite";
+          openvrRuntimePackage = inputs.lemonake.packages.${pkgs.system}.opencomposite-git;
+          openxrRuntime = "wivrn";
+          openxrRuntimePackage = wivrnPackage;
         };
       };
 

@@ -3,7 +3,9 @@
     packages = with pkgs; [
       lxappearance
       shared-mime-info
-      (nerdfonts.override { fonts = [ "FiraCode" "FiraMono" ]; })
+      nerd-fonts.symbols-only
+      nerd-fonts.fira-code
+      nerd-fonts.fira-mono
     ];
     pointerCursor = {
       name = "volantes_cursors";

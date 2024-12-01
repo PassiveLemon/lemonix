@@ -25,14 +25,13 @@
       # Office
       obsidian onlyoffice-bin drawio
       # Audio
-      pavucontrol easyeffects helvum tauon audacity
+      feishin tauon audacity
+      pavucontrol easyeffects helvum
       # Image/Video
       loupe flameshot gimp scrot krita
       mpv libsForQt5.kdenlive
       # Miscellaneous
-      localsend xclicker libsForQt5.kruler
-      
-      inputs.lemonake.packages.${pkgs.system}.picom-tag
+      picom localsend xclicker libsForQt5.kruler
     ];
     username = "lemon";
     homeDirectory = "/home/lemon";

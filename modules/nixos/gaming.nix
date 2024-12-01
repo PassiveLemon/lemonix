@@ -40,7 +40,7 @@ in
         };
         wivrn = let
           # Overriden until I somehow fix the cudaSupport stuff
-          wivrnPackage = inputs.lemonake.packages.${pkgs.system}.wivrn.override { cudaSupport = true; };
+          wivrnPackage = inputs.lemonake.packages.${pkgs.system}.wivrn-git.override { cudaSupport = true; };
           # wivrnPackage = inputs.lemonake.packages.${pkgs.system}.wivrn;
         in {
           enable = true;
@@ -57,11 +57,11 @@ in
           };
           extraServerFlags = [ "--no-publish-service" ];
           extraPackages = with pkgs; [
-            pkgs.linuxKernel.packages.linux_zen.nvidia_x11
-            systemd
-            bash
-            procps
-            gawk
+            systemd # systemctl
+            bash # for the below
+            (config.hardware.nvidia.package) # nvidia-smi
+            procps # top
+            gawk # awk
           ];
           config = {
             enable = true;

@@ -7,7 +7,8 @@
   home = {
     packages = with pkgs; [
       headsetcontrol
-      easytag onthespot
+      easytag
+      (callPackage ../../../pkgs/onthespot.nix { })
 
       lazydocker act dive trivy
 
