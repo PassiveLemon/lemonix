@@ -206,7 +206,15 @@
         "x-scheme-handler/https" = "firefox.desktop";
       };
     };
-    configFile."mimeapps.list".force = true;
+    desktopEntries = {
+      "pcmanfm-desktop-pref" = {
+        name = "Desktop Preferences";
+        noDisplay = true;
+      };
+    };
+    configFile = {
+      "mimeapps.list".force = true;
+    };
   };
 
   nixpkgs = {

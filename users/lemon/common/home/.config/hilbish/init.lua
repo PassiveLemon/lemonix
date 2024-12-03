@@ -37,6 +37,15 @@ promptua.setTheme({
     format    = "@style@icon@info",
   },
   {
+		provider = "command.execTime",
+		style    = "magenta",
+	},
+	{
+    provider = "command.execTimeBool",
+    separator = "┃ ",
+    format    = "@style@icon@info",
+  },
+	{
     provider  = "git.branch",
     style     = "red",
     format    = "@style@icon@info",
@@ -72,16 +81,13 @@ end
 
 hilbish.alias("ls", "eza -lgF --group-directories-first")
 hilbish.alias("cat", "bat --theme=Lemon")
-hilbish.alias("tp", "trash put")
-hilbish.alias("tr", "trash restore")
-hilbish.alias("rm", "trash")
-hilbish.alias("rm -r", "trash")
+hilbish.alias("rmx", "trash")
 hilbish.alias("nrs", "sudo nixos-rebuild switch")
 hilbish.alias("nos", "nh os switch ~/Documents/GitHub/lemonix")
 hilbish.alias("hms", "home-manager switch --flake ~/Documents/GitHub/lemonix#" .. hilbish.user .. "@" .. hilbish.host)
 hilbish.alias("nhs", "nh home switch ~/Documents/GitHub/lemonix")
 hilbish.alias("npr", "nixpkgs-review rev --print-result HEAD")
-hilbish.alias("comma", ",")
+hilbish.alias("cma", ",")
 
 commander.register("nb", function(args)
   if (args[1] == "--help") or (args[1] == "-h") then

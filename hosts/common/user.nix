@@ -1,7 +1,7 @@
 { pkgs, ... }: {
   environment = {
     systemPackages = with pkgs; [
-      xss-lock
+      xss-lock gtk3
       networkmanagerapplet
     ];
   };

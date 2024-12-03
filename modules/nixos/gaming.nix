@@ -40,7 +40,7 @@ in
         };
         wivrn = let
           # Overriden until I somehow fix the cudaSupport stuff
-          wivrnPackage = inputs.lemonake.packages.${pkgs.system}.wivrn-git.override { cudaSupport = true; };
+          wivrnPackage = inputs.lemonake.packages.${pkgs.system}.wivrn.override { cudaSupport = true; };
           # wivrnPackage = inputs.lemonake.packages.${pkgs.system}.wivrn;
         in {
           enable = true;

@@ -93,8 +93,9 @@ awesome.connect_signal("ui::lock::toggle", function()
 end)
 
 -- Don't require auth if login handoff from the .bash_profile script is present
-if h.is_file(os.getenv("HOME") .. "/.cache/passivelemon/loginauth") then
-  os.remove(os.getenv("HOME") .. "/.cache/passivelemon/loginauth")
+local auth_file = os.getenv("HOME") .. "/.cache/passivelemon/loginauth"
+if h.is_file(auth_file) then
+  os.remove(auth_file)
 else
   toggle_lock()
 end
