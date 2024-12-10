@@ -38,9 +38,6 @@
       ".config/awesome/ui/crosshair.lua" = {
         source = ./home/.config/awesome/ui/crosshair.lua;
       };
-      ".config/awesome/liblua_pam.so" = {
-        source = ./home/.config/awesome/liblua_pam.so;
-      };
       ".config/lite-xl/init.lua" = {
         source = ./home/.config/lite-xl/init.lua;
       };

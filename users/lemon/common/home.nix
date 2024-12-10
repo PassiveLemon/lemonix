@@ -35,7 +35,10 @@
     ];
     username = "lemon";
     homeDirectory = "/home/lemon";
-    file = {
+    file = let
+      lua-pam = pkgs.callPackage ../../../pkgs/lua-pam.nix { };
+    in
+    {
       ".config/" = {
         source = ./home/.config;
         recursive = true;
@@ -43,6 +46,9 @@
       ".config/awesome/libraries/bling" = {
         source = inputs.awesomewm-bling;
         recursive = true;
+      };
+      ".config/awesome/liblua_pam.so" = {
+        source = "${lua-pam}/lib/liblua_pam.so";
       };
       ".config/lite-xl/libraries/widget" = {
         source = inputs.lite-xl-widget;

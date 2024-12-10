@@ -1,11 +1,12 @@
--- Credit to https://github.com/chadcat7/crystal/blob/aura/ui/lock/init.lua/
+-- Heavily inspired by https://github.com/chadcat7/crystal/blob/aura/ui/lock/init.lua/
 
 require("ui.lock.lockscreen")
 
 local awful = require("awful")
 
 local h = require("helpers")
-local pam = require("liblua_pam") -- Compile and link from https://github.com/RMTT/lua-pam/. `nix-shell -p cmake lua linux-pam`
+
+local pam = require("liblua_pam") -- https://github.com/RMTT/lua-pam/
 
 --
 -- Lockscreen function
@@ -31,7 +32,7 @@ local function grab()
         end
       }
     },
-    keypressed_callback = function(_, _, key, _)
+    keypressed_callback = function(_, _, key)
       if #key == 1 then
         if input_count < 32 then
           awesome.emit_signal("ui::lock::keypress", key, input_count, nil)
@@ -62,7 +63,7 @@ local function grab()
         awesome.emit_signal("ui::lock::keypress", key, 0, nil)
       end
     end,
-    keyreleased_callback = function(self, _, key, _)
+    keyreleased_callback = function(self, _, key)
       if key == "Return" then
         if auth(input) then
           awesome.emit_signal("ui::lock::keypress", key, input_count, true)
