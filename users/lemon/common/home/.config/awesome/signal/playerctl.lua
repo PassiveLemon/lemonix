@@ -49,7 +49,9 @@ local function art_image_locator(client_cache_dir, art_url_trim)
     if h.is_file(art_cache_dir .. art_url_trim) then
       metadata.media.art_image = gears.surface.load_uncached(art_cache_dir .. art_url_trim)
     else
-      awful.spawn.with_shell("curl -Lso " .. art_cache_dir .. art_url_trim .. ' "' .. metadata.media.art_url .. '"')
+      awful.spawn.easy_async_with_shell("curl -Lso " .. art_cache_dir .. art_url_trim .. ' "' .. metadata.media.art_url .. '"', function()
+        metadata.media.art_image = gears.surface.load_uncached(art_cache_dir .. art_url_trim)
+      end)
     end
   else
     if h.is_file(client_cache_dir .. art_url_trim) then
@@ -58,21 +60,33 @@ local function art_image_locator(client_cache_dir, art_url_trim)
   end
 end
 
+local function art_image_name(album, backup)
+  local album_string = album:gsub("%W", "")
+  if album_string == "" or album_string == nil then
+    return backup
+  else
+    return album_string
+  end
+end
+
 local function art_image_fetch()
-  -- By means of the highest priority client, we define the art file name (trim) by grabbing a unique part of the url and a client cache directory if supported
+  -- We normalize the album name and use that as the cache name for the album art, that way it's only downloaded once per album, which makes caching more efficient. In case the normalization results in a bad filename, we use a backup string
   if metadata.client.player_name == "tauon" then
     local art_url_trim = metadata.media.art_url:gsub(".*/", "")
     local client_cache_dir = os.getenv("HOME") .. "/.cache/TauonMusicBox/export/"
     art_image_locator(client_cache_dir, art_url_trim)
   elseif metadata.client.player_name == "Feishin" then
-    local art_url_trim = metadata.media.art_url:match("?id=(.*)&u=")
+    local art_image_name_backup = metadata.media.art_url:match("?id=(.*)&u=")
+    local art_url_trim = art_image_name(metadata.media.album, art_image_name_backup)
     art_image_locator(nil, art_url_trim)
   elseif metadata.client.player_name == "spotify" then
-    local art_url_trim = metadata.media.art_url:gsub(".*/", "")
+    local art_image_name_backup = metadata.media.art_url:gsub(".*/", "")
+    local art_url_trim = art_image_name(metadata.media.album, art_image_name_backup)
     art_image_locator(nil, art_url_trim)
   end
 end
 
+-- If the art isn't already cached then the notification will have the art of the previous media
 local function track_notification()
   if (b.playerctl.notifications) and (metadata.raw_stdout ~= "") then
     naughty.notification({
