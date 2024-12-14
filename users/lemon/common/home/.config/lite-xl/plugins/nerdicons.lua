@@ -125,6 +125,7 @@ local extension_icons = {
   [".lock"]        = { "#f7ca39", "fa-lock"                  },
   [".key"]         = { "#f7ca39", "md-key"                   },
   [".pem"]         = { "#f7ca39", "md-key"                   },
+  [".nim"]         = { "#ffc200", "seti-nim"                 },
 }
 
 local known_filenames_icons = {

@@ -22,7 +22,7 @@ config.fps = 60
 config.animation_rate = 1.0
 config.mouse_wheel_scroll = 70 * SCALE
 config.ignore_files = {
-  "^%.git/",   "^%.hg/",
+  "^%.git/", "^%.hg/",
   "^node_modules/", "^%.cache/", "^__pycache__/",
   "^desktop%.ini$", "^%.DS_Store$", "^%.directory$",
 }
@@ -49,9 +49,15 @@ lintplus.load({ "luacheck", "python", "shellcheck" })
 lspconfig.bashls.setup()
 lspconfig.dockerls.setup()
 lspconfig.nillsp.setup()
+lspconfig.nimlsp.setup()
 lspconfig.pyright.setup()
-lspconfig.sumneko_lua.setup()
 lspconfig.yamlls.setup()
+lspconfig.sumneko_lua.setup({
+  name = "lua-language-server",
+  language = "lua",
+  file_patterns = { "%.lua$" },
+  command = { "lua-language-server", "--configpath", "/home/lemon/Documents/GitHub/lemonix/.luarc.json" }
+})
 
 -- Open documents by default
 local default_path = os.getenv("HOME") .. "/Documents/GitHub"

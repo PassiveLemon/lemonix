@@ -88,6 +88,7 @@ hilbish.alias("hms", "home-manager switch --flake ~/Documents/GitHub/lemonix#" .
 hilbish.alias("nhs", "nh home switch ~/Documents/GitHub/lemonix")
 hilbish.alias("npr", "nixpkgs-review rev --print-result HEAD")
 hilbish.alias("cma", ",")
+hilbish.alias("dc", "docker compose")
 
 commander.register("nb", function(args)
   if (args[1] == "--help") or (args[1] == "-h") then
