@@ -1,6 +1,7 @@
 local awful = require("awful")
 local gears = require("gears")
 
+local h = require("helpers")
 local lfs = require("lfs")
 
 -- storage_stats_dict
@@ -24,14 +25,16 @@ local function storage()
   -- Then iterate over the matches, get a table of the first partition stats, and then add that key value pair to a table for use elsewhere
   for device in lfs.dir("/sys/block") do
     if device:match("nvme.(d*)n.(d*)") then
-      awful.spawn.easy_async_with_shell("df /dev/".. device .. "p1 | grep '/dev'", function(device_stats, _, _, code)
+      local device_path = h.join_path("/dev/", device)
+      awful.spawn.easy_async_with_shell("df " .. device_path .. "p1 | grep '/dev'", function(device_stats, _, _, code)
         if code == 0 then
           local device_stats = device_stats:gsub("\n", "")
           storage_stats_dict[device] = device_stats_table(device_stats)
         end
       end)
     elseif device:match("sd.(l*)") then
-      awful.spawn.easy_async_with_shell("df /dev/".. device .. "1 | grep '/dev'", function(device_stats, _, _, code)
+      local device_path = h.join_path("/dev/", device)
+      awful.spawn.easy_async_with_shell("df ".. device_path .. "1 | grep '/dev'", function(device_stats, _, _, code)
         if code == 0 then
           local device_stats = device_stats:gsub("\n", "")
           storage_stats_dict[device] = device_stats_table(device_stats)

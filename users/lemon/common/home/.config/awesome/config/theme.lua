@@ -6,7 +6,8 @@ local menubar_utils = require("menubar.utils")
 
 local h = require("helpers")
 
-b.init(gears.filesystem.get_configuration_dir() .. "config/theme.lua")
+local awesome_theme = h.join_path(gears.filesystem.get_configuration_dir(), "/config/theme.lua")
+b.init(awesome_theme)
 
 local dpi = b.xresources.apply_dpi
 
@@ -87,7 +88,7 @@ theme.margins = dpi(4)
 
 -- Media
 theme.playerctl.players = "tauon,spotify,Feishin"
-theme.playerctl.art_cache_dir = os.getenv("HOME") .. "/.cache/passivelemon/lemonix/media/"
+theme.playerctl.art_cache_dir = h.join_path(os.getenv("HOME"), "/.cache/passivelemon/lemonix/media/")
 theme.playerctl.notifications = true
 
 --
@@ -102,11 +103,11 @@ client.connect_signal("property::class", function(c)
   end
 end)
 
-theme.wallpaper = os.getenv("HOME") .. "/.wallpaper-image"
-if not h.is_file(os.getenv("HOME") .. "/.lockscreen-image") then
-  awful.spawn.with_shell("convert " .. theme.wallpaper .. " -filter Gaussian -blur 0x6 -fill 222222c1 -colorize 50% " .. gears.filesystem.get_cache_dir() .. ".lockscreen-image")
+theme.wallpaper = h.join_path(os.getenv("HOME"), "/.wallpaper-image")
+theme.lockscreen = h.join_path(os.getenv("HOME"), "/.lockscreen-image")
+if not h.is_file(theme.lockscreen) then
+  awful.spawn.with_shell("convert " .. theme.wallpaper .. " -filter Gaussian -blur 0x6 -fill 222222c1 -colorize 50% " .. theme.lockscreen)
 end
-theme.lockscreen = os.getenv("HOME") .. "/.lockscreen-image"
 
 screen.connect_signal("request::wallpaper", function(s)
   awful.wallpaper({

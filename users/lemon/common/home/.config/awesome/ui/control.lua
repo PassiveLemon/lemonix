@@ -301,7 +301,7 @@ if not user.has_brightness then
   brightness_bar.visible = false
 end
 
-local xdg_cache_home = os.getenv("HOME") .. "/.cache/passivelemon/lemonix/media/"
+local xdg_cache_home = h.join_path(os.getenv("HOME"), "/.cache/passivelemon/lemonix/media/")
 if not h.is_dir(xdg_cache_home) then
   gears.filesystem.make_directories(xdg_cache_home)
 end

@@ -183,5 +183,47 @@ function helpers.dump_table(table)
   end
 end
 
+function helpers.join_path(...)
+  if not ... then return nil end
+  local norm_paths = { }
+  -- Normalize the input paths to ensure consistent results:
+  -- Sanitize inputs
+  -- Match and separate paths inside strings ("foo/bar" -> "foo", "bar")
+  -- Remove training/leading slashes (keep the leading if it's the first element for root)
+  for i = 1, select("#", ...) do
+    local path = select(i, ...)
+    if type(path) == "string" then
+      if i == 1 and (path:match("^/+") or path == "/") then
+        table.insert(norm_paths, "")
+      end
+      for part in path:gmatch("[^/]+") do
+        part = part:gsub("^/+", ""):gsub("/+$", "")
+        table.insert(norm_paths, part)
+      end
+    end
+  end
+  local final_path = table.concat(norm_paths, "/")
+  return final_path
+end
+
+-- Some test cases
+-- -- Plain -> "home/user/documents/file.txt"
+-- print(helpers.join_path("home", "user", "documents", "file.txt"))
+-- -- Root leading slash -> "/home/user/documents/file.txt"
+-- print(helpers.join_path("/home", "user", "documents", "file.txt"))
+-- -- Trailing/leading slashes -> "home/user/documents/file.txt"
+-- print(helpers.join_path("home", "user/", "/documents", "/file.txt/"))
+-- -- Excessive slashes -> "/home/user/documents/file.txt"
+-- print(helpers.join_path("//home////", "user///", "/documents", "file.txt"))
+-- -- Spaces -> "home/user/documents/my file.txt"
+-- print(helpers.join_path("home", "user", "documents", "my file.txt"))
+-- -- Relatives -> "home/user/pictures/../documents/file.txt"
+-- print(helpers.join_path("home", "user", "pictures", "..", "documents", "file.txt"))
+-- -- Bad inputs -> "home/user/documents/file.txt"
+-- -- If there's no valid strings, returns empty string
+-- print(helpers.join_path("", "home", true, "user", nil, "documents", 1, "file.txt"))
+-- -- No inputs -> nil
+-- print(helpers.join_path())
+
 return helpers
 

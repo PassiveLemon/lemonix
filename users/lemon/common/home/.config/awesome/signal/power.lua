@@ -1,5 +1,6 @@
 local gears = require("gears")
 
+local h = require("helpers")
 local lgi = require("lgi")
 local upower = lgi.require("UPowerGlib")
 
@@ -15,7 +16,8 @@ end
 
 local function get_device(target)
   for _, device in ipairs(devices) do
-    if device:get_object_path() == ("/org/freedesktop/UPower/devices/" .. target) then
+    local device_path = h.join_path("/org/freedesktop/UPower/devices/", target)
+    if device:get_object_path() == (device_path) then
       return device
     end
   end

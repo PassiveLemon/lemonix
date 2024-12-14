@@ -46,16 +46,18 @@ local function art_image_locator(client_cache_dir, art_url_trim)
     art_cache_dir = "/tmp/passivelemon/lemonix/media/"
   end
   if not client_cache_dir then
-    if h.is_file(art_cache_dir .. art_url_trim) then
-      metadata.media.art_image = gears.surface.load_uncached(art_cache_dir .. art_url_trim)
+    local art_path = h.join_path(art_cache_dir, art_url_trim)
+    if h.is_file(art_path) then
+      metadata.media.art_image = gears.surface.load_uncached(art_path)
     else
-      awful.spawn.easy_async_with_shell("curl -Lso " .. art_cache_dir .. art_url_trim .. ' "' .. metadata.media.art_url .. '"', function()
-        metadata.media.art_image = gears.surface.load_uncached(art_cache_dir .. art_url_trim)
+      awful.spawn.easy_async_with_shell("curl -Lso " .. art_path .. ' "' .. metadata.media.art_url .. '"', function()
+        metadata.media.art_image = gears.surface.load_uncached(art_path)
       end)
     end
   else
-    if h.is_file(client_cache_dir .. art_url_trim) then
-      metadata.media.art_image = gears.surface.load_uncached(client_cache_dir .. art_url_trim)
+    local client_art_path = h.join_path(client_cache_dir, art_url_trim)
+    if h.is_file(client_art_path) then
+      metadata.media.art_image = gears.surface.load_uncached(client_art_path)
     end
   end
 end
@@ -73,7 +75,7 @@ local function art_image_fetch()
   -- We normalize the album name and use that as the cache name for the album art, that way it's only downloaded once per album, which makes caching more efficient. In case the normalization results in a bad filename, we use a backup string
   if metadata.client.player_name == "tauon" then
     local art_url_trim = metadata.media.art_url:gsub(".*/", "")
-    local client_cache_dir = os.getenv("HOME") .. "/.cache/TauonMusicBox/export/"
+    local client_cache_dir = h.join_path(os.getenv("HOME"), "/.cache/TauonMusicBox/export/")
     art_image_locator(client_cache_dir, art_url_trim)
   elseif metadata.client.player_name == "Feishin" then
     local art_image_name_backup = metadata.media.art_url:match("?id=(.*)&u=")

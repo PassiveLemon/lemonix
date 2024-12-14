@@ -27,7 +27,7 @@ local function grab()
       awful.key {
         modifiers = { "Mod1", "Mod4", "Shift", "Control" },
         key = "Return",
-        on_press = function(_)
+        on_press = function()
           input = input
         end
       }
@@ -94,7 +94,7 @@ awesome.connect_signal("ui::lock::toggle", function()
 end)
 
 -- Don't require auth if login handoff from the .bash_profile script is present
-local auth_file = os.getenv("HOME") .. "/.cache/passivelemon/loginauth"
+local auth_file = h.join_path(os.getenv("HOME"), "/.cache/passivelemon/loginauth")
 if h.is_file(auth_file) then
   os.remove(auth_file)
 else
