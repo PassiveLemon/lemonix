@@ -1,10 +1,16 @@
-{ ... }: {
+{ pkgs, ... }: {
   networking = {
     firewall = {
       allowedTCPPorts = [
         54384 # LiveSync
       ];
     };
+  };
+
+  environment = {
+    systemPackages = with pkgs; [
+      lazydocker
+    ];
   };
 
   users = {

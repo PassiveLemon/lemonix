@@ -21,8 +21,7 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
     lemonake = {
-      #url = "github:passivelemon/lemonake";
-      url = "path:/home/lemon/Documents/GitHub/lemonake";
+      url = "github:passivelemon/lemonake";
       inputs.nixpkgs.follows = "nixpkgs";
     };
     nixpkgs-f2k = {
@@ -40,7 +39,7 @@
 
     # Submodules
     awesomewm-bling = {
-      url = "github:blingcorp/bling";
+      url = "github:passivelemon/bling/flatpak-fix";
       flake = false;
     };
     lite-xl-widget = {

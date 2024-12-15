@@ -19,7 +19,7 @@
       # Development
       lite-xl vscode github-desktop
       shellcheck luajitPackages.luacheck python312Packages.flake8
-      nil pyright lua-language-server bash-language-server dockerfile-language-server-nodejs yaml-language-server
+      nil nimlsp pyright lua-language-server bash-language-server dockerfile-language-server-nodejs yaml-language-server
       nixpkgs-review nixfmt-rfc-style
       nvfetcher
       # Office
@@ -31,7 +31,7 @@
       loupe flameshot gimp scrot krita
       mpv libsForQt5.kdenlive
       # Miscellaneous
-      picom localsend xclicker libsForQt5.kruler
+      picom ente-auth localsend xclicker libsForQt5.kruler
     ];
     username = "lemon";
     homeDirectory = "/home/lemon";

@@ -26,6 +26,13 @@ in
         enable = true;
         extraCompatPackages = with pkgs; [
           proton-ge-bin
+          (proton-ge-bin.overrideAttrs (finalAttrs: _: {
+            version = "GE-Proton9-20-rtsp16";
+            src = pkgs.fetchzip {
+              url = "https://github.com/SpookySkeletons/proton-ge-rtsp/releases/download/${finalAttrs.version}/${finalAttrs.version}.tar.gz";
+              hash = "sha256-iq7oiDW5+51wzqYwASOGSV922c/pg1k29MdkIXlT34k=";
+            };
+          }))
         ];
       };
     })
@@ -41,7 +48,6 @@ in
         wivrn = let
           # Overriden until I somehow fix the cudaSupport stuff
           wivrnPackage = inputs.lemonake.packages.${pkgs.system}.wivrn.override { cudaSupport = true; };
-          # wivrnPackage = inputs.lemonake.packages.${pkgs.system}.wivrn;
         in {
           enable = true;
           package = wivrnPackage;
@@ -104,7 +110,7 @@ in
       };
 
       # Wlx-overlay-s config has some stuff that needs it
-      # systemd.user.services.wivrn.serviceConfig.ProtectProc = lib.mkForce "default";
+      systemd.user.services.wivrn.serviceConfig.ProtectProc = lib.mkForce "default";
 
       hardware.graphics.extraPackages = with pkgs; [
         inputs.lemonake.packages.${pkgs.system}.monado-vulkan-layers-git

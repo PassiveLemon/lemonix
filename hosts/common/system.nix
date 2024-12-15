@@ -58,6 +58,7 @@
   };
 
   systemd = {
+    #enableStrictShellChecks = true;
     services = {
       NetworkManager-wait-online.enable = false;
       "nix-daemon".serviceConfig = {
