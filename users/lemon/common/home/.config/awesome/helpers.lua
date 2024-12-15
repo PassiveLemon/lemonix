@@ -48,6 +48,8 @@ function helpers.text(conf)
           widget = wibox.widget.imagebox,
           resize = conf.resize,
           image = conf.image,
+          halign = conf.halign or "center",
+          valign = conf.valign or "center",
         },
       }
     },
@@ -91,6 +93,8 @@ function helpers.button(conf)
           widget = wibox.widget.imagebox,
           resize = conf.resize,
           image = conf.image,
+          halign = conf.halign or "center",
+          valign = conf.valign or "center",
         },
       }
     },
