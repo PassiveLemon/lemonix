@@ -34,13 +34,19 @@
     "lemon-local" = {
       paths = [
         "/home/lemon/Documents"
-        "/home/lemon/Pictures"
-        "/home/lemon/Videos"
         "/home/lemon/Music"
+        "/home/lemon/Pictures"
+        "/home/lemon/Shared"
+        "/home/lemon/Standalone"
+        "/home/lemon/Videos"
         "/home/lemon/.config"
-        "/home/lemon/.local/share/gdlauncher_carbon/data/instances"
-        "/home/HDD2TBEXT4/Media/Music"
-        "/home/BACKUPDRIVE/ManualBackups"
+        "/home/lemon/.local/share"
+      ];
+      exclude = [
+        "/home/lemon/.config/r2modmanPlus-local/*/cache"
+        "/home/lemon/.local/share/Trash"
+        "/home/lemon/.local/share/Steam/steamapps"
+        "/home/lemon/.local/share/Steam/compatibilitytools.d"
       ];
       repo = "ssh://borg@127.0.0.1/home/BACKUPDRIVE/BorgBackups/silver";
       encryption = {
@@ -60,12 +66,19 @@
     "lemon-remote" = {
       paths = [
         "/home/lemon/Documents"
-        "/home/lemon/Pictures"
-        "/home/lemon/Videos"
         "/home/lemon/Music"
+        "/home/lemon/Pictures"
+        "/home/lemon/Shared"
+        "/home/lemon/Standalone"
+        "/home/lemon/Videos"
         "/home/lemon/.config"
-        "/home/lemon/.local/share/gdlauncher_carbon/data/instances"
-        "/home/BACKUPDRIVE/ManualBackups"
+        "/home/lemon/.local/share"
+      ];
+      exclude = [
+        "/home/lemon/.config/r2modmanPlus-local/*/cache"
+        "/home/lemon/.local/share/Trash"
+        "/home/lemon/.local/share/Steam/steamapps"
+        "/home/lemon/.local/share/Steam/compatibilitytools.d"
       ];
       repo = "ssh://u412758@u412758.your-storagebox.de:23/home/BorgBackups/silver";
       encryption = {
@@ -86,6 +99,8 @@
     "docker-local" = {
       paths = [
         "/home/docker"
+        "/home/HDD2TBEXT4/Media/Music"
+        "/home/BACKUPDRIVE/ManualBackups"
       ];
       repo = "ssh://borg@127.0.0.1/home/BACKUPDRIVE/BorgBackups/silver";
       encryption = {
@@ -105,6 +120,8 @@
     "docker-remote" = {
       paths = [
         "/home/docker"
+        "/home/HDD2TBEXT4/Media/Music"
+        "/home/BACKUPDRIVE/ManualBackups"
       ];
       repo = "ssh://u412758@u412758.your-storagebox.de:23/home/BorgBackups/silver";
       encryption = {

@@ -10,7 +10,7 @@
       easytag
       (callPackage ../../../pkgs/onthespot.nix { })
 
-      lazydocker act dive trivy
+
       act dive trivy
 
       inputs.lemonake.packages.${pkgs.system}.hd2pystratmacro
