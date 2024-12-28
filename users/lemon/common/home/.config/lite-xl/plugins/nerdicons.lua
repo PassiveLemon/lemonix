@@ -126,6 +126,7 @@ local extension_icons = {
   [".key"]         = { "#f7ca39", "md-key"                   },
   [".pem"]         = { "#f7ca39", "md-key"                   },
   [".nim"]         = { "#ffc200", "seti-nim"                 },
+  [".nimble"]      = { "#ffc200", "md-package"               },
 }
 
 local known_filenames_icons = {
