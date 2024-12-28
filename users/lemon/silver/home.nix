@@ -6,7 +6,6 @@
 
   home = {
     packages = with pkgs; [
-      headsetcontrol
       easytag
       (callPackage ../../../pkgs/onthespot.nix { })
 
@@ -26,9 +25,6 @@
       };
       ".config/awesome/signal/init.lua" = {
         source = ./home/.config/awesome/signal/init.lua;
-      };
-      ".config/awesome/signal/headsetcontrol.lua" = {
-        source = ./home/.config/awesome/signal/headsetcontrol.lua;
       };
       ".config/awesome/ui/init.lua" = {
         source = ./home/.config/awesome/ui/init.lua;

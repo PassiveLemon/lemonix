@@ -21,7 +21,6 @@ awful.spawn.with_shell("pidof -q xss-lock || xss-lock awesome-client 'awesome.em
 awful.spawn.with_shell("pidof -q picom || picom --realtime -b")
 awful.spawn.with_shell("pidof -q easyeffects || easyeffects --gapplication-service")
 awful.spawn.with_shell("pidof -q nm-applet || nm-applet")
-awful.spawn.with_shell("headsetcontrol -s 110 -l 0")
 
 return user
 

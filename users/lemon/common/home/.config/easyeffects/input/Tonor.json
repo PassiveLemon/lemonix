@@ -94,13 +94,27 @@
             "clipping-range": 6.0,
             "fft": "4096",
             "input-gain": 0.0,
-            "output-gain": 15.0,
+            "output-gain": 0.0,
             "std": "ISO226-2003",
             "volume": 0.0
+        },
+        "pitch#0": {
+            "anti-alias": false,
+            "bypass": false,
+            "input-gain": 0.0,
+            "output-gain": 0.0,
+            "overlap-length": 8,
+            "quick-seek": false,
+            "rate-difference": 0.0,
+            "seek-window": 15,
+            "semitones": -12.0,
+            "sequence-length": 40,
+            "tempo-difference": 0.0
         },
         "plugins_order": [
             "crystalizer#0",
             "deesser#0",
+            "pitch#0",
             "loudness#0"
         ]
     }

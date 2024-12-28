@@ -9,5 +9,3 @@ require("signal.playerctl")
 require("signal.storage")
 require("signal.volume")
 
-require("signal.headsetcontrol")
-

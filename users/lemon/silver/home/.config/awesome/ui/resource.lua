@@ -132,23 +132,6 @@ awesome.connect_signal("signal::miscellaneous::uptime", function(uptime_days, up
 	uptime_time:get_children_by_id("textbox")[1].text = uptime(uptime_days, uptime_hours)
 end)
 
-local devices_text = h.text({
-  text = "Devices",
-})
-local headset_bat = h.text({
-  halign = "left",
-})
-awesome.connect_signal("signal::peripheral::headset", function(headset)
-  if headset == -2 then
-    headset_bat:get_children_by_id("textbox")[1].text = "HS BAT: Not found"
-  elseif headset == -1 then
-    headset_bat:get_children_by_id("textbox")[1].text = "HS BAT: Charging"
-  else
-    headset_bat:get_children_by_id("textbox")[1].text = "HS BAT: " .. headset .. "%"
-  end
-end)
-
-
 awful.screen.connect_for_each_screen(function(s)
   local main = awful.popup({
     placement = awful.placement.centered,
@@ -219,9 +202,6 @@ awful.screen.connect_for_each_screen(function(s)
           space,
           uptime_text,
           uptime_time,
-          space,
-          devices_text,
-          headset_bat,
         },
       },
     },
