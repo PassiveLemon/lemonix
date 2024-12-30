@@ -119,6 +119,6 @@
     };
   };
 
-  system.stateVersion = "23.05";
+  system.stateVersion = "23.05"; # Don't change unless you know what you are doing
 }
 

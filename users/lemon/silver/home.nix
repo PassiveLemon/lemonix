@@ -1,4 +1,4 @@
-{ inputs, pkgs, ... }: {
+{ pkgs, ... }: {
   imports = [
     ../common/home.nix
     ./modules/customization.nix
@@ -9,12 +9,7 @@
       easytag
       (callPackage ../../../pkgs/onthespot.nix { })
 
-
       act dive trivy
-
-      inputs.lemonake.packages.${pkgs.system}.hd2pystratmacro
-      inputs.lemonake.packages.${pkgs.system}.poepyautopot
-      inputs.lemonake.packages.${pkgs.system}.tilp2
     ];
     file = {
       ".config/awesome/config/init.lua" = {
@@ -38,12 +33,9 @@
       ".config/lite-xl/init.lua" = {
         source = ./home/.config/lite-xl/init.lua;
       };
-      ".local/bin/passivelemon" = {
-        source = ./home/.local/bin/passivelemon;
-        recursive = true;
       };
     };
-    stateVersion = "23.05";
+    stateVersion = "23.05"; # Don't change unless you know what you are doing
   };
 
   programs = {
@@ -75,21 +67,6 @@
             };
           };
         };
-      };
-    };
-  };
-
-  xdg = {
-    desktopEntries = {
-      "sd-comfy" = {
-        name = "sd-comfy";
-        exec = "/home/lemon/.local/bin/passivelemon/sd-comfy.sh";
-        terminal = true;
-      };
-      "sd-auto" = {
-        name = "sd-auto";
-        exec = "/home/lemon/.local/bin/passivelemon/sd-auto.sh";
-        terminal = true;
       };
     };
   };

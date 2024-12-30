@@ -1,4 +1,4 @@
-{ pkgs, lib, ... }: {
+{ lib, pkgs, ... }: {
   imports = [
     ./hardware-configuration.nix
     ../common/system.nix
@@ -118,6 +118,6 @@
   # Drives
   # 1 TB Crucial (Root)
 
-  system.stateVersion = "23.11";
+  system.stateVersion = "23.11"; # Don't change unless you know what you are doing
 }
 

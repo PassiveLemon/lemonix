@@ -1,4 +1,4 @@
-{ inputs, config, pkgs, lib, ... }:
+{ inputs, config, lib, pkgs, ... }:
 let
   inherit (lib) mkIf mkEnableOption;
   cfg = config.lemonix.agenix;
@@ -20,3 +20,4 @@ in
     ];
   };
 }
+

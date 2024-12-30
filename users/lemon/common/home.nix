@@ -11,8 +11,6 @@
       eza bat fd ripgrep jq nh
       # Browsing
       firefox
-      # Communication
-      srain
       # File/storage management
       pcmanfm xarchiver filezilla gparted
       ffmpegthumbnailer
@@ -20,18 +18,16 @@
       lite-xl vscode github-desktop
       shellcheck luajitPackages.luacheck python312Packages.flake8
       nil nimlsp pyright lua-language-server bash-language-server dockerfile-language-server-nodejs yaml-language-server
-      nixpkgs-review nixfmt-rfc-style
-      nvfetcher
       # Office
-      obsidian onlyoffice-bin drawio
+      obsidian onlyoffice-desktopeditors onlyoffice-documentserver drawio
       # Audio
-      feishin tauon audacity
-      pavucontrol easyeffects helvum
+      feishin audacity
+      pwvucontrol easyeffects helvum
       # Image/Video
       loupe flameshot gimp scrot krita
-      mpv libsForQt5.kdenlive
+      mpv kdePackages.kdenlive
       # Miscellaneous
-      picom ente-auth localsend xclicker libsForQt5.kruler
+      picom ente-auth localsend xclicker kdePackages.kruler
     ];
     username = "lemon";
     homeDirectory = "/home/lemon";

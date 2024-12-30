@@ -1,4 +1,4 @@
-{ inputs, config, pkgs, lib, ... }:
+{ inputs, config, lib, pkgs, ... }:
 let
   inherit (lib) mkIf mkEnableOption mkForce;
   cfg = config.lemonix.lanzaboote;
@@ -31,3 +31,4 @@ in
     };
   };
 }
+

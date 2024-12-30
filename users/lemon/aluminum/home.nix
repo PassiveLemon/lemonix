@@ -22,8 +22,6 @@
       ".config/awesome/ui/init.lua" = {
         source = ./home/.config/awesome/ui/init.lua;
       };
-      ".config/awesome/liblua_pam.so" = {
-        source = ./home/.config/awesome/liblua_pam.so;
       };
       ".config/lite-xl/init.lua" = {
         source = ./home/.config/lite-xl/init.lua;
@@ -33,7 +31,7 @@
       };
     };
     pointerCursor.size = 32;
-    stateVersion = "23.11";
+    stateVersion = "23.11"; # Don't change unless you know what you are doing
   };
 
   programs = {

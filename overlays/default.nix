@@ -1,10 +1,4 @@
-{ inputs, ... }:
-let
-  config = {
-    allowUnfree = true;
-  };
-in
-{
+{ inputs, ... }: {
   packages = final: prev: {
     # Overlay use of a package on the nixos-(stable) branch. Mainly used for the system part of the setup.
     stable = import inputs.nixos { inherit (prev) system config; };
