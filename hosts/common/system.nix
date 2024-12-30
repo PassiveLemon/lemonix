@@ -14,6 +14,7 @@
         configurationLimit = 50;
       };
     };
+    kernelPackages = lib.mkDefault pkgs.linuxPackages_latest;
   };
 
   time = {
