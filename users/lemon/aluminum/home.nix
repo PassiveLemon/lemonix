@@ -22,9 +22,8 @@
       ".config/awesome/ui/init.lua" = {
         source = ./home/.config/awesome/ui/init.lua;
       };
-      };
-      ".config/lite-xl/init.lua" = {
-        source = ./home/.config/lite-xl/init.lua;
+      ".config/lite-xl/user.lua" = {
+        source = ./home/.config/lite-xl/user.lua;
       };
       ".bash_profile" = {
         source = ./home/.bash_profile;

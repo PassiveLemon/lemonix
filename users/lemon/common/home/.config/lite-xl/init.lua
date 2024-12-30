@@ -1,6 +1,8 @@
+require("user")
+
 local core = require("core")
-local keymap = require("core.keymap")
 local config = require("core.config")
+local keymap = require("core.keymap")
 local style = require("core.style")
 
 local lintplus = require("plugins.lintplus")
@@ -18,17 +20,13 @@ keymap.add({
 	["ctrl+shift+x"] = "open-file-location:open-file-location",
 })
 
-config.fps = 60
+config.fps = 144
 config.animation_rate = 1.0
 config.mouse_wheel_scroll = 70 * SCALE
 config.ignore_files = {
   "^%.git/", "^%.hg/",
   "^node_modules/", "^%.cache/", "^__pycache__/",
   "^desktop%.ini$", "^%.DS_Store$", "^%.directory$",
-}
-
-config.plugins.scale = {
-  default_scale = 1.4,
 }
 
 config.plugins.exterm = {
@@ -60,7 +58,7 @@ lspconfig.sumneko_lua.setup({
 })
 
 -- Open documents by default
-local default_path = os.getenv("HOME") .. "/Documents/GitHub"
+local default_path = "/home/lemon/Documents/GitHub"
 if not core.switched_to_default_dir then
   core.switched_to_default_dir = true
   if core.project_dir ~= default_path then
