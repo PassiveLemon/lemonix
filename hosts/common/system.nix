@@ -59,13 +59,23 @@
   };
 
   systemd = {
-    #enableStrictShellChecks = true;
+    enableStrictShellChecks = true;
     services = {
       NetworkManager-wait-online.enable = false;
       "nix-daemon".serviceConfig = {
         Slice = "nix-daemon.slice";
         OOMScoreAdjust = 1000;
       };
+      # https://github.com/NixOS/nixpkgs/pull/369512
+      cron.preStart = lib.mkForce ''
+        mkdir -m 710 /var/cron || true
+
+        # By default, allow all users to create a crontab.  This
+        # is denoted by the existence of an empty cron.deny file.
+        if ! test -e /var/cron/cron.allow -o -e /var/cron/cron.deny; then
+            touch /var/cron/cron.deny
+        fi
+      '';
     };
     # System likes to hang during expensive builds so we apply some limits
     slices."nix-daemon".sliceConfig = {
