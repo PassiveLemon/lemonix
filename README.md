@@ -1,6 +1,9 @@
 # lemonix
 
-These are my dotfiles for my NixOS system. This is configuration for the stuff I use on a daily basis, so things will ALWAYS be changing. This is for my own organization and preservation so I will NOT guarantee compatibility on other systems. </br>
+These are my dotfiles for my NixOS system. This is configuration for the stuff I use on a daily basis, so things will ALWAYS be changing.
+
+> [!WARNING]
+> This Nix configuration and install items are designed for MY use case. <b>I WILL NOT help with this and I am not responsible for any data loss that occurs from improper installation.</b> Issues are still welcome but please do not open any regarding installation.
 
 ## Overview
 - NixOS flake with Home-Manager, designed for multiple hosts and users.
@@ -22,7 +25,4 @@ These are my dotfiles for my NixOS system. This is configuration for the stuff I
 
 ## Install
 There is an install script and install guide in [/other](https://github.com/passivelemon/lemonix/tree/master/other) to aid in installation.
-
-> [!WARNING]
-> This Nix configuration and install items are designed for MY use case. <b>I WILL NOT help with this and I am not responsible for any data loss that occurs from improper installation.</b> Issues are still welcome but please do not open any regarding installation.
 
