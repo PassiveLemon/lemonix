@@ -8,8 +8,6 @@
     packages = with pkgs; [
       easytag
       (callPackage ../../../pkgs/onthespot.nix { })
-
-      act dive trivy
     ];
     file = {
       ".config/awesome/config/init.lua" = {

@@ -142,6 +142,18 @@
     };
 
     overlays = import ./overlays { inherit inputs outputs; };
+
+    devShells.x86_64-linux = let
+      pkgs = import inputs.nixpkgs { system = "x86_64-linux"; };
+    in
+    {
+      default = self.devShells.x86_64-linux.docker;
+      docker = pkgs.mkShell {
+        packages = with pkgs; [
+          act dive trivy
+        ];
+      };
+    };
   };
 }
 
