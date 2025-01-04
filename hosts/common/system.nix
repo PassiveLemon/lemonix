@@ -110,12 +110,15 @@
         "nix-community.cachix.org-1:mB9FSh9qf2dCimDSUo8Zy7bkq5CX+/rkCWyvRCYg3Fs="
         "passivelemon.cachix.org-1:ScYjLCvvLi70S95SMMr8lMilpZHuafLP3CK/nZ9AaXM="
       ];
-      auto-optimise-store = true;
       warn-dirty = false;
+    };
+    optimise = {
+      automatic = true;
+      dates = [ "Sat" ];
     };
     gc = {
       automatic = true;
-      dates = "weekly";
+      dates = "Sat";
       options = "--delete-older-than 14d";
     };
   };
