@@ -66,6 +66,10 @@
       url = "github:lite-xl/lite-xl-lsp";
       flake = false;
     };
+    hilbish-promptua = {
+      url = "github:passivelemon/promptua";
+      flake = false;
+    };
   };
 
   outputs = { self, ... } @ inputs:

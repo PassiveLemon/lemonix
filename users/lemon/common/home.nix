@@ -185,6 +185,11 @@
       };
       "mimeapps.list".force = true;
     };
+    dataFile = {
+      "hilbish/libs/promptua" = {
+        source = inputs.hilbish-promptua;
+      };
+    };
     mime.enable = true;
     mimeApps = {
       enable = true;

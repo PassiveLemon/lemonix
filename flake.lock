@@ -305,6 +305,22 @@
         "type": "github"
       }
     },
+    "hilbish-promptua": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1733089302,
+        "narHash": "sha256-m4V4jUgqkYt7OrBcPdsPtKi5WegM1k2mnOtZ3v01yi8=",
+        "owner": "passivelemon",
+        "repo": "promptua",
+        "rev": "f4d604e246a92193823e98d8d2c405a5694f1ab8",
+        "type": "github"
+      },
+      "original": {
+        "owner": "passivelemon",
+        "repo": "promptua",
+        "type": "github"
+      }
+    },
     "home-manager": {
       "inputs": {
         "nixpkgs": [
@@ -786,6 +802,7 @@
       "inputs": {
         "agenix": "agenix",
         "awesomewm-bling": "awesomewm-bling",
+        "hilbish-promptua": "hilbish-promptua",
         "home-manager": "home-manager_2",
         "lanzaboote": "lanzaboote",
         "lemonake": "lemonake",
