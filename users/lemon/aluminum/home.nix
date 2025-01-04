@@ -37,19 +37,19 @@
 
   xdg = {
     configFile = {
-      ".config/awesome/config/init.lua" = {
+      "awesome/config/init.lua" = {
         source = ./home/.config/awesome/config/init.lua;
       };
-      ".config/awesome/config/user.lua" = {
+      "awesome/config/user.lua" = {
         source = ./home/.config/awesome/config/user.lua;
       };
-      ".config/awesome/signal/init.lua" = {
+      "awesome/signal/init.lua" = {
         source = ./home/.config/awesome/signal/init.lua;
       };
-      ".config/awesome/ui/init.lua" = {
+      "awesome/ui/init.lua" = {
         source = ./home/.config/awesome/ui/init.lua;
       };
-      ".config/lite-xl/user.lua" = {
+      "lite-xl/user.lua" = {
         source = ./home/.config/lite-xl/user.lua;
       };
     };
