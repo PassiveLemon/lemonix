@@ -71,6 +71,27 @@
       enable = true;
       plugins = with pkgs.obs-studio-plugins; [ obs-pipewire-audio-capture ];
     };
+    firefox = {
+      enable = true;
+      profiles."lemon" = {
+        id = 0;
+        isDefault = true;
+        search = {
+          default = "DuckDuckGo";
+          order = [ "DuckDuckGo" ];
+          engines = {
+            "Bing".metaData.hidden = true;
+            "Google".metaData.hidden = true;
+            "Wikipedia (en)".metaData.hidden = true;
+          };
+        };
+      };
+      policies = {
+        "DisablePocket" = true;
+        "DisableTelemetry" = true;
+        "HardwareAcceleration" = true;
+      };
+    };
     nixcord = {
       enable = true;
       config = {
