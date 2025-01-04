@@ -1,4 +1,4 @@
-{ inputs, outputs, pkgs, ... }: {
+{ inputs, outputs, lib, pkgs, ... }: {
   imports = [
     ./modules/customization.nix
     inputs.nixcord.homeManagerModules.nixcord
@@ -9,8 +9,6 @@
       # Terminal
       tym hilbish comma fend thefuck trashy pamixer playerctl imagemagick appimage-run ventoy-bin
       eza bat fd ripgrep jq nh
-      # Browsing
-      firefox
       # File/storage management
       pcmanfm xarchiver filezilla gparted
       ffmpegthumbnailer
@@ -31,43 +29,9 @@
     ];
     username = "lemon";
     homeDirectory = "/home/lemon";
-    file = let
-      lua-pam = pkgs.callPackage ../../../pkgs/lua-pam.nix { };
-    in
-    {
+    file = {
       ".config/" = {
         source = ./home/.config;
-        recursive = true;
-      };
-      ".config/awesome/libraries/bling" = {
-        source = inputs.awesomewm-bling;
-        recursive = true;
-      };
-      ".config/awesome/liblua_pam.so" = {
-        source = "${lua-pam}/lib/liblua_pam.so";
-      };
-      ".config/lite-xl/libraries/widget" = {
-        source = inputs.lite-xl-widget;
-        recursive = true;
-      };
-      ".config/lite-xl/plugins/editorconfig" = {
-        source = inputs.lite-xl-plugins + "/plugins/editorconfig";
-        recursive = true;
-      };
-      ".config/lite-xl/plugins/lintplus" = {
-        source = inputs.lite-xl-lintplus;
-        recursive = true;
-      };
-      ".config/lite-xl/plugins/evergreen" = {
-        source = inputs.lite-xl-evergreen;
-        recursive = true;
-      };
-      ".config/lite-xl/plugins/treeview-extender" = {
-        source = inputs.lite-xl-treeview-extender;
-        recursive = true;
-      };
-      ".config/lite-xl/plugins/lsp" = {
-        source = inputs.lite-xl-lsp;
         recursive = true;
       };
       ".vscode/" = {
@@ -81,19 +45,18 @@
         source = ./home/Documents;
         recursive = true;
       };
+      ".mozilla/firefox/lemon/search.json.mozlz4".force = lib.mkForce true;
     };
   };
 
   xsession = {
     enable = true;
-    windowManager = {
-      awesome = {
-        enable = true;
-        package = inputs.nixpkgs-f2k.packages.${pkgs.system}.awesome-luajit-git;
-        luaModules = with pkgs; [
-          luajitPackages.luafilesystem
-        ];
-      };
+    windowManager.awesome = {
+      enable = true;
+      package = inputs.nixpkgs-f2k.packages.${pkgs.system}.awesome-luajit-git;
+      luaModules = with pkgs; [
+        luajitPackages.luafilesystem
+      ];
     };
   };
 
@@ -163,6 +126,44 @@
   };
 
   xdg = {
+    enable = true;
+    configFile = let
+      lua-pam = pkgs.callPackage ../../../pkgs/lua-pam.nix { };
+    in
+    {
+      "awesome/libraries/bling" = {
+        source = inputs.awesomewm-bling;
+        recursive = true;
+      };
+      "awesome/liblua_pam.so" = {
+        source = "${lua-pam}/lib/liblua_pam.so";
+      };
+      "lite-xl/libraries/widget" = {
+        source = inputs.lite-xl-widget;
+        recursive = true;
+      };
+      "lite-xl/plugins/editorconfig" = {
+        source = inputs.lite-xl-plugins + "/plugins/editorconfig";
+        recursive = true;
+      };
+      "lite-xl/plugins/lintplus" = {
+        source = inputs.lite-xl-lintplus;
+        recursive = true;
+      };
+      "lite-xl/plugins/evergreen" = {
+        source = inputs.lite-xl-evergreen;
+        recursive = true;
+      };
+      "lite-xl/plugins/treeview-extender" = {
+        source = inputs.lite-xl-treeview-extender;
+        recursive = true;
+      };
+      "lite-xl/plugins/lsp" = {
+        source = inputs.lite-xl-lsp;
+        recursive = true;
+      };
+      "mimeapps.list".force = true;
+    };
     mime.enable = true;
     mimeApps = {
       enable = true;
@@ -213,9 +214,6 @@
         name = "Desktop Preferences";
         noDisplay = true;
       };
-    };
-    configFile = {
-      "mimeapps.list".force = true;
     };
   };
 
