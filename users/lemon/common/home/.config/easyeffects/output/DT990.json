@@ -6,7 +6,7 @@
             "bypass": false,
             "floor": 20.0,
             "floor-active": false,
-            "harmonics": 9.799999999999995,
+            "harmonics": 9.8,
             "input-gain": 0.0,
             "output-gain": 0.0,
             "scope": 40.0
@@ -205,7 +205,7 @@
             "num-bands": 16,
             "output-gain": 0.0,
             "pitch-left": 0.0,
-            "pitch-right": -3.469446951953614e-18,
+            "pitch-right": 0.0,
             "right": {
                 "band0": {
                     "frequency": 25.399265260594923,

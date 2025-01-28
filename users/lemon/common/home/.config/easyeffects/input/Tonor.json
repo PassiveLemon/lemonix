@@ -96,7 +96,7 @@
             "input-gain": 0.0,
             "output-gain": 0.0,
             "std": "ISO226-2003",
-            "volume": 0.0
+            "volume": 2.0
         },
         "pitch#0": {
             "anti-alias": false,
