@@ -1,4 +1,4 @@
-{ pkgs, ... }: {
+{ inputs, pkgs, ... }: {
   imports = [
     ../common/home.nix
     ./modules/customization.nix
@@ -8,6 +8,7 @@
     packages = with pkgs; [
       easytag
       (callPackage ../../../pkgs/onthespot.nix { })
+      inputs.lemonake.packages.${pkgs.system}.webfisher
     ];
     stateVersion = "23.05"; # Don't change unless you know what you are doing
   };

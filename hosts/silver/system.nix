@@ -45,7 +45,7 @@
         home = "/home/lemon";
         hashedPassword = "$6$J7q0.RZ88OJiQRkq$mQx2d32YHf6IXqZNMSv.o/sslQMgBAGIKID2aL6tLpN6XFpXp2Fda5p1Yi78H/cXOolBPIuXEQPzxhmKp5qWc0";
         extraGroups = [
-          "wheel" "video" "audio" "networkmanager" "storage" "docker" "kvm" "libvirtd"
+          "wheel" "video" "audio" "networkmanager" "storage" "docker" "kvm" "libvirtd" "input"
           "docker_management" "borg_management"
         ];
         isNormalUser = true;
