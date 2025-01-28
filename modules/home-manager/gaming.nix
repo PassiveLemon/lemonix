@@ -2,7 +2,6 @@
 let
   inherit (lib) mkIf mkEnableOption mkMerge;
   cfg = config.lemonix.gaming;
-  # Overriden until I somehow fix the cudaSupport stuff
   wivrnPackage = inputs.lemonake.packages.${pkgs.system}.wivrn.override { cudaSupport = true; };
 in
 {
@@ -45,23 +44,12 @@ in
       ];
 
       programs.steamvr = {
+        enable = true;
         openvrRuntimeOverride = {
           enable = true;
-          config = "json";
-          json = {
-            config = [
-              "${config.home.homeDirectory}/.local/share/Steam/config"
-            ];
-            external_drivers = [ ];
-            jsonid = "vrpathreg";
-            log = [
-              "${config.home.homeDirectory}/.local/share/Steam/logs"
-            ];
-            runtime = [
-              "${inputs.lemonake.packages.${pkgs.system}.opencomposite-git}/lib/opencomposite"
-            ];
-            version = 1;
-          };
+          config = "path";
+          # path = "${inputs.lemonake.packages.${pkgs.system}.opencomposite-git}/lib/opencomposite";
+          path = "${inputs.lemonake.packages.${pkgs.system}.xrizer}/lib";
         };
         openxrRuntimeOverride = {
           enable = true;
@@ -70,8 +58,10 @@ in
         };
         helperScript = {
           enable = true;
-          openvrRuntime = "opencomposite";
-          openvrRuntimePackage = inputs.lemonake.packages.${pkgs.system}.opencomposite-git;
+          # openvrRuntime = "opencomposite";
+          # openvrRuntimePackage = inputs.lemonake.packages.${pkgs.system}.opencomposite-git;
+          openvrRuntime = "xrizer";
+          openvrRuntimePackage = inputs.lemonake.packages.${pkgs.system}.xrizer;
           openxrRuntime = "wivrn";
           openxrRuntimePackage = wivrnPackage;
         };
