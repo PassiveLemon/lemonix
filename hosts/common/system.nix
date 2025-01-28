@@ -34,13 +34,11 @@
 
   environment = {
     systemPackages = with pkgs; [
-      dash bash
       nano unzip unrar p7zip zip curl wget git gvfs psmisc
       htop sysstat iotop stress netcat lm_sensors smartmontools dig neofetch
       networkmanager ethtool
     ];
-    binsh = "${pkgs.dash}/bin/dash";
-    shells = with pkgs; [ bash ];
+    shells = with pkgs; [ bashInteractive ];
   };
 
   services = {
