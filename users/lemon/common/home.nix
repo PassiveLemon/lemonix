@@ -148,16 +148,13 @@
 
   xdg = {
     enable = true;
-    configFile = let
-      lua-pam = pkgs.callPackage ../../../pkgs/lua-pam.nix { };
-    in
-    {
+    configFile = {
       "awesome/libraries/bling" = {
         source = inputs.awesomewm-bling;
         recursive = true;
       };
       "awesome/liblua_pam.so" = {
-        source = "${lua-pam}/lib/liblua_pam.so";
+        source = "${inputs.lemonake.packages.${pkgs.system}.lua-pam-git}/lib/liblua_pam.so";
       };
       "lite-xl/libraries/widget" = {
         source = inputs.lite-xl-widget;
