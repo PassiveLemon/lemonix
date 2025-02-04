@@ -27,10 +27,10 @@ in
         extraCompatPackages = with pkgs; [
           proton-ge-bin
           (proton-ge-bin.overrideAttrs (finalAttrs: _: {
-            version = "GE-Proton9-20-rtsp16";
+            version = "GE-Proton9-22-rtsp17";
             src = pkgs.fetchzip {
               url = "https://github.com/SpookySkeletons/proton-ge-rtsp/releases/download/${finalAttrs.version}/${finalAttrs.version}.tar.gz";
-              hash = "sha256-iq7oiDW5+51wzqYwASOGSV922c/pg1k29MdkIXlT34k=";
+              hash = "sha256-1zj0y7E9JWrnPC9HllFXos33rsdAt3q+NamoxNTmHHM=";
             };
           }))
         ];
@@ -112,9 +112,8 @@ in
       # Wlx-overlay-s config has some stuff that needs it
       systemd.user.services.wivrn.serviceConfig.ProtectProc = lib.mkForce "default";
 
-      hardware.graphics.extraPackages = with pkgs; [
+      hardware.graphics.extraPackages = [
         inputs.lemonake.packages.${pkgs.system}.monado-vulkan-layers-git
-        vulkan-validation-layers
       ];
     })
     (mkIf cfg.streaming.enable {

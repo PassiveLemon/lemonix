@@ -48,8 +48,9 @@ in
         openvrRuntimeOverride = {
           enable = true;
           config = "path";
-          # path = "${inputs.lemonake.packages.${pkgs.system}.opencomposite-git}/lib/opencomposite";
-          path = "${inputs.lemonake.packages.${pkgs.system}.xrizer}/lib";
+          path = "${inputs.lemonake.packages.${pkgs.system}.opencomposite-git}/lib/opencomposite";
+          # path = "${inputs.lemonake.packages.${pkgs.system}.xrizer}/lib";
+          # path = "${inputs.lemonake.packages.${pkgs.system}.vapor-git}/lib";
         };
         openxrRuntimeOverride = {
           enable = true;
@@ -58,10 +59,12 @@ in
         };
         helperScript = {
           enable = true;
-          # openvrRuntime = "opencomposite";
-          # openvrRuntimePackage = inputs.lemonake.packages.${pkgs.system}.opencomposite-git;
-          openvrRuntime = "xrizer";
-          openvrRuntimePackage = inputs.lemonake.packages.${pkgs.system}.xrizer;
+          openvrRuntime = "opencomposite";
+          openvrRuntimePackage = inputs.lemonake.packages.${pkgs.system}.opencomposite-git;
+          # openvrRuntime = "xrizer";
+          # openvrRuntimePackage = inputs.lemonake.packages.${pkgs.system}.xrizer;
+          # openvrRuntime = "vapor";
+          # openvrRuntimePackage = inputs.lemonake.packages.${pkgs.system}.vapor-git;
           openxrRuntime = "wivrn";
           openxrRuntimePackage = wivrnPackage;
         };
