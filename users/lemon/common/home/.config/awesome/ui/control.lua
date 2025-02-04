@@ -23,6 +23,11 @@ local volume_icon = h.text({
   text = "󰕾",
   font = b.sysfont(dpi(14)),
 })
+volume_icon:connect_signal("button::press", function()
+  awful.spawn.easy_async("pamixer -t", function()
+    awesome.emit_signal("signal::peripheral::volume::update")
+  end)
+end)
 
 local volume_slider = h.slider({
   margins = {

@@ -94,11 +94,13 @@
     };
     nixcord = {
       enable = true;
-      config = {
+      config = let
+        theme = "https://raw.githubusercontent.com/PassiveLemon/lemonix/master/users/lemon/common/home/.vscode/extensions/lemon-color-theme/themes/lemon-color-theme.json";
+      in {
         frameless = true;
         disableMinSize = true;
         themeLinks = [
-          "https://raw.githubusercontent.com/PassiveLemon/lemonix/master/users/lemon/common/home/.config/Vencord/themes/Lemon.theme.css"
+          theme
         ];
         plugins = {
           anonymiseFileNames = {
@@ -134,7 +136,7 @@
           roleColorEverywhere.enable = true;
           shikiCodeblocks = {
             enable = true;
-            theme = "https://raw.githubusercontent.com/PassiveLemon/lemonix/master/users/lemon/common/home/.vscode/extensions/lemon-color-theme/themes/lemon-color-theme.json";
+            theme = theme;
           };
           showConnections.enable = true;
           validReply.enable = true;

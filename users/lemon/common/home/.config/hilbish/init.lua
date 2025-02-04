@@ -87,7 +87,7 @@ hilbish.alias("nos", "nh os switch ~/Documents/GitHub/lemonix")
 hilbish.alias("hms", "home-manager switch --flake ~/Documents/GitHub/lemonix#" .. hilbish.user .. "@" .. hilbish.host)
 hilbish.alias("nhs", "nh home switch ~/Documents/GitHub/lemonix")
 hilbish.alias("npr", "nixpkgs-review rev --print-result HEAD")
-hilbish.alias("cma", ",")
+hilbish.alias("cma", "comma")
 hilbish.alias("dc", "docker compose")
 
 commander.register("nb", function(args)

@@ -371,7 +371,7 @@ screen.connect_signal("request::desktop_decoration", function(s)
     text = "󰎈",
   })
   awesome.connect_signal("signal::playerctl::metadata", function(metadata_table)
-    if metadata_table.status == "Playing" then
+    if metadata_table.client.status == "Playing" then
       pill_music.visible = true
     else
       pill_music.visible = false
@@ -398,13 +398,16 @@ screen.connect_signal("request::desktop_decoration", function(s)
           layout = wibox.layout.fixed.horizontal,
           sep,
           volume_icon,
-          wifi_icon,
+          --wifi_icon,
           caps_icon,
           sep,
         },
       },
     },
   })
+  if not user.bar.utility then
+    pill_utils.visible = false
+  end
 
   local pill_date = wibox.widget({
     widget = wibox.container.margin,
@@ -637,7 +640,7 @@ screen.connect_signal("request::desktop_decoration", function(s)
   end)
 
   pill_music:connect_signal("button::press", function()
-    awesome.emit_signal("ui::media::toggle")
+    awesome.emit_signal("ui::control::toggle")
   end)
 end)
 
