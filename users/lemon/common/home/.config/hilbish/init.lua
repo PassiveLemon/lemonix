@@ -97,16 +97,15 @@ commander.register("nb", function(args)
   end
 
   local args_str = ""
-  if #args > 0 then
-    for k, _ in pairs(args) do
-      if string.find(tostring(args[k]), "#") then
-        args_str = args_str .. tostring(args[k])
-      else
-        args_str = ".#" .. tostring((args[k] or ""))
-      end
+  for k, _ in pairs(args) do
+    if string.find(tostring(args[k]), "#") then
+      args_str = args_str .. tostring(args[k])
+    else
+      args_str = args_str .. " .#" .. tostring((args[k] or ""))
     end
   end
 
+  print("nix build " .. args_str)
   hilbish.run("nix build " .. args_str)
 end)
 
@@ -127,27 +126,23 @@ commander.register("nd", function(args)
     args_str = ".#" .. tostring((args[1] or ""))
   end
 
+  print("nix develop " .. args_str)
   hilbish.run("nix develop " .. args_str)
 end)
 
 commander.register("nfu", function(args)
-  if #args > 1 then
-    hilbish.run("echo 'Too many arguments: nfu (flake-url)'")
-    return 1
-  end
   if (args[1] == "--help") or (args[1] == "-h") then
     hilbish.run("nix flake update --help")
     return 0
   end
 
   local args_str = ""
-  if string.find(tostring(args[1]), "#") then
-    args_str = tostring(args[1])
-  else
-    args_str = ".#" .. tostring((args[1] or ""))
+  for k, _ in pairs(args) do
+    args_str = args_str .. " " .. tostring(args[k])
   end
 
-  hilbish.run("nix flake update --flake " .. args_str)
+  print("nix flake update" .. args_str)
+  hilbish.run("nix flake update" .. args_str)
 end)
 
 commander.register("nr", function(args)
@@ -162,13 +157,14 @@ commander.register("nr", function(args)
   else
     args_str = ".#" .. tostring((args[1] or ""))
   end
-  args_str = args_str .. " -- "
+  args_str = args_str .. " --"
   for k, _ in pairs(args) do
     if k > 1 then
       args_str = args_str .. " " .. tostring(args[k])
     end
   end
 
+  print("nix run " .. args_str)
   hilbish.run("nix run " .. args_str)
 end)
 
@@ -179,17 +175,16 @@ commander.register("ns", function(args)
   end
 
   local args_str = ""
-  if #args > 0 then
-    for k, _ in pairs(args) do
-      if string.find(tostring(args[k]), "#") then
-        args_str = args_str .. tostring(args[k])
-      else
-        args_str = ".#" .. tostring((args[k] or ""))
-      end
+  for k, _ in pairs(args) do
+    if string.find(tostring(args[k]), "#") then
+      args_str = args_str .. tostring(args[k])
+    else
+      args_str = args_str .. " nixpkgs#" .. tostring((args[k] or ""))
     end
   end
 
-  hilbish.run("nix shell " .. args_str)
+  print("nix shell" .. args_str)
+  hilbish.run("nix shell" .. args_str)
 end)
 
 commander.register("nsp", function(args)
