@@ -27,8 +27,8 @@ local function network()
     if adapter:match("enp.(d*)s.(d*)") or adapter:match("wlp.(d*)s.(d*)") then
       awful.spawn.easy_async_with_shell("ip -s link show ".. adapter .. " | grep 'state UP'", function(_, _, _, code)
         if code == 0 then
-          awful.spawn.easy_async_with_shell("cat /proc/net/dev | grep " .. adapter, function(adapter_stats)
-            local adapter_stats = adapter_stats:gsub("\n", ""):gsub(adapter .. ":", "")
+          awful.spawn.easy_async_with_shell("cat /proc/net/dev | grep " .. adapter, function(adapter_stats_stdout)
+            local adapter_stats = adapter_stats_stdout:gsub("\n", ""):gsub(adapter .. ":", "")
             network_stats_dict[adapter] = adapter_stats_table(adapter_stats)
           end)
         end
@@ -39,7 +39,10 @@ local function network()
     emit(network_stats_dict)
   end)
 end
+
 network()
+
+-- luacheck: ignore 211
 local total_timer = gears.timer({
   timeout = 60,
   autostart = true,
@@ -47,3 +50,4 @@ local total_timer = gears.timer({
     network()
   end,
 })
+

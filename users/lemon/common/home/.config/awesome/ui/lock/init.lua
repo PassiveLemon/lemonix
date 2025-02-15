@@ -96,7 +96,7 @@ end)
 -- Don't require auth if login handoff from the .bash_profile script is present
 local auth_file = h.join_path(os.getenv("HOME"), "/.cache/passivelemon/loginauth")
 if h.is_file(auth_file) then
-  os.remove(auth_file)
+  os.remove(tostring(auth_file))
 else
   toggle_lock()
 end

@@ -1,5 +1,7 @@
 std = "min"
 
+ignore = { "631" }
+
 read_globals = {
   -- AWM
   "awesome",

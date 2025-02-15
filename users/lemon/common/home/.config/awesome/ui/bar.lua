@@ -104,15 +104,14 @@ screen.connect_signal("request::desktop_decoration", function(s)
   end)
 
   -- Internet
-  local wifi_icon = h.text({
-    margins = {
-      right = dpi(3),
-      left = dpi(3),
-    },
-
-    text = "󰤨",
-    font = b.sysfont(dpi(14)),
-  })
+  -- local wifi_icon = h.text({
+  --   margins = {
+  --     right = dpi(3),
+  --     left = dpi(3),
+  --   },
+  --   text = "󰤨",
+  --   font = b.sysfont(dpi(14)),
+  -- })
 
   -- Power
   local battery_icon = h.text({

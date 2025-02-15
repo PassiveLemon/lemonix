@@ -26,17 +26,17 @@ local function storage()
   for device in lfs.dir("/sys/block") do
     if device:match("nvme.(d*)n.(d*)") then
       local device_path = h.join_path("/dev/", device)
-      awful.spawn.easy_async_with_shell("df " .. device_path .. "p1 | grep '/dev'", function(device_stats, _, _, code)
+      awful.spawn.easy_async_with_shell("df " .. device_path .. "p1 | grep '/dev'", function(device_stats_raw, _, _, code)
         if code == 0 then
-          local device_stats = device_stats:gsub("\n", "")
+          local device_stats = device_stats_raw:gsub("\n", "")
           storage_stats_dict[device] = device_stats_table(device_stats)
         end
       end)
     elseif device:match("sd.(l*)") then
       local device_path = h.join_path("/dev/", device)
-      awful.spawn.easy_async_with_shell("df ".. device_path .. "1 | grep '/dev'", function(device_stats, _, _, code)
+      awful.spawn.easy_async_with_shell("df ".. device_path .. "1 | grep '/dev'", function(device_stats_raw, _, _, code)
         if code == 0 then
-          local device_stats = device_stats:gsub("\n", "")
+          local device_stats = device_stats_raw:gsub("\n", "")
           storage_stats_dict[device] = device_stats_table(device_stats)
         end
       end)
@@ -46,7 +46,10 @@ local function storage()
     emit(storage_stats_dict)
   end)
 end
+
 storage()
+
+-- luacheck: ignore 211
 local storage_timer = gears.timer({
   timeout = 60,
   autostart = true,

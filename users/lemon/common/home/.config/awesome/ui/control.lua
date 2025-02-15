@@ -81,20 +81,6 @@ local volume_bar = wibox.widget({
   },
 })
 
-local cancel_button = h.button({
-  margins = {
-    top = b.margins,
-    right = b.margins,
-    bottom = b.margins,
-    left = b.margins,
-  },
-  x = dpi(32),
-  y = dpi(32),
-  shape = gears.shape.circle,
-  text = "󰜺",
-  font = b.sysfont(dpi(14)),
-})
-
 local lock_button = h.button({
   margins = {
     top = b.margins,
@@ -106,8 +92,60 @@ local lock_button = h.button({
   y = dpi(32),
   shape = gears.shape.circle,
   text = "",
-  font = b.sysfont(dpi(11)),
+  font = b.sysfont(dpi(12)),
 })
+
+local suspend_button = h.button({
+  margins = {
+    top = b.margins,
+    right = b.margins,
+    bottom = b.margins,
+    left = b.margins,
+  },
+  x = dpi(32),
+  y = dpi(32),
+  shape = gears.shape.circle,
+  text = "",
+  font = b.sysfont(dpi(14)),
+  toggle = false,
+})
+local suspend_hover_timer = gears.timer({
+  timeout = 1,
+  single_shot = true,
+  callback = function()
+    suspend_button.toggle = true
+    suspend_button:get_children_by_id("background")[1].fg = b.fg_focus
+  end,
+})
+if not user.suspend then
+  suspend_button.visible = false
+end
+
+local hibernate_button = h.button({
+  margins = {
+    top = b.margins,
+    right = b.margins,
+    bottom = b.margins,
+    left = b.margins,
+  },
+  x = dpi(32),
+  y = dpi(32),
+  shape = gears.shape.circle,
+  text = "",
+  font = b.sysfont(dpi(16)),
+  toggle = false,
+})
+local hibernate_hover_timer = gears.timer({
+  timeout = 2,
+  single_shot = true,
+  callback = function()
+    hibernate_button.toggle = true
+    hibernate_button:get_children_by_id("background")[1].fg = b.fg_focus
+  end,
+})
+if not user.hibernate then
+  hibernate_button.visible = false
+end
 
 local poweroff_button = h.button({
   margins = {
@@ -120,11 +158,11 @@ local poweroff_button = h.button({
   y = dpi(32),
   shape = gears.shape.circle,
   text = "󰐥",
-  font = b.sysfont(dpi(14)),
+  font = b.sysfont(dpi(15)),
   toggle = false,
 })
 local poweroff_hover_timer = gears.timer({
-  timeout = 1,
+  timeout = 2,
   single_shot = true,
   callback = function()
     poweroff_button.toggle = true
@@ -147,7 +185,7 @@ local restart_button = h.button({
   toggle = false,
 })
 local restart_hover_timer = gears.timer({
-  timeout = 1,
+  timeout = 3,
   single_shot = true,
   callback = function()
     restart_button.toggle = true
@@ -166,51 +204,47 @@ local power_button = h.button({
   y = dpi(32),
   shape = gears.shape.circle,
   text = "󰐥",
-  font = b.sysfont(dpi(14)),
+  font = b.sysfont(dpi(15)),
 })
 
 local power_menu_button_group = wibox.widget({
-  visible = false,
-  layout = wibox.layout.fixed.horizontal,
+  layout = wibox.layout.fixed.vertical,
+  lock_button,
+  suspend_button,
+  hibernate_button,
   poweroff_button,
   restart_button,
-  lock_button,
-  cancel_button,
 })
-
-local function power_menu_button_group_hide()
-  power_menu_button_group.visible = false
-  power_button.visible = true
-  volume_bar:get_children_by_id("background")[1].forced_width = (dpi(total_width) - (b.margins * 4) - dpi(32))
-end
-
-local function power_menu_button_group_show()
-  volume_bar:get_children_by_id("background")[1].forced_width = (dpi(total_width) - (b.margins * 4) - (dpi(32) * 4) - (b.margins * 6))
-  power_button.visible = false
-  power_menu_button_group.visible = true
-end
-
-local power_menu_button_group_hover_timer = gears.timer({
-  timeout = 3,
-  single_shot = true,
-  callback = function()
-    power_menu_button_group_hide()
-  end,
-})
-power_menu_button_group:connect_signal("mouse::enter", function()
-  power_menu_button_group_hover_timer:stop()
-end)
-power_menu_button_group:connect_signal("mouse::leave", function()
-  power_menu_button_group_hover_timer:again()
-end)
-
-cancel_button:connect_signal("button::press", function()
-  power_menu_button_group_hide()
-end)
 
 lock_button:connect_signal("button::press", function()
   awesome.emit_signal('ui::lock::toggle')
   awesome.emit_signal("signal::playerctl::pause", "%all%")
+end)
+
+suspend_button:connect_signal("mouse::enter", function()
+  suspend_hover_timer:again()
+end)
+suspend_button:connect_signal("mouse::leave", function()
+  suspend_hover_timer:stop()
+  suspend_button.toggle = false
+end)
+suspend_button:connect_signal("button::press", function()
+  if suspend_button.toggle then
+    awful.spawn("systemctl suspend")
+  end
+end)
+
+hibernate_button:connect_signal("mouse::enter", function()
+  hibernate_hover_timer:again()
+end)
+hibernate_button:connect_signal("mouse::leave", function()
+  hibernate_hover_timer:stop()
+  hibernate_button.toggle = false
+end)
+hibernate_button:connect_signal("button::press", function()
+  if hibernate_button.toggle then
+    awful.spawn("systemctl hibernate")
+  end
 end)
 
 poweroff_button:connect_signal("mouse::enter", function()
@@ -237,10 +271,6 @@ restart_button:connect_signal("button::press", function()
   if restart_button.toggle then
     awful.spawn("systemctl reboot")
   end
-end)
-
-power_button:connect_signal("button::press", function()
-  power_menu_button_group_show()
 end)
 
 local brightness_icon = h.text({
@@ -516,6 +546,53 @@ awesome.connect_signal("signal::playerctl::metadata", function(metadata_table)
 end)
 
 awful.screen.connect_for_each_screen(function(s)
+  local power_popup = awful.popup({
+    x = dpi(s.geometry.x + 12 + 361),
+    y = dpi(32 + 12),
+    bg = b.bg_primary,
+    fg = b.fg_primary,
+    border_width = dpi(3),
+    border_color = b.border_color_active,
+    screen = s,
+    ontop = true,
+    visible = false,
+    type = "popup_menu",
+    widget = {
+      widget = wibox.container.margin,
+      margins = {
+        top = b.margins,
+        right = b.margins,
+        bottom = b.margins,
+        left = b.margins,
+      },
+      {
+        id = "background",
+        widget = wibox.container.background,
+        bg = b.bg_primary,
+        {
+          layout = wibox.layout.fixed.vertical,
+          power_menu_button_group,
+        },
+      },
+    },
+  })
+
+  local power_popup_timer = gears.timer({
+    timeout = 5,
+    single_shot = true,
+    callback = function()
+      power_popup.visible = false
+    end,
+  })
+
+  power_button:connect_signal("button::press", function()
+    if power_popup.screen.index == awful.screen.focused().index then
+      power_popup.visible = not power_popup.visible
+    else
+      power_popup.visible = false
+    end
+  end)
+
   local main = awful.popup({
     x = dpi(s.geometry.x + 12),
     y = dpi(32 + 12),
@@ -545,7 +622,6 @@ awful.screen.connect_for_each_screen(function(s)
             layout = wibox.layout.fixed.horizontal,
             volume_bar,
             power_button,
-            power_menu_button_group,
           },
           brightness_bar,
           media_player_bar,
@@ -553,18 +629,30 @@ awful.screen.connect_for_each_screen(function(s)
       },
     },
   })
+
   local main_timer = gears.timer({
     timeout = 5,
     single_shot = true,
     callback = function()
       main.visible = false
+      power_popup.visible = false
     end,
   })
+
   main:connect_signal("mouse::enter", function()
     main_timer:stop()
   end)
   main:connect_signal("mouse::leave", function()
     main_timer:again()
+  end)
+
+  power_popup:connect_signal("mouse::enter", function()
+    main_timer:stop()
+    power_popup_timer:stop()
+  end)
+  power_popup:connect_signal("mouse::leave", function()
+    main_timer:again()
+    power_popup_timer:again()
   end)
 
   awesome.connect_signal("ui::control::toggle", function(state)
@@ -582,5 +670,6 @@ awful.screen.connect_for_each_screen(function(s)
   end)
 
   click_to_hide.popup(main, nil, true)
+  click_to_hide.popup(power_popup, nil, true)
 end)
 

@@ -12,16 +12,20 @@ local dpi = b.xresources.apply_dpi
 --
 
 local space = h.text({
+  bg = b.bg_primary,
   text = " ",
 })
 
 local cpu_text = h.text({
+  bg = b.bg_primary,
   text = "CPU",
 })
 local cpu_use = h.text({
+  bg = b.bg_primary,
   halign = "left",
 })
 local cpu_temp = h.text({
+  bg = b.bg_primary,
   halign = "left",
 })
 awesome.connect_signal("signal::resource::cpu::data", function(use, temp)
@@ -30,36 +34,51 @@ awesome.connect_signal("signal::resource::cpu::data", function(use, temp)
 end)
 
 local gpu_text = h.text({
+  bg = b.bg_primary,
   text = "GPU",
 })
 local gpu_use = h.text({
+  bg = b.bg_primary,
   halign = "left",
 })
 local gpu_temp = h.text({
+  bg = b.bg_primary,
   halign = "left",
 })
 local gpu_mem = h.text({
+  bg = b.bg_primary,
   halign = "left",
 })
 awesome.connect_signal("signal::resource::gpu::data", function(nvidia_smi_table)
+  if nvidia_smi_table == "ERR" then
+    gpu_use:get_children_by_id("textbox")[1].text = "ERR"
+    gpu_temp:get_children_by_id("textbox")[1].text = "ERR"
+    gpu_mem:get_children_by_id("textbox")[1].text = "ERR"
+    return
+  end
 	gpu_use:get_children_by_id("textbox")[1].text = "Usage: " .. nvidia_smi_table[1] .. "%"
   gpu_temp:get_children_by_id("textbox")[1].text = nvidia_smi_table[2] .. "C"
   gpu_mem:get_children_by_id("textbox")[1].text = "Memory: " .. h.round((nvidia_smi_table[4] / 1024), 1) .. "/" .. h.round((nvidia_smi_table[3] / 1024), 1) .. " GiB " .. h.round(((nvidia_smi_table[4] / nvidia_smi_table[3]) * 100), 0) .. "%"
 end)
 
 local mem_text = h.text({
+  bg = b.bg_primary,
   text = "Memory",
 })
 local mem_use = h.text({
+  bg = b.bg_primary,
   halign = "left",
 })
 local mem_use_perc = h.text({
+  bg = b.bg_primary,
   halign = "left",
 })
 local cache_use = h.text({
+  bg = b.bg_primary,
   halign = "left",
 })
 local cache_use_perc = h.text({
+  bg = b.bg_primary,
   halign = "left",
 })
 awesome.connect_signal("signal::resource::memory::data", function(free_mem_table)
@@ -70,9 +89,11 @@ awesome.connect_signal("signal::resource::memory::data", function(free_mem_table
 end)
 
 local strg_text = h.text({
+  bg = b.bg_primary,
   text = "Storage",
 })
 local strg_drives = h.text({
+  bg = b.bg_primary,
   halign = "left",
 })
 
@@ -98,9 +119,11 @@ awesome.connect_signal("signal::resource::storage::data", function(storage_stats
 end)
 
 local network_text = h.text({
+  bg = b.bg_primary,
   text = "Network",
 })
 local network_adapters = h.text({
+  bg = b.bg_primary,
   halign = "left",
 })
 awesome.connect_signal("signal::resource::network::data", function(network_stats_dict)
@@ -114,9 +137,11 @@ awesome.connect_signal("signal::resource::network::data", function(network_stats
 end)
 
 local uptime_text = h.text({
+  bg = b.bg_primary,
   text = "Uptime",
 })
 local uptime_time = h.text({
+  bg = b.bg_primary,
   halign = "left",
 })
 local function uptime(uptime_days, uptime_hours)

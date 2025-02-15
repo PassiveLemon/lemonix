@@ -32,7 +32,10 @@ local function power()
   local time = get_device("battery_BAT1").time_to_empty
   emit(ac, perc, time)
 end
+
 power()
+
+-- luacheck: ignore 211
 local power_timer = gears.timer({
   timeout = 5,
   autostart = true,

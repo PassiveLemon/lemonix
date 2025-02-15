@@ -6,17 +6,17 @@ local function emit(cur, max)
 end
 
 local function brightness()
-  awful.spawn.easy_async("brightnessctl get", function(cur)
-    local cur = cur:gsub("\n", "")
-    local cur = tonumber(cur)
-    awful.spawn.easy_async("brightnessctl max", function(max)
-      local max = max:gsub("\n", "")
-      local max = tonumber(max)
+  awful.spawn.easy_async("brightnessctl get", function(cur_stdout)
+    local cur = tonumber(cur_stdout:gsub("\n", ""))
+    awful.spawn.easy_async("brightnessctl max", function(max_stdout)
+      local max = tonumber(max_stdout:gsub("\n", ""))
       emit(cur, max)
     end)
   end)
 end
+
 brightness()
+
 local brightness_timer = gears.timer({
   timeout = 3,
   autostart = true,

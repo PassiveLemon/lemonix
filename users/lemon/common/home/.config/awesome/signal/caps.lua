@@ -8,8 +8,8 @@ local function emit(caps)
 end
 
 local function caps_query()
-  awful.spawn.easy_async_with_shell("xset q | grep Caps | awk '{print $4}'", function(caps)
-    local caps = caps:gsub("\n", "")
+  awful.spawn.easy_async_with_shell("xset q | grep Caps | awk '{print $4}'", function(caps_stdout)
+    local caps = caps_stdout:gsub("\n", "")
     caps_cache = caps
     emit(caps)
   end)

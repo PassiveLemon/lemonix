@@ -23,13 +23,13 @@ local naughty = require("naughty")
 local subscribers = { }
 
 local function subscribe(action, name, percent, command)
-  local percent = tonumber(percent)
+  local percent_num = tonumber(percent)
 
   if action then
     subscribers[name] = {
       name = name,
       notify = true,
-      percent = percent,
+      percent_num = percent_num,
       command = command
     }
   else
@@ -38,8 +38,8 @@ local function subscribe(action, name, percent, command)
 end
 
 local function check(subscriber)
-  awful.spawn.easy_async_with_shell(subscriber.command, function(stdout)
-    local stdout = tonumber(stdout)
+  awful.spawn.easy_async_with_shell(subscriber.command, function(raw_stdout)
+    local stdout = tonumber(raw_stdout)
 
     awesome.emit_signal(("signal::battery::status::" .. subscriber.name), stdout)
     awesome.emit_signal("signal::battery::status", subscriber.name, stdout)
@@ -62,6 +62,7 @@ local function main()
   end
 end
 
+-- luacheck: ignore 211
 local main_timer = gears.timer({
   timeout = 5,
   autostart = true,

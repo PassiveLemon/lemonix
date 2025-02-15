@@ -16,15 +16,18 @@ end
 
 local function memory()
   local free_mem_table = { }
-  awful.spawn.easy_async_with_shell("free -m | grep 'Mem:'", function(free_raw)
-    local free_raw = free_raw:gsub("\n", "")
-    for number in free_raw:gmatch("%d+") do
+  awful.spawn.easy_async_with_shell("free -m | grep 'Mem:'", function(free_stdout)
+    local free = free_stdout:gsub("\n", "")
+    for number in free:gmatch("%d+") do
       table.insert(free_mem_table, normalize(number))
     end
     emit(free_mem_table)
   end)
 end
+
 memory()
+
+-- luacheck: ignore 211
 local memory_timer = gears.timer({
   timeout = 3,
   autostart = true,
@@ -32,3 +35,4 @@ local memory_timer = gears.timer({
     memory()
   end,
 })
+
