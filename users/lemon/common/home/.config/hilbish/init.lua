@@ -105,7 +105,6 @@ commander.register("nb", function(args)
     end
   end
 
-  print("nix build " .. args_str)
   hilbish.run("nix build " .. args_str)
 end)
 
@@ -126,7 +125,6 @@ commander.register("nd", function(args)
     args_str = ".#" .. tostring((args[1] or ""))
   end
 
-  print("nix develop " .. args_str)
   hilbish.run("nix develop " .. args_str)
 end)
 
@@ -141,7 +139,6 @@ commander.register("nfu", function(args)
     args_str = args_str .. " " .. tostring(args[k])
   end
 
-  print("nix flake update" .. args_str)
   hilbish.run("nix flake update" .. args_str)
 end)
 
@@ -164,7 +161,6 @@ commander.register("nr", function(args)
     end
   end
 
-  print("nix run " .. args_str)
   hilbish.run("nix run " .. args_str)
 end)
 
@@ -183,7 +179,6 @@ commander.register("ns", function(args)
     end
   end
 
-  print("nix shell" .. args_str)
   hilbish.run("nix shell" .. args_str)
 end)
 
