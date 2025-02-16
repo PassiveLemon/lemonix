@@ -2,7 +2,11 @@
 let
   inherit (lib) mkIf mkEnableOption mkMerge;
   cfg = config.lemonix.gaming;
-  wivrnPackage = inputs.lemonake.packages.${pkgs.system}.wivrn.override { cudaSupport = true; };
+  wivrnPackage = inputs.lemonake.packages.${pkgs.system}.wivrn.override {
+    cudaSupport = true;
+    opencomposite = "${openCompPackage}";
+  };
+  openCompPackage = inputs.lemonake.packages.${pkgs.system}.opencomposite-git;
 in
 {
   options = {
@@ -38,8 +42,8 @@ in
     })
     (mkIf cfg.vr.enable {
       home.packages = with pkgs; [
-        sidequest
-        nexusmods-app beatsabermodmanager
+        nexusmods-app
+        (callPackage ../../pkgs/bs-manager.nix { })
         xrgears
       ];
 
@@ -48,9 +52,8 @@ in
         openvrRuntimeOverride = {
           enable = true;
           config = "path";
-          path = "${inputs.lemonake.packages.${pkgs.system}.opencomposite-git}/lib/opencomposite";
-          # path = "${inputs.lemonake.packages.${pkgs.system}.xrizer}/lib";
-          # path = "${inputs.lemonake.packages.${pkgs.system}.vapor-git}/lib";
+          path = "${openCompPackage}/lib/opencomposite";
+          # path = "${inputs.lemonake.packages.${pkgs.system}.xrizer}/lib/xrizer";
         };
         openxrRuntimeOverride = {
           enable = true;
@@ -60,20 +63,30 @@ in
         helperScript = {
           enable = true;
           openvrRuntime = "opencomposite";
-          openvrRuntimePackage = inputs.lemonake.packages.${pkgs.system}.opencomposite-git;
+          openvrRuntimePackage = openCompPackage;
           # openvrRuntime = "xrizer";
           # openvrRuntimePackage = inputs.lemonake.packages.${pkgs.system}.xrizer;
-          # openvrRuntime = "vapor";
-          # openvrRuntimePackage = inputs.lemonake.packages.${pkgs.system}.vapor-git;
           openxrRuntime = "wivrn";
           openxrRuntimePackage = wivrnPackage;
         };
       };
 
-      xdg.mimeApps.defaultApplications = {
-        "x-scheme-handler/beatsaver" = "BeatSaberModManager-url-beatsaver.desktop";
-        "x-scheme-handler/bsplaylist" = "BeatSaberModManager-url-bsplaylist.desktop";
-        "x-scheme-handler/modelsaber" = "BeatSaberModManager-url-modelsaber.desktop";
+      xdg = {
+        configFile = {
+          "wlxoverlay/conf.d/wayvr.yaml" = {
+            text = ''
+              dashboard:
+                exec: "${inputs.lemonake.packages.${pkgs.system}.wayvr-dashboard-git}/bin/wayvr_dashboard"
+                args: ""
+                env: [ "GDK_BACKEND=wayland", "WEBKIT_DISABLE_DMABUF_RENDERER=1" ]
+            '';
+          };
+        };
+        mimeApps.defaultApplications = {
+          "x-scheme-handler/beatsaver" = "BeatSaberModManager-url-beatsaver.desktop";
+          "x-scheme-handler/bsplaylist" = "BeatSaberModManager-url-bsplaylist.desktop";
+          "x-scheme-handler/modelsaber" = "BeatSaberModManager-url-modelsaber.desktop";
+        };
       };
     })
     (mkIf cfg.streaming.enable {

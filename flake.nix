@@ -13,16 +13,12 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
     lemonake = {
-      url = "github:passivelemon/lemonake";
-      # url = "path:/home/lemon/Documents/GitHub/lemonake";
+      # url = "github:passivelemon/lemonake";
+      url = "path:/home/lemon/Documents/GitHub/lemonake";
       inputs.nixpkgs.follows = "nixpkgs";
     };
     nixpkgs-f2k = {
       url = "github:moni-dz/nixpkgs-f2k";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
-    nixpkgs-xr = {
-      url = "github:nix-community/nixpkgs-xr";
       inputs.nixpkgs.follows = "nixpkgs";
     };
     lanzaboote = {
@@ -82,7 +78,8 @@
   {
     nixosConfigurations = {
       # Desktop
-      "silver" = inputs.nixos.lib.nixosSystem {
+      # Would be on NixOS, but OpenComposite has been having issues...
+      "silver" = inputs.nixpkgs.lib.nixosSystem {
         inherit specialArgs;
         system = "x86_64-linux";
         modules = [

@@ -13,12 +13,13 @@ in
     };
   };
 
-  disabledModules = [ "services/video/wivrn.nix" ];
-
   imports = [
     inputs.lemonake.nixosModules.wivrn
     inputs.lemonake.nixosModules.autoadb
   ];
+
+  # Importing my own WiVRn module so we disable the offical to avoid conflicts
+  disabledModules = [ "services/video/wivrn.nix" ];
 
   config = mkIf cfg.enable (mkMerge [
     (mkIf cfg.desktop.enable {
@@ -26,13 +27,7 @@ in
         enable = true;
         extraCompatPackages = with pkgs; [
           proton-ge-bin
-          (proton-ge-bin.overrideAttrs (finalAttrs: _: {
-            version = "GE-Proton9-22-rtsp17";
-            src = pkgs.fetchzip {
-              url = "https://github.com/SpookySkeletons/proton-ge-rtsp/releases/download/${finalAttrs.version}/${finalAttrs.version}.tar.gz";
-              hash = "sha256-1zj0y7E9JWrnPC9HllFXos33rsdAt3q+NamoxNTmHHM=";
-            };
-          }))
+          inputs.lemonake.packages.${pkgs.system}.proton-ge-rtsp
         ];
       };
     })
@@ -46,8 +41,10 @@ in
           '';
         };
         wivrn = let
-          # Overriden until I somehow fix the cudaSupport stuff
-          wivrnPackage = inputs.lemonake.packages.${pkgs.system}.wivrn.override { cudaSupport = true; };
+          wivrnPackage = inputs.lemonake.packages.${pkgs.system}.wivrn.override {
+            cudaSupport = true;
+            opencomposite = "${inputs.lemonake.packages.${pkgs.system}.opencomposite-git}";
+          };
         in {
           enable = true;
           package = wivrnPackage;
@@ -102,7 +99,7 @@ in
                   group = 0;
                 }
               ];
-              application = inputs.nixpkgs-xr.packages.${pkgs.system}.wlx-overlay-s;
+              application = inputs.lemonake.packages.${pkgs.system}.wlx-overlay-s-git;
               tcp_only = true;
             };
           };
