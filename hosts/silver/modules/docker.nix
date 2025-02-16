@@ -57,6 +57,16 @@
   };
 
   systemd = {
+    services.stack-up = {
+      description = "WiVRn XR runtime service";
+      serviceConfig = {
+        ExecStartPre = "${pkgs.coreutils}/bin/sleep 10";
+        ExecStart = "${pkgs.docker}/bin/docker compose -f /home/lemon/Documents/GitHub/lemocker/silver/docker-compose.yaml up -d";
+        ExecStartPost = "${pkgs.coreutils}/bin/sleep 30";
+      };
+      wantedBy = [ "multi-user.target" ];
+      after = [ "docker.service" ];
+    };
     tmpfiles.rules = [
       "Z /home/docker 770 docker docker_management - -"
       "Z /home/docker/Containers 770 docker docker_management - -"
