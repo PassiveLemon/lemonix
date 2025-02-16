@@ -88,7 +88,7 @@ merge_tables(default_patterns, {
     pattern = "inherit()%s*.-%s*();",
     type = { "keyword", "literal", "normal" },
   },
-  { pattern = "%S+%s*[,:]",        type = "normal" },
+  { pattern = "%S+%s*[,:]%s",      type = "normal" },
   -- Everything else
   { pattern = "[%a%-%_][%w%-%_]*", type = "keyword2" },
 })
