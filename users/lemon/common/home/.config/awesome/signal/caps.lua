@@ -15,7 +15,7 @@ local function caps_query()
     else
       caps_cache = false
     end
-    emit(caps)
+    emit(caps_cache)
   end)
 end
 caps_query()
