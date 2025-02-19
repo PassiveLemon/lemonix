@@ -14,7 +14,7 @@ end
 local function adapter_stats_table(adapter_stats)
   local stats_table = { }
   for number in adapter_stats:gmatch("%d+") do
-    table.insert(stats_table, number)
+    table.insert(stats_table, tonumber(number))
   end
   return stats_table
 end

@@ -10,7 +10,11 @@ end
 local function caps_query()
   awful.spawn.easy_async_with_shell("xset q | grep Caps | awk '{print $4}'", function(caps_stdout)
     local caps = caps_stdout:gsub("\n", "")
-    caps_cache = caps
+    if caps == "on" then
+      caps_cache = true
+    else
+      caps_cache = false
+    end
     emit(caps)
   end)
 end
@@ -25,11 +29,11 @@ local caps_query_timer = gears.timer({
 
 -- Nifty function to just make the caps signals much more responsive due to delays with detecting caps lock
 local function caps()
-  if caps_cache == "on" then
-    caps_cache = "off"
+  if caps_cache == true then
+    caps_cache = false
     emit(caps_cache)
-  elseif caps_cache == "off" then
-    caps_cache = "on"
+  elseif caps_cache == false then
+    caps_cache = true
     emit(caps_cache)
   end
 end

@@ -17,7 +17,7 @@ local function gpu()
       return
     end
     for number in nvidia_smi_raw:gmatch("%d+") do
-      table.insert(nvidia_smi_table, number)
+      table.insert(nvidia_smi_table, tonumber(number))
     end
     emit(nvidia_smi_table)
   end)

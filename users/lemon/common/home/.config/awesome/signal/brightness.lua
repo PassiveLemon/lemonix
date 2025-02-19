@@ -7,10 +7,10 @@ end
 
 local function brightness()
   awful.spawn.easy_async("brightnessctl get", function(cur_stdout)
-    local cur = tonumber(cur_stdout:gsub("\n", ""))
+    local cur = cur_stdout:gsub("\n", "")
     awful.spawn.easy_async("brightnessctl max", function(max_stdout)
-      local max = tonumber(max_stdout:gsub("\n", ""))
-      emit(cur, max)
+      local max = max_stdout:gsub("\n", "")
+      emit(tonumber(cur), tonumber(max))
     end)
   end)
 end

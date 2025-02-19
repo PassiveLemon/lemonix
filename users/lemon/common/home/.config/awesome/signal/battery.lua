@@ -23,13 +23,11 @@ local naughty = require("naughty")
 local subscribers = { }
 
 local function subscribe(action, name, percent, command)
-  local percent_num = tonumber(percent)
-
   if action then
     subscribers[name] = {
       name = name,
       notify = true,
-      percent_num = percent_num,
+      percent = percent,
       command = command
     }
   else
@@ -72,6 +70,6 @@ local main_timer = gears.timer({
 })
 
 awesome.connect_signal("signal::battery::subscribe", function(action, name, percent, command)
-  subscribe(action, name, percent, command)
+  subscribe(action, name, tonumber(percent), command)
 end)
 

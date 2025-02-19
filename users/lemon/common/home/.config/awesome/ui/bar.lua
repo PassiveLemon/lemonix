@@ -66,7 +66,7 @@ screen.connect_signal("request::desktop_decoration", function(s)
     markup = 'A<span underline="single">a</span>',
   })
   awesome.connect_signal("signal::peripheral::caps::state", function(caps)
-    if caps == "on" then
+    if caps then
       caps_icon:get_children_by_id("textbox")[1].markup = '<span underline="single">A</span>a'
     else
       caps_icon:get_children_by_id("textbox")[1].markup = 'A<span underline="single">a</span>'
@@ -136,30 +136,22 @@ screen.connect_signal("request::desktop_decoration", function(s)
     },
     halign = "left",
   })
+  local battery_icons = {
+    [9] = "󰁹",
+    [8] = "󰂂",
+    [7] = "󰂁",
+    [6] = "󰂀",
+    [5] = "󰁿",
+    [4] = "󰁾",
+    [3] = "󰁽",
+    [2] = "󰁼",
+    [1] = "󰁻",
+    [0] = "󰁺",
+  }
   awesome.connect_signal("signal::power", function(ac, perc, time)
     battery_text:get_children_by_id("textbox")[1].text = perc .. "%"
     if not ac then
-      if perc > 90 then
-        battery_icon:get_children_by_id("textbox")[1].text = "󰁹"
-      elseif perc < 90 then
-        battery_icon:get_children_by_id("textbox")[1].text = "󰂂"
-      elseif perc < 80 then
-        battery_icon:get_children_by_id("textbox")[1].text = "󰂁"
-      elseif perc < 70 then
-        battery_icon:get_children_by_id("textbox")[1].text = "󰂀"
-      elseif perc < 60 then
-        battery_icon:get_children_by_id("textbox")[1].text = "󰁿"
-      elseif perc < 50 then
-        battery_icon:get_children_by_id("textbox")[1].text = "󰁾"
-      elseif perc < 40 then
-        battery_icon:get_children_by_id("textbox")[1].text = "󰁽"
-      elseif perc < 30 then
-        battery_icon:get_children_by_id("textbox")[1].text = "󰁼"
-      elseif perc < 20 then
-        battery_icon:get_children_by_id("textbox")[1].text = "󰁻"
-      elseif perc < 10 then
-        battery_icon:get_children_by_id("textbox")[1].text = "󰁺"
-      end
+      battery_icon:get_children_by_id("textbox")[1].text = battery_icons[math.floor(perc / 10)]
       battery_etr.visible = true
       local _etr = h.round((time / 3600), 1)
       if _etr > 1 then
@@ -188,7 +180,7 @@ screen.connect_signal("request::desktop_decoration", function(s)
     halign = "left",
   })
   awesome.connect_signal("signal::peripheral::brightness::value", function(cur, max)
-    light_text:get_children_by_id("textbox")[1].text = tostring(h.round(((cur / max) * 100), 0)) .. "%"
+    light_text:get_children_by_id("textbox")[1].text = h.round(((cur / max) * 100), 0) .. "%"
   end)
 
   -- Pills
