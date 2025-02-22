@@ -22,11 +22,11 @@
   };
 
   age.secrets = {
-    borgbackup = {
-      file = ../../../secrets/borgbackup.age;
-      mode = "770";
-      owner = "1103";
-      group = "1201";
+    borgBackupPass = {
+      file = ../../../secrets/borgBackupPass.age;
+      mode = "600";
+      owner = "borg";
+      group = "borg_management";
     };
   };
 
@@ -51,7 +51,7 @@
       repo = "ssh://borg@127.0.0.1/home/BACKUPDRIVE/BorgBackups/silver";
       encryption = {
         mode = "repokey";
-        passCommand = "cat ${config.age.secrets.borgbackup.path}";
+        passCommand = "cat ${config.age.secrets.borgBackupPass.path}";
       };
       environment.BORG_RSH = "ssh -i /home/borg/.ssh/id_ed25519";
       compression = "auto,zstd";
@@ -83,7 +83,7 @@
       repo = "ssh://u412758@u412758.your-storagebox.de:23/home/BorgBackups/silver";
       encryption = {
         mode = "repokey";
-        passCommand = "cat ${config.age.secrets.borgbackup.path}";
+        passCommand = "cat ${config.age.secrets.borgBackupPass.path}";
       };
       environment.BORG_RSH = "ssh -i /home/borg/.ssh/id_ed25519";
       compression = "auto,zstd";
@@ -105,7 +105,7 @@
       repo = "ssh://borg@127.0.0.1/home/BACKUPDRIVE/BorgBackups/silver";
       encryption = {
         mode = "repokey";
-        passCommand = "cat ${config.age.secrets.borgbackup.path}";
+        passCommand = "cat ${config.age.secrets.borgBackupPass.path}";
       };
       environment.BORG_RSH = "ssh -i /home/borg/.ssh/id_ed25519";
       compression = "auto,zstd";
@@ -126,7 +126,7 @@
       repo = "ssh://u412758@u412758.your-storagebox.de:23/home/BorgBackups/silver";
       encryption = {
         mode = "repokey";
-        passCommand = "cat ${config.age.secrets.borgbackup.path}";
+        passCommand = "cat ${config.age.secrets.borgBackupPass.path}";
       };
       environment.BORG_RSH = "ssh -i /home/borg/.ssh/id_ed25519";
       compression = "auto,zstd";

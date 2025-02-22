@@ -1,4 +1,4 @@
-{ lib, pkgs, ... }: {
+{ config, lib, pkgs, ... }: {
   imports = [
     ./hardware-configuration.nix
     ../common/system.nix
@@ -34,6 +34,7 @@
       "root" = {
         home = "/root";
         hashedPassword = "!";
+        openssh.authorizedKeys.keys = [ "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAILU/6QN9j6jXztUj2JldcU9oW0T3BRuQ7Il4Mx5pC7Ko root@aluminum" ];
       };
       "lemon" = {
         uid = 1100;
@@ -44,6 +45,7 @@
           "wheel" "video" "audio" "networkmanager" "storage" "input"
         ];
         isNormalUser = true;
+        openssh.authorizedKeys.keys = [ "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIBnOSJDixevSeo1KcgGHki45BWMJqOxfgOASvT5WFStB lemon@aluminum" ];
       };
     };
   };
@@ -53,6 +55,15 @@
       nvtopPackages.amd
       powertop
     ];
+  };
+
+  age.secrets = {
+    tailscaleAuthKey = {
+      file = ../../secrets/tailscaleAuthKey.age;
+      mode = "600";
+      owner = "root";
+      group = "root";
+    };
   };
 
   services = {
@@ -89,7 +100,13 @@
         DEVICES_TO_DISABLE_ON_STARTUP = "bluetooth";
       };
     };
-    tailscale.enable = true;
+    tailscale = {
+      enable = true;
+      authKeyFile = config.age.secrets.tailscaleAuthKey.path;
+      extraUpFlags = [
+        "--accept-routes"
+      ];
+    };
   };
 
   systemd = {

@@ -37,6 +37,7 @@
       "root" = {
         home = "/root";
         hashedPassword = "!";
+        # The first key is just the users public key for easy reference.
         openssh.authorizedKeys.keys = [ "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIPbedW5DDGCzGpbym2f0Ex+efnyfzFfHRPAhDFY9ZI5K root@silver" ];
       };
       "lemon" = {
@@ -68,8 +69,23 @@
     ];
   };
 
+  age.secrets = {
+    tailscaleAuthKey = {
+      file = ../../secrets/tailscaleAuthKey.age;
+      mode = "600";
+      owner = "root";
+      group = "root";
+    };
+  };
+
   services = {
-    tailscale.enable = true;
+    tailscale = {
+      enable = true;
+      authKeyFile = config.age.secrets.tailscaleAuthKey.path;
+      extraUpFlags = [
+        "--accept-routes"
+      ];
+    };
     #create_ap = {
     #  enable = true;
     #  settings = {
