@@ -118,16 +118,10 @@
       };
       script = ''
         systemctl restart NetworkManager
-
-        # nmcli radio wifi off
-        # nmcli radio wifi on
-        
-        # modprobe -r mt7921e
-        # modprobe mt7921e
       '';
       wantedBy = [ "post-resume.target" ];
       after = [ "post-resume.target" ];
-      path = [ pkgs.systemd pkgs.networkmanager pkgs.kmod ];
+      path = [ pkgs.systemd ];
     };
   };
 

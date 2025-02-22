@@ -65,6 +65,7 @@
         OOMScoreAdjust = 1000;
       };
       # https://github.com/NixOS/nixpkgs/pull/369512
+      # It was not backported so we gotta keep it here
       cron.preStart = lib.mkForce ''
         mkdir -m 710 /var/cron || true
 

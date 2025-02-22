@@ -58,7 +58,7 @@
 
   systemd = {
     services.stack-up = {
-      description = "WiVRn XR runtime service";
+      description = "Docker stack upper";
       serviceConfig = {
         ExecStartPre = "${pkgs.coreutils}/bin/sleep 10";
         ExecStart = "${pkgs.docker}/bin/docker compose -f /home/lemon/Documents/GitHub/lemocker/silver/docker-compose.yaml up -d";
