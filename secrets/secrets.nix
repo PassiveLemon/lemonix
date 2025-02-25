@@ -1,7 +1,9 @@
 let
   # Normal users should have a passphrase
   # ssh-keygen
-  aluminum = "AAAAC3NzaC1lZDI1NTE5AAAAILU/6QN9j6jXztUj2JldcU9oW0T3BRuQ7Il4Mx5pC7Ko";
+
+  # Get this from /etc/ssh/ssh_host_ed25519_key (services.openssh.hostKeys)
+  aluminum = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIG6XfgAvxAVWsHKYX6Y1LGSgc1xuSKBZQ19CIAki8xDb";
   palladium = "";
   silver = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIPbedW5DDGCzGpbym2f0Ex+efnyfzFfHRPAhDFY9ZI5K";
 
@@ -9,6 +11,7 @@ let
     silver = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIOH57JnHLmW6Al34ksW1zb0TJq7IY9mZLN7kBiFR0dYi";
   };
   lemon = {
+    aluminum = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIBnOSJDixevSeo1KcgGHki45BWMJqOxfgOASvT5WFStB";
     silver = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIDHteP0JhNBJOlom+X8PY8s0FXPdUY4VcV6PgPPzXIKi";
   };
 in
