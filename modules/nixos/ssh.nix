@@ -7,17 +7,14 @@ in
   options = {
     lemonix.ssh = {
       enable = mkEnableOption "ssh";
+      openFirewall = mkEnableOption "the default ports in the firewall for the ssh server";
     };
   };
 
   config = mkIf cfg.enable {
-    networking.firewall = {
-      enable = true;
-      allowedTCPPorts = [ 22 ];
-    };
-
     services.openssh = {
       enable = true;
+      openFirewall = cfg.openFirewall;
       extraConfig = ''
         AllowAgentForwarding no
         AllowStreamLocalForwarding no

@@ -15,7 +15,10 @@
       };
     };
     agenix.enable = true;
-    ssh.enable = true;
+    ssh = {
+      enable = true;
+      openFirewall = true;
+    };
     swap = {
       enable = false;
       zram = {

@@ -13,7 +13,6 @@
         memory = 32;
       };
     };
-  
     agenix.enable = true;
     lanzaboote.enable = true;
     bluetooth.enable = true;
@@ -22,7 +21,10 @@
       desktop.enable = true;
       vr.enable = true;
     };
-    ssh.enable = true;
+    ssh = {
+      enable = true;
+      openFirewall = true;
+    };
     swap = {
       enable = true;
       size = 16;
