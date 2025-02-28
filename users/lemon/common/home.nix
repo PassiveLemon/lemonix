@@ -88,6 +88,9 @@
             "Wikipedia (en)".metaData.hidden = true;
           };
         };
+        settings = {
+          "accessibility.typeaheadfind.enablesound" = false;
+        };
       };
       policies = {
         "DisablePocket" = true;
@@ -97,13 +100,11 @@
     };
     nixcord = {
       enable = true;
-      config = let
-        theme = "https://raw.githubusercontent.com/PassiveLemon/lemonix/master/users/lemon/common/home/.vscode/extensions/lemon-color-theme/themes/lemon-color-theme.json";
-      in {
+      config = {
         frameless = true;
         disableMinSize = true;
         themeLinks = [
-          theme
+          "https://raw.githubusercontent.com/PassiveLemon/lemonix/refs/heads/master/users/lemon/common/home/.config/Vencord/themes/Lemon.theme.css"
         ];
         plugins = {
           anonymiseFileNames = {
@@ -117,7 +118,8 @@
           fixSpotifyEmbeds.enable = true;
           fixYoutubeEmbeds.enable = true;
           imageZoom = {
-            enable = true;
+            # Currently crashes Discord
+            enable = false;
             saveZoomValues = false;
             size = 800.0;
           };
@@ -139,7 +141,7 @@
           roleColorEverywhere.enable = true;
           shikiCodeblocks = {
             enable = true;
-            theme = theme;
+            theme = "https://raw.githubusercontent.com/PassiveLemon/lemonix/master/users/lemon/common/home/.vscode/extensions/lemon-color-theme/themes/lemon-color-theme.json";
           };
           showConnections.enable = true;
           validReply.enable = true;
