@@ -100,40 +100,38 @@ local function track_notification()
   end
 end
 
-local function metadata_fetch(position_zero)
-  awful.spawn.easy_async(playerctl_cmd .. "metadata -f 'artUrl_{{mpris:artUrl}}title_{{xesam:title}}artist_{{xesam:artist}}album_{{xesam:album}}length_{{mpris:length}}playerName_{{playerName}}shuffle_{{shuffle}}status_{{status}}loop_{{loop}}position_{{position}}volume_{{volume}}'", function(stdout)
-    stdout = stdout:gsub("\n", "")
-    if stdout == "No player could handle this command" or stdout == "No players found" then
+local function metadata_fetch()
+  awful.spawn.easy_async(playerctl_cmd .. "metadata -f 'artUrl_{{mpris:artUrl}}title_{{xesam:title}}artist_{{xesam:artist}}album_{{xesam:album}}length_{{mpris:length}}playerName_{{playerName}}shuffle_{{shuffle}}status_{{status}}loop_{{loop}}position_{{position}}volume_{{volume}}'", function(stdout_raw, _, _, code)
+    local stdout = stdout_raw:gsub("\n", "")
+    if code == 0 then
+      -- Media metadata
+      metadata.media.art_url = stdout:match("artUrl_(.*)title_") or ""
+      metadata.media.title = stdout:match("title_(.*)artist_") or ""
+      metadata.media.artist = stdout:match("artist_(.*)album_") or ""
+      metadata.media.album = stdout:match("album_(.*)length_") or ""
+      metadata.media.length = stdout:match("length_(.*)playerName_") or ""
+      -- Client metadata
+      metadata.client.player_name = stdout:match("playerName_(.*)shuffle_") or ""
+      metadata.client.shuffle = stdout:match("shuffle_(.*)status_") or ""
+      metadata.client.status = stdout:match("status_(.*)loop_") or ""
+      metadata.client.loop = stdout:match("loop_(.*)position_") or ""
+      metadata.client.position = stdout:match("position_(.*)volume_") or ""
+      metadata.client.volume = stdout:match("volume_(.*)") or ""
+      -- Fetch art image and send notification when the media metadata changes
+      -- Compare the previously stored raw_stdout to the newly fetched stdout
+      if metadata.raw_stdout:match("artUrl_(.*)playerName_") ~= stdout:match("artUrl_(.*)playerName_") then
+        art_image_fetch()
+        track_notification()
+      end
+    else
       stdout = ""
-    end
-    -- Media metadata
-    metadata.media.art_url = stdout:match("artUrl_(.*)title_") or ""
-    metadata.media.title = stdout:match("title_(.*)artist_") or ""
-    metadata.media.artist = stdout:match("artist_(.*)album_") or ""
-    metadata.media.album = stdout:match("album_(.*)length_") or ""
-    metadata.media.length = stdout:match("length_(.*)playerName_") or ""
-    -- Client metadata
-    metadata.client.player_name = stdout:match("playerName_(.*)shuffle_") or ""
-    metadata.client.shuffle = stdout:match("shuffle_(.*)status_") or ""
-    metadata.client.status = stdout:match("status_(.*)loop_") or ""
-    metadata.client.loop = stdout:match("loop_(.*)position_") or ""
-    metadata.client.position = stdout:match("position_(.*)volume_") or ""
-    metadata.client.volume = stdout:match("volume_(.*)") or ""
-    -- Override
-    if position_zero then -- Just sets the position to the lowest value a 0-100 slider can actually show so it doesn't fallback to a nil value
-      metadata.client.position = (metadata.media.length / 525)
-    end
-    -- Fetch art image and send notification when the media metadata changes
-    if (metadata.raw_stdout:match("artUrl_(.*)playerName_") ~= stdout:match("artUrl_(.*)playerName_")) or (not metadata.raw_stdout) then
-      art_image_fetch()
-      track_notification()
     end
     metadata.raw_stdout = stdout
     emit()
   end)
 end
 
-metadata_fetch(true)
+metadata_fetch()
 
 local playerctl_timer = gears.timer({
   timeout = 1,
@@ -159,7 +157,7 @@ end
 local function previouser()
   playerctl_timer:stop()
   awful.spawn.spawn(playerctl_cmder .. "previous")
-  metadata_fetch(true)
+  metadata_fetch()
   playerctl_timer:start()
 end
 
@@ -185,7 +183,7 @@ end
 local function nexter()
   playerctl_timer:stop()
   awful.spawn.spawn(playerctl_cmder .. "next")
-  metadata_fetch(true)
+  metadata_fetch()
   playerctl_timer:start()
 end
 

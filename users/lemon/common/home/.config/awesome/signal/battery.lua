@@ -1,3 +1,5 @@
+-- Currently unused
+
 local awful = require("awful")
 local gears = require("gears")
 local naughty = require("naughty")
@@ -59,6 +61,8 @@ local function main()
     check(v)
   end
 end
+
+main()
 
 -- luacheck: ignore 211
 local main_timer = gears.timer({

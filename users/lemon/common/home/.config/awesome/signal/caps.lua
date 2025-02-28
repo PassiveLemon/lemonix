@@ -18,7 +18,9 @@ local function caps_query()
     emit(caps_cache)
   end)
 end
+
 caps_query()
+
 local caps_query_timer = gears.timer({
   timeout = 3,
   autostart = true,

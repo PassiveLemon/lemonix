@@ -547,7 +547,9 @@ end)
 
 awful.screen.connect_for_each_screen(function(s)
   local power_popup = awful.popup({
+    --      screen width, margin, main popup width
     x = dpi(s.geometry.x + 12 + 361),
+    --      bar width, margin
     y = dpi(32 + 12),
     bg = b.bg_primary,
     fg = b.fg_primary,
@@ -594,7 +596,9 @@ awful.screen.connect_for_each_screen(function(s)
   end)
 
   local main = awful.popup({
+    --      screen width, margin
     x = dpi(s.geometry.x + 12),
+    --      bar width, margin
     y = dpi(32 + 12),
     bg = b.bg_primary,
     fg = b.fg_primary,
@@ -661,10 +665,13 @@ awful.screen.connect_for_each_screen(function(s)
       main.visible = true
     elseif state == false then
       main.visible = false
+      power_popup.visible = false
     elseif main.screen.index == awful.screen.focused().index then
       main.visible = not main.visible
+      power_popup.visible = false
     else
       main.visible = false
+      power_popup.visible = false
     end
     main_timer:again()
   end)

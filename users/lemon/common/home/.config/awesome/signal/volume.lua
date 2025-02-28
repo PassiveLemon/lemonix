@@ -16,7 +16,9 @@ local function volume()
     emit(value)
   end)
 end
+
 volume()
+
 local volume_timer = gears.timer({
   timeout = 2,
   autostart = true,

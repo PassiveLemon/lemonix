@@ -1,4 +1,3 @@
-require("signal.battery")
 require("signal.caps")
 require("signal.cpu")
 require("signal.gpu")

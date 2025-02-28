@@ -21,7 +21,7 @@ uptime()
 
 -- luacheck: ignore 211
 local uptime_timer = gears.timer({
-  timeout = 1,
+  timeout = 15,
   autostart = true,
   callback = function()
     uptime()

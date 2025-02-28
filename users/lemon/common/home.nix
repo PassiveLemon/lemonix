@@ -56,7 +56,10 @@
       package = inputs.nixpkgs-f2k.packages.${pkgs.system}.awesome-luajit-git;
       luaModules = with pkgs; [
         luajitPackages.luafilesystem
-      ];
+      ] ++ (with astal; [
+        auth battery mpris network wireplumber
+        # bluetooth powerprofiles # Some stuff to experiment with in the future?
+      ]);
     };
   };
 
