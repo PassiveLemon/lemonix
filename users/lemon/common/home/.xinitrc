@@ -1,4 +1,7 @@
-#!/bin/sh 
+#!/bin/sh
+
+export XDG_SESSION_TYPE=x11
+export XDG_SESSION_DESKTOP=awesome
 
 if [ -z "$DBUS_SESSION_BUS_ADDRESS" ]; then
 	eval "$(dbus-launch --exit-with-session --sh-syntax)"
