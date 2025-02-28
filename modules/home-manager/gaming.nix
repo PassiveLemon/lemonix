@@ -25,7 +25,6 @@ in
   config = mkIf cfg.enable (mkMerge [
     (mkIf cfg.desktop.enable {
       home.packages = with pkgs; [
-        protonup-ng protontricks
         gamemode dxvk
         r2modman
         heroic
@@ -43,7 +42,7 @@ in
     (mkIf cfg.vr.enable {
       home.packages = with pkgs; [
         nexusmods-app
-        (callPackage ../../pkgs/bs-manager.nix { })
+        bs-manager
         xrgears
       ];
 
@@ -73,14 +72,16 @@ in
 
       xdg = {
         configFile = {
-          "wlxoverlay/conf.d/wayvr.yaml" = {
+          "wlxoverlay/wayvr.conf.d/wayvr.yaml" = {
             text = ''
               dashboard:
                 exec: "${inputs.lemonake.packages.${pkgs.system}.wayvr-dashboard-git}/bin/wayvr_dashboard"
                 args: ""
-                env: [ "GDK_BACKEND=wayland", "WEBKIT_DISABLE_DMABUF_RENDERER=1" ]
+                env: [ "GDK_BACKEND=wayland", "WEBKIT_DISABLE_DMABUF_RENDERER=1", "WEBKIT_DISABLE_COMPOSITING_MODE=1" ]
             '';
           };
+          "openxr/1/active_runtime.json".force = true;
+          "openvr/openvrpaths.vrpath".force = true;
         };
         mimeApps.defaultApplications = {
           "x-scheme-handler/beatsaver" = "BeatSaberModManager-url-beatsaver.desktop";
