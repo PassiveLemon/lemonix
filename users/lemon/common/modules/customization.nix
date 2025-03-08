@@ -23,8 +23,17 @@
   dconf = {
     enable = true;
     settings = {
+      "org/gtk/gtk4/settings/file-chooser" = {
+        sort-directories-first = true;
+        show-hidden = true;
+        show-size-column = true;
+        show-type-column = true;
+      };
       "org/gtk/settings/file-chooser" = {
         sort-directories-first = true;
+        show-hidden = true;
+        show-size-column = true;
+        show-type-column = true;
       };
       "org/gnome/desktop/interface" = {
         color-scheme = "prefer-dark";
