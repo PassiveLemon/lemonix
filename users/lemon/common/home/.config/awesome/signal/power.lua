@@ -1,4 +1,5 @@
 local gears = require("gears")
+local naughty = require("naughty")
 
 local h = require("helpers")
 local lgi = require("lgi")
@@ -25,12 +26,23 @@ local function get_device(target)
   return upower.Client():get_display_device()
 end
 
+local system_battery_good = true
+
 local function power()
   update_devices()
   local ac = get_device("line_power_ACAD").online
   local perc = tonumber(get_device("battery_BAT1").percentage)
   local time = tonumber(get_device("battery_BAT1").time_to_empty)
   emit(ac, perc, time)
+
+  -- Manage device battery
+  if not ac and perc <= 10 and system_battery_good then
+    naughty.notify({ title = "System battery low (10%)" })
+    system_battery_good = false
+  end
+  if not ac and perc <= 5 then
+    awful.spawn("systemctl suspend")
+  end
 end
 
 power()
