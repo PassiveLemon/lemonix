@@ -1,4 +1,4 @@
-{ inputs, outputs, lib, pkgs, ... }: {
+{ inputs, outputs, pkgs, ... }: {
   imports = [
     ./modules/customization.nix
     inputs.nixcord.homeManagerModules.nixcord
@@ -45,7 +45,6 @@
         source = ./home/Documents;
         recursive = true;
       };
-      ".mozilla/firefox/lemon/search.json.mozlz4".force = lib.mkForce true;
     };
   };
 
@@ -81,9 +80,12 @@
         isDefault = true;
         search = {
           default = "DuckDuckGo";
+          privateDefault = "DuckDuckGo";
           order = [ "DuckDuckGo" ];
+          force = true;
           engines = {
             "Bing".metaData.hidden = true;
+            "DuckDuckGo".metaData.hidden = false;
             "Google".metaData.hidden = true;
             "Wikipedia (en)".metaData.hidden = true;
           };
