@@ -61,6 +61,8 @@ local function grab()
         input_count = 0
       elseif key == "Return" then
         awesome.emit_signal("ui::lock::keypress", key, 0, nil)
+      elseif key == "Caps_Lock" then
+        awesome.emit_signal("signal::peripheral::caps::update")
       end
     end,
     keyreleased_callback = function(self, _, key)
