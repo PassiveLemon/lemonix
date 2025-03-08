@@ -9,7 +9,7 @@ local dpi = b.xresources.apply_dpi
 
 local total_width = 350
 
-local volume_icon = h.text({
+local volume_icon = h.button({
   margins = {
     top = dpi(3),
     right = dpi(4),
@@ -20,12 +20,20 @@ local volume_icon = h.text({
   y = dpi(15),
   text = "󰕾",
   font = b.sysfont(dpi(14)),
+  no_color = true,
+  button_press = function()
+    awful.spawn.easy_async("pamixer -t", function()
+      awesome.emit_signal("signal::peripheral::volume::update")
+    end)
+  end
 })
 
 local volume_slider = h.slider({
   margins = {
+    top = 0,
     right = dpi(16),
-    left = b.margins,
+    bottom = 0,
+    left = dpi(b.margins),
   },
   x = dpi(total_width),
   y = dpi(16),
@@ -51,27 +59,16 @@ awesome.connect_signal("signal::peripheral::volume::value", function(value)
   end
 end)
 
-local volume_bar = wibox.widget({
-  widget = wibox.container.margin,
-  margins = {
-    top = b.margins,
-    right = b.margins,
-    bottom = b.margins,
-    left = b.margins,
-  },
-  {
-    id = "background",
-    widget = wibox.container.background,
-    forced_width = (dpi(total_width) - (b.margins * 4)),
-    forced_height = dpi(32),
-    bg = b.bg_secondary,
-    shape = gears.shape.rounded_bar,
-    {
-      layout = wibox.layout.fixed.horizontal,
-      volume_icon,
-      volume_slider,
-    },
-  },
+local volume_bar = h.background({
+  layout = wibox.layout.fixed.horizontal,
+  volume_icon,
+  volume_slider,
+},
+{
+  x = dpi(total_width - (b.margins * 4)),
+  y = dpi(32),
+  bg = b.bg_secondary,
+  shape = gears.shape.rounded_bar,
 })
 
 local brightness_icon = h.text({
@@ -89,8 +86,10 @@ local brightness_icon = h.text({
 
 local brightness_slider = h.slider({
   margins = {
+    top = 0,
     right = dpi(16),
-    left = b.margins,
+    bottom = 0,
+    left = dpi(b.margins),
   },
   x = dpi(total_width),
   y = dpi(16),
@@ -110,96 +109,64 @@ awesome.connect_signal("signal::peripheral::brightness::value", function(value)
   end
 end)
 
-local brightness_bar = wibox.widget({
-  widget = wibox.container.margin,
-  margins = {
-    top = b.margins,
-    right = b.margins,
-    bottom = b.margins,
-    left = b.margins,
-  },
-  {
-    id = "background",
-    widget = wibox.container.background,
-    forced_width = (dpi(total_width) - (b.margins * 4)),
-    forced_height = dpi(32),
-    bg = b.bg_secondary,
-    shape = gears.shape.rounded_bar,
-    {
-      layout = wibox.layout.fixed.horizontal,
-      brightness_icon,
-      brightness_slider,
-    },
-  },
+local brightness_bar = h.background({
+  layout = wibox.layout.fixed.horizontal,
+  brightness_icon,
+  brightness_slider,
+},
+{
+  x = dpi(total_width - (b.margins * 4)),
+  y = dpi(32),
+  bg = b.bg_secondary,
+  shape = gears.shape.rounded_bar,
 })
 
 awful.screen.connect_for_each_screen(function(s)
-  local main = awful.popup({
-    x = dpi(s.geometry.x + 12),
-    y = dpi(32 + 12),
+  local main = h.timed_popup({
+    --      screen width, margin
+    x = dpi(s.geometry.x + (b.margins * 3)),
+    --      bar height, margin
+    y = dpi(32 + (b.margins * 3)),
+    screen = s,
     bg = b.bg_primary,
     fg = b.fg_primary,
-    border_width = dpi(3),
+    border_width = b.border_width,
     border_color = b.border_color_active,
-    screen = s,
     ontop = true,
     visible = false,
     type = "popup_menu",
-    widget = {
-      widget = wibox.container.margin,
-      margins = {
-        top = b.margins,
-        right = b.margins,
-        bottom = b.margins,
-        left = b.margins,
-      },
+    widget = h.margin({
+      id = "background",
+      widget = wibox.container.background,
+      bg = b.ui_main_bg,
       {
-        id = "background",
-        widget = wibox.container.background,
-        bg = b.ui_main_bg,
-        {
-          layout = wibox.layout.fixed.vertical,
-          volume_bar,
-          brightness_bar,
-        },
+        layout = wibox.layout.fixed.vertical,
+        volume_bar,
+        brightness_bar,
       },
-    },
-  })
-  local main_timer = gears.timer({
-    timeout = 3,
-    single_shot = true,
-    callback = function()
-      main.visible = false
-    end,
-  })
-  main:connect_signal("mouse::enter", function()
-    main_timer:stop()
-  end)
-  main:connect_signal("mouse::leave", function()
-    main_timer:again()
-  end)
+    }),
+  }, 3, true)
 
-  local function show_control(state, volume_state, brightness_state)
+  local function show_control(force, volume_state, brightness_state)
     volume_bar.visible = volume_state
     brightness_bar.visible = brightness_state
-    if state == true then
-      main.visible = true
-    elseif state == false then
-      main.visible = false
+    if force == true then
+      main:toggle(true)
+    elseif force == false then
+      main:toggle(false)
     elseif main.screen.index == awful.screen.focused().index then
-      main.visible = true
+      main:toggle(true)
     else
-      main.visible = false
+      main:toggle(false)
     end
-    main_timer:again()
   end
 
-  awesome.connect_signal("ui::control::notification::volume", function(state)
-    show_control(state, true, false)
+  awesome.connect_signal("ui::control::notification::volume", function(force)
+    show_control(force, true, false)
   end)
 
-  awesome.connect_signal("ui::control::notification::brightness", function(state)
-    show_control(state, false, true)
+  awesome.connect_signal("ui::control::notification::brightness", function(force)
+    show_control(force, false, true)
   end)
 end)
 

@@ -17,14 +17,22 @@ screen.connect_signal("request::desktop_decoration", function(s)
 
   -- Space
   local sep = h.text({
+    margins = {
+      top = 0,
+      right = 0,
+      bottom = 0,
+      left = 0,
+    },
     text = " ",
   })
 
   -- CPU
   local cpu_icon = h.text({
     margins = {
+      top = 0,
       right = dpi(3),
       bottom = dpi(2),
+      left = 0,
     },
     text = "",
     font = b.sysfont(dpi(15)),
@@ -42,14 +50,19 @@ screen.connect_signal("request::desktop_decoration", function(s)
   -- Memory
   local memory_icon = h.text({
     margins = {
+      top = 0,
       right = dpi(3),
       bottom = dpi(2),
+      left = 0,
     },
     text = "",
     font = b.sysfont(dpi(15)),
   })
   local memory_text = h.text({
     margins = {
+      top = 0,
+      right = 0,
+      bottom = 0,
       left = dpi(3),
     },
     halign = "left",
@@ -61,6 +74,9 @@ screen.connect_signal("request::desktop_decoration", function(s)
   -- Caps lock
   local caps_icon = h.text({
     margins = {
+      top = 0,
+      right = 0,
+      bottom = 0,
       left = dpi(3),
     },
     markup = 'A<span underline="single">a</span>',
@@ -74,13 +90,28 @@ screen.connect_signal("request::desktop_decoration", function(s)
   end)
 
   -- Volume
-  local volume_icon = h.text({
+  local volume_icon = h.button({
     margins = {
+      top = 0,
       right = dpi(3),
+      bottom = 0,
+      left = 0,
     },
     text = "󰖀",
+    no_color = true,
+    button_press = function()
+      awful.spawn.easy_async("pamixer -t", function()
+        awesome.emit_signal("signal::peripheral::volume::update")
+      end)
+    end
   })
   local volume_text = h.text({
+    margins = {
+      top = 0,
+      right = 0,
+      bottom = 0,
+      left = 0,
+    },
     halign = "left",
   })
   awesome.connect_signal("signal::peripheral::volume::value", function(value)
@@ -103,35 +134,31 @@ screen.connect_signal("request::desktop_decoration", function(s)
     end
   end)
 
-  -- Internet
-  -- local wifi_icon = h.text({
-  --   margins = {
-  --     right = dpi(3),
-  --     left = dpi(3),
-  --   },
-  --   text = "󰤨",
-  --   font = b.sysfont(dpi(14)),
-  -- })
-
   -- Power
   local battery_icon = h.text({
     margins = {
+      top = 0,
       right = dpi(3),
       bottom = dpi(2),
+      left = 0,
     },
     text = "󰁹",
     font = b.sysfont(dpi(10)),
   })
   local battery_text = h.text({
     margins = {
+      top = 0,
       right = dpi(3),
+      bottom = 0,
       left = dpi(3),
     },
     halign = "left",
   })
   local battery_etr = h.text({
     margins = {
+      top = 0,
       right = dpi(3),
+      bottom = 0,
       left = dpi(3),
     },
     halign = "left",
@@ -168,13 +195,18 @@ screen.connect_signal("request::desktop_decoration", function(s)
   -- Brightness
   local light_icon = h.text({
     margins = {
+      top = 0,
       right = dpi(3),
+      bottom = 0,
+      left = 0,
     },
     text = "󰌵",
   })
   local light_text = h.text({
     margins = {
+      top = 0,
       right = dpi(3),
+      bottom = 0,
       left = dpi(3),
     },
     halign = "left",
@@ -184,9 +216,37 @@ screen.connect_signal("request::desktop_decoration", function(s)
   end)
 
   -- Pills
+  local pill_systray = h.timed_widget(h.margin({
+    widget = wibox.container.place,
+    valign = "center",
+    halign = "center",
+    forced_height = dpi(24),
+    {
+      widget = wibox.container.background,
+      bg = b.bg_secondary,
+      shape = gears.shape.rounded_bar,
+      forced_height = dpi(24),
+      {
+        layout = wibox.layout.fixed.horizontal,
+        sep,
+        wibox.widget.systray,
+      },
+    },
+  },
+  {
+    margins = {
+      top = 0,
+      right = dpi(2),
+      bottom = 0,
+      left = dpi(2),
+    },
+  }), 3, true)
+
   local pill_nixos = h.button({
     margins = {
+      top = 0,
       right = dpi(2),
+      bottom = 0,
       left = dpi(4),
     },
     x = dpi(24),
@@ -194,157 +254,131 @@ screen.connect_signal("request::desktop_decoration", function(s)
     shape = gears.shape.circle,
     text = "",
     font = b.sysfont(dpi(16)),
-  })
-
-  local pill_systray = wibox.widget({
-    visible = false,
-    widget = wibox.container.margin,
-    margins = {
-      right = dpi(2),
-      left = dpi(2),
-    },
-    {
-      widget = wibox.container.place,
-      valign = "center",
-      halign = "center",
-      forced_height = dpi(24),
-      {
-        widget = wibox.container.background,
-        bg = b.bg_secondary,
-        shape = gears.shape.rounded_bar,
-        forced_height = dpi(24),
-        {
-          layout = wibox.layout.fixed.horizontal,
-          sep,
-          wibox.widget.systray,
-        },
-      },
-    },
-  })
-
-  local pill_systray_hider = gears.timer({
-    timeout = 2,
-    single_shot = true,
-    callback = function()
-      pill_systray.visible = false
+    button_press = function()
+      pill_systray.screen = awful.screen.focused()
+      pill_systray:toggle()
     end,
   })
 
-  local pill_cpu = wibox.widget({
-    widget = wibox.container.margin,
-    margins = {
-      right = dpi(2),
-      left = dpi(2),
-    },
+  local pill_cpu = h.margin({
+    widget = wibox.container.place,
+    valign = "center",
+    halign = "center",
+    forced_height = dpi(24),
     {
-      widget = wibox.container.place,
-      valign = "center",
-      halign = "center",
+      widget = wibox.container.background,
+      bg = b.bg_secondary,
+      shape = gears.shape.rounded_bar,
       forced_height = dpi(24),
       {
-        widget = wibox.container.background,
-        bg = b.bg_secondary,
-        shape = gears.shape.rounded_bar,
-        forced_height = dpi(24),
-        {
-          layout = wibox.layout.fixed.horizontal,
-          sep,
-          cpu_icon,
-          cpu_text,
-          sep,
-        },
+        layout = wibox.layout.fixed.horizontal,
+        sep,
+        cpu_icon,
+        cpu_text,
+        sep,
       },
+    },
+  },
+  {
+    margins = {
+      top = 0,
+      right = dpi(2),
+      bottom = 0,
+      left = dpi(2),
     },
   })
   if not user.bar.cpu then
     pill_cpu.visible = false
   end
 
-  local pill_memory = wibox.widget({
-    widget = wibox.container.margin,
-    margins = {
-      right = dpi(2),
-      left = dpi(2),
-    },
+  local pill_memory = h.margin({
+    widget = wibox.container.place,
+    valign = "center",
+    halign = "center",
+    forced_height = dpi(24),
     {
-      widget = wibox.container.place,
-      valign = "center",
-      halign = "center",
+      widget = wibox.container.background,
+      bg = b.bg_secondary,
+      shape = gears.shape.rounded_bar,
       forced_height = dpi(24),
       {
-        widget = wibox.container.background,
-        bg = b.bg_secondary,
-        shape = gears.shape.rounded_bar,
-        forced_height = dpi(24),
-        {
-          layout = wibox.layout.fixed.horizontal,
-          sep,
-          memory_icon,
-          memory_text,
-          sep,
-        },
+        layout = wibox.layout.fixed.horizontal,
+        sep,
+        memory_icon,
+        memory_text,
+        sep,
       },
+    },
+  },
+  {
+    margins = {
+      top = 0,
+      right = dpi(2),
+      bottom = 0,
+      left = dpi(2),
     },
   })
   if not user.bar.memory then
     pill_memory.visible = false
   end
 
-  local pill_brightness = wibox.widget({
-    layout = wibox.layout.margin,
-    margins = {
-      right = dpi(2),
-      left = dpi(2),
-    },
+  local pill_brightness = h.margin({
+    widget = wibox.container.place,
+    valign = "center",
+    halign = "center",
+    forced_height = dpi(24),
     {
-      widget = wibox.container.place,
-      valign = "center",
-      halign = "center",
+      widget = wibox.container.background,
+      bg = b.bg_secondary,
+      shape = gears.shape.rounded_bar,
       forced_height = dpi(24),
       {
-        widget = wibox.container.background,
-        bg = b.bg_secondary,
-        shape = gears.shape.rounded_bar,
-        forced_height = dpi(24),
-        {
-          layout = wibox.layout.fixed.horizontal,
-          sep,
-          light_icon,
-          light_text,
-          sep,
-        },
+        layout = wibox.layout.fixed.horizontal,
+        sep,
+        light_icon,
+        light_text,
+        sep,
       },
+    },
+  },
+  {
+    margins = {
+      top = 0,
+      right = dpi(2),
+      bottom = 0,
+      left = dpi(2),
     },
   })
   if not user.bar.brightness then
     pill_brightness.visible = false
   end
 
-  local pill_battery = wibox.widget({
-    layout = wibox.layout.margin,
-    margins = {
-      right = dpi(2),
-      left = dpi(2),
-    },
+  local pill_battery = h.margin({
+    widget = wibox.container.place,
+    valign = "center",
+    halign = "center",
+    forced_height = dpi(24),
     {
-      widget = wibox.container.place,
-      valign = "center",
-      halign = "center",
+      widget = wibox.container.background,
+      bg = b.bg_secondary,
+      shape = gears.shape.rounded_bar,
       forced_height = dpi(24),
       {
-        widget = wibox.container.background,
-        bg = b.bg_secondary,
-        shape = gears.shape.rounded_bar,
-        forced_height = dpi(24),
-        {
-          layout = wibox.layout.fixed.horizontal,
-          sep,
-          battery_icon,
-          battery_text,
-          battery_etr,
-          sep,
-        },
+        layout = wibox.layout.fixed.horizontal,
+        sep,
+        battery_icon,
+        battery_text,
+        battery_etr,
+        sep,
       },
+    },
+  },
+  {
+    margins = {
+      top = 0,
+      right = dpi(2),
+      bottom = 0,
+      left = dpi(2),
     },
   })
   if not user.bar.battery then
@@ -353,13 +387,18 @@ screen.connect_signal("request::desktop_decoration", function(s)
 
   local pill_music = h.button({
     margins = {
+      top = 0,
       right = dpi(2),
+      bottom = 0,
       left = dpi(2),
     },
     x = dpi(24),
     y = dpi(24),
     shape = gears.shape.circle,
     text = "󰎈",
+    button_press = function()
+      awesome.emit_signal("ui::control::toggle")
+    end
   })
   awesome.connect_signal("signal::playerctl::metadata", function(metadata_table)
     if metadata_table.client.status == "Playing" then
@@ -369,94 +408,96 @@ screen.connect_signal("request::desktop_decoration", function(s)
     end
   end)
 
-  local pill_utils = wibox.widget({
-    widget = wibox.container.margin,
-    margins = {
-      right = dpi(2),
-      left = dpi(2),
-    },
+  local pill_utils = h.margin({
+    widget = wibox.container.place,
+    valign = "center",
+    halign = "center",
+    forced_height = dpi(24),
     {
-      widget = wibox.container.place,
-      valign = "center",
-      halign = "center",
+      widget = wibox.container.background,
+      bg = b.bg_secondary,
+      shape = gears.shape.rounded_bar,
       forced_height = dpi(24),
       {
-        widget = wibox.container.background,
-        bg = b.bg_secondary,
-        shape = gears.shape.rounded_bar,
-        forced_height = dpi(24),
-        {
-          layout = wibox.layout.fixed.horizontal,
-          sep,
-          volume_icon,
-          --wifi_icon,
-          caps_icon,
-          sep,
-        },
+        layout = wibox.layout.fixed.horizontal,
+        sep,
+        volume_icon,
+        caps_icon,
+        sep,
       },
+    },
+  },
+  {
+    margins = {
+      top = 0,
+      right = dpi(2),
+      bottom = 0,
+      left = dpi(2),
     },
   })
   if not user.bar.utility then
     pill_utils.visible = false
   end
 
-  local pill_date = wibox.widget({
-    widget = wibox.container.margin,
-    margins = {
-      right = dpi(2),
-      left = dpi(2),
-    },
+  local pill_date = h.margin({
+    widget = wibox.container.place,
+    valign = "center",
+    halign = "center",
+    forced_height = dpi(24),
     {
-      widget = wibox.container.place,
-      valign = "center",
-      halign = "center",
+      widget = wibox.container.background,
+      bg = b.bg_secondary,
+      shape = gears.shape.rounded_bar,
       forced_height = dpi(24),
       {
-        widget = wibox.container.background,
-        bg = b.bg_secondary,
-        shape = gears.shape.rounded_bar,
-        forced_height = dpi(24),
+        layout = wibox.layout.fixed.horizontal,
+        sep,
         {
-          layout = wibox.layout.fixed.horizontal,
-          sep,
-          {
-            widget = wibox.widget.textclock,
-            format = "%a %b %-d",
-            halign = "left",
-          },
-          sep,
+          widget = wibox.widget.textclock,
+          format = "%a %b %-d",
+          halign = "left",
         },
+        sep,
       },
+    },
+  },
+  {
+    margins = {
+      top = 0,
+      right = dpi(2),
+      bottom = 0,
+      left = dpi(2),
     },
   })
 
-  local pill_time = wibox.widget({
-    widget = wibox.container.margin,
-    margins = {
-      right = dpi(4),
-      left = dpi(2),
-    },
+  local pill_time = h.margin({
+    widget = wibox.container.place,
+    valign = "center",
+    halign = "center",
+    forced_height = dpi(24),
     {
-      widget = wibox.container.place,
-      valign = "center",
-      halign = "center",
+      widget = wibox.container.background,
+      bg = b.bg_secondary,
+      shape = gears.shape.rounded_bar,
       forced_height = dpi(24),
       {
-        widget = wibox.container.background,
-        bg = b.bg_secondary,
-        shape = gears.shape.rounded_bar,
-        forced_height = dpi(24),
+        layout = wibox.layout.fixed.horizontal,
+        sep,
         {
-          layout = wibox.layout.fixed.horizontal,
-          sep,
-          {
-            widget = wibox.widget.textclock,
-            format = "%-I:%M %p",
-            halign = "left",
-          },
-          sep,
+          widget = wibox.widget.textclock,
+          format = "%-I:%M %p",
+          halign = "left",
         },
+        sep,
       },
+    },
+  },
+  {
+    margins = {
+      top = 0,
+      right = dpi(4),
+      bottom = 0,
+      left = dpi(2),
     },
   })
 
@@ -531,10 +572,10 @@ screen.connect_signal("request::desktop_decoration", function(s)
   s.wibar = awful.wibar({
     width = s.geometry.width,
     height = dpi(32),
+    screen = s,
     bg = b.bg_primary,
     fg = b.fg_primary,
     border_width = dpi(0),
-    screen = s,
     position = "top",
     type = "dock",
     widget = {
@@ -610,28 +651,8 @@ screen.connect_signal("request::desktop_decoration", function(s)
     },
   })
 
-  volume_icon:connect_signal("button::press", function()
-    awful.spawn.easy_async("pamixer -t", function()
-      awesome.emit_signal("signal::peripheral::volume::update")
-    end)
-  end)
-
-  pill_nixos:connect_signal("button::press", function()
-    pill_systray.visible = not pill_systray.visible
-    pill_systray.screen = awful.screen.focused()
-  end)
-  pill_systray:connect_signal("mouse::enter", function()
-    pill_systray_hider:stop()
-  end)
-  pill_systray:connect_signal("mouse::leave", function()
-    pill_systray_hider:again()
-  end)
   s.wibar:connect_signal("mouse::leave", function()
-    pill_systray_hider:again()
-  end)
-
-  pill_music:connect_signal("button::press", function()
-    awesome.emit_signal("ui::control::toggle")
+    pill_systray:again()
   end)
 end)
 

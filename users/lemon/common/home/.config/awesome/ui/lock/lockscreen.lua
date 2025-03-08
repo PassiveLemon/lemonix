@@ -98,7 +98,7 @@ awful.screen.connect_for_each_screen(function(s)
     font = b.sysfont(dpi(14)),
   })
   awesome.connect_signal("signal::peripheral::caps::state", function(caps)
-    if caps == "on" then
+    if caps then
       caps_lock.markup = "Caps lock"
     else
       caps_lock.markup = " "
@@ -165,8 +165,8 @@ awful.screen.connect_for_each_screen(function(s)
   })
   awful.placement.centered(main)
 
-  awesome.connect_signal("ui::lock::state", function(state)
-    if state then
+  awesome.connect_signal("ui::lock::state", function(force)
+    if force then
       -- What should happen when the lockscreen is enabled
       main.visible = true
       awful.spawn.with_shell("pamixer -m")

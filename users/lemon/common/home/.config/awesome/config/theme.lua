@@ -84,7 +84,8 @@ theme.bg_systray = theme.bg_secondary
 
 theme.useless_gap = dpi(6)
 
-theme.margins = dpi(4)
+-- Don't dpi() this, it is applied in widget definitions
+theme.margins = 4
 
 -- Media
 theme.playerctl.players = "Feishin"
