@@ -37,9 +37,6 @@
 
   xdg = {
     configFile = {
-      "awesome/config/init.lua" = {
-        source = ./home/.config/awesome/config/init.lua;
-      };
       "awesome/config/user.lua" = {
         source = ./home/.config/awesome/config/user.lua;
       };
