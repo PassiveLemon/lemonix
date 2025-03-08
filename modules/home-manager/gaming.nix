@@ -71,14 +71,18 @@ in
       };
 
       xdg = {
-        configFile = {
-          "wlxoverlay/wayvr.conf.d/wayvr.yaml" = {
-            text = ''
-              dashboard:
-                exec: "${inputs.lemonake.packages.${pkgs.system}.wayvr-dashboard-git}/bin/wayvr_dashboard"
-                args: ""
-                env: [ "GDK_BACKEND=wayland", "WEBKIT_DISABLE_DMABUF_RENDERER=1", "WEBKIT_DISABLE_COMPOSITING_MODE=1" ]
-            '';
+        configFile = let
+          yaml = pkgs.formats.yaml { };
+        in {
+          "wlxoverlay/wayvr.conf.d/wayvr.yaml".source = yaml.generate "wayvr.yaml" {
+            dashboard = {
+              exec = (lib.getExe inputs.lemonake.packages.${pkgs.system}.wayvr-dashboard-git);
+              env = [
+                "GDK_BACKEND=wayland"
+                "WEBKIT_DISABLE_DMABUF_RENDERER=1"
+                "WEBKIT_DISABLE_COMPOSITING_MODE=1"
+              ];
+            };
           };
           "openxr/1/active_runtime.json".force = true;
           "openvr/openvrpaths.vrpath".force = true;

@@ -3,7 +3,7 @@
     systemPackages = with pkgs; [
       xss-lock gtk3 snixembed
       networkmanagerapplet
-      trayscale tailscale-systray # Trayscale icon doesn't appear on AWM so tailscale-systray is a substitute until it's fixed
+      tailscale-systray
     ];
   };
 
