@@ -120,8 +120,7 @@
           fixSpotifyEmbeds.enable = true;
           fixYoutubeEmbeds.enable = true;
           imageZoom = {
-            # Currently crashes Discord
-            enable = false;
+            enable = true;
             saveZoomValues = false;
             size = 800.0;
           };
