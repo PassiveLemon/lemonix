@@ -84,22 +84,23 @@ local button_default = {
 function helpers.button(conf_in)
   local conf = gears.table.join(button_default, (conf_in or { }))
   local button = helpers.text(conf)
+  local button_id = button:get_children_by_id("background")[1]
   button.buttons = {
     awful.button({ }, 1, function()
       conf:button_press()
     end)
   }
-  button:connect_signal("mouse::enter", function()
+  button_id:connect_signal("mouse::enter", function(self)
     if not conf.no_color then
-      button:get_children_by_id("background")[1].bg = conf.bg_focus or b.bg_minimize
-      button:get_children_by_id("background")[1].fg = conf.fg_focus or b.fg_focus
+      self.bg = conf.bg_focus or b.bg_minimize
+      self.fg = conf.fg_focus or b.fg_focus
     end
     conf:mouse_enter()
   end)
-  button:connect_signal("mouse::leave", function()
+  button_id:connect_signal("mouse::leave", function(self)
     if not conf.no_color then
-      button:get_children_by_id("background")[1].bg = conf.bg_primary or b.bg_secondary
-      button:get_children_by_id("background")[1].fg = conf.fg_primary or b.fg_primary
+      self.bg = conf.bg_primary or b.bg_secondary
+      self.fg = conf.fg_primary or b.fg_primary
     end
     conf:mouse_leave()
   end)
@@ -114,13 +115,14 @@ local timed_default = {
 function helpers.timed_button(conf_in, time)
   local conf = gears.table.join(button_default, (conf_in or { }))
   local button = helpers.text(conf)
+  local button_id = button:get_children_by_id("background")[1]
   button.toggle = false
   local timer = gears.timer({
     timeout = time or 3,
     single_shot = true,
     callback = function()
       button.toggle = true
-      button:get_children_by_id("background")[1].fg = b.fg_focus
+      button_id.fg = b.fg_focus
     end,
   })
   button.buttons = {
@@ -130,20 +132,24 @@ function helpers.timed_button(conf_in, time)
       end
     end)
   }
-  button:connect_signal("mouse::enter", function()
+  button_id:connect_signal("mouse::enter", function(self)
     if button.toggle == false then
-      button:get_children_by_id("background")[1].bg = conf.bg_focus or b.bg_focus
-      button:get_children_by_id("background")[1].fg = conf.fg_primary or b.red
+      if not conf.no_color then
+        self.bg = conf.bg_focus or b.bg_minimize
+        self.fg = conf.fg_primary or b.red
+      end
     else
-      button:get_children_by_id("background")[1].bg = conf.bg_focus or b.bg_minimize
-      button:get_children_by_id("background")[1].fg = conf.fg_focus or b.fg_focus
+      self.bg = conf.bg_focus or b.bg_minimize
+      self.fg = conf.fg_focus or b.fg_focus
     end
     timer:again()
     conf:mouse_enter()
   end)
-  button:connect_signal("mouse::leave", function()
-    button:get_children_by_id("background")[1].bg = conf.bg_primary or b.bg_secondary
-    button:get_children_by_id("background")[1].fg = conf.fg_primary or b.fg_primary
+  button_id:connect_signal("mouse::leave", function(self)
+    if not conf.no_color then
+      self.bg = conf.bg_primary or b.bg_secondary
+      self.fg = conf.fg_primary or b.fg_primary
+    end
     timer:stop()
     button.toggle = false
     conf:mouse_leave()
@@ -171,14 +177,21 @@ function helpers.slider(conf_in)
     bar_color = conf.bar_color or b.bg_minimize,
     bar_active_color = conf.bar_active_color or b.fg_primary,
   }, conf_in)
-  slider:connect_signal("mouse::enter", function()
-    slider:get_children_by_id("slider")[1].handle_width = conf.handle_width
-    slider:get_children_by_id("slider")[1].bar_active_color = conf.bar_active_color or b.fg_primary
+  local slider_id = slider:get_children_by_id("slider")[1]
+  if (conf.output_signal ~= "") and (conf.output_signal ~= nil) then
+    slider_id:connect_signal("property::value", function(self, new_state)
+      self.value = new_state
+      awesome.emit_signal(conf.output_signal, new_state)
+    end)
+  end
+  slider_id:connect_signal("mouse::enter", function(self)
+    self.handle_width = conf.handle_width
+    self.bar_active_color = conf.bar_active_color or b.fg_primary
     conf:mouse_enter()
   end)
-  slider:connect_signal("mouse::leave", function()
-    slider:get_children_by_id("slider")[1].handle_width = dpi(0)
-    slider:get_children_by_id("slider")[1].bar_active_color = conf.bar_active_color or b.fg_primary
+  slider_id:connect_signal("mouse::leave", function(self)
+    self.handle_width = dpi(0)
+    self.bar_active_color = conf.bar_active_color or b.fg_primary
     conf:mouse_leave()
   end)
   return slider
@@ -195,33 +208,33 @@ function helpers.widget(conf_in)
   -- Mechanism to disallow popup to toggle too often.
   -- This avoids multiple toggles problem caused by hide_on_click
   local can_toggle = true
-  local toggle_lock_timer = gears.timer {
+  local toggle_lock_timer = gears.timer({
     timeout = 0.1,
     single_shot = true,
     callback  = function()
       can_toggle = true
     end
-  }
+  })
   widget:connect_signal("property::visible", function()
     can_toggle = false
     toggle_lock_timer:again()
   end)
   function widget:toggle(force)
     if can_toggle then
-      if force == false or (force == nil and widget.visible) then
-        widget.visible = false
+      if force == false or (force == nil and self.visible) then
+        self.visible = false
       else
-        widget.visible = true
+        self.visible = true
       end
     end
   end
   -- For use by other helper functions
   function widget:toggle_priv(force)
     if can_toggle then
-      if force == false or (force == nil and widget.visible) then
-        widget.visible = false
+      if force == false or (force == nil and self.visible) then
+        self.visible = false
       else
-        widget.visible = true
+        self.visible = true
       end
     end
   end
@@ -251,9 +264,9 @@ function helpers.timed_widget(conf_in, time, start_on_visible)
   end
   function widget:toggle(force)
     if force == false or (force == nil and self.visible) then
-      widget:toggle_priv(false)
+      self:toggle_priv(false)
     else
-      widget:toggle_priv(true)
+      self:toggle_priv(true)
     end
     if start_on_visible then
       timer:again()
@@ -281,33 +294,33 @@ function helpers.popup(conf_in)
   -- Mechanism to disallow popup to toggle too often.
   -- This avoids multiple toggles problem caused by hide_on_click
   local can_toggle = true
-  local toggle_lock_timer = gears.timer {
+  local toggle_lock_timer = gears.timer({
     timeout = 0.1,
     single_shot = true,
     callback  = function()
       can_toggle = true
     end
-  }
+  })
   popup:connect_signal("property::visible", function()
     can_toggle = false
     toggle_lock_timer:again()
   end)
   function popup:toggle(force)
     if can_toggle then
-      if force == false or (force == nil and popup.visible) then
-        popup.visible = false
+      if force == false or (force == nil and self.visible) then
+        self.visible = false
       else
-        popup.visible = true
+        self.visible = true
       end
     end
   end
   -- For use by other helper functions
   function popup:toggle_priv(force)
     if can_toggle then
-      if force == false or (force == nil and popup.visible) then
-        popup.visible = false
+      if force == false or (force == nil and self.visible) then
+        self.visible = false
       else
-        popup.visible = true
+        self.visible = true
       end
     end
   end
@@ -336,10 +349,10 @@ function helpers.timed_popup(conf_in, time, start_on_visible)
     timer:again()
   end
   function popup:toggle(force)
-    if force == false or (force == nil and popup.visible) then
-      popup:toggle_priv(false)
+    if force == false or (force == nil and self.visible) then
+      self:toggle_priv(false)
     else
-      popup:toggle_priv(true)
+      self:toggle_priv(true)
     end
     if start_on_visible then
       timer:again()
