@@ -1,3 +1,10 @@
+require("signal.cpu")
+require("signal.gpu")
+require("signal.memory")
+require("signal.network")
+require("signal.other")
+require("signal.storage")
+
 local awful = require("awful")
 local b = require("beautiful")
 local wibox = require("wibox")

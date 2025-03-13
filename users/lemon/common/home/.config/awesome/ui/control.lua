@@ -1,3 +1,6 @@
+require("signal.playerctl")
+require("signal.volume")
+
 local awful = require("awful")
 local gears = require("gears")
 local b = require("beautiful")
@@ -42,12 +45,8 @@ local volume_slider = h.slider({
   handle_width = dpi(16),
   bar_height = dpi(6),
   bar_shape = gears.shape.rounded_rect,
+  output_signal = "signal::peripheral::volume",
 })
-
-volume_slider:get_children_by_id("slider")[1]:connect_signal("property::value", function(slider, volume_state)
-  slider.value = volume_state
-  awesome.emit_signal("signal::peripheral::volume", volume_state)
-end)
 awesome.connect_signal("signal::peripheral::volume::value", function(value)
   if value == -1 then
     volume_icon:get_children_by_id("textbox")[1].text = "󰝟"
@@ -177,11 +176,8 @@ local brightness_slider = h.slider({
   handle_width = dpi(16),
   bar_height = dpi(6),
   bar_shape = gears.shape.rounded_rect,
+  output_signal = "signal::peripheral::brightness",
 })
-brightness_slider:get_children_by_id("slider")[1]:connect_signal("property::value", function(slider, brightness_state)
-  slider.value = brightness_state
-  awesome.emit_signal("signal::peripheral::brightness", brightness_state)
-end)
 awesome.connect_signal("signal::peripheral::brightness::value", function(value)
   if value >= 0 then
     brightness_slider:get_children_by_id("slider")[1]._private.value = value
@@ -203,6 +199,8 @@ local brightness_bar = h.background({
 
 if not user.has_brightness then
   brightness_bar.visible = false
+else
+  require("signal.brightness")
 end
 
 local xdg_cache_home = h.join_path(os.getenv("HOME"), "/.cache/passivelemon/lemonix/media/")
@@ -276,6 +274,7 @@ local position_slider = h.slider({
   handle_width = dpi(16),
   bar_height = dpi(6),
   bar_shape = gears.shape.rounded_rect,
+  output_signal = "signal::playerctl::position",
 })
 
 local function metadata_updater()
@@ -351,11 +350,6 @@ toggle_button:connect_signal("button::press", function()
     toggle_button:get_children_by_id("textbox")[1].text = "󰏤"
   end
   awesome.emit_signal("signal::playerctl::toggle")
-end)
-
-position_slider:get_children_by_id("slider")[1]:connect_signal("property::value", function(slider, position_state)
-  slider.value = position_state
-  awesome.emit_signal("signal::playerctl::position", position_state)
 end)
 
 awesome.connect_signal("signal::playerctl::metadata", function(metadata_table)

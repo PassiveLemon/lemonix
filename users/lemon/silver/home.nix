@@ -47,9 +47,6 @@
       "awesome/config/user.lua" = {
         source = ./home/.config/awesome/config/user.lua;
       };
-      "awesome/signal/init.lua" = {
-        source = ./home/.config/awesome/signal/init.lua;
-      };
       "awesome/ui/init.lua" = {
         source = ./home/.config/awesome/ui/init.lua;
       };
