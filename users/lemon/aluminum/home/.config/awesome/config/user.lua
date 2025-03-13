@@ -14,7 +14,7 @@ user.suspend = true
 user.hibernate = true
 
 user.bar = {
-  cpu = true,
+  cpu = false,
   memory = false,
   brightness = true,
   battery = true,

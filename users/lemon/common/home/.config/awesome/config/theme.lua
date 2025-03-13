@@ -120,6 +120,11 @@ screen.connect_signal("request::wallpaper", function(s)
       tiled = false,
       {
         widget = wibox.widget.imagebox,
+        -- Breaks awm
+        -- image = gears.surface.crop_surface({
+        --   surface = gears.surface.load_uncached(theme.wallpaper),
+        --   ratio = s.geometry.width/s.geometry.height,
+        -- }),
         image = theme.wallpaper,
         upscale = true,
         downscale = true,

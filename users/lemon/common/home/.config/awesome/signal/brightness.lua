@@ -18,7 +18,7 @@ end
 brightness()
 
 local brightness_timer = gears.timer({
-  timeout = 3,
+  timeout = 5,
   autostart = true,
   callback = function()
     brightness()

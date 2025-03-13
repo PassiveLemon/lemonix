@@ -16,6 +16,7 @@ local metadata = {
   media = { },
   client = { }
 }
+
 local playerctl_cmd = "playerctl " -- This doesn't change. It gets the metadata of the song and active player
 local playerctl_cmder = "playerctl " -- This one does change. It is used to control playerctl and can be overridden
 
@@ -134,10 +135,20 @@ end
 metadata_fetch()
 
 local playerctl_timer = gears.timer({
-  timeout = 1,
+  timeout = 5,
   autostart = true,
-  callback = function()
+  callback = function(self)
     metadata_fetch()
+    -- Speed up the poll if media is currently playing
+    local cur_timeout = self.timeout
+    if (metadata.client.status == "Playing") then
+      self.timeout = 1
+    else
+      self.timeout = 5
+    end
+    if cur_timeout ~= self.timeout then
+      self:again()
+    end
   end,
 })
 

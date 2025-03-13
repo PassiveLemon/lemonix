@@ -29,7 +29,7 @@ memory()
 
 -- luacheck: ignore 211
 local memory_timer = gears.timer({
-  timeout = 3,
+  timeout = 5,
   autostart = true,
   callback = function()
     memory()
