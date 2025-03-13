@@ -36,6 +36,7 @@ end)
 awesome.connect_signal("signal::peripheral::volume", function(volume_new)
   volume_timer:stop()
   awful.spawn("pamixer --set-volume " .. volume_new)
+  emit(volume_new)
   volume_timer:start()
 end)
 

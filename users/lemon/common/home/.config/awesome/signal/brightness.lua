@@ -34,6 +34,7 @@ end)
 awesome.connect_signal("signal::peripheral::brightness", function(brightness_new)
   brightness_timer:stop()
   awful.spawn("brightnessctl set " .. brightness_new)
+  emit(brightness_new)
   brightness_timer:start()
 end)
 
