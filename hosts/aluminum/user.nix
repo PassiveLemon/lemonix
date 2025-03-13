@@ -4,6 +4,7 @@
     ../../modules/nixos/bluetooth.nix
   ];
 
+  location.provider = "geoclue2";
   services = {
     logind = {
       powerKey = "suspend-then-hibernate";
@@ -12,6 +13,7 @@
       lidSwitchExternalPower = "suspend-then-hibernate";
       lidSwitchDocked = "suspend-then-hibernate";
     };
+    clight.enable = true;
     syncthing = {
       enable = true;
       openDefaultPorts = true;
