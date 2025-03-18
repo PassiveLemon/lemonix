@@ -38,6 +38,10 @@
       "org/gnome/desktop/interface" = {
         color-scheme = "prefer-dark";
       };
+      "org/gnome/desktop/sound" = {
+        event-sounds = false;
+        input-feedback-sounds = false;
+      };
     };
   };
 

@@ -38,6 +38,9 @@
         source = ./home/.vscode;
         recursive = true;
       };
+      ".profile" = {
+        source = ./home/.profile;
+      };
       ".xinitrc" = {
         source = ./home/.xinitrc;
       };
