@@ -46,8 +46,9 @@
         home = "/home/lemon";
         hashedPassword = "$6$J7q0.RZ88OJiQRkq$mQx2d32YHf6IXqZNMSv.o/sslQMgBAGIKID2aL6tLpN6XFpXp2Fda5p1Yi78H/cXOolBPIuXEQPzxhmKp5qWc0";
         extraGroups = [
-          "wheel" "video" "audio" "networkmanager" "storage" "docker" "kvm" "libvirtd" "input"
-          "docker_management" "borg_management"
+          "wheel" "video" "audio" "input" "networkmanager" "storage"
+          "docker" "kvm" "libvirtd"
+          "docker-management" "borg-management"
         ];
         isNormalUser = true;
         openssh.authorizedKeys.keys = [ "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIDHteP0JhNBJOlom+X8PY8s0FXPdUY4VcV6PgPPzXIKi lemon@silver" ];

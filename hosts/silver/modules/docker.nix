@@ -15,8 +15,8 @@
 
   users = {
     groups = {
-      "docker_management" = {
-        gid = 1200;
+      "docker-management" = {
+        gid = 1202;
       };
     };
     users = {
@@ -25,7 +25,7 @@
         description = "Docker";
         home = "/var/empty";
         hashedPassword = "!";
-        extraGroups = [ "docker_management" ];
+        extraGroups = [ "docker-management" ];
         isNormalUser = true;
       };
     };
@@ -68,18 +68,18 @@
       after = [ "docker.service" ];
     };
     tmpfiles.rules = [
-      "Z /home/docker 770 docker docker_management - -"
-      "Z /home/docker/Containers 770 docker docker_management - -"
-      "Z /home/BACKUPDRIVE/Docker 770 docker docker_management - -"
+      "Z /home/docker 770 docker docker-management - -"
+      "Z /home/docker/Volumes 770 docker docker-management - -"
+      "Z /home/BACKUPDRIVE/Docker 770 docker docker-management - -"
 
-      "Z /home/HDD2TBEXT4/Media 770 docker docker_management - -"
-      "Z /home/HDD2TBEXT4/Media2 770 docker docker_management - -"
-      "Z /home/HDD2TBEXT4/Downloads/JDownloader 770 docker docker_management - -"
+      "Z /home/HDD2TBEXT4/Media 770 docker docker-management - -"
+      "Z /home/HDD2TBEXT4/Media2 770 docker docker-management - -"
+      "Z /home/HDD2TBEXT4/Downloads/JDownloader 770 docker docker-management - -"
 
-      "z /home/docker/Containers/Networking/Traefik/acme.json 600 docker docker_management - -"
+      "z /home/docker/Volumes/Networking/Traefik/acme.json 600 docker docker-management - -"
 
-      "Z /home/docker/Containers/Media/Invidious/postgresdata 770 999 docker_management - -"
-      "Z /home/BACKUPDRIVE/Docker/Containers/Media/BitMagnet 770 70 docker_management - -"
+      "Z /home/docker/Volumes/Media/Invidious/postgresdata 770 999 docker-management - -"
+      "Z /home/BACKUPDRIVE/Docker/Volumes/Media/BitMagnet 770 70 docker-management - -"
     ];
   };
 }

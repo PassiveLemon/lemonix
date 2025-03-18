@@ -1,8 +1,8 @@
 { config, ... }: {
   users = {
     groups = {
-      "borg_management" = {
-        gid = 1201;
+      "borg-management" = {
+        gid = 1203;
       };
     };
     users = {
@@ -11,7 +11,7 @@
         description = "Borg";
         home = "/home/borg";
         hashedPassword = "$6$ZfEb26naaa.Sx5XE$EuCvgHvdXN68flpvEh0hfeqSbAZUzf7Q5zGjiGXuxk8owgePS8OK477LA740Gm1iOabOBSZa4CZP3fL3JgG.I0";
-        extraGroups = [ "borg_management" "docker_management" ];
+        extraGroups = [ "borg-management" "docker-management" ];
         isNormalUser = true;
         openssh.authorizedKeys.keys = [
           "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIOH57JnHLmW6Al34ksW1zb0TJq7IY9mZLN7kBiFR0dYi borg@silver"
@@ -26,7 +26,7 @@
       file = ../../../secrets/borgBackupPass.age;
       mode = "600";
       owner = "borg";
-      group = "borg_management";
+      group = "borg-management";
     };
   };
 
@@ -142,8 +142,8 @@
 
   systemd = {
     tmpfiles.rules = [
-      "Z /home/BACKUPDRIVE/BorgBackups 750 borg borg_management - -"
-      "Z /home/BACKUPDRIVE/BorgMount 750 borg borg_management - -"
+      "Z /home/BACKUPDRIVE/BorgBackups 750 borg borg-management - -"
+      "Z /home/BACKUPDRIVE/BorgMount 750 borg borg-management - -"
     ];
   };
 }

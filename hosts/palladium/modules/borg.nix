@@ -1,7 +1,7 @@
 { config, ... }: {
   users = {
     groups = {
-      "borg_management" = {
+      "borg-management" = {
         gid = 1201;
       };
     };
@@ -11,7 +11,7 @@
         description = "Borg";
         home = "/home/borg";
         hashedPassword = "$6$H.OMKehp89SXUJcD$UppHgGDwiKk727vZ67YGpyqRNfwXJP6Zgx953CBqJLSbhMVQfVlqPyg5YJ7JBrUJAA5jNrTCFLNxSXqfBnz0J.";
-        extraGroups = [ "borg_management" "docker_management" ];
+        extraGroups = [ "borg-management" "docker-management" ];
         isNormalUser = true;
         openssh.authorizedKeys.keys = [ "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIL2l60AJF1l0HPUYcHSUfxQgSRrwEWTke0ByWJnUvrBu borg@palladium" ];
       };
@@ -23,7 +23,7 @@
       file = ../../../secrets/borgBackupPass.age;
       mode = "600";
       owner = "borg";
-      group = "borg_management";
+      group = "borg-management";
     };
   };
 

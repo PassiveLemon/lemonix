@@ -24,8 +24,8 @@
 
   users = {
     groups = {
-      "docker_management" = {
-        gid = 1200;
+      "docker-management" = {
+        gid = 1202;
       };
     };
     users = {
@@ -34,7 +34,7 @@
         description = "Docker";
         home = "/home/docker";
         hashedPassword = "!";
-        extraGroups = [ "docker_management" ];
+        extraGroups = [ "docker-management" ];
         isNormalUser = true;
       };
     };
@@ -69,10 +69,10 @@
 
   systemd = {
     tmpfiles.rules = [
-      "Z /home/docker 770 docker docker_management - -"
-      "Z /home/docker/Containers 770 docker docker_management - -"
+      "Z /home/docker 770 docker docker-management - -"
+      "Z /home/docker/Volumes 770 docker docker-management - -"
 
-      "z /home/docker/Containers/Networking/Traefik/acme.json 600 docker docker_management - -"
+      "z /home/docker/Volumes/Networking/Traefik/acme.json 600 docker docker-management - -"
     ];
   };
 }
