@@ -78,8 +78,9 @@
 
       "z /home/docker/Volumes/Networking/Traefik/acme.json 600 docker docker-management - -"
 
-      "Z /home/docker/Volumes/Media/Invidious/postgresdata 770 999 docker-management - -"
-      "Z /home/BACKUPDRIVE/Docker/Volumes/Media/BitMagnet 770 70 docker-management - -"
+      "Z /home/docker/Volumes/Streaming/Invidious/postgresdata 770 999 docker-management - -"
+      "Z /home/docker/Volumes/Utilities/Yamtrack/cache 770 999 docker-management - -"
+      "Z /home/BACKUPDRIVE/Docker/Volumes/Torrenting/BitMagnet 770 70 docker-management - -"
     ];
   };
 }
