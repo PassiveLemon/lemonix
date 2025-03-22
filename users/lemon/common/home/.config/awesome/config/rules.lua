@@ -1,4 +1,5 @@
 local awful = require("awful")
+local gears = require("gears")
 local b = require("beautiful")
 local ruled = require("ruled")
 
@@ -11,8 +12,8 @@ local dpi = b.xresources.apply_dpi
 -- Rules
 --
 
--- Rules to apply to new clients.
 ruled.client.connect_signal("request::rules", function()
+  -- Rules to apply to new all clients.
   ruled.client.append_rule({
     id = "global",
     rule = { },
@@ -25,13 +26,13 @@ ruled.client.connect_signal("request::rules", function()
     },
   })
 
-  -- Always floating clients
+  -- Default floating clients
   ruled.client.append_rule({
     id = "floating",
     rule_any = {
-      instance = { "loupe", "xarchiver", "nm-connection-editor", ".blueman-manager-wrapped", "lxappearance", "kruler" },
-      class    = { "loupe", "Xarchiver", "Nm-connection-editor", ".blueman-manager-wrapped", "Lxappearance", "kruler" },
-      name     = { "Confirm File Replacing", "Copying files", "Steam Settings", "Friends List", "Recordings & Screenshots" },
+      instance = { "xarchiver", "loupe", "nm-connection-editor", ".blueman-manager-wrapped", "lxappearance" },
+      class    = { "Xarchiver", "loupe", "Nm-connection-editor", ".blueman-manager-wrapped", "Lxappearance" },
+      name     = { "Confirm File Replacing", "Copying files" },
       role     = { "pop-up", "GtkFileChooserDialog" },
     },
     properties = {
@@ -45,15 +46,39 @@ ruled.client.connect_signal("request::rules", function()
   -- Specifics
   --
 
+  -- Float all Steam child clients: Chat, settings, game properties, etc
   ruled.client.append_rule({
+    id = "steam",
+    rule = {
+      instance = "steamwebhelper",
+      class    = "steam",
+    },
+    except = {
+      -- The exact match is necessary. Otherwise, the "Steam Settings" window name would be excepted.
+      name = "^Steam$",
+    },
+    properties = {
+      floating = true,
+      raise = true,
+      placement = awful.placement.centered+awful.placement.no_offscreen,
+    },
+  })
+
+  -- Float, remove border, and widen kruler to screen width
+  ruled.client.append_rule({
+    id = "kruler",
     rule = {
       instance = "kruler",
       class    = "kruler",
       name     = "KRuler",
     },
     properties = {
+      floating = true,
+      raise = true,
+      placement = awful.placement.left+awful.placement.no_offscreen,
       width = awful.screen.focused().geometry.width,
       height = dpi(75),
+      shape = gears.shape.rectangle,
       border_width = dpi(0),
     },
   })
