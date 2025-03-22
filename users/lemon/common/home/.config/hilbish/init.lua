@@ -79,16 +79,24 @@ local function get_last_command()
   return hilbish.history.get(hilbish.history.size() - 1)
 end
 
+-- Deprecated, but still here for certain reasons
+hilbish.alias("nrs", "sudo nixos-rebuild switch")
+hilbish.alias("hms", "home-manager switch --flake ~/Documents/GitHub/lemonix#" .. hilbish.user .. "@" .. hilbish.host)
+
+-- Core
 hilbish.alias("ls", "eza -lgF --group-directories-first")
 hilbish.alias("cat", "bat --theme=Lemon")
+hilbish.alias("cdr", "cd $(git rev-parse --show-toplevel)")
 hilbish.alias("rmx", "trash")
-hilbish.alias("nrs", "sudo nixos-rebuild switch")
+
+-- Docker
+hilbish.alias("dc", "docker compose")
+
+-- Nix
 hilbish.alias("nos", "nh os switch ~/Documents/GitHub/lemonix")
-hilbish.alias("hms", "home-manager switch --flake ~/Documents/GitHub/lemonix#" .. hilbish.user .. "@" .. hilbish.host)
 hilbish.alias("nhs", "nh home switch ~/Documents/GitHub/lemonix")
 hilbish.alias("npr", "nixpkgs-review rev --print-result HEAD")
 hilbish.alias("cma", "comma")
-hilbish.alias("dc", "docker compose")
 
 commander.register("nb", function(args)
   if (args[1] == "--help") or (args[1] == "-h") then
@@ -204,6 +212,7 @@ commander.register("nsp", function(args)
   end
 end)
 
+-- Fuck
 commander.register("fuck", function(args)
   if #args == 0 then
     hilbish.run("thefuck " .. get_last_command())
