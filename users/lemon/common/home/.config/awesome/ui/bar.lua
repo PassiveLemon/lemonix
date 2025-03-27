@@ -183,7 +183,7 @@ else
 end
 
 -- Brightness
-local light_icon = h.text({
+local light_icon = h.button({
   margins = {
     top = 0,
     right = dpi(3),
@@ -191,6 +191,17 @@ local light_icon = h.text({
     left = 0,
   },
   text = "󰌵",
+  no_color = true,
+  button_press = function()
+    awesome.emit_signal("signal::peripheral::brightness::update")
+    awful.spawn.easy_async("systemctl is-active --quiet --user clight", function(_, _, _, code)
+      if code == 0 then
+        awful.spawn("systemctl --user stop clight")
+      else
+        awful.spawn("systemctl --user restart clight")
+      end
+    end)
+  end,
 })
 local light_text = h.text({
   margins = {
@@ -203,6 +214,13 @@ local light_text = h.text({
 })
 awesome.connect_signal("signal::peripheral::brightness::value", function(cur, max)
   light_text:get_children_by_id("textbox")[1].text = h.round(((cur / max) * 100), 0) .. "%"
+  awful.spawn.easy_async("systemctl is-active --quiet --user clight", function(_, _, _, code)
+    if code == 0 then
+      light_icon:get_children_by_id("textbox")[1].text = "󰌵"
+    else
+      light_icon:get_children_by_id("textbox")[1].text = "󱠂"
+    end
+  end)
 end)
 
 local pill_brightness = h.margin({
