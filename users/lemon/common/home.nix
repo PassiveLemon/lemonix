@@ -79,15 +79,15 @@
         id = 0;
         isDefault = true;
         search = {
-          default = "DuckDuckGo";
-          privateDefault = "DuckDuckGo";
-          order = [ "DuckDuckGo" ];
+          default = "ddg";
+          privateDefault = "ddg";
+          order = [ "ddg" ];
           force = true;
           engines = {
-            "Bing".metaData.hidden = true;
-            "DuckDuckGo".metaData.hidden = false;
-            "Google".metaData.hidden = true;
-            "Wikipedia (en)".metaData.hidden = true;
+            "bing".metaData.hidden = true;
+            "ddg".metaData.hidden = false;
+            "google".metaData.hidden = true;
+            "wikipedia".metaData.hidden = true;
           };
         };
         settings = {
