@@ -69,6 +69,7 @@ in
           config = {
             enable = true;
             json = {
+              application = inputs.lemonake.packages.${pkgs.system}.wlx-overlay-s-git;
               bitrate = 100000000;
               encoders = [
                 {
@@ -99,7 +100,6 @@ in
                   group = 0;
                 }
               ];
-              application = inputs.lemonake.packages.${pkgs.system}.wlx-overlay-s-git;
               tcp_only = true;
             };
           };

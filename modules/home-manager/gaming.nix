@@ -25,12 +25,10 @@ in
   config = mkIf cfg.enable (mkMerge [
     (mkIf cfg.desktop.enable {
       home.packages = with pkgs; [
-        gamemode dxvk
-        r2modman
-        heroic
-        lunar-client prismlauncher
+        r2modman nexusmods-app
+        heroic bottles
+        lunar-client
         inputs.lemonake.packages.${pkgs.system}.gdlauncher-carbon
-        bottles
         ludusavi
       ];
 
@@ -41,9 +39,7 @@ in
     })
     (mkIf cfg.vr.enable {
       home.packages = with pkgs; [
-        nexusmods-app
         bs-manager
-        xrgears
       ];
 
       programs.steamvr = {

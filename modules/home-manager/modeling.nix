@@ -17,7 +17,7 @@ in
     (mkIf cfg.cad.enable {
       home.packages = with pkgs; [
         freecad openscad
-        blender
+        (kicad.override { stable = true; })
       ];
     })
     (mkIf cfg.printing.enable {
