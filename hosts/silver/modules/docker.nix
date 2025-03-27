@@ -41,7 +41,10 @@
         dates = "weekly";
       };
       daemon.settings = {
-        hosts = [ "unix:///var/run/docker.sock" ];
+        hosts = [
+          "unix:///var/run/docker.sock"
+          "tcp://localhost:2375"
+        ];
       };
     };
   };
