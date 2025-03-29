@@ -1,4 +1,4 @@
-require("signal.playerctl")
+require("signal.mpris")
 require("signal.volume")
 
 local awful = require("awful")
@@ -210,7 +210,7 @@ end
 
 local metadata = {
   media = { },
-  client = { }
+  player = { }
 }
 
 local art_image_box = h.text({
@@ -244,7 +244,7 @@ local prev_button = h.button({
   text = "󰒮",
   font = b.sysfont(dpi(18)),
   button_press = function()
-    awesome.emit_signal("signal::playerctl::previous")
+    awesome.emit_signal("signal::mpris::previous")
   end
 })
 
@@ -263,7 +263,7 @@ local next_button = h.button({
   text = "󰒭",
   font = b.sysfont(dpi(18)),
   button_press = function()
-    awesome.emit_signal("signal::playerctl::next")
+    awesome.emit_signal("signal::mpris::next")
   end
 })
 
@@ -274,11 +274,11 @@ local position_slider = h.slider({
   handle_width = dpi(16),
   bar_height = dpi(6),
   bar_shape = gears.shape.rounded_rect,
-  output_signal = "signal::playerctl::position",
+  output_signal = "signal::mpris::position",
 })
 
 local function metadata_updater()
-  if metadata.media.title == "" then
+  if metadata.player.title == "" then
     art_image_box.visible = false
     artist_text.visible = false
     position_slider.visible = false
@@ -295,19 +295,19 @@ local function metadata_updater()
 end
 
 local function toggle_updater()
-  if metadata.client.status == "Playing" then
+  if metadata.player.status == "PLAYING" then
     toggle_button:get_children_by_id("textbox")[1].text = "󰏤"
-  elseif metadata.client.status == "Paused" then
+  elseif metadata.player.status == "PAUSED" then
     toggle_button:get_children_by_id("textbox")[1].text = "󰐊"
   end
 end
 
 local function position_updater()
-  if (metadata.client.position == "") or (metadata.media.length == "") then
+  if (metadata.player.position == "") or (metadata.media.length == "") then
     position_slider.visible = false
   else
     position_slider.visible = true
-    position_slider:get_children_by_id("slider")[1]._private.value = h.round(((metadata.client.position / metadata.media.length) * 100), 3)
+    position_slider:get_children_by_id("slider")[1]._private.value = h.round(((metadata.player.position / metadata.media.length) * 100), 3)
     position_slider:emit_signal("widget::redraw_needed")
   end
 end
@@ -344,17 +344,17 @@ local media_player_bar = h.background({
 })
 
 toggle_button:connect_signal("button::press", function()
-  if metadata.client.state == "Playing" then
+  if metadata.player.state == "PLAYING" then
     toggle_button:get_children_by_id("textbox")[1].text = "󰐊"
-  elseif metadata.client.state == "Paused" then
+  elseif metadata.player.state == "PAUSED" then
     toggle_button:get_children_by_id("textbox")[1].text = "󰏤"
   end
-  awesome.emit_signal("signal::playerctl::toggle")
+  awesome.emit_signal("signal::mpris::toggle")
 end)
 
-awesome.connect_signal("signal::playerctl::metadata", function(metadata_table)
+awesome.connect_signal("signal::mpris::metadata", function(metadata_table)
   metadata = metadata_table
-  if metadata.raw_stdout == "" then
+  if not metadata.player.available then
     media_player_bar.visible = false
   else
     media_player_bar.visible = true
@@ -440,7 +440,7 @@ awful.screen.connect_for_each_screen(function(s)
   end)
 
   awesome.connect_signal("ui::control::toggle", function(force)
-    awesome.emit_signal("signal::playerctl::update")
+    awesome.emit_signal("signal::mpris::update")
     if force == true then
       main:toggle(true)
     elseif force == false then

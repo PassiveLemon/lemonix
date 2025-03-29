@@ -1,5 +1,5 @@
 require("signal.caps")
-require("signal.playerctl")
+require("signal.mpris")
 require("signal.volume")
 
 local awful = require("awful")
@@ -363,8 +363,8 @@ local pill_music = h.button({
     awesome.emit_signal("ui::control::toggle")
   end
 })
-awesome.connect_signal("signal::playerctl::metadata", function(metadata_table)
-  if metadata_table.client.status == "Playing" then
+awesome.connect_signal("signal::mpris::metadata", function(metadata_table)
+  if metadata_table.player.status == "PLAYING" then
     pill_music.visible = true
   else
     pill_music.visible = false

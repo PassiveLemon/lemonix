@@ -15,9 +15,7 @@ local dpi = b.xresources.apply_dpi
 -- Theme
 --
 
-local theme = {
-  playerctl = { }
-}
+local theme = { }
 
 -- Font
 function theme.sysfont(size)
@@ -88,9 +86,9 @@ theme.useless_gap = dpi(6)
 theme.margins = 4
 
 -- Media
-theme.playerctl.players = "Feishin"
-theme.playerctl.art_cache_dir = h.join_path(os.getenv("HOME"), "/.cache/passivelemon/lemonix/media/")
-theme.playerctl.notifications = true
+theme.mpris_players = { "Feishin" }
+theme.mpris_art_cache_dir = h.join_path(os.getenv("HOME"), "/.cache/passivelemon/lemonix/media/")
+theme.mpris_notifications = true
 
 --
 -- Wallpaper & icons
