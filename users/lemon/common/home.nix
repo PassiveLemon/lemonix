@@ -1,4 +1,4 @@
-{ inputs, outputs, pkgs, ... }: {
+{ inputs, outputs, lib, pkgs, ... }: {
   imports = [
     ./modules/customization.nix
     inputs.nixcord.homeManagerModules.nixcord
@@ -52,13 +52,20 @@
     enable = true;
     windowManager.awesome = {
       enable = true;
-      package = inputs.nixpkgs-f2k.packages.${pkgs.system}.awesome-luajit-git;
+      package = (inputs.nixpkgs-f2k.packages.${pkgs.system}.awesome-luajit-git.overrideAttrs (prevAttrs: {
+        GI_TYPELIB_PATH = let
+          mkTypeLibPath = pkg: "${pkg}/lib/girepository-1.0";
+          extraGITypeLibPaths = lib.forEach (with pkgs; [
+            networkmanager upower playerctl
+          ] ++ (with pkgs.astal; [
+            auth battery bluetooth mpris network powerprofiles wireplumber
+          ])) mkTypeLibPath;
+        in
+        lib.concatStringsSep ":" (extraGITypeLibPaths ++ [ (mkTypeLibPath pkgs.pango.out) ]);
+      }));
       luaModules = with pkgs; [
         luajitPackages.luafilesystem
-      ] ++ (with astal; [
-        auth battery mpris network wireplumber
-        # bluetooth powerprofiles # Some stuff to experiment with in the future?
-      ]);
+      ];
     };
   };
 
