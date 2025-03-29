@@ -1,38 +1,44 @@
 local awful = require("awful")
 local gears = require("gears")
 
-local lfs = require("lfs")
+local networkmanager = require("lgi").NM
+
 
 -- network_stats_dict
---             |read                                                                   |write
--- adapter = { (bytes) (packets) (errs) (drop) (fifo) (frame) (compressed) (multicast) (bytes) (packets) (errs) (drop) (fifo) (colls) (carrier) (compressed) }
+--               |read                                                                     |write
+-- interface = { (bytes) (packets) (errs) (drop) (fifo) (frame) (compressed) (multicast) (bytes) (packets) (errs) (drop) (fifo) (colls) (carrier) (compressed) }
 
 local function emit(network_stats_dict)
   awesome.emit_signal("signal::resource::network::data", network_stats_dict)
 end
 
-local function adapter_stats_table(adapter_stats)
+local client = networkmanager.Client.new()
+local devices = client:get_devices()
+
+local function update_devices()
+  devices = client:get_devices()
+end
+
+local function interface_stats_table(interface_stats)
   local stats_table = { }
-  for number in adapter_stats:gmatch("%d+") do
+  for number in interface_stats:gmatch("%d+") do
     table.insert(stats_table, tonumber(number))
   end
   return stats_table
 end
 
 local function network()
+  update_devices()
   local network_stats_dict = { }
-  -- We iterate over each network adapter in /sys/class/net and filter them by a pattern
-  -- Then iterate over the matches, get a table of the adapter stats, and then add that key value pair to a table for use elsewhere
-  for adapter in lfs.dir("/sys/class/net") do
-    if adapter:match("enp.(d*)s.(d*)") or adapter:match("wlp.(d*)s.(d*)") then
-      awful.spawn.easy_async_with_shell("ip -s link show ".. adapter .. " | grep 'state UP'", function(_, _, _, code)
-        if code == 0 then
-          awful.spawn.easy_async_with_shell("cat /proc/net/dev | grep " .. adapter, function(adapter_stats_stdout)
-            local adapter_stats = adapter_stats_stdout:gsub("\n", ""):gsub(adapter .. ":", "")
-            network_stats_dict[adapter] = adapter_stats_table(adapter_stats)
-          end)
-        end
-      end)
+  for _, device in ipairs(devices) do
+    local interface = device:get_iface()
+    if interface:match("enp.(d*)s.(d*)") or interface:match("wlp.(d*)s.(d*)") then
+      if device:get_state() == "ACTIVATED" then
+        awful.spawn.easy_async_with_shell("cat /proc/net/dev | grep " .. interface, function(interface_stats_stdout)
+          local interface_stats = interface_stats_stdout:gsub("\n", ""):gsub(interface .. ":", "")
+          network_stats_dict[interface] = interface_stats_table(interface_stats)
+        end)
+      end
     end
   end
   awful.spawn.easy_async_with_shell("sleep 5", function()
