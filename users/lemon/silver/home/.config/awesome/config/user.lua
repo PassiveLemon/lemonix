@@ -8,17 +8,33 @@ user.editor = os.getenv("EDITOR") or "nano"
 user.visual_editor = "lite-xl"
 user.editor_cmd = user.terminal .. " -- " .. user.editor
 user.super = "Mod4" -- Windows key
-user.has_brightness = false
-user.has_battery = false
-user.suspend = false
-user.hibernate = false
 
 user.bar = {
+  battery = false,
+  brightness = false,
   cpu = true,
   memory = true,
-  brightness = false,
-  battery = false,
+  music = true,
+  systray = true,
+  taglist = true,
+  tasklist = true,
+  time = true,
   utility = true,
+}
+
+user.control = {
+  brightness = false,
+  music = true,
+  power = true,
+  volume = true,
+}
+
+user.power = {
+  lock = true,
+  suspend = false,
+  hibernate = false,
+  poweroff = true,
+  restart = true,
 }
 
 awful.spawn.with_shell("autorandr -l Default")
@@ -29,7 +45,6 @@ awful.spawn.with_shell("pidof -q nm-applet || nm-applet &")
 awful.spawn.with_shell("pidof -q tailscale-systray || tailscale-systray &")
 awful.spawn.with_shell("pidof -q snixembed || snixembed --fork")
 awful.spawn.with_shell("pidof -q flameshot || flameshot &")
-
 
 return user
 

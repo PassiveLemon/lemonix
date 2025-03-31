@@ -8,17 +8,33 @@ user.editor = os.getenv("EDITOR") or "nano"
 user.visual_editor = "lite-xl"
 user.editor_cmd = user.terminal .. " -- " .. user.editor
 user.super = "Mod4" -- Windows key
-user.has_brightness = true
-user.has_battery = true
-user.suspend = true
-user.hibernate = true
 
 user.bar = {
+  battery = true,
+  brightness = true,
   cpu = false,
   memory = false,
-  brightness = true,
-  battery = true,
+  music = true,
+  systray = true,
+  taglist = true,
+  tasklist = true,
+  time = true,
   utility = true,
+}
+
+user.control = {
+  brightness = true,
+  music = true,
+  power = true,
+  volume = true,
+}
+
+user.power = {
+  lock = true,
+  suspend = true,
+  hibernate = true,
+  poweroff = true,
+  restart = true,
 }
 
 awful.spawn.with_shell("autorandr -l Default")
