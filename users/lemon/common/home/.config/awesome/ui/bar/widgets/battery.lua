@@ -1,7 +1,9 @@
 --require("signal.battery")
 require("signal.power")
 
+local gears = require("gears")
 local b = require("beautiful")
+local wibox = require("wibox")
 
 local h = require("helpers")
 
