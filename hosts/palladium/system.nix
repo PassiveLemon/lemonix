@@ -108,6 +108,13 @@
     enableRedistributableFirmware = true;
   };
 
+  nix = {
+    settings = {
+      cores = 2;
+      max-jobs = 1;
+    };
+  };
+
   # Drives
   # 32 GB SD (Root)
 

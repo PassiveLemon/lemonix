@@ -1,6 +1,6 @@
 { config, lib, ... }:
 let
-  inherit (lib) mkIf mkEnableOption mkOption types;
+  inherit (lib) mkIf mkEnableOption;
   cfg = config.lemonix;
 in
 {
@@ -11,20 +11,6 @@ in
         server.enable = mkEnableOption "server configuration";
         hibernation.enable = mkEnableOption "hibernation configuration";
         headless.enable = mkEnableOption "headless configuration";
-        specs = {
-          cpu = mkOption {
-            type = types.int;
-            description = "The amount of CPU threads.";
-          };
-          gpu = mkOption {
-            type = types.enum [ "none" "nvidia" "amd" "amd-igpu" "intel" "intel-igpu" ];
-            description = "The graphics processing device.";
-          };
-          memory = mkOption {
-            type = types.int;
-            description = "The amount of system memory in whole gigabytes.";
-          };
-        };
       };
     };
   };
@@ -46,22 +32,6 @@ in
     systemd.services.nix-gc = mkIf cfg.system.mobile.enable {
       unitConfig.ConditionACPower = true;
     };
-
-    nix = (
-      if cfg.system.specs.cpu <= 4
-      then {
-        settings = {
-          cores = 3;
-          max-jobs = 1;
-        };
-      }
-      else {
-        settings = {
-          cores = ((cfg.system.specs.cpu - 2) / 2);
-          max-jobs = 2;
-        };
-      }
-    );
   };
 }
 

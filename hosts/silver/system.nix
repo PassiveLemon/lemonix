@@ -123,6 +123,13 @@
     config.cudaSupport = true;
   };
 
+  nix = {
+    settings = {
+      cores = 4;
+      max-jobs = 2;
+    };
+  };
+
   # Drives
   # 500 GB Crucial (Root)
 

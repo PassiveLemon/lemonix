@@ -63,7 +63,7 @@
         Slice = "nix-daemon.slice";
         OOMScoreAdjust = 1000;
       };
-      # https://github.com/NixOS/nixpkgs/pull/369512
+      # https://github.com/NixOS/nixpkgs/pull/370910
       # It was not backported so we gotta keep it here
       cron.preStart = lib.mkForce ''
         mkdir -m 710 /var/cron || true
@@ -77,9 +77,13 @@
     };
     # System likes to hang during expensive builds so we apply some limits
     slices."nix-daemon".sliceConfig = {
+      CPUAccounting = true;
       CPUQuota = "80%";
-      ManagedOOMMemoryPressure = "kill";
-      ManagedOOMMemoryPressureLimit = "80%";
+      MemoryAccounting = true;
+      MemoryHigh = "70%";
+      MemoryMax = "80%";
+      MemorySwapMax = "70%";
+      MemoryZSwapMax = "70%";
     };
   };
 
@@ -87,17 +91,15 @@
     enable = true;
   };
 
-  documentation = {
-    enable = false;
-    doc.enable = false;
-    man.enable = false;
-    dev.enable = false;
-  };
-
   nix = {
     settings = {
-      experimental-features = [ "nix-command" "flakes" ];
-      trusted-users = [ "lemon" ];
+      fallback = true;
+      keep-going = true;
+      use-xdg-base-directories = true;
+      warn-dirty = false;
+      experimental-features = [ "flakes" "nix-command" ];
+      allowed-users = [ "@wheel" ];
+      trusted-users = [ "@wheel" ];
       substituters = [ "https://cache.nixos.org" ];
       trusted-public-keys = [ "cache.nixos.org-1:6NCHdD59X431o0gWypbMrAURkbJ16ZPMQFGspcDShjY=" ];
       extra-substituters = [
@@ -108,7 +110,6 @@
         "nix-community.cachix.org-1:mB9FSh9qf2dCimDSUo8Zy7bkq5CX+/rkCWyvRCYg3Fs="
         "passivelemon.cachix.org-1:ScYjLCvvLi70S95SMMr8lMilpZHuafLP3CK/nZ9AaXM="
       ];
-      warn-dirty = false;
     };
     optimise = {
       automatic = true;

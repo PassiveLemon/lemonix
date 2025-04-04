@@ -7,11 +7,6 @@
   lemonix = {
     system = {
       server.enable = true;
-      specs = {
-        cpu = 12;
-        gpu = "nvidia";
-        memory = 32;
-      };
     };
     agenix.enable = true;
     lanzaboote.enable = true;
