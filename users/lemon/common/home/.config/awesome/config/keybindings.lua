@@ -82,6 +82,7 @@ awful.keyboard.append_global_keybindings({
   { description = "|| run app launcher", group = "launcher" }),
 
   awful.key({ super }, "c", function()
+    awesome.emit_signal("ui::control::notification::brightness", false)
     awesome.emit_signal("ui::control::notification::volume", false)
     awesome.emit_signal("ui::control::toggle")
   end,
@@ -90,10 +91,8 @@ awful.keyboard.append_global_keybindings({
   awful.key({ super }, "x", function() awesome.emit_signal("ui::resource::toggle") end,
   { description = "|| run resource monitor", group = "launcher" }),
 
-  awful.key({ super }, "l", function()
-    awesome.emit_signal('ui::lock::toggle')
-    awesome.emit_signal("signal::playerctl::pause", "%all%")
-  end,
+  awful.key({ super }, "l", function() awesome.emit_signal('ui::lock::toggle') end,
+
   { description = "|| lock display", group = "launcher" }),
 
   -- Control
@@ -101,7 +100,7 @@ awful.keyboard.append_global_keybindings({
     awful.spawn.easy_async("brightnessctl set 3%+", function()
       awesome.emit_signal("signal::peripheral::brightness::update")
       awesome.emit_signal("ui::control::toggle", false)
-      awesome.emit_signal("ui::control::notification::brightness")
+      awesome.emit_signal("ui::control::notification::brightness", true)
     end)
   end,
   { description = "|| increase brightness", group = "control" }),
@@ -110,7 +109,7 @@ awful.keyboard.append_global_keybindings({
     awful.spawn.easy_async("brightnessctl set 3%-", function()
       awesome.emit_signal("signal::peripheral::brightness::update")
       awesome.emit_signal("ui::control::toggle", false)
-      awesome.emit_signal("ui::control::notification::brightness")
+      awesome.emit_signal("ui::control::notification::brightness", true)
     end)
   end,
   { description = "|| decrease brightness", group = "control" }),
@@ -119,7 +118,7 @@ awful.keyboard.append_global_keybindings({
     awful.spawn.easy_async("pamixer -t", function()
       awesome.emit_signal("signal::peripheral::volume::update")
       awesome.emit_signal("ui::control::toggle", false)
-      awesome.emit_signal("ui::control::notification::volume")
+      awesome.emit_signal("ui::control::notification::volume", true)
     end)
   end,
   { description = "|| toggle mute", group = "control" }),
@@ -128,7 +127,7 @@ awful.keyboard.append_global_keybindings({
     awful.spawn.easy_async("pamixer -d 1", function()
       awesome.emit_signal("signal::peripheral::volume::update")
       awesome.emit_signal("ui::control::toggle", false)
-      awesome.emit_signal("ui::control::notification::volume")
+      awesome.emit_signal("ui::control::notification::volume", true)
     end)
   end,
   { description = "|| decrease volume", group = "control" }),
@@ -137,7 +136,7 @@ awful.keyboard.append_global_keybindings({
     awful.spawn.easy_async("pamixer -i 1", function()
       awesome.emit_signal("signal::peripheral::volume::update")
       awesome.emit_signal("ui::control::toggle", false)
-      awesome.emit_signal("ui::control::notification::volume")
+      awesome.emit_signal("ui::control::notification::volume", true)
     end)
   end,
   { description = "|| increase volume", group = "control" }),
@@ -265,17 +264,4 @@ client.connect_signal("request::default_mousebindings", function()
     end)
   })
 end)
-
---
--- Other
---
-
--- These are just for information. They have no binding.
-awful.keyboard.append_client_keybindings({
-  awful.key({ }, "sudo nixos-rebuild switch", function() end,
-  { description = "|| rebuild nixos", group = "other" }),
-
-  awful.key({ }, "home-manager switch --flake ~/Documents/GitHub/lemonix/#lemon@silver", function() end,
-  { description = "|| rebuild home-manager", group = "other" }),
-})
 

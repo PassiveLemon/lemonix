@@ -2,8 +2,7 @@ local gears = require("gears")
 local naughty = require("naughty")
 
 local h = require("helpers")
-local lgi = require("lgi")
-local upower = lgi.require("UPowerGlib")
+local upower = require("lgi").require("UPowerGlib")
 
 local function emit(ac, perc, time)
   awesome.emit_signal("signal::power", ac, perc, time)
@@ -22,7 +21,7 @@ local function get_device(target)
       return device
     end
   end
-  -- Fall back to the display device if the target device is not found. May result in problems if you want an AC device but a battery device is returned
+  -- Fall back to the display device if the target device is not found. May result in problems like if you want an AC device but a battery device is returned.
   return upower.Client():get_display_device()
 end
 

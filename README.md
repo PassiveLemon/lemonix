@@ -12,7 +12,7 @@ These are my dotfiles for my NixOS system. This is configuration for the stuff I
   - Lockscreen + PAM authentication (Supports fprintd)
   - Bar + systray under NixOS icon
   - Control menu with sliders, powermenu, and a media player.
-  - Playerctl and various signals for resources, peripherals, and other miscellany.
+  - Mpris and various signals for resources, peripherals, and other miscellany.
 - Tym terminal with Hilbish shell.
 - Custom color theme for Lite-XL, Discord, and Obsidian. (GTK may or may not happen)
 - Papirus Icons and Volantes Cursors.

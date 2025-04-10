@@ -171,6 +171,7 @@ awful.screen.connect_for_each_screen(function(s)
     if force then
       -- What should happen when the lockscreen is enabled
       main.visible = true
+      awesome.emit_signal("signal::mpris::pause", "%all%")
       awful.spawn.with_shell("pamixer -m")
       awful.spawn.with_shell("xset s on +dpms")
     else

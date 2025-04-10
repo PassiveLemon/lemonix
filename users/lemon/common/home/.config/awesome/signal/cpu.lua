@@ -36,7 +36,7 @@ local function cpu()
     local hwmon_1_path = h.join_path("/sys/class/hwmon/", hwmon_list[1], "/temp1_input")
     awful.spawn.easy_async("cat " .. hwmon_1_path, function(temp_stdout)
       local temp = temp_stdout:gsub("\n", "")
-      local temp_norm = h.round((temp / 1000), 1)
+      local temp_norm = h.round((tonumber(temp) / 1000), 1)
       emit(use, temp_norm)
     end)
     hwmon_list = { }

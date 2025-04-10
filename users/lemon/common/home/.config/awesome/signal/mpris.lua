@@ -172,7 +172,7 @@ end
 
 metadata_fetch()
 
-local playerctl_timer = gears.timer({
+local mpris_timer = gears.timer({
   timeout = 5,
   autostart = true,
   callback = function(self)
@@ -191,7 +191,7 @@ local playerctl_timer = gears.timer({
 })
 
 local function shuffler()
-  playerctl_timer:stop()
+  mpris_timer:stop()
   if metadata.player.shuffle == "ON" then
     metadata.player.shuffle = "OFF"
   elseif metadata.player.shuffle == "OFF" then
@@ -199,18 +199,18 @@ local function shuffler()
   end
   global_player:shuffle()
   emit()
-  playerctl_timer:start()
+  mpris_timer:start()
 end
 
 local function previouser()
-  playerctl_timer:stop()
+  mpris_timer:stop()
   global_player:previous()
   metadata_fetch()
-  playerctl_timer:start()
+  mpris_timer:start()
 end
 
 local function toggler()
-  playerctl_timer:stop()
+  mpris_timer:stop()
   if metadata.player.status == "PLAYING" then
     metadata.player.status = "PAUSED"
   elseif metadata.player.status == "PAUSED" then
@@ -218,28 +218,28 @@ local function toggler()
   end
   global_player:play_pause()
   emit()
-  playerctl_timer:start()
+  mpris_timer:start()
 end
 
 local function play_pauser(option)
-  playerctl_timer:stop()
+  mpris_timer:stop()
   if option == "play" then
     global_player:play()
   elseif option == "pause" then
-    global_player.pause()
+    global_player:pause()
   end
-  playerctl_timer:start()
+  mpris_timer:start()
 end
 
 local function nexter()
-  playerctl_timer:stop()
+  mpris_timer:stop()
   global_player:next()
   metadata_fetch()
-  playerctl_timer:start()
+  mpris_timer:start()
 end
 
 local function looper()
-  playerctl_timer:stop()
+  mpris_timer:stop()
   if metadata.player.loop == "NONE" then
     metadata.player.loop = "PLAYLIST"
   elseif metadata.player.loop == "PLAYLIST" then
@@ -249,25 +249,25 @@ local function looper()
   end
   global_player:loop()
   emit()
-  playerctl_timer:start()
+  mpris_timer:start()
 end
 
 local function positioner(position_new)
-  playerctl_timer:stop()
+  mpris_timer:stop()
   global_player.position = h.round(((position_new * metadata.media.length) / 100), 3)
-  playerctl_timer:start()
+  mpris_timer:start()
 end
 
 local function volumer(volume_new)
-  playerctl_timer:stop()
+  mpris_timer:stop()
   global_player.volume = h.round((volume_new / 100), 3)
-  playerctl_timer:start()
+  mpris_timer:start()
 end
 
 awesome.connect_signal("signal::mpris::update", function()
-  playerctl_timer:stop()
+  mpris_timer:stop()
   metadata_fetch()
-  playerctl_timer:start()
+  mpris_timer:start()
 end)
 
 awesome.connect_signal("signal::mpris::shuffle", function()
