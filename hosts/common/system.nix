@@ -58,7 +58,10 @@
   systemd = {
     enableStrictShellChecks = true;
     services = {
+      # Fixes for problematic services
       NetworkManager-wait-online.enable = false;
+      cups-browsed.serviceConfig.TimeoutStopSec = 10;
+      # System sometimes hangs during expensive builds
       "nix-daemon".serviceConfig = {
         Slice = "nix-daemon.slice";
         OOMScoreAdjust = 1000;
@@ -75,7 +78,6 @@
         fi
       '';
     };
-    # System likes to hang during expensive builds so we apply some limits
     slices."nix-daemon".sliceConfig = {
       CPUAccounting = true;
       CPUQuota = "80%";

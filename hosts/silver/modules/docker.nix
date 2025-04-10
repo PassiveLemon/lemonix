@@ -55,7 +55,7 @@
 
   services = {
     cron.systemCronJobs = [
-      "0 2 * * * root docker restart invidious"
+      "0 2 * * * root docker restart invidious invidious-db invidious-sig-helper"
     ];
   };
 

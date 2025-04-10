@@ -7,7 +7,7 @@
   home = {
     packages = with pkgs; [
       # Terminal
-      tym hilbish comma fend thefuck trashy pamixer playerctl imagemagick appimage-run ventoy-bin
+      tym hilbish comma fend thefuck trashy pamixer imagemagick appimage-run ventoy-bin
       eza bat fd ripgrep jq nh
       # File/storage management
       pcmanfm xarchiver filezilla gparted
@@ -56,7 +56,7 @@
         GI_TYPELIB_PATH = let
           mkTypeLibPath = pkg: "${pkg}/lib/girepository-1.0";
           extraGITypeLibPaths = lib.forEach (with pkgs; [
-            networkmanager upower playerctl
+            networkmanager upower
           ] ++ (with pkgs.astal; [
             auth battery bluetooth mpris network powerprofiles wireplumber
           ])) mkTypeLibPath;
@@ -78,7 +78,7 @@
     home-manager.enable = true;
     obs-studio = {
       enable = true;
-      plugins = with pkgs.obs-studio-plugins; [ obs-pipewire-audio-capture ];
+      package = (pkgs.obs-studio.override { cudaSupport = true; });
     };
     firefox = {
       enable = true;
