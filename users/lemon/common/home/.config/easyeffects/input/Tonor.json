@@ -1,5 +1,16 @@
 {
     "input": {
+        "bass_enhancer#0": {
+            "amount": 3.0,
+            "blend": 0.0,
+            "bypass": false,
+            "floor": 20.0,
+            "floor-active": false,
+            "harmonics": 8.5,
+            "input-gain": 0.0,
+            "output-gain": 0.0,
+            "scope": 100.0
+        },
         "blocklist": [],
         "crystalizer#0": {
             "band0": {
@@ -98,9 +109,24 @@
             "std": "ISO226-2003",
             "volume": 2.0
         },
+        "pitch#0": {
+            "anti-alias": true,
+            "bypass": false,
+            "input-gain": 0.0,
+            "output-gain": 0.0,
+            "overlap-length": 8,
+            "quick-seek": false,
+            "rate-difference": 0.0,
+            "seek-window": 15,
+            "semitones": -0.4,
+            "sequence-length": 40,
+            "tempo-difference": 0.0
+        },
         "plugins_order": [
             "crystalizer#0",
             "deesser#0",
+            "bass_enhancer#0",
+            "pitch#0",
             "loudness#0"
         ]
     }
