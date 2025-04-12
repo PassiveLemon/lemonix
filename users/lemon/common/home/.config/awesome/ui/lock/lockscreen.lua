@@ -11,6 +11,8 @@ local dpi = b.xresources.apply_dpi
 -- Lockscreen visual
 --
 
+-- This is purely a visual additive to the lock process, it does not handle any security measures
+
 local function get_random()
   return math.random(0, 628) / 100
 end
@@ -169,16 +171,9 @@ awful.screen.connect_for_each_screen(function(s)
 
   awesome.connect_signal("ui::lock::state", function(force)
     if force then
-      -- What should happen when the lockscreen is enabled
       main.visible = true
-      awesome.emit_signal("signal::mpris::pause", "%all%")
-      awful.spawn.with_shell("pamixer -m")
-      awful.spawn.with_shell("xset s on +dpms")
     else
-      -- What should happen when the lockscreen is disabled
       main.visible = false
-      awful.spawn.with_shell("pamixer -u")
-      awful.spawn.with_shell("xset s off -dpms")
     end
   end)
 end)

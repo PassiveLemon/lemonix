@@ -16,7 +16,33 @@ local function auth(password)
   return pam.auth_current_user(password)
 end
 
-local function grab()
+local clients = client.get()
+
+local function unlock()
+  awesome.emit_signal("ui::lock::state", false)
+  awful.spawn.with_shell("pamixer -u")
+  awful.spawn.with_shell("xset s off -dpms")
+
+  -- Unhide all clients
+  for _, c in ipairs(clients) do
+    c.hidden = false
+  end
+end
+
+local function lock()
+  awesome.emit_signal("ui::lock::state", true)
+  awesome.emit_signal("signal::mpris::pause", "%all%")
+  awful.spawn.with_shell("pamixer -m")
+  awful.spawn.with_shell("xset s on +dpms")
+
+  -- Hide all clients and unset focus
+  clients = client.get()
+  for _, c in ipairs(clients) do
+    c.hidden = true
+  end
+  client.focus = nil
+
+  -- Setup keygrabber
   local input = ""
   local input_count = 0
   local grabber = awful.keygrabber({
@@ -73,6 +99,7 @@ local function grab()
           input = ""
           input_count = 0
           self:stop()
+          unlock()
         else
           awesome.emit_signal("ui::lock::keypress", key, input_count, false)
           awesome.emit_signal("ui::lock::state", true)
@@ -85,14 +112,8 @@ local function grab()
   grabber:start()
 end
 
-local function toggle_lock()
-  awesome.emit_signal("ui::lock::state", true)
-  client.focus = nil
-  grab()
-end
-
 awesome.connect_signal("ui::lock::toggle", function()
-  toggle_lock()
+  lock()
 end)
 
 -- Don't require auth if login handoff from the .bash_profile script is present
@@ -100,6 +121,6 @@ local auth_file = h.join_path(os.getenv("HOME"), "/.cache/passivelemon/loginauth
 if h.is_file(auth_file) then
   os.remove(tostring(auth_file))
 else
-  toggle_lock()
+  lock()
 end
 
