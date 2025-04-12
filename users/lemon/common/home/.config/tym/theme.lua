@@ -2,9 +2,9 @@ return {
   color_foreground = "#aaaaaa",
   color_background = "rgba(33, 33, 33, 0.85)",
   color_window_background = "rgba(33, 33, 33, 0.85)",
-  color_cursor_foreground = color_foreground,
-  color_cursor = color_foreground,
-  color_bold = color_foreground,
+  color_cursor_foreground = "#aaaaaa",
+  color_cursor = "#aaaaaa",
+  color_bold = "#aaaaaa",
   color_highlight_foreground = "#222222",
   color_highlight = "#aaaaaa",
 
@@ -25,3 +25,4 @@ return {
   color_7  = "#c6c6c6",
   color_15 = "#e2e2e2",
 }
+
