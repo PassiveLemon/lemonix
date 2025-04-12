@@ -58,11 +58,11 @@ awful.screen.connect_for_each_screen(function(s)
       layout = wibox.layout.fixed.vertical,
       {
         layout = wibox.layout.fixed.horizontal,
-        widgets.volume.bar,
+        widgets.volume.control,
         widgets.power.button,
       },
-      widgets.brightness.bar,
-      widgets.music.bar,
+      widgets.brightness.control,
+      widgets.music.control,
     },
     {
       bg = b.bg_primary,
@@ -73,7 +73,7 @@ awful.screen.connect_for_each_screen(function(s)
     mouse_leave = function()
       power_popup:again()
     end
-  }, 5)
+  }, 3)
 
   power_popup:connect_signal("mouse::enter", function()
     main:stop()

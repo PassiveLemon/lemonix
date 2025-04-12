@@ -51,7 +51,7 @@ awesome.connect_signal("signal::peripheral::brightness::value", function(value)
   end
 end)
 
-brightness.bar = h.background({
+brightness.control = h.background({
   layout = wibox.layout.fixed.horizontal,
   brightness_icon,
   brightness_slider,
@@ -62,6 +62,8 @@ brightness.bar = h.background({
   bg = b.bg_secondary,
   shape = gears.shape.rounded_bar,
 })
+
+brightness.notif = brightness.control
 
 return brightness
 

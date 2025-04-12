@@ -82,8 +82,7 @@ awful.keyboard.append_global_keybindings({
   { description = "|| run app launcher", group = "launcher" }),
 
   awful.key({ super }, "c", function()
-    awesome.emit_signal("ui::control::notification::brightness", false)
-    awesome.emit_signal("ui::control::notification::volume", false)
+    awesome.emit_signal("ui::control::notification", false)
     awesome.emit_signal("ui::control::toggle")
   end,
   { description = "|| run control panel", group = "launcher" }),
@@ -92,14 +91,12 @@ awful.keyboard.append_global_keybindings({
   { description = "|| run resource monitor", group = "launcher" }),
 
   awful.key({ super }, "l", function() awesome.emit_signal('ui::lock::toggle') end,
-
   { description = "|| lock display", group = "launcher" }),
 
   -- Control
   awful.key({ }, "XF86MonBrightnessUp", function()
     awful.spawn.easy_async("brightnessctl set 3%+", function()
       awesome.emit_signal("signal::peripheral::brightness::update")
-      awesome.emit_signal("ui::control::toggle", false)
       awesome.emit_signal("ui::control::notification::brightness", true)
     end)
   end,
@@ -108,7 +105,6 @@ awful.keyboard.append_global_keybindings({
   awful.key({ }, "XF86MonBrightnessDown", function()
     awful.spawn.easy_async("brightnessctl set 3%-", function()
       awesome.emit_signal("signal::peripheral::brightness::update")
-      awesome.emit_signal("ui::control::toggle", false)
       awesome.emit_signal("ui::control::notification::brightness", true)
     end)
   end,
@@ -117,7 +113,6 @@ awful.keyboard.append_global_keybindings({
   awful.key({ }, "XF86AudioMute", function()
     awful.spawn.easy_async("pamixer -t", function()
       awesome.emit_signal("signal::peripheral::volume::update")
-      awesome.emit_signal("ui::control::toggle", false)
       awesome.emit_signal("ui::control::notification::volume", true)
     end)
   end,
@@ -126,7 +121,6 @@ awful.keyboard.append_global_keybindings({
   awful.key({ }, "XF86AudioLowerVolume", function()
     awful.spawn.easy_async("pamixer -d 1", function()
       awesome.emit_signal("signal::peripheral::volume::update")
-      awesome.emit_signal("ui::control::toggle", false)
       awesome.emit_signal("ui::control::notification::volume", true)
     end)
   end,
@@ -135,7 +129,6 @@ awful.keyboard.append_global_keybindings({
   awful.key({ }, "XF86AudioRaiseVolume", function()
     awful.spawn.easy_async("pamixer -i 1", function()
       awesome.emit_signal("signal::peripheral::volume::update")
-      awesome.emit_signal("ui::control::toggle", false)
       awesome.emit_signal("ui::control::notification::volume", true)
     end)
   end,

@@ -29,19 +29,25 @@ awful.screen.connect_for_each_screen(function(s)
       bg = b.ui_main_bg,
       {
         layout = wibox.layout.fixed.vertical,
-        widgets.volume.bar,
-        widgets.brightness.bar,
+        widgets.volume.notif,
+        widgets.brightness.notif,
+        -- widgets.music.notif,
       },
     }),
   }, 3, true)
 
-  local function show_control(force, volume_state, brightness_state)
+  local function show_control(force, brightness, volume, music)
+    awesome.emit_signal("ui::control::toggle", false)
     if user.control.brightness then
-      widgets.brightness.bar.visible = brightness_state
+      widgets.brightness.notif.visible = brightness
     end
     if user.control.volume then
-      widgets.volume.bar.visible = volume_state
+      widgets.volume.notif.visible = volume
     end
+    -- At some point I may finish implementing this
+    -- if user.control.music then
+    --   widgets.music.notif.visible = music
+    -- end
     if force == true then
       main:toggle(true)
     elseif force == false then
@@ -53,12 +59,20 @@ awful.screen.connect_for_each_screen(function(s)
     end
   end
 
+  awesome.connect_signal("ui::control::notification", function(force)
+    show_control(force)
+  end)
+
   awesome.connect_signal("ui::control::notification::volume", function(force)
-    show_control(force, true, false)
+    show_control(force, false, true, false)
   end)
 
   awesome.connect_signal("ui::control::notification::brightness", function(force)
-    show_control(force, false, true)
+    show_control(force, true, false, false)
   end)
+
+  -- awesome.connect_signal("ui::control::notification::mpris", function(force)
+  --   show_control(force, false, false, true)
+  -- end)
 end)
 

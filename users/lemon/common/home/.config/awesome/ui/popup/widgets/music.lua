@@ -123,7 +123,7 @@ local function position_updater(metadata)
   end
 end
 
-music.bar = h.background({
+music.control = h.background({
   layout = wibox.layout.fixed.horizontal,
   art_image_box,
   {
@@ -154,15 +154,39 @@ music.bar = h.background({
   shape = gears.shape.rounded_rect,
 })
 
+music.notif = h.background({
+  layout = wibox.layout.align.horizontal,
+  art_image_box,
+  {
+    widget = h.margin({
+      layout = wibox.layout.fixed.vertical,
+      title_text,
+      artist_text,
+    },
+    {
+      margins = {
+        right = dpi(8),
+        left = dpi(8),
+      },
+    })
+  },
+},
+{ -- There's something up in here that stops removing the margin around the art image. It's stuck with a 4px margin
+  x = dpi(total_width - (b.margins * 4)),
+  y = dpi(130 + (b.margins * 2)),
+  bg = b.bg_secondary,
+  shape = gears.shape.rounded_rect,
+})
+
 awesome.connect_signal("signal::mpris::metadata", function(metadata)
   if metadata.player.available then
-    music.bar.visible = true
+    music.control.visible = true
     art_image_box:get_children_by_id("imagebox")[1].image = metadata.media.art_image
     metadata_updater(metadata)
     toggle_updater(metadata)
     position_updater(metadata)
   else
-    music.bar.visible = false
+    music.control.visible = false
   end
 end)
 

@@ -101,7 +101,6 @@ local art_image_player_lookup = {
 local function art_image_fetch()
   -- We normalize the album name and use that as the cache name for the album art, that way it's only downloaded once per album, which makes caching more efficient. In case the normalization results in a bad filename, we use a backup string
   local player_lookup = art_image_player_lookup[metadata.player.name]
-
   local trim = ""
   if not player_lookup.trim then
     local album_string = metadata.media.album:gsub("%W", "")
@@ -116,6 +115,7 @@ end
 
 -- If the art isn't already cached then the notification will have the art of the previous media
 local function track_notification()
+  -- awesome.emit_signal("ui::control::notification::mpris", true)
   if b.mpris_notifications and metadata.player.available then
     naughty.notification({
       icon = metadata.media.art_image,

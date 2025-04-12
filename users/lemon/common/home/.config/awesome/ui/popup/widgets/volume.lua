@@ -63,13 +63,25 @@ awesome.connect_signal("signal::peripheral::volume::value", function(value)
   end
 end)
 
-volume.bar = h.background({
+volume.control = h.background({
   layout = wibox.layout.fixed.horizontal,
   volume_icon,
   volume_slider,
 },
 {
   x = dpi(total_width - 32 - (b.margins * 6)),
+  y = dpi(32),
+  bg = b.bg_secondary,
+  shape = gears.shape.rounded_bar,
+})
+
+volume.notif = h.background({
+  layout = wibox.layout.fixed.horizontal,
+  volume_icon,
+  volume_slider,
+},
+{
+  x = dpi(total_width - (b.margins * 4)),
   y = dpi(32),
   bg = b.bg_secondary,
   shape = gears.shape.rounded_bar,
