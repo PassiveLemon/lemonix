@@ -84,11 +84,20 @@ ruled.client.connect_signal("request::rules", function()
   })
 end)
 
+-- Actually fullscreen managed clients
+client.connect_signal("request::manage", function(c)
+  local s = awful.screen.focused()
+  if c.fullscreen then
+    c.x, c.y = s.geometry.x, s.geometry.y
+  end
+end)
+
 --
 -- Other
 --
 
 -- Cleanup serverauth files
+-- These persist if X crashes and can sometimes pile up
 local homedir = h.join_path(os.getenv("HOME"))
 for item in lfs.dir(homedir) do
   if item:match("%.serverauth%.%d+") then
@@ -103,12 +112,39 @@ tag.connect_signal("request::default_layouts", function()
   })
 end)
 
-client.connect_signal("manage", function(c)
+client.connect_signal("request::manage", function(c)
   if not awesome.startup then awful.client.setslave(c) end
 end)
 
--- Enable sloppy focus, so that focus follows mouse.
+-- Sloppy focus across clients
 client.connect_signal("mouse::enter", function(c)
   c:activate({ context = "mouse_enter", raise = false })
+end)
+
+local function activate_under_pointer()
+  local c = awful.mouse.client_under_pointer()
+  if not (c == nil) then
+    c:activate({ context = "mouse_enter", raise = false })
+  end
+end
+
+local focus_timer = gears.timer({
+  autostart = true,
+  timeout = 0.2,
+  callback = function()
+    activate_under_pointer()
+  end
+})
+
+-- Sloppy focus across workspace changes
+tag.connect_signal("property::selected", function(t)
+  if t.selected then
+    focus_timer:start()
+  end
+end)
+
+-- Sloppy focus after closing clients
+client.connect_signal("request::unmanage", function()
+  focus_timer:start()
 end)
 
