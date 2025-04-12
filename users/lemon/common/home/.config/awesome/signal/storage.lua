@@ -19,27 +19,28 @@ local function device_stats_table(device_stats)
   return stats_table
 end
 
+local storage_pattern_lookup = {
+  -- I only care about the first partition on each drive
+  ["nvme.(d*)n.(d*)"] = "p1",
+  ["sd.(l*)"] = "1"
+}
+
 local function storage()
   local storage_stats_dict = { }
   -- We iterate over each storage device in /sys/block and filter them by a pattern
   -- Then iterate over the matches, get a table of the first partition stats, and then add that key value pair to a table for use elsewhere
   for device in lfs.dir("/sys/block") do
-    if device:match("nvme.(d*)n.(d*)") then
-      local device_path = h.join_path("/dev/", device)
-      awful.spawn.easy_async_with_shell("df " .. device_path .. "p1 | grep '/dev'", function(device_stats_raw, _, _, code)
-        if code == 0 then
-          local device_stats = device_stats_raw:gsub("\n", "")
-          storage_stats_dict[device] = device_stats_table(device_stats)
-        end
-      end)
-    elseif device:match("sd.(l*)") then
-      local device_path = h.join_path("/dev/", device)
-      awful.spawn.easy_async_with_shell("df ".. device_path .. "1 | grep '/dev'", function(device_stats_raw, _, _, code)
-        if code == 0 then
-          local device_stats = device_stats_raw:gsub("\n", "")
-          storage_stats_dict[device] = device_stats_table(device_stats)
-        end
-      end)
+    for pattern, part in pairs(storage_pattern_lookup) do
+      if device:match(pattern) then
+        local device_path = h.join_path("/dev/", device)
+        awful.spawn.easy_async_with_shell("df " .. device_path .. part .. " | grep '/dev'", function(device_stats_raw, _, _, code)
+          if code == 0 then
+            local device_stats = device_stats_raw:gsub("\n", "")
+            storage_stats_dict[device] = device_stats_table(device_stats)
+          end
+        end)
+        break
+      end
     end
   end
   awful.spawn.easy_async("sleep 5", function()

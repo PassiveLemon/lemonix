@@ -27,17 +27,25 @@ local function interface_stats_table(interface_stats)
   return stats_table
 end
 
+local adapter_pattern_lookup = {
+  "enp.(d*)s.(d*)",
+  "wlp.(d*)s.(d*)"
+}
+
 local function network()
   update_devices()
   local network_stats_dict = { }
   for _, device in ipairs(devices) do
-    local interface = device:get_iface()
-    if interface:match("enp.(d*)s.(d*)") or interface:match("wlp.(d*)s.(d*)") then
-      if device:get_state() == "ACTIVATED" then
-        awful.spawn.easy_async_with_shell("cat /proc/net/dev | grep " .. interface, function(interface_stats_stdout)
-          local interface_stats = interface_stats_stdout:gsub("\n", ""):gsub(interface .. ":", "")
-          network_stats_dict[interface] = interface_stats_table(interface_stats)
-        end)
+    for _, pattern in ipairs(adapter_pattern_lookup) do
+      local interface = device:get_iface()
+      if interface:match(pattern) then
+        if device:get_state() == "ACTIVATED" then
+          awful.spawn.easy_async_with_shell("cat /proc/net/dev | grep " .. interface, function(interface_stats_stdout)
+            local interface_stats = interface_stats_stdout:gsub("\n", ""):gsub(interface .. ":", "")
+            network_stats_dict[interface] = interface_stats_table(interface_stats)
+          end)
+        end
+        break
       end
     end
   end
