@@ -92,19 +92,6 @@ client.connect_signal("request::manage", function(c)
   end
 end)
 
---
--- Other
---
-
--- Cleanup serverauth files
--- These persist if X crashes and can sometimes pile up
-local homedir = h.join_path(os.getenv("HOME"))
-for item in lfs.dir(homedir) do
-  if item:match("%.serverauth%.%d+") then
-    awful.spawn.with_shell("rm " .. h.join_path(homedir, item))
-  end
-end
-
 -- Layout
 tag.connect_signal("request::default_layouts", function()
   awful.layout.append_default_layouts({
@@ -147,4 +134,17 @@ end)
 client.connect_signal("request::unmanage", function()
   focus_timer:start()
 end)
+
+--
+-- Other
+--
+
+-- Cleanup serverauth files
+-- These persist if X crashes and can pile up if not removed
+local homedir = h.join_path(os.getenv("HOME"))
+for item in lfs.dir(homedir) do
+  if item:match("%.serverauth%.%d+") then
+    awful.spawn.with_shell("rm " .. h.join_path(homedir, item))
+  end
+end
 

@@ -53,17 +53,19 @@ screen.connect_signal("request::desktop_decoration", function(s)
     widgets.systray.pill_systray:again()
   end)
 
-  -- Pull wibar ontop when focused client isn't fullscreened
-  local function wibar_focus(c)
-    if c.fullscreen then
-      s.wibar.ontop = false
-    else
-      s.wibar.ontop = true
+  -- Push wibar behind when focused client is fullscreen
+  local function wibar_layer()
+    local sf = awful.screen.focused()
+    for _, c in ipairs(sf.clients) do
+      if c.fullscreen and c.active then
+        s.wibar.ontop = false
+        return
+      end
     end
+    s.wibar.ontop = true
   end
 
-  -- Using "request::activate" causes a fight of focus between the wibar and fullscreen client, resulting in lots of visual spam
-  client.connect_signal("button::press", wibar_focus)
-  client.connect_signal("request::geometry", wibar_focus)
+  client.connect_signal("request::activate", wibar_layer)
+  client.connect_signal("request::geometry", wibar_layer)
 end)
 
