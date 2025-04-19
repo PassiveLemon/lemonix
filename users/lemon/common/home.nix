@@ -114,6 +114,7 @@
         disableMinSize = true;
         themeLinks = [
           "https://raw.githubusercontent.com/PassiveLemon/lemonix/refs/heads/master/users/lemon/common/home/.config/Vencord/themes/Lemon.theme.css"
+          "https://mairiosipla.github.io/unshittify-discord/UnShittifySource.theme.css"
         ];
         plugins = {
           anonymiseFileNames = {
