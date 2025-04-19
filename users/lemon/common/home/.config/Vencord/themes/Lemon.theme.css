@@ -28,15 +28,43 @@
 	--backgroundsecondaryalt: 34,34,34;	/* Background 3		     - 	default:	41,43,47	-  hex:	#292b2f	*/
 	--backgroundtertiary: 		41,41,41;	/* Background 4		     - 	default:	32,34,37	-  hex:	#202225	*/
 	--backgroundfloating: 		0,0,0;		 /* Background Elevated  - 	default:	24,25,28	-  hex:	#18191c	*/
+}
 
-	/* Remove gift button */
-	button[aria-label="Send a gift"] {
-		display: none;
-	}
-	/* Remove sticker and app buttons */
-	.expression-picker-chat-input-button:has(div[class*="stickerButton"]),
-	div[class^="channelAppLauncher_"]{
-		display:none !important;
-	}
+/* Remove gift button */
+button[aria-label="Send a gift"] {
+	display: none;
+}
+/* Remove sticker and app buttons */
+.expression-picker-chat-input-button:has(div[class*="stickerButton"]),
+div[class^="channelAppLauncher_"]{
+	display:none !important;
+}
+
+/* Mostly taken from here: https://nspc911.github.io/themes/vencord/RefreshedSeamlessChatBar.theme.css */
+/* Move typing indicator above textbox */
+.visual-refresh .form_f75fb0 {
+  display: flex;
+  flex-direction: column;
+  padding: 0px 4px 4px 4px !important;
+  /* Chat bar */
+  .channelTextArea_f75fb0 {
+    margin-bottom: 4px;
+    margin-right: 4px;
+  }
+  /* Slowmode bar + Typing indicator */
+  .base_b88801 {
+    position: static;
+    order: -1;
+    .typing_b88801,
+    .typingDots_b88801,
+    .cooldownText_b21699 {
+      &.typingDots_b88801 {
+        transform: translateX(4px);
+      }
+      &.cooldownText_b21699 {
+        transform: translateY(1px);
+      }
+    }
+  }
 }
 
