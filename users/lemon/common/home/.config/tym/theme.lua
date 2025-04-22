@@ -1,7 +1,7 @@
 return {
   color_foreground = "#aaaaaa",
-  color_background = "rgba(33, 33, 33, 0.85)",
-  color_window_background = "rgba(33, 33, 33, 0.85)",
+  color_background = "rgba(34, 34, 34, 0.85)",
+  color_window_background = "rgba(34, 34, 34, 0.85)",
   color_cursor_foreground = "#aaaaaa",
   color_cursor = "#aaaaaa",
   color_bold = "#aaaaaa",
