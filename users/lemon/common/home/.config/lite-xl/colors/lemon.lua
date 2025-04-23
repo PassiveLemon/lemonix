@@ -25,7 +25,8 @@ style.cyan     = "#53d2e0"
 style.blue     = "#61b8ff"
 style.magenta  = "#cd61ec"
 
-style.link     = "#00b0f4"
+-- Color of name in file tree
+style.link     = "#61b8ff"
 
 style.background  = { common.color(style.bg0) }
 style.background2 = { common.color(style.bg1) }

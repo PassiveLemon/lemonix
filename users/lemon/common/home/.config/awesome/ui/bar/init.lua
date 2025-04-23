@@ -21,6 +21,7 @@ screen.connect_signal("request::desktop_decoration", function(s)
     fg = b.fg_primary,
     border_width = dpi(0),
     position = "top",
+    ontop = true,
     type = "dock",
     widget = {
       layout = wibox.layout.align.horizontal,

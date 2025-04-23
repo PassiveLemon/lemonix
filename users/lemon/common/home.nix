@@ -22,7 +22,7 @@
       feishin audacity
       pwvucontrol easyeffects helvum
       # Image/Video
-      loupe flameshot gimp scrot krita
+      loupe flameshot papers gimp scrot krita
       mpv kdePackages.kdenlive
       # Miscellaneous
       picom ente-auth localsend xclicker kdePackages.kruler
