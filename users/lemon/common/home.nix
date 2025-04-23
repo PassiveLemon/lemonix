@@ -113,8 +113,10 @@
         frameless = true;
         disableMinSize = true;
         themeLinks = [
-          "https://raw.githubusercontent.com/PassiveLemon/lemonix/refs/heads/master/users/lemon/common/home/.config/Vencord/themes/Lemon.theme.css"
+          "https://mwittrien.github.io/BetterDiscordAddons/Themes/DiscordRecolor/DiscordRecolor.css"
           "https://mairiosipla.github.io/unshittify-discord/UnShittifySource.theme.css"
+          "https://raw.githubusercontent.com/PassiveLemon/lemonix/refs/heads/master/users/lemon/common/home/.config/Vencord/themes/Lemon.theme.css"
+          "https://raw.githubusercontent.com/PassiveLemon/lemonix/refs/heads/master/users/lemon/common/home/.config/Vencord/themes/LemonFixes.theme.css"
         ];
         plugins = {
           anonymiseFileNames = {
@@ -207,7 +209,7 @@
     mimeApps = {
       enable = true;
       defaultApplications = {
-        "application/pdf" = "onlyoffice-desktopeditors.desktop";
+        "application/pdf" = "org.gnome.Papers.desktop";
         "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" = "onlyoffice-desktopeditors.desktop";
         "application/vnd.openxmlformats-officedocument.wordprocessingml.document" = "onlyoffice-desktopeditors.desktop";
         "application/x-extension-htm" = "firefox.desktop";

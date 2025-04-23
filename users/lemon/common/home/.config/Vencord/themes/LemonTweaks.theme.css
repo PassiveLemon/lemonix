@@ -1,0 +1,378 @@
+/* TODO */
+/* Document each part: Why it's here, what it does, and where an example can be found. */
+/* See what we can cleanup. Reduce !important count, maybe consolidate some things like cards. */
+/* Implement more consistent button animations. */
+
+.visual-refresh {
+  /* === Client Face === */
+  /* Top-right icons */
+  .trailing_c38106 {
+    background-color: rgb(var(--backgroundsecondary));
+    top: calc(var(--space-xs) + 1px);
+  }
+  .searchBar__97492 .icon__97492 {
+    height: 26px;
+    width: 26px;
+  }
+  /* Server banner */
+  .sidebarListRounded_c48ade {
+    border-top-left-radius: unset;
+  }
+  /* Account popup */
+  #popout_43.layer_da8173 {
+    bottom: 74px !important;
+    left: 81px !important;
+    .overlay_c0bea0 {
+      background-color: rgb(var(--backgroundaccent));
+    }
+  }
+  /* User popup */
+  .root_af8192,
+  .root_fccfdf {
+    .button__7d7f7,
+    .role_dfa8b6 {
+      background-color: rgba(var(--backgroundaccent), 0.7);
+      transition: border-color .2s ease, background-color .2s ease-in-out;
+      &:hover {
+        background-color: rgba(var(--backgroundaccent), 1);
+        border-color: var(--border-subtle) !important;
+      }
+      &[aria-expanded=true] {
+        border-color: var(--brand-500) !important;
+      }
+    }
+  }
+  /* User profile */
+  .note_fcb628 .textarea__9daae:focus {
+    background-color: rgb(var(--backgroundsecondary));
+  }
+  /* Emoji popup */
+  #popout_12505 .popoutContainer__0f481,
+  #popout_12276 .popoutContainer__0f481 {
+    background-color: color-mix(in oklab, rgb(var(--backgroundprimary)), transparent 10%);
+    .guildSection_d5cd2d {
+      background-color: rgb(var(--backgroundaccent));
+    }
+  }
+  /* Reactions */
+  .reactionBtn__23977,
+  .reaction__23977 {
+    background-color: rgba(var(--backgroundaccent), 0.7);
+    transition: border-color .2s ease, background-color .2s ease-in-out;
+    &:hover {
+      background-color: rgba(var(--backgroundaccent), 1);
+      border-color: var(--border-subtle) !important;
+    }
+    &.reactionMe__23977,
+    &.active__23977 {
+      border-color: var(--brand-500) !important;
+    }
+  }
+  /* === Client Settings === */
+  /* Vencord */
+  .vc-settings-quickActions-card .vc-settings-quickActions-pill {
+    background-color: rgb(var(--backgroundprimary));
+    color: rgb(var(--textbrighter));
+  }
+  .vc-addon-card {
+    background-color: rgb(var(--backgroundaccent));
+    color: rgb(var(--backgroundaccent));
+  }
+  /* Bio text input */
+  .bioTextAreaContainer__6a919 {
+    border: 1px solid var(--border-subtle);
+    transition: border-color .2s ease-in-out;
+    &:hover {
+      border-color: var(--deprecated-text-input-border-hover);
+    }
+    &:focus-within {
+      border-color: var(--brand-500) !important;
+    }
+    .bioTextArea__6a919 {
+      background-color: rgb(var(--backgroundsecondary));
+      border-radius: var(--radius-sm);
+    }
+  }
+  /* Family Center */
+  .contentPanel_dc2e0e .box_f8c98c {
+    background-color: rgb(var(--backgroundaccent));
+  }
+  /* Authorized Apps */
+  .authedAppV2__50a54 {
+    border: 1px solid var(--border-subtle);
+    .headerV2__50a54 {
+      background-color: rgb(var(--backgroundaccent));
+    }
+  }
+  /* Connections */
+  .connection_c7f964 {
+    border: 1px solid var(--border-subtle);
+    .connectionHeader_c7f964 {
+      background-color: rgb(var(--backgroundaccent));
+    }
+  }
+  .connectedAccountContainer_e6abe8 {
+    background-color: rgba(var(--backgroundaccent), 0.7);
+  }
+  /* Gift Inventory */
+  .codeRedemptionInput__3514e {
+    background-color: rgb(var(--backgroundprimary)) !important;
+    .inputError__0f084 {
+      background-color: rgb(var(--backgroundprimary));
+    }
+  }
+  /* Accessibility */
+  .preview__5d148 {
+    background-color: rgb(var(--backgroundaccent));
+  }
+  /* Registered Games */
+  .notDetected_cc46f0,
+  .activeGame_cc46f0 {
+    border-radius: 8px;
+  }
+  #app-mount .game_cc46f0.card_b846e5 {
+    &:before {
+      background-color: rgb(var(--backgroundprimary));
+      border: 1px solid var(--border-subtle);
+      border-radius: 8px;
+      transition: opacity .2s ease, background-color .2s ease-in-out;
+    }
+    &:hover:before {
+      background-color: rgb(var(--backgroundaccent)) !important;
+    }
+  }
+  /* === Server settings === */
+  /* Profile Traits */
+  .traitContainer__4cbea {
+    animation: unset;
+    transition: border-color .2s ease-in-out;
+    &:hover {
+      border-color: var(--deprecated-text-input-border-hover);
+    }
+    &:focus-within {
+      border-color: var(--brand-400) !important;
+    }
+    .emojiWrapper__4cbea,
+    .input__0f084.traitInput__4cbea {
+      border: none;
+    }
+  }
+  /* Emoji */
+  #app-mount .emojiRow_e7d73e.card_b846e5 {
+    &:before {
+      background-color: rgb(var(--backgroundprimary));
+      border: 1px solid var(--border-subtle);
+      border-radius: 8px;
+      transition: opacity .2s ease, background-color .2s ease-in-out;
+    }
+    &:hover:before {
+      background-color: rgb(var(--backgroundaccent)) !important;
+    }
+  }
+  .outer__4f074 {
+    /* Fix this so it shows on hover and not focus */
+    .input__4f074 {
+      outline: 1px solid transparent;
+      transition: outline-color .2s ease-in-out, background-color .2s ease-in-out;
+      &:hover {
+        background-color: rgb(var(--backgroundsecondary));
+        outline-color: var(--deprecated-text-input-border-hover);
+      }
+      &:focus {
+        background-color: rgb(var(--backgroundsecondary)) !important;
+        outline-color: var(--brand-500) !important;
+      }
+    }
+  }
+  /* Stickers */
+  .wrapper__83b1d {
+    border: 1px solid transparent;
+    transition: border-color .2s ease-in-out, background-color .2s ease-in-out;
+    &:hover {
+      background-color: rgb(var(--backgroundaccent));
+      border-color: var(--border-subtle);
+    }
+  }
+  /* Members */
+  .searchHeader__98d1c .container_a45028 .inner_a45028 {
+    background-color: rgb(var(--backgroundprimary));
+  }
+  .actionCell__71c22 .button__71c22:hover {
+    background-color: rgb(var(--backgroundaccent));
+  }
+  /* Roles */
+  .roleRow__5f97b {
+    border: 1px solid transparent;
+    border-radius: 8px;
+    transition: border-color .2s ease-in-out, background-color .2s ease-in-out;
+    &:hover {
+      background-color: rgb(var(--backgroundaccent));
+      border: 1px solid var(--border-subtle);
+    }
+  }
+  /* Invites */
+  #app-mount .inviteSettingsInviteRow__1de14.card_b846e5 {
+    &:before {
+      background-color: rgb(var(--backgroundprimary));
+      border: 1px solid var(--border-subtle);
+      border-radius: 8px;
+      transition: opacity .2s ease, background-color .2s ease-in-out;
+    }
+    &:hover:before {
+      background-color: rgb(var(--backgroundaccent)) !important;
+    }
+  }
+  /* Access */
+  .joinOptions__959cb {
+    background-color: rgb(var(--backgroundsecondary));
+  }
+  .joinOptionContent__959cb.active__959cb {
+    background-color: rgb(var(--backgroundprimary));
+  }
+  /* Integrations */
+  .contentColumn__23e6b .card_dc2e44 {
+    background-color: rgb(var(--backgroundaccent));
+  }
+  /* Safety Setup */
+  .clickableContainer__6cd3a {
+    background-color: rgb(var(--backgroundaccent));
+  }
+  .backgroundModifierContainer__6cd3a {
+    background-color: rgb(var(--backgroundaccent));
+    &:hover:not(.disabled__6cd3a):not(.noAction__6cd3a) {
+      background-color: rgb(var(--backgroundaccent));
+    }
+  }
+  /* Audit Log */
+  .auditLog__43dab {
+    border: 1px solid var(--border-subtle) !important;
+    .headerClickable__43dab {
+      background-color: rgb(var(--backgroundaccent)) !important;
+    }
+    .headerExpanded__43dab {
+      background-color: rgb(var(--backgroundprimary)) !important;
+    }
+    .divider__43dab {
+      background-color: rgb(var(--backgroundaccent)) !important;
+    }
+    .changeDetails__43dab {
+      background-color: rgb(var(--backgroundaccent)) !important;
+    }
+  }
+  /* AutoMod */
+  .editCard_a25a68 {
+    background-color: rgb(var(--backgroundaccent));
+  }
+  .editCard_a25a68.contentExpandContainer_a25a68 {
+    border-radius: 8px;
+  }
+  .container_fea832 .input_fea832 {
+    border-color: var(--brand-500) !important;
+  }
+  /* Boost award cards */
+  .tierHeader_f15dca {
+    background-color: rgb(var(--backgroundaccent)) !important;
+  }
+  .tier_f15dca {
+    background-color: rgb(var(--backgroundsecondary));
+  }
+  .tierHeaderWithoutCardBody_f15dca {
+    border-radius: 8px 8px 0px 0px;
+  }
+  /* Channel settings */
+  /* Permissions */
+  .contentColumn__23e6b .card_b651ff {
+    background-color: rgb(var(--backgroundaccent));
+  }
+  /* === General === */
+  /* Search boxes */
+  .searchBar__97492,
+  .container_fea832,
+  .container_a45028 {
+    border: 1px solid var(--border-subtle);
+    transition: border-color .2s ease-in-out;
+    &:hover {
+      border-color: var(--deprecated-text-input-border-hover);
+    }
+    &:focus-within {
+      border-color: var(--brand-500) !important;
+    }
+    .inner_fea832,
+    .inner_a45028 {
+      background-color: rgb(var(--backgroundsecondary));
+    }
+  }
+  /* Text input */
+  .inputWrapper__0f084 {
+    background-color: rgb(var(--backgroundsecondary));
+    border-radius: var(--radius-sm);
+    &:hover {
+      border-color: var(--deprecated-text-input-border-hover);
+    }
+  }
+  .inputDefault__0f084 {
+    background-color: rgb(var(--backgroundsecondary));
+    border: 1px solid var(--border-subtle);
+    border-radius: var(--radius-sm);
+    &:hover {
+      border-color: var(--deprecated-text-input-border-hover);
+    }
+    &.textArea__7aff3 {
+      background-color: rgb(var(--backgroundsecondary));
+      margin-bottom: -3px;
+    }
+  }
+  .input__4f074,
+  .input__0f084 {
+    transition: border-color .2s ease-in-out;
+    &:focus {
+      border-color: var(--brand-500) !important;
+    }
+  }
+  /* Select menus */
+  .select__3f413 {
+    border: 1px solid var(--border-subtle);
+    border-radius: var(--radius-sm);
+    transition: border-color .2s ease-in-out;
+    &.open__3f413 {
+      border-color: var(--brand-500) !important;
+    }
+    &:hover {
+      border-color: var(--deprecated-text-input-border-hover);
+    }
+  }
+  .popout__3f413 {
+    background-color: rgb(var(--backgroundsecondary));
+  }
+  .option__3f413 {
+    &[aria-selected=true] {
+      background-color: rgb(var(--backgroundaccent));
+    }
+    .focused__3f413 {
+      background-color: unset;
+      &:hover {
+        background-color: var(--background-modifier-hover);
+        color: var(--interactive-active)
+      }
+    }
+  }
+  /* Radio bars */
+  .item__001a7[aria-checked=true] .radioBar__001a7 {
+    .refreshIconStroke__001a7 {
+      fill: #fff;
+    }
+    .refreshIcon__001a7 {
+      fill: var(--radio-bar-accent-color, var(--redesign-input-control-selected));
+    }
+  }
+  /* Steppers */
+  .stepper_ed9c90 {
+    .iconWrapper__96f95 {
+      background-color: rgb(var(--backgroundsecondary));
+    }
+    .inputWrapper__0f084 .inputDefault__0f084 {
+      border-color: transparent;
+    }
+  }
+}
+

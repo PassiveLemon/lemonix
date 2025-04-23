@@ -1,6 +1,3 @@
-@import url(https://mwittrien.github.io/BetterDiscordAddons/Themes/DiscordRecolor/DiscordRecolor.css);
-@import url(https://mairiosipla.github.io/unshittify-discord/UnShittifySource.theme.css);
-
 :root {
 	/* DiscordRecolor settings */
 	--font: "gg sans", "Noto Sans";
@@ -32,39 +29,73 @@
 	/* Unshittify-Discord settings */
 	--top-bar-padding: 85px;
 	--icon-scale: 1.1;
+
+	/* Other overrides */
+	--button-secondary-background: rgb(var(--backgroundaccent)) !important;
+  --button-secondary-background-hover: rgb(var(--backgroundaccent)) !important;
+  --background-modifier-selected: rgb(var(--backgroundaccent)) !important;
+  --border-subtle: rgba(60, 60, 60, 1) !important;
 }
 
-/* Remove sticker and app buttons */
-button[aria-label="Send a gift"],
-.expression-picker-chat-input-button:has(div[class*="stickerButton"]),
-div[class^="channelAppLauncher_"]{
-	display:none !important;
-}
-
-/* Mostly taken from here: https://nspc911.github.io/themes/vencord/RefreshedSeamlessChatBar.theme.css */
-/* Move typing indicator above textbox */
-.visual-refresh .form_f75fb0 {
-  display: flex;
-  flex-direction: column;
-  padding: 0px 4px 4px 4px !important;
-  /* Chat bar */
-  .channelTextArea_f75fb0 {
-    margin: 2px 4px 4px 0px;
+.visual-refresh {
+  /* Make the spoiler box a little lighter */
+  #app-mount .spoilerContent__54ab5.hidden__54ab5 {
+    background-color: rgb(var(--backgroundaccent)) !important;
   }
-  /* Slowmode bar + Typing indicator */
-  .base_b88801 {
-    position: static;
-    order: -1;
-    .typing_b88801,
-    .typingDots_b88801,
-    .cooldownText_b21699 {
-      &.typingDots_b88801 {
-        transform: translateX(4px) translateY(2px);
+  /* Inspired by: https://nspc911.github.io/themes/vencord/RefreshedSeamlessChatBar.theme.css */
+  /* Move typing indicator above textbox */
+  .chatContent_f75fb0 {
+    .scrollerSpacer__36d07 {
+      /* Height of typing indicator */
+      height: 25px;
+    }
+    .form_f75fb0 {
+      display: flex;
+      flex-direction: column;
+      padding: 0px 4px 4px 4px !important;
+      /* Chat bar */
+      .channelTextArea_f75fb0 {
+        margin: 2px 4px 4px 0px;
+        /* Remove gift, sticker, and app button, and reverse button order */
+        .buttons__74017 {
+          flex-direction: row-reverse;
+          button[aria-label="Send a gift"],
+          .expression-picker-chat-input-button:has(div[class*="stickerButton"]),
+          div[class^="channelAppLauncher_"] {
+            display: none !important;
+          }
+        }
       }
-      &.cooldownText_b21699 {
-      	padding-right: 4px;
-        transform: translateY(1px);
+      /* Slowmode bar + Typing indicator */
+      .base_b88801 {
+        order: -1;
+        .typing_b88801,
+        .typingDots_b88801 {
+          /* Initials to remove Unshittify-Discord UI changes */
+          background-color: initial;
+          height: initial;
+          transform: translateY(2px);
+        }
+        .cooldownText_b21699 {
+          background-color: initial;
+          height: initial;
+          padding-right: 4px;
+          transform: translateY(1px);
+        }
       }
+      /* Don't touch my corners >:( */
+      /* 8px to remove Unshittify-Discord UI changes */
+      &:has(.typing_b88801 .typingDots_b88801) .channelTextArea_f75fb0 {
+        border-top-left-radius: 8px !important;
+      }
+      &:has(.typing_b88801 .cooldownWrapper_b21699) .channelTextArea_f75fb0 {
+        border-top-right-radius: 8px !important;
+      }
+    }
+    /* If typing indicator, then shrink scrollerSpacer__36d07 to reduce jumping*/
+    &:has(.typing_b88801 .cooldownWrapper_b21699) .scrollerSpacer__36d07,
+    &:has(.typing_b88801 .typingDots_b88801) .scrollerSpacer__36d07 {
+      height: 0px;
     }
   }
 }
