@@ -26,6 +26,7 @@
       mpv kdePackages.kdenlive
       # Miscellaneous
       picom ente-auth localsend xclicker kdePackages.kruler
+      (callPackage ../../../pkgs/awmtt.nix { })
     ];
     username = "lemon";
     homeDirectory = "/home/lemon";
