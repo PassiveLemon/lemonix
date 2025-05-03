@@ -1,67 +1,179 @@
-/* TODO */
-/* Document each part: Why it's here, what it does, and where an example can be found. */
-/* See what we can cleanup. Reduce !important count, maybe consolidate some things like cards. */
-/* Implement more consistent button animations. */
+/* TODO
+Consolidate what we can. Things that use the same set of animations or effects can be merged down:
+Bordered buttons (reactions, roles, etc)
+Unborded buttons (Account widget, call phone button, etc)
+
+Fix emoji text effect so it shows on hover and not focus
+Use the partial transparency hover effects for audit log, safety setup, etc as a default "button" type
+Event popup share and interested buttons
+Channel and roles search box
+Channel and roles colors
+
+Chat box and account widget are not same height
+
+Update obsidian colors to match AWM?
+
+Server admin members under events fix search bar color
+
+User profile 'In voice' card color
+
+Vencord card hover colors are funky. Set vencord stuff to last priority since it's different from all of Discords design
+*/
+
+/*
+Honestly with the amount of stuff that needs to be modified to fix BDRecolor and Discord stuff, I might just make my own recolor wrapper
+*/
 
 .visual-refresh {
-  /* === Client Face === */
-  /* Top-right icons */
+  /* === Client Front === */
+  /* Friends */
+  .peopleColumn__133bf {
+    .inner_a45028 {
+      background-color: rgb(var(--backgroundprimary)) !important;
+    }
+    .peopleListItem_cc6179 {
+      transition: background-color .2s ease-in-out;
+      &:hover {
+        background-color: rgb(var(--backgroundprimary));
+      }
+      .actionButton_f8fa06 {
+        background-color: rgb(var(--backgroundsecondary));
+        transition: background-color .2s ease-in-out;
+        &:hover {
+          background-color: rgb(var(--backgroundaccent));
+        }
+      }
+    }
+  }
+  /* Active Now */
+  .nowPlayingColumn__133bf .itemCard__7e549 {
+    /* Fix colors and add effects */
+    background-color: rgba(var(--backgroundaccent), 0.7);
+    border: 1px solid var(--border-subtle);
+    transition: background-color .2s ease-in-out;
+    &:hover {
+      background-color: rgba(var(--backgroundaccent), 1) !important;
+    }
+  }
+  /* Top bar */
+  /* .page_c48ade .container__9293f {
+    border-bottom: 1px solid var(--border-subtle);
+  } */
+  .searchBar__35e86 {
+    /* border-bottom: unset; */
+    box-shadow: var(--elevation-low);
+  }
   .trailing_c38106 {
+    /* Fix inbox/help margins from Unshittify-Discord */
+    /* Color to match bg */
     background-color: rgb(var(--backgroundsecondary));
     top: calc(var(--space-xs) + 1px);
   }
   .searchBar__97492 .icon__97492 {
+    /* Fix search bar magnifying glass centering */
     height: 26px;
     width: 26px;
   }
   /* Server banner */
   .sidebarListRounded_c48ade {
+    /* Fix server banner top left radius from Unshittify-Discord */
     border-top-left-radius: unset;
   }
+  /* Follow updates bar */
+  .chatContent_f75fb0 .wrapper__44df5 {
+    /* Fix margins to match text input */
+    height: 24px;
+    margin: 2px 4px 4px 0px;
+  }
+  /* Account widget */
+  .avatarWrapper__37e49 {
+    /* Add button effects */
+    background-color: rgb(var(--backgroundprimary));
+    border: 1px solid transparent;
+    transition: border-color .2s ease, background-color .2s ease-in-out;
+    &:hover {
+      background-color: rgba(var(--backgroundaccent), 1);
+      border-color: var(--border-subtle)
+    }
+    &[aria-expanded=true] {
+      background-color: rgba(var(--backgroundaccent), 1);
+      border-color: var(--brand-500) !important;
+    }
+  }
   /* Account popup */
-  #popout_43.layer_da8173 {
+  #popout_47 {
+    /* Align account popup with account widget */
     bottom: 74px !important;
     left: 81px !important;
-    .overlay_c0bea0 {
+    .outer_c0bea0 .overlay_c0bea0 {
+      /* Fix internal colors */
       background-color: rgb(var(--backgroundaccent));
     }
   }
   /* User popup */
   .root_af8192,
   .root_fccfdf {
+    .expandButton_fccfdf,
     .button__7d7f7,
     .role_dfa8b6 {
+      /* Add effects to role buttons */
       background-color: rgba(var(--backgroundaccent), 0.7);
-      transition: border-color .2s ease, background-color .2s ease-in-out;
+      border: 1px solid var(--border-subtle) !important;
+      transition: background-color .2s ease-in-out;
       &:hover {
         background-color: rgba(var(--backgroundaccent), 1);
-        border-color: var(--border-subtle) !important;
       }
       &[aria-expanded=true] {
+        background-color: rgba(var(--backgroundaccent), 1);
         border-color: var(--brand-500) !important;
       }
     }
   }
   /* User profile */
   .note_fcb628 .textarea__9daae:focus {
+    /* Fix user profile note bg color */
     background-color: rgb(var(--backgroundsecondary));
   }
   /* Emoji popup */
-  #popout_12505 .popoutContainer__0f481,
-  #popout_12276 .popoutContainer__0f481 {
+  .popoutContainer__0f481,
+  .popoutContainer__0f481 {
+    /* Fix emoji popup bg color */
     background-color: color-mix(in oklab, rgb(var(--backgroundprimary)), transparent 10%);
     .guildSection_d5cd2d {
       background-color: rgb(var(--backgroundaccent));
     }
   }
+  /* Events popup */
+  .card__88264 {
+    background-color: rgba(var(--backgroundaccent), 0.7);
+    border-color: var(--border-subtle);
+    transition: background-color .2s ease-in-out;
+    &:hover {
+      background-color: rgba(var(--backgroundaccent), 1);
+    }
+  }
+  /* Channels & Roles popup */
+  .prompt__5d7c9 .optionButtonWrapper__270d7 {
+    background-color: rgba(var(--backgroundaccent), 0.7);
+    border-color: var(--border-subtle);
+    transition: background-color .2s ease-in-out;
+    &:hover {
+      background-color: rgba(var(--backgroundaccent), 1);
+    }
+    &.selected__270d7 {
+      background-color: rgba(var(--backgroundaccent), 1);
+      border-color: var(--brand-400);
+    }
+  }
   /* Reactions */
   .reactionBtn__23977,
   .reaction__23977 {
+    /* Change reaction button effects to be more consistent */
     background-color: rgba(var(--backgroundaccent), 0.7);
+    border: 1px solid var(--border-subtle) !important;
     transition: border-color .2s ease, background-color .2s ease-in-out;
     &:hover {
       background-color: rgba(var(--backgroundaccent), 1);
-      border-color: var(--border-subtle) !important;
     }
     &.reactionMe__23977,
     &.active__23977 {
@@ -70,7 +182,7 @@
   }
   /* === Client Settings === */
   /* Vencord */
-  .vc-settings-quickActions-card .vc-settings-quickActions-pill {
+  .vc-settings-quickActions-pill {
     background-color: rgb(var(--backgroundprimary));
     color: rgb(var(--textbrighter));
   }
@@ -80,6 +192,7 @@
   }
   /* Bio text input */
   .bioTextAreaContainer__6a919 {
+    /* Change profile bio input effects to be more consistent */
     border: 1px solid var(--border-subtle);
     transition: border-color .2s ease-in-out;
     &:hover {
@@ -95,17 +208,30 @@
   }
   /* Family Center */
   .contentPanel_dc2e0e .box_f8c98c {
+    /* Fix bg color */
     background-color: rgb(var(--backgroundaccent));
   }
   /* Authorized Apps */
   .authedAppV2__50a54 {
+    /* Fix colors */
     border: 1px solid var(--border-subtle);
     .headerV2__50a54 {
       background-color: rgb(var(--backgroundaccent));
     }
   }
   /* Connections */
+  .connectionsContainer_c7f964 {
+    /* Fix colors and lower gap so it doesn't overflow to next row */
+    gap: 7px;
+    .wrapper__02fc8,
+    .accountAddWrapper_c7f964 {
+        background-color: rgba(var(--backgroundaccent), 1);
+        border: 1px solid var(--border-subtle) !important;
+        border-radius: var(--radius-sm);
+    }
+  }
   .connection_c7f964 {
+    /* Fix colors */
     border: 1px solid var(--border-subtle);
     .connectionHeader_c7f964 {
       background-color: rgb(var(--backgroundaccent));
@@ -116,34 +242,35 @@
   }
   /* Gift Inventory */
   .codeRedemptionInput__3514e {
+    /* Fix colors */
     background-color: rgb(var(--backgroundprimary)) !important;
     .inputError__0f084 {
       background-color: rgb(var(--backgroundprimary));
     }
+    .error__0f084 {
+      border-color: var(--text-danger) !important;
+    }
   }
-  /* Accessibility */
-  .preview__5d148 {
-    background-color: rgb(var(--backgroundaccent));
+  /* Keybinds */
+  .recorderContainer__2636e {
+    /* Fix colors and add effects */
+    background-color: rgb(var(--backgroundsecondary)) !important;
+    border: 1px solid var(--border-subtle) !important;
+    transition: border-color .2s ease-in-out;
+    &:hover {
+        border: 1px solid var(--deprecated-text-input-border-hover) !important;
+    }
   }
   /* Registered Games */
   .notDetected_cc46f0,
   .activeGame_cc46f0 {
-    border-radius: 8px;
-  }
-  #app-mount .game_cc46f0.card_b846e5 {
-    &:before {
-      background-color: rgb(var(--backgroundprimary));
-      border: 1px solid var(--border-subtle);
-      border-radius: 8px;
-      transition: opacity .2s ease, background-color .2s ease-in-out;
-    }
-    &:hover:before {
-      background-color: rgb(var(--backgroundaccent)) !important;
-    }
+    /* Add radius to game detection */
+    border-radius: var(--radius-sm);
   }
   /* === Server settings === */
   /* Profile Traits */
   .traitContainer__4cbea {
+    /* Change trait effects to be more consistent */
     animation: unset;
     transition: border-color .2s ease-in-out;
     &:hover {
@@ -158,19 +285,8 @@
     }
   }
   /* Emoji */
-  #app-mount .emojiRow_e7d73e.card_b846e5 {
-    &:before {
-      background-color: rgb(var(--backgroundprimary));
-      border: 1px solid var(--border-subtle);
-      border-radius: 8px;
-      transition: opacity .2s ease, background-color .2s ease-in-out;
-    }
-    &:hover:before {
-      background-color: rgb(var(--backgroundaccent)) !important;
-    }
-  }
   .outer__4f074 {
-    /* Fix this so it shows on hover and not focus */
+    /* Change emoji text effects to be more consistent */
     .input__4f074 {
       outline: 1px solid transparent;
       transition: outline-color .2s ease-in-out, background-color .2s ease-in-out;
@@ -186,6 +302,7 @@
   }
   /* Stickers */
   .wrapper__83b1d {
+    /* Change sticker effects to be more consistent */
     border: 1px solid transparent;
     transition: border-color .2s ease-in-out, background-color .2s ease-in-out;
     &:hover {
@@ -195,15 +312,23 @@
   }
   /* Members */
   .searchHeader__98d1c .container_a45028 .inner_a45028 {
+    /* Fix search bg color */
     background-color: rgb(var(--backgroundprimary));
   }
   .actionCell__71c22 .button__71c22:hover {
+    /* Fix button hover color */
     background-color: rgb(var(--backgroundaccent));
   }
   /* Roles */
+  .container_d8f25b {
+    /* Fix color */
+    background-color: rgb(var(--backgroundaccent));
+  }
+  .memberRow__9a73f,
   .roleRow__5f97b {
+    /* Change role effects to be more consistent */
     border: 1px solid transparent;
-    border-radius: 8px;
+    border-radius: var(--radius-sm);
     transition: border-color .2s ease-in-out, background-color .2s ease-in-out;
     &:hover {
       background-color: rgb(var(--backgroundaccent));
@@ -212,10 +337,11 @@
   }
   /* Invites */
   #app-mount .inviteSettingsInviteRow__1de14.card_b846e5 {
+    /* Change invite effects to be more consistent */
     &:before {
       background-color: rgb(var(--backgroundprimary));
       border: 1px solid var(--border-subtle);
-      border-radius: 8px;
+      border-radius: var(--radius-sm);
       transition: opacity .2s ease, background-color .2s ease-in-out;
     }
     &:hover:before {
@@ -224,27 +350,31 @@
   }
   /* Access */
   .joinOptions__959cb {
+    /* Fix option bg colors */
     background-color: rgb(var(--backgroundsecondary));
   }
   .joinOptionContent__959cb.active__959cb {
+    /* Fix option bg colors */
     background-color: rgb(var(--backgroundprimary));
-  }
-  /* Integrations */
-  .contentColumn__23e6b .card_dc2e44 {
-    background-color: rgb(var(--backgroundaccent));
   }
   /* Safety Setup */
   .clickableContainer__6cd3a {
+    /* Fix colors */
     background-color: rgb(var(--backgroundaccent));
   }
   .backgroundModifierContainer__6cd3a {
+    /* Fix colors */
     background-color: rgb(var(--backgroundaccent));
     &:hover:not(.disabled__6cd3a):not(.noAction__6cd3a) {
       background-color: rgb(var(--backgroundaccent));
     }
   }
+  /* Integrations/Webhooks */
+  /* WIP */
   /* Audit Log */
   .auditLog__43dab {
+    /* Fix colors and make these more consistent */
+    background-color: rgb(var(--backgroundaccent)) !important;
     border: 1px solid var(--border-subtle) !important;
     .headerClickable__43dab {
       background-color: rgb(var(--backgroundaccent)) !important;
@@ -259,17 +389,26 @@
       background-color: rgb(var(--backgroundaccent)) !important;
     }
   }
+  /* Bans */
+  .container_cdb2b0 .scrollerContainer_cdb2b0 {
+    /* Fix color */
+    background-color: rgb(var(--backgroundaccent));
+  }
   /* AutoMod */
   .editCard_a25a68 {
+    /* Fix color */
     background-color: rgb(var(--backgroundaccent));
   }
   .editCard_a25a68.contentExpandContainer_a25a68 {
-    border-radius: 8px;
+    /* Fix borders */
+    border-radius: var(--radius-sm);
   }
   .container_fea832 .input_fea832 {
+    /* Fix colors */
     border-color: var(--brand-500) !important;
   }
   /* Boost award cards */
+  /* Change card style to be more consistent */
   .tierHeader_f15dca {
     background-color: rgb(var(--backgroundaccent)) !important;
   }
@@ -279,9 +418,10 @@
   .tierHeaderWithoutCardBody_f15dca {
     border-radius: 8px 8px 0px 0px;
   }
-  /* Channel settings */
+  /* === Channel settings === */
   /* Permissions */
   .contentColumn__23e6b .card_b651ff {
+    /* Fix colors */
     background-color: rgb(var(--backgroundaccent));
   }
   /* === General === */
@@ -289,6 +429,7 @@
   .searchBar__97492,
   .container_fea832,
   .container_a45028 {
+    /* Change search boxes to be more consistent */
     border: 1px solid var(--border-subtle);
     transition: border-color .2s ease-in-out;
     &:hover {
@@ -303,6 +444,7 @@
     }
   }
   /* Text input */
+  /* Change text boxes to be more consistent */
   .inputWrapper__0f084 {
     background-color: rgb(var(--backgroundsecondary));
     border-radius: var(--radius-sm);
@@ -330,7 +472,9 @@
     }
   }
   /* Select menus */
+  /* Change menu selections to be more consistent */
   .select__3f413 {
+    background-color: rgb(var(--backgroundsecondary));
     border: 1px solid var(--border-subtle);
     border-radius: var(--radius-sm);
     transition: border-color .2s ease-in-out;
@@ -356,8 +500,36 @@
       }
     }
   }
+  /* Cards */
+  .cardPrimary__73069 {
+    /* Fix color */
+    background-color: rgb(var(--backgroundaccent)) !important;
+  }
+  #app-mount .card_b846e5 {
+    /* Change cards effects to be more consistent */
+    &:before {
+      background-color: rgb(var(--backgroundprimary));
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-sm);
+      transition: opacity .2s ease, background-color .2s ease-in-out;
+    }
+    &:hover:before {
+      background-color: rgb(var(--backgroundaccent)) !important;
+    }
+  }
+  /* Buttons */
+  .button__67645 {
+    background-color: rgb(var(--backgroundprimary));
+    border: 1px solid transparent;
+    transition: border-color .2s ease, background-color .2s ease-in-out;
+    &:hover {
+      background-color: rgba(var(--backgroundaccent), 1);
+      border-color: var(--border-subtle)
+    }
+  }
   /* Radio bars */
   .item__001a7[aria-checked=true] .radioBar__001a7 {
+    /* Fix default purple bar radio icon */
     .refreshIconStroke__001a7 {
       fill: #fff;
     }
@@ -367,6 +539,7 @@
   }
   /* Steppers */
   .stepper_ed9c90 {
+    /* Change steppers to be more consistent */
     .iconWrapper__96f95 {
       background-color: rgb(var(--backgroundsecondary));
     }
