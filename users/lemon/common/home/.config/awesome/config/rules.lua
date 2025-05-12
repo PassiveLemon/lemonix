@@ -118,6 +118,7 @@ end
 local focus_timer = gears.timer({
   autostart = true,
   timeout = 0.2,
+  single_shot = true,
   callback = function()
     activate_under_pointer()
   end

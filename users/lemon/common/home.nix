@@ -1,7 +1,7 @@
 { inputs, outputs, lib, pkgs, ... }: {
   imports = [
     ./modules/customization.nix
-    inputs.nixcord.homeManagerModules.nixcord
+    inputs.nixcord.homeModules.nixcord
   ];
 
   home = {
