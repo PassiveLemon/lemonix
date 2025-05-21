@@ -20,9 +20,6 @@ keymap.add({
 	["ctrl+shift+x"] = "open-file-location:open-file-location",
 })
 
-config.fps = 144
-config.animation_rate = 1.0
-config.mouse_wheel_scroll = 70 * SCALE
 config.ignore_files = {
   "^%.git/", "^%.hg/",
   "^node_modules/", "^%.cache/", "^__pycache__/",
