@@ -33,34 +33,19 @@
       url = "github:kaylorben/nixcord";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    nix-xl = {
+      # url = "github:passivelemon/nix-xl";
+      url = "path:/home/lemon/Documents/GitHub/nix-xl";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
 
     # Submodules
     awesomewm-bling = {
       url = "github:passivelemon/bling/flatpak-fix";
       flake = false;
     };
-    lite-xl-widget = {
-      url = "github:lite-xl/lite-xl-widgets";
-      flake = false;
-    };
     lite-xl-plugins = {
       url = "github:lite-xl/lite-xl-plugins";
-      flake = false;
-    };
-    lite-xl-lintplus = {
-      url = "github:liquidev/lintplus";
-      flake = false;
-    };
-    lite-xl-evergreen = {
-      url = "github:evergreen-lxl/evergreen.lxl";
-      flake = false;
-    };
-    lite-xl-treeview-extender = {
-      url = "github:juliardi/lite-xl-treeview-extender";
-      flake = false;
-    };
-    lite-xl-lsp = {
-      url = "github:lite-xl/lite-xl-lsp";
       flake = false;
     };
     hilbish-promptua = {

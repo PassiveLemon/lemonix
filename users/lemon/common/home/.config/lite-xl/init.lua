@@ -20,6 +20,13 @@ keymap.add({
 	["ctrl+shift+x"] = "open-file-location:open-file-location",
 })
 
+core.status_view:get_item("doc:lines").get_item = function()
+  local dv = core.active_view
+  return {
+    style.text, #dv.doc.lines, " lines",
+  }
+end
+
 config.ignore_files = {
   "^%.git/", "^%.hg/",
   "^node_modules/", "^%.cache/", "^__pycache__/",

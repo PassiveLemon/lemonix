@@ -2,6 +2,7 @@
   imports = [
     ./modules/customization.nix
     inputs.nixcord.homeModules.nixcord
+    inputs.nix-xl.homeManagerModules.lite-xl
   ];
 
   home = {
@@ -75,6 +76,27 @@
   };
 
   programs = {
+    lite-xl = {
+      enable = true;
+      languages = [ "diff" "env" "go" "json" "nim" "sh" "zig" ]; 
+      customLanguages = {
+        "containerfile" = ./home/.config/lite-xl/plugins/languages/language_containerfile.lua;
+        "nix" = ./home/.config/lite-xl/plugins/languages/language_nix.lua;
+        "yaml" = ./home/.config/lite-xl/plugins/languages/language_yaml.lua;
+      };
+      plugins = [
+        "autoinsert" "autowrap" "bracketmatch" "colorpicker" "colorpreview"
+        "eofnewline" "ephemeral_tabs" "editorconfig" "evergreen" "exterm"
+        "force_syntax" "gitdiff_highlight" "indentguide" "lfautoinsert"
+        "lintplus" "lsp" "lsp_snippets" "open_ext"
+        "openfilelocation" "selectionhighlight" "terminal" "treeview-extender"
+      ];
+      customPlugins = {
+        "nerdicons" = ./home/.config/lite-xl/plugins/nerdicons.lua;
+      };
+      libraries = [ "font_symbols_nerdfont_mono_regular" "tree_sitter" "widget" ];
+    };
+    
     autorandr.enable = true;
     home-manager.enable = true;
     obs-studio = {
@@ -175,30 +197,6 @@
       };
       "awesome/liblua_pam.so" = {
         source = "${inputs.lemonake.packages.${pkgs.system}.lua-pam-git}/lib/liblua_pam.so";
-      };
-      "lite-xl/libraries/widget" = {
-        source = inputs.lite-xl-widget;
-        recursive = true;
-      };
-      "lite-xl/plugins/editorconfig" = {
-        source = inputs.lite-xl-plugins + "/plugins/editorconfig";
-        recursive = true;
-      };
-      "lite-xl/plugins/lintplus" = {
-        source = inputs.lite-xl-lintplus;
-        recursive = true;
-      };
-      "lite-xl/plugins/evergreen" = {
-        source = inputs.lite-xl-evergreen;
-        recursive = true;
-      };
-      "lite-xl/plugins/treeview-extender" = {
-        source = inputs.lite-xl-treeview-extender;
-        recursive = true;
-      };
-      "lite-xl/plugins/lsp" = {
-        source = inputs.lite-xl-lsp;
-        recursive = true;
       };
       "mimeapps.list".force = true;
     };
