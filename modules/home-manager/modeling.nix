@@ -17,7 +17,7 @@ in
     (mkIf cfg.cad.enable {
       home.packages = with pkgs; [
         freecad openscad
-        (kicad.override { stable = true; })
+        (kicad-small.override { stable = true; })
       ];
     })
     (mkIf cfg.printing.enable {

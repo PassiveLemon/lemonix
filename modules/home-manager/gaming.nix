@@ -26,7 +26,7 @@ in
     (mkIf cfg.desktop.enable {
       home.packages = with pkgs; [
         r2modman nexusmods-app
-        heroic bottles
+        heroic (bottles.override { removeWarningPopup = true; })
         lunar-client
         inputs.lemonake.packages.${pkgs.system}.gdlauncher-carbon
         ludusavi

@@ -15,6 +15,7 @@ fi
 
 systemctl --user start nixos-fake-graphical-session.target
 
+autorandr -l Default
 awesome
 
 systemctl --user stop nixos-fake-graphical-session.target

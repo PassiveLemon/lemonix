@@ -8,7 +8,7 @@
   home = {
     packages = with pkgs; [
       # Terminal
-      tym hilbish comma fend thefuck trashy pamixer imagemagick appimage-run ventoy-bin
+      tym hilbish comma fend thefuck trashy pamixer imagemagick
       eza bat fd ripgrep jq nh
       # File/storage management
       pcmanfm xarchiver filezilla gparted

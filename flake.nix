@@ -3,7 +3,7 @@
 
   inputs = {
     nixos-old.url = "github:nixos/nixpkgs/nixos-24.05";
-    nixos.url = "github:nixos/nixpkgs/nixos-24.11";
+    nixos.url = "github:nixos/nixpkgs/nixos-25.05";
     nixpkgs.url = "github:nixos/nixpkgs/nixpkgs-unstable";
     master.url = "github:nixos/nixpkgs";
     nixos-hardware.url = "github:nixos/nixos-hardware";
@@ -44,10 +44,6 @@
       url = "github:passivelemon/bling/flatpak-fix";
       flake = false;
     };
-    lite-xl-plugins = {
-      url = "github:lite-xl/lite-xl-plugins";
-      flake = false;
-    };
     hilbish-promptua = {
       url = "github:passivelemon/promptua";
       flake = false;
@@ -63,8 +59,7 @@
   {
     nixosConfigurations = {
       # Desktop
-      # Would be on NixOS, but OpenComposite has been having issues...
-      "silver" = inputs.nixpkgs.lib.nixosSystem {
+      "silver" = inputs.nixos.lib.nixosSystem {
         inherit specialArgs;
         system = "x86_64-linux";
         modules = [
