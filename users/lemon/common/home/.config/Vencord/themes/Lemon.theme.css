@@ -56,6 +56,9 @@
       /* Chat bar */
       .channelTextArea_f75fb0 {
         margin: 2px 4px 4px 0px;
+        .inner__74017 {
+          height: 58px;
+        }
         /* Remove gift, sticker, and app button, and reverse button order */
         .buttons__74017 {
           flex-direction: row-reverse;
