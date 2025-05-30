@@ -116,6 +116,7 @@ merge_tables(default_patterns, {
     type = { "normal", "string", "literal", "string", "normal", "normal" },
   },
   {
+    -- Currently malformed. Will need to debug
     pattern = '%s*()[%w%-%_%.]*()".*"()[%w%-%_%.]*()%s*()=()%s*',
     type = { "normal", "literal", "string", "literal", "normal", "normal" },
   },

@@ -14,7 +14,7 @@
       pcmanfm xarchiver filezilla gparted
       ffmpegthumbnailer
       # Development
-      lite-xl vscode github-desktop
+      vscode github-desktop
       shellcheck luajitPackages.luacheck python312Packages.flake8
       nil nimlsp pyright lua-language-server bash-language-server dockerfile-language-server-nodejs yaml-language-server
       # Office
@@ -76,32 +76,39 @@
   };
 
   programs = {
-    lite-xl = {
-      enable = true;
-      languages = [ "diff" "env" "go" "json" "nim" "sh" "zig" ]; 
-      customLanguages = {
-        "containerfile" = ./home/.config/lite-xl/plugins/languages/language_containerfile.lua;
-        "nix" = ./home/.config/lite-xl/plugins/languages/language_nix.lua;
-        "yaml" = ./home/.config/lite-xl/plugins/languages/language_yaml.lua;
-      };
-      plugins = [
-        "autoinsert" "autowrap" "bracketmatch" "colorpicker" "colorpreview"
-        "eofnewline" "ephemeral_tabs" "editorconfig" "evergreen" "exterm"
-        "force_syntax" "gitdiff_highlight" "indentguide" "lfautoinsert"
-        "lintplus" "lsp" "lsp_snippets" "open_ext"
-        "openfilelocation" "selectionhighlight" "terminal" "treeview-extender"
-      ];
-      customPlugins = {
-        "nerdicons" = ./home/.config/lite-xl/plugins/nerdicons.lua;
-      };
-      libraries = [ "font_symbols_nerdfont_mono_regular" "tree_sitter" "widget" ];
-    };
-    
     autorandr.enable = true;
     home-manager.enable = true;
     obs-studio = {
       enable = true;
       package = (pkgs.obs-studio.override { cudaSupport = true; });
+    };
+    lite-xl = {
+      enable = true;
+      plugins = {
+        enableList = [
+          "autoinsert" "autowrap" "bracketmatch" "colorpicker" "colorpreview"
+          "eofnewline" "ephemeral_tabs" "editorconfig" "evergreen" "exterm"
+          "force_syntax" "gitdiff_highlight" "indentguide" "lfautoinsert"
+          "lintplus" "lsp" "lsp_snippets" "open_ext" "selectionhighlight"
+          "terminal" "treeview-extender"
+        ];
+        customEnableList = {
+          "exterm" = ./home/.config/lite-xl/plugins/exterm.lua;
+          "nerdicons" = ./home/.config/lite-xl/plugins/nerdicons.lua;
+        };
+        languages = {
+          enableList = [ "diff" "env" "go" "json" "nim" "sh" "zig" ]; 
+          customEnableList = {
+            "containerfile" = ./home/.config/lite-xl/plugins/languages/language_containerfile.lua;
+            "nix" = ./home/.config/lite-xl/plugins/languages/language_nix.lua;
+            "yaml" = ./home/.config/lite-xl/plugins/languages/language_yaml.lua;
+          };
+        };
+        formatter.enableList = [ "black" "ruff" ];
+        lsp.enableList = [ "lua" "yaml" ];
+        evergreen.enableList = [ "cpp" "javascript" "html" "lua" ];
+      };
+      libraries.enableList = [ "font_symbols_nerdfont_mono_regular" "tree_sitter" "widget" ];
     };
     firefox = {
       enable = true;
