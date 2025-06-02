@@ -87,10 +87,10 @@
       plugins = {
         enableList = [
           "autoinsert" "autowrap" "bracketmatch" "colorpicker" "colorpreview"
-          "eofnewline" "ephemeral_tabs" "editorconfig" "evergreen" "exterm"
-          "force_syntax" "gitdiff_highlight" "indentguide" "lfautoinsert"
-          "lintplus" "lsp" "lsp_snippets" "open_ext" "selectionhighlight"
-          "terminal" "treeview-extender"
+          "eofnewline" "ephemeral_tabs" "editorconfig" "evergreen" "force_syntax"
+          "gitdiff_highlight" "gitstatus" "indentguide" "lfautoinsert" "lintplus"
+          "lsp" "lsp_snippets" "open_ext" "selectionhighlight" "terminal"
+          "treeview-extender"
         ];
         customEnableList = {
           "exterm" = ./home/.config/lite-xl/plugins/exterm.lua;
@@ -104,9 +104,9 @@
             "yaml" = ./home/.config/lite-xl/plugins/languages/language_yaml.lua;
           };
         };
-        formatter.enableList = [ "black" "ruff" ];
-        lsp.enableList = [ "lua" "yaml" ];
-        evergreen.enableList = [ "cpp" "javascript" "html" "lua" ];
+        # formatter.enableList = [ "black" "ruff" ];
+        # lsp.enableList = [ "lua" "yaml" ];
+        evergreen.enableList = [ "html" "lua" ];
       };
       libraries.enableList = [ "font_symbols_nerdfont_mono_regular" "tree_sitter" "widget" ];
     };

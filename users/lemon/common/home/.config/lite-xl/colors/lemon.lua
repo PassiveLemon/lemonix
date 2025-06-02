@@ -51,7 +51,7 @@ style.drag_overlay_tab = style.fg1
 style.good     = { common.color("#72b886") }
 style.warn     = { common.color("#ffa94d") }
 style.error    = { common.color("#ff3333") }
-style.modified = { common.color("#1c7c9c") }
+style.modified = style.warn
 style.log = {
   ["INFO"]  = { icon = "i", color = style.text },
   ["WARN"]  = { icon = "!", color = style.warn },
@@ -138,8 +138,12 @@ style.lint.error = style.error
 
 -- Gitdiff Highlight
 style.gitdiff_addition = style.good
+style.gitdiff_modification = style.warn
 style.gitdiff_deletion = style.error
-style.gitdiff_modification = style.modified
+
+style.gitstatus_addition = style.good
+style.gitstatus_modification = style.warn
+style.gitstatus_deletion = style.error
 
 -- Bracketmatch
 style.bracketmatch_color = style.fg1
