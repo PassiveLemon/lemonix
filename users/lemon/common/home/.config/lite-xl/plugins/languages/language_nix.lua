@@ -1,6 +1,9 @@
 -- mod-version:3
 -- https://nixos.wiki/wiki/Overview_of_the_Nix_Language
-local syntax = require "core.syntax"
+
+-- Personally modified to match the syntax highlighting of https://github.com/nix-community/vscode-nix-ide
+
+local syntax = require("core.syntax")
 
 local function merge_tables(a, b)
   for _, v in pairs(b) do
@@ -28,28 +31,20 @@ local default_symbols = {
 local default_patterns = { }
 
 local string_interpolation = {
-  -- Escapement
-  { pattern = { "''%${", "}" }, type = "keyword", syntax = {
-    patterns = default_patterns,
-    symbols = default_symbols,
-  }},
-
   { pattern = { "%${", "}" }, type = "keyword", syntax = {
     patterns = default_patterns,
     symbols = default_symbols,
   }},
-
+  -- Recolor the escapement
+  { pattern = "%s*()''%$(){.*}",
+    type = { "normal", "keyword", "string" },
+  },
   { pattern = "[%S][%w]*", type = "string" },
 }
 
 -- local brace_interpolation = {
---   { pattern = "%S+%s*,%s", type = "normal" },
---   { pattern = ",%s*%S+",   type = "normal" },
---   { pattern = "%s*%S+%s*%?",   type = "normal" },
--- }
-
--- local list_interpolation = {
---   { pattern = "%s*%S+%s*%?",   type = "normal" },
+--   { regex = "[\\w\\-_]+[\\s\\S],", type = "normal" },
+--   { regex = ",[\\s\\S][\\w\\-_]+", type = "normal" },
 -- }
 
 merge_tables(default_patterns, {
@@ -74,28 +69,25 @@ merge_tables(default_patterns, {
     patterns = string_interpolation,
     symbols = { },
   }},
-  -- Some ideas to handle module attributes. Need some heavy refinement
-  -- { pattern = { "{", "}:%S" }, type = "normal", syntax = {
+  -- Works on inline arguments but not multi-line
+  -- { regex = { "\\{[\\s\\S]*(?=[\\s\\S]*\\}:)", "}:" }, type = "normal", syntax = {
   --   patterns = brace_interpolation,
-  --   symbols = default_symbols,
-  -- }},
-  -- { pattern = { "%s", ",%s" }, type = "normal", syntax = {
-  --   patterns = list_interpolation,
-  --   symbols = default_symbols,
+  --   symbols = { },
   -- }},
 
   -- Operators
-  { pattern = "[%+%-%?!>%*]", type = "normal" },
-  { pattern = "/ ",           type = "normal" },
-  { pattern = "< ",           type = "normal" },
-  { pattern = "//",           type = "normal" },
-  { pattern = "&&",           type = "normal" },
-  { pattern = "%->",          type = "normal" },
-  { pattern = "||",           type = "normal" },
-  { pattern = "==",           type = "normal" },
-  { pattern = "!=",           type = "normal" },
-  { pattern = ">=",           type = "normal" },
-  { pattern = "<=",           type = "normal" },
+  { pattern = "[%+%-%*/]", type = "normal" },
+  { pattern = "! ",        type = "normal" },
+  { pattern = "> ",        type = "normal" },
+  { pattern = "< ",        type = "normal" },
+  { pattern = "//",        type = "normal" },
+  { pattern = "&&",        type = "normal" },
+  { pattern = "%->",       type = "normal" },
+  { pattern = "||",        type = "normal" },
+  { pattern = "==",        type = "normal" },
+  { pattern = "!=",        type = "normal" },
+  { pattern = ">=",        type = "normal" },
+  { pattern = "<=",        type = "normal" },
 
   -- Paths
   { pattern = "%.?%.?/[^%s%[%]%(%){};,:]+", type = "string" },
@@ -103,44 +95,25 @@ merge_tables(default_patterns, {
   { pattern = { "<", ">" },                 type = "string" },
 
   -- Functions
-  { pattern = "%S+%s*:%s", type = "normal" },
+  { pattern = "[%w%-%_]+%s*:", type = "normal" },
 
-  -- Module attributes
-  { pattern = "%S+%s*,%s", type = "normal" },
-  { pattern = ",%s*%S+",   type = "normal" },
+  -- Module arguments
+  -- { regex = "[\\w\\-_]+[\\s\\S]\\?(?=.+,)", type = "normal" },
+  -- { regex = "(?<!\\?)[\\w\\-_]+[\\s\\S],",  type = "normal" },
+  { pattern = "[%w%-%_]+%s*,", type = "normal" },
+  { pattern = ",%s*[%w%-%_]+", type = "normal" },
 
-  -- Other patterns
-  -- Variables/attributes with a strings
-  {
-    pattern = '%s*()".*"()[%w%-%_%.]*()".*"()%s*()=()%s*',
-    type = { "normal", "string", "literal", "string", "normal", "normal" },
-  },
-  {
-    -- Currently malformed. Will need to debug
-    pattern = '%s*()[%w%-%_%.]*()".*"()[%w%-%_%.]*()%s*()=()%s*',
-    type = { "normal", "literal", "string", "literal", "normal", "normal" },
-  },
-  {
-    pattern = '%s*()[%w%-%_%.]*()".*"()%s*()=()%s*',
-    type = { "normal", "literal", "string", "normal", "normal" },
-  },
-  {
-    pattern = '%s*()".*"()[%w%-%_%.]*()%s*()=()%s*',
-    type = { "normal", "string", "literal", "normal", "normal" },
-  },
-
-  -- Variables/attributes
-  {
-    pattern = "%s*()[%w%-%_%.]*()%s*()=()%s*",
-    type = { "normal", "literal", "normal", "normal", "normal" },
+  -- Attribute assignments
+  { regex = "[\\w\\-_]+()\\.*(?=[^{}]*=)",
+    type = { "literal", "normal" },
   },
 
   -- Inherits
-  {
+  { -- Namespace inherits
     pattern = "inherit()%s*%(()%w+()%)()%s*.-%s*();",
     type = { "keyword", "normal", "keyword2", "normal", "literal", "normal" },
   },
-  {
+  { -- General inherits
     pattern = "inherit()%s*.-%s*();",
     type = { "keyword", "literal", "normal" },
   },
@@ -150,10 +123,7 @@ merge_tables(default_patterns, {
 })
 
 -- Current issues:
--- Attribute dots are the same color. Not a big deal. Ex: programs.firefox.profiles.etc
---                                 Should be gray, but are orange ^       ^        ^
--- Escaped nix expressions in strings result in the following semi-colon turning green.
--- A variety of issues regarding module attributes.
+-- Any module arg that does not have a comma before/after will not be colored
 
 syntax.add({
   name = "Nix",
