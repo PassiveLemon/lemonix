@@ -8,7 +8,7 @@
   home = {
     packages = with pkgs; [
       # Terminal
-      tym hilbish comma fend thefuck trashy pamixer imagemagick
+      tym hilbish comma fend trashy pamixer imagemagick
       eza bat fd ripgrep jq nh
       # File/storage management
       pcmanfm xarchiver filezilla gparted
@@ -43,7 +43,7 @@
       ".xinitrc" = {
         source = ./home/.xinitrc;
       };
-      "Documents" = {
+      "Documents/" = {
         source = ./home/Documents;
         recursive = true;
       };
@@ -80,6 +80,7 @@
     home-manager.enable = true;
     obs-studio = {
       enable = true;
+      # https://github.com/NixOS/nixpkgs/issues/382666 but issue still persists
       package = (pkgs.obs-studio.override { cudaSupport = true; });
     };
     lite-xl = {
@@ -97,16 +98,16 @@
           "nerdicons" = ./home/.config/lite-xl/plugins/nerdicons.lua;
         };
         languages = {
-          enableList = [ "diff" "env" "go" "json" "nim" "sh" "zig" ]; 
+          enableList = [ "diff" "env" "ignore" "go" "json" "nim" "sh" "toml" "zig" ]; 
           customEnableList = {
             "containerfile" = ./home/.config/lite-xl/plugins/languages/language_containerfile.lua;
             "nix" = ./home/.config/lite-xl/plugins/languages/language_nix.lua;
             "yaml" = ./home/.config/lite-xl/plugins/languages/language_yaml.lua;
           };
         };
+        evergreen.enableList = [ "html" "lua" ];
         # formatter.enableList = [ "black" "ruff" ];
         # lsp.enableList = [ "lua" "yaml" ];
-        evergreen.enableList = [ "html" "lua" ];
       };
       libraries.enableList = [ "font_symbols_nerdfont_mono_regular" "tree_sitter" "widget" ];
     };

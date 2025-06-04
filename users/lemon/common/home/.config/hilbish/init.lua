@@ -1,7 +1,6 @@
 require("nix")
 
 local promptua = require("promptua")
-local commander = require("commander")
 
 
 hilbish.opts.greeting = false
@@ -70,10 +69,6 @@ promptua.setTheme({
   },
 })
 
-local function get_last_command()
-  return hilbish.history.get(hilbish.history.size() - 1)
-end
-
 -- Core
 hilbish.alias("ls", "eza -lgF --group-directories-first")
 hilbish.alias("cat", "bat --theme=Lemon")
@@ -82,15 +77,6 @@ hilbish.alias("rmx", "trash")
 
 -- Docker
 hilbish.alias("dc", "docker compose")
-
--- Fuck
-commander.register("fuck", function(args)
-  if #args == 0 then
-    hilbish.run("thefuck " .. get_last_command())
-  else
-    hilbish.run("thefuck " .. args[1])
-  end
-end)
 
 promptua.init()
 

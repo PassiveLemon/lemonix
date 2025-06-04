@@ -10,6 +10,8 @@
       systemd-boot.enable = true;
     };
     kernelModules = [ "iwlwifi" "kvm-amd" ];
+    # https://github.com/NixOS/nixpkgs/issues/412299
+    kernelPackages = pkgs.linuxPackages_6_14;
   };
 
   networking = {
