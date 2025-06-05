@@ -132,7 +132,7 @@
   };
 
   # Drives
-  # 1 TB Crucial (Root)
+  # 1 TB Crucial T500 (Root)
 
   system.stateVersion = "23.11"; # Don't change unless you know what you are doing
 }

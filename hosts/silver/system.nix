@@ -133,16 +133,16 @@
   };
 
   # Drives
-  # 500 GB Crucial (Root)
+  # 500 GB Crucial P3 (Root)
 
   fileSystems = {
-    # 1 TB Sabrent (Home)
+    # 2 TB Crucial T500 (Home)
     "/home" = {
-      device = "/dev/disk/by-uuid/30266ca4-5926-430a-83f5-403c30092cf5";
+      device = "/dev/disk/by-uuid/ceec28f7-95b7-4b92-9e43-826e70903e5d";
       fsType = "ext4";
       options = [ "noatime" ];
     };
-    # 2 TB Seagate
+    # 2 TB Seagate Barracuda
     "/home/HDD2TBEXT4" = {
       device = "/dev/disk/by-uuid/c532ca53-130a-46c6-9e06-3aee4fd8b6e2";
       fsType = "ext4";
