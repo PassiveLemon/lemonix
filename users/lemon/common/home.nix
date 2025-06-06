@@ -2,7 +2,7 @@
   imports = [
     ./modules/customization.nix
     inputs.nixcord.homeModules.nixcord
-    inputs.nix-xl.homeManagerModules.lite-xl
+    inputs.nix-xl.homeModules.lite-xl
   ];
 
   home = {

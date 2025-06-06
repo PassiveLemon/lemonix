@@ -19,7 +19,7 @@ in
   };
 
   imports = [
-    inputs.lemonake.homeManagerModules.steamvr
+    inputs.lemonake.homeModules.steamvr
   ];
 
   config = mkIf cfg.enable (mkMerge [
