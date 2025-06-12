@@ -15,6 +15,11 @@
       # url = "path:/home/lemon/Documents/GitHub/lemonake";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    nix-xl = {
+      url = "github:passivelemon/nix-xl";
+      # url = "path:/home/lemon/Documents/GitHub/nix-xl";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
     nixpkgs-f2k = {
       url = "github:moni-dz/nixpkgs-f2k";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -29,11 +34,6 @@
     };
     nixcord = {
       url = "github:kaylorben/nixcord";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
-    nix-xl = {
-      # url = "github:passivelemon/nix-xl";
-      url = "path:/home/lemon/Documents/GitHub/nix-xl";
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
