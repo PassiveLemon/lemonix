@@ -19,19 +19,23 @@ local dpi = b.xresources.apply_dpi
 --
 
 local space = h.text({
+  margins = { top = 0, right = 0, bottom = 0, left = 0 },
   bg = b.bg_primary,
   text = " ",
 })
 
 local cpu_text = h.text({
+  margins = { top = 0, right = 0, bottom = 0, left = 0 },
   bg = b.bg_primary,
   text = "CPU",
 })
 local cpu_use = h.text({
+  margins = { top = 0, right = 0, bottom = 0, left = 0 },
   bg = b.bg_primary,
   halign = "left",
 })
 local cpu_temp = h.text({
+  margins = { top = 0, right = 0, bottom = 0, left = 0 },
   bg = b.bg_primary,
   halign = "left",
 })
@@ -41,18 +45,22 @@ awesome.connect_signal("signal::resource::cpu::data", function(use, temp)
 end)
 
 local gpu_text = h.text({
+  margins = { top = 0, right = 0, bottom = 0, left = 0 },
   bg = b.bg_primary,
   text = "GPU",
 })
 local gpu_use = h.text({
+  margins = { top = 0, right = 0, bottom = 0, left = 0 },
   bg = b.bg_primary,
   halign = "left",
 })
 local gpu_temp = h.text({
+  margins = { top = 0, right = 0, bottom = 0, left = 0 },
   bg = b.bg_primary,
   halign = "left",
 })
 local gpu_mem = h.text({
+  margins = { top = 0, right = 0, bottom = 0, left = 0 },
   bg = b.bg_primary,
   halign = "left",
 })
@@ -65,26 +73,31 @@ awesome.connect_signal("signal::resource::gpu::data", function(nvidia_smi_table)
   end
 	gpu_use:get_children_by_id("textbox")[1].text = "Usage: " .. nvidia_smi_table[1] .. "%"
   gpu_temp:get_children_by_id("textbox")[1].text = nvidia_smi_table[2] .. "C"
-  gpu_mem:get_children_by_id("textbox")[1].text = "Memory: " .. h.round((nvidia_smi_table[4] / 1024), 1) .. "/" .. h.round((nvidia_smi_table[3] / 1024), 1) .. " GiB " .. h.round(((nvidia_smi_table[4] / nvidia_smi_table[3]) * 100), 0) .. "%"
+  gpu_mem:get_children_by_id("textbox")[1].text = "Memory: " .. h.round((nvidia_smi_table[4] / 1024), 1) .. "/" .. h.round((nvidia_smi_table[3] / 1024), 1) .. " GB " .. h.round(((nvidia_smi_table[4] / nvidia_smi_table[3]) * 100), 0) .. "%"
 end)
 
 local mem_text = h.text({
+  margins = { top = 0, right = 0, bottom = 0, left = 0 },
   bg = b.bg_primary,
   text = "Memory",
 })
 local mem_use = h.text({
+  margins = { top = 0, right = 0, bottom = 0, left = 0 },
   bg = b.bg_primary,
   halign = "left",
 })
 local mem_use_perc = h.text({
+  margins = { top = 0, right = 0, bottom = 0, left = 0 },
   bg = b.bg_primary,
   halign = "left",
 })
 local cache_use = h.text({
+  margins = { top = 0, right = 0, bottom = 0, left = 0 },
   bg = b.bg_primary,
   halign = "left",
 })
 local cache_use_perc = h.text({
+  margins = { top = 0, right = 0, bottom = 0, left = 0 },
   bg = b.bg_primary,
   halign = "left",
 })
@@ -96,10 +109,12 @@ awesome.connect_signal("signal::resource::memory::data", function(free_mem_table
 end)
 
 local strg_text = h.text({
+  margins = { top = 0, right = 0, bottom = 0, left = 0 },
   bg = b.bg_primary,
   text = "Storage",
 })
 local strg_drives = h.text({
+  margins = { top = 0, right = 0, bottom = 0, left = 0 },
   bg = b.bg_primary,
   halign = "left",
 })
@@ -126,10 +141,12 @@ awesome.connect_signal("signal::resource::storage::data", function(storage_stats
 end)
 
 local network_text = h.text({
+  margins = { top = 0, right = 0, bottom = 0, left = 0 },
   bg = b.bg_primary,
   text = "Network",
 })
 local network_adapters = h.text({
+  margins = { top = 0, right = 0, bottom = 0, left = 0 },
   bg = b.bg_primary,
   halign = "left",
 })
@@ -144,10 +161,12 @@ awesome.connect_signal("signal::resource::network::data", function(network_stats
 end)
 
 local uptime_text = h.text({
+  margins = { top = 0, right = 0, bottom = 0, left = 0 },
   bg = b.bg_primary,
   text = "Uptime",
 })
 local uptime_time = h.text({
+  margins = { top = 0, right = 0, bottom = 0, left = 0 },
   bg = b.bg_primary,
   halign = "left",
 })
@@ -202,7 +221,7 @@ awful.screen.connect_for_each_screen(function(s)
       {
         widget = wibox.container.margin,
         margins = { top = dpi(4), right = dpi(2), bottom = dpi(3), left = dpi(2) },
-        forced_width = dpi(200),
+        forced_width = dpi(220),
         {
           layout = wibox.layout.fixed.vertical,
           mem_text,
