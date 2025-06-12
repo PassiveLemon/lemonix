@@ -386,10 +386,21 @@
             },
             "split-channels": false
         },
+        "loudness#0": {
+            "bypass": false,
+            "clipping": false,
+            "clipping-range": 6.0,
+            "fft": "256",
+            "input-gain": 0.0,
+            "output-gain": 0.0,
+            "std": "ISO226-2023",
+            "volume": 5.0
+        },
         "plugins_order": [
             "equalizer#0",
             "bass_enhancer#0",
-            "crossfeed#0"
+            "crossfeed#0",
+            "loudness#0"
         ]
     }
 }
