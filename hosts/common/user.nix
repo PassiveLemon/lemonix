@@ -2,8 +2,7 @@
   environment = {
     systemPackages = with pkgs; [
       xss-lock gtk3 snixembed
-      networkmanagerapplet
-      tailscale-systray
+      networkmanagerapplet trayscale
     ];
   };
 
@@ -54,7 +53,13 @@
   programs = {
     dconf.enable = true;
     seahorse.enable = true;
-    nix-ld.enable = true;
+  };
+
+  environment.sessionVariables = {
+    XDG_CONFIG_HOME = "$HOME/.config";
+    XDG_DATA_HOME = "$HOME/.local/share";
+    XDG_STATE_HOME = "$HOME/.local/state";
+    XDG_CACHE_HOME = "$HOME/.cache";
   };
 
   hardware = {

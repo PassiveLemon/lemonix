@@ -41,9 +41,9 @@ awful.spawn.with_shell("autorandr -l Default")
 awful.spawn.with_shell("pidof -q xss-lock || xss-lock awesome-client 'awesome.emit_signal(\"ui::lock::toggle\")' &")
 awful.spawn.with_shell("pidof -q picom || picom --realtime -b")
 awful.spawn.with_shell("pidof -q easyeffects || easyeffects --gapplication-service")
-awful.spawn.with_shell("pidof -q nm-applet || nm-applet &")
-awful.spawn.with_shell("pidof -q tailscale-systray || tailscale-systray &")
 awful.spawn.with_shell("pidof -q snixembed || snixembed --fork")
+awful.spawn.with_shell("pidof -q nm-applet || nm-applet &")
+awful.spawn.with_shell("pidof -q trayscale || trayscale --gapplication-service &")
 awful.spawn.with_shell("pidof -q flameshot || flameshot &")
 
 return user
