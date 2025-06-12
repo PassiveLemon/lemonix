@@ -13,6 +13,9 @@ local dpi = b.xresources.apply_dpi
 
 local systray = { }
 
+local tray = wibox.widget.systray()
+tray:set_base_size(b.systray_icon_size)
+
 local sep = h.text({
   margins = {
     top = 0,
@@ -36,7 +39,12 @@ systray.pill_systray = h.timed_widget(h.margin({
     {
       layout = wibox.layout.fixed.horizontal,
       sep,
-      wibox.widget.systray,
+      {
+        widget = wibox.container.place,
+        valign = "center",
+        tray,
+      },
+      sep,
     },
   },
 },

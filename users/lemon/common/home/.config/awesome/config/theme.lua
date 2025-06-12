@@ -79,6 +79,8 @@ theme.tasklist_disable_task_name = true
 theme.tasklist_spacing           = dpi(1)
 
 theme.bg_systray = theme.bg_secondary
+theme.systray_icon_spacing = dpi(1)
+theme.systray_icon_size = dpi(21)
 
 theme.useless_gap = dpi(6)
 
