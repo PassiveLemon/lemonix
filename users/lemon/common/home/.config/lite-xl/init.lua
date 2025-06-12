@@ -46,6 +46,8 @@ config.plugins.treeview = {
   animate_scroll_to_focused_file = true,
 }
 
+config.plugins.evergreen.config.warnFallbackColors = false
+
 lintplus.load({ "luacheck", "python", "shellcheck" })
 
 lspconfig.bashls.setup()
@@ -61,7 +63,7 @@ lspconfig.sumneko_lua.setup({
   command = { "lua-language-server", "--configpath", "/home/lemon/Documents/GitHub/lemonix/.luarc.json" }
 })
 
--- Open documents by default
+-- Open GitHub project dir by default
 local default_path = "/home/lemon/Documents/GitHub"
 if not core.switched_to_default_dir then
   core.switched_to_default_dir = true

@@ -111,6 +111,11 @@
         # lsp.enableList = [ "lua" "yaml" ];
       };
       libraries.enableList = [ "font_symbols_nerdfont_mono_regular" "tree_sitter" "widget" ];
+      fonts = {
+        font = "FiraCodeNerdFont-Retina";
+        # customFont = { name = "FiraCodeNerdFont-Retina"; value = pkgs.nerd-fonts.fira-code + "/share/fonts/truetype/NerdFonts/FiraCode/FiraCodeNerdFont-Retina.ttf"; };
+        codeFont = "FiraCodeNerdFontMono-Retina";
+      };
     };
     firefox = {
       enable = true;
