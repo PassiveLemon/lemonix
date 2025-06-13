@@ -46,7 +46,7 @@ config.plugins.treeview = {
   animate_scroll_to_focused_file = true,
 }
 
-config.plugins.evergreen.config.warnFallbackColors = false
+config.plugins.evergreen.warnFallbackColors = false
 
 lintplus.load({ "luacheck", "python", "shellcheck" })
 
