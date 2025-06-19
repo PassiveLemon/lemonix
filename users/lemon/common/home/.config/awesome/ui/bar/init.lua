@@ -53,20 +53,5 @@ screen.connect_signal("request::desktop_decoration", function(s)
   s.wibar:connect_signal("mouse::leave", function()
     widgets.systray.pill_systray:again()
   end)
-
-  -- Push wibar behind when focused client is fullscreen
-  local function wibar_layer()
-    local sf = awful.screen.focused()
-    for _, c in ipairs(sf.clients) do
-      if c.fullscreen and c.active then
-        s.wibar.ontop = false
-        return
-      end
-    end
-    s.wibar.ontop = true
-  end
-
-  client.connect_signal("request::activate", wibar_layer)
-  client.connect_signal("request::geometry", wibar_layer)
 end)
 
