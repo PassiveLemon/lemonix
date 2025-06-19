@@ -133,8 +133,9 @@ local function metadata_fetch()
       -- Sleep here to "improve" responsiveness. Otherwise it happens so quickly that we end up grabbing the old media metadata
       awful.spawn.easy_async("sleep 0.1", function()
         if player.available then
-          local old_media = (metadata.media.art_url..metadata.media.title..metadata.media.artist..metadata.media.album..metadata.media.length) or ""
-          local new_media = (player.art_url..player.title..(player.artist or "")..player.album..player.length) or ""
+          local old_media = metadata.media.art_url..metadata.media.title..metadata.media.artist..metadata.media.album..metadata.media.length
+          -- Might need to do (xxx or "") for other metadata, but so far only had issues with artist
+          local new_media = player.art_url..player.title..(player.artist or "")..player.album..player.length
 
           -- Media metadata
           metadata.media.art_url = player.art_url or ""
@@ -156,9 +157,12 @@ local function metadata_fetch()
 
           -- Fetch art image and send notification when the media metadata changes
           -- Compare the previously stored metadata to the newly fetched metadata
-          if old_media ~= new_media and old_media ~= "" then
+          if old_media ~= new_media then
             art_image_fetch()
-            track_notification()
+            -- Don't send a notification on AWM startup
+            if old_media ~= "" then
+              track_notification()
+            end
           end
           emit()
         end
