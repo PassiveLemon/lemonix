@@ -133,30 +133,30 @@ local function metadata_fetch()
       -- Sleep here to "improve" responsiveness. Otherwise it happens so quickly that we end up grabbing the old media metadata
       awful.spawn.easy_async("sleep 0.1", function()
         if player.available then
-          local old_media = metadata.media.art_url..metadata.media.title..metadata.media.artist..metadata.media.album..metadata.media.length
-          local new_media = player.art_url..player.title..player.artist..player.album..player.length
+          local old_media = (metadata.media.art_url..metadata.media.title..metadata.media.artist..metadata.media.album..metadata.media.length) or ""
+          local new_media = (player.art_url..player.title..(player.artist or "")..player.album..player.length) or ""
 
           -- Media metadata
-          metadata.media.art_url = player.art_url
-          metadata.media.title = player.title
-          metadata.media.artist = player.artist
-          metadata.media.album = player.album
-          metadata.media.length = player.length
+          metadata.media.art_url = player.art_url or ""
+          metadata.media.title = player.title or ""
+          metadata.media.artist = player.artist or ""
+          metadata.media.album = player.album or ""
+          metadata.media.length = player.length or "1"
 
           -- Player metadata
           metadata.player.available = true
-          metadata.player.name = player_name
-          metadata.player.shuffle = player.shuffle_status
-          metadata.player.status = player.playback_status
-          metadata.player.loop = player.loop_status
-          metadata.player.position = player.position
-          metadata.player.volume = player.volume
+          metadata.player.name = player_name or ""
+          metadata.player.shuffle = player.shuffle_status or "NONE"
+          metadata.player.status = player.playback_status or "PLAYING"
+          metadata.player.loop = player.loop_status or "PLAYLIST"
+          metadata.player.position = player.position or "1"
+          metadata.player.volume = player.volume or "1"
 
           global_player = player
 
           -- Fetch art image and send notification when the media metadata changes
           -- Compare the previously stored metadata to the newly fetched metadata
-          if old_media ~= new_media then
+          if old_media ~= new_media and old_media ~= "" then
             art_image_fetch()
             track_notification()
           end
