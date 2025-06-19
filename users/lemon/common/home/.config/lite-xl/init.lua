@@ -60,11 +60,11 @@ lspconfig.sumneko_lua.setup({
   name = "lua-language-server",
   language = "lua",
   file_patterns = { "%.lua$" },
-  command = { "lua-language-server", "--configpath", "/home/lemon/Documents/GitHub/lemonix/.luarc.json" }
+  command = { "lua-language-server", "--configpath", os.getenv("HOME") .. "/Documents/GitHub/lemonix/.luarc.json" }
 })
 
 -- Open GitHub project dir by default
-local default_path = "/home/lemon/Documents/GitHub"
+local default_path = os.getenv("HOME") .. "/Documents/GitHub"
 if not core.switched_to_default_dir then
   core.switched_to_default_dir = true
   if core.project_dir ~= default_path then
