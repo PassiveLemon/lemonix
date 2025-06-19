@@ -92,6 +92,20 @@ client.connect_signal("request::manage", function(c)
   end
 end)
 
+-- Hide the wibar if the focused client is fullscreened
+local function wibar_layer(c)
+  local screen = c.screen
+  if not screen or not screen.wibar then return end
+  if c.fullscreen and c == client.focus then
+    screen.wibar.ontop = false
+  else
+    screen.wibar.ontop = true
+  end
+end
+
+client.connect_signal("request::activate", function(c) wibar_layer(c) end)
+client.connect_signal("request::geometry", function(c) wibar_layer(c) end)
+
 -- Layout
 tag.connect_signal("request::default_layouts", function()
   awful.layout.append_default_layouts({
@@ -140,56 +154,6 @@ end)
 client.connect_signal("property::tags", function()
   focus_timer:start()
 end)
-
---
--- Bar
---
-
--- Same flickering problem as the original
--- local function wibar_layer(c)
---   if c.fullscreen and c.active then
---     c.screen.wibar.ontop = false
---   else
---     c.screen.wibar.ontop = true
---   end
--- end
-
--- client.connect_signal("property::fullscreen", wibar_layer)
--- client.connect_signal("focus", wibar_layer)
--- client.connect_signal("unfocus", wibar_layer)
-
--- Appears to work but untested multiscreen setup
--- local function wibar_layer(c)
---   local cs = c.screen
---   if not cs or not cs.wibar then return end
-
---   for _, sc in ipairs(cs.clients) do
---     if sc.fullscreen and sc.active then
---       s.wibar.ontop = false
---       return
---     end
---   end
---   s.wibar.ontop = true
--- end
-
--- client.connect_signal("request::activate", function(c) wibar_layer(c) end)
--- client.connect_signal("request::geometry", function(c) wibar_layer(c) end)
-
--- Basically the previous but without looping
-local function wibar_layer(c)
-  local screen = c.screen
-  if not screen or not screen.wibar then return end
-
-  -- Only hide the wibar if this client is both fullscreen and focused
-  if c.fullscreen and c == client.focus then
-    screen.wibar.ontop = false
-  else
-    screen.wibar.ontop = true
-  end
-end
-
-client.connect_signal("request::activate", function(c) wibar_layer(c) end)
-client.connect_signal("request::geometry", function(c) wibar_layer(c) end)
 
 --
 -- Other
