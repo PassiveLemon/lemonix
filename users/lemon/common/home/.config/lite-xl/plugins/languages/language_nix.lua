@@ -110,7 +110,7 @@ merge_tables(default_patterns, {
 
   -- Inherits
   { -- Namespace inherits
-    pattern = "inherit()%s*%(()%w+()%)()%s*.-%s*();",
+    pattern = "inherit()%s*%(()[%w%-%_]+()%)()%s*.-%s*();",
     type = { "keyword", "normal", "keyword2", "normal", "literal", "normal" },
   },
   { -- General inherits
