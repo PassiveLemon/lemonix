@@ -34,8 +34,7 @@ in
     (mkIf cfg.vr.enable {
       services = {
         autoadb = {
-          # https://github.com/NixOS/nixpkgs/issues/392872
-          enable = false;
+          enable = true;
           command = ''
             adb reverse tcp:9757 tcp:9757
             adb shell monkey -p org.meumeu.wivrn.github 1
