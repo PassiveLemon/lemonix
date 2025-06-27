@@ -95,22 +95,22 @@ merge_tables(default_patterns, {
   { pattern = { "<", ">" },                 type = "string" },
 
   -- Functions
-  { pattern = "[%w%-%_]+%s*:", type = "normal" },
+  { pattern = "[%w%-%_']+%s*:", type = "normal" },
 
   -- Module arguments
-  -- { regex = "[\\w\\-_]+[\\s\\S]\\?(?=.+,)", type = "normal" },
-  -- { regex = "(?<!\\?)[\\w\\-_]+[\\s\\S],",  type = "normal" },
-  { pattern = "[%w%-%_]+%s*,", type = "normal" },
-  { pattern = ",%s*[%w%-%_]+", type = "normal" },
+  -- { regex = "[\\w\\-_']+[\\s\\S]\\?(?=.+,)", type = "normal" },
+  -- { regex = "(?<!\\?)[\\w\\-_']+[\\s\\S],",  type = "normal" },
+  { pattern = "[%w%-%_']+%s*,", type = "normal" },
+  { pattern = ",%s*[%w%-%_']+", type = "normal" },
 
   -- Attribute assignments
-  { regex = "[\\w\\-_]+()\\.*(?=[^{}]*=)",
+  { regex = "[\\w\\-_']+()\\.*(?=[^{}]*=)",
     type = { "literal", "normal" },
   },
 
   -- Inherits
   { -- Namespace inherits
-    pattern = "inherit()%s*%(()[%w%-%_]+()%)()%s*.-%s*();",
+    pattern = "inherit()%s*%(()[%w%-%_']+()%)()%s*.-%s*();",
     type = { "keyword", "normal", "keyword2", "normal", "literal", "normal" },
   },
   { -- General inherits
