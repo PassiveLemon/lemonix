@@ -32,7 +32,7 @@ in
     (mkIf cfg.avatar.enable {
       home.packages = with pkgs; [
         blender
-        unityhub
+        # unityhub # https://github.com/NixOS/nixpkgs/issues/418451
         inputs.lemonake.packages.${pkgs.system}.alcom
       ];
     })
