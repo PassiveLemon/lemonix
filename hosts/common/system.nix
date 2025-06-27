@@ -45,6 +45,15 @@
       enable = true;
       mountOnMedia = true;
     };
+    earlyoom = {
+      enable = true;
+      freeSwapThreshold = 5;
+      freeMemThreshold = 5;
+      enableNotifications = true;
+      extraArgs = [
+        "-g" "--avoid" "'^(X|.awesome-wrappe|pipewire|tym|lite-xl)$'"
+      ];
+    };
     gvfs.enable = true;
     devmon.enable = true;
     journald.extraConfig = "SystemMaxUse=1G";
@@ -57,35 +66,15 @@
 
   systemd = {
     enableStrictShellChecks = true;
+    oomd = {
+      enable = true;
+      enableRootSlice = true;
+      enableUserSlices = true;
+    };
     services = {
       # Fixes for problematic services
       NetworkManager-wait-online.enable = false;
       cups-browsed.serviceConfig.TimeoutStopSec = 10;
-      # System sometimes hangs during expensive builds
-      "nix-daemon".serviceConfig = {
-        Slice = "nix-daemon.slice";
-        OOMScoreAdjust = 1000;
-      };
-      # https://github.com/NixOS/nixpkgs/pull/370910
-      # It was not backported so we gotta keep it here
-      cron.preStart = lib.mkForce ''
-        mkdir -m 710 /var/cron || true
-
-        # By default, allow all users to create a crontab.  This
-        # is denoted by the existence of an empty cron.deny file.
-        if ! test -e /var/cron/cron.allow -o -e /var/cron/cron.deny; then
-            touch /var/cron/cron.deny
-        fi
-      '';
-    };
-    slices."nix-daemon".sliceConfig = {
-      CPUAccounting = true;
-      CPUQuota = "80%";
-      MemoryAccounting = true;
-      MemoryHigh = "70%";
-      MemoryMax = "80%";
-      MemorySwapMax = "70%";
-      MemoryZSwapMax = "70%";
     };
   };
 
