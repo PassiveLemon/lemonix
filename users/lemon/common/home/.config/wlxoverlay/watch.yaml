@@ -26,16 +26,16 @@ elements:
         action: Destroy
 
   # Dashboard button
-  - type: Button
-    rect: [50, 50, 50, 50]
-    corner_radius: 4
-    font_size: 16
-    bg_color: "#2288FF"
-    fg_color: "#24273a"
-    text: "Dash"
-    click_up:
-      - type: WayVR
-        action: ToggleDashboard
+  # - type: Button
+  #   rect: [50, 50, 50, 50]
+  #   corner_radius: 4
+  #   font_size: 16
+  #   bg_color: "#2288FF"
+  #   fg_color: "#24273a"
+  #   text: "Dash"
+  #   click_up:
+  #     - type: WayVR
+  #       action: ToggleDashboard
 
   # Keyboard button
   - type: Button
