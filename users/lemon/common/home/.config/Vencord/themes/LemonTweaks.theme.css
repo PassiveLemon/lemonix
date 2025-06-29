@@ -186,6 +186,9 @@ Honestly with the amount of stuff that needs to be modified to fix BDRecolor and
     background-color: rgb(var(--backgroundprimary));
     color: rgb(var(--textbrighter));
   }
+  .vc-settings-theme-links {
+    color: var(--text-default) !important;
+  }
   .vc-addon-card {
     background-color: rgb(var(--backgroundaccent));
     color: rgb(var(--backgroundaccent));

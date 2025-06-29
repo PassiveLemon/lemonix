@@ -23,7 +23,7 @@
 	--backgroundprimary:  	  41, 41, 41;	/* Background 1		     -  default:  54, 57, 63	-  hex:	#36393f */
 	--backgroundsecondary:    34, 34, 34;	/* Background 2		     -  default:	47, 49, 54	-  hex:	#2f3136 */
 	--backgroundsecondaryalt: 34, 34, 34;	/* Background 3		     -  default:	41, 43, 47	-  hex:	#292b2f */
-	--backgroundtertiary: 		41, 41, 41;	/* Background 4		     -  default:	32, 34, 37	-  hex:	#202225 */
+	--backgroundtertiary: 		34, 34, 34;	/* Background 4		     -  default:	32, 34, 37	-  hex:	#202225 */
 	--backgroundfloating: 		0, 0, 0;		 /* Background Elevated  -  default:	24, 25, 28	-  hex:	#18191c */
 
 	/* Unshittify-Discord settings */
@@ -57,7 +57,7 @@
       .channelTextArea_f75fb0 {
         margin: 2px 4px 4px 0px;
         .inner__74017 {
-          height: 58px;
+          min-height: 58px;
         }
         /* Remove gift, sticker, and app button, and reverse button order */
         .buttons__74017 {
