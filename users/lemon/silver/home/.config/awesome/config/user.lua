@@ -1,5 +1,7 @@
 local awful = require("awful")
 
+require("signal.wivrn")
+
 local user = { }
 
 user.terminal = "tym"
