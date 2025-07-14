@@ -26,6 +26,7 @@ elements:
         action: Destroy
 
   # Dashboard button
+  # https://github.com/olekolek1000/wayvr-dashboard/issues/7
   # - type: Button
   #   rect: [50, 50, 50, 50]
   #   corner_radius: 4

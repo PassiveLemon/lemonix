@@ -10,6 +10,8 @@ keyboard_repeat_delay: 200
 
 keyboard_repeat_rate: 50
 
+blit_method: "software"
+
 displays:
   Watch:
     width: 400
