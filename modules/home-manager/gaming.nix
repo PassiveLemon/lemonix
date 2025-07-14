@@ -70,7 +70,7 @@ in
         configFile = let
           yaml = pkgs.formats.yaml { };
         in {
-          "wlxoverlay/wayvr.conf.d/dashboard.yaml".source = yaml.generate "wayvr.yaml" {
+          "wlxoverlay/wayvr.conf.d/wayvr.yaml".source = yaml.generate "wayvr.yaml" {
             dashboard = {
               exec = (lib.getExe inputs.lemonake.packages.${pkgs.system}.wayvr-dashboard-git);
               env = [
