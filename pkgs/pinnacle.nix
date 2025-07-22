@@ -84,6 +84,7 @@ rustPlatform.buildRustPackage rec {
     maintainers = with maintainers; [ passivelemon ];
     platforms = platforms.linux;
     mainProgram = "pinnacle";
+    sourceProvenance = with sourceTypes; [ fromSource ];
   };
 }
 
