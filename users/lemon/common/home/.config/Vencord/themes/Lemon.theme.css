@@ -98,8 +98,15 @@
     /* If typing indicator, then shrink scrollerSpacer__36d07 to reduce jumping*/
     &:has(.typing_b88801 .cooldownWrapper_b21699) .scrollerSpacer__36d07,
     &:has(.typing_b88801 .typingDots_b88801) .scrollerSpacer__36d07 {
-      height: 0px;
+      height: 0px !important;
     }
+  }
+
+  /* Remove the added height from the blocked user messages */
+  /* This still allows for the new messages indicator to appear, so will need to figure out how to hide that when the newest message is blocked. */
+  /* This also doesnt work if the typing indicator shows up */
+  .groupStart__5126c + .scrollerSpacer__36d07 {
+    height: 8px !important;
   }
 }
 
