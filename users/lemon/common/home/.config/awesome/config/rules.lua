@@ -92,19 +92,50 @@ client.connect_signal("request::manage", function(c)
   end
 end)
 
--- Hide the wibar if the focused client is fullscreened
-local function wibar_layer(c)
-  local screen = c.screen
-  if not screen or not screen.wibar then return end
-  if c.fullscreen and c == client.focus then
-    screen.wibar.ontop = false
-  else
-    screen.wibar.ontop = true
+-- Hide the wibar for the screen of the focused client if it is fullscreened
+local function wibar_layer(c, force)
+  if c then
+    local s = c.screen
+    if not s or not s.wibar then return end
+    if c.fullscreen and ((c == client.focus) or force) then
+      s.wibar.ontop = false
+    else
+      s.wibar.ontop = true
+    end
   end
 end
 
-client.connect_signal("request::activate", function(c) wibar_layer(c) end)
+local client_screen_history = { }
+
+local function add_client_screen_history(c)
+  if client_screen_history[c] then
+    for k, v in ipairs(client_screen_history[c]) do
+      if v.index == c.screen.index then
+        table.remove(client_screen_history[c], k)
+        break
+      end
+    end
+    table.insert(client_screen_history[c], 1, c.screen)
+  else
+    client_screen_history[c] = { c.screen }
+  end
+end
+
 client.connect_signal("request::geometry", function(c) wibar_layer(c) end)
+client.connect_signal("request::activate", function(c)
+  add_client_screen_history(c)
+  wibar_layer(c)
+end)
+-- Run the wibar_layer check for the last focused client on a screen when the current focused client leaves the tag
+client.connect_signal("request::tag", function(c)
+  add_client_screen_history(c)
+  -- Select the second screen history because the first will be the current screen the client is on
+  local focused_client_last_screen = client_screen_history[c][2] or nil
+  if focused_client_last_screen then
+    local last_focused_client = awful.client.focus.history.get(focused_client_last_screen, 0)
+    wibar_layer(last_focused_client, true)
+  end
+end)
 
 -- Layout
 tag.connect_signal("request::default_layouts", function()
@@ -123,7 +154,7 @@ client.connect_signal("mouse::enter", function(c)
 end)
 
 local function activate_under_pointer()
-  local c = awful.mouse.client_under_pointer()
+  local c = mouse.current_client
   if not (c == nil) then
     c:activate({ context = "mouse_enter", raise = false })
   end
