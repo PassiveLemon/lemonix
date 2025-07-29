@@ -31,13 +31,8 @@ local caps_query_timer = gears.timer({
 
 -- Nifty function to just make the caps signals much more responsive due to delays with detecting caps lock
 local function caps()
-  if caps_cache == true then
-    caps_cache = false
-    emit(caps_cache)
-  elseif caps_cache == false then
-    caps_cache = true
-    emit(caps_cache)
-  end
+  caps_cache = not caps_cache
+  emit(caps_cache)
 end
 
 awesome.connect_signal("signal::peripheral::caps::update", function()

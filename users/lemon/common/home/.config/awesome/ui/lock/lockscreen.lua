@@ -170,11 +170,7 @@ awful.screen.connect_for_each_screen(function(s)
   awful.placement.centered(main)
 
   awesome.connect_signal("ui::lock::state", function(force)
-    if force then
-      main.visible = true
-    else
-      main.visible = false
-    end
+    main.visible = force or false
   end)
 end)
 

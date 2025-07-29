@@ -31,15 +31,7 @@ awful.screen.connect_for_each_screen(function(s)
     {
       bg = b.bg_primary,
     })
-  }, 3)
-
-  widgets.power.button:connect_signal("button::press", function()
-    if power_popup.screen.index == awful.screen.focused().index then
-      power_popup:toggle()
-    else
-      power_popup:toggle(false)
-    end
-  end)
+  }, 2)
 
   local main = h.timed_popup({
     -- screen position, useless gaps
@@ -67,11 +59,29 @@ awful.screen.connect_for_each_screen(function(s)
     toggle_off = function(self)
       self.cc_control = false
     end,
-  }, 3)
+  }, 2)
 
   --
   -- Control
   --
+
+  widgets.power.button:connect_signal("button::press", function()
+    if power_popup.screen.index == awful.screen.focused().index then
+      power_popup:toggle()
+    else
+      power_popup:toggle(false)
+    end
+  end)
+
+  power_popup:connect_signal("property::visible", function(w)
+    if w.visible then
+      main:stop()
+      widgets.power.button:get_children_by_id("textbox")[1].text = ""
+    else
+      widgets.power.button:get_children_by_id("textbox")[1].text = "󰐥"
+      main:again()
+    end
+  end)
 
   power_popup:connect_signal("mouse::enter", function()
     main:stop()
@@ -86,14 +96,11 @@ awful.screen.connect_for_each_screen(function(s)
         main:toggle(true)
       elseif force == false then
         main:toggle(false)
-        power_popup:toggle(false)
       else
         main:toggle()
-        power_popup:toggle(false)
       end
     else
       main:toggle(false)
-      power_popup:toggle(false)
     end
     main:again()
   end
@@ -113,12 +120,18 @@ awful.screen.connect_for_each_screen(function(s)
     {
       bg = b.bg_primary,
     })
+    -- Bring the popup back to the control mode if the keybind is pressed while in notification mode
     if not main.cc_control then
       main.cc_control = true
       show_control(true)
     else
       show_control(force)
     end
+  end)
+
+  main:connect_signal("property::visible", function(w)
+    s = awful.screen.focused()
+    s.wibar.ontop = (w.visible and main.cc_control)
   end)
 
   --
