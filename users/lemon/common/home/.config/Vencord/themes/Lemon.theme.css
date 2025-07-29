@@ -107,7 +107,7 @@
   .groupStart__5126c:has(+ .scrollerSpacer__36d07) {
     display: none !important;
   }
-  .isUnread__908e2:has(+ .groupStart__5126c) {
+  .divider__908e2:has(+ .groupStart__5126c) {
     display: none !important;
   }
 }
