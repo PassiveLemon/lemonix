@@ -95,18 +95,20 @@
         border-top-right-radius: 8px !important;
       }
     }
-    /* If typing indicator, then shrink scrollerSpacer__36d07 to reduce jumping*/
+    /* If typing indicator, then shrink scrollerSpacer__36d07 to reduce jumping */
     &:has(.typing_b88801 .cooldownWrapper_b21699) .scrollerSpacer__36d07,
     &:has(.typing_b88801 .typingDots_b88801) .scrollerSpacer__36d07 {
       height: 0px !important;
     }
   }
 
-  /* Remove the added height from the blocked user messages */
-  /* This still allows for the new messages indicator to appear, so will need to figure out how to hide that when the newest message is blocked. */
-  /* This also doesnt work if the typing indicator shows up */
-  .groupStart__5126c + .scrollerSpacer__36d07 {
-    height: 8px !important;
+  /* Remove the added height and hide new message bars from blocked user messages */
+  /* This won't stop discord from highlighting the channel though */
+  .groupStart__5126c:has(+ .scrollerSpacer__36d07) {
+    display: none !important;
+  }
+  .isUnread__908e2:has(+ .groupStart__5126c) {
+    display: none !important;
   }
 }
 
