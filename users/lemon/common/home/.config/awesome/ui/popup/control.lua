@@ -54,7 +54,6 @@ awful.screen.connect_for_each_screen(function(s)
     ontop = true,
     visible = false,
     type = "popup_menu",
-    hide_on_click_anywhere = true,
     -- widget property is dynamically set, this is just a simple default
     widget = widgets.power.button,
     -- cc_control is a custom value for when the control center is in "control" mode (aka showing all widgets)
@@ -82,18 +81,21 @@ awful.screen.connect_for_each_screen(function(s)
   end)
 
   local function show_control(force)
-    if force == true then
-      main:toggle(true)
-    elseif force == false then
-      main:toggle(false)
-      power_popup:toggle(false)
-    elseif main.screen.index == awful.screen.focused().index then
-      main:toggle()
-      power_popup:toggle(false)
+    if main.screen.index == awful.screen.focused().index then
+      if force == true then
+        main:toggle(true)
+      elseif force == false then
+        main:toggle(false)
+        power_popup:toggle(false)
+      else
+        main:toggle()
+        power_popup:toggle(false)
+      end
     else
       main:toggle(false)
       power_popup:toggle(false)
     end
+    main:again()
   end
 
   awesome.connect_signal("ui::control::toggle", function(force)

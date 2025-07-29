@@ -3,11 +3,11 @@
 local awful = require "awful"
 local wibox = require "wibox"
 
-local function click_to_hide(widget, hide_fct, only_outside)
-	only_outside = only_outside or false
+local function click_to_hide(widget, hide_fct, outside_only)
+	outside_only = outside_only or false
 
 	hide_fct = hide_fct or function(object)
-		if only_outside and object == widget then
+		if outside_only and object == widget then
 			return
 		end
 		widget.visible = false
