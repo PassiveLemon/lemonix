@@ -115,14 +115,8 @@ end
 
 -- If the art isn't already cached then the notification will have the art of the previous media
 local function track_notification()
-  -- awesome.emit_signal("ui::control::notification::mpris", true)
   if b.mpris_notifications and metadata.player.available then
-    naughty.notification({
-      icon = metadata.media.art_image,
-      icon_size = 100,
-      title = metadata.media.title,
-      message = "By " .. metadata.media.artist .. "\nOn " .. metadata.media.album,
-    })
+    awesome.emit_signal("ui::control::notification::mpris")
   end
 end
 

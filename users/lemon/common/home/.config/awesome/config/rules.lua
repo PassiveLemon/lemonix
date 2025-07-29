@@ -84,6 +84,10 @@ ruled.client.connect_signal("request::rules", function()
   })
 end)
 
+--
+-- Bar and fullscreens
+--
+
 -- Actually fullscreen managed clients
 client.connect_signal("request::manage", function(c)
   local s = awful.screen.focused()
@@ -105,6 +109,8 @@ local function wibar_layer(c, force)
   end
 end
 
+-- Stores a history of each clients previous screen attachment.
+-- Current screen is index 1 and the first previous is the second.
 local client_screen_history = { }
 
 local function add_client_screen_history(c)
@@ -122,11 +128,10 @@ local function add_client_screen_history(c)
 end
 
 client.connect_signal("request::geometry", function(c) wibar_layer(c) end)
-client.connect_signal("request::activate", function(c)
-  add_client_screen_history(c)
-  wibar_layer(c)
-end)
+client.connect_signal("request::activate", function(c) wibar_layer(c) end)
+
 -- Run the wibar_layer check for the last focused client on a screen when the current focused client leaves the tag
+client.connect_signal("request::manage", function(c) add_client_screen_history(c) end)
 client.connect_signal("request::tag", function(c)
   add_client_screen_history(c)
   -- Select the second screen history because the first will be the current screen the client is on
@@ -137,7 +142,10 @@ client.connect_signal("request::tag", function(c)
   end
 end)
 
+--
 -- Layout
+--
+
 tag.connect_signal("request::default_layouts", function()
   awful.layout.append_default_layouts({
     awful.layout.suit.spiral.dwindle,
@@ -148,7 +156,11 @@ client.connect_signal("request::manage", function(c)
   if not awesome.startup then awful.client.setslave(c) end
 end)
 
--- Sloppy focus across clients
+--
+-- Sloppy focus
+--
+
+-- Across clients
 client.connect_signal("mouse::enter", function(c)
   c:activate({ context = "mouse_enter", raise = false })
 end)
@@ -169,21 +181,24 @@ local focus_timer = gears.timer({
   end
 })
 
--- Sloppy focus across workspace changes
+-- Across workspace changes
 tag.connect_signal("property::selected", function(t)
   if t.selected then
     focus_timer:start()
   end
 end)
 
--- Sloppy focus after closing clients
+-- After closing clients
 client.connect_signal("request::unmanage", function()
   focus_timer:start()
 end)
 
--- Sloppy focus after moving clients across workspaces
-client.connect_signal("property::tags", function()
-  focus_timer:start()
+-- After moving clients across workspaces
+client.connect_signal("property::tags", function(c)
+  -- Floating clients can get stuck behind tiled clients if the check happens while the cursor is not over the new floating client
+  if not c.floating then
+    focus_timer:start()
+  end
 end)
 
 --

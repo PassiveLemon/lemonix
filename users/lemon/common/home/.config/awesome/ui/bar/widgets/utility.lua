@@ -36,9 +36,7 @@ utility.volume_icon = h.button({
   text = "󰖀",
   no_color = true,
   button_press = function()
-    awful.spawn.easy_async("pamixer -t", function()
-      awesome.emit_signal("signal::peripheral::volume::update")
-    end)
+    awesome.emit_signal("signal::peripheral::volume::mute")
   end
 })
 utility.volume_text = h.text({

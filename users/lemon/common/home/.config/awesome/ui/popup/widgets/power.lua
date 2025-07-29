@@ -82,6 +82,7 @@ local power_menu_items = {
   layout = wibox.layout.fixed.vertical,
 }
 
+-- Dynamically add power options to the menu based on what the device is capable of (at user discretion)
 if user.power.lock then
   table.insert(power_menu_items, lock_button)
 end

@@ -45,6 +45,12 @@ local artist_text = h.text({
   halign = "center",
 })
 
+local album_text = h.text({
+  x = dpi(532),
+  y = dpi(17),
+  halign = "center",
+})
+
 local prev_button = h.button({
   x = dpi(50),
   y = dpi(50),
@@ -92,6 +98,7 @@ local function metadata_updater(metadata)
   if metadata.player.title == "" then
     art_image_box.visible = false
     artist_text.visible = false
+    album_text.visible = false
     position_slider.visible = false
     title_text:get_children_by_id("textbox")[1].text = "No media found"
   else
@@ -102,6 +109,7 @@ local function metadata_updater(metadata)
       artist_text.visible = true
       artist_text:get_children_by_id("textbox")[1].text = "By " .. metadata.media.artist
     end
+    album_text:get_children_by_id("textbox")[1].text = "On " .. metadata.media.album
   end
 end
 
@@ -147,8 +155,10 @@ music.control = h.background({
     })
   },
 },
-{ -- There's something up in here that stops removing the margin around the art image. It's stuck with a 4px margin
+{
+  -- control center width, margins
   x = dpi(total_width - (b.margins * 4)),
+  -- art image height, margins
   y = dpi(130 + (b.margins * 2)),
   bg = b.bg_secondary,
   shape = gears.shape.rounded_rect,
@@ -162,6 +172,13 @@ music.notif = h.background({
       layout = wibox.layout.fixed.vertical,
       title_text,
       artist_text,
+      album_text,
+      {
+        layout = wibox.layout.flex.horizontal,
+        prev_button,
+        toggle_button,
+        next_button,
+      },
     },
     {
       margins = {
@@ -171,8 +188,10 @@ music.notif = h.background({
     })
   },
 },
-{ -- There's something up in here that stops removing the margin around the art image. It's stuck with a 4px margin
+{
+  -- control center width, margins
   x = dpi(total_width - (b.margins * 4)),
+  -- art image height, margins
   y = dpi(130 + (b.margins * 2)),
   bg = b.bg_secondary,
   shape = gears.shape.rounded_rect,

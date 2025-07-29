@@ -3,6 +3,7 @@ local b = require("beautiful")
 local wibox = require("wibox")
 
 local h = require("helpers")
+local user = require("config.user")
 
 local widgets = require("ui.popup.widgets")
 
@@ -10,9 +11,9 @@ local dpi = b.xresources.apply_dpi
 
 awful.screen.connect_for_each_screen(function(s)
   local power_popup = h.timed_popup({
-    --      screen width, margin, main popup width
+    -- screen position, main popup width, useless gaps
     x = (dpi(s.geometry.x + 353) + (b.useless_gap * 2)),
-    --      bar height, margin
+    -- wibar height, useless gaps
     y = (dpi(32) + (b.useless_gap * 2)),
     screen = s,
     bg = b.bg_primary,
@@ -30,7 +31,7 @@ awful.screen.connect_for_each_screen(function(s)
     {
       bg = b.bg_primary,
     })
-  }, 5)
+  }, 3)
 
   widgets.power.button:connect_signal("button::press", function()
     if power_popup.screen.index == awful.screen.focused().index then
@@ -41,9 +42,9 @@ awful.screen.connect_for_each_screen(function(s)
   end)
 
   local main = h.timed_popup({
-    --      screen width, gap
+    -- screen position, useless gaps
     x = (dpi(s.geometry.x) + (b.useless_gap * 2)),
-    --      bar height, gap
+    -- wibar height, useless gaps
     y = (dpi(32) + (b.useless_gap * 2)),
     screen = s,
     bg = b.bg_primary,
@@ -54,26 +55,24 @@ awful.screen.connect_for_each_screen(function(s)
     visible = false,
     type = "popup_menu",
     hide_on_click_anywhere = true,
-    widget = h.background({
-      layout = wibox.layout.fixed.vertical,
-      {
-        layout = wibox.layout.fixed.horizontal,
-        widgets.volume.control,
-        widgets.power.button,
-      },
-      widgets.brightness.control,
-      widgets.music.control,
-    },
-    {
-      bg = b.bg_primary,
-    }),
+    -- widget property is dynamically set, this is just a simple default
+    widget = widgets.power.button,
+    -- cc_control is a custom value for when the control center is in "control" mode (aka showing all widgets)
+    cc_control = false,
     mouse_enter = function()
       power_popup:stop()
     end,
     mouse_leave = function()
       power_popup:again()
-    end
+    end,
+    toggle_off = function(self)
+      self.cc_control = false
+    end,
   }, 3)
+
+  --
+  -- Control
+  --
 
   power_popup:connect_signal("mouse::enter", function()
     main:stop()
@@ -82,8 +81,7 @@ awful.screen.connect_for_each_screen(function(s)
     main:again()
   end)
 
-  awesome.connect_signal("ui::control::toggle", function(force)
-    awesome.emit_signal("signal::mpris::update")
+  local function show_control(force)
     if force == true then
       main:toggle(true)
     elseif force == false then
@@ -96,6 +94,58 @@ awful.screen.connect_for_each_screen(function(s)
       main:toggle(false)
       power_popup:toggle(false)
     end
+  end
+
+  awesome.connect_signal("ui::control::toggle", function(force)
+    awesome.emit_signal("signal::mpris::update")
+    main.widget = h.background({
+      layout = wibox.layout.fixed.vertical,
+      {
+        layout = wibox.layout.fixed.horizontal,
+        widgets.volume.control,
+        widgets.power.button,
+      },
+      widgets.brightness.control,
+      widgets.music.control,
+    },
+    {
+      bg = b.bg_primary,
+    })
+    if not main.cc_control then
+      main.cc_control = true
+      show_control(true)
+    else
+      show_control(force)
+    end
+  end)
+
+  --
+  -- Notification
+  --
+
+  local function show_notif(widget)
+    -- Dynamically show the specified widget
+    if not main.cc_control then
+      if user.control[widget] then
+        main.widget = h.margin({
+          layout = wibox.layout.fixed.vertical,
+          widgets[widget].notif,
+        })
+        show_control(true)
+      end
+    end
+  end
+
+  awesome.connect_signal("ui::control::notification::volume", function()
+    show_notif("volume")
+  end)
+
+  awesome.connect_signal("ui::control::notification::brightness", function()
+    show_notif("brightness")
+  end)
+
+  awesome.connect_signal("ui::control::notification::mpris", function()
+    show_notif("music")
   end)
 end)
 

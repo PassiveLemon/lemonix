@@ -57,6 +57,7 @@ brightness.control = h.background({
   brightness_slider,
 },
 {
+  -- control center width, margins
   x = dpi(total_width - (b.margins * 4)),
   y = dpi(32),
   bg = b.bg_secondary,

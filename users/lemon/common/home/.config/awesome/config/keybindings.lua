@@ -15,6 +15,7 @@ local dpi = b.xresources.apply_dpi
 
 local super = user.super
 
+-- TODO: Probably should move this out of keybindings.lua
 local app_launcher = bling.widget.app_launcher({
   terminal = user.terminal,
   type = "popup",
@@ -81,10 +82,7 @@ awful.keyboard.append_global_keybindings({
   awful.key({ super }, "space", function() app_launcher:toggle() end,
   { description = "|| run app launcher", group = "launcher" }),
 
-  awful.key({ super }, "c", function()
-    awesome.emit_signal("ui::control::notification", false)
-    awesome.emit_signal("ui::control::toggle")
-  end,
+  awful.key({ super }, "c", function() awesome.emit_signal("ui::control::toggle") end,
   { description = "|| run control panel", group = "launcher" }),
 
   awful.key({ super }, "x", function() awesome.emit_signal("ui::resource::toggle") end,
@@ -94,45 +92,20 @@ awful.keyboard.append_global_keybindings({
   { description = "|| lock display", group = "launcher" }),
 
   -- Control
-  awful.key({ }, "XF86MonBrightnessUp", function()
-    awful.spawn.easy_async("brightnessctl set 3%+", function()
-      awesome.emit_signal("signal::peripheral::brightness::update")
-      awesome.emit_signal("ui::control::notification::brightness", true)
-    end)
-  end,
+  awful.key({ }, "XF86MonBrightnessUp", function() awesome.emit_signal("signal::peripheral::brightness::increase") end,
   { description = "|| increase brightness", group = "control" }),
 
-  awful.key({ }, "XF86MonBrightnessDown", function()
-    awful.spawn.easy_async("brightnessctl set 3%-", function()
-      awesome.emit_signal("signal::peripheral::brightness::update")
-      awesome.emit_signal("ui::control::notification::brightness", true)
-    end)
-  end,
+  awful.key({ }, "XF86MonBrightnessDown", function() awesome.emit_signal("signal::peripheral::brightness::decrease") end,
   { description = "|| decrease brightness", group = "control" }),
 
-  awful.key({ }, "XF86AudioMute", function()
-    awful.spawn.easy_async("pamixer -t", function()
-      awesome.emit_signal("signal::peripheral::volume::update")
-      awesome.emit_signal("ui::control::notification::volume", true)
-    end)
-  end,
+  awful.key({ }, "XF86AudioMute", function() awesome.emit_signal("signal::peripheral::volume::mute") end,
   { description = "|| toggle mute", group = "control" }),
 
-  awful.key({ }, "XF86AudioLowerVolume", function()
-    awful.spawn.easy_async("pamixer -d 1", function()
-      awesome.emit_signal("signal::peripheral::volume::update")
-      awesome.emit_signal("ui::control::notification::volume", true)
-    end)
-  end,
-  { description = "|| decrease volume", group = "control" }),
-
-  awful.key({ }, "XF86AudioRaiseVolume", function()
-    awful.spawn.easy_async("pamixer -i 1", function()
-      awesome.emit_signal("signal::peripheral::volume::update")
-      awesome.emit_signal("ui::control::notification::volume", true)
-    end)
-  end,
+  awful.key({ }, "XF86AudioRaiseVolume", function() awesome.emit_signal("signal::peripheral::volume::increase") end,
   { description = "|| increase volume", group = "control" }),
+
+  awful.key({ }, "XF86AudioLowerVolume", function() awesome.emit_signal("signal::peripheral::volume::decrease") end,
+  { description = "|| decrease volume", group = "control" }),
 
   awful.key({ }, "XF86AudioPrev", function() awesome.emit_signal("signal::mpris::previous") end,
   { description = "|| previous media", group = "control" }),

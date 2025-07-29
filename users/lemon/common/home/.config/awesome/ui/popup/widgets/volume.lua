@@ -30,9 +30,7 @@ local volume_icon = h.button({
   font = b.sysfont(dpi(14)),
   no_color = true,
   button_press = function()
-    awful.spawn.easy_async("pamixer -t", function()
-      awesome.emit_signal("signal::peripheral::volume::update")
-    end)
+    awesome.emit_signal("signal::peripheral::volume::mute")
   end
 })
 
@@ -69,6 +67,7 @@ volume.control = h.background({
   volume_slider,
 },
 {
+  -- control center width, power button width, margins
   x = dpi(total_width - 32 - (b.margins * 6)),
   y = dpi(32),
   bg = b.bg_secondary,
@@ -81,6 +80,7 @@ volume.notif = h.background({
   volume_slider,
 },
 {
+  -- control center width, margins
   x = dpi(total_width - (b.margins * 4)),
   y = dpi(32),
   bg = b.bg_secondary,

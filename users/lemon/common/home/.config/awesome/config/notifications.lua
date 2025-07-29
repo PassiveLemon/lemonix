@@ -42,7 +42,7 @@ naughty.config.defaults.screen = awful.screen.focused()
 naughty.config.defaults.ontop = true
 naughty.config.defaults.margin = (b.margins * 2)
 naughty.config.defaults.border_width = b.border_width
-naughty.config.defaults.position = "bottom_right"
+naughty.config.defaults.position = "top_left"
 
 naughty.connect_signal("request::display", function(n)
   naughty.layout.box({

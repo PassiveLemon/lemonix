@@ -11,6 +11,8 @@ local dpi = b.xresources.apply_dpi
 -- Helpers
 --
 
+-- TODO: This is turning into a mess. Try to refactor the widget wrappers
+
 local helpers = { }
 
 function helpers.margin(widget_pass, conf_in)
@@ -87,7 +89,8 @@ function helpers.button(conf_in)
   local button_id = button:get_children_by_id("background")[1]
   button.buttons = {
     awful.button({ }, 1, function()
-      conf:button_press()
+      -- Mock "self" implementation by passing the config back to the callback
+      conf.button_press(button_id)
     end)
   }
   button_id:connect_signal("mouse::enter", function(self)
@@ -95,14 +98,14 @@ function helpers.button(conf_in)
       self.bg = conf.bg_focus or b.bg_minimize
       self.fg = conf.fg_focus or b.fg_focus
     end
-    conf:mouse_enter()
+    conf.mouse_enter(button_id)
   end)
   button_id:connect_signal("mouse::leave", function(self)
     if not conf.no_color then
       self.bg = conf.bg_primary or b.bg_secondary
       self.fg = conf.fg_primary or b.fg_primary
     end
-    conf:mouse_leave()
+    conf.mouse_leave(button_id)
   end)
   return button
 end
@@ -110,6 +113,7 @@ end
 local timed_default = {
   mouse_enter = function() end,
   mouse_leave = function() end,
+  timer_callback = function() end,
 }
 
 function helpers.timed_button(conf_in, time)
@@ -121,6 +125,7 @@ function helpers.timed_button(conf_in, time)
     timeout = time or 3,
     single_shot = true,
     callback = function()
+      conf.timer_callback(button_id)
       button.toggle = true
       button_id.fg = b.fg_focus
     end,
@@ -128,7 +133,7 @@ function helpers.timed_button(conf_in, time)
   button.buttons = {
     awful.button({ }, 1, function()
       if button.toggle == true then
-        conf:button_press()
+        conf.button_press(button_id)
       end
     end)
   }
@@ -143,7 +148,7 @@ function helpers.timed_button(conf_in, time)
       self.fg = conf.fg_focus or b.fg_focus
     end
     timer:again()
-    conf:mouse_enter()
+    conf.mouse_enter(button_id)
   end)
   button_id:connect_signal("mouse::leave", function(self)
     if not conf.no_color then
@@ -152,7 +157,7 @@ function helpers.timed_button(conf_in, time)
     end
     timer:stop()
     button.toggle = false
-    conf:mouse_leave()
+    conf.mouse_leave(button_id)
   end)
   return button
 end
@@ -187,19 +192,26 @@ function helpers.slider(conf_in)
   slider_id:connect_signal("mouse::enter", function(self)
     self.handle_width = conf.handle_width
     self.bar_active_color = conf.bar_active_color or b.fg_primary
-    conf:mouse_enter()
+    conf.mouse_enter(slider_id)
   end)
   slider_id:connect_signal("mouse::leave", function(self)
     self.handle_width = dpi(0)
     self.bar_active_color = conf.bar_active_color or b.fg_primary
-    conf:mouse_leave()
+    conf.mouse_leave(slider_id)
   end)
   return slider
 end
 
+local widget_default = {
+  mouse_enter = function() end,
+  mouse_leave = function() end,
+  toggle_on = function() end,
+  toggle_off = function() end,
+}
+
 -- Widget with a toggle lock
 function helpers.widget(conf_in)
-  local conf = conf_in or { }
+  local conf = gears.table.join(widget_default, (conf_in or { }))
   local widget = conf_in
   -- https://bitbucket.org/grumph/home_config/src/4d650b5bc3c366eff245f528c7830c22bfef1ba4/.config/awesome/helpers/widget_popup.lua#lines-42:57
   if conf.hide_on_click_anywhere then
@@ -223,8 +235,10 @@ function helpers.widget(conf_in)
     if can_toggle then
       if force == false or (force == nil and self.visible) then
         self.visible = false
+        conf.toggle_off(widget)
       else
         self.visible = true
+        conf.toggle_on(widget)
       end
     end
   end
@@ -233,8 +247,10 @@ function helpers.widget(conf_in)
     if can_toggle then
       if force == false or (force == nil and self.visible) then
         self.visible = false
+        conf.toggle_off(widget)
       else
         self.visible = true
+        conf.toggle_on(widget)
       end
     end
   end
@@ -250,6 +266,7 @@ function helpers.timed_widget(conf_in, time, start_on_visible)
     timeout = time or 3,
     single_shot = true,
     callback = function()
+      conf.timer_callback(widget)
       widget.visible = false
     end,
   })
@@ -274,18 +291,18 @@ function helpers.timed_widget(conf_in, time, start_on_visible)
   end
   widget:connect_signal("mouse::enter", function()
     timer:stop()
-    conf:mouse_enter()
+    conf.mouse_enter(widget)
   end)
   widget:connect_signal("mouse::leave", function()
     timer:again()
-    conf:mouse_leave()
+    conf.mouse_leave(widget)
   end)
   return widget
 end
 
 -- Popup with a toggle lock
 function helpers.popup(conf_in)
-  local conf = conf_in or { }
+  local conf = gears.table.join(widget_default, (conf_in or { }))
   local popup = awful.popup(conf)
   -- https://bitbucket.org/grumph/home_config/src/4d650b5bc3c366eff245f528c7830c22bfef1ba4/.config/awesome/helpers/widget_popup.lua#lines-42:57
   if conf.hide_on_click_anywhere then
@@ -309,8 +326,10 @@ function helpers.popup(conf_in)
     if can_toggle then
       if force == false or (force == nil and self.visible) then
         self.visible = false
+        conf.toggle_off(popup)
       else
         self.visible = true
+        conf.toggle_on(popup)
       end
     end
   end
@@ -319,8 +338,10 @@ function helpers.popup(conf_in)
     if can_toggle then
       if force == false or (force == nil and self.visible) then
         self.visible = false
+        conf.toggle_off(popup)
       else
         self.visible = true
+        conf.toggle_on(popup)
       end
     end
   end
@@ -336,6 +357,7 @@ function helpers.timed_popup(conf_in, time, start_on_visible)
     timeout = time or 3,
     single_shot = true,
     callback = function()
+      conf.timer_callback(popup)
       popup:toggle(false)
     end,
   })
@@ -360,11 +382,11 @@ function helpers.timed_popup(conf_in, time, start_on_visible)
   end
   popup:connect_signal("mouse::enter", function()
     timer:stop()
-    conf:mouse_enter()
+    conf.mouse_enter(popup)
   end)
   popup:connect_signal("mouse::leave", function()
     timer:again()
-    conf:mouse_leave()
+    conf.mouse_leave(popup)
   end)
   return popup
 end
