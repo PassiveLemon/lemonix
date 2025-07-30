@@ -90,6 +90,23 @@ awful.screen.connect_for_each_screen(function(s)
     main:again()
   end)
 
+  -- When the wibar is visible, move the control center below it
+  local function popup_positioner()
+    if (not s.wibar.ontop) and client.focus.fullscreen and (client.focus.screen == awful.screen.focused()) then
+      main.y = (b.useless_gap * 2)
+    else
+      main.y = (s.wibar.height + (b.useless_gap * 2))
+    end
+  end
+
+  s.wibar:connect_signal("property::ontop", function()
+    popup_positioner()
+  end)
+
+  client.connect_signal("request::geometry", function()
+    popup_positioner()
+  end)
+
   local function show_control(force)
     popup_positioner()
     if main.screen.index == awful.screen.focused().index then
