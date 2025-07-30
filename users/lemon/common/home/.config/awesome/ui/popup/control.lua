@@ -14,7 +14,7 @@ awful.screen.connect_for_each_screen(function(s)
     -- screen position, main popup width, useless gaps
     x = (dpi(s.geometry.x + 353) + (b.useless_gap * 2)),
     -- wibar height, useless gaps
-    y = (dpi(32) + (b.useless_gap * 2)),
+    y = (s.wibar.height + (b.useless_gap * 2)),
     screen = s,
     bg = b.bg_primary,
     fg = b.fg_primary,
@@ -37,7 +37,7 @@ awful.screen.connect_for_each_screen(function(s)
     -- screen position, useless gaps
     x = (dpi(s.geometry.x) + (b.useless_gap * 2)),
     -- wibar height, useless gaps
-    y = (dpi(32) + (b.useless_gap * 2)),
+    y = (s.wibar.height + (b.useless_gap * 2)),
     screen = s,
     bg = b.bg_primary,
     fg = b.fg_primary,
@@ -48,8 +48,6 @@ awful.screen.connect_for_each_screen(function(s)
     type = "popup_menu",
     -- widget property is dynamically set, this is just a simple default
     widget = widgets.power.button,
-    -- cc_control is a custom value for when the control center is in "control" mode (aka showing all widgets)
-    cc_control = false,
     mouse_enter = function()
       power_popup:stop()
     end,
@@ -60,6 +58,8 @@ awful.screen.connect_for_each_screen(function(s)
       self.cc_control = false
     end,
   }, 2)
+  -- cc_control is a custom value for when the control center is in "control" mode (aka showing all widgets)
+  main.cc_control = false
 
   --
   -- Control
@@ -91,6 +91,7 @@ awful.screen.connect_for_each_screen(function(s)
   end)
 
   local function show_control(force)
+    popup_positioner()
     if main.screen.index == awful.screen.focused().index then
       if force == true then
         main:toggle(true)

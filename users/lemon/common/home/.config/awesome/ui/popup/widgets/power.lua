@@ -14,7 +14,7 @@ local dpi = b.xresources.apply_dpi
 
 local power = { }
 
-local lock_button = h.button({
+power.lock_button = h.button({
   x = dpi(32),
   y = dpi(32),
   shape = gears.shape.circle,
@@ -26,7 +26,7 @@ local lock_button = h.button({
   end
 })
 
-local suspend_button = h.timed_button({
+power.suspend_button = h.timed_button({
   x = dpi(32),
   y = dpi(32),
   shape = gears.shape.circle,
@@ -37,7 +37,7 @@ local suspend_button = h.timed_button({
   end
 }, 1)
 
-local hibernate_button = h.timed_button({
+power.hibernate_button = h.timed_button({
   x = dpi(32),
   y = dpi(32),
   shape = gears.shape.circle,
@@ -48,7 +48,7 @@ local hibernate_button = h.timed_button({
   end
 }, 2)
 
-local poweroff_button = h.timed_button({
+power.poweroff_button = h.timed_button({
   x = dpi(32),
   y = dpi(32),
   shape = gears.shape.circle,
@@ -59,7 +59,7 @@ local poweroff_button = h.timed_button({
   end
 }, 3)
 
-local restart_button = h.timed_button({
+power.restart_button = h.timed_button({
   x = dpi(32),
   y = dpi(32),
   shape = gears.shape.circle,
@@ -78,29 +78,23 @@ power.button = h.button({
   font = b.sysfont(dpi(15)),
 })
 
+local power_menu_order = {
+  "lock",
+  "suspend",
+  "hibernate",
+  "poweroff",
+  "restart",
+}
+
 local power_menu_items = {
   layout = wibox.layout.fixed.vertical,
 }
 
 -- Dynamically add power options to the menu based on what the device is capable of (at user discretion)
-if user.power.lock then
-  table.insert(power_menu_items, lock_button)
-end
-
-if user.power.suspend then
-  table.insert(power_menu_items, suspend_button)
-end
-
-if user.power.hibernate then
-  table.insert(power_menu_items, hibernate_button)
-end
-
-if user.power.poweroff then
-  table.insert(power_menu_items, poweroff_button)
-end
-
-if user.power.restart then
-  table.insert(power_menu_items, restart_button)
+for _, v in ipairs(power_menu_order) do
+  if user.power[v] then
+    table.insert(power_menu_items, power[v .. "_button"])
+  end
 end
 
 power.menu = wibox.widget(power_menu_items)

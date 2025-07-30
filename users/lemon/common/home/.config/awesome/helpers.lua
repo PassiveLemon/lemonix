@@ -41,7 +41,7 @@ function helpers.background(widget_pass, conf_in)
     bg = conf.bg or b.bg_secondary,
     fg = conf.fg or b.fg_primary,
     shape = conf.shape,
-    visible = conf.visible or true,
+    visible = conf.visible,
     widget_pass,
   }, conf_in)
   return background
@@ -213,6 +213,7 @@ local widget_default = {
 function helpers.widget(conf_in)
   local conf = gears.table.join(widget_default, (conf_in or { }))
   local widget = conf_in
+  widget.visible = true
   -- https://bitbucket.org/grumph/home_config/src/4d650b5bc3c366eff245f528c7830c22bfef1ba4/.config/awesome/helpers/widget_popup.lua#lines-42:57
   if conf.hide_on_click_anywhere then
     click_to_hide.popup(widget, nil, true)
@@ -304,6 +305,7 @@ end
 function helpers.popup(conf_in)
   local conf = gears.table.join(widget_default, (conf_in or { }))
   local popup = awful.popup(conf)
+  popup.visible = false
   -- https://bitbucket.org/grumph/home_config/src/4d650b5bc3c366eff245f528c7830c22bfef1ba4/.config/awesome/helpers/widget_popup.lua#lines-42:57
   if conf.hide_on_click_anywhere then
     click_to_hide.popup(popup, nil, true)

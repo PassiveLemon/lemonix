@@ -1,7 +1,6 @@
 local awful = require("awful")
 local gears = require("gears")
 local b = require("beautiful")
-local naughty = require("naughty")
 
 local h = require("helpers")
 
@@ -188,84 +187,90 @@ local mpris_timer = gears.timer({
   end,
 })
 
-local function shuffler()
+local function mpris_timer_wrapper(callback)
   mpris_timer:stop()
-  if metadata.player.shuffle == "ON" then
-    metadata.player.shuffle = "OFF"
-  elseif metadata.player.shuffle == "OFF" then
-    metadata.player.shuffle = "ON"
-  end
-  global_player:shuffle()
-  emit()
+  callback()
   mpris_timer:start()
+end
+
+local function shuffler()
+  mpris_timer_wrapper(function()
+    if metadata.player.shuffle == "ON" then
+      metadata.player.shuffle = "OFF"
+    elseif metadata.player.shuffle == "OFF" then
+      metadata.player.shuffle = "ON"
+    end
+    global_player:shuffle()
+    emit()
+  end)
 end
 
 local function previouser()
-  mpris_timer:stop()
-  global_player:previous()
-  metadata_fetch()
-  mpris_timer:start()
+  mpris_timer_wrapper(function()
+    global_player:previous()
+    metadata_fetch()
+  end)
 end
 
 local function toggler()
-  mpris_timer:stop()
-  if metadata.player.status == "PLAYING" then
-    metadata.player.status = "PAUSED"
-  elseif metadata.player.status == "PAUSED" then
-    metadata.player.status = "PLAYING"
-  end
-  global_player:play_pause()
-  emit()
-  mpris_timer:start()
+  mpris_timer_wrapper(function()
+    if metadata.player.status == "PLAYING" then
+      metadata.player.status = "PAUSED"
+    elseif metadata.player.status == "PAUSED" then
+      metadata.player.status = "PLAYING"
+    end
+    global_player:play_pause()
+    emit()
+  end)
 end
 
 local function play_pauser(option)
-  mpris_timer:stop()
-  if option == "play" then
-    global_player:play()
-  elseif option == "pause" then
-    global_player:pause()
-  end
-  mpris_timer:start()
+  mpris_timer_wrapper(function()
+    if option == "play" then
+      global_player:play()
+    elseif option == "pause" then
+      global_player:pause()
+    end
+  end)
 end
 
 local function nexter()
-  mpris_timer:stop()
-  global_player:next()
-  metadata_fetch()
-  mpris_timer:start()
+  mpris_timer_wrapper(function()
+    global_player:next()
+    metadata_fetch()
+  end)
 end
 
 local function looper()
-  mpris_timer:stop()
-  if metadata.player.loop == "NONE" then
-    metadata.player.loop = "PLAYLIST"
-  elseif metadata.player.loop == "PLAYLIST" then
-    metadata.player.loop = "TRACK"
-  elseif metadata.player.loop == "TRACK" then
-    metadata.player.loop = "NONE"
-  end
-  global_player:loop()
-  emit()
-  mpris_timer:start()
+  mpris_timer_wrapper(function()
+    if metadata.player.loop == "NONE" then
+      metadata.player.loop = "PLAYLIST"
+    elseif metadata.player.loop == "PLAYLIST" then
+      metadata.player.loop = "TRACK"
+    elseif metadata.player.loop == "TRACK" then
+      metadata.player.loop = "NONE"
+    end
+    global_player:loop()
+    emit()
+  end)
 end
 
 local function positioner(position_new)
-  mpris_timer:stop()
-  global_player.position = h.round(((position_new * metadata.media.length) / 100), 3)
-  mpris_timer:start()
+  mpris_timer_wrapper(function()
+    global_player.position = h.round(((position_new * metadata.media.length) / 100), 3)
+  end)
 end
 
 local function volumer(volume_new)
-  mpris_timer:stop()
-  global_player.volume = h.round((volume_new / 100), 3)
-  mpris_timer:start()
+  mpris_timer_wrapper(function()
+    global_player.volume = h.round((volume_new / 100), 3)
+  end)
 end
 
 awesome.connect_signal("signal::mpris::update", function()
-  mpris_timer:stop()
-  metadata_fetch()
-  mpris_timer:start()
+  mpris_timer_wrapper(function()
+    metadata_fetch()
+  end)
 end)
 
 awesome.connect_signal("signal::mpris::shuffle", function()

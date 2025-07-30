@@ -11,7 +11,7 @@ local function volume()
     if value == "muted" then
       value = -1
     else
-      value = tonumber(value)
+      value = tonumber(value) or 50
     end
     emit(value)
   end)
@@ -27,40 +27,49 @@ local volume_timer = gears.timer({
   end,
 })
 
-awesome.connect_signal("signal::peripheral::volume::update", function()
+local function volume_timer_wrapper(callback)
   volume_timer:stop()
-  volume()
+  callback()
   volume_timer:start()
+end
+
+awesome.connect_signal("signal::peripheral::volume::update", function()
+  volume_timer_wrapper(function()
+    volume()
+  end)
   awesome.emit_signal("ui::control::notification::volume")
 end)
 
 awesome.connect_signal("signal::peripheral::volume", function(volume_new)
-  volume_timer:stop()
-  awful.spawn("pamixer --set-volume " .. volume_new)
-  emit(volume_new)
-  volume_timer:start()
+  volume_timer_wrapper(function()
+    awful.spawn("pamixer --set-volume " .. volume_new)
+    emit(volume_new)
+  end)
 end)
 
 awesome.connect_signal("signal::peripheral::volume::increase", function(inc)
-  volume_timer:stop()
-  awful.spawn("pamixer -i " .. (inc or 1))
-  volume()
-  volume_timer:start()
+  volume_timer_wrapper(function()
+    awful.spawn.easy_async("pamixer -i " .. (inc or 1), function()
+      volume()
+    end)
+  end)
   awesome.emit_signal("ui::control::notification::volume")
 end)
 
 awesome.connect_signal("signal::peripheral::volume::decrease", function(dec)
-  volume_timer:stop()
-  awful.spawn("pamixer -d " .. (dec or 1))
-  volume()
-  volume_timer:start()
+  volume_timer_wrapper(function()
+    awful.spawn.easy_async("pamixer -d " .. (dec or 1), function()
+      volume()
+    end)
+  end)
   awesome.emit_signal("ui::control::notification::volume")
 end)
 
 awesome.connect_signal("signal::peripheral::volume::mute", function()
-  volume_timer:stop()
-  awful.spawn("pamixer -t")
-  volume()
-  volume_timer:start()
+  volume_timer_wrapper(function()
+    awful.spawn.easy_async("pamixer -t", function()
+      volume()
+    end)
+  end)
 end)
 

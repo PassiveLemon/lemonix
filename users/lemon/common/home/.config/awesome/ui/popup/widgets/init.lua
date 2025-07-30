@@ -2,28 +2,13 @@ local user = require("config.user")
 
 local widgets = { }
 
-if user.control.brightness then
-  widgets.brightness = require("ui.popup.widgets.brightness")
-else
-  widgets.brightness = { }
-end
-
-if user.control.music then
-  widgets.music = require("ui.popup.widgets.music")
-else
-  widgets.music = { }
-end
-
-if user.control.power then
-  widgets.power = require("ui.popup.widgets.power")
-else
-  widgets.power = { }
-end
-
-if user.control.volume then
-  widgets.volume = require("ui.popup.widgets.volume")
-else
-  widgets.volume = { }
+-- Dynamically import widgets based on user config
+for k, v in pairs(user.control) do
+  if v then
+    widgets[k] = require("ui.popup.widgets." .. k)
+  else
+    widgets[k] = { }
+  end
 end
 
 return widgets
