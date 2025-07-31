@@ -10,7 +10,7 @@
       # Terminal
       tym hilbish comma fend trashy pamixer imagemagick
       eza bat fd ripgrep jq nh
-      nix-output-monitor nvd dix
+      nix-output-monitor dix
       # File/storage management
       pcmanfm xarchiver filezilla gparted
       ffmpegthumbnailer

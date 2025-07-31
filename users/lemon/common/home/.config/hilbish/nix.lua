@@ -23,30 +23,38 @@ hilbish.alias("cma", "comma")
 
 -- commander.register("nos", function()
 --   print("Building NixOS configuration...")
-
---   -- Get previous NixOS generation path for diff
---   local code1, before = hilbish.run("realpath /nix/var/nix/profiles/system", false)
---   print("1" .. before)
---   if code1 then
---     hilbish.run("sudo -v")
---     -- TODO: build and then switch later
---     -- If line starts with $ then remove it
---     local code2 = hilbish.run("sudo nixos-rebuild switch --flake ~/Documents/GitHub/lemonix#" .. hilbish.host .. " --log-format internal-json -v |& nom --json")
---     if code2 then
---       local code3, after = hilbish.run("realpath /nix/var/nix/profiles/system", false)
---       if code3 then
---         print("Comparing diff...")
---         print("2" .. before)
---         print("3" .. after)
---         hilbish.run("nvd diff " .. before .. " " .. after)
---       else
---         print("Failed to compare diff.")
+--   local code1 = hilbish.run("sudo -v")
+--   -- TODO: Somehow hide the commands outputs
+--   if code1 == 0 then
+--     local code2 = hilbish.run("sudo nixos-rebuild switch --fast --flake ~/Documents/GitHub/lemonix#" .. hilbish.host .. " --log-format internal-json -v |& nom --json")
+--     if code2 == 0 then
+--       -- After building, determine the current and previous profile to diff
+--       local profiles = fs.readdir("/nix/var/nix/profiles/")
+--       local code3, current_path = hilbish.run("realpath /nix/var/nix/profiles/system", false)
+--       local current_path_clean = current_path:match("^%s*(.-)%s*$")
+--       local current_profile = 0
+--       for _, v in ipairs(profiles) do
+--         local code4, realpath = hilbish.run("realpath /nix/var/nix/profiles/" .. v)
+--         local realpath_clean = realpath:match("^%s*(.-)%s*$")
+--         -- These don't fucking match for some god damn reason, even though they look the exact same after trimming whitespace
+--         if code4 == 0 and current_path_clean == realpath_clean then
+--           print("match")
+--           current_profile = v:match("^system%-(%d+)%-link$")
+--           break
+--         end
 --       end
---     else
---       print("Failed to switch to newly built profile.")
+--       local code5, previous_profile = hilbish.run("realpath /nix/var/nix/profiles/system-" .. (current_profile -1) .. "-link" )
+--       if code3 == 0 and code5 == 0 then
+--         print("test1-" .. previous_profile)
+--         print("test2-" .. current_profile)
+--         print("Comparing diff...")
+--         hilbish.run("dix " .. previous_profile .. " " .. current_profile)
+--       else
+--         print("Failed to determine current and/or latest profiles.")
+--       end
 --     end
 --   else
---     print("Failed to determine current system generation.")
+--     print("Failed to elevate priviledges.")
 --   end
 -- end)
 
