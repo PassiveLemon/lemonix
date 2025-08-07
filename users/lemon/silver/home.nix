@@ -8,6 +8,8 @@
     packages = with pkgs; [
       easytag
       (callPackage ../../../pkgs/onthespot.nix { })
+      (callPackage ../../../pkgs/overte.nix { })
+      (callPackage ../../../pkgs/pinnacle.nix { })
       # (callPackage ../../../pkgs/pulsemeeter.nix { })
       # (callPackage ../../../pkgs/hardcode-tray.nix { })
       inputs.lemonake.packages.${pkgs.system}.webfisher
@@ -66,6 +68,7 @@
 
   nixpkgs = {
     config.permittedInsecurePackages = [
+      "libxml2-2.13.8" # Unityhub
     ];
   };
 }

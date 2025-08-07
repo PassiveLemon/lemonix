@@ -28,7 +28,6 @@
       mpv kdePackages.kdenlive
       # Miscellaneous
       picom ente-auth localsend xclicker kdePackages.kruler
-      (callPackage ../../../pkgs/pinnacle.nix { })
     ];
     username = "lemon";
     homeDirectory = "/home/lemon";

@@ -20,6 +20,7 @@ in
 
   imports = [
     inputs.lemonake.homeModules.steamvr
+    inputs.steam-config.homeModules.default
   ];
 
   config = mkIf cfg.enable (mkMerge [
@@ -42,27 +43,52 @@ in
         bs-manager
       ];
 
-      programs.steamvr = {
-        enable = true;
-        openvrRuntimeOverride = {
+      programs = {
+        # Lemonake
+        steamvr = {
           enable = true;
-          config = "path";
-          path = "${openCompPackage}/lib/opencomposite";
-          # path = "${inputs.lemonake.packages.${pkgs.system}.xrizer}/lib/xrizer";
+          openvrRuntimeOverride = {
+            enable = true;
+            config = "path";
+            path = "${openCompPackage}/lib/opencomposite";
+            # path = "${inputs.lemonake.packages.${pkgs.system}.xrizer}/lib/xrizer";
+          };
+          openxrRuntimeOverride = {
+            enable = true;
+            config = "path";
+            path = "${wivrnPackage}/share/openxr/1/openxr_wivrn.json";
+          };
+          helperScript = {
+            enable = true;
+            openvrRuntime = "opencomposite";
+            openvrRuntimePackage = openCompPackage;
+            # openvrRuntime = "xrizer";
+            # openvrRuntimePackage = inputs.lemonake.packages.${pkgs.system}.xrizer;
+            openxrRuntime = "wivrn";
+            openxrRuntimePackage = wivrnPackage;
+          };
         };
-        openxrRuntimeOverride = {
+        # Steam-config
+        steam.config = {
           enable = true;
-          config = "path";
-          path = "${wivrnPackage}/share/openxr/1/openxr_wivrn.json";
-        };
-        helperScript = {
-          enable = true;
-          openvrRuntime = "opencomposite";
-          openvrRuntimePackage = openCompPackage;
-          # openvrRuntime = "xrizer";
-          # openvrRuntimePackage = inputs.lemonake.packages.${pkgs.system}.xrizer;
-          openxrRuntime = "wivrn";
-          openxrRuntimePackage = wivrnPackage;
+          closeSteam = true;
+          apps = with lib; let
+            # Generate a defaut attrset with typical VR game settings and override as needed
+            vrApps = [ "620980" "629730""1592190" "823500" "863960" "450540" "617830" "801550" "843390" "1318090" ];
+            vrAppDefaults = genAttrs vrApps (id: {
+              compatTool = "Proton 9.0-4";
+              launchOptions = "vr-helper %command%";
+            });
+          in recursiveUpdate vrAppDefaults {
+            "963930" = {
+              compatTool = "Proton 8.0-5";
+              launchOptions = "vr-helper %command%";
+            };
+            "438100" = {
+              compatTool = "GE-Proton-rtsp"; # Lemonake
+              launchOptions = "PRESSURE_VESSEL_FILESYSTEMS_RW=$XDG_RUNTIME_DIR/wivrn/comp_ipc %command%";
+            };
+          };
         };
       };
 

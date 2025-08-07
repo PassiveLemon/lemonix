@@ -23,6 +23,10 @@ in
 
   config = mkIf cfg.enable (mkMerge [
     (mkIf cfg.desktop.enable {
+      # environment.systemPackages = with pkgs; [
+      #   master.lsfg-vk master.lsfg-vk-ui
+      # ];
+
       programs.steam = {
         enable = true;
         extraCompatPackages = with pkgs; [
@@ -57,6 +61,8 @@ in
             XRT_COMPOSITOR_LOG = "warning";
             XRT_PRINT_OPTIONS = "off";
             PROBER_LOG = "warning";
+            IPC_EXIT_WHEN_IDLE = "on";
+            IPC_EXIT_WHEN_IDLE_DELAY_MS = "900000"; # 15 minutes
           };
           extraServerFlags = [ "--no-publish-service" ];
           extraPackages = with pkgs; [
@@ -71,35 +77,6 @@ in
             json = {
               application = inputs.lemonake.packages.${pkgs.system}.wlx-overlay-s-git;
               bitrate = 100000000;
-              encoders = [
-                {
-                  encoder = "nvenc";
-                  codec = "h264";
-                  width = 0.5;
-                  height = 0.25;
-                  offset_x = 0;
-                  offset_y = 0;
-                  group = 0;
-                }
-                {
-                  encoder = "nvenc";
-                  codec = "h264";
-                  width = 0.5;
-                  height = 0.75;
-                  offset_x = 0;
-                  offset_y = 0.25;
-                  group = 0;
-                }
-                {
-                  encoder = "nvenc";
-                  codec = "h264";
-                  width = 0.5;
-                  height = 1;
-                  offset_x = 0.5;
-                  offset_y = 0;
-                  group = 0;
-                }
-              ];
               tcp_only = true;
             };
           };

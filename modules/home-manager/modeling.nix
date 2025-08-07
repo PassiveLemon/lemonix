@@ -17,7 +17,8 @@ in
     (mkIf cfg.cad.enable {
       home.packages = with pkgs; [
         freecad openscad
-        (kicad-small.override { stable = true; })
+        # Kicad packaging is kind of a mess so it's going to stay disabled until I need it
+        # (kicad-small.override { stable = true; })
       ];
     })
     (mkIf cfg.printing.enable {
@@ -32,9 +33,13 @@ in
     (mkIf cfg.avatar.enable {
       home.packages = with pkgs; [
         blender
-        # unityhub # https://github.com/NixOS/nixpkgs/issues/418451
+        unityhub
         inputs.lemonake.packages.${pkgs.system}.alcom
       ];
+
+      xdg.mimeApps.defaultApplications = {
+        "x-scheme-handler/unityhub" = "unityhub.desktop";
+      };
     })
   ]);
 }

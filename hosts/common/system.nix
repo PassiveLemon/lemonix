@@ -104,11 +104,11 @@
     };
     optimise = {
       automatic = true;
-      dates = [ "Sat" ];
+      dates = [ "Sun" ];
     };
     gc = {
       automatic = true;
-      dates = "Sat";
+      dates = "Sun";
       options = "--delete-older-than 14d";
     };
   };
