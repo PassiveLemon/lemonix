@@ -82,7 +82,6 @@ in
           in recursiveUpdate vrAppDefaults {
             "963930" = {
               compatTool = "Proton 8.0-5";
-              launchOptions = "vr-helper %command%";
             };
             "438100" = {
               compatTool = "GE-Proton-rtsp"; # Lemonake
