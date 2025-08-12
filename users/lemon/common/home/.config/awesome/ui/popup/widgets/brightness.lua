@@ -43,8 +43,8 @@ local brightness_slider = h.slider({
   bar_shape = gears.shape.rounded_rect,
   output_signal = "signal::peripheral::brightness",
 })
-awesome.connect_signal("signal::peripheral::brightness::value", function(cur, max)
-  brightness_slider:get_children_by_id("slider")[1]._private.value = h.round(((cur / max) * 100), 0)
+awesome.connect_signal("signal::peripheral::brightness::value", function(value)
+  brightness_slider:get_children_by_id("slider")[1]._private.value = value
   brightness_slider:emit_signal("widget::redraw_needed")
 end)
 

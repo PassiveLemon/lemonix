@@ -54,8 +54,8 @@ brightness.text = h.text({
   },
   halign = "left",
 })
-awesome.connect_signal("signal::peripheral::brightness::value", function(cur, max)
-  brightness.text:get_children_by_id("textbox")[1].text = h.round(((cur / max) * 100), 0) .. "%"
+awesome.connect_signal("signal::peripheral::brightness::value", function(value)
+  brightness.text:get_children_by_id("textbox")[1].text = value .. "%"
   awful.spawn.easy_async("systemctl is-active --quiet --user clight", function(_, _, _, code)
     if code == 0 then
       brightness.icon:get_children_by_id("textbox")[1].text = "󰌵"
