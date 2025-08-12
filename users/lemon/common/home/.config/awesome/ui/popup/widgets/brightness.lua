@@ -38,17 +38,14 @@ local brightness_slider = h.slider({
   },
   x = dpi(total_width),
   y = dpi(16),
-  max = 255,
   handle_width = dpi(16),
   bar_height = dpi(6),
   bar_shape = gears.shape.rounded_rect,
   output_signal = "signal::peripheral::brightness",
 })
-awesome.connect_signal("signal::peripheral::brightness::value", function(value)
-  if value >= 0 then
-    brightness_slider:get_children_by_id("slider")[1]._private.value = value
-    brightness_slider:emit_signal("widget::redraw_needed")
-  end
+awesome.connect_signal("signal::peripheral::brightness::value", function(cur, max)
+  brightness_slider:get_children_by_id("slider")[1]._private.value = h.round(((cur / max) * 100), 0)
+  brightness_slider:emit_signal("widget::redraw_needed")
 end)
 
 brightness.control = h.background({
