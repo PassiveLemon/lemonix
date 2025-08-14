@@ -138,22 +138,22 @@ elements:
     format: "%H:%M:%S"
 
   # CPU usage
-  - type: Label
-    rect: [285, 48, 200, 50]
-    corner_radius: 4
-    font_size: 16
-    fg_color: "#aaaaaa"
-    source: Exec
-    command: [ "bash", "-c", "top -bn1 | grep '%Cpu' | awk '{print \"CPU: \" int(100-$8)\"%\"}'" ]
-    interval: 2
+  # - type: Label
+  #   rect: [285, 48, 200, 50]
+  #   corner_radius: 4
+  #   font_size: 16
+  #   fg_color: "#aaaaaa"
+  #   source: Exec
+  #   command: [ "bash", "-c", "top -bn1 | grep '%Cpu' | awk '{print \"CPU: \" int(100-$8)\"%\"}'" ]
+  #   interval: 2
 
   # GPU usage
-  - type: Label
-    rect: [285, 68, 200, 50]
-    corner_radius: 4
-    font_size: 16
-    fg_color: "#aaaaaa"
-    source: Exec
-    command: [ "bash", "-c", "nvidia-smi --query-gpu=utilization.gpu --format=csv,noheader,nounits | awk '{print \"GPU: \" $1\"%\"}'" ]
-    interval: 2
+  # - type: Label
+  #   rect: [285, 68, 200, 50]
+  #   corner_radius: 4
+  #   font_size: 16
+  #   fg_color: "#aaaaaa"
+  #   source: Exec
+  #   command: [ "bash", "-c", "nvidia-smi --query-gpu=utilization.gpu --format=csv,noheader,nounits | awk '{print \"GPU: \" $1\"%\"}'" ]
+  #   interval: 2
 

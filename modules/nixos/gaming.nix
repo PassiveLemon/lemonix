@@ -48,6 +48,7 @@ in
           wivrnPackage = inputs.lemonake.packages.${pkgs.system}.wivrn.override {
             cudaSupport = true;
             opencomposite = "${inputs.lemonake.packages.${pkgs.system}.opencomposite-git}";
+            xrizer = "${inputs.lemonake.packages.${pkgs.system}.xrizer-git}";
           };
         in {
           enable = true;
@@ -65,18 +66,22 @@ in
             IPC_EXIT_WHEN_IDLE_DELAY_MS = "900000"; # 15 minutes
           };
           extraServerFlags = [ "--no-publish-service" ];
-          extraPackages = with pkgs; [
-            systemd # systemctl
-            bash # for the below
-            (config.hardware.nvidia.package) # nvidia-smi
-            procps # top
-            gawk # awk
-          ];
+          steam.importOXRRuntimes = true;
           config = {
             enable = true;
             json = {
-              application = inputs.lemonake.packages.${pkgs.system}.wlx-overlay-s-git;
+              # application = inputs.lemonake.packages.${pkgs.system}.wlx-overlay-s-git;
               bitrate = 100000000;
+              encoders = [
+                {
+                  encoder = "nvenc";
+                  codec = "h264";
+                  width = 1.0;
+                  height = 1.0;
+                  offset_x = 0;
+                  offset_y = 0;
+                }
+              ];
               tcp_only = true;
             };
           };
@@ -84,7 +89,7 @@ in
       };
 
       # Wlx-overlay-s config has some stuff that needs it
-      systemd.user.services.wivrn.serviceConfig.ProtectProc = lib.mkForce "default";
+      # systemd.user.services.wivrn.serviceConfig.ProtectProc = lib.mkForce "default";
 
       hardware.graphics.extraPackages = [
         inputs.lemonake.packages.${pkgs.system}.monado-vulkan-layers-git
