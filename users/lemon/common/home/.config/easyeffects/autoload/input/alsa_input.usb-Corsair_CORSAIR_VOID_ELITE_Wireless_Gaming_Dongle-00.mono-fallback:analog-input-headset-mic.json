@@ -1,6 +1,0 @@
-{
-    "device": "alsa_input.usb-Corsair_CORSAIR_VOID_ELITE_Wireless_Gaming_Dongle-00.mono-fallback",
-    "device-description": "CORSAIR VOID ELITE Wireless Gaming Dongle Mono",
-    "device-profile": "analog-input-headset-mic",
-    "preset-name": "Corsair"
-}

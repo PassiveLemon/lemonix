@@ -1,0 +1,6 @@
+{
+    "device": "alsa_output.usb-TONOR_TONOR_TD510_Dynamic_Mic_2024-4-26A-00.analog-stereo",
+    "device-description": "TONOR TD510 Dynamic Mic Analog Stereo",
+    "device-profile": "analog-output-headphones",
+    "preset-name": "DT990"
+}

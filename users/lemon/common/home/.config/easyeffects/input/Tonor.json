@@ -1,16 +1,5 @@
 {
     "input": {
-        "bass_enhancer#0": {
-            "amount": 3.0,
-            "blend": 0.0,
-            "bypass": false,
-            "floor": 20.0,
-            "floor-active": false,
-            "harmonics": 8.5,
-            "input-gain": 0.0,
-            "output-gain": 0.0,
-            "scope": 100.0
-        },
         "blocklist": [],
         "crystalizer#0": {
             "band0": {
@@ -82,53 +71,64 @@
             "input-gain": 0.0,
             "output-gain": 0.0
         },
-        "deesser#0": {
+        "deepfilternet#0": {
+            "attenuation-limit": 30.0,
+            "max-df-processing-threshold": 20.0,
+            "max-erb-processing-threshold": 30.0,
+            "min-processing-buffer": 0,
+            "min-processing-threshold": -10.0,
+            "post-filter-beta": 0.02
+        },
+        "gate#0": {
+            "attack": 1.0,
             "bypass": false,
-            "detection": "RMS",
-            "f1-freq": 6000.0,
-            "f1-level": 0.0,
-            "f2-freq": 4500.0,
-            "f2-level": 12.0,
-            "f2-q": 1.0,
+            "curve-threshold": -40.0,
+            "curve-zone": -10.0,
+            "dry": -100.0,
+            "hpf-frequency": 10.0,
+            "hpf-mode": "off",
+            "hysteresis": false,
+            "hysteresis-threshold": -12.0,
+            "hysteresis-zone": -6.0,
             "input-gain": 0.0,
-            "laxity": 15,
+            "lpf-frequency": 20000.0,
+            "lpf-mode": "off",
             "makeup": 0.0,
-            "mode": "Wide",
             "output-gain": 0.0,
-            "ratio": 3.0,
-            "sc-listen": false,
-            "threshold": -18.0
-        },
-        "loudness#0": {
-            "bypass": false,
-            "clipping": false,
-            "clipping-range": 6.0,
-            "fft": "4096",
-            "input-gain": 0.0,
-            "output-gain": 0.0,
-            "std": "ISO226-2003",
-            "volume": 2.0
-        },
-        "pitch#0": {
-            "anti-alias": true,
-            "bypass": false,
-            "input-gain": 0.0,
-            "output-gain": 0.0,
-            "overlap-length": 8,
-            "quick-seek": false,
-            "rate-difference": 0.0,
-            "seek-window": 15,
-            "semitones": -0.4,
-            "sequence-length": 40,
-            "tempo-difference": 0.0
+            "reduction": -24.0,
+            "release": 100.0,
+            "sidechain": {
+                "input": "External",
+                "lookahead": 0.0,
+                "mode": "RMS",
+                "preamp": 0.0,
+                "reactivity": 10.0,
+                "source": "Middle",
+                "stereo-split-source": "Left/Right"
+            },
+            "stereo-split": false,
+            "wet": 0.0
         },
         "plugins_order": [
-            "crystalizer#0",
-            "deesser#0",
-            "bass_enhancer#0",
-            "pitch#0",
-            "loudness#0"
-        ]
+            "speex#0",
+            "gate#0",
+            "deepfilternet#0",
+            "crystalizer#0"
+        ],
+        "speex#0": {
+            "bypass": false,
+            "enable-agc": false,
+            "enable-denoise": true,
+            "enable-dereverb": true,
+            "input-gain": 0.0,
+            "noise-suppression": -70,
+            "output-gain": 0.0,
+            "vad": {
+                "enable": true,
+                "probability-continue": 90,
+                "probability-start": 95
+            }
+        }
     }
 }
 
