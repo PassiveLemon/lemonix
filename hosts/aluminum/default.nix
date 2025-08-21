@@ -19,6 +19,7 @@
       enable = true;
       device = "/dev/nvme0n1p5";
     };
+    syncthing.enable = true;
   };
 }
 

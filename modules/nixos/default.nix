@@ -22,6 +22,7 @@ in
     ./lanzaboote.nix
     ./ssh.nix
     ./swap.nix
+    ./syncthing.nix
   ];
 
   config = {

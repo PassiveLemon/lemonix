@@ -28,6 +28,7 @@
         memoryPercent = 25;
       };
     };
+    syncthing.enable = true;
   };
 }
 
