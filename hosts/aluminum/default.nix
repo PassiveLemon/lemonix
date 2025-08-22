@@ -20,6 +20,7 @@
       device = "/dev/nvme0n1p5";
     };
     syncthing.enable = true;
+    tailscale.enable = true;
   };
 }
 

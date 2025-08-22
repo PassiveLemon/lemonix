@@ -56,15 +56,6 @@
     ];
   };
 
-  age.secrets = {
-    tailscaleAuthKey = {
-      file = ../../secrets/tailscaleAuthKey.age;
-      mode = "600";
-      owner = "root";
-      group = "root";
-    };
-  };
-
   services = {
     fwupd.enable = true;
     thermald.enable = true;
@@ -98,13 +89,6 @@
 
         DEVICES_TO_DISABLE_ON_STARTUP = "bluetooth";
       };
-    };
-    tailscale = {
-      enable = true;
-      authKeyFile = config.age.secrets.tailscaleAuthKey.path;
-      extraUpFlags = [
-        "--accept-routes"
-      ];
     };
   };
 

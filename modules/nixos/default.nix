@@ -23,6 +23,7 @@ in
     ./ssh.nix
     ./swap.nix
     ./syncthing.nix
+    ./tailscale.nix
   ];
 
   config = {
