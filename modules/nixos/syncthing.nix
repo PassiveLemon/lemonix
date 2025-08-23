@@ -27,8 +27,8 @@ in
         };
         devices = {
           "Silver" = { id = "RJUPLXU-KS7PLLI-6OTXT22-W26HMRO-RXMFJ5G-2KU6FEM-G54HQ4D-LXWRBA4"; };
-          "Aluminum" = { id = "ISH2V3D-ITIYVOE-I6FUGCD-6NQT6VQ-5N2ZG3S-HQOEFI5-ZEDAADF-CJ3OIQ7"; };
-          "Aluminum-Windows" = { id = "MCLYZ4I-F2NL364-P6T7LPX-6KW4UCH-UHGCAEY-TLBYD3H-C4TQMXE-GJ3UCQ6"; };
+          "Aluminum" = { id = "WX4PLOZ-WXLJR47-BOFKW6F-YLTJHGS-XPCEYUW-D4Y2BDY-I2LXFPU-W7PQ6A3"; };
+          "Aluminum-Windows" = { id = ""; };
         };
         folders = {
           "Shared" = {
