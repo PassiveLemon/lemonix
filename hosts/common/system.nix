@@ -36,6 +36,7 @@
       nano unzip unrar p7zip zip curl wget git gvfs psmisc
       htop sysstat iotop stress netcat lm_sensors smartmontools dig neofetch
       networkmanager ethtool
+      sbctl
     ];
     shells = with pkgs; [ bashInteractive ];
   };

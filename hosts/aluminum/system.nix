@@ -1,4 +1,4 @@
-{ config, lib, pkgs, ... }: {
+{ lib, pkgs, ... }: {
   imports = [
     ./hardware-configuration.nix
     ../common/system.nix
@@ -44,7 +44,7 @@
           "wheel" "video" "audio" "networkmanager" "storage" "input"
         ];
         isNormalUser = true;
-        openssh.authorizedKeys.keys = [ "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIBnOSJDixevSeo1KcgGHki45BWMJqOxfgOASvT5WFStB lemon@aluminum" ];
+        openssh.authorizedKeys.keys = [ "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIFXRE/wC3EAMvJiRIpWv/Rl1+UfwmxF0p8M+YpUkelmU lemon@aluminum" ];
       };
     };
   };
@@ -118,6 +118,6 @@
   # Drives
   # 1 TB Crucial T500 (Root)
 
-  system.stateVersion = "23.11"; # Don't change unless you know what you are doing
+  system.stateVersion = "25.05"; # Don't change unless you know what you are doing
 }
 
