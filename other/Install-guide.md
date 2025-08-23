@@ -48,9 +48,10 @@ mkswap -L swap /dev/nvme0n1p3
 # Generating
 ```
 mkdir -p /mnt/boot
-mount /dev/disk/by-label/boot /mnt/boot
 
+# Mount the root BEFORE mounting boot!!!!
 mount /dev/disk/by-label/nixos /mnt
+mount /dev/disk/by-label/boot /mnt/boot
 
 swapon /dev/disk/by-label/swap
 
@@ -69,37 +70,44 @@ Find a temporary directory:
 nix-shell -p git
 git clone https://github.com/PassiveLemon/lemonix
 cd lemonix
-
-cp /etc/nixos/hardware-configuration.nix ./hosts/silver/
+```
+Disable any modules that use agenix or lanzaboote.
+```
+cp /mnt/etc/nixos/hardware-configuration.nix ./hosts/silver/
 nixos-install --flake .#silver
 
 reboot
 ```
 -  May need to `git add` the hardware config if there wasn't one already there.
 
+Enter the root password.
+
 # Finishing touches
 You should be able to log in now. Head to `~/Documents/GitHub/` or wherever you want to store your GitHub repos/projects.
-
 ```
-git clone --recurse-submodules https://github.com/PassiveLemon/lemonix
+git clone https://github.com/PassiveLemon/lemonix
 cd lemonix
 
 bash ./other/installer.sh
+sbctl create-keys # For lanzaboote
+```
+This script mounts the current dotfile repository into `/etc/nixos/`.
+You should also keep agenix modules disabled unless you re-set your SSH keys now.
+```
+sudo nixos-rebuild switch
 ```
 - The `installer.sh` script must be run from the root of the repository.
 
-Hardware config should be in `/etc/nixos-backup/` if needed.
-
-Perform any manual tasks. Ex:
-- Setting any files
-- Lanzaboote `sbctl create-keys` `sbctl enroll-keys`
-- Bat theme cache build
+Hardware config should be in `/etc/nixos-backup/` if needed. You may want to copy this back into the cloned repo so it can be pushed later.
 
 ```
-nix run home-manager/release-24.05 -- init --switch
+nix run home-manager/release-25.05 -- init --switch
 home-manager switch --flake .#lemon@silver
 reboot
 ```
-
+Perform any manual tasks. Ex:
+- Setting any files
+- [After enabling secure-boot setup](https://github.com/nix-community/lanzaboote/blob/master/docs/QUICK_START.md#part-2-enabling-secure-boot), `sbctl enroll-keys --microsoft`
+- Bat theme cache build
 The system should be set up and ready for use. The only thing left after this is stuff that isn't managed by Nix, such as web logins, application settings, etc.
 
