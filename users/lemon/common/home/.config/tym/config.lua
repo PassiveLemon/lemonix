@@ -2,7 +2,7 @@ local tym = require("tym")
 
 -- set by table
 tym.set_config({
-  shell = os.getenv("HOME") .. "/.nix-profile/bin/hilbish",
+  shell = os.getenv("HOME") .. "/.local/state/nix/profile/bin/hilbish",
   silent = true,
   padding_top = 8,
   padding_right = 8,
