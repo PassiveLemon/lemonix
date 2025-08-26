@@ -108,17 +108,17 @@ Honestly with the amount of stuff that needs to be modified to fix BDRecolor and
     }
   }
   /* Account popup */
-  #popout_47 {
+  .outer_c0bea0 {
     /* Align account popup with account widget */
-    bottom: 74px !important;
-    left: 81px !important;
+    bottom: 8px !important;
+    left: -8px !important;
     .outer_c0bea0 .overlay_c0bea0 {
       /* Fix internal colors */
       background-color: rgb(var(--backgroundaccent));
     }
   }
   /* User popup */
-  #popout_69716 {
+  .outer_c0bea0 {
     .activityContainer__84832 {
       .card__39ec2 {
         background-color: rgba(var(--backgroundaccent), 0.7);
