@@ -171,6 +171,7 @@ Honestly with the amount of stuff that needs to be modified to fix BDRecolor and
       /* Fix user profile note bg and hover colors */
       background-color: rgb(var(--backgroundsecondary)) !important;
       border: 0px solid var(--border-subtle) !important;
+      border-radius: var(--radius-sm);
       transition: border-color .2s ease;
       &:hover {
         border: 1px solid var(--input-border-default); !important;
