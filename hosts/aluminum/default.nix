@@ -17,7 +17,7 @@
     };
     swap = {
       enable = true;
-      device = "/dev/nvme0n1p5";
+      device = "/dev/nvme0n1p6";
     };
     syncthing.enable = true;
     tailscale.enable = true;
