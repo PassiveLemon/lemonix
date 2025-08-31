@@ -74,6 +74,7 @@
       "Z /home/docker 770 docker docker-management - -"
       "Z /home/docker/Volumes 770 docker docker-management - -"
       "Z /home/BACKUPDRIVE/Docker 770 docker docker-management - -"
+      "Z /home/lemon/Documents/GitHub/lemocker/silver 770 docker docker-management - -"
 
       "Z /home/HDD2TBEXT4/Media 770 docker docker-management - -"
       "Z /home/HDD2TBEXT4/Media2 770 docker docker-management - -"
