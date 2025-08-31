@@ -7,7 +7,6 @@
   home = {
     packages = with pkgs; [
       easytag
-      (callPackage ../../../pkgs/onthespot.nix { })
       (callPackage ../../../pkgs/overte.nix { })
       (callPackage ../../../pkgs/pinnacle.nix { })
       # (callPackage ../../../pkgs/pulsemeeter.nix { })
