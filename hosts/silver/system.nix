@@ -49,7 +49,7 @@
         hashedPassword = "$6$J7q0.RZ88OJiQRkq$mQx2d32YHf6IXqZNMSv.o/sslQMgBAGIKID2aL6tLpN6XFpXp2Fda5p1Yi78H/cXOolBPIuXEQPzxhmKp5qWc0";
         extraGroups = [
           "wheel" "video" "audio" "input" "networkmanager" "storage"
-          "docker" "kvm" "libvirtd"
+          "docker" "kvm" "libvirtd" "dialout"
           "docker-management" "borg-management"
         ];
         isNormalUser = true;
