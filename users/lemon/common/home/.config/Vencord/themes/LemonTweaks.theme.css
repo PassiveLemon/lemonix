@@ -3,11 +3,13 @@ Consolidate what we can. Things that use the same set of animations or effects c
 Bordered buttons (reactions, roles, etc)
 Unborded buttons (Account widget, call phone button, etc)
 
-Fix emoji text effect so it shows on hover and not focus
+Fix server emoji text name effect so it shows on hover and not focus
 Use the partial transparency hover effects for audit log, safety setup, etc as a default "button" type
 Event popup share and interested buttons
 Channel and roles search box
 Channel and roles colors
+
+Server boost status and sticker card tops change when that perk is unlocked
 
 Server admin members under events fix search bar color
 

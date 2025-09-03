@@ -8,23 +8,23 @@
   home = {
     packages = with pkgs; [
       # Terminal
-      tym hilbish comma fend trashy pamixer imagemagick
-      eza bat fd ripgrep jq nh
-      nix-output-monitor dix
+      tym hilbish comma fend pamixer imagemagick
+      nh eza bat trashy fd ripgrep
+      #nix-output-monitor dix 
       # File/storage management
-      pcmanfm xarchiver filezilla gparted
+      pcmanfm xarchiver gparted
       ffmpegthumbnailer
       # Development
-      vscode github-desktop
+      github-desktop
       shellcheck luajitPackages.luacheck python312Packages.flake8
       nil nimlsp pyright lua-language-server bash-language-server dockerfile-language-server-nodejs yaml-language-server
       # Office
       obsidian onlyoffice-desktopeditors onlyoffice-documentserver drawio
       # Audio
-      feishin audacity
+      feishin
       pwvucontrol easyeffects helvum
       # Image/Video
-      loupe flameshot papers gimp scrot krita
+      loupe flameshot papers gimp scrot
       mpv kdePackages.kdenlive
       # Miscellaneous
       picom ente-auth localsend xclicker kdePackages.kruler

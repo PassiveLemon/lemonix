@@ -15,6 +15,7 @@
       enable = true;
       desktop.enable = true;
       vr.enable = true;
+      streaming.enable = true;
     };
     ssh = {
       enable = true;
@@ -22,7 +23,7 @@
     };
     swap = {
       enable = true;
-      size = 16;
+      size = 32;
       zram = {
         enable = true;
         memoryPercent = 25;

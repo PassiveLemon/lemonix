@@ -73,7 +73,7 @@
       enableUserSlices = true;
     };
     services = {
-      # Fixes for problematic services
+      # Workarounds for problematic services
       NetworkManager-wait-online.enable = false;
       cups-browsed.serviceConfig.TimeoutStopSec = 10;
     };
@@ -81,6 +81,17 @@
 
   powerManagement = {
     enable = true;
+  };
+
+  # Experimental
+  networking.networkmanager.wifi.backend = "iwd";
+  boot.tmp.useTmpfs = true;
+  boot.tmp.cleanOnBoot = true;
+  boot.initrd.systemd.enable = true;
+  services.dbus.implementation = "broker";
+  services.irqbalance.enable = true;
+  systemd.services.nix-daemon = {
+    environment.TMPDIR = "/var/tmp";
   };
 
   nix = {

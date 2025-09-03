@@ -6,7 +6,7 @@
 
   home = {
     packages = with pkgs; [
-      easytag
+      easytag zenity
       (callPackage ../../../pkgs/overte.nix { })
       (callPackage ../../../pkgs/pinnacle.nix { })
       # (callPackage ../../../pkgs/pulsemeeter.nix { })

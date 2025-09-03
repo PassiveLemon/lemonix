@@ -3,6 +3,7 @@
     gaming = {
       enable = true;
       desktop.enable = true;
+      streaming.enable = true;
     };
     modeling = {
       enable = true;

@@ -63,12 +63,16 @@
     services.stack-up = {
       description = "Docker stack upper";
       serviceConfig = {
-        ExecStartPre = "${pkgs.coreutils}/bin/sleep 10";
-        ExecStart = "${pkgs.docker}/bin/docker compose -f /home/lemon/Documents/GitHub/lemocker/silver/docker-compose.yaml up -d";
-        ExecStartPost = "${pkgs.coreutils}/bin/sleep 30";
+        Type = "oneshot";
+        RemainAfterExit = true;
+        ExecStart = "-${pkgs.docker}/bin/docker compose -f /home/lemon/Documents/GitHub/lemocker/silver/docker-compose.yaml up -d";
+        Restart = "on-failure";
+        RestartSec = 15;
       };
+      startLimitBurst = 5;
       wantedBy = [ "multi-user.target" ];
-      after = [ "docker.service" ];
+      after = [ "docker.service" "network-online.target" ];
+      wants = [ "network-online.target" ];
     };
     tmpfiles.rules = [
       "Z /home/docker 770 docker docker-management - -"
