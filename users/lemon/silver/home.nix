@@ -9,7 +9,6 @@
       easytag zenity
       (callPackage ../../../pkgs/overte.nix { })
       (callPackage ../../../pkgs/pinnacle.nix { })
-      # (callPackage ../../../pkgs/pulsemeeter.nix { })
       # (callPackage ../../../pkgs/hardcode-tray.nix { })
       inputs.lemonake.packages.${pkgs.system}.nimpad
       inputs.lemonake.packages.${pkgs.system}.webfisher
