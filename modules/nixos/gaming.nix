@@ -23,10 +23,6 @@ in
 
   config = mkIf cfg.enable (mkMerge [
     (mkIf cfg.desktop.enable {
-      # environment.systemPackages = with pkgs; [
-      #   master.lsfg-vk master.lsfg-vk-ui
-      # ];
-
       programs.steam = {
         enable = true;
         extraCompatPackages = with pkgs; [

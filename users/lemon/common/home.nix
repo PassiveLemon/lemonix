@@ -88,7 +88,7 @@
       plugins = {
         enableList = [
           "autoinsert" "autowrap" "bracketmatch" "colorpicker" "colorpreview"
-          /*"eofnewline" repo was deleted */ "ephemeral_tabs" "editorconfig" "evergreen" "force_syntax"
+          /* "eofnewline" repo was deleted */ "ephemeral_tabs" "editorconfig" "evergreen" "force_syntax"
           "gitdiff_highlight" "gitstatus" "indentguide" "lfautoinsert" "lintplus"
           "lsp" "lsp_snippets" "open_ext" "selectionhighlight" "terminal"
           "treeview-extender"
