@@ -45,7 +45,7 @@
       padding: 0px 4px 4px 4px !important;
       /* Chat bar */
       .channelTextArea_f75fb0 {
-        margin: 2px 4px 4px 0px;
+        margin: 0px 4px 4px 0px;
         /* Remove gift, sticker, and app button, and reverse button order */
         .buttons__74017 {
           flex-direction: row-reverse;
@@ -56,15 +56,17 @@
           }
         }
       }
-      /* Typing indicator */
-      /* I want to move it just a little closer to the text input box */
-      /* .typingDots_b88801 {
-        
-      } */
     }
-    .scrollerSpacer__36d07 {
-      /* Reduce height of scroller spacer to reduce unnecessary space */
-      height: 34px;
+  }
+  /* Reduce height of scroller spacer to reduce unnecessary space */
+  .scrollerSpacer__36d07 {
+    height: 38px !important;
+  }
+  /* Slight typing indicator repositioning */
+  .typing_b88801 {
+    padding-left: 8px !important;
+    .text_b88801 {
+      margin-left: 8px !important;
     }
   }
 
