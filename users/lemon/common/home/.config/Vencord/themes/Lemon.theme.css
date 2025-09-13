@@ -26,10 +26,6 @@
 	--backgroundtertiary: 		34, 34, 34;	/* Background 4		     -  default:	32, 34, 37	-  hex:	#202225 */
 	--backgroundfloating: 		0, 0, 0;		 /* Background Elevated  -  default:	24, 25, 28	-  hex:	#18191c */
 
-	/* Unshittify-Discord settings */
-	--top-bar-padding: 85px;
-	--icon-scale: 1.1;
-
 	/* Other overrides */
 	--button-secondary-background: rgb(var(--backgroundaccent)) !important;
   --button-secondary-background-hover: rgb(var(--backgroundaccent)) !important;
@@ -38,17 +34,11 @@
 }
 
 .visual-refresh {
-  /* Make the spoiler box a little lighter */
+  /* Make spoiler boxes a little lighter */
   #app-mount .spoilerContent__54ab5.hidden__54ab5 {
     background-color: rgb(var(--backgroundaccent)) !important;
   }
-  /* Inspired by: https://nspc911.github.io/themes/vencord/RefreshedSeamlessChatBar.theme.css */
-  /* Move typing indicator above textbox */
   .chatContent_f75fb0 {
-    .scrollerSpacer__36d07 {
-      /* Height of typing indicator */
-      height: 25px;
-    }
     .form_f75fb0 {
       display: flex;
       flex-direction: column;
@@ -56,49 +46,25 @@
       /* Chat bar */
       .channelTextArea_f75fb0 {
         margin: 2px 4px 4px 0px;
-        .inner__74017 {
-          min-height: 58px;
-        }
         /* Remove gift, sticker, and app button, and reverse button order */
         .buttons__74017 {
           flex-direction: row-reverse;
-          button[aria-label="Send a gift"],
+          div[aria-label="Send a gift"],
           .expression-picker-chat-input-button:has(div[class*="stickerButton"]),
           div[class^="channelAppLauncher_"] {
             display: none !important;
           }
         }
       }
-      /* Slowmode bar + Typing indicator */
-      .base_b88801 {
-        order: -1;
-        .typing_b88801,
-        .typingDots_b88801 {
-          /* Initials to remove Unshittify-Discord UI changes */
-          background-color: initial;
-          height: initial;
-          transform: translateY(2px);
-        }
-        .cooldownText_b21699 {
-          background-color: initial;
-          height: initial;
-          padding-right: 4px;
-          transform: translateY(1px);
-        }
-      }
-      /* Don't touch my corners >:( */
-      /* 8px to remove Unshittify-Discord UI changes */
-      &:has(.typing_b88801 .typingDots_b88801) .channelTextArea_f75fb0 {
-        border-top-left-radius: 8px !important;
-      }
-      &:has(.typing_b88801 .cooldownWrapper_b21699) .channelTextArea_f75fb0 {
-        border-top-right-radius: 8px !important;
-      }
+      /* Typing indicator */
+      /* I want to move it just a little closer to the text input box */
+      /* .typingDots_b88801 {
+        
+      } */
     }
-    /* If typing indicator, then shrink scrollerSpacer__36d07 to reduce jumping */
-    &:has(.typing_b88801 .cooldownWrapper_b21699) .scrollerSpacer__36d07,
-    &:has(.typing_b88801 .typingDots_b88801) .scrollerSpacer__36d07 {
-      height: 0px !important;
+    .scrollerSpacer__36d07 {
+      /* Reduce height of scroller spacer to reduce unnecessary space */
+      height: 34px;
     }
   }
 
@@ -109,6 +75,78 @@
   }
   .divider__908e2:has(+ .groupStart__5126c) {
     display: none !important;
+  }
+
+  /* Everything past this point is from Unshittify-Discord */
+  /* https://github.com/MaiRiosIPla/unshittify-discord */
+  /* Discord CSS updates broke the theming in there and it hasn't been updated in months */
+
+  /* User account widget */
+  .panels_c48ade {
+    right: var(--space-xs) !important;
+    left: auto;
+    bottom: var(--space-xs);
+    width: calc(100% - var(--space-xs) * 2 - var(--custom-guild-list-width));
+    z-index: 200 !important;
+  }
+  /* Top bar */
+  .base_c48ade {
+    grid-template-rows: [top] 0 [titleBarEnd] min-content [noticeEnd] 1fr [end];
+  }
+  .trailing_c38106 {
+    gap: 2px;
+    width: max-content;
+    z-index: 2000 !important;
+    position: absolute;
+    background-color: var(--background-tertiary);
+    border-radius: var(--radius-sm);
+    top: 6px;
+    right: var(--space-xs);
+    left: unset;
+    padding: 0;
+    overflow: hidden;
+  }
+  .bar_c38106::before {
+    content: "";
+    position: fixed;
+    top:0;
+    right:0;
+    left: var(--custom-guild-sidebar-width);
+    height: 10px;
+    width: 200%;
+    z-index: -1 !important;
+  }
+  .bar_c38106 {
+    margin-left: var(--custom-guild-sidebar-width);
+    height: 15px;
+    min-height: unset !important;
+  }
+  .title__85643,
+  .title_c38106 {
+    display: none !important;
+  }
+  /* Search bar */
+  .container__9293f {
+    padding-right: 85px !important;
+    overflow: hidden !important;
+  }
+  .search__49676 > div {
+    display: flex !important;
+    flex-shrink: 1 !important;
+  }
+  .searchBar__97492 {
+    width: auto !important;
+    min-width: 100px !important;
+  }
+  /* Server bar */
+  .tree_ef3116 {
+    margin-top: 1rem;
+  }
+  .itemsContainer_ef3116, .tree_ef3116 {
+    height: calc(100% - 1rem);
+  }
+  .guilds_c48ade {
+    margin-bottom: 0;
   }
 }
 
