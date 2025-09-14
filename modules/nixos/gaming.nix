@@ -41,11 +41,7 @@ in
           '';
         };
         wivrn = let
-          wivrnPackage = inputs.lemonake.packages.${pkgs.system}.wivrn.override {
-            cudaSupport = true;
-            opencomposite = "${inputs.lemonake.packages.${pkgs.system}.opencomposite-git}";
-            xrizer = "${inputs.lemonake.packages.${pkgs.system}.xrizer-git}";
-          };
+          wivrnPackage = inputs.lemonake.packages.${pkgs.system}.wivrn.override { cudaSupport = true; };
         in {
           enable = true;
           package = wivrnPackage;
@@ -68,16 +64,15 @@ in
             json = {
               # application = inputs.lemonake.packages.${pkgs.system}.wlx-overlay-s-git;
               bitrate = 100000000;
-              encoders = [
-                {
-                  encoder = "nvenc";
-                  codec = "h264";
-                  width = 1.0;
-                  height = 1.0;
-                  offset_x = 0;
-                  offset_y = 0;
-                }
-              ];
+              encoders = [{
+                encoder = "nvenc";
+                codec = "h264";
+                width = 1.0;
+                height = 1.0;
+                offset_x = 0;
+                offset_y = 0;
+              }];
+              openvr-compat-path = "${inputs.lemonake.packages.${pkgs.system}.opencomposite-git}";
               tcp_only = true;
             };
           };
