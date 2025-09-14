@@ -137,6 +137,10 @@ elements:
     source: Timer
     format: "%H:%M:%S"
 
+  # WiVRn 25.8 introduced transient services instead of a separate application service
+  # and since we currently don't have a way to set the PATH, we can't expose other programs to it.
+  # This means that a lot of Wlx watch configs broke due to inaccessible CLI commands
+
   # CPU usage
   # - type: Label
   #   rect: [285, 48, 200, 50]

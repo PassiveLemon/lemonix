@@ -62,6 +62,7 @@ in
           config = {
             enable = true;
             json = {
+              # As of WiVRn 25.8, Wlx on my system has unusable latency issues
               # application = inputs.lemonake.packages.${pkgs.system}.wlx-overlay-s-git;
               bitrate = 100000000;
               encoders = [{
@@ -73,12 +74,16 @@ in
                 offset_y = 0;
               }];
               openvr-compat-path = "${inputs.lemonake.packages.${pkgs.system}.opencomposite-git}";
+              publish-service = null;
               tcp_only = true;
             };
           };
         };
       };
 
+      # WiVRn 25.8 introduced transient services instead of a separate application service
+      # and since we currently don't have a way to set the PATH, we can't expose other programs to it.
+      # This means that a lot of Wlx watch configs broke due to inaccessible CLI commands
       # Wlx-overlay-s config has some stuff that needs it
       # systemd.user.services.wivrn.serviceConfig.ProtectProc = lib.mkForce "default";
 
