@@ -71,22 +71,26 @@
   }
 
   /* Attempt to hide blocked users as much as possible (When paired with noBlockedMessages from Vencord) */
-  /* This won't stop Discord from highlighting the channel though */
+  /* This gets most obvious things, but won't get channel highlights, reply names, or reactions */
 
-  /* Remove the added height from the blocked message */
-  .groupStart__5126c:has(+ .scrollerSpacer__36d07) {
-    display: none !important;
+  /* Remove added height */
+  .groupStart__5126c {
+    /* Above the chat box */
+    &:has(+ .scrollerSpacer__36d07),
+    /* Above new message bars */
+    &:has(+ .divider__908e2) {
+      display: none !important;
+    }
   }
-  /* Hide the new message divider bar if the message is blocked */
+  /* Hide the new message divider bar */
   .divider__908e2:has(+ .groupStart__5126c) {
     display: none !important;
   }
-  /* Hide the top new message jump bar if the message is blocked */
+  /* Hide the top new message jump-to bar */
   .newMessagesBar__0f481 {
-    /* Hide bar if blocked message is before scroller spacer and after new message bar */
-    &:has(+ .scroller__36d07 .groupStart__5126c + .scrollerSpacer__36d07) {
-      display: none !important;
-    }
+    /* Message is exactly before scroller spacer */
+    &:has(+ .scroller__36d07 .groupStart__5126c + .scrollerSpacer__36d07),
+    /* Message is exactly between new message bar and scroller spacer */
     &:has(+ .scroller__36d07 .divider__908e2 + .groupStart__5126c + .scrollerSpacer__36d07) {
       display: none !important;
     }
