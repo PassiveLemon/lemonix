@@ -70,13 +70,26 @@
     }
   }
 
-  /* Remove the added height and hide new message bars from blocked user messages */
-  /* This won't stop discord from highlighting the channel though */
+  /* Attempt to hide blocked users as much as possible (When paired with noBlockedMessages from Vencord) */
+  /* This won't stop Discord from highlighting the channel though */
+
+  /* Remove the added height from the blocked message */
   .groupStart__5126c:has(+ .scrollerSpacer__36d07) {
     display: none !important;
   }
+  /* Hide the new message divider bar if the message is blocked */
   .divider__908e2:has(+ .groupStart__5126c) {
     display: none !important;
+  }
+  /* Hide the top new message jump bar if the message is blocked */
+  .newMessagesBar__0f481 {
+    /* Hide bar if blocked message is before scroller spacer and after new message bar */
+    &:has(+ .scroller__36d07 .groupStart__5126c + .scrollerSpacer__36d07) {
+      display: none !important;
+    }
+    &:has(+ .scroller__36d07 .divider__908e2 + .groupStart__5126c + .scrollerSpacer__36d07) {
+      display: none !important;
+    }
   }
 
   /* Everything past this point is from Unshittify-Discord */
