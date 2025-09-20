@@ -1,5 +1,5 @@
 {
-  "$schema": "https://raw.githubusercontent.com/LuaLS/vscode-lua/refs/heads/master/setting/schema.json",
+  "$schema": "https://raw.githubusercontent.com/LuaLS/vscode-lua/master/setting/schema.json",
   "Lua.diagnostics.globals": [
     // AWM
     "awesome",
@@ -15,9 +15,11 @@
 
     // Lite-XL
     "renderer",
+    "system",
     "SCALE",
     "USERDIR",
     "PLATFORM",
+    "PATHSEP",
 
     // Hilbish
     "hilbish"

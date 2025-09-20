@@ -20,24 +20,13 @@ keymap.add({
 	["ctrl+shift+x"] = "open-file-location:open-file-location",
 })
 
-core.status_view:get_item("doc:lines").get_item = function()
-  local dv = core.active_view
-  return {
-    style.text, #dv.doc.lines, " lines",
-  }
-end
-
 config.ignore_files = {
   "^%.git/", "^%.hg/",
   "^node_modules/", "^%.cache/", "^__pycache__/",
   "^desktop%.ini$", "^%.DS_Store$", "^%.directory$",
 }
 
-config.plugins.exterm = {
-  executable = "tym",
-  keymap_project = "ctrl+shift+p",
-  keymap_working = "ctrl+shift+space",
-}
+config.message_timeout = 2
 
 config.plugins.treeview = {
   highlight_focused_file = true,
@@ -46,7 +35,19 @@ config.plugins.treeview = {
   animate_scroll_to_focused_file = true,
 }
 
+config.plugins.exterm = {
+  executable = "tym",
+  keymap_project = "ctrl+shift+p",
+  keymap_working = "ctrl+shift+space",
+}
+
 config.plugins.evergreen.warnFallbackColors = false
+
+-- Disable stonks
+core.status_view:get_item("doc:lines").get_item = function()
+  local dv = core.active_view
+  return { style.text, #dv.doc.lines, " lines" }
+end
 
 lintplus.load({ "luacheck", "python", "shellcheck" })
 
