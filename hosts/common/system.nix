@@ -84,7 +84,6 @@
   };
 
   # Experimental
-  networking.networkmanager.wifi.backend = "iwd";
   boot.tmp.useTmpfs = true;
   boot.tmp.cleanOnBoot = true;
   boot.initrd.systemd.enable = true;
