@@ -13,7 +13,7 @@ local dpi = b.xresources.apply_dpi
 --
 
 ruled.client.connect_signal("request::rules", function()
-  -- Rules to apply to new all clients.
+  -- All clients.
   ruled.client.append_rule({
     id = "global",
     rule = { },
@@ -26,7 +26,7 @@ ruled.client.connect_signal("request::rules", function()
     },
   })
 
-  -- Default floating clients
+  -- Floating clients
   ruled.client.append_rule({
     id = "floating",
     rule_any = {
@@ -37,6 +37,21 @@ ruled.client.connect_signal("request::rules", function()
     },
     properties = {
       floating = true,
+      raise = true,
+      placement = awful.placement.centered+awful.placement.no_offscreen,
+    },
+  })
+
+  -- Fullscreen clients
+  ruled.client.append_rule({
+    id = "fullscreen",
+    rule_any = {
+      instance = { "sober" },
+      class    = { "org.vinegarhq.Sober" },
+    },
+    properties = {
+      fullscreen = true,
+      maximized = true,
       raise = true,
       placement = awful.placement.centered+awful.placement.no_offscreen,
     },
@@ -82,6 +97,14 @@ ruled.client.connect_signal("request::rules", function()
       border_width = dpi(0),
     },
   })
+end)
+
+-- Some jank because otherwise Sober will have a transparent bar the height of the wibar at the bottom. I guess re-fullscreening updates it to draw?
+client.connect_signal("request::manage", function(c)
+  if (c.instance == "sober") or (c.class == "org.vinegarhq.Sober") then
+    c.fullscreen = false
+    c.fullscreen = true
+  end
 end)
 
 --
