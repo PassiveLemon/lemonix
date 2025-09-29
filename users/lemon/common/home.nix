@@ -88,11 +88,10 @@
       plugins = {
         enableList = [
           "autoinsert" "autowrap" "bracketmatch" "colorpicker" "colorpreview"
-          /* "eofnewline" */ "ephemeral_tabs" "editorconfig" "evergreen"
+          "eofnewline" "ephemeral_tabs" "editorconfig" "evergreen"
           "extend_selection_line" "force_syntax" "gitdiff_highlight" "gitstatus"
           "indentguide" "lfautoinsert" "lintplus" "lsp" "lsp_snippets" "open_ext"
           "openfilelocation" "selectionhighlight" "terminal" "treeview-extender"
-          # eofnewline https://github.com/lite-xl/lite-xl-plugins/issues/576
         ];
         customEnableList = {
           "exterm" = ./home/.config/lite-xl/plugins/exterm.lua;
