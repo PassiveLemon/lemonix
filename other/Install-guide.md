@@ -91,7 +91,7 @@ cd lemonix
 bash ./other/installer.sh
 sbctl create-keys # For lanzaboote
 ```
-This script mounts the current dotfile repository into `/etc/nixos/`.
+This script mounts the current dotfile repository into `/etc/nixos/` and moves the previous configuration to `/etc/nixos-backup/`.
 You should also keep agenix modules disabled unless you re-set your SSH keys now.
 ```
 sudo nixos-rebuild switch
@@ -99,15 +99,23 @@ sudo nixos-rebuild switch
 - The `installer.sh` script must be run from the root of the repository.
 
 Hardware config should be in `/etc/nixos-backup/` if needed. You may want to copy this back into the cloned repo so it can be pushed later.
-
 ```
 nix run home-manager/release-25.05 -- init --switch
 home-manager switch --flake .#lemon@silver
+```
+The system is now ready to be rebooted. Before we do that, do any tasks that may require the BIOS. Ex:
+- [Enable secure-boot setup](https://github.com/nix-community/lanzaboote/blob/master/docs/QUICK_START.md#part-2-enabling-secure-boot)
+
+```
 reboot
 ```
 Perform any manual tasks. Ex:
-- Setting any files
-- [After enabling secure-boot setup](https://github.com/nix-community/lanzaboote/blob/master/docs/QUICK_START.md#part-2-enabling-secure-boot), `sbctl enroll-keys --microsoft`
+- Setting any files like git repositories or config files
+- `sbctl enroll-keys --microsoft` (If you followed the pre-reboot tasks)
 - Bat theme cache build
-The system should be set up and ready for use. The only thing left after this is stuff that isn't managed by Nix, such as web logins, application settings, etc.
+
+The system should be set up and ready for use. The only thing left after this is stuff that isn't managed by Nix. Ex:
+- Wallpaper
+- Application settings
+- Web logins
 

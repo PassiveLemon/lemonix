@@ -1,5 +1,4 @@
 # lemonix
-
 These are my dotfiles for my NixOS system. This is configuration for the stuff I use on a daily basis, so things will ALWAYS be changing.
 
 > [!WARNING]
@@ -10,11 +9,11 @@ These are my dotfiles for my NixOS system. This is configuration for the stuff I
 - Extensible modules for NixOS and Home-Manager.
 - AwesomeWM configuration:
   - Lockscreen + PAM authentication (Supports fprintd)
-  - Bar + systray under NixOS icon
-  - Control menu with sliders, powermenu, and a media player.
+  - User config (per host) that controls widgets on the bar and control menu.
+  - Control menu that supports sliders, powermenu, and a media player.
   - Mpris and various signals for resources, peripherals, and other miscellany.
 - Tym terminal with Hilbish shell.
-- Custom color theme for Lite-XL, Discord, and Obsidian. (GTK may or may not happen)
+- Custom color theme for AwesomeWM, Lite-XL, Discord, Obsidian, and VSCode. (GTK theme may or may not happen)
 - Papirus Icons and Volantes Cursors.
 - Configuration for a variety of programs.
 
@@ -24,5 +23,5 @@ These are my dotfiles for my NixOS system. This is configuration for the stuff I
 - Images updated Oct 29, 2024.
 
 ## Install
-There is an install script and install guide in [/other](https://github.com/passivelemon/lemonix/tree/master/other) to aid in installation.
+There is an install script and install guide in [/other](https://github.com/passivelemon/lemonix/tree/master/other) to aid in installation and setup.
 
