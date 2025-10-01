@@ -92,7 +92,7 @@ awful.screen.connect_for_each_screen(function(s)
 
   -- When the wibar is visible, move the control center below it
   local function popup_positioner()
-    if (not s.wibar.ontop) and client.focus.fullscreen and (client.focus.screen == awful.screen.focused()) then
+    if (not s.wibar.ontop) and client.focus and client.focus.fullscreen and (client.focus.screen == awful.screen.focused()) then
       main.y = (b.useless_gap * 2)
     else
       main.y = (s.wibar.height + (b.useless_gap * 2))
