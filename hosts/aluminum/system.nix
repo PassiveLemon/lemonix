@@ -34,6 +34,8 @@
       "root" = {
         home = "/root";
         hashedPassword = "!";
+        # The first key is just the users public key for easy reference.
+        openssh.authorizedKeys.keys = [ ];
       };
       "lemon" = {
         uid = 1100;
@@ -41,7 +43,7 @@
         home = "/home/lemon";
         hashedPassword = "$6$cVhBvZ0RiacmsWNS$4vT6O9R9Bo62kXCQVBSsqVtbpiNbwuI6Eb4fE.2.EVYGuoNEjy16ZWwZfHom6JQSOau20K92U3sZjbPo07XSa.";
         extraGroups = [
-          "wheel" "video" "audio" "networkmanager" "storage" "input"
+          "wheel" "networkmanager" "video" "audio" "storage" "input"
         ];
         isNormalUser = true;
         openssh.authorizedKeys.keys = [ "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIFXRE/wC3EAMvJiRIpWv/Rl1+UfwmxF0p8M+YpUkelmU lemon@aluminum" ];

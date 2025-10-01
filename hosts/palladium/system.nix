@@ -45,6 +45,10 @@
       "root" = {
         home = "/root";
         hashedPassword = "!";
+        extraGroup = [
+          "docker-management"
+        ];
+        # The first key is just the users public key for easy reference.
         openssh.authorizedKeys.keys = [ "will need to be changed" ];
       };
       "nixos" = {

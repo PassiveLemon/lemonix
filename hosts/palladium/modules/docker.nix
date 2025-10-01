@@ -1,4 +1,4 @@
-{ pkgs, ... }: {
+{ ... }: {
   networking = {
     firewall = {
       allowedTCPPorts = [
@@ -14,12 +14,6 @@
       #  #{ from = 40000; to = 44000; } # Docker containers
       #];
     };
-  };
-
-  environment = {
-    systemPackages = with pkgs; [
-      lazydocker
-    ];
   };
 
   users = {

@@ -32,8 +32,7 @@
   };
 
   systemd = {
-    sleep.extraConfig = "HibernateDelaySec=2h";
-    services.syncthing.environment.STNODEFAULTFOLDER = "true";
+    sleep.extraConfig = "HibernateDelaySec=1.5h";
   };
 }
 

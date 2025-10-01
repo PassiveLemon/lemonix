@@ -7,12 +7,6 @@
     };
   };
 
-  environment = {
-    systemPackages = with pkgs; [
-      lazydocker
-    ];
-  };
-
   users = {
     groups = {
       "docker-management" = {

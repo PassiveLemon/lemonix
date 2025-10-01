@@ -38,6 +38,7 @@ in
         };
       };
     };
+    systemd.services.syncthing.environment.STNODEFAULTFOLDER = "true";
   };
 }
 

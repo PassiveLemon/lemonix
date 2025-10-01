@@ -39,6 +39,9 @@
       "root" = {
         home = "/root";
         hashedPassword = "!";
+        extraGroup = [
+          "docker-management" "borg-management"
+        ];
         # The first key is just the users public key for easy reference.
         openssh.authorizedKeys.keys = [ "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIPbedW5DDGCzGpbym2f0Ex+efnyfzFfHRPAhDFY9ZI5K root@silver" ];
       };
@@ -48,12 +51,15 @@
         home = "/home/lemon";
         hashedPassword = "$6$J7q0.RZ88OJiQRkq$mQx2d32YHf6IXqZNMSv.o/sslQMgBAGIKID2aL6tLpN6XFpXp2Fda5p1Yi78H/cXOolBPIuXEQPzxhmKp5qWc0";
         extraGroups = [
-          "wheel" "video" "audio" "input" "networkmanager" "storage"
-          "docker" "kvm" "libvirtd" "dialout"
+          "wheel" "networkmanager" "video" "audio" "storage" "input" "dialout"
+          "docker" "kvm" "libvirtd"
           "docker-management" "borg-management"
         ];
         isNormalUser = true;
-        openssh.authorizedKeys.keys = [ "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIDHteP0JhNBJOlom+X8PY8s0FXPdUY4VcV6PgPPzXIKi lemon@silver" ];
+        openssh.authorizedKeys.keys = [
+          "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIDHteP0JhNBJOlom+X8PY8s0FXPdUY4VcV6PgPPzXIKi lemon@silver"
+          "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIFXRE/wC3EAMvJiRIpWv/Rl1+UfwmxF0p8M+YpUkelmU lemon@aluminum"
+        ];
       };
       "monitor" = {
         uid = 1101;
