@@ -39,7 +39,7 @@
       "root" = {
         home = "/root";
         hashedPassword = "!";
-        extraGroup = [
+        extraGroups = [
           "docker-management" "borg-management"
         ];
         # The first key is just the users public key for easy reference.
