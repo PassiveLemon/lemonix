@@ -125,9 +125,9 @@ function helpers.timed_button(conf_in, time)
     timeout = time or 3,
     single_shot = true,
     callback = function()
-      conf.timer_callback(button_id)
       button.toggle = true
       button_id.fg = b.fg_focus
+      conf.timer_callback(button_id)
     end,
   })
   button.buttons = {
