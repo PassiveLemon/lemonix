@@ -105,8 +105,7 @@ merge_tables(default_patterns, {
   { pattern = ",%s*[%w%-%_']+", type = "normal" },
 
   -- Attribute assignments
-  -- Issue 2
-  { regex = "[\\w\\-_']+()\\.*(?=[^{}]*=)",
+  { regex = "[\\w\\-_']+()\\.*(?=[^{}]*\\s=[^=])",
     type = { "literal", "normal" },
   },
 
@@ -126,7 +125,6 @@ merge_tables(default_patterns, {
 
 -- Issues:
 -- 1. Any module arg that does not have a comma before/after will not be colored
--- 2. Attr assignments with a conditional are collored incorrectly: listNotEmpty = length testList != 0;
 
 syntax.add({
   name = "Nix",
