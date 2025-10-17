@@ -43,10 +43,6 @@
     };
   };
 
-  hardware = {
-    nvidia-container-toolkit.enable = true;
-  };
-
   services = {
     cron.systemCronJobs = [
       "0 2 * * * root docker restart invidious invidious-db invidious-sig-helper"
@@ -59,7 +55,7 @@
       serviceConfig = {
         Type = "oneshot";
         RemainAfterExit = true;
-        ExecStart = "-${pkgs.docker}/bin/docker compose -f /home/lemon/Documents/GitHub/lemocker/silver/docker-compose.yml up -d";
+        ExecStart = "-${pkgs.docker}/bin/docker compose -f /data/lemocker/titanium/docker-compose.yml up -d";
         Restart = "on-failure";
         RestartSec = 15;
       };
@@ -69,18 +65,16 @@
       wants = [ "network-online.target" ];
     };
     tmpfiles.rules = [
-      "Z /home/docker 770 docker docker-management - -"
-      "Z /home/docker/Volumes 770 docker docker-management - -"
-      "Z /home/lemon/Documents/GitHub/lemocker/silver 770 docker docker-management - -"
+      "Z /data/docker 770 docker docker-management - -"
+      "Z /data/docker/Volumes 770 docker docker-management - -"
+      "Z /data/lemocker/titanium 770 docker docker-management - -"
 
-      "Z /home/HDD2TBEXT4/Media 770 docker docker-management - -"
-      "Z /home/HDD2TBEXT4/Media2 770 docker docker-management - -"
-      "Z /home/HDD2TBEXT4/Downloads/JDownloader 770 docker docker-management - -"
+      "Z /data/Media 770 docker docker-management - -"
 
-      "z /home/docker/Volumes/Networking/Traefik/acme.json 600 docker docker-management - -"
+      "z /data/Volumes/Networking/Traefik/acme.json 600 docker docker-management - -"
 
-      "Z /home/docker/Volumes/Streaming/Invidious/postgresdata 770 999 docker-management - -"
-      "Z /home/docker/Volumes/Utilities/Yamtrack/cache 770 999 docker-management - -"
+      "Z /data/Volumes/Streaming/Invidious/postgresdata 770 999 docker-management - -"
+      "Z /data/Volumes/Utilities/Yamtrack/cache 770 999 docker-management - -"
     ];
   };
 }
