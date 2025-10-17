@@ -12,12 +12,12 @@
       nh eza bat trashy fd ripgrep
       #nix-output-monitor dix 
       # File/storage management
-      pcmanfm xarchiver gparted
+      pcmanfm xarchiver gparted filezilla
       ffmpegthumbnailer
       # Development
       github-desktop
       shellcheck luajitPackages.luacheck python312Packages.flake8
-      nil nimlsp pyright lua-language-server bash-language-server dockerfile-language-server-nodejs yaml-language-server
+      nil nimlsp pyright lua-language-server bash-language-server dockerfile-language-server yaml-language-server
       # Office
       obsidian onlyoffice-desktopeditors onlyoffice-documentserver drawio
       # Audio

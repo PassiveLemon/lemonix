@@ -10,8 +10,8 @@
       systemd-boot.enable = true;
     };
     kernelModules = [ "iwlwifi" "kvm-amd" ];
-    # # https://github.com/NixOS/nixpkgs/issues/412299
-    # # kernelPackages = pkgs.linuxPackages_6_15;
+    # https://github.com/NixOS/nixpkgs/issues/452057
+    kernelPackages = pkgs.linuxPackages_6_16;
   };
 
   networking = {
@@ -104,7 +104,7 @@
 
   hardware = {
     nvidia = {
-      # https://github.com/NixOS/nixpkgs/issues/429624
+      # https://github.com/NixOS/nixpkgs/issues/452057
       # package = config.boot.kernelPackages.nvidiaPackages.beta;
       package = config.boot.kernelPackages.nvidiaPackages.mkDriver {
         version = "580.65.06";
