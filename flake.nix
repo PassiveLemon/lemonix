@@ -85,19 +85,6 @@
           ./hosts/aluminum/user.nix
         ];
       };
-      # Raspberry Pi
-      # SD card died and will be offline for the foreseeable future.
-      #"palladium" = inputs.nixos.lib.nixosSystem {
-      #  inherit specialArgs;
-      #  system = "aarch64-linux";
-      #  modules = [
-      #    inputs.nixos-hardware.nixosModules.common-pc-ssd
-      #    inputs.nixos-hardware.nixosModules.raspberry-pi-4
-      #    ./hosts/common/default.nix
-      #    ./hosts/palladium/default.nix
-      #    ./hosts/palladium/system.nix
-      #  ];
-      #};
     };
 
     homeConfigurations = {

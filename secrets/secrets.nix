@@ -4,7 +4,6 @@ let
 
   # Get this from /etc/ssh/ssh_host_ed25519_key.pub (services.openssh.hostKeys)
   aluminum = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIB/5WTbUE/YjK0EqTLGJwlE4/qA5EJB8Ey/w2o09FGtV";
-  palladium = "";
   silver = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIPbedW5DDGCzGpbym2f0Ex+efnyfzFfHRPAhDFY9ZI5K";
 
   borg = {
@@ -18,7 +17,7 @@ in
 {
   # agenix -e <file>
   # First list are hosts and second are users
-  "borgBackupPass.age".publicKeys = [ palladium silver ] ++ [ borg.silver lemon.silver ];
+  "borgBackupPass.age".publicKeys = [ silver ] ++ [ borg.silver lemon.silver ];
   "tailscaleAuthKey.age".publicKeys = [ aluminum silver ] ++ [ lemon.silver ];
 }
 
