@@ -1,6 +1,6 @@
 { inputs, config, lib, pkgs, ... }:
 let
-  inherit (lib) mkIf mkEnableOption mkMerge;
+  inherit (lib) mkIf mkEnableOption mkMerge optional;
   cfg = config.lemonix.gaming;
 in
 {
@@ -27,8 +27,9 @@ in
         enable = true;
         extraCompatPackages = with pkgs; [
           proton-ge-bin
+        ] ++ (optional cfg.vr.enable [
           inputs.lemonake.packages.${pkgs.system}.proton-ge-rtsp
-        ];
+        ]);
       };
     })
     (mkIf cfg.vr.enable {
