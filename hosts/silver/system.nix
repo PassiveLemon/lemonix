@@ -10,8 +10,6 @@
       systemd-boot.enable = true;
     };
     kernelModules = [ "iwlwifi" "kvm-amd" ];
-    # https://github.com/NixOS/nixpkgs/issues/452057
-    kernelPackages = pkgs.linuxPackages_6_16;
   };
 
   networking = {
@@ -105,14 +103,15 @@
   hardware = {
     nvidia = {
       # https://github.com/NixOS/nixpkgs/issues/452057
+      package = config.boot.kernelPackages.nvidiaPackages.stable;
       # package = config.boot.kernelPackages.nvidiaPackages.beta;
-      package = config.boot.kernelPackages.nvidiaPackages.mkDriver {
-        version = "580.65.06";
-        sha256_64bit = "sha256-BLEIZ69YXnZc+/3POe1fS9ESN1vrqwFy6qGHxqpQJP8=";
-        openSha256 = "sha256-BKe6LQ1ZSrHUOSoV6UCksUE0+TIa0WcCHZv4lagfIgA=";
-        settingsSha256 = "sha256-9PWmj9qG/Ms8Ol5vLQD3Dlhuw4iaFtVHNC0hSyMCU24=";
-        usePersistenced = false;
-      };
+      # package = config.boot.kernelPackages.nvidiaPackages.mkDriver {
+      #   version = "580.65.06";
+      #   sha256_64bit = "sha256-BLEIZ69YXnZc+/3POe1fS9ESN1vrqwFy6qGHxqpQJP8=";
+      #   openSha256 = "sha256-BKe6LQ1ZSrHUOSoV6UCksUE0+TIa0WcCHZv4lagfIgA=";
+      #   settingsSha256 = "sha256-9PWmj9qG/Ms8Ol5vLQD3Dlhuw4iaFtVHNC0hSyMCU24=";
+      #   usePersistenced = false;
+      # };
       open = true;
       modesetting.enable = true;
       powerManagement.enable = true;
