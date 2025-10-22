@@ -10,25 +10,27 @@
       systemd-boot.enable = true;
     };
     kernelModules = [ "iwlwifi" "kvm-amd" ];
-    swraid = {
-      enable = true;
-      mdadmConf = ''
+    # swraid = {
+    #   enable = true;
+    #   mdadmConf = ''
       
-      '';
-    };
+    #   '';
+    # };
   };
 
   networking = {
     hostName = "titanium";
-    # interfaces = {
-    #   "enp7s0" = {
-    #     ipv4.addresses = [{
-    #       address = "192.168.1.177";
-    #       prefixLength = 24;
-    #     }];
-    #     useDHCP = false;
-    #   };
-    # };
+    interfaces = {
+      "eno1" = {
+        ipv4 = {
+          addresses = [{
+            address = "192.168.1.11";
+            prefixLength = 24;
+          }];
+        };
+        useDHCP = false;
+      };
+    };
     enableIPv6 = false;
     nameservers = [ "1.1.1.1" "9.9.9.9" ];
   };
@@ -90,6 +92,8 @@
   #     };
   #   };
   # };
+
+  hardware.nvidia.modesetting.enable = false; # For the GT 8400
 
   virtualisation = {
     libvirtd.enable = true;

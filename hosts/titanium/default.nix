@@ -10,7 +10,7 @@
       headless.enable = true;
     };
     agenix.enable = true;
-    lanzaboote.enable = true;
+    lanzaboote.enable = false;
     ssh = {
       enable = true;
       openFirewall = true;
