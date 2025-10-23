@@ -125,14 +125,14 @@
   # Drives
   # 500 GB Crucial P3 (Root)
 
-  fileSystems = {
-    # 4 TB Crucial T500 Volume
-    "/data" = {
-      device = "/dev/disk/by-uuid/xxxxxxxxxxxxx";
-      fsType = "ext4";
-      options = [ "noatime" ];
-    };
-  };
+  # fileSystems = {
+  #   # 4 TB Crucial T500 Volume
+  #   "/data" = {
+  #     device = "/dev/disk/by-uuid/xxxxxxxxxxxxx";
+  #     fsType = "ext4";
+  #     options = [ "noatime" ];
+  #   };
+  # };
 
   system.stateVersion = "25.05"; # Don't change unless you know what you are doing
 }
