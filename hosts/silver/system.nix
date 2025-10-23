@@ -14,20 +14,17 @@
 
   networking = {
     hostName = "silver";
-    # firewall = {
-    #   allowedTCPPorts = [
-    #     5500 # HTML Webserver for testing
-    #   ];
-    # };
-    # interfaces = {
-    #   "enp7s0" = {
-    #     ipv4.addresses = [{
-    #       address = "192.168.1.177";
-    #       prefixLength = 24;
-    #     }];
-    #     useDHCP = false;
-    #   };
-    # };
+    interfaces = {
+      "eno1" = {
+        ipv4 = {
+          addresses = [{
+            address = "192.168.1.10";
+            prefixLength = 24;
+          }];
+        };
+        useDHCP = false;
+      };
+    };
     enableIPv6 = false;
     nameservers = [ "1.1.1.1" "9.9.9.9" ];
   };
@@ -75,26 +72,6 @@
       nvtopPackages.nvidia
     ];
   };
-
-  # services = {
-  #   create_ap = {
-  #     enable = true;
-  #     settings = {
-  #       INTERNET_IFACE = "enp7s0";
-  #       WIFI_IFACE = "wlp6s0";
-  #       SSID = "Unknown Network";
-  #       PASSPHRASE = "kXP3@%p!k%N7KL!4#26Z3";
-  #       IEEE80211N = 1;
-  #       IEEE80211AC = 1;
-  #       HT_CAPAB = "[HT40+][SHORT-GI-40][MAX-AMSDU-7935][TX-STBC][RX-STBC2][LDPC][DSSS_CCK-40]";
-  #       VHT_CAPAB = "[SHORT-GI-160][MAX-MPDU-11454][TX-STBC][RX-STBC-2][LDPC]";
-  #       FREQ_BAND = 5;
-  #       HIDDEN = 1;
-  #       COUNTRY = "US";
-  #       ISOLATE_CLIENTS = 1;
-  #     };
-  #   };
-  # };
 
   virtualisation = {
     libvirtd.enable = true;

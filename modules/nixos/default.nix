@@ -1,6 +1,6 @@
 { config, lib, ... }:
 let
-  inherit (lib) mkIf mkEnableOption;
+  inherit (lib) mkIf mkEnableOption mkForce;
   cfg = config.lemonix;
 in
 {
@@ -33,6 +33,10 @@ in
   
     systemd.services.nix-gc = mkIf cfg.system.mobile.enable {
       unitConfig.ConditionACPower = true;
+    };
+
+    services.xserver = mkIf cfg.system.headless.enable {
+      enable = mkForce false;
     };
   };
 }

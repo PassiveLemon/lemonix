@@ -85,6 +85,19 @@
           ./hosts/aluminum/user.nix
         ];
       };
+      # Homeserver
+      "titanium" = inputs.nixos.lib.nixosSystem {
+        inherit specialArgs;
+        system = "x86_64-linux";
+        modules = [
+          # Doesn't currently have a GPU but one may be added in the future for transcoding and whatnot
+          inputs.nixos-hardware.nixosModules.common-cpu-amd-pstate
+          inputs.nixos-hardware.nixosModules.common-pc-ssd
+          ./hosts/common/default.nix
+          ./hosts/titanium/default.nix
+          ./hosts/titanium/system.nix
+        ];
+      };
     };
 
     homeConfigurations = {
