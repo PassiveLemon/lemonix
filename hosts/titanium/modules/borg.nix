@@ -10,11 +10,11 @@
         uid = 1103;
         description = "Borg";
         home = "/home/borg";
-        hashedPassword = "xxxxxxxxxxxxxx";
+        hashedPassword = "$6$MtSAYxY8upZRU1nk$ktFdgqil9HqxMexHEvp25f4iPYJMPXVnOugH8tRbQyMB1ILX1DLOCwL3nmcvR3RwJIgEELt.SP1LdwRNP0W4L/";
         extraGroups = [ "borg-management" "docker-management" ];
         isNormalUser = true;
         openssh.authorizedKeys.keys = [
-          "xxxxxxxxxxxxx"
+          "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIGt7EoDxKbFzXMXVV+RF422Tt9dBS7gKIgWMLxWncax9 borg@titanium"
           "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIOH57JnHLmW6Al34ksW1zb0TJq7IY9mZLN7kBiFR0dYi borg@silver"
         ];
       };

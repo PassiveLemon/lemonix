@@ -10,6 +10,20 @@
       systemd-boot.enable = true;
     };
     kernelModules = [ "iwlwifi" "kvm-amd" ];
+    kernelParams = [
+      "nomodeset"
+      "vga=normal"
+      "video=vesafb:off"
+      "video=efifb:off"
+    ];
+    blacklistedKernelModules = [
+      "nouveau"
+      "nvidia"
+      "nvidia_drm"
+      "nvidia_modeset"
+      "drm_kms_helper"
+      "drm"
+    ];
     # swraid = {
     #   enable = true;
     #   mdadmConf = ''
@@ -44,13 +58,15 @@
           "docker-management" "borg-management"
         ];
         # The first key is just the users public key for easy reference.
-        openssh.authorizedKeys.keys = [ ];
+        openssh.authorizedKeys.keys = [
+          "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIJyZC7OZPCMe+jecSZC1ueL3XR5+G7gCg/Zvc/oNqxO6 root@titanium"
+        ];
       };
       "lemon" = {
         uid = 1100;
         description = "Lemon";
         home = "/home/lemon";
-        hashedPassword = "xxxxxxxxxxx";
+        hashedPassword = "$6$rf1mpzpAbaL7ml1o$sRfhuqilsLdrxqmXLHobwnPfBFYlc4usBJE5ZfcOrv1duaTs5k6uGa9Hgc/Wb4uKSpWPDCiWgIVl7OyW2k7bd1";
         extraGroups = [
           "wheel" "networkmanager" "storage" "input"
           "docker" "kvm" "libvirtd"
@@ -58,7 +74,7 @@
         ];
         isNormalUser = true;
         openssh.authorizedKeys.keys = [
-          "xxxxxxxxx"
+          "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAINxpX0Uf3Bf1lSSCxvX+oTRsHD1tkBPWYzYFjSRqZ/MK lemon@titanium"
           "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIDHteP0JhNBJOlom+X8PY8s0FXPdUY4VcV6PgPPzXIKi lemon@silver"
         ];
       };
@@ -66,9 +82,11 @@
         uid = 1101;
         description = "Monitor";
         home = "/home/monitor";
-        hashedPassword = "xxxxxxxxx";
+        hashedPassword = "$6$8UYgx2knIzubEIcf$mPKCPdVJ0w5IU/hzNuz8kt0liDPOjxqZgE/DC4s6zY1biKeV3maGJo2jixjAfnkvYOXAWqgLe4N61h91cybSw/";
         isNormalUser = true;
-        openssh.authorizedKeys.keys = [ ];
+        openssh.authorizedKeys.keys = [
+          "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIA2BjYf5UkUCNgSo/z/7/lqCKtaenbeaFHI1GGdkj/ry monitor@titanium"
+        ];
       };
     };
   };
@@ -92,8 +110,6 @@
   #     };
   #   };
   # };
-
-  hardware.nvidia.modesetting.enable = false; # For the GT 8400
 
   virtualisation = {
     libvirtd.enable = true;
