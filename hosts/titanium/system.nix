@@ -50,6 +50,11 @@
   };
 
   users = {
+    groups = {
+      "management" = {
+        gid = 1204;
+      };
+    };
     users = {
       "root" = {
         home = "/root";
@@ -70,7 +75,7 @@
         extraGroups = [
           "wheel" "networkmanager" "storage" "input"
           "docker" "kvm" "libvirtd"
-          "docker-management" "borg-management"
+          "management" "docker-management" "borg-management"
         ];
         isNormalUser = true;
         openssh.authorizedKeys.keys = [
@@ -110,6 +115,12 @@
   #     };
   #   };
   # };
+
+  systemd = {
+    tmpfiles.rules = [
+      "Z /data 770 root management - -"
+    ];
+  };
 
   virtualisation = {
     libvirtd.enable = true;
