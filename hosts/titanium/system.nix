@@ -59,7 +59,7 @@
         ];
         # The first key is just the users public key for easy reference.
         openssh.authorizedKeys.keys = [
-          "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIJyZC7OZPCMe+jecSZC1ueL3XR5+G7gCg/Zvc/oNqxO6 root@titanium"
+          "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIGCBA9bX/zAfV04lQXGPPL+f24qD+MrX7zDt+odiE0pI root@titanium"
         ];
       };
       "lemon" = {
@@ -123,7 +123,7 @@
   };
 
   # Drives
-  # 500 GB Crucial P3 (Root)
+  # 500 GB Crucial T500 (Root)
 
   # fileSystems = {
   #   # 4 TB Crucial T500 Volume

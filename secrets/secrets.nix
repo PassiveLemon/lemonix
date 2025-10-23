@@ -5,7 +5,7 @@ let
   # Get this from /etc/ssh/ssh_host_ed25519_key.pub (services.openssh.hostKeys)
   aluminum = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIB/5WTbUE/YjK0EqTLGJwlE4/qA5EJB8Ey/w2o09FGtV";
   silver = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIPbedW5DDGCzGpbym2f0Ex+efnyfzFfHRPAhDFY9ZI5K";
-  titanium = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIJyZC7OZPCMe+jecSZC1ueL3XR5+G7gCg/Zvc/oNqxO6";
+  titanium = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIGCBA9bX/zAfV04lQXGPPL+f24qD+MrX7zDt+odiE0pI";
 
   borg = {
     silver = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIOH57JnHLmW6Al34ksW1zb0TJq7IY9mZLN7kBiFR0dYi";
