@@ -1,6 +1,6 @@
 { ... }: {
   imports = [
-    #./modules/docker.nix
+    ./modules/docker.nix
     ./modules/borg.nix
   ];
 

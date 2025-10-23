@@ -24,12 +24,12 @@
       "drm_kms_helper"
       "drm"
     ];
-    # swraid = {
-    #   enable = true;
-    #   mdadmConf = ''
-      
-    #   '';
-    # };
+    swraid = {
+      enable = true;
+      mdadmConf = ''
+        ARRAY /dev/md0 UUID=e53aed8f:e6224c4e:86f71ff5:1d0c884e
+      '';
+    };
   };
 
   networking = {
@@ -119,6 +119,7 @@
   systemd = {
     tmpfiles.rules = [
       "Z /data 770 root management - -"
+      "Z /data/lemonix 770 root management - -"
     ];
   };
 
@@ -136,14 +137,14 @@
   # Drives
   # 500 GB Crucial T500 (Root)
 
-  # fileSystems = {
-  #   # 4 TB Crucial T500 Volume
-  #   "/data" = {
-  #     device = "/dev/disk/by-uuid/xxxxxxxxxxxxx";
-  #     fsType = "ext4";
-  #     options = [ "noatime" ];
-  #   };
-  # };
+  fileSystems = {
+    # 2x 2 TB Crucial T500 RAID 1
+    "/data" = {
+      device = "/dev/disk/by-uuid/896ef644-96f6-4e06-b4d5-b5e7fb84faad";
+      fsType = "ext4";
+      options = [ "noatime" ];
+    };
+  };
 
   system.stateVersion = "25.05"; # Don't change unless you know what you are doing
 }
