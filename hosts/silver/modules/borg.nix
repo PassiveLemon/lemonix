@@ -63,6 +63,38 @@
         monthly = -1;
       };
     };
+    "lemon-onsite" = {
+      paths = [
+        "/home/lemon/Documents"
+        "/home/lemon/Music"
+        "/home/lemon/Pictures"
+        "/home/lemon/Shared"
+        "/home/lemon/Standalone"
+        "/home/lemon/Videos"
+        "/home/lemon/.config"
+        "/home/lemon/.local/share"
+      ];
+      exclude = [
+        "/home/lemon/.config/r2modmanPlus-local/*/cache"
+        "/home/lemon/.local/share/Trash"
+        "/home/lemon/.local/share/Steam/steamapps"
+        "/home/lemon/.local/share/Steam/compatibilitytools.d"
+      ];
+      repo = "ssh://borg@titanium.passivelemon.net/data/BorgBackups/silver";
+      encryption = {
+        mode = "repokey";
+        passCommand = "cat ${config.age.secrets.borgBackupPass.path}";
+      };
+      environment.BORG_RSH = "ssh -i /home/borg/.ssh/id_ed25519";
+      compression = "auto,zstd";
+      startAt = "daily";
+      prune.keep = {
+        within = "1d";
+        daily = 7;
+        weekly = 4;
+        monthly = -1;
+      };
+    };
     "lemon-remote" = {
       paths = [
         "/home/lemon/Documents"
@@ -99,7 +131,6 @@
     "docker-local" = {
       paths = [
         "/home/docker"
-        "/home/HDD2TBEXT4/Media/Music"
         "/home/BACKUPDRIVE/ManualBackups"
       ];
       repo = "ssh://borg@127.0.0.1/home/BACKUPDRIVE/BorgBackups/silver";
@@ -117,10 +148,29 @@
         monthly = -1;
       };
     };
+    "docker-onsite" = {
+      paths = [
+        "/home/docker"
+        "/home/BACKUPDRIVE/ManualBackups"
+      ];
+      repo = "ssh://borg@titanium.passivelemon.net/data/BorgBackups/silver";
+      encryption = {
+        mode = "repokey";
+        passCommand = "cat ${config.age.secrets.borgBackupPass.path}";
+      };
+      environment.BORG_RSH = "ssh -i /home/borg/.ssh/id_ed25519";
+      compression = "auto,zstd";
+      startAt = "daily";
+      prune.keep = {
+        within = "1d";
+        daily = 7;
+        weekly = 4;
+        monthly = -1;
+      };
+    };
     "docker-remote" = {
       paths = [
         "/home/docker"
-        "/home/HDD2TBEXT4/Media/Music"
         "/home/BACKUPDRIVE/ManualBackups"
       ];
       repo = "ssh://u412758@u412758.your-storagebox.de:23/home/BorgBackups/silver";

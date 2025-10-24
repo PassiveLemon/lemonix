@@ -1,12 +1,4 @@
 { pkgs, ... }: {
-  networking = {
-    firewall = {
-      allowedTCPPorts = [
-        54384 # LiveSync
-      ];
-    };
-  };
-
   users = {
     groups = {
       "docker-management" = {
@@ -73,14 +65,8 @@
       "Z /home/docker/Volumes 770 docker docker-management - -"
       "Z /home/lemon/Documents/GitHub/lemocker/silver 770 docker docker-management - -"
 
-      "Z /home/HDD2TBEXT4/Media 770 docker docker-management - -"
       "Z /home/HDD2TBEXT4/Media2 770 docker docker-management - -"
       "Z /home/HDD2TBEXT4/Downloads/JDownloader 770 docker docker-management - -"
-
-      "z /home/docker/Volumes/Networking/Traefik/acme.json 600 docker docker-management - -"
-
-      "Z /home/docker/Volumes/Streaming/Invidious/postgresdata 770 999 docker-management - -"
-      "Z /home/docker/Volumes/Utilities/Yamtrack/cache 770 999 docker-management - -"
     ];
   };
 }
