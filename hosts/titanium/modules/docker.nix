@@ -1,10 +1,19 @@
 { pkgs, ... }: {
   networking = {
-    firewall = {
-      allowedTCPPorts = [
-        54384 # LiveSync
-      ];
-    };
+    firewall.extraCommands = ''
+      iptables -N DOCKER-USER || true
+      iptables -F DOCKER-USER
+
+      # Allow established connections
+      iptables -A DOCKER-USER -i wlp5s0 -m state --state RELATED,ESTABLISHED -j ACCEPT
+
+      # Allow from trusted IP ranges
+      iptables -A DOCKER-USER -s 100.64.0.0/24 -j ACCEPT
+      iptables -A DOCKER-USER -s 192.168.1.0/24 -j ACCEPT
+
+      # Drop everything else
+      iptables -A DOCKER-USER -i wlp5s0 -j DROP
+    '';
   };
 
   users = {
