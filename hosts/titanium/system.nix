@@ -118,7 +118,7 @@
 
   systemd = {
     tmpfiles.rules = [
-      "Z /data 770 root management - -"
+      "Z /data 775 root management - -"
       "Z /data/lemonix 770 root management - -"
     ];
   };
