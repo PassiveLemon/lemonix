@@ -1,4 +1,4 @@
-{ config, pkgs, ... }: {
+{ config, lib, pkgs, ... }: {
   imports = [
     ./hardware-configuration.nix
     ../common/system.nix
@@ -6,7 +6,7 @@
 
   age.secrets = {
     discordWebhook = {
-      file = ../../../secrets/discordWebhook.age;
+      file = ../../secrets/discordWebhook.age;
       mode = "600";
       owner = "root";
       group = "management";
@@ -38,13 +38,17 @@
       mdadmConf = ''
         ARRAY /dev/md0 UUID=e53aed8f:e6224c4e:86f71ff5:1d0c884e
 
-        PROGRAM ${pkgs.writeShellApplication {
+        PROGRAM bash ${lib.getExe (pkgs.writeShellApplication {
           name = "mdadm-discord-webhook";
           text = ''
             DISCORD_WEBHOOK_URL=$(cat ${config.age.secrets.discordWebhook.path})
             ${builtins.readFile ./webhook.sh}
           '';
-        }}
+          meta = with lib; {
+            license = licenses.mit;
+            mainProgrma = "mdadm-discord-webhook";
+          };
+        })}
       '';
     };
   };
@@ -134,6 +138,7 @@
   # };
 
   systemd = {
+    units."mdmonitor.service".enable = true;
     tmpfiles.rules = [
       "Z /data 775 root management - -"
       "Z /data/lemonix 770 root management - -"
