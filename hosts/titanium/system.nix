@@ -1,8 +1,17 @@
-{ ... }: {
+{ config, pkgs, ... }: {
   imports = [
     ./hardware-configuration.nix
     ../common/system.nix
   ];
+
+  age.secrets = {
+    discordWebhook = {
+      file = ../../../secrets/discordWebhook.age;
+      mode = "600";
+      owner = "root";
+      group = "management";
+    };
+  };
 
   boot = {
     loader = {
@@ -28,6 +37,14 @@
       enable = true;
       mdadmConf = ''
         ARRAY /dev/md0 UUID=e53aed8f:e6224c4e:86f71ff5:1d0c884e
+
+        PROGRAM ${pkgs.writeShellApplication {
+          name = "mdadm-discord-webhook";
+          text = ''
+            DISCORD_WEBHOOK_URL=$(cat ${config.age.secrets.discordWebhook.path})
+            ${builtins.readFile ./webhook.sh}
+          '';
+        }}
       '';
     };
   };

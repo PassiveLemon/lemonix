@@ -22,6 +22,7 @@ in
   # agenix -e <file>
   # First list are hosts and second are users
   "borgBackupPass.age".publicKeys = [ silver titanium ] ++ [ borg.silver lemon.silver borg.titanium lemon.titanium ];
+  "discordWebhook.age".publicKeys = [ titanium ] ++ [ lemon.titanium ];
   "tailscaleAuthKey.age".publicKeys = [ aluminum silver titanium ] ++ [ lemon.aluminum lemon.silver lemon.titanium ];
 }
 
