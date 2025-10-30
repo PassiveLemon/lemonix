@@ -31,8 +31,9 @@ in
       "lemonix: Hibernation is enabled but swap is not. Hibernation will not work."
     ];
   
-    systemd.services.nix-gc = mkIf cfg.system.mobile.enable {
-      unitConfig.ConditionACPower = true;
+    systemd.services = mkIf cfg.system.mobile.enable {
+      nix-gc.unitConfig.ConditionACPower = true;
+      nix-optimize.unitConfig.ConditionACPower = true;
     };
 
     services.xserver = mkIf cfg.system.headless.enable {

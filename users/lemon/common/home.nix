@@ -135,6 +135,8 @@
         };
         settings = {
           "accessibility.typeaheadfind.enablesound" = false;
+          "gfx.webrender.all" = true;
+          "media.ffmpeg.vaapi.enabled" = true;
         };
       };
       policies = {
