@@ -15,10 +15,6 @@
       };
     };
     kernelPackages = lib.mkDefault pkgs.linuxPackages_latest;
-    kernelParams = [
-      "net.ifnames=1" 
-      "biosdevname=0"
-    ];
   };
 
   time = {

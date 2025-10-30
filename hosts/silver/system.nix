@@ -15,7 +15,7 @@
   networking = {
     hostName = "silver";
     interfaces = {
-      "enp8s0" = {
+      "eno1" = {
         ipv4 = {
           addresses = [{
             address = "192.168.1.10";
