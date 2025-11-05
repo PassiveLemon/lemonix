@@ -16,7 +16,7 @@ in
   config = mkIf cfg.enable (mkMerge [
     (mkIf cfg.desktop.enable {
       home.packages = with pkgs; [
-        r2modman nexusmods-app
+        r2modman limo
         heroic (bottles.override { removeWarningPopup = true; })
         lunar-client
         inputs.lemonake.packages.${pkgs.system}.gdlauncher-carbon
@@ -26,6 +26,7 @@ in
       xdg.mimeApps.defaultApplications = {
         "x-scheme-handler/gdlauncher" = "gdlauncher.desktop";
         "x-scheme-handler/ror2mm" = "r2modman.desktop";
+        "x-scheme-handler/nxm" = "limo.desktop";
       };
     })
     (mkIf cfg.vr.enable {
