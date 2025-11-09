@@ -109,8 +109,19 @@
     z-index: 200 !important;
   }
   /* Top bar */
-  .base_c48ade {
+  .base__5e434 {
     grid-template-rows: [top] 0 [titleBarEnd] min-content [noticeEnd] 1fr [end];
+    .sidebarListRounded__5e434,
+    .sidebarList__5e434 {
+      border-top: 0px;
+      border-start-start-radius: 0px;
+      .bannerVisible_f37cb1 .header_f37cb1 {
+        border-top: 0px;
+      }
+    }
+    .chat_f75fb0 {
+      border-top: 0px;
+    }
   }
   .trailing_c38106 {
     gap: 2px;
