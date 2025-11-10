@@ -21,7 +21,8 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
     nixpkgs-f2k = {
-      url = "github:moni-dz/nixpkgs-f2k";
+      # url = "github:moni-dz/nixpkgs-f2k";
+      url = "github:passivelemon/nixpkgs-f2k/fix-awm";
       inputs.nixpkgs.follows = "nixpkgs";
     };
     lanzaboote = {
