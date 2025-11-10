@@ -101,7 +101,7 @@
   /* Discord CSS updates broke the theming in there and it hasn't been updated in months */
 
   /* User account widget */
-  .panels_c48ade {
+  .panels__5e434 {
     right: var(--space-xs) !important;
     left: auto;
     bottom: var(--space-xs);
@@ -173,9 +173,9 @@
     margin-top: 1rem;
   }
   .itemsContainer_ef3116, .tree_ef3116 {
-    height: calc(100% - 1rem);
+    height: calc(100%);
   }
-  .guilds_c48ade {
+  .wrapper_ef3116 {
     margin-bottom: 0;
   }
 }
