@@ -135,6 +135,17 @@
         ];
       };
     };
+    packages.x86_64-linux = let
+      pkgs = import inputs.nixpkgs { system = "x86_64-linux"; };
+    in
+    {
+      rd-titanium = pkgs.writeShellApplication {
+        name = "update";
+        text = ''
+          nixos-rebuild switch --flake .#titanium --target-host root@titanium
+        '';
+      };
+    };
   };
 }
 
