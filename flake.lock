@@ -352,16 +352,16 @@
         "rust-overlay": "rust-overlay"
       },
       "locked": {
-        "lastModified": 1737639419,
-        "narHash": "sha256-AEEDktApTEZ5PZXNDkry2YV2k6t0dTgLPEmAZbnigXU=",
+        "lastModified": 1762205063,
+        "narHash": "sha256-If6vQ+KvtKs3ARBO9G3l+4wFSCYtRBrwX1z+I+B61wQ=",
         "owner": "nix-community",
         "repo": "lanzaboote",
-        "rev": "a65905a09e2c43ff63be8c0e86a93712361f871e",
+        "rev": "88b8a563ff5704f4e8d8e5118fb911fa2110ca05",
         "type": "github"
       },
       "original": {
         "owner": "nix-community",
-        "ref": "v0.4.2",
+        "ref": "v0.4.3",
         "repo": "lanzaboote",
         "type": "github"
       }
@@ -519,16 +519,15 @@
         "parts": "parts"
       },
       "locked": {
-        "lastModified": 1762792265,
+        "lastModified": 1762794896,
         "narHash": "sha256-DL40GG2fXus28b2ihL0HSlpeA11M2t1Vi4BRsG8P6gk=",
-        "owner": "passivelemon",
+        "owner": "moni-dz",
         "repo": "nixpkgs-f2k",
-        "rev": "a65b428e3f954f336f5824c3d8647fb4f866cba0",
+        "rev": "643e35307961656b3c3a3dd66fbc27ae501a7b1d",
         "type": "github"
       },
       "original": {
-        "owner": "passivelemon",
-        "ref": "fix-awm",
+        "owner": "moni-dz",
         "repo": "nixpkgs-f2k",
         "type": "github"
       }
