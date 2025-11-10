@@ -58,13 +58,11 @@ in
             IPC_EXIT_WHEN_IDLE = "on";
             IPC_EXIT_WHEN_IDLE_DELAY_MS = "900000"; # 15 minutes
           };
-          extraServerFlags = [ "--no-publish-service" ];
           steam.importOXRRuntimes = true;
           config = {
             enable = true;
             json = {
-              # As of WiVRn 25.8, Wlx on my system has unusable latency issues
-              # application = inputs.lemonake.packages.${pkgs.system}.wlx-overlay-s-git;
+              application = inputs.lemonake.packages.${pkgs.system}.wlx-overlay-s-git;
               bitrate = 100000000;
               encoders = [{
                 encoder = "nvenc";
@@ -74,8 +72,6 @@ in
                 offset_x = 0;
                 offset_y = 0;
               }];
-              openvr-compat-path = "${inputs.lemonake.packages.${pkgs.system}.opencomposite-git}";
-              publish-service = null;
               tcp_only = true;
             };
           };
@@ -84,13 +80,9 @@ in
 
       # WiVRn 25.8 introduced transient services instead of a separate application service
       # and since we currently don't have a way to set the PATH, we can't expose other programs to it.
-      # This means that a lot of Wlx watch configs broke due to inaccessible CLI commands
-      # Wlx-overlay-s config has some stuff that needs it
+      # This means that my watch shell commands do not and cannnot work until we can expose PATH.
+      # # Wlx-overlay-s config has some stuff that needs it
       # systemd.user.services.wivrn.serviceConfig.ProtectProc = lib.mkForce "default";
-
-      hardware.graphics.extraPackages = [
-        inputs.lemonake.packages.${pkgs.system}.monado-vulkan-layers-git
-      ];
     })
     (mkIf cfg.streaming.enable {
       services.sunshine = {
