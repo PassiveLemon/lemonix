@@ -139,11 +139,12 @@
       options = [ "noatime" ];
     };
     # Titanium NFS
-    "/mnt/titanium" = {
-      device = "titanium:/";
-      fsType = "nfs";
-      options = [ "noauto" "x-systemd.automount" "x-systemd.idle-timeout=600" ];
-    };
+    # Not super reliable
+    # "/mnt/titanium" = {
+    #   device = "titanium:/";
+    #   fsType = "nfs";
+    #   options = [ "noauto" "x-systemd.automount" "x-systemd.idle-timeout=600" ];
+    # };
   };
 
   system.stateVersion = "23.05"; # Don't change unless you know what you are doing
