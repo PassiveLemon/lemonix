@@ -1,4 +1,4 @@
-{ outputs, lib, pkgs, ... }: {
+{ outputs, config, lib, pkgs, ... }: {
   boot = {
     loader = {
       efi.canTouchEfiVariables = true;
@@ -114,14 +114,35 @@
         "passivelemon.cachix.org-1:ScYjLCvvLi70S95SMMr8lMilpZHuafLP3CK/nZ9AaXM="
       ];
     };
+    distributedBuilds = true;
+    buildMachines = lib.filter (m: m.hostName != config.system.name) [
+      {
+        hostName = "silver";
+        system = "x86_64-linux";
+        publicHostKey = "c3NoLWVkMjU1MTkgQUFBQUMzTnphQzFsWkRJMU5URTVBQUFBSVBiZWRXNURER0N6R3BieW0yZjBFeCtlZm55ZnpGZkhSUEFoREZZOVpJNUsgcm9vdEBzaWx2ZXIK";
+        sshKey = "/etc/ssh/ssh_host_ed25519_key";
+        sshUser = "root";
+        speedFactor = 2;
+        maxJobs = 2;
+      }
+      {
+        hostName = "titanium";
+        system = "x86_64-linux";
+        publicHostKey = "c3NoLWVkMjU1MTkgQUFBQUMzTnphQzFsWkRJMU5URTVBQUFBSUdDQkE5YlgvekFmVjA0bFFYR1BQTCtmMjRxRCtNclg3ekR0K29kaUUwcEkgcm9vdEB0aXRhbml1bQo=";
+        sshKey = "/etc/ssh/ssh_host_ed25519_key";
+        sshUser = "root";
+        speedFactor = 2;
+        maxJobs = 2;
+      }
+    ];
     optimise = {
       automatic = true;
-      dates = [ "Sun" ];
+      dates = [ "Sun 4:00" ];
     };
     gc = {
       automatic = true;
-      dates = "Sun";
-      options = "--delete-older-than 14d";
+      dates = "Sun 3:00";
+      options = "--delete-older-than 7d";
     };
   };
 

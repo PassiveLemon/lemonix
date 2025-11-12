@@ -44,7 +44,11 @@
           "docker-management" "borg-management"
         ];
         # The first key is just the users public key for easy reference.
-        openssh.authorizedKeys.keys = [ "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIPbedW5DDGCzGpbym2f0Ex+efnyfzFfHRPAhDFY9ZI5K root@silver" ];
+        openssh.authorizedKeys.keys = [
+          "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIPbedW5DDGCzGpbym2f0Ex+efnyfzFfHRPAhDFY9ZI5K root@silver"
+          "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIGCBA9bX/zAfV04lQXGPPL+f24qD+MrX7zDt+odiE0pI root@titanium"
+          "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAINxpX0Uf3Bf1lSSCxvX+oTRsHD1tkBPWYzYFjSRqZ/MK lemon@titanium"
+        ];
       };
       "lemon" = {
         uid = 1100;
