@@ -11,9 +11,25 @@ local dpi = b.xresources.apply_dpi
 -- Helpers
 --
 
--- TODO: This is turning into a mess. Try to refactor the widget wrappers
-
 local helpers = { }
+
+local timed_default = {
+  mouse_enter = function() end,
+  mouse_leave = function() end,
+}
+
+local button_default = {
+  toggle = true,
+  no_color = false,
+  mouse_enter = function() end,
+  mouse_leave = function() end,
+  button_press = function() end,
+}
+
+local slider_default = {
+  mouse_enter = function() end,
+  mouse_leave = function() end,
+}
 
 function helpers.margin(widget_pass, conf_in)
   local conf = conf_in or { }
@@ -41,7 +57,7 @@ function helpers.background(widget_pass, conf_in)
     bg = conf.bg or b.bg_secondary,
     fg = conf.fg or b.fg_primary,
     shape = conf.shape,
-    visible = conf.visible,
+    visible = conf.visible or true,
     widget_pass,
   }, conf_in)
   return background
@@ -50,122 +66,234 @@ end
 function helpers.text(conf_in)
   local conf = conf_in or { }
   local text = helpers.background({
-    -- Allow use of either text or image. Kind of pointless to make 2 separate ones.
-    layout = wibox.layout.stack,
-    {
-      id = "textbox",
-      widget = wibox.widget.textbox,
-      forced_width = conf.x,
-      forced_height = conf.y,
-      markup = conf.markup,
-      text = conf.text,
-      font = conf.font or b.sysfont(dpi(10)),
-      halign = conf.halign or "center",
-      valign = conf.valign or "center",
-    },
-    {
-      id = "imagebox",
-      widget = wibox.widget.imagebox,
-      resize = conf.resize or true,
-      image = conf.image,
-      halign = conf.halign or "center",
-      valign = conf.valign or "center",
-    },
+    id = "textbox",
+    widget = wibox.widget.textbox,
+    forced_width = conf.x,
+    forced_height = conf.y,
+    markup = conf.markup,
+    text = conf.text,
+    font = conf.font or b.sysfont(dpi(10)),
+    halign = conf.halign or "center",
+    valign = conf.valign or "center",
   }, conf_in)
   return text
 end
 
-local button_default = {
-  toggle = true,
-  no_color = false,
-  mouse_enter = function() end,
-  mouse_leave = function() end,
-  button_press = function() end,
-}
+function helpers.image(conf_in)
+  local conf = conf_in or { }
+  local image = helpers.background({
+    id = "imagebox",
+    widget = wibox.widget.imagebox,
+    resize = conf.resize or true,
+    image = conf.image,
+    halign = conf.halign or "center",
+    valign = conf.valign or "center",
+  }, conf_in)
+  return image
+end
 
-function helpers.button(conf_in)
+-- Widget wrappers
+
+-- Widget with button behaviour
+function helpers.widget(widget_pass, conf_in)
   local conf = gears.table.join(button_default, (conf_in or { }))
-  local button = helpers.text(conf)
-  local button_id = button:get_children_by_id("background")[1]
-  button.buttons = {
-    awful.button({ }, 1, function()
-      -- Mock "self" implementation by passing the config back to the callback
-      conf.button_press(button_id)
-    end)
-  }
-  button_id:connect_signal("mouse::enter", function(self)
+  local widget = widget_pass
+  local widget_id = widget:get_children_by_id("background")[1]
+  -- Button behaviour
+  widget_id:connect_signal("button::press", function()
+    conf:button_press()
+  end)
+  widget_id:connect_signal("mouse::enter", function(self)
     if not conf.no_color then
       self.bg = conf.bg_focus or b.bg_minimize
       self.fg = conf.fg_focus or b.fg_focus
     end
-    conf.mouse_enter(button_id)
+    conf:mouse_enter()
   end)
-  button_id:connect_signal("mouse::leave", function(self)
+  widget_id:connect_signal("mouse::leave", function(self)
     if not conf.no_color then
       self.bg = conf.bg_primary or b.bg_secondary
       self.fg = conf.fg_primary or b.fg_primary
     end
-    conf.mouse_leave(button_id)
+    conf:mouse_leave()
   end)
-  return button
+  return widget
 end
 
-local timed_default = {
-  mouse_enter = function() end,
-  mouse_leave = function() end,
-  timer_callback = function() end,
-}
+-- Widget with a toggle lock
+function helpers.lock_widget(widget_pass, conf_in)
+  local conf = conf_in or { }
+  local widget = helpers.widget(widget_pass, conf)
+  -- https://bitbucket.org/grumph/home_config/src/4d650b5bc3c366eff245f528c7830c22bfef1ba4/.config/awesome/helpers/widget_popup.lua#lines-42:57
+  if conf.hide_on_click_anywhere then
+    click_to_hide.popup(widget, nil, true)
+  end
+  -- Mechanism to disallow popup to toggle too often.
+  -- This avoids multiple toggles problem caused by hide_on_click
+  local can_toggle = true
+  local toggle_lock_timer = gears.timer({
+    timeout = 0.1,
+    single_shot = true,
+    callback  = function()
+      can_toggle = true
+    end
+  })
+  -- Locking behaviour
+  widget:connect_signal("property::visible", function()
+    can_toggle = false
+    toggle_lock_timer:again()
+  end)
+  function widget:toggle(force)
+    if can_toggle then
+      if force == false or (force == nil and self.visible) then
+        self.visible = false
+      else
+        self.visible = true
+      end
+    end
+  end
+  -- For use by other helper functions
+  function widget:toggle_priv(force)
+    widget:toggle(force)
+  end
+  return widget
+end
 
-function helpers.timed_button(conf_in, time)
-  local conf = gears.table.join(button_default, (conf_in or { }))
-  local button = helpers.text(conf)
-  local button_id = button:get_children_by_id("background")[1]
-  button.toggle = false
+-- Widget with a life-time
+function helpers.timed_widget(widget_pass, conf_in, time, start_on_visible)
+  local conf = gears.table.join(timed_default, (conf_in or { }))
+  local widget = helpers.widget(widget_pass, conf)
+  widget.visible = false
   local timer = gears.timer({
     timeout = time or 3,
     single_shot = true,
     callback = function()
-      button.toggle = true
-      button_id.fg = b.fg_focus
-      conf.timer_callback(button_id)
+      widget.visible = false
     end,
   })
-  button.buttons = {
-    awful.button({ }, 1, function()
-      if button.toggle == true then
-        conf.button_press(button_id)
-      end
-    end)
-  }
-  button_id:connect_signal("mouse::enter", function(self)
-    if button.toggle == false then
-      if not conf.no_color then
-        self.bg = conf.bg_focus or b.bg_minimize
-        self.fg = conf.fg_primary or b.red
-      end
-    else
-      self.bg = conf.bg_focus or b.bg_minimize
-      self.fg = conf.fg_focus or b.fg_focus
-    end
-    timer:again()
-    conf.mouse_enter(button_id)
-  end)
-  button_id:connect_signal("mouse::leave", function(self)
-    if not conf.no_color then
-      self.bg = conf.bg_primary or b.bg_secondary
-      self.fg = conf.fg_primary or b.fg_primary
-    end
+  function widget:start()
+    timer:start()
+  end
+  function widget:stop()
     timer:stop()
-    button.toggle = false
-    conf.mouse_leave(button_id)
+  end
+  function widget:again()
+    timer:again()
+  end
+  function widget:toggle(force)
+    if force == false or (force == nil and self.visible) then
+      self:toggle_priv(false)
+    else
+      self:toggle_priv(true)
+    end
+    if start_on_visible then
+      timer:again()
+    end
+  end
+  widget:connect_signal("mouse::enter", function()
+    timer:stop()
+    conf:mouse_enter()
   end)
-  return button
+  widget:connect_signal("mouse::leave", function()
+    timer:again()
+    conf:mouse_leave()
+  end)
+  return widget
 end
 
-local slider_default = {
-  mouse_enter = function() end,
-  mouse_leave = function() end,
-}
+-- Popup wrappers
+
+-- Popup with a toggle lock
+function helpers.popup(widget_pass, conf_in)
+  local conf = conf_in or { }
+  local popup = awful.popup(widget_pass)
+  -- https://bitbucket.org/grumph/home_config/src/4d650b5bc3c366eff245f528c7830c22bfef1ba4/.config/awesome/helpers/widget_popup.lua#lines-42:57
+  if conf.hide_on_click_anywhere then
+    click_to_hide.popup(popup, nil, true)
+  end
+  -- Mechanism to disallow popup to toggle too often.
+  -- This avoids multiple toggles problem caused by hide_on_click
+  local can_toggle = true
+  local toggle_lock_timer = gears.timer({
+    timeout = 0.1,
+    single_shot = true,
+    callback  = function()
+      can_toggle = true
+    end
+  })
+  popup:connect_signal("property::visible", function()
+    can_toggle = false
+    toggle_lock_timer:again()
+  end)
+  function popup:toggle(force)
+    if can_toggle then
+      if force == false or (force == nil and self.visible) then
+        self.visible = false
+      else
+        self.visible = true
+      end
+    end
+  end
+  -- For use by other helper functions
+  function popup:toggle_priv(force)
+    popup:toggle(force)
+  end
+  return popup
+end
+
+-- Popup with a life-time
+function helpers.timed_popup(widget_pass, conf_in, time, start_on_visible)
+  local conf = gears.table.join(timed_default, (conf_in or { }))
+  local popup = helpers.popup(widget_pass, conf)
+  popup.visible = false
+  local timer = gears.timer({
+    timeout = time or 3,
+    single_shot = true,
+    callback = function()
+      popup:toggle(false)
+    end,
+  })
+  function popup:start()
+    timer:start()
+  end
+  function popup:stop()
+    timer:stop()
+  end
+  function popup:again()
+    timer:again()
+  end
+  function popup:toggle(force)
+    if force == false or (force == nil and self.visible) then
+      self:toggle_priv(false)
+    else
+      self:toggle_priv(true)
+    end
+    if start_on_visible then
+      timer:again()
+    end
+  end
+  popup:connect_signal("mouse::enter", function()
+    timer:stop()
+    conf:mouse_enter()
+  end)
+  popup:connect_signal("mouse::leave", function()
+    timer:again()
+    conf:mouse_leave()
+  end)
+  return popup
+end
+
+-- Other stuff
+
+function helpers.button(conf_in)
+  local conf = conf_in or { }
+  return helpers.widget(helpers.text(conf), conf)
+end
+
+function helpers.timed_button(conf_in, time, start_on_visible)
+  local conf = conf_in or { }
+  return helpers.timed_widget(helpers.text(conf), conf, time, start_on_visible)
+end
 
 function helpers.slider(conf_in)
   local conf = gears.table.join(slider_default, (conf_in or { }))
@@ -192,205 +320,14 @@ function helpers.slider(conf_in)
   slider_id:connect_signal("mouse::enter", function(self)
     self.handle_width = conf.handle_width
     self.bar_active_color = conf.bar_active_color or b.fg_primary
-    conf.mouse_enter(slider_id)
+    conf:mouse_enter()
   end)
   slider_id:connect_signal("mouse::leave", function(self)
     self.handle_width = dpi(0)
     self.bar_active_color = conf.bar_active_color or b.fg_primary
-    conf.mouse_leave(slider_id)
+    conf:mouse_leave()
   end)
-  return slider
-end
-
-local widget_default = {
-  mouse_enter = function() end,
-  mouse_leave = function() end,
-  toggle_on = function() end,
-  toggle_off = function() end,
-}
-
--- Widget with a toggle lock
-function helpers.widget(conf_in)
-  local conf = gears.table.join(widget_default, (conf_in or { }))
-  local widget = conf_in
-  widget.visible = true
-  -- https://bitbucket.org/grumph/home_config/src/4d650b5bc3c366eff245f528c7830c22bfef1ba4/.config/awesome/helpers/widget_popup.lua#lines-42:57
-  if conf.hide_on_click_anywhere then
-    click_to_hide.popup(widget, nil, true)
-  end
-  -- Mechanism to disallow popup to toggle too often.
-  -- This avoids multiple toggles problem caused by hide_on_click
-  local can_toggle = true
-  local toggle_lock_timer = gears.timer({
-    timeout = 0.1,
-    single_shot = true,
-    callback  = function()
-      can_toggle = true
-    end
-  })
-  widget:connect_signal("property::visible", function()
-    can_toggle = false
-    toggle_lock_timer:again()
-  end)
-  function widget:toggle(force)
-    if can_toggle then
-      if force == false or (force == nil and self.visible) then
-        self.visible = false
-        conf.toggle_off(widget)
-      else
-        self.visible = true
-        conf.toggle_on(widget)
-      end
-    end
-  end
-  -- For use by other helper functions
-  function widget:toggle_priv(force)
-    if can_toggle then
-      if force == false or (force == nil and self.visible) then
-        self.visible = false
-        conf.toggle_off(widget)
-      else
-        self.visible = true
-        conf.toggle_on(widget)
-      end
-    end
-  end
-  return widget
-end
-
--- Widget with a life-time
-function helpers.timed_widget(conf_in, time, start_on_visible)
-  local conf = gears.table.join(timed_default, (conf_in or { }))
-  local widget = helpers.widget(conf_in)
-  widget.visible = false
-  local timer = gears.timer({
-    timeout = time or 3,
-    single_shot = true,
-    callback = function()
-      conf.timer_callback(widget)
-      widget.visible = false
-    end,
-  })
-  function widget:start()
-    timer:start()
-  end
-  function widget:stop()
-    timer:stop()
-  end
-  function widget:again()
-    timer:again()
-  end
-  function widget:toggle(force)
-    if force == false or (force == nil and self.visible) then
-      self:toggle_priv(false)
-    else
-      self:toggle_priv(true)
-    end
-    if start_on_visible then
-      timer:again()
-    end
-  end
-  widget:connect_signal("mouse::enter", function()
-    timer:stop()
-    conf.mouse_enter(widget)
-  end)
-  widget:connect_signal("mouse::leave", function()
-    timer:again()
-    conf.mouse_leave(widget)
-  end)
-  return widget
-end
-
--- Popup with a toggle lock
-function helpers.popup(conf_in)
-  local conf = gears.table.join(widget_default, (conf_in or { }))
-  local popup = awful.popup(conf)
-  popup.visible = false
-  -- https://bitbucket.org/grumph/home_config/src/4d650b5bc3c366eff245f528c7830c22bfef1ba4/.config/awesome/helpers/widget_popup.lua#lines-42:57
-  if conf.hide_on_click_anywhere then
-    click_to_hide.popup(popup, nil, true)
-  end
-  -- Mechanism to disallow popup to toggle too often.
-  -- This avoids multiple toggles problem caused by hide_on_click
-  local can_toggle = true
-  local toggle_lock_timer = gears.timer({
-    timeout = 0.1,
-    single_shot = true,
-    callback  = function()
-      can_toggle = true
-    end
-  })
-  popup:connect_signal("property::visible", function()
-    can_toggle = false
-    toggle_lock_timer:again()
-  end)
-  function popup:toggle(force)
-    if can_toggle then
-      if force == false or (force == nil and self.visible) then
-        self.visible = false
-        conf.toggle_off(popup)
-      else
-        self.visible = true
-        conf.toggle_on(popup)
-      end
-    end
-  end
-  -- For use by other helper functions
-  function popup:toggle_priv(force)
-    if can_toggle then
-      if force == false or (force == nil and self.visible) then
-        self.visible = false
-        conf.toggle_off(popup)
-      else
-        self.visible = true
-        conf.toggle_on(popup)
-      end
-    end
-  end
-  return popup
-end
-
--- Popup with a life-time
-function helpers.timed_popup(conf_in, time, start_on_visible)
-  local conf = gears.table.join(timed_default, (conf_in or { }))
-  local popup = helpers.popup(conf)
-  popup.visible = false
-  local timer = gears.timer({
-    timeout = time or 3,
-    single_shot = true,
-    callback = function()
-      conf.timer_callback(popup)
-      popup:toggle(false)
-    end,
-  })
-  function popup:start()
-    timer:start()
-  end
-  function popup:stop()
-    timer:stop()
-  end
-  function popup:again()
-    timer:again()
-  end
-  function popup:toggle(force)
-    if force == false or (force == nil and self.visible) then
-      self:toggle_priv(false)
-    else
-      self:toggle_priv(true)
-    end
-    if start_on_visible then
-      timer:again()
-    end
-  end
-  popup:connect_signal("mouse::enter", function()
-    timer:stop()
-    conf.mouse_enter(popup)
-  end)
-  popup:connect_signal("mouse::leave", function()
-    timer:again()
-    conf.mouse_leave(popup)
-  end)
-  return popup
+  return slider, conf
 end
 
 function helpers.round(number, place)
