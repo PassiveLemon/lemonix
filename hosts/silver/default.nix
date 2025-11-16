@@ -9,7 +9,7 @@
       server.enable = true;
     };
     agenix.enable = true;
-    lanzaboote.enable = true;
+    lanzaboote.enable = false;
     bluetooth.enable = true;
     gaming = {
       enable = true;
