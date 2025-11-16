@@ -46,7 +46,7 @@
           '';
           meta = with lib; {
             license = licenses.mit;
-            mainProgrma = "mdadm-discord-webhook";
+            mainProgram = "mdadm-discord-webhook";
           };
         })}
       '';
@@ -68,7 +68,6 @@
     };
     enableIPv6 = false;
     nameservers = [ "1.1.1.1" "9.9.9.9" ];
-    firewall.allowedTCPPorts = [ 2049 ]; # NFS
   };
 
   users = {
@@ -140,15 +139,6 @@
   #   };
   # };
 
-  services = {
-    nfs.server = {
-      enable = true;
-      exports = ''
-        /data  192.168.1.10(rw,nohide,insecure,no_subtree_check)
-      '';
-    };
-  };
-
   systemd = {
     units."mdmonitor.service".enable = true;
     tmpfiles.rules = [
@@ -177,10 +167,6 @@
       device = "/dev/disk/by-uuid/896ef644-96f6-4e06-b4d5-b5e7fb84faad";
       fsType = "ext4";
       options = [ "noatime" ];
-    };
-    "/export" = {
-      device = "/data";
-      options = [ "bind" ];
     };
   };
 
