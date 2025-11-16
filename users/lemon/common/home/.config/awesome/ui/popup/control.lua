@@ -45,6 +45,7 @@ awful.screen.connect_for_each_screen(function(s)
     border_color = b.border_color_active,
     ontop = true,
     visible = false,
+    hide_on_right_click = true,
     type = "popup_menu",
     -- widget property is dynamically set, this is just a simple default
     widget = widgets.power.button,
