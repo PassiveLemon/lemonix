@@ -5,6 +5,9 @@ local gears = require("gears")
 local b = require("beautiful")
 local wibox = require("wibox")
 
+local h = require("helpers")
+local user = require("config.user")
+
 local dpi = b.xresources.apply_dpi
 
 --
@@ -109,6 +112,39 @@ awful.screen.connect_for_each_screen(function(s)
     end
   end)
 
+  local battery_icon = wibox.widget({
+    id = "textbox",
+    widget = wibox.widget.textbox,
+    valign = "center",
+    halign = "center",
+    markup = "󰁹",
+    font = b.sysfont(dpi(18)),
+  })
+
+  if not user.bar.battery then
+    battery_icon.visible = false
+  end
+
+  local battery_icons_lookup = {
+    [9] = "󰁹",
+    [8] = "󰂂",
+    [7] = "󰂁",
+    [6] = "󰂀",
+    [5] = "󰁿",
+    [4] = "󰁾",
+    [3] = "󰁽",
+    [2] = "󰁼",
+    [1] = "󰁻",
+    [0] = "󰁺",
+  }
+  awesome.connect_signal("signal::power", function(ac, perc)
+    if not ac then
+      battery_icon:get_children_by_id("textbox")[1].text = battery_icons_lookup[math.floor(perc / 10)]
+    else
+      battery_icon:get_children_by_id("textbox")[1].text = "󰂄"
+    end
+  end)
+
   local main = wibox({
     width = s.geometry.width,
     height = s.geometry.height,
@@ -155,12 +191,27 @@ awful.screen.connect_for_each_screen(function(s)
           {
             widget = wibox.container.margin,
             margins = {
-              bottom = dpi(200),
+              bottom = dpi(180),
             },
             {
               layout = wibox.layout.stack,
               circle,
               caps_lock,
+            },
+          },
+        },
+        {
+          widget = wibox.container.place,
+          halign = "right",
+          {
+            widget = wibox.container.margin,
+            margins = {
+              right = dpi(24),
+              bottom = dpi(20),
+            },
+            {
+              layout = wibox.layout.stack,
+              battery_icon,
             },
           },
         },
