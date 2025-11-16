@@ -85,7 +85,10 @@ awful.keyboard.append_global_keybindings({
   awful.key({ super }, "c", function() awesome.emit_signal("ui::control::toggle") end,
   { description = "|| run control panel", group = "launcher" }),
 
-  awful.key({ super }, "x", function() awesome.emit_signal("ui::resource::toggle") end,
+  awful.key({ super }, "x", function() awesome.emit_signal("ui::control::clear") end,
+  { description = "|| clear control panel", group = "launcher" }),
+
+  awful.key({ super }, "z", function() awesome.emit_signal("ui::resource::toggle") end,
   { description = "|| run resource monitor", group = "launcher" }),
 
   awful.key({ super }, "l", function() awesome.emit_signal('ui::lock::toggle') end,
@@ -117,9 +120,6 @@ awful.keyboard.append_global_keybindings({
   { description = "|| next media", group = "control" }),
 
   -- Utility
-  awful.key({ super }, "s", hotkeys_popup.show_help,
-  { description = "|| show help", group = "utility" }),
-
   awful.key({ }, "Print", function() awful.spawn("flameshot gui") end,
   { description = "|| flameshot", group = "utility" }),
 
@@ -149,20 +149,6 @@ awful.keyboard.append_global_keybindings({
   }),
 
   awful.key({
-    modifiers   = { super, "Control" },
-    keygroup    = "numrow",
-    description = "|| toggle tag",
-    group       = "tag",
-    on_press    = function(index)
-      local screen = awful.screen.focused()
-      local tag = screen.tags[index]
-      if tag then
-        awful.tag.viewtoggle(tag)
-      end
-    end,
-  }),
-
-  awful.key({
     modifiers = { super, "Shift" },
     keygroup    = "numrow",
     description = "|| move focused client to tag",
@@ -173,6 +159,20 @@ awful.keyboard.append_global_keybindings({
         if tag then
           client.focus:move_to_tag(tag)
         end
+      end
+    end,
+  }),
+
+  awful.key({
+    modifiers   = { super, "Control" },
+    keygroup    = "numrow",
+    description = "|| toggle tag",
+    group       = "tag",
+    on_press    = function(index)
+      local screen = awful.screen.focused()
+      local tag = screen.tags[index]
+      if tag then
+        awful.tag.viewtoggle(tag)
       end
     end,
   }),

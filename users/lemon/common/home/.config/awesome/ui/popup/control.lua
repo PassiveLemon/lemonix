@@ -123,6 +123,10 @@ awful.screen.connect_for_each_screen(function(s)
     main:again()
   end
 
+  awesome.connect_signal("ui::control::clear", function()
+    main:toggle(false)
+  end)
+
   awesome.connect_signal("ui::control::toggle", function(force)
     awesome.emit_signal("signal::mpris::update")
     main.widget = h.background({

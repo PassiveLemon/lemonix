@@ -115,19 +115,33 @@ end)
 client.connect_signal("request::manage", function(c)
   local s = awful.screen.focused()
   if c.fullscreen then
+    -- Spawn the client on top of the entire screen, not just under the bar.
     c.x, c.y = s.geometry.x, s.geometry.y
   end
 end)
 
+-- Helps stop spazzing when the focus context rapidly changes
+local wibar_layer_timeout = false
+local wibar_layer_timer = gears.timer({
+  timeout = 0.1,
+  callback = function()
+    wibar_layer_timeout = false
+  end,
+})
+
 -- Hide the wibar for the screen of the focused client if it is fullscreened
 local function wibar_layer(c, force)
-  if c then
-    local s = c.screen
-    if not s or not s.wibar then return end
-    if c.fullscreen and ((c == client.focus) or force) then
-      s.wibar.ontop = false
-    else
-      s.wibar.ontop = true
+  if not wibar_layer_timeout then
+    wibar_layer_timeout = true
+    if c then
+      local s = c.screen
+      if not s or not s.wibar then return end
+      if c.fullscreen and ((c == client.focus) or force) then
+        s.wibar.ontop = false
+      else
+        s.wibar.ontop = true
+      end
+      wibar_layer_timer:again()
     end
   end
 end
@@ -195,6 +209,7 @@ local function activate_under_pointer()
   end
 end
 
+-- the mouse::enter signal doesn't emit in the following cases, so we time an activation right after to mostly seamlessly activate context
 local focus_timer = gears.timer({
   autostart = true,
   timeout = 0.2,
