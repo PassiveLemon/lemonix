@@ -139,7 +139,7 @@ elements:
 
   # WiVRn 25.8 introduced transient services instead of a separate application service
   # and since we currently don't have a way to set the PATH, we can't expose other programs to it.
-  # This means that a lot of Wlx watch configs broke due to inaccessible CLI commands
+  # This means that my watch shell commands do not and cannnot work until we can expose PATH.
 
   # CPU usage
   # - type: Label
