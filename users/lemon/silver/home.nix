@@ -7,9 +7,10 @@
   home = {
     packages = with pkgs; [
       easytag zenity
-      (callPackage ../../../pkgs/overte.nix { })
-      (callPackage ../../../pkgs/pinnacle.nix { })
+      # (callPackage ../../../pkgs/overte.nix { })
+      # (callPackage ../../../pkgs/pinnacle.nix { })
       # (callPackage ../../../pkgs/hardcode-tray.nix { })
+      # (callPackage ../../../pkgs/somachord { })
       inputs.lemonake.packages.${pkgs.system}.nimpad
       inputs.lemonake.packages.${pkgs.system}.tilp2
       inputs.lemonake.packages.${pkgs.system}.webfisher

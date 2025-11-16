@@ -3,6 +3,7 @@
     systemPackages = with pkgs; [
       xss-lock gtk3 snixembed
       networkmanagerapplet trayscale
+      resources baobab
     ];
   };
 

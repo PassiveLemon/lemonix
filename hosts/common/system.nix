@@ -115,6 +115,7 @@
       ];
     };
     distributedBuilds = true;
+    # Don't add ourself to the list
     buildMachines = lib.filter (m: m.hostName != config.system.name) [
       {
         hostName = "silver";

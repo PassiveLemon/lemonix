@@ -17,6 +17,7 @@ in
     (mkIf cfg.cad.enable {
       home.packages = with pkgs; [
         freecad openscad
+        digital
         # Kicad packaging is kind of a mess so it's going to stay disabled until I need it
         # (kicad-small.override { stable = true; })
       ];
