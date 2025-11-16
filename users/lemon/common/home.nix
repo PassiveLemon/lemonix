@@ -136,7 +136,12 @@
         settings = {
           "accessibility.typeaheadfind.enablesound" = false;
           "gfx.webrender.all" = true;
+          "gfx.webrender.compositor" = true;
           "media.ffmpeg.vaapi.enabled" = true;
+          "layers.acceleration.force-enabled" = true;
+          "toolkit.telemetry.enabled" = false;
+          "datareporting.healthreport.uploadEnabled" = false;
+          "browser.newtabpage.activity-stream.feeds.telemetry" = false;
         };
       };
       policies = {

@@ -39,7 +39,7 @@ user.power = {
 
 awful.spawn.with_shell("autorandr -l Default")
 awful.spawn.with_shell("pidof -q xss-lock || xss-lock awesome-client 'awesome.emit_signal(\"ui::lock::toggle\")' &")
-awful.spawn.with_shell("pidof -q fusuma || fusuma -d")
+-- awful.spawn.with_shell("pidof -q fusuma || fusuma -d") -- I pretty much forget it exists anyways, but I don't want to completely remove it yet
 awful.spawn.with_shell("pidof -q picom || picom --realtime -b")
 awful.spawn.with_shell("pidof -q snixembed || snixembed --fork")
 awful.spawn.with_shell("pidof -q nm-applet || nm-applet &")

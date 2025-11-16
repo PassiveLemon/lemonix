@@ -17,6 +17,14 @@
       "splash"
       "systemd.show_status=auto"
       "rd.udev.log_level=3"
+      "tsc=reliable"
+      "clocksource=tsc"
+      "hpet=disable"
+    ];
+    blacklistedKernelModules = [
+      # Only have solid state so no need for the accelerometer
+      "amd_sfh"
+      "amd_sfh_hid"
     ];
     plymouth.enable = true;
     consoleLogLevel = 0;
@@ -27,6 +35,7 @@
     hostName = "aluminum";
     enableIPv6 = false;
     nameservers = [ "1.1.1.1" "9.9.9.9" ];
+    networkmanager.wifi.powersave = true;
   };
 
   users = {
@@ -81,15 +90,16 @@
         CPU_MAX_PERF_ON_BAT = 70;
 
         CPU_BOOST_ON_AC = 1;
-        CPU_BOOST_ON_BAT = 0;
+        CPU_BOOST_ON_BAT = 1;
 
         CPU_HWP_DYN_BOOST_ON_AC = 1;
-        CPU_HWP_DYN_BOOST_ON_BAT = 0;
+        CPU_HWP_DYN_BOOST_ON_BAT = 1;
 
         START_CHARGE_THRESH_BAT0 = 70;
         STOP_CHARGE_THRESH_BAT0 = 95;
 
         DEVICES_TO_DISABLE_ON_STARTUP = "bluetooth";
+        RUNTIME_PM_DRIVER_BLACKLIST = "amdgpu";
       };
     };
   };
