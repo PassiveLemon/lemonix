@@ -36,6 +36,10 @@
       url = "github:kaylorben/nixcord";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    pinnacle = {
+      url = "github:pinnacle-comp/pinnacle";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
 
     # Submodules
     awesomewm-bling = {
