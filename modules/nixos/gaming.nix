@@ -87,7 +87,7 @@ in
     (mkIf cfg.streaming.enable {
       services.sunshine = {
         enable = true;
-        autoStart = true;
+        autoStart = false; # We can start it from ssh
         capSysAdmin = true;
         openFirewall = true;
       };
