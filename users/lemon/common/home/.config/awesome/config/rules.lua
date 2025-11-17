@@ -123,7 +123,7 @@ end)
 -- Helps stop spazzing when the focus context rapidly changes
 local wibar_layer_timeout = false
 local wibar_layer_timer = gears.timer({
-  timeout = 0.1,
+  timeout = 0.05,
   callback = function()
     wibar_layer_timeout = false
   end,
