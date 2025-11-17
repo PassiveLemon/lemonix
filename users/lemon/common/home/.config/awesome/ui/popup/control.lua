@@ -45,7 +45,6 @@ awful.screen.connect_for_each_screen(function(s)
     border_color = b.border_color_active,
     ontop = true,
     visible = false,
-    hide_on_right_click = true,
     type = "popup_menu",
     -- widget property is dynamically set, this is just a simple default
     widget = widgets.power.button,
@@ -66,13 +65,25 @@ awful.screen.connect_for_each_screen(function(s)
   -- Control
   --
 
-  widgets.power.button:connect_signal("button::press", function()
-    if power_popup.screen.index == awful.screen.focused().index then
-      power_popup:toggle()
-    else
-      power_popup:toggle(false)
+  widgets.power.button:connect_signal("button::press", function(_, _, _, button)
+    if button == 1 then
+      if power_popup.screen.index == awful.screen.focused().index then
+        power_popup:toggle()
+      else
+        power_popup:toggle(false)
+      end
     end
   end)
+
+  widgets.power.button:buttons({
+    awful.button({ }, 1, function()
+      if power_popup.screen.index == awful.screen.focused().index then
+        power_popup:toggle()
+      else
+        power_popup:toggle(false)
+      end
+    end)
+  })
 
   power_popup:connect_signal("property::visible", function(w)
     if w.visible then
@@ -124,10 +135,6 @@ awful.screen.connect_for_each_screen(function(s)
     main:again()
   end
 
-  awesome.connect_signal("ui::control::clear", function()
-    main:toggle(false)
-  end)
-
   awesome.connect_signal("ui::control::toggle", function(force)
     awesome.emit_signal("signal::mpris::update")
     main.widget = h.background({
@@ -150,6 +157,10 @@ awful.screen.connect_for_each_screen(function(s)
     else
       show_control(force)
     end
+  end)
+
+  awesome.connect_signal("ui::control::clear", function()
+    main:toggle(false)
   end)
 
   main:connect_signal("property::visible", function(w)

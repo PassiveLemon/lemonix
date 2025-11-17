@@ -87,12 +87,12 @@ function helpers.button(conf_in)
   local conf = gears.table.join(button_default, (conf_in or { }))
   local button = helpers.text(conf)
   local button_id = button:get_children_by_id("background")[1]
-  button.buttons = {
+  button:buttons({
     awful.button({ }, 1, function()
       -- Mock "self" implementation by passing the config back to the callback
       conf.button_press(button_id)
     end)
-  }
+  })
   button_id:connect_signal("mouse::enter", function(self)
     if not conf.no_color then
       self.bg = conf.bg_focus or b.bg_minimize
@@ -130,13 +130,13 @@ function helpers.timed_button(conf_in, time)
       conf.timer_callback(button_id)
     end,
   })
-  button.buttons = {
+  button:buttons({
     awful.button({ }, 1, function()
       if button.toggle == true then
         conf.button_press(button_id)
       end
     end)
-  }
+  })
   button_id:connect_signal("mouse::enter", function(self)
     if button.toggle == false then
       if not conf.no_color then
@@ -362,6 +362,11 @@ function helpers.timed_popup(conf_in, time, start_on_visible)
       conf.timer_callback(popup)
       popup:toggle(false)
     end,
+  })
+  popup:buttons({
+    awful.button({ }, 3, function()
+      popup:toggle(false)
+    end)
   })
   function popup:start()
     timer:start()
