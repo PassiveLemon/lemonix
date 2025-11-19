@@ -29,10 +29,35 @@ local volume_icon = h.button({
   text = "󰕾",
   font = b.sysfont(dpi(14)),
   no_color = true,
-  button_press = function()
-    awesome.emit_signal("signal::peripheral::volume::mute")
-  end
 })
+
+volume_icon:buttons({
+  awful.button({ }, 1, function()
+    awesome.emit_signal("signal::peripheral::volume::mute")
+  end),
+  awful.button({ }, 4, function()
+    awesome.emit_signal("signal::peripheral::volume::step", 3)
+  end),
+  awful.button({ }, 5, function()
+    awesome.emit_signal("signal::peripheral::volume::step", -3)
+  end)
+})
+
+awesome.connect_signal("signal::peripheral::volume::value", function(value)
+  if value == -1 then
+    volume_icon:get_children_by_id("textbox")[1].text = "󰝟"
+    volume_icon:get_children_by_id("textbox")[1].font = b.sysfont(dpi(17))
+  elseif value < 33 then
+    volume_icon:get_children_by_id("textbox")[1].text = "󰕿"
+    volume_icon:get_children_by_id("textbox")[1].font = b.sysfont(dpi(9))
+  elseif value < 67 then
+    volume_icon:get_children_by_id("textbox")[1].text = "󰖀"
+    volume_icon:get_children_by_id("textbox")[1].font = b.sysfont(dpi(13))
+  else
+    volume_icon:get_children_by_id("textbox")[1].text = "󰕾"
+    volume_icon:get_children_by_id("textbox")[1].font = b.sysfont(dpi(15))
+  end
+end)
 
 local volume_slider = h.slider({
   margins = {

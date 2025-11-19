@@ -35,9 +35,17 @@ utility.volume_icon = h.button({
   },
   text = "󰖀",
   no_color = true,
-  button_press = function()
+})
+utility.volume_icon:buttons({
+  awful.button({ }, 1, function()
     awesome.emit_signal("signal::peripheral::volume::mute")
-  end
+  end),
+  awful.button({ }, 4, function()
+    awesome.emit_signal("signal::peripheral::volume::step", 3)
+  end),
+  awful.button({ }, 5, function()
+    awesome.emit_signal("signal::peripheral::volume::step", -3)
+  end)
 })
 utility.volume_text = h.text({
   margins = {

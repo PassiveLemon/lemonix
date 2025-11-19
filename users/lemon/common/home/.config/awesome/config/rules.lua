@@ -136,11 +136,8 @@ local function wibar_layer(c, force)
     if c then
       local s = c.screen
       if not s or not s.wibar then return end
-      if c.fullscreen and ((c == client.focus) or force) then
-        s.wibar.ontop = false
-      else
-        s.wibar.ontop = true
-      end
+      local focused_and_fullscreen = (c.fullscreen and ((c == client.focus) or force))
+      s.wibar.ontop = not focused_and_fullscreen
       wibar_layer_timer:again()
     end
   end

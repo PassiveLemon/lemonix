@@ -7,12 +7,14 @@ local function emit(value)
   awesome.emit_signal("signal::peripheral::brightness::value", value)
 end
 
+local max, value
+
 local function brightness()
   awful.spawn.easy_async("brightnessctl get", function(cur_stdout)
     local cur = cur_stdout:gsub("\n", "")
     awful.spawn.easy_async("brightnessctl max", function(max_stdout)
-      local max = max_stdout:gsub("\n", "")
-      local value = h.round(((cur / max) * 100), 0)
+      max = max_stdout:gsub("\n", "")
+      value = h.round(((cur / max) * 100), 0)
       emit(value)
     end)
   end)
@@ -34,37 +36,35 @@ local function brightness_timer_wrapper(callback)
   brightness_timer:start()
 end
 
+local function normalize_to_awm(num)
+  return h.round(((num / max) * 100), 0)
+end
+
+local function normalize_from_awm(num)
+  -- Brightnessctl returns a max of 65535 so we can just divide that by 100 and multiply by the new brightness (which is a slider from 0 - 100)
+  -- I would like a solution that doesn't rely on the magic number but it's not very important
+  return (num * 655.35)
+end
+
 awesome.connect_signal("signal::peripheral::brightness::update", function()
   brightness_timer_wrapper(function()
     brightness()
+    awesome.emit_signal("ui::control::notification::brightness")
   end)
-  awesome.emit_signal("ui::control::notification::brightness")
 end)
 
 awesome.connect_signal("signal::peripheral::brightness", function(brightness_new)
   brightness_timer_wrapper(function()
-    -- Brightnessctl returns a max of 65535 so we can just divide that by 100 and multiply by the new brightness (which is a slider from 0 - 100)
-    -- I would like a solution that doesn't rely on the magic number but it's not very important
-    awful.spawn("brightnessctl set " .. (brightness_new * 655.35))
+    awful.spawn("brightnessctl set " .. normalize_from_awm(brightness_new))
     emit(brightness_new)
   end)
 end)
 
-awesome.connect_signal("signal::peripheral::brightness::increase", function(inc)
+awesome.connect_signal("signal::peripheral::volume::step", function(step)
   brightness_timer_wrapper(function()
-    awful.spawn.easy_async("brightnessctl set " .. (inc or 3) .. "%+", function()
-      brightness()
-    end)
+    local brightness_new = (normalize_to_awm(value) + (step or 0))
+    awful.spawn("brightnessctl set " .. brightness_new)
+    emit(brightness_new)
   end)
-  awesome.emit_signal("ui::control::notification::brightness")
-end)
-
-awesome.connect_signal("signal::peripheral::brightness::decrease", function(dec)
-  brightness_timer_wrapper(function()
-    awful.spawn.easy_async("brightnessctl set " .. (dec or 3) .. "%-", function()
-      brightness()
-    end)
-  end)
-  awesome.emit_signal("ui::control::notification::brightness")
 end)
 

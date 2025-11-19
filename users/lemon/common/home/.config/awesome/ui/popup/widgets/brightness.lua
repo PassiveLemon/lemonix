@@ -28,6 +28,25 @@ local brightness_icon = h.text({
   text = "",
   font = b.sysfont(dpi(14)),
 })
+brightness_icon:buttons({
+  awful.button({ }, 1, function()
+    awesome.emit_signal("signal::peripheral::brightness::update")
+    awful.spawn.easy_async("systemctl is-active --quiet --user clight", function(_, _, _, code)
+      if code == 0 then
+        awful.spawn("systemctl --user stop clight")
+      else
+        awful.spawn("systemctl --user restart clight")
+      end
+    end)
+  end),
+  awful.button({ }, 4, function()
+    awesome.emit_signal("signal::peripheral::brightness::step", 3)
+  end),
+  awful.button({ }, 5, function()
+    awesome.emit_signal("signal::peripheral::brightness::step", -3)
+  end)
+})
+
 
 local brightness_slider = h.slider({
   margins = {

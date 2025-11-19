@@ -1,7 +1,7 @@
 local awful = require("awful")
 local gears = require("gears")
 
--- TODO: Use lua lgi instead of busctl
+-- TODO: Use lua dbus instead of busctl
 
 local state_cache = false
 

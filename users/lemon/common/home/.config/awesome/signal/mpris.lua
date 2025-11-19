@@ -263,7 +263,19 @@ end
 
 local function volumer(volume_new)
   mpris_timer_wrapper(function()
-    global_player.volume = h.round((volume_new / 100), 3)
+    volume_new = h.round((volume_new / 100), 3)
+    global_player.volume = volume_new
+    metadata.player.volume = volume_new
+    emit()
+  end)
+end
+
+local function volume_stepper(volume_new)
+  mpris_timer_wrapper(function()
+    volume_new = (global_player.volume + h.round((volume_new / 100), 3))
+    global_player.volume = volume_new
+    metadata.player.volume = volume_new
+    emit()
   end)
 end
 
@@ -305,5 +317,9 @@ end)
 
 awesome.connect_signal("signal::mpris::volume", function(volume_new)
   volumer(volume_new)
+end)
+
+awesome.connect_signal("signal::mpris::volume::step", function(volume_new)
+  volume_stepper(volume_new)
 end)
 

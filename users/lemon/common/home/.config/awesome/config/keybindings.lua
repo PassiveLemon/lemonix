@@ -2,7 +2,6 @@ local awful = require("awful")
 local gears = require("gears")
 local b = require("beautiful")
 local wibox = require("wibox")
-local hotkeys_popup = require("awful.hotkeys_popup")
 
 local user = require("config.user")
 local bling = require("libraries.bling")
@@ -18,7 +17,7 @@ local super = user.super
 -- TODO: Probably should move this out of keybindings.lua
 local app_launcher = bling.widget.app_launcher({
   terminal = user.terminal,
-  type = "popup",
+  type = "popup_menu",
   border_color = b.border_color_active,
   background = b.bg_primary,
 
@@ -95,19 +94,19 @@ awful.keyboard.append_global_keybindings({
   { description = "|| lock display", group = "launcher" }),
 
   -- Control
-  awful.key({ }, "XF86MonBrightnessUp", function() awesome.emit_signal("signal::peripheral::brightness::increase") end,
+  awful.key({ }, "XF86MonBrightnessUp", function() awesome.emit_signal("signal::peripheral::brightness::step", 3) end,
   { description = "|| increase brightness", group = "control" }),
 
-  awful.key({ }, "XF86MonBrightnessDown", function() awesome.emit_signal("signal::peripheral::brightness::decrease") end,
+  awful.key({ }, "XF86MonBrightnessDown", function() awesome.emit_signal("signal::peripheral::brightness::step", -3) end,
   { description = "|| decrease brightness", group = "control" }),
 
   awful.key({ }, "XF86AudioMute", function() awesome.emit_signal("signal::peripheral::volume::mute") end,
   { description = "|| toggle mute", group = "control" }),
 
-  awful.key({ }, "XF86AudioRaiseVolume", function() awesome.emit_signal("signal::peripheral::volume::increase") end,
+  awful.key({ }, "XF86AudioRaiseVolume", function() awesome.emit_signal("signal::peripheral::volume::step", 3) end,
   { description = "|| increase volume", group = "control" }),
 
-  awful.key({ }, "XF86AudioLowerVolume", function() awesome.emit_signal("signal::peripheral::volume::decrease") end,
+  awful.key({ }, "XF86AudioLowerVolume", function() awesome.emit_signal("signal::peripheral::volume::step", -3) end,
   { description = "|| decrease volume", group = "control" }),
 
   awful.key({ }, "XF86AudioPrev", function() awesome.emit_signal("signal::mpris::previous") end,

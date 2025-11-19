@@ -1,5 +1,6 @@
 require("signal.mpris")
 
+local awful = require("awful")
 local gears = require("gears")
 local b = require("beautiful")
 local wibox = require("wibox")
@@ -131,29 +132,79 @@ local function position_updater(metadata)
   end
 end
 
-music.control = h.background({
-  layout = wibox.layout.fixed.horizontal,
-  art_image_box,
-  {
-    widget = h.margin({
-      layout = wibox.layout.fixed.vertical,
-      title_text,
-      artist_text,
-      {
-        layout = wibox.layout.flex.horizontal,
-        prev_button,
-        toggle_button,
-        next_button,
-      },
-      position_slider,
-    },
-    {
-      margins = {
-        right = dpi(8),
-        left = dpi(8),
-      },
-    })
+local volume_icon = h.button({
+  margins = {
+    top = dpi(4),
+    right = dpi(10),
+    bottom = 0,
+    left = 0,
   },
+  text = "󰖀",
+  font = b.sysfont(dpi(12)),
+  no_color = true,
+})
+
+volume_icon:buttons({
+  awful.button({ }, 4, function()
+    awesome.emit_signal("signal::mpris::volume::step", 5)
+  end),
+  awful.button({ }, 5, function()
+    awesome.emit_signal("signal::mpris::volume::step", -5)
+  end)
+})
+
+local function volume_updater(metadata)
+  local value = (metadata.player.volume * 100)
+  if value == -1 then
+    volume_icon:get_children_by_id("textbox")[1].text = "󰝟"
+    volume_icon:get_children_by_id("textbox")[1].font = b.sysfont(dpi(17))
+  elseif value < 33 then
+    volume_icon:get_children_by_id("textbox")[1].text = "󰕿"
+    volume_icon:get_children_by_id("textbox")[1].font = b.sysfont(dpi(9))
+  elseif value < 67 then
+    volume_icon:get_children_by_id("textbox")[1].text = "󰖀"
+    volume_icon:get_children_by_id("textbox")[1].font = b.sysfont(dpi(13))
+  else
+    volume_icon:get_children_by_id("textbox")[1].text = "󰕾"
+    volume_icon:get_children_by_id("textbox")[1].font = b.sysfont(dpi(15))
+  end
+end
+
+music.control = h.background({
+  layout = wibox.layout.stack,
+  {
+    layout = wibox.layout.fixed.horizontal,
+    art_image_box,
+    {
+      widget = h.margin({
+        layout = wibox.layout.fixed.vertical,
+        title_text,
+        artist_text,
+        {
+          layout = wibox.layout.flex.horizontal,
+          prev_button,
+          toggle_button,
+          next_button,
+        },
+        position_slider,
+      },
+      {
+        margins = {
+          right = dpi(8),
+          left = dpi(8),
+        },
+      })
+    },
+  },
+  {
+    widget = wibox.container.place,
+    halign = "right",
+    valign = "top",
+    {
+      layout = wibox.layout.stack,
+      volume_icon,
+    },
+  }
 },
 {
   -- control center width, margins
@@ -204,6 +255,7 @@ awesome.connect_signal("signal::mpris::metadata", function(metadata)
     metadata_updater(metadata)
     toggle_updater(metadata)
     position_updater(metadata)
+    volume_updater(metadata)
   else
     music.control.visible = false
   end
