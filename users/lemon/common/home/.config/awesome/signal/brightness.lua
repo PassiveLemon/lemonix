@@ -36,10 +36,6 @@ local function brightness_timer_wrapper(callback)
   brightness_timer:start()
 end
 
-local function normalize_to_awm(num)
-  return h.round(((num / max) * 100), 0)
-end
-
 local function normalize_from_awm(num)
   -- Brightnessctl returns a max of 65535 so we can just divide that by 100 and multiply by the new brightness (which is a slider from 0 - 100)
   -- I would like a solution that doesn't rely on the magic number but it's not very important
@@ -60,11 +56,11 @@ awesome.connect_signal("signal::peripheral::brightness", function(brightness_new
   end)
 end)
 
-awesome.connect_signal("signal::peripheral::volume::step", function(step)
+awesome.connect_signal("signal::peripheral::brightness::step", function(step)
   brightness_timer_wrapper(function()
-    local brightness_new = (normalize_to_awm(value) + (step or 0))
-    awful.spawn("brightnessctl set " .. brightness_new)
-    emit(brightness_new)
+    value = (value + (step or 0))
+    awful.spawn("brightnessctl set " .. normalize_from_awm(value))
+    emit(value)
   end)
 end)
 
