@@ -76,11 +76,15 @@ local function art_image_locator(cache_dir, trim)
 end
 
 -- art_image_player_lookup = {
---   [(player)] = { (cache) (trim) (backup) }
+--   [(player)] = {
+--     (cache) -- Location of the players art cache if we can determine the name of the file based on the art_url
+--     (trim) -- The part of art_url to use to find the art image cache
+--     (backup) -- The part of the art_url to use as the file name for our own caching if we cant use the players cache
+--   }
 -- }
 
 local art_image_player_lookup = {
-  ["Feishin"] = {
+  ["feishin"] = {
     cache = nil,
     trim = nil,
     backup = "?id=(.*)&u=",
@@ -99,7 +103,7 @@ local art_image_player_lookup = {
 
 local function art_image_fetch()
   -- We normalize the album name and use that as the cache name for the album art, that way it's only downloaded once per album, which makes caching more efficient. In case the normalization results in a bad filename, we use a backup string
-  local player_lookup = art_image_player_lookup[metadata.player.name]
+  local player_lookup = art_image_player_lookup[string.lower(metadata.player.name)]
   local trim = ""
   if not player_lookup.trim then
     local album_string = metadata.media.album:gsub("%W", "")
