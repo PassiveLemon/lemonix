@@ -114,6 +114,17 @@ end
 
 -- If the art isn't already cached then the notification will have the art of the previous media
 local function track_notification()
+  local p_name = string.lower(metadata.player.name)
+  -- Don't show a notification if the music player is visible
+  for s in screen do
+    for _, c in pairs(s.clients) do
+      local c_instance = string.lower(c.instance or "")
+      local c_class = string.lower(c.class or "")
+      if c_instance == p_name or c_class == p_name then
+        return
+      end
+    end
+  end
   if b.mpris_notifications and metadata.player.available then
     awesome.emit_signal("ui::control::notification::mpris")
   end
