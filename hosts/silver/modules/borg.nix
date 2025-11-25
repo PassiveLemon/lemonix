@@ -131,7 +131,7 @@
     "docker-local" = {
       paths = [
         "/home/docker"
-        "/home/BACKUPDRIVE/ManualBackups"
+        "/data/BACKUPDRIVE/ManualBackups"
       ];
       repo = "ssh://borg@127.0.0.1/home/BACKUPDRIVE/BorgBackups/silver";
       encryption = {
@@ -151,7 +151,7 @@
     "docker-onsite" = {
       paths = [
         "/home/docker"
-        "/home/BACKUPDRIVE/ManualBackups"
+        "/data/BACKUPDRIVE/ManualBackups"
       ];
       repo = "ssh://borg@titanium.passivelemon.net/data/BorgBackups/silver";
       encryption = {
@@ -171,7 +171,7 @@
     "docker-remote" = {
       paths = [
         "/home/docker"
-        "/home/BACKUPDRIVE/ManualBackups"
+        "/data/BACKUPDRIVE/ManualBackups"
       ];
       repo = "ssh://u412758@u412758.your-storagebox.de:23/home/BorgBackups/silver";
       encryption = {
@@ -192,8 +192,8 @@
 
   systemd = {
     tmpfiles.rules = [
-      "Z /home/BACKUPDRIVE/BorgBackups 750 borg borg-management - -"
-      "Z /home/BACKUPDRIVE/BorgMount 750 borg borg-management - -"
+      "Z /data/BACKUPDRIVE/BorgBackups 750 borg borg-management - -"
+      "Z /data/BACKUPDRIVE/BorgMount 750 borg borg-management - -"
     ];
   };
 }

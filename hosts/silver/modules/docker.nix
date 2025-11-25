@@ -82,8 +82,8 @@
       "Z /home/docker/Volumes 770 docker docker-management - -"
       "Z /home/lemon/Documents/GitHub/lemocker/silver 770 docker docker-management - -"
 
-      "Z /home/HDD2TBEXT4/Media2 770 docker docker-management - -"
-      "Z /home/HDD2TBEXT4/Downloads/JDownloader 770 docker docker-management - -"
+      "Z /data/HDD2TBEXT4/Media2 770 docker docker-management - -"
+      "Z /data/HDD2TBEXT4/Downloads/JDownloader 770 docker docker-management - -"
     ];
   };
 }
