@@ -9,7 +9,7 @@
       file = ../../secrets/discordWebhook.age;
       mode = "600";
       owner = "root";
-      group = "management";
+      group = "root";
     };
   };
 
@@ -71,11 +71,6 @@
   };
 
   users = {
-    groups = {
-      "management" = {
-        gid = 1204;
-      };
-    };
     users = {
       "root" = {
         home = "/root";
@@ -98,7 +93,7 @@
         extraGroups = [
           "wheel" "networkmanager" "storage" "input"
           "docker" "kvm" "libvirtd"
-          "management" "docker-management" "borg-management"
+          "docker-management" "borg-management"
         ];
         isNormalUser = true;
         openssh.authorizedKeys.keys = [
@@ -142,8 +137,8 @@
   systemd = {
     units."mdmonitor.service".enable = true;
     tmpfiles.rules = [
-      "Z /data 775 root management - -"
-      "Z /data/lemonix 770 root management - -"
+      "Z /data 777 root root - -"
+      "Z /data/lemonix 770 lemon users - -"
     ];
   };
 
