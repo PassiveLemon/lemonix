@@ -85,6 +85,14 @@ awesome.connect_signal("signal::peripheral::volume::value", function(value)
     volume_slider:emit_signal("widget::redraw_needed")
   end
 end)
+volume_slider:buttons({
+  awful.button({ }, 4, function()
+    awesome.emit_signal("signal::peripheral::volume::step", 3)
+  end),
+  awful.button({ }, 5, function()
+    awesome.emit_signal("signal::peripheral::volume::step", -3)
+  end)
+})
 
 volume.control = h.background({
   layout = wibox.layout.fixed.horizontal,

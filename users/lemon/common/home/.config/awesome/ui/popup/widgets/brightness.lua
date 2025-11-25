@@ -67,6 +67,14 @@ awesome.connect_signal("signal::peripheral::brightness::value", function(value)
   brightness_slider:get_children_by_id("slider")[1]._private.value = value
   brightness_slider:emit_signal("widget::redraw_needed")
 end)
+brightness_slider:buttons({
+  awful.button({ }, 4, function()
+    awesome.emit_signal("signal::peripheral::brightness::step", 3)
+  end),
+  awful.button({ }, 5, function()
+    awesome.emit_signal("signal::peripheral::brightness::step", -3)
+  end)
+})
 
 brightness.control = h.background({
   layout = wibox.layout.fixed.horizontal,

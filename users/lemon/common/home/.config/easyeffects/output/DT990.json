@@ -379,7 +379,7 @@
             "band0": {
                 "attack-threshold": -20.0,
                 "attack-time": 10.0,
-                "boost-amount": 6.0,
+                "boost-amount": 8.000000000000002,
                 "boost-threshold": -72.0,
                 "compression-mode": "Boosting",
                 "compressor-enable": true,

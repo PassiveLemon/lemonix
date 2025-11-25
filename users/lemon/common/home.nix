@@ -22,7 +22,7 @@
       obsidian onlyoffice-desktopeditors onlyoffice-documentserver drawio
       # Audio
       feishin
-      pwvucontrol easyeffects helvum
+      pwvucontrol stable.easyeffects helvum
       # Image/Video
       loupe flameshot papers gimp scrot
       mpv kdePackages.kdenlive
@@ -127,9 +127,12 @@
           order = [ "ddg" ];
           force = true;
           engines = {
+            "amazon".metaData.hidden = true;
             "bing".metaData.hidden = true;
             "ddg".metaData.hidden = false;
+            "ebay".metaData.hidden = false;
             "google".metaData.hidden = true;
+            "perplexity".metaData.hidden = true;
             "wikipedia".metaData.hidden = true;
           };
         };
@@ -187,15 +190,13 @@
             ignoreBots = true;
             ignoreSelf = true;
           };
-          moreCommands.enable = true;
-          moreKaomoji.enable = true;
           noBlockedMessages.enable = true;
           noReplyMention.enable = true;
           normalizeMessageLinks.enable = true;
           roleColorEverywhere.enable = true;
           shikiCodeblocks = {
             enable = true;
-            theme = "https://raw.githubusercontent.com/PassiveLemon/lemonix/master/users/lemon/common/home/.vscode/extensions/lemon-color-theme/themes/lemon-color-theme.json";
+            customTheme = "https://raw.githubusercontent.com/PassiveLemon/lemonix/master/users/lemon/common/home/.vscode/extensions/lemon-color-theme/themes/lemon-color-theme.json";
           };
           showConnections.enable = true;
           validReply.enable = true;
