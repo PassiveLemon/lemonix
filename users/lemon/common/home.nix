@@ -170,7 +170,7 @@
             anonymiseByDefault = true;
           };
           betterRoleContext.enable = true;
-          clearURLs.enable = true;
+          clearUrLs.enable = true;
           crashHandler.enable = true;
           fakeNitro.enable = true;
           fixSpotifyEmbeds.enable = true;
