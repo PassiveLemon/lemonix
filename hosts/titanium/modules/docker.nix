@@ -84,6 +84,8 @@
 
       "Z /data/docker/Volumes/Streaming/Invidious/postgresdata 770 999 999 - -"
       "Z /data/docker/Volumes/Utilities/Yamtrack/cache 770 999 docker-management - -"
+
+      "Z /data/docker/Volumes/Utilities/LiveSync 770 5984 5984 - -"
     ];
   };
 }
