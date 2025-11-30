@@ -46,7 +46,6 @@
       daemon.settings = {
         hosts = [
           "unix:///var/run/docker.sock"
-          "tcp://localhost:2375"
         ];
       };
     };
@@ -54,12 +53,6 @@
 
   hardware = {
     nvidia-container-toolkit.enable = true;
-  };
-
-  services = {
-    cron.systemCronJobs = [
-      "0 2 * * * root docker restart invidious invidious-db invidious-sig-helper"
-    ];
   };
 
   systemd = {
@@ -79,7 +72,6 @@
     };
     tmpfiles.rules = [
       "Z /home/docker 770 docker docker-management - -"
-      "Z /home/docker/Volumes 770 docker docker-management - -"
       "Z /home/lemon/Documents/GitHub/lemocker/silver 770 docker docker-management - -"
 
       "Z /data/HDD2TBEXT4/Media2 770 docker docker-management - -"
