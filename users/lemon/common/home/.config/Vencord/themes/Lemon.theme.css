@@ -96,6 +96,11 @@
     }
   }
 
+  /* Remove window management buttons */
+  .winButtons_c38106 {
+    display: none;
+  }
+
   /* Everything past this point is from Unshittify-Discord */
   /* https://github.com/MaiRiosIPla/unshittify-discord */
   /* Discord CSS updates broke the theming in there and it hasn't been updated in months */
