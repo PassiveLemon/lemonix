@@ -55,7 +55,9 @@
           "wheel" "networkmanager" "video" "audio" "storage" "input"
         ];
         isNormalUser = true;
-        openssh.authorizedKeys.keys = [ "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIFXRE/wC3EAMvJiRIpWv/Rl1+UfwmxF0p8M+YpUkelmU lemon@aluminum" ];
+        openssh.authorizedKeys.keys = [
+          "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIFXRE/wC3EAMvJiRIpWv/Rl1+UfwmxF0p8M+YpUkelmU lemon@aluminum"
+        ];
       };
     };
   };
