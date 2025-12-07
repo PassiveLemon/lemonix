@@ -24,7 +24,7 @@
     swap = {
       enable = true;
       size = 32;
-      zram = {
+      zswap = {
         enable = true;
         memoryPercent = 25;
       };

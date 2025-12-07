@@ -18,6 +18,10 @@
     swap = {
       enable = true;
       device = "/dev/nvme0n1p6";
+      zswap = {
+        enable = true;
+        memoryPercent = 25;
+      };
     };
     syncthing.enable = true;
     tailscale.enable = true;
