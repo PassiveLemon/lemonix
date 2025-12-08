@@ -9,13 +9,7 @@
       grub.enable = false;
       systemd-boot.enable = true;
     };
-    kernelModules = [ "iwlwifi" "kvm-amd" "v4l2loopback" ];
-    extraModulePackages = [
-      config.boot.kernelPackages.v4l2loopback.out
-    ];
-    extraModprobeConfig = ''
-      options v4l2loopback exclusive_caps=1 card_label="Virtual Camera"
-    '';
+    kernelModules = [ "iwlwifi" "kvm-amd" ];
   };
 
   networking = {
@@ -87,16 +81,19 @@
 
   hardware = {
     nvidia = {
-      # https://github.com/NixOS/nixpkgs/issues/452057
-      package = config.boot.kernelPackages.nvidiaPackages.stable;
-      # package = config.boot.kernelPackages.nvidiaPackages.beta;
-      # package = config.boot.kernelPackages.nvidiaPackages.mkDriver {
-      #   version = "580.65.06";
-      #   sha256_64bit = "sha256-BLEIZ69YXnZc+/3POe1fS9ESN1vrqwFy6qGHxqpQJP8=";
-      #   openSha256 = "sha256-BKe6LQ1ZSrHUOSoV6UCksUE0+TIa0WcCHZv4lagfIgA=";
-      #   settingsSha256 = "sha256-9PWmj9qG/Ms8Ol5vLQD3Dlhuw4iaFtVHNC0hSyMCU24=";
-      #   usePersistenced = false;
-      # };
+      # https://github.com/NixOS/nixpkgs/issues/467814
+      # package = config.boot.kernelPackages.nvidiaPackages.stable;
+      package = config.boot.kernelPackages.nvidiaPackages.stable // {
+        open = config.boot.kernelPackages.nvidiaPackages.stable.open.overrideAttrs (old: {
+          patches = (old.patches or [ ]) ++ [
+            (pkgs.fetchpatch {
+              name = "get_dev_pagemap.patch";
+              url = "https://github.com/NVIDIA/open-gpu-kernel-modules/commit/3e230516034d29e84ca023fe95e284af5cd5a065.patch";
+              hash = "sha256-BhL4mtuY5W+eLofwhHVnZnVf0msDj7XBxskZi8e6/k8=";
+            })
+          ];
+        });
+      };
       open = true;
       modesetting.enable = true;
       powerManagement.enable = true;
