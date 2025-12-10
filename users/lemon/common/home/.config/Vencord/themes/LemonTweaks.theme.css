@@ -121,25 +121,8 @@ Honestly with the amount of stuff that needs to be modified to fix BDRecolor and
   }
   /* User popup */
   .outer_c0bea0 {
-    .activityContainer__84832 {
-      .card__39ec2 {
-        background-color: rgba(var(--backgroundaccent), 0.7);
-        border: 1px solid var(--border-subtle) !important;
-        transition: background-color .2s ease-in-out, border-color .2s ease;
-        &:hover {
-          background-color: rgba(var(--backgroundaccent), 1);
-        }
-      }
-      .button__201d5 {
-        background-color: rgba(var(--backgroundaccent), 0.7);
-        border: 1px solid var(--border-subtle) !important;
-        transition: background-color .2s ease-in-out, border-color .2s ease;
-        &:hover {
-          background-color: rgba(var(--backgroundaccent), 1);
-        }
-      }
-    }
-    .showMoreButton__84832,
+    .container__62dd3,
+    .overlay_c0bea0,
     .button__7d7f7,
     .role_dfa8b6 {
       /* Add effects to role buttons */
