@@ -29,7 +29,7 @@
             position = "0x0";
             mode = "2256x1504";
             rate = "60.00";
-            # 85% scale in X and Y. Using the autorandr scale option doesn't always work
+            # 85% scale in X and Y to aproximately give 1920x1280. Using the autorandr scale option doesn't always work
             transform = [
               [ 0.85 0.0 0.0 ]
               [ 0.0 0.85 0.0 ]

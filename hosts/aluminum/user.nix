@@ -6,12 +6,12 @@
 
   location.provider = "geoclue2";
   services = {
-    logind = {
-      powerKey = "suspend-then-hibernate";
-      powerKeyLongPress = "poweroff";
-      lidSwitch = "suspend-then-hibernate";
-      lidSwitchExternalPower = "suspend-then-hibernate";
-      lidSwitchDocked = "suspend-then-hibernate";
+    logind.settings.Login = {
+      HandlePowerKey = "suspend-then-hibernate";
+      HandlePowerKeyLongPress = "poweroff";
+      HandleLidSwitch = "suspend-then-hibernate";
+      HandleLidSwitchExternalPower = "suspend-then-hibernate";
+      HandleLidSwitchDocked = "suspend-then-hibernate";
     };
     clight.enable = true;
     xserver.displayManager.importedVariables = [
