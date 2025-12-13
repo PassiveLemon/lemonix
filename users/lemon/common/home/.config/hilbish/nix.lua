@@ -13,7 +13,6 @@ local function find_in_table(table, value)
   end
 end
 
--- Will be deprecated because nh is slower than regular nix cmds, but keeping them here for a bit. Maybe something improves in the future?
 hilbish.alias("nos", "nh os switch ~/Documents/GitHub/lemonix")
 hilbish.alias("nhs", "nh home switch ~/Documents/GitHub/lemonix")
 
@@ -21,34 +20,37 @@ hilbish.alias("nhs", "nh home switch ~/Documents/GitHub/lemonix")
 hilbish.alias("npr", "nixpkgs-review rev --print-result HEAD")
 hilbish.alias("cma", "comma")
 
+-- Well it works, but the point of this was to be faster than nh in terms of eval time and it's so much slower.
 -- commander.register("nos", function()
 --   print("Building NixOS configuration...")
 --   local code1 = hilbish.run("sudo -v")
---   -- TODO: Somehow hide the commands outputs
+--   -- TODO: Somehow hide the debug outputs
 --   if code1 == 0 then
---     local code2 = hilbish.run("sudo nixos-rebuild switch --fast --flake ~/Documents/GitHub/lemonix#" .. hilbish.host .. " --log-format internal-json -v |& nom --json")
+--     local code2 = hilbish.run("sudo nixos-rebuild switch --flake ~/Documents/GitHub/lemonix#" .. hilbish.host .. " --log-format internal-json -v |& grep -v '^debug: nixos_rebuild' |& nom --json")
 --     if code2 == 0 then
---       -- After building, determine the current and previous profile to diff
+--       -- After building, determine the current and new profile to diff
 --       local profiles = fs.readdir("/nix/var/nix/profiles/")
---       local code3, current_path = hilbish.run("realpath /nix/var/nix/profiles/system", false)
---       local current_path_clean = current_path:match("^%s*(.-)%s*$")
---       local current_profile = 0
---       for _, v in ipairs(profiles) do
---         local code4, realpath = hilbish.run("realpath /nix/var/nix/profiles/" .. v)
---         local realpath_clean = realpath:match("^%s*(.-)%s*$")
---         -- These don't fucking match for some god damn reason, even though they look the exact same after trimming whitespace
---         if code4 == 0 and current_path_clean == realpath_clean then
---           print("match")
---           current_profile = v:match("^system%-(%d+)%-link$")
---           break
+--       local code3, new_path = hilbish.run("realpath /nix/var/nix/profiles/system", false)
+--       local new_path_clean = new_path:match("%s*(%S+)%s*")
+--       local current_path, current_profile
+--       for _, profile in ipairs(profiles) do
+--         -- Find the new system-xxx-link path
+--         if profile:find("%d+") then
+--           local code4, test_path = hilbish.run("realpath /nix/var/nix/profiles/" .. profile, false)
+--           local test_path_clean = test_path:match("%s*(%S+)%s*")
+--           if code4 == 0 and test_path_clean == new_path_clean then
+--             current_path = test_path_clean
+--             current_profile = profile:match("%s*system%-(%S+)%-link%s*")
+--             break
+--           end
 --         end
 --       end
---       local code5, previous_profile = hilbish.run("realpath /nix/var/nix/profiles/system-" .. (current_profile -1) .. "-link" )
+--       -- Diff the old profile with the new profile
+--       local code5, previous_profile = hilbish.run("realpath /nix/var/nix/profiles/system-" .. (tonumber(current_profile) - 1) .. "-link", false)
+--       local previous_profile_clean = previous_profile:match("%s*(%S+)%s*")
 --       if code3 == 0 and code5 == 0 then
---         print("test1-" .. previous_profile)
---         print("test2-" .. current_profile)
 --         print("Comparing diff...")
---         hilbish.run("dix " .. previous_profile .. " " .. current_profile)
+--         hilbish.run("dix " .. previous_profile_clean .. " " .. current_path)
 --       else
 --         print("Failed to determine current and/or latest profiles.")
 --       end
@@ -56,18 +58,6 @@ hilbish.alias("cma", "comma")
 --   else
 --     print("Failed to elevate priviledges.")
 --   end
--- end)
-
--- commander.register("nhs", function()
---   print("Building Home-Manager configuration...")
-
---   -- Get previous Home-Manager generation path for diff
---   local code, stdout = hilbish.run("realpath /home/" .. hilbish.user .. "/.local/state/nix/profiles/home-manager", false)
-
---   hilbish.run("home-manager switch --flake ~/Documents/GitHub/lemonix#" .. hilbish.user .. "@" .. hilbish.host .. " --log-format internal-json -v |& nom --json")
-
---   print("Visualing diff...")
---   hilbish.run("nvd " .. stdout .. " /home/" .. hilbish.user .. "/.local/state/nix/profiles/home-manager")
 -- end)
 
 -- Nix build

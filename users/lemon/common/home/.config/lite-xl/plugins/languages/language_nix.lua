@@ -111,7 +111,8 @@ merge_tables(default_patterns, {
 
   -- Inherits
   { -- Namespace inherits
-    pattern = "inherit()%s*%(()[%w%-%_']+()%)()%s*.-%s*();",
+    -- Issue 2
+    pattern = "inherit()%s*%(()[%w%-%_'%.]+()%)()%s*.-%s*();",
     type = { "keyword", "normal", "keyword2", "normal", "literal", "normal" },
   },
   { -- General inherits
@@ -125,6 +126,7 @@ merge_tables(default_patterns, {
 
 -- Issues:
 -- 1. Any module arg that does not have a comma before/after will not be colored
+-- 2. When inheriting something like inherit (prevAttrs.cargoDeps) name;, we include the period in the match which messes with the color.
 
 syntax.add({
   name = "Nix",
