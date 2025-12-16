@@ -1,0 +1,22 @@
+<layout>
+  <elements>
+    <rectangle width="400" color="#222222" border="3.0" border_color="#444444" round="12">
+      <div gap="8" flex_direction="column" padding="16">
+        <!-- <label text="12:34 PM" size="36"/> -->
+        <label _source="clock" _display="time" size="36"/>
+        <!-- <label text="Sun Dec 14" size="20"/> -->
+        <label _source="clock" _display="date" size="20"/>
+        <!-- <label text="6.4" size="20"/> -->
+        <label _source="ipd" size="20"/>
+        <!-- <label text="H42 L72 R73" size="20"/> -->
+        <label _source="battery" _device="0" size="20"/>
+        <div gap="8" flex_direction="row">
+          <Button _press="::PlayspaceReset" text="M" tooltip="Playspace Reset" tooltip_side="bottom" size="20" padding="4"/>
+          <Button _press="::PlayspaceRecenter" text="M" tooltip="Playspace Recenter" tooltip_side="bottom" size="20" padding="4"/>
+          <Button _press="::PlayspaceFixFloor" text="M" tooltip="Playspace Floor Fix" tooltip_side="bottom" size="20" padding="4"/>
+        </div>
+      </div>
+    </rectangle>
+  </elements>
+</layout>
+

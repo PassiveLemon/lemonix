@@ -1,0 +1,5 @@
+timezones:
+- "America/New_York"
+
+clock_12h: true
+

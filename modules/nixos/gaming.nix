@@ -41,11 +41,9 @@ in
             adb shell monkey -p org.meumeu.wivrn.github 1
           '';
         };
-        wivrn = let
-          wivrnPackage = inputs.lemonake.packages.${pkgs.system}.wivrn.override { cudaSupport = true; };
-        in {
+        wivrn = {
           enable = true;
-          package = wivrnPackage;
+          package = inputs.lemonake.packages.${pkgs.system}.wivrn.override { cudaSupport = true; };
           openFirewall = false;
           defaultRuntime = true;
           autoStart = true;

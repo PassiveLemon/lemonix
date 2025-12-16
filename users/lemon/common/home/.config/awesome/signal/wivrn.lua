@@ -26,12 +26,14 @@ local function wivrn()
       if not state_cache then
         state_cache = true
         awful.spawn.with_shell("kill $(pgrep picom)")
+        awful.spawn.with_shell("kill $(pgrep easyeffects)")
         focus_steam()
       end
     else
       if state_cache then
         state_cache = false
         awful.spawn.with_shell("pidof -q picom || picom --realtime -b")
+        awful.spawn.with_shell("pidof -q easyeffects || easyeffects --gapplication-service")
       end
     end
   end)
