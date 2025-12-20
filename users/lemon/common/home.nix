@@ -1,4 +1,23 @@
-{ inputs, outputs, lib, pkgs, ... }: {
+{ inputs, outputs, lib, pkgs, ... }:
+let
+  somewm = (pkgs.callPackage ../../../pkgs/somewm.nix {
+    additionalLuaPackages = [
+      pkgs.luajitPackages.luafilesystem
+    ];
+    additionalLuaCPATH = "${inputs.lemonake.packages.${pkgs.system}.lua-pam-git}/lib/?.so";
+  }).overrideAttrs {
+    GI_TYPELIB_PATH = let
+      mkTypeLibPath = pkg: "${pkg}/lib/girepository-1.0";
+      extraGITypeLibPaths = lib.forEach (with pkgs; [
+        networkmanager upower
+      ] ++ (with pkgs.astal; [
+        auth battery bluetooth mpris network powerprofiles wireplumber
+      ])) mkTypeLibPath;
+    in
+    lib.concatStringsSep ":" (extraGITypeLibPaths ++ [ (mkTypeLibPath pkgs.pango.out) ]);
+  };
+in
+{
   imports = [
     ./modules/customization.nix
     inputs.nixcord.homeModules.nixcord
@@ -28,6 +47,8 @@
       mpv kdePackages.kdenlive
       # Miscellaneous
       picom ente-auth localsend xclicker kdePackages.kruler
+
+      somewm
     ];
     username = "lemon";
     homeDirectory = "/home/lemon";
@@ -39,6 +60,9 @@
       ".vscode/" = {
         source = ./home/.vscode;
         recursive = true;
+      };
+      ".winitrc" = {
+        source = ./home/.winitrc;
       };
       ".xinitrc" = {
         source = ./home/.xinitrc;
@@ -275,6 +299,14 @@
         name = "Desktop Preferences";
         noDisplay = true;
       };
+    };
+    portal = {
+      enable = true;
+      extraPortals = with pkgs; [
+        gnome-keyring
+        xdg-desktop-portal-wlr
+        xdg-desktop-portal-gtk
+      ];
     };
   };
 

@@ -1,4 +1,4 @@
-{ pkgs, ... }: {
+{ inputs, lib, pkgs, ... }: {
   environment = {
     systemPackages = with pkgs; [
       xss-lock gtk3 snixembed
@@ -52,6 +52,33 @@
   };
 
   programs = {
+    uwsm = let
+      somewm = (pkgs.callPackage ../../pkgs/somewm.nix {
+        additionalLuaPackages = [
+          pkgs.luajitPackages.luafilesystem
+        ];
+        additionalLuaCPATH = "${inputs.lemonake.packages.${pkgs.system}.lua-pam-git}/lib/?.so";
+      }).overrideAttrs {
+        GI_TYPELIB_PATH = let
+          mkTypeLibPath = pkg: "${pkg}/lib/girepository-1.0";
+          extraGITypeLibPaths = lib.forEach (with pkgs; [
+            networkmanager upower
+          ] ++ (with pkgs.astal; [
+            auth battery bluetooth mpris network powerprofiles wireplumber
+          ])) mkTypeLibPath;
+        in
+        lib.concatStringsSep ":" (extraGITypeLibPaths ++ [ (mkTypeLibPath pkgs.pango.out) ]);
+      };
+    in {
+      enable = true;
+      waylandCompositors = {
+        somewm = {
+          prettyName = "SomeWM";
+          comment = "SomeWM compositor managed by UWSM";
+          binPath = "/home/lemon/.local/state/nix/profile/bin/somewm";
+        };
+      };
+    };
     dconf.enable = true;
     seahorse.enable = true;
   };
@@ -76,8 +103,13 @@
   xdg = {
     portal = {
       enable = true;
+      wlr.enable = true;
       config.common.default = [ "gtk" ];
-      extraPortals = with pkgs; [ xdg-desktop-portal-gtk ];
+      extraPortals = with pkgs; [
+        gnome-keyring
+        xdg-desktop-portal-gtk
+        xdg-desktop-portal-wlr
+      ];
     };
   };
 }

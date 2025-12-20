@@ -1,13 +1,9 @@
 local awful = require("awful")
-local gears = require("gears")
 local b = require("beautiful")
 local wibox = require("wibox")
 local menubar_utils = require("menubar.utils")
 
 local h = require("helpers")
-
-local awesome_theme = h.join_path(gears.filesystem.get_configuration_dir(), "/config/theme.lua")
-b.init(awesome_theme)
 
 local dpi = b.xresources.apply_dpi
 
