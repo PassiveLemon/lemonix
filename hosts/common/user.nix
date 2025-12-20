@@ -1,4 +1,8 @@
 { inputs, lib, pkgs, ... }: {
+  imports = [
+    inputs.lemonake.nixosModules.somewm
+  ];
+
   environment = {
     systemPackages = with pkgs; [
       xss-lock gtk3 snixembed
@@ -52,8 +56,8 @@
   };
 
   programs = {
-    uwsm = let
-      somewm = (pkgs.callPackage ../../pkgs/somewm.nix {
+    somewm = let
+      somewm = (inputs.lemonake.packages.${pkgs.system}.somewm-git.override {
         additionalLuaPackages = [
           pkgs.luajitPackages.luafilesystem
         ];
@@ -71,13 +75,7 @@
       };
     in {
       enable = true;
-      waylandCompositors = {
-        somewm = {
-          prettyName = "SomeWM";
-          comment = "SomeWM compositor managed by UWSM";
-          binPath = "/home/lemon/.local/state/nix/profile/bin/somewm";
-        };
-      };
+      package = somewm;
     };
     dconf.enable = true;
     seahorse.enable = true;

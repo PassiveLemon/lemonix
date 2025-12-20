@@ -102,6 +102,7 @@ stdenv.mkDerivation (finalAttrs: {
     maintainers = with maintainers; [ passivelemon ];
     platforms = platforms.linux;
     sourceProvenance = with sourceTypes; [ fromSource ];
+    mainProgram = "somewm";
   };
 })
 

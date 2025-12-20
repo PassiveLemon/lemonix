@@ -1,27 +1,9 @@
-{ inputs, outputs, lib, pkgs, ... }:
-let
-  somewm = (pkgs.callPackage ../../../pkgs/somewm.nix {
-    additionalLuaPackages = [
-      pkgs.luajitPackages.luafilesystem
-    ];
-    additionalLuaCPATH = "${inputs.lemonake.packages.${pkgs.system}.lua-pam-git}/lib/?.so";
-  }).overrideAttrs {
-    GI_TYPELIB_PATH = let
-      mkTypeLibPath = pkg: "${pkg}/lib/girepository-1.0";
-      extraGITypeLibPaths = lib.forEach (with pkgs; [
-        networkmanager upower
-      ] ++ (with pkgs.astal; [
-        auth battery bluetooth mpris network powerprofiles wireplumber
-      ])) mkTypeLibPath;
-    in
-    lib.concatStringsSep ":" (extraGITypeLibPaths ++ [ (mkTypeLibPath pkgs.pango.out) ]);
-  };
-in
-{
+{ inputs, outputs, lib, pkgs, ... }: {
   imports = [
     ./modules/customization.nix
     inputs.nixcord.homeModules.nixcord
     inputs.nix-xl.homeModules.nix-xl
+    inputs.lemonake.homeModules.somewm
   ];
 
   home = {
@@ -47,8 +29,6 @@ in
       mpv kdePackages.kdenlive
       # Miscellaneous
       picom ente-auth localsend xclicker kdePackages.kruler
-
-      somewm
     ];
     username = "lemon";
     homeDirectory = "/home/lemon";
@@ -92,6 +72,30 @@ in
       luaModules = with pkgs; [
         luajitPackages.luafilesystem
       ];
+    };
+  };
+
+  wayland = {
+    windowManager.somewm = let
+      somewm = (inputs.lemonake.packages.${pkgs.system}.somewm-git.override {
+        additionalLuaPackages = [
+          pkgs.luajitPackages.luafilesystem
+        ];
+        additionalLuaCPATH = "${inputs.lemonake.packages.${pkgs.system}.lua-pam-git}/lib/?.so";
+      }).overrideAttrs {
+        GI_TYPELIB_PATH = let
+          mkTypeLibPath = pkg: "${pkg}/lib/girepository-1.0";
+          extraGITypeLibPaths = lib.forEach (with pkgs; [
+            networkmanager upower
+          ] ++ (with pkgs.astal; [
+            auth battery bluetooth mpris network powerprofiles wireplumber
+          ])) mkTypeLibPath;
+        in
+        lib.concatStringsSep ":" (extraGITypeLibPaths ++ [ (mkTypeLibPath pkgs.pango.out) ]);
+      };
+    in {
+      enable = true;
+      package = somewm;
     };
   };
 
@@ -299,14 +303,6 @@ in
         name = "Desktop Preferences";
         noDisplay = true;
       };
-    };
-    portal = {
-      enable = true;
-      extraPortals = with pkgs; [
-        gnome-keyring
-        xdg-desktop-portal-wlr
-        xdg-desktop-portal-gtk
-      ];
     };
   };
 
