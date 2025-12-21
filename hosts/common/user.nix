@@ -1,4 +1,4 @@
-{ inputs, lib, pkgs, ... }: {
+{ inputs, pkgs, ... }: {
   imports = [
     inputs.lemonake.nixosModules.somewm
   ];
@@ -8,6 +8,7 @@
       xss-lock gtk3 snixembed
       networkmanagerapplet trayscale
       resources baobab
+      uwsm
     ];
   };
 
@@ -56,27 +57,6 @@
   };
 
   programs = {
-    somewm = let
-      somewm = (inputs.lemonake.packages.${pkgs.system}.somewm-git.override {
-        additionalLuaPackages = [
-          pkgs.luajitPackages.luafilesystem
-        ];
-        additionalLuaCPATH = "${inputs.lemonake.packages.${pkgs.system}.lua-pam-git}/lib/?.so";
-      }).overrideAttrs {
-        GI_TYPELIB_PATH = let
-          mkTypeLibPath = pkg: "${pkg}/lib/girepository-1.0";
-          extraGITypeLibPaths = lib.forEach (with pkgs; [
-            networkmanager upower
-          ] ++ (with pkgs.astal; [
-            auth battery bluetooth mpris network powerprofiles wireplumber
-          ])) mkTypeLibPath;
-        in
-        lib.concatStringsSep ":" (extraGITypeLibPaths ++ [ (mkTypeLibPath pkgs.pango.out) ]);
-      };
-    in {
-      enable = true;
-      package = somewm;
-    };
     dconf.enable = true;
     seahorse.enable = true;
   };
