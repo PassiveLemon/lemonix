@@ -90,17 +90,12 @@
         extraSearchPaths = [
           inputs.lemonake.packages.${pkgs.system}.lua-pam-luajit-git
         ];
-      }).overrideAttrs {
-        GI_TYPELIB_PATH = let
-          mkTypeLibPath = pkg: "${pkg}/lib/girepository-1.0";
-          extraGITypeLibPaths = lib.forEach (with pkgs; [
-            networkmanager upower
-          ] ++ (with pkgs.astal; [
-            auth battery bluetooth mpris network powerprofiles wireplumber
-          ])) mkTypeLibPath;
-        in
-        lib.concatStringsSep ":" (extraGITypeLibPaths ++ [ (mkTypeLibPath pkgs.pango.out) ]);
-      };
+        extraGITypeLibPaths = with pkgs; [
+          networkmanager upower
+        ] ++ (with pkgs.astal; [
+          auth battery bluetooth mpris network powerprofiles wireplumber
+        ]);
+      });
     in {
       enable = true;
       package = somewm;
@@ -252,7 +247,7 @@
         recursive = true;
       };
       "awesome/liblua_pam.so" = {
-        source = "${inputs.lemonake.packages.${pkgs.system}.lua-pam-git}/lib/liblua_pam.so";
+        source = "${inputs.lemonake.packages.${pkgs.system}.lua-pam-luajit-git}/lib/lua/5.1/liblua_pam.so";
       };
       "mimeapps.list".force = true;
     };

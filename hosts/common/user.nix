@@ -1,8 +1,4 @@
-{ inputs, pkgs, ... }: {
-  imports = [
-    inputs.lemonake.nixosModules.somewm
-  ];
-
+{ pkgs, ... }: {
   environment = {
     systemPackages = with pkgs; [
       xss-lock gtk3 snixembed

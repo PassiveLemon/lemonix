@@ -17,6 +17,7 @@ local super = user.super
 -- TODO: Probably should move this out of keybindings.lua
 local app_launcher = bling.widget.app_launcher({
   terminal = user.terminal,
+  icon_theme = "papirus",
   type = "popup_menu",
   border_color = b.border_color_active,
   background = b.bg_primary,

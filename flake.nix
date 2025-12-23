@@ -43,7 +43,7 @@
 
     # Submodules
     awesomewm-bling = {
-      url = "github:passivelemon/bling/flatpak-fix";
+      url = "github:passivelemon/bling";
       flake = false;
     };
     hilbish-promptua = {
