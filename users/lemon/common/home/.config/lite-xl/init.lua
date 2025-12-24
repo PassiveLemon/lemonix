@@ -4,6 +4,7 @@ local core = require("core")
 local config = require("core.config")
 local keymap = require("core.keymap")
 local style = require("core.style")
+local docview = require("core.docview")
 
 local lintplus = require("plugins.lintplus")
 local lspconfig = require("plugins.lsp.config")
@@ -71,5 +72,12 @@ if not core.switched_to_default_dir then
   if core.project_dir ~= default_path then
     core.open_folder_project(default_path)
   end
+end
+
+-- Put the save asterisk before the name
+function docview:get_name()
+  local post = self.doc:is_dirty() and "*" or ""
+  local name = self.doc:get_name()
+  return post .. name:match("[^/%\\]*$")
 end
 
