@@ -9,6 +9,7 @@
       grub.enable = false;
       systemd-boot.enable = true;
     };
+    blacklistedKernelModules = [ "nouveau" "nova_core" ];
     kernelModules = [ "iwlwifi" "kvm-amd" ];
   };
 

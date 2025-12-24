@@ -23,7 +23,7 @@
       obsidian onlyoffice-desktopeditors onlyoffice-documentserver drawio
       # Audio
       feishin
-      pwvucontrol stable.easyeffects helvum
+      pwvucontrol easyeffects helvum
       # Image/Video
       loupe flameshot papers gimp scrot
       mpv kdePackages.kdenlive
@@ -78,8 +78,6 @@
   wayland = {
     # Current issues with AWM config on SomeWM:
     # Lockscreen does not work at all, unsure if the call to lua-pam works, but it also does not go away when unlock() is called. Will need to test if it's the signals causing problems or wayland not liking the idea of a popup for a lockscreen
-    # Bling app_launcher breaks the config load. Mentions something deprecated, unsure if important
-    # Some widget stack border issues
     # Generally noticable delay when switching tags
     # # Not sure how much of that is an issue with SomeWM vs Nvidia + a user with zero Wayland experience
     windowManager.somewm = let
@@ -111,7 +109,6 @@
     home-manager.enable = true;
     obs-studio = {
       enable = true;
-      # https://github.com/NixOS/nixpkgs/issues/382666 but issue still persists
       package = (pkgs.obs-studio.override { cudaSupport = true; });
     };
     lite-xl = {
@@ -161,7 +158,7 @@
             "amazon".metaData.hidden = true;
             "bing".metaData.hidden = true;
             "ddg".metaData.hidden = false;
-            "ebay".metaData.hidden = false;
+            "ebay".metaData.hidden = true;
             "google".metaData.hidden = true;
             "perplexity".metaData.hidden = true;
             "wikipedia".metaData.hidden = true;
@@ -201,7 +198,7 @@
             anonymiseByDefault = true;
           };
           betterRoleContext.enable = true;
-          clearUrLs.enable = true;
+          ClearURLs.enable = true;
           crashHandler.enable = true;
           fakeNitro.enable = true;
           fixSpotifyEmbeds.enable = true;

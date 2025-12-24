@@ -68,7 +68,6 @@
   nixpkgs = {
     config.permittedInsecurePackages = [
       "libxml2-2.13.8" # Unityhub
-      "electron-36.9.5"
     ];
   };
 }

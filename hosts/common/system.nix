@@ -1,4 +1,4 @@
-{ outputs, config, lib, pkgs, ... }: {
+{ outputs, lib, pkgs, ... }: {
   boot = {
     loader = {
       efi.canTouchEfiVariables = true;
@@ -69,7 +69,8 @@
   };
 
   systemd = {
-    enableStrictShellChecks = true;
+    # https://github.com/NixOS/nixpkgs/issues/469102
+    enableStrictShellChecks = false;
     oomd = {
       enable = true;
       enableRootSlice = true;
