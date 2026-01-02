@@ -152,12 +152,6 @@ local function wibar_layer(c)
     end
     for s, overlap in pairs(screens) do
       local hide = false
-      for _, c_visible in ipairs(s:get_clients()) do
-        if c_visible.fullscreen then
-          hide = true
-          break
-        end
-      end
       -- If the client overlaps the screen and is not fullscreened, show the wibar
       -- If not, iterate over all clients and see if there is a fullscreened client
       if overlap then
@@ -165,6 +159,13 @@ local function wibar_layer(c)
           hide = true
         else
           hide = false
+        end
+      else
+        for _, c_visible in ipairs(s:get_clients()) do
+          if c_visible.fullscreen then
+            hide = true
+            break
+          end
         end
       end
       hide_wibar(s, hide)
