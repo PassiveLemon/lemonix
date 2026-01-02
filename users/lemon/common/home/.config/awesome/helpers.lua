@@ -427,7 +427,7 @@ function helpers.table_dump(table)
       if type(k) ~= "number" then
         k = '"' .. k .. '"'
       end
-      s = s .. "[" .. k .. "] = " .. helpers.dump_table(v) .. ","
+      s = s .. "[" .. k .. "] = " .. helpers.table_dump(v) .. ","
     end
     return s .. "} "
   else

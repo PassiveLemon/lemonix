@@ -22,7 +22,6 @@ ruled.client.connect_signal("request::rules", function()
       raise = true,
       screen = awful.screen.preferred,
       size_hints_honor = false,
-      placement = awful.placement.centered+awful.placement.no_offscreen,
     },
   })
 
@@ -53,7 +52,6 @@ ruled.client.connect_signal("request::rules", function()
       fullscreen = true,
       maximized = true,
       raise = true,
-      placement = awful.placement.centered+awful.placement.no_offscreen,
     },
   })
 
@@ -69,7 +67,7 @@ ruled.client.connect_signal("request::rules", function()
       class    = "steam",
     },
     except = {
-      -- The exact match is necessary. Otherwise, the "Steam Settings" window name would be excepted.
+      -- The exact match is necessary. Otherwise, the "Steam Settings" window name would be excepted
       name = "^Steam$",
     },
     properties = {
@@ -117,71 +115,68 @@ client.connect_signal("request::manage", function(c)
 end)
 
 --
--- Bar and fullscreens
+-- Fullscreening and wibar
 --
 
--- Actually fullscreen managed clients
+-- Actually fullscreen newly managed clients
 client.connect_signal("request::manage", function(c)
   local s = awful.screen.focused()
   if c.fullscreen then
-    -- Spawn the client on top of the entire screen, not just under the bar.
+    -- Spawn the client on top of the entire screen, not just under the bar
     c.x, c.y = s.geometry.x, s.geometry.y
   end
 end)
 
--- Helps stop spazzing when the focus context rapidly changes
-local wibar_layer_timeout = false
-local wibar_layer_timer = gears.timer({
-  timeout = 0.05,
-  callback = function()
-    wibar_layer_timeout = false
-  end,
-})
-
--- Hide the wibar for the screen of the focused client if it is fullscreened
-local function wibar_layer(c, force)
-  if not wibar_layer_timeout then
-    wibar_layer_timeout = true
-    if c then
-      local s = c.screen
-      if not s or not s.wibar then return end
-      local focused_and_fullscreen = (c.fullscreen and ((c == client.focus) or force))
-      s.wibar.ontop = not focused_and_fullscreen
-      wibar_layer_timer:again()
-    end
+local function hide_wibar(s, force)
+  if s.wibar then
+    s.wibar.ontop = not force
   end
 end
 
--- Stores a history of each clients previous screen attachment.
--- Current screen is index 1 and the first previous is the second.
-local client_screen_history = { }
+-- Check if a client overlaps screen geometry
+local function screen_collision(c, s)
+  -- Only implemented for horizontal bars
+  local c_l = c.x
+  local c_r = c.x + c.width
+  local s_l = s.geometry.x
+  local s_r = s.geometry.x + s.geometry.width
+  return c_l < s_r and c_r > s_l
+end
 
-local function add_client_screen_history(c)
-  if client_screen_history[c] then
-    for k, v in ipairs(client_screen_history[c]) do
-      if v.index == c.screen.index then
-        table.remove(client_screen_history[c], k)
-        break
-      end
+local function wibar_layer(c)
+  if c and not c.minimized then
+    -- First check all screens for potential collision
+    local screens = { [c.screen] = true }
+    for s in screen do
+      screens[s] = screen_collision(c, s)
     end
-    table.insert(client_screen_history[c], 1, c.screen)
-  else
-    client_screen_history[c] = { c.screen }
+    for s, overlap in pairs(screens) do
+      local hide = false
+      for _, c_visible in ipairs(s:get_clients()) do
+        if c_visible.fullscreen then
+          hide = true
+          break
+        end
+      end
+      -- If the client overlaps the screen and is not fullscreened, show the wibar
+      -- If not, iterate over all clients and see if there is a fullscreened client
+      if overlap then
+        if c.fullscreen then
+          hide = true
+        else
+          hide = false
+        end
+      end
+      hide_wibar(s, hide)
+    end
   end
 end
 
 client.connect_signal("request::geometry", function(c) wibar_layer(c) end)
-client.connect_signal("request::activate", function(c) wibar_layer(c) end)
-
--- Run the wibar_layer check for the last focused client on a screen when the current focused client leaves the tag
-client.connect_signal("request::manage", function(c) add_client_screen_history(c) end)
-client.connect_signal("request::tag", function(c)
-  add_client_screen_history(c)
-  -- Select the second screen history because the first will be the current screen the client is on
-  local focused_client_last_screen = client_screen_history[c][2] or nil
-  if focused_client_last_screen then
-    local last_focused_client = awful.client.focus.history.get(focused_client_last_screen, 0)
-    wibar_layer(last_focused_client, true)
+client.connect_signal("manage", function(c) wibar_layer(c) end)
+client.connect_signal("request::activate", function(c)
+  if c.fullscreen then
+    wibar_layer(c)
   end
 end)
 
