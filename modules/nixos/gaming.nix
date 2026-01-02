@@ -22,16 +22,7 @@ in
   disabledModules = [ "services/video/wivrn.nix" ];
 
   config = mkIf cfg.enable (mkMerge [
-    (mkIf cfg.desktop.enable {
-      programs.steam = {
-        enable = true;
-        extraCompatPackages = with pkgs; [
-          proton-ge-bin
-        ] ++ optionals cfg.vr.enable [
-          inputs.lemonake.packages.${pkgs.system}.proton-ge-rtsp
-        ];
-      };
-    })
+    (mkIf cfg.desktop.enable { })
     (mkIf cfg.vr.enable {
       services = {
         autoadb = {

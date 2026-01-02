@@ -17,16 +17,24 @@ in
     (mkIf cfg.desktop.enable {
       home.packages = with pkgs; [
         r2modman limo
-        heroic (bottles.override { removeWarningPopup = true; })
+        steam heroic (bottles.override { removeWarningPopup = true; })
         lunar-client
         inputs.lemonake.packages.${pkgs.system}.gdlauncher-carbon
         ludusavi
       ];
 
-      xdg.mimeApps.defaultApplications = {
-        "x-scheme-handler/gdlauncher" = "gdlauncher.desktop";
-        "x-scheme-handler/ror2mm" = "r2modman.desktop";
-        "x-scheme-handler/nxm" = "limo.desktop";
+      xdg = {
+        dataFile = {
+          "Steam/compatibilitytools.d/proton-ge" = {
+            source = "${pkgs.proton-ge-bin.steamcompattool}";
+            recursive = true;
+          };
+        };
+        mimeApps.defaultApplications = {
+          "x-scheme-handler/gdlauncher" = "gdlauncher.desktop";
+          "x-scheme-handler/ror2mm" = "r2modman.desktop";
+          "x-scheme-handler/nxm" = "limo.desktop";
+        };
       };
     })
     (mkIf cfg.vr.enable {
@@ -51,6 +59,12 @@ in
         #     };
         #   };
         # };
+        dataFile = {
+          "Steam/compatibilitytools.d/proton-ge-rtsp" = {
+            source = "${inputs.lemonake.packages.${pkgs.system}.proton-ge-rtsp.steamcompattool}";
+            recursive = true;
+          };
+        };
         mimeApps.defaultApplications = {
           "x-scheme-handler/beatsaver" = "BeatSaberModManager-url-beatsaver.desktop";
           "x-scheme-handler/bsplaylist" = "BeatSaberModManager-url-bsplaylist.desktop";
