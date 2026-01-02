@@ -411,7 +411,16 @@ function helpers.is_dir(dir)
   return gears.filesystem.is_dir(dir)
 end
 
-function helpers.dump_table(table)
+function helpers.table_contains(table, value)
+  for _, v in ipairs(table) do
+    if v == value then
+      return true
+    end
+  end
+  return false
+end
+
+function helpers.table_dump(table)
   if type(table) == "table" then
     local s = "{ "
     for k, v in pairs(table) do

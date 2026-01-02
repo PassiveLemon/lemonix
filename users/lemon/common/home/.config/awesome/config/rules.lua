@@ -85,7 +85,6 @@ ruled.client.connect_signal("request::rules", function()
     rule = {
       instance = "kruler",
       class    = "kruler",
-      name     = "KRuler",
     },
     properties = {
       floating = true,
@@ -99,8 +98,18 @@ ruled.client.connect_signal("request::rules", function()
   })
 end)
 
--- Some jank because otherwise Sober will have a transparent bar the height of the wibar at the bottom. I guess re-fullscreening updates it to draw?
+awesome.register_xproperty("STEAM_GAME", "number")
 client.connect_signal("request::manage", function(c)
+  -- Fullscreen all steam games with an exclusion check
+  local cclass_exclude = { "steam", "zenity" }
+  local cclass = string.lower(c.class)
+  local csteam = c:get_xproperty("STEAM_GAME")
+  if csteam and not h.table_contains(cclass_exclude, cclass) then
+    c.fullscreen = true
+    c:raise()
+  end
+
+  -- Some jank because otherwise Sober will have a transparent bar the height of the wibar at the bottom. I guess re-fullscreening updates it to draw?
   if (c.instance == "sober") or (c.class == "org.vinegarhq.Sober") then
     c.fullscreen = false
     c.fullscreen = true
