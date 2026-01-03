@@ -18,7 +18,6 @@ in
       home.packages = with pkgs; [
         r2modman limo
         steam heroic (bottles.override { removeWarningPopup = true; })
-        lunar-client
         inputs.lemonake.packages.${pkgs.system}.gdlauncher-carbon
         ludusavi
       ];

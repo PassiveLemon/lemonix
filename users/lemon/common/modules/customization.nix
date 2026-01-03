@@ -94,10 +94,16 @@
     style.name = "gtk2";
   };
 
-  xdg.portal = {
-    enable = true;
-    config.common.default = [ "gtk" ];
-    extraPortals = with pkgs; [ xdg-desktop-portal-gtk ];
+  xdg = {
+    portal = {
+      enable = true;
+      config.common.default = [ "gtk" ];
+      extraPortals = with pkgs; [
+        gnome-keyring
+        xdg-desktop-portal-gtk
+        xdg-desktop-portal-wlr
+      ];
+    };
   };
 }
 
