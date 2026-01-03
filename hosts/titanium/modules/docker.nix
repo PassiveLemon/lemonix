@@ -55,6 +55,7 @@
   services = {
     cron.systemCronJobs = [
       "0 2 * * * root docker restart invidious invidious-db invidious-companion"
+      "0 3 * * 6 root /data/Media/Music/rsgain.sh"
     ];
   };
 
