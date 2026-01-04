@@ -1,4 +1,4 @@
-{ inputs, config, lib, pkgs, ... }:
+{ inputs, system, config, lib, pkgs, ... }:
 let
   inherit (lib) mkIf mkEnableOption mkMerge;
   cfg = config.lemonix.gaming;
@@ -18,7 +18,7 @@ in
       home.packages = with pkgs; [
         r2modman limo
         steam heroic (bottles.override { removeWarningPopup = true; })
-        inputs.lemonake.packages.${pkgs.system}.gdlauncher-carbon
+        inputs.lemonake.packages.${system}.gdlauncher-carbon
         ludusavi
       ];
 
@@ -60,7 +60,7 @@ in
         # };
         dataFile = {
           "Steam/compatibilitytools.d/proton-ge-rtsp" = {
-            source = "${inputs.lemonake.packages.${pkgs.system}.proton-ge-rtsp.steamcompattool}";
+            source = "${inputs.lemonake.packages.${system}.proton-ge-rtsp.steamcompattool}";
             recursive = true;
           };
         };

@@ -1,4 +1,4 @@
-{ inputs, config, lib, pkgs, ... }:
+{ inputs, system, config, lib, ... }:
 let
   inherit (lib) mkIf mkEnableOption;
   cfg = config.lemonix.agenix;
@@ -15,7 +15,7 @@ in
   ];
 
   config = mkIf cfg.enable {
-    environment.systemPackages = with pkgs; [
+    environment.systemPackages = [
       inputs.agenix.packages.${system}.default
     ];
     lemonix.ssh.enable = true;

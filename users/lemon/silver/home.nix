@@ -1,4 +1,4 @@
-{ inputs, pkgs, ... }: {
+{ inputs, system, pkgs, ... }: {
   imports = [
     ../common/home.nix
     ./modules/customization.nix
@@ -7,9 +7,9 @@
   home = {
     packages = with pkgs; [
       easytag zenity
-      inputs.lemonake.packages.${pkgs.system}.nimpad
-      inputs.lemonake.packages.${pkgs.system}.tilp2
-      inputs.lemonake.packages.${pkgs.system}.webfisher
+      inputs.lemonake.packages.${system}.nimpad
+      inputs.lemonake.packages.${system}.tilp2
+      inputs.lemonake.packages.${system}.webfisher
     ];
     stateVersion = "23.05"; # Don't change unless you know what you are doing
   };

@@ -55,15 +55,18 @@
   outputs = { self, ... } @ inputs:
   let
     inherit (self) outputs;
-    specialArgs = { inherit self inputs outputs; };
+    # Not the ideal place to define system but all my machines are the same arch so it works
+    system = "x86_64-linux";
+    specialArgs = {
+      inherit self inputs outputs system;
+    };
     extraSpecialArgs = specialArgs;
   in
   {
     nixosConfigurations = {
       # Desktop
       "silver" = inputs.nixos.lib.nixosSystem {
-        inherit specialArgs;
-        system = "x86_64-linux";
+        inherit system specialArgs;
         modules = [
           inputs.nixos-hardware.nixosModules.common-cpu-amd-pstate
           inputs.nixos-hardware.nixosModules.common-gpu-nvidia-nonprime
@@ -76,8 +79,7 @@
       };
       # Framework Laptop
       "aluminum" = inputs.nixos.lib.nixosSystem {
-        inherit specialArgs;
-        system = "x86_64-linux";
+        inherit system specialArgs;
         modules = [
           inputs.nixos-hardware.nixosModules.common-cpu-amd-pstate
           inputs.nixos-hardware.nixosModules.common-cpu-amd-raphael-igpu
@@ -91,8 +93,7 @@
       };
       # Homeserver
       "titanium" = inputs.nixos.lib.nixosSystem {
-        inherit specialArgs;
-        system = "x86_64-linux";
+        inherit system specialArgs;
         modules = [
           # Doesn't currently have a GPU but one may be added in the future for transcoding and whatnot
           inputs.nixos-hardware.nixosModules.common-cpu-amd-pstate
@@ -107,7 +108,7 @@
     homeConfigurations = {
       "lemon@silver" = inputs.home-manager.lib.homeManagerConfiguration {
         inherit extraSpecialArgs;
-        pkgs = import inputs.nixpkgs { system = "x86_64-linux"; };
+        pkgs = import inputs.nixpkgs { inherit system; };
         modules = [
           ./users/lemon/common/default.nix
           ./users/lemon/silver/default.nix
@@ -116,7 +117,7 @@
       };
       "lemon@aluminum" = inputs.home-manager.lib.homeManagerConfiguration {
         inherit extraSpecialArgs;
-        pkgs = import inputs.nixpkgs { system = "x86_64-linux"; };
+        pkgs = import inputs.nixpkgs { inherit system; };
         modules = [
           ./users/lemon/common/default.nix
           ./users/lemon/aluminum/default.nix

@@ -1,6 +1,6 @@
-{ inputs, config, lib, pkgs, ... }:
+{ inputs, system, config, lib, ... }:
 let
-  inherit (lib) mkIf mkEnableOption mkMerge optionals;
+  inherit (lib) mkIf mkEnableOption mkMerge;
   cfg = config.lemonix.gaming;
 in
 {
@@ -34,7 +34,7 @@ in
         };
         wivrn = {
           enable = true;
-          package = inputs.lemonake.packages.${pkgs.system}.wivrn.override { cudaSupport = true; };
+          package = inputs.lemonake.packages.${system}.wivrn.override { cudaSupport = true; };
           openFirewall = false;
           defaultRuntime = true;
           autoStart = true;
@@ -51,7 +51,7 @@ in
           config = {
             enable = true;
             json = {
-              application = inputs.lemonake.packages.${pkgs.system}.wlx-overlay-s-git;
+              application = inputs.lemonake.packages.${system}.wlx-overlay-s-git;
               bitrate = 100000000;
               encoders = [{
                 encoder = "nvenc";

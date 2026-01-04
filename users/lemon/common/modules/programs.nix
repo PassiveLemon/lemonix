@@ -26,15 +26,15 @@
           "openfilelocation" "selectionhighlight" "terminal" "treeview-extender"
         ];
         customEnableList = {
-          "exterm" = ./home/.config/lite-xl/plugins/exterm.lua;
-          "nerdicons" = ./home/.config/lite-xl/plugins/nerdicons.lua;
+          "exterm" = ../home/.config/lite-xl/plugins/exterm.lua;
+          "nerdicons" = ../home/.config/lite-xl/plugins/nerdicons.lua;
         };
         languages = {
           enableList = [ "diff" "env" "ignore" "go" "json" "nim" "sh" "toml" "zig" ]; 
           customEnableList = {
-            "containerfile" = ./home/.config/lite-xl/plugins/languages/language_containerfile.lua;
-            "nix" = ./home/.config/lite-xl/plugins/languages/language_nix.lua;
-            "yaml" = ./home/.config/lite-xl/plugins/languages/language_yaml.lua;
+            "containerfile" = ../home/.config/lite-xl/plugins/languages/language_containerfile.lua;
+            "nix" = ../home/.config/lite-xl/plugins/languages/language_nix.lua;
+            "yaml" = ../home/.config/lite-xl/plugins/languages/language_yaml.lua;
           };
         };
         evergreen.enableList = [ "html" "lua" ];
