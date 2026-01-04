@@ -49,7 +49,7 @@
         home = "/home/lemon";
         hashedPassword = "$6$J7q0.RZ88OJiQRkq$mQx2d32YHf6IXqZNMSv.o/sslQMgBAGIKID2aL6tLpN6XFpXp2Fda5p1Yi78H/cXOolBPIuXEQPzxhmKp5qWc0";
         extraGroups = [
-          "wheel" "networkmanager" "video" "audio" "storage" "input" "dialout"
+          "wheel" "networkmanager" "video" "audio" "storage" "input" "uinput" "dialout"
           "docker" "kvm" "libvirtd"
           "docker-management" "borg-management"
         ];
@@ -81,6 +81,7 @@
   };
 
   hardware = {
+    uinput.enable = true;
     nvidia = {
       package = config.boot.kernelPackages.nvidiaPackages.stable;
       open = true;
