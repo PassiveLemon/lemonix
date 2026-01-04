@@ -16,8 +16,8 @@ in
   config = mkIf cfg.enable (mkMerge [
     (mkIf cfg.desktop.enable {
       home.packages = with pkgs; [
-        r2modman limo
         steam heroic (bottles.override { removeWarningPopup = true; })
+        r2modman limo
         inputs.lemonake.packages.${system}.gdlauncher-carbon
         ludusavi
       ];

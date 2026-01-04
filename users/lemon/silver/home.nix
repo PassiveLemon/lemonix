@@ -6,7 +6,8 @@
 
   home = {
     packages = with pkgs; [
-      easytag zenity
+      #easytag #github.com/NixOS/nixpkgs/issues/476039
+      zenity
       inputs.lemonake.packages.${system}.nimpad
       inputs.lemonake.packages.${system}.tilp2
       inputs.lemonake.packages.${system}.webfisher

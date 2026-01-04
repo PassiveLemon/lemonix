@@ -16,7 +16,7 @@ in
   config = mkIf cfg.enable (mkMerge [
     (mkIf cfg.cad.enable {
       home.packages = with pkgs; [
-        freecad openscad
+        freecad
         digital
         # Kicad packaging is kind of a mess so it's going to stay disabled until I need it
         # (kicad-small.override { stable = true; })
