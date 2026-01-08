@@ -1,4 +1,4 @@
-{ inputs, pkgs, ... }: {
+{ inputs, ... }: {
   imports = [
     inputs.nixcord.homeModules.nixcord
     inputs.nix-xl.homeModules.nix-xl
@@ -11,10 +11,7 @@
   programs = {
     autorandr.enable = true;
     home-manager.enable = true;
-    obs-studio = {
-      enable = true;
-      package = (pkgs.obs-studio.override { cudaSupport = true; });
-    };
+    obs-studio.enable = true;
     lite-xl = {
       enable = true;
       plugins = {
