@@ -82,8 +82,28 @@
 
   hardware = {
     uinput.enable = true;
-    nvidia = {
-      package = config.boot.kernelPackages.nvidiaPackages.stable;
+    nvidia = let
+      nvidia-package = config.boot.kernelPackages.nvidiaPackages.mkDriver {
+        version = "580.95.05";
+        sha256_64bit = "sha256-hJ7w746EK5gGss3p8RwTA9VPGpp2lGfk5dlhsv4Rgqc=";
+        openSha256 = "sha256-RFwDGQOi9jVngVONCOB5m/IYKZIeGEle7h0+0yGnBEI=";
+        settingsSha256 = "sha256-F2wmUEaRrpR1Vz0TQSwVK4Fv13f3J9NJLtBe4UP2f14=";
+        usePersistenced = false;
+      };
+    in {
+      # https://github.com/yshui/picom/issues/1488 and https://github.com/NixOS/nixpkgs/issues/467814
+      # package = config.boot.kernelPackages.nvidiaPackages.stable;
+      package = nvidia-package // {
+        open = nvidia-package.overrideAttrs (prevAttrs: {
+          patches = (prevAttrs.patches or [ ]) ++ [
+            (pkgs.fetchpatch {
+              name = "get_dev_pagemap.patch";
+              url = "https://github.com/NVIDIA/open-gpu-kernel-modules/commit/3e230516034d29e84ca023fe95e284af5cd5a065.patch";
+              hash = "sha256-BhL4mtuY5W+eLofwhHVnZnVf0msDj7XBxskZi8e6/k8=";
+            })
+          ];
+        });
+      };
       open = true;
       modesetting.enable = true;
       powerManagement.enable = true;
