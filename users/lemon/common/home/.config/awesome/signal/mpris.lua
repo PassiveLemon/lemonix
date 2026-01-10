@@ -317,8 +317,8 @@ end
 
 local function volume_stepper(volume_new, override)
   mpris_timer_wrapper(function(player)
-    volume_new = (player.volume + h.round((volume_new / 100), 3))
-    player.volume = volume_new
+    volume_new = (players[player].volume + h.round((volume_new / 100), 3))
+    players[player].volume = volume_new
     metadata[player].player.volume = volume_new
     emit()
   end, override)
