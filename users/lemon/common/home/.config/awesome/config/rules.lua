@@ -100,7 +100,7 @@ awesome.register_xproperty("STEAM_GAME", "number")
 client.connect_signal("request::manage", function(c)
   -- Fullscreen all steam games with an exclusion check
   local cclass_exclude = { "steam", "zenity" }
-  local cclass = string.lower(c.class)
+  local cclass = string.lower(c.class or "")
   local csteam = c:get_xproperty("STEAM_GAME")
   if csteam and not h.table_contains(cclass_exclude, cclass) then
     c.fullscreen = true
