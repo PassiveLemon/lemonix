@@ -28,8 +28,9 @@ music.pill = h.button({
     awesome.emit_signal("ui::control::toggle")
   end
 })
-awesome.connect_signal("signal::mpris::metadata", function(metadata_table)
-  if metadata_table.player.status == "PLAYING" then
+awesome.connect_signal("signal::mpris::metadata", function(metadata_top)
+  local metadata = metadata_top["feishin"]
+  if metadata.player.status == "PLAYING" then
     music.pill.visible = true
   else
     music.pill.visible = false

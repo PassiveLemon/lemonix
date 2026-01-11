@@ -248,7 +248,8 @@ music.notif = h.background({
   shape = gears.shape.rounded_rect,
 })
 
-awesome.connect_signal("signal::mpris::metadata", function(metadata)
+awesome.connect_signal("signal::mpris::metadata", function(metadata_top)
+  local metadata = metadata_top["feishin"]
   if metadata.player.available then
     music.control.visible = true
     art_image_box:get_children_by_id("imagebox")[1].image = metadata.media.art_image
