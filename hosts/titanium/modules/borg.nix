@@ -43,6 +43,7 @@
         passCommand = "cat ${config.age.secrets.borgBackupPass.path}";
       };
       environment.BORG_RSH = "ssh -i /home/borg/.ssh/id_ed25519";
+      failOnWarnings = false;
       compression = "auto,zstd";
       startAt = "daily";
       prune.keep = {
@@ -63,6 +64,7 @@
         passCommand = "cat ${config.age.secrets.borgBackupPass.path}";
       };
       environment.BORG_RSH = "ssh -i /home/borg/.ssh/id_ed25519";
+      failOnWarnings = false;
       compression = "auto,zstd";
       startAt = "daily";
       prune.keep = {

@@ -48,12 +48,16 @@
         "/home/lemon/.local/share/Steam/steamapps"
         "/home/lemon/.local/share/Steam/compatibilitytools.d"
       ];
-      repo = "ssh://borg@127.0.0.1/home/BACKUPDRIVE/BorgBackups/silver";
+      repo = "ssh://borg@127.0.0.1/data/BACKUPDRIVE/BorgBackups/silver";
       encryption = {
         mode = "repokey";
         passCommand = "cat ${config.age.secrets.borgBackupPass.path}";
       };
-      environment.BORG_RSH = "ssh -i /home/borg/.ssh/id_ed25519";
+      environment = {
+        BORG_RSH = "ssh -i /home/borg/.ssh/id_ed25519";
+        BORG_RELOCATED_REPO_ACCESS_IS_OK = "yes";
+      };
+      failOnWarnings = false;
       compression = "auto,zstd";
       startAt = "daily";
       prune.keep = {
@@ -80,12 +84,13 @@
         "/home/lemon/.local/share/Steam/steamapps"
         "/home/lemon/.local/share/Steam/compatibilitytools.d"
       ];
-      repo = "ssh://borg@titanium.passivelemon.net/data/BorgBackups/silver";
+      repo = "ssh://borg@titanium/data/BorgBackups/silver";
       encryption = {
         mode = "repokey";
         passCommand = "cat ${config.age.secrets.borgBackupPass.path}";
       };
       environment.BORG_RSH = "ssh -i /home/borg/.ssh/id_ed25519";
+      failOnWarnings = false;
       compression = "auto,zstd";
       startAt = "daily";
       prune.keep = {
@@ -118,6 +123,7 @@
         passCommand = "cat ${config.age.secrets.borgBackupPass.path}";
       };
       environment.BORG_RSH = "ssh -i /home/borg/.ssh/id_ed25519";
+      failOnWarnings = false;
       compression = "auto,zstd";
       startAt = "daily";
       prune.keep = {
@@ -133,12 +139,16 @@
         "/home/docker"
         "/data/BACKUPDRIVE/ManualBackups"
       ];
-      repo = "ssh://borg@127.0.0.1/home/BACKUPDRIVE/BorgBackups/silver";
+      repo = "ssh://borg@127.0.0.1/data/BACKUPDRIVE/BorgBackups/silver";
       encryption = {
         mode = "repokey";
         passCommand = "cat ${config.age.secrets.borgBackupPass.path}";
       };
-      environment.BORG_RSH = "ssh -i /home/borg/.ssh/id_ed25519";
+      environment = {
+        BORG_RSH = "ssh -i /home/borg/.ssh/id_ed25519";
+        BORG_RELOCATED_REPO_ACCESS_IS_OK = "yes";
+      };
+      failOnWarnings = false;
       compression = "auto,zstd";
       startAt = "daily";
       prune.keep = {
@@ -153,12 +163,13 @@
         "/home/docker"
         "/data/BACKUPDRIVE/ManualBackups"
       ];
-      repo = "ssh://borg@titanium.passivelemon.net/data/BorgBackups/silver";
+      repo = "ssh://borg@titanium/data/BorgBackups/silver";
       encryption = {
         mode = "repokey";
         passCommand = "cat ${config.age.secrets.borgBackupPass.path}";
       };
       environment.BORG_RSH = "ssh -i /home/borg/.ssh/id_ed25519";
+      failOnWarnings = false;
       compression = "auto,zstd";
       startAt = "daily";
       prune.keep = {
@@ -179,6 +190,7 @@
         passCommand = "cat ${config.age.secrets.borgBackupPass.path}";
       };
       environment.BORG_RSH = "ssh -i /home/borg/.ssh/id_ed25519";
+      failOnWarnings = false;
       compression = "auto,zstd";
       startAt = "daily";
       prune.keep = {
