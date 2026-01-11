@@ -186,16 +186,6 @@ end
 
 metadata_fetch()
 
-local function get_player(name)
-  -- Fetch player from mpris itself, not this mpris signal
-  -- local mpris_players = mpris.mpris.get_players()
-  for p_name, p in pairs(players) do
-    if p_name == name then
-      return p
-    end
-  end
-end
-
 local mpris_timer = gears.timer({
   timeout = 5,
   autostart = true,
@@ -216,14 +206,22 @@ local mpris_timer = gears.timer({
 
 local function mpris_call_wrapper(callback, override)
   mpris_timer:stop()
-  local pm = metadata[players["global"]]
-  local p = players[players["global"]]
-  if not override == nil then
-    local override_player = get_player(override)
-    pm = metadata[override_player]
-    p = players[override_player]
+  if override == nil then
+    local pm = metadata[players["global"]]
+    local p = players[players["global"]]
+    callback(pm, p)
+  elseif override:gmatch("%%all%%") then
+    -- Get all mpris players, not just the ones in theme.lua
+    for _, mpris_p in ipairs(mpris.Mpris.new("awm").players) do
+      local pm = metadata[mpris_p]
+      local p = players[mpris_p]
+      callback(pm, p)
+    end
+  else
+    local pm = metadata[override]
+    local p = players[override]
+    callback(pm, p)
   end
-  callback(pm, p)
   mpris_timer:start()
 end
 
