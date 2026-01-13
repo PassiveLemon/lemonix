@@ -32,13 +32,13 @@ local volume_timer = gears.timer({
 local function volume_timer_wrapper(callback)
   volume_timer:stop()
   callback()
+  awesome.emit_signal("ui::control::notification::volume")
   volume_timer:start()
 end
 
 awesome.connect_signal("signal::peripheral::volume::update", function()
   volume_timer_wrapper(function()
     volume()
-    awesome.emit_signal("ui::control::notification::volume")
   end)
 end)
 

@@ -33,6 +33,7 @@ local brightness_timer = gears.timer({
 local function brightness_timer_wrapper(callback)
   brightness_timer:stop()
   callback()
+  awesome.emit_signal("ui::control::notification::brightness")
   brightness_timer:start()
 end
 
@@ -45,7 +46,6 @@ end
 awesome.connect_signal("signal::peripheral::brightness::update", function()
   brightness_timer_wrapper(function()
     brightness()
-    awesome.emit_signal("ui::control::notification::brightness")
   end)
 end)
 
