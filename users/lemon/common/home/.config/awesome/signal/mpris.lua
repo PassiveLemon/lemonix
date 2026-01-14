@@ -15,7 +15,7 @@ local mpris = require("lgi").Playerctl
 local metadata = { }
 
 -- players = {
---   ["player"] = mpris.Player
+--   ["player"] = (mpris.Player)
 -- }
 local players = { }
 
@@ -27,26 +27,28 @@ end
 
 local function init_player_default(p_name, p)
   -- Set default values for players
-  players[p_name] = p
-  metadata[p_name] = {
-    media = {
-      art_url = "",
-      title = "",
-      artist = "",
-      album = "",
-      length = "1",
-      art_image = nil,
-    },
-    player = {
-      available = false,
-      name = "",
-      shuffle = "false",
-      status = "STOPPED",
-      loop = "NONE",
-      position = "1",
-      volume = "1",
-    },
-  }
+  if not players[p_name] then
+    players[p_name] = p
+    metadata[p_name] = {
+      media = {
+        art_url = "",
+        title = "",
+        artist = "",
+        album = "",
+        length = "1",
+        art_image = nil,
+      },
+      player = {
+        available = false,
+        name = "",
+        shuffle = "false",
+        status = "STOPPED",
+        loop = "NONE",
+        position = "1",
+        volume = "1",
+      },
+    }
+  end
 end
 
 -- Init all currently existing players
@@ -59,7 +61,6 @@ local function init_undefined_players()
   end
 end
 
-local i = 0
 local function init_defined_players()
   for _, p_namex in ipairs(b.mpris_players) do
     local p = mpris.Player.new(p_namex)
@@ -71,9 +72,39 @@ end
 init_undefined_players()
 init_defined_players()
 
+-- Set the global player to the current player by order of priority in b.mpris_players
+local function set_global_player()
+  local p_list = b.mpris_players
+  for _, p_namex in ipairs(p_list) do
+    local p_name = string.lower(p_namex)
+    if players[p_name] then
+      players["global"] = players[p_name]
+      metadata["global"] = metadata[p_name]
+      return
+    end
+  end
+end
+
+set_global_player()
+
+-- Remove players from metadata and players arrays when they are gone
+-- local function clean_metadata()
+--   for p_name, _ in pairs(players) do
+--     if not h.table_contains(manager, p_name) then
+--       players[p_name] = nil
+--     end
+--   end
+--   for p_name, _ in pairs(metadata) do
+--     if not h.table_contains(manager, p_name) then
+--       metadata[p_name] = nil
+--     end
+--   end
+-- end
+
+-- Fetch art if not cached and load it
 local function fetch_art_image(cache_dir, trim, pm)
   local art_cache_dir = b.mpris_art_cache_dir
-  -- We set a fallback directory if user does not define one
+  -- Set a fallback directory if user does not define one
   if not art_cache_dir then
     art_cache_dir = "/tmp/passivelemon/lemonix/media/"
   end
@@ -97,60 +128,50 @@ end
 -- art_image_player_lookup = {
 --   ["player"] = {
 --     (cache) -- Location of the players art cache if we can determine the name of the file based on the art_url
---     (trim) -- The part of art_url to use to find the art image cache
---     (backup) -- The part of the art_url to use as the file name for our own caching if we cant use the players cache or the album string is bad
+--     (trim) -- The part of art_url to use to find the art image cache. It's also used as the file name for our own caching if we cant use the players cache or the album string is bad
 --   }
 -- }
 local art_image_player_lookup = {
   ["feishin"] = {
     cache = nil,
-    trim = nil,
-    backup = "?id=(.*)&u=",
+    trim = "?id=(.*)&u=",
   },
   ["tauon"] = {
     cache = h.join_path(os.getenv("HOME"), "/.cache/TauonMusicBox/export/"),
     trim = "/(.*)",
-    backup = nil,
   },
   ["spotify"] = {
     cache = nil,
-    trim = nil,
-    backup = "/(.*)",
+    trim = "/(.*)",
   },
 }
 
+-- We normalize the album name and use that as the cache name for the album art, that way it's only downloaded once per album, which makes caching more efficient. In case the normalization results in a bad filename, we use a backup string
 local function art_image_handler(p_name, pm)
-  -- We normalize the album name and use that as the cache name for the album art, that way it's only downloaded once per album, which makes caching more efficient. In case the normalization results in a bad filename, we use a backup string
   local p_lookup = art_image_player_lookup[p_name]
   local trim = ""
   local cache = nil
   if p_lookup then
-    if not p_lookup.trim then
-      local album_string = pm.media.album:gsub("%W", "")
-      if album_string == "" or not album_string then
-        trim = pm.media.art_url:match(p_lookup.backup)
-      else
-        trim = album_string
-      end
-    end
     cache = p_lookup.cache
-  else
-    trim = pm.media.art_url:match("/(.*)")
+    local album_string = pm.media.album:gsub("%W", "")
+    if album_string == "" or not album_string then
+      trim = pm.media.art_url:match(p_lookup.backup)
+    else
+      trim = album_string
+    end
+    fetch_art_image(cache, trim, pm)
   end
-  fetch_art_image(cache, trim, pm)
 end
 
 -- If the art isn't already cached then the notification will have the art of the previous media
 local function track_notification(pm)
   local p_name = pm.player.name
   -- Don't show a notification if the music player is visible
-  for s in screen do
-    for _, c in pairs(s.clients) do
-      local c_instance = string.lower(c.instance or "")
-      local c_class = string.lower(c.class or "")
-      if (c_instance == p_name) or (c_class == p_name) then
-        return
-      end
+  for _, c in ipairs(client.get()) do
+    local c_instance = string.lower(c.instance or "")
+    local c_class = string.lower(c.class or "")
+    if (c_instance == p_name) or (c_class == p_name) then
+      return
     end
   end
   if b.mpris_notifications and pm.player.available then
@@ -166,19 +187,13 @@ local function get_metadata_sig(pm)
       pm.media.title or "",
       pm.media.artist or "",
       pm.media.album or "",
-      pm.media.length or "1",
+      pm.media.length or "",
     })
-    if sig ~= "1" then
-      return sig
-    else
-      return ""
-    end
+    return sig
   else
     return ""
   end
 end
-
-local naughty = require("naughty")
 
 -- sig_cache = {
 --   ["player"] = (sig)
@@ -187,43 +202,36 @@ local sig_cache = { }
 
 local function get_metadata(p_name, p, force_art)
   local pm = metadata[p_name]
-  -- sig_cache[p_name] = get_metadata_sig(pm)
   local old_sig = sig_cache[p_name]
-  -- Sleep here to "improve" responsiveness. Otherwise it happens so quickly that we end up grabbing the old media metadata
-  awful.spawn.easy_async("sleep 0.1", function()
-    -- Media metadata
-    pm.media.art_url = p:print_metadata_prop("mpris:artUrl") or ""
-    pm.media.title = p:get_title() or ""
-    pm.media.artist = p:get_artist() or ""
-    pm.media.album = p:get_album() or ""
-    pm.media.length = p:print_metadata_prop("mpris:length") or "1"
 
-    -- Player metadata
-    pm.player.available = true
-    pm.player.name = p_name or ""
-    pm.player.shuffle = p.shuffle or false
-    pm.player.status = p.playback_status or "STOPPED"
-    pm.player.loop = p.loop_status or "NONE"
-    pm.player.position = p.position or "1"
-    pm.player.volume = p.volume or "1"
+  -- Media metadata
+  pm.media.art_url = p:print_metadata_prop("mpris:artUrl") or ""
+  pm.media.title = p:get_title() or ""
+  pm.media.artist = p:get_artist() or ""
+  pm.media.album = p:get_album() or ""
+  pm.media.length = p:print_metadata_prop("mpris:length") or "1"
 
-    local new_sig = get_metadata_sig(pm)
+  -- Player metadata
+  pm.player.available = true
+  pm.player.name = p_name or ""
+  pm.player.shuffle = p.shuffle or false
+  pm.player.status = p.playback_status or "STOPPED"
+  pm.player.loop = p.loop_status or "NONE"
+  pm.player.position = p.position or "1"
+  pm.player.volume = p.volume or "1"
 
-    -- Fetch art image and send notification when the media metadata changes
-    -- Compare the previously stored metadata signature to the newly fetched metadata
-    if (old_sig ~= new_sig) or force_art then
-      sig_cache[p_name] = new_sig
-      art_image_handler(p_name, pm)
-      -- If the track changes, set the global player to that player
-      -- Not a great solution, but works until I implement a better global player system
-      players["global"] = players[p_name]
-      metadata["global"] = metadata[p_name]
-      -- Don't send a notification on AWM startup (old_sig will be nil only then)
-      if old_sig ~= nil then
-        track_notification(pm)
-      end
+  local new_sig = get_metadata_sig(pm)
+
+  -- Fetch art image and send notification when the media metadata changes
+  -- Compare the previously stored metadata signature to the newly fetched metadata
+  if (old_sig ~= new_sig) or force_art then
+    sig_cache[p_name] = new_sig
+    art_image_handler(p_name, pm)
+    -- Don't send a notification on AWM startup (old_sig will be nil only then)
+    if old_sig ~= nil then
+      track_notification(pm)
     end
-  end)
+  end
 end
 
 local function metadata_fetch(player, force_art)
@@ -245,6 +253,8 @@ local mpris_timer = gears.timer({
   autostart = true,
   callback = function(self)
     init_undefined_players()
+    -- clean_metadata()
+    set_global_player()
     metadata_fetch()
     -- Speed up the poll if media is currently playing
     local cur_timeout = self.timeout
@@ -338,14 +348,14 @@ end
 
 local function positioner(position_new, override)
   mpris_call_wrapper(function(pm, p)
-    p.set_position(h.round(((position_new * pm.media.length) / 100), 3))
+    p:set_position(h.round(((position_new * pm.media.length) / 100), 3))
   end, override)
 end
 
 local function volumer(volume_new, override)
   mpris_call_wrapper(function(pm, p)
     volume_new = h.round((volume_new / 100), 3)
-    p.set_volume(volume_new)
+    p:set_volume(volume_new)
     pm.player.volume = volume_new
     emit()
   end, override)
@@ -354,7 +364,7 @@ end
 local function volume_stepper(volume_new, override)
   mpris_call_wrapper(function(pm, p)
     volume_new = (p.volume + h.round((volume_new / 100), 3))
-    p.set_volume(volume_new)
+    p:set_volume(volume_new)
     pm.player.volume = volume_new
     emit()
   end, override)

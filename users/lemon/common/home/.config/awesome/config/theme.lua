@@ -83,9 +83,13 @@ theme.useless_gap = dpi(6)
 -- Don't dpi() this, it is applied in widget definitions
 theme.margins = 4
 
--- Media
+-- Signal
+-- List of players to track into the mpris signal. Highest priority player is the "global" signal, priority decreases further
+-- %all% bypasses this for controls
 theme.mpris_players = { "Feishin" }
+-- The directory to "cache" album art. Defaults to a /tmp directory. If not in /tmp, the cache won't get cleaned
 theme.mpris_art_cache_dir = h.join_path(os.getenv("HOME"), "/.cache/passivelemon/lemonix/media/")
+-- Enable notifications for song changes from the mpris signal
 theme.mpris_notifications = true
 
 --
