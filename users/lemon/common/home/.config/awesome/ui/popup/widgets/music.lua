@@ -250,7 +250,7 @@ music.notif = h.background({
 
 awesome.connect_signal("signal::mpris::metadata", function(metadata)
   local pm = metadata["global"]
-  if pm.player.available then
+  if pm and pm.player.available then
     music.control.visible = true
     art_image_box:get_children_by_id("imagebox")[1].image = pm.media.art_image
     metadata_updater(pm)

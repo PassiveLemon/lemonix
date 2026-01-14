@@ -30,7 +30,7 @@ music.pill = h.button({
 })
 awesome.connect_signal("signal::mpris::metadata", function(metadata)
   local pm = metadata["global"]
-  if pm.player.status == "PLAYING" then
+  if pm and pm.player.status == "PLAYING" then
     music.pill.visible = true
   else
     music.pill.visible = false
