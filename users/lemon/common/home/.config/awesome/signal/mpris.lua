@@ -228,7 +228,6 @@ end
 
 local function metadata_fetch(player, force_art)
   if player then
-    naughty.notify({ title = "ovrd " .. player.player_name })
     get_metadata(string.lower(player.player_name), player)
   else
     for p_name, p in pairs(players) do
