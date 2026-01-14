@@ -4,7 +4,7 @@ local b = require("beautiful")
 
 local h = require("helpers")
 
-local mpris = require("lgi").require("AstalMpris")
+local mpris = require("lgi").Playerctl
 
 -- metadata = {
 --   ["player"] = {
@@ -12,53 +12,66 @@ local mpris = require("lgi").require("AstalMpris")
 --     player = { (available) (name) (shuffle) (status) (loop) (position) (volume) }
 --   }
 -- }
-
 local metadata = { }
 
 -- players = {
 --   ["player"] = mpris.Player
 -- }
-
 local players = { }
+
+local manager = mpris.PlayerManager.new()
 
 local function emit()
   awesome.emit_signal("signal::mpris::metadata", metadata)
 end
 
-local function init_players()
-  local i = 0
-  for _, player in ipairs(b.mpris_players) do
-    players[string.lower(player)] = mpris.Player.new(player)
-    metadata[string.lower(player)] = {
-      media = {
-        art_url = "",
-        title = "",
-        artist = "",
-        album = "",
-        length = "",
-        art_image = nil,
-      },
-      player = {
-        available = false,
-        name = "",
-        shuffle = "",
-        status = "",
-        loop = "",
-        position = "",
-        volume = "",
-      },
-    }
-    -- Temporary, set the global player to the first player
-    if i == 0 then
-      players["global"] = string.lower(player)
-      i = 1
-    end
+local function init_player_default(p_name, p)
+  -- Set default values for players
+  players[p_name] = p
+  metadata[p_name] = {
+    media = {
+      art_url = "",
+      title = "",
+      artist = "",
+      album = "",
+      length = "1",
+      art_image = nil,
+    },
+    player = {
+      available = false,
+      name = "",
+      shuffle = "false",
+      status = "STOPPED",
+      loop = "NONE",
+      position = "1",
+      volume = "1",
+    },
+  }
+end
+
+-- Init all currently existing players
+local function init_undefined_players()
+  for _, p_namex in ipairs(manager.player_names) do
+    local p = mpris.Player.new_from_name(p_namex)
+    local p_name = string.lower(p.player_name)
+    manager:manage_player(p)
+    init_player_default(p_name, p)
   end
 end
 
-init_players()
+local i = 0
+local function init_defined_players()
+  for _, p_namex in ipairs(b.mpris_players) do
+    local p = mpris.Player.new(p_namex)
+    local p_name = string.lower(p_namex)
+    init_player_default(p_name, p)
+  end
+end
 
-local function art_image_locator(cache_dir, trim, pm)
+init_undefined_players()
+init_defined_players()
+
+local function fetch_art_image(cache_dir, trim, pm)
   local art_cache_dir = b.mpris_art_cache_dir
   -- We set a fallback directory if user does not define one
   if not art_cache_dir then
@@ -82,13 +95,12 @@ local function art_image_locator(cache_dir, trim, pm)
 end
 
 -- art_image_player_lookup = {
---   [(player)] = {
+--   ["player"] = {
 --     (cache) -- Location of the players art cache if we can determine the name of the file based on the art_url
 --     (trim) -- The part of art_url to use to find the art image cache
---     (backup) -- The part of the art_url to use as the file name for our own caching if we cant use the players cache
+--     (backup) -- The part of the art_url to use as the file name for our own caching if we cant use the players cache or the album string is bad
 --   }
 -- }
-
 local art_image_player_lookup = {
   ["feishin"] = {
     cache = nil,
@@ -107,19 +119,25 @@ local art_image_player_lookup = {
   },
 }
 
-local function art_image_fetch(pm)
+local function art_image_handler(p_name, pm)
   -- We normalize the album name and use that as the cache name for the album art, that way it's only downloaded once per album, which makes caching more efficient. In case the normalization results in a bad filename, we use a backup string
-  local player_lookup = art_image_player_lookup[string.lower(pm.player.name)]
+  local p_lookup = art_image_player_lookup[p_name]
   local trim = ""
-  if not player_lookup.trim then
-    local album_string = pm.media.album:gsub("%W", "")
-    if album_string == "" or not album_string then
-      trim = pm.media.art_url:match(player_lookup.backup)
-    else
-      trim = album_string
+  local cache = nil
+  if p_lookup then
+    if not p_lookup.trim then
+      local album_string = pm.media.album:gsub("%W", "")
+      if album_string == "" or not album_string then
+        trim = pm.media.art_url:match(p_lookup.backup)
+      else
+        trim = album_string
+      end
     end
+    cache = p_lookup.cache
+  else
+    trim = pm.media.art_url:match("/(.*)")
   end
-  art_image_locator(player_lookup.cache, trim, pm)
+  fetch_art_image(cache, trim, pm)
 end
 
 -- If the art isn't already cached then the notification will have the art of the previous media
@@ -130,7 +148,7 @@ local function track_notification(pm)
     for _, c in pairs(s.clients) do
       local c_instance = string.lower(c.instance or "")
       local c_class = string.lower(c.class or "")
-      if c_instance == p_name or c_class == p_name then
+      if (c_instance == p_name) or (c_class == p_name) then
         return
       end
     end
@@ -140,60 +158,98 @@ local function track_notification(pm)
   end
 end
 
-local function metadata_fetch()
-  for p_name, p in pairs(players) do
-    local pm = metadata[p_name]
-    if p.available then
-      -- Sleep here to "improve" responsiveness. Otherwise it happens so quickly that we end up grabbing the old media metadata
-      awful.spawn.easy_async("sleep 0.1", function()
-        -- TODO: Find a nicer way to do this.
-        local old_media = pm.media.art_url..pm.media.title..pm.media.artist..pm.media.album..pm.media.length
-        -- Might need to do (xxx or "") for other metadata, but so far only had issues with artist
-        local new_media = p.art_url..p.title..(p.artist or "")..p.album..p.length
-
-        -- Media metadata
-        pm.media.art_url = p.art_url or ""
-        pm.media.title = p.title or ""
-        pm.media.artist = p.artist or ""
-        pm.media.album = p.album or ""
-        pm.media.length = p.length or "1"
-
-        -- Player metadata
-        pm.player.available = true
-        pm.player.name = p_name or ""
-        pm.player.shuffle = p.shuffle_status or "NONE"
-        pm.player.status = p.playback_status or "PLAYING"
-        pm.player.loop = p.loop_status or "PLAYLIST"
-        pm.player.position = p.position or "1"
-        pm.player.volume = p.volume or "1"
-
-        -- Fetch art image and send notification when the media metadata changes
-        -- Compare the previously stored metadata to the newly fetched metadata
-        if old_media ~= new_media then
-          art_image_fetch(pm)
-          -- Don't send a notification on AWM startup
-          if old_media ~= "" then
-            track_notification(pm)
-          end
-        end
-      end)
+-- Create a basic signature of static track metadata
+local function get_metadata_sig(pm)
+  if pm and pm.media then
+    local sig = table.concat({
+      pm.media.art_url or "",
+      pm.media.title or "",
+      pm.media.artist or "",
+      pm.media.album or "",
+      pm.media.length or "1",
+    })
+    if sig ~= "1" then
+      return sig
     else
-      -- pm.player.available = false
+      return ""
+    end
+  else
+    return ""
+  end
+end
+
+local naughty = require("naughty")
+
+-- sig_cache = {
+--   ["player"] = (sig)
+-- }
+local sig_cache = { }
+
+local function get_metadata(p_name, p, force_art)
+  local pm = metadata[p_name]
+  -- sig_cache[p_name] = get_metadata_sig(pm)
+  local old_sig = sig_cache[p_name]
+  -- Sleep here to "improve" responsiveness. Otherwise it happens so quickly that we end up grabbing the old media metadata
+  awful.spawn.easy_async("sleep 0.1", function()
+    -- Media metadata
+    pm.media.art_url = p:print_metadata_prop("mpris:artUrl") or ""
+    pm.media.title = p:get_title() or ""
+    pm.media.artist = p:get_artist() or ""
+    pm.media.album = p:get_album() or ""
+    pm.media.length = p:print_metadata_prop("mpris:length") or "1"
+
+    -- Player metadata
+    pm.player.available = true
+    pm.player.name = p_name or ""
+    pm.player.shuffle = p.shuffle or false
+    pm.player.status = p.playback_status or "STOPPED"
+    pm.player.loop = p.loop_status or "NONE"
+    pm.player.position = p.position or "1"
+    pm.player.volume = p.volume or "1"
+
+    local new_sig = get_metadata_sig(pm)
+
+    -- Fetch art image and send notification when the media metadata changes
+    -- Compare the previously stored metadata signature to the newly fetched metadata
+    if (old_sig ~= new_sig) or force_art then
+      sig_cache[p_name] = new_sig
+      art_image_handler(p_name, pm)
+      -- If the track changes, set the global player to that player
+      -- Not a great solution, but works until I implement a better global player system
+      players["global"] = players[p_name]
+      metadata["global"] = metadata[p_name]
+      -- Don't send a notification on AWM startup (old_sig will be nil only then)
+      if old_sig ~= nil then
+        track_notification(pm)
+      end
+    end
+  end)
+end
+
+local function metadata_fetch(player, force_art)
+  if player then
+    naughty.notify({ title = "ovrd " .. player.player_name })
+    get_metadata(string.lower(player.player_name), player)
+  else
+    for p_name, p in pairs(players) do
+      get_metadata(p_name, p, force_art)
     end
   end
   emit()
 end
 
-metadata_fetch()
+-- Force a metadata and art fetch on load
+metadata_fetch(nil, true)
 
 local mpris_timer = gears.timer({
   timeout = 5,
   autostart = true,
   callback = function(self)
+    init_undefined_players()
     metadata_fetch()
     -- Speed up the poll if media is currently playing
     local cur_timeout = self.timeout
-    if metadata[players["global"]].player.status == "PLAYING" then
+    if metadata["global"].player.status == "PLAYING" then
       self.timeout = 1
     else
       self.timeout = 5
@@ -206,15 +262,13 @@ local mpris_timer = gears.timer({
 
 local function mpris_call_wrapper(callback, override)
   mpris_timer:stop()
-  if override == nil then
-    local pm = metadata[players["global"]]
-    local p = players[players["global"]]
+  if not override then
+    local pm = metadata["global"]
+    local p = players["global"]
     callback(pm, p)
   elseif override:gmatch("%%all%%") then
-    -- Get all mpris players, not just the ones in theme.lua
-    for _, mpris_p in ipairs(mpris.Mpris.new("awm").players) do
-      local pm = metadata[mpris_p]
-      local p = players[mpris_p]
+    for p_name, p in pairs(players) do
+      local pm = metadata[p_name]
       callback(pm, p)
     end
   else
@@ -227,12 +281,8 @@ end
 
 local function shuffler(override)
   mpris_call_wrapper(function(pm, p)
-    if pm.player.shuffle == "ON" then
-      pm.player.shuffle = "OFF"
-    elseif pm.player.shuffle == "OFF" then
-      pm.player.shuffle = "ON"
-    end
-    p:shuffle()
+    pm.player.shuffle = not pm.player.shuffle
+    p:set_shuffle(pm.player.shuffle)
     emit()
   end, override)
 end
@@ -240,7 +290,7 @@ end
 local function previouser(override)
   mpris_call_wrapper(function(_, p)
     p:previous()
-    metadata_fetch()
+    metadata_fetch(p)
   end, override)
 end
 
@@ -269,7 +319,7 @@ end
 local function nexter(override)
   mpris_call_wrapper(function(_, p)
     p:next()
-    metadata_fetch()
+    metadata_fetch(p)
   end, override)
 end
 
@@ -282,21 +332,21 @@ local function looper(override)
     elseif pm.player.loop == "TRACK" then
       pm.player.loop = "NONE"
     end
-    p:loop()
+    p:set_loop_status(pm.player.loop)
     emit()
   end, override)
 end
 
 local function positioner(position_new, override)
   mpris_call_wrapper(function(pm, p)
-    p.position = h.round(((position_new * pm.media.length) / 100), 3)
+    p.set_position(h.round(((position_new * pm.media.length) / 100), 3))
   end, override)
 end
 
 local function volumer(volume_new, override)
   mpris_call_wrapper(function(pm, p)
     volume_new = h.round((volume_new / 100), 3)
-    p.volume = volume_new
+    p.set_volume(volume_new)
     pm.player.volume = volume_new
     emit()
   end, override)
@@ -305,7 +355,7 @@ end
 local function volume_stepper(volume_new, override)
   mpris_call_wrapper(function(pm, p)
     volume_new = (p.volume + h.round((volume_new / 100), 3))
-    p.volume = volume_new
+    p.set_volume(volume_new)
     pm.player.volume = volume_new
     emit()
   end, override)

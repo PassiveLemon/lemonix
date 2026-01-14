@@ -95,39 +95,39 @@ local position_slider = h.slider({
   output_signal = "signal::mpris::position",
 })
 
-local function metadata_updater(metadata)
-  if metadata.player.title == "" then
+local function metadata_updater(pm)
+  if pm.player.title == "" then
     art_image_box.visible = false
     artist_text.visible = false
     album_text.visible = false
     position_slider.visible = false
     title_text:get_children_by_id("textbox")[1].text = "No media found"
   else
-    title_text:get_children_by_id("textbox")[1].text = metadata.media.title
-    if metadata.media.artist == "" then
+    title_text:get_children_by_id("textbox")[1].text = pm.media.title
+    if pm.media.artist == "" then
       artist_text.visible = false
     else
       artist_text.visible = true
-      artist_text:get_children_by_id("textbox")[1].text = "By " .. metadata.media.artist
+      artist_text:get_children_by_id("textbox")[1].text = "By " .. pm.media.artist
     end
-    album_text:get_children_by_id("textbox")[1].text = "On " .. metadata.media.album
+    album_text:get_children_by_id("textbox")[1].text = "On " .. pm.media.album
   end
 end
 
-local function toggle_updater(metadata)
-  if metadata.player.status == "PLAYING" then
+local function toggle_updater(pm)
+  if pm.player.status == "PLAYING" then
     toggle_button:get_children_by_id("textbox")[1].text = "󰏤"
-  elseif metadata.player.status == "PAUSED" then
+  elseif pm.player.status == "PAUSED" then
     toggle_button:get_children_by_id("textbox")[1].text = "󰐊"
   end
 end
 
-local function position_updater(metadata)
-  if (metadata.player.position == "") or (metadata.media.length == "") then
+local function position_updater(pm)
+  if (pm.player.position == "") or (pm.media.length == "") then
     position_slider.visible = false
   else
     position_slider.visible = true
-    position_slider:get_children_by_id("slider")[1]._private.value = h.round(((metadata.player.position / metadata.media.length) * 100), 3)
+    position_slider:get_children_by_id("slider")[1]._private.value = h.round(((pm.player.position / pm.media.length) * 100), 3)
     position_slider:emit_signal("widget::redraw_needed")
   end
 end
@@ -153,8 +153,8 @@ volume_icon:buttons({
   end)
 })
 
-local function volume_updater(metadata)
-  local value = (metadata.player.volume * 100)
+local function volume_updater(pm)
+  local value = (pm.player.volume * 100)
   if value == -1 then
     volume_icon:get_children_by_id("textbox")[1].text = "󰝟"
     volume_icon:get_children_by_id("textbox")[1].font = b.sysfont(dpi(17))
@@ -248,15 +248,15 @@ music.notif = h.background({
   shape = gears.shape.rounded_rect,
 })
 
-awesome.connect_signal("signal::mpris::metadata", function(metadata_top)
-  local metadata = metadata_top["feishin"]
-  if metadata.player.available then
+awesome.connect_signal("signal::mpris::metadata", function(metadata)
+  local pm = metadata["global"]
+  if pm.player.available then
     music.control.visible = true
-    art_image_box:get_children_by_id("imagebox")[1].image = metadata.media.art_image
-    metadata_updater(metadata)
-    toggle_updater(metadata)
-    position_updater(metadata)
-    volume_updater(metadata)
+    art_image_box:get_children_by_id("imagebox")[1].image = pm.media.art_image
+    metadata_updater(pm)
+    toggle_updater(pm)
+    position_updater(pm)
+    volume_updater(pm)
   else
     music.control.visible = false
   end

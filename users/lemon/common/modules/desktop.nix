@@ -22,10 +22,8 @@
         GI_TYPELIB_PATH = let
           mkTypeLibPath = pkg: "${pkg}/lib/girepository-1.0";
           extraGITypeLibPaths = lib.forEach (with pkgs; [
-            networkmanager upower
-          ] ++ (with pkgs.astal; [
-            auth battery bluetooth mpris network powerprofiles wireplumber
-          ])) mkTypeLibPath;
+            networkmanager upower playerctl
+          ]) mkTypeLibPath;
         in
         lib.concatStringsSep ":" (extraGITypeLibPaths ++ [ (mkTypeLibPath pkgs.pango.out) ]);
       }));
@@ -49,10 +47,8 @@
           inputs.lemonake.packages.${system}.lua-pam-luajit-git
         ];
         extraGITypeLibPaths = with pkgs; [
-          networkmanager upower
-        ] ++ (with pkgs.astal; [
-          auth battery bluetooth mpris network powerprofiles wireplumber
-        ]);
+          networkmanager upower playerctl
+        ];
       });
     in {
       enable = true;
