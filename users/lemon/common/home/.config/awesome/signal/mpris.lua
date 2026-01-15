@@ -167,11 +167,13 @@ end
 local function track_notification(pm)
   local p_name = pm.player.name
   -- Don't show a notification if the music player is visible
-  for _, c in ipairs(client.get()) do
-    local c_instance = string.lower(c.instance or "")
-    local c_class = string.lower(c.class or "")
-    if (c_instance == p_name) or (c_class == p_name) then
-      return
+  for s in screen do
+    for _, c in ipairs(s.clients) do
+      local c_instance = string.lower(c.instance or "")
+      local c_class = string.lower(c.class or "")
+      if (c_instance == p_name) or (c_class == p_name) then
+        return
+      end
     end
   end
   if b.mpris_notifications and pm.player.available then
