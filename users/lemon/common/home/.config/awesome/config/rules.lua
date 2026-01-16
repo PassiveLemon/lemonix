@@ -161,7 +161,7 @@ local function wibar_layer(c)
           hide = false
         end
       else
-        for _, c_visible in ipairs(s:get_clients()) do
+        for _, c_visible in ipairs(s.clients) do
           if c_visible.fullscreen then
             hide = true
             break
