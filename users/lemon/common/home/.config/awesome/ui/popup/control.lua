@@ -111,13 +111,9 @@ awful.screen.connect_for_each_screen(function(s)
     end
   end
 
-  s.wibar:connect_signal("property::ontop", function()
-    popup_positioner()
-  end)
-
-  client.connect_signal("request::geometry", function()
-    popup_positioner()
-  end)
+  s.wibar:connect_signal("property::ontop", function() popup_positioner() end)
+  client.connect_signal("request::geometry", function() popup_positioner() end)
+  client.connect_signal("request::activate", function() popup_positioner() end)
 
   local function show_control(force)
     popup_positioner()
