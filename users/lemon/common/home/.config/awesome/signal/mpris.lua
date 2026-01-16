@@ -176,7 +176,7 @@ local function track_notification(pm)
       end
     end
   end
-  if b.mpris_notifications and pm.player.available then
+  if not (p_name == "global") and b.mpris_notifications and pm.player.available then
     awesome.emit_signal("ui::control::notification::mpris")
   end
 end
