@@ -58,7 +58,12 @@ end)
 
 awesome.connect_signal("signal::peripheral::brightness::step", function(step)
   brightness_timer_wrapper(function()
-    value = (value + (step or 0))
+    local to_value = value + (step or 0)
+    if to_value > 100 then
+      value = 100
+    else
+      value = to_value
+    end
     awful.spawn("brightnessctl set " .. normalize_from_awm(value))
     emit(value)
   end)
