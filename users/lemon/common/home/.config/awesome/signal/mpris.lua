@@ -202,7 +202,7 @@ end
 -- }
 local sig_cache = { }
 
-local function get_metadata(p_name, p, force_art)
+local function get_metadata(p_name, p)
   local pm = metadata[p_name]
   local old_sig = sig_cache[p_name]
 
@@ -226,7 +226,7 @@ local function get_metadata(p_name, p, force_art)
 
   -- Fetch art image and send notification when the media metadata changes
   -- Compare the previously stored metadata signature to the newly fetched metadata
-  if (old_sig ~= new_sig) or force_art then
+  if (old_sig ~= new_sig) then
     sig_cache[p_name] = new_sig
     art_image_handler(p_name, pm)
     -- Don't send a notification on AWM startup (old_sig will be nil only then)
@@ -236,22 +236,23 @@ local function get_metadata(p_name, p, force_art)
   end
 end
 
-local function metadata_fetch(player, force_art)
+local function metadata_fetch(player)
   if player then
     get_metadata(string.lower(player.player_name), player)
   else
     for p_name, p in pairs(players) do
-      get_metadata(p_name, p, force_art)
+      if not (p_name == "global") then
+        get_metadata(p_name, p)
+      end
     end
   end
   emit()
 end
 
--- Force a metadata and art fetch on load
-metadata_fetch(nil, true)
+metadata_fetch()
 
 local mpris_timer = gears.timer({
-  timeout = 5,
+  timeout = 1,
   autostart = true,
   callback = function(self)
     init_undefined_players()
