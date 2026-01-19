@@ -53,24 +53,22 @@ end
 
 -- Init all currently existing players
 local function init_undefined_players()
+  local p_list = { }
   for _, p_namex in ipairs(manager.player_names) do
     local p = mpris.Player.new_from_name(p_namex)
     local p_name = string.lower(p.player_name)
     manager:manage_player(p)
+    p_list[p_name] = true
     init_player_default(p_name, p)
   end
-end
-
-local function init_defined_players()
-  for _, p_namex in ipairs(b.mpris_players) do
-    local p = mpris.Player.new(p_namex)
-    local p_name = string.lower(p_namex)
-    init_player_default(p_name, p)
+  -- Remove metadata for no longer existing players
+  for p_name, _ in pairs(players) do
+    if p_name ~= "global" and not p_list[p_name] then
+      players[p_name] = nil
+      metadata[p_name] = nil
+    end
   end
 end
-
-init_undefined_players()
-init_defined_players()
 
 -- Set the global player to the current player by order of priority in b.mpris_players
 local function set_global_player()
@@ -85,21 +83,8 @@ local function set_global_player()
   end
 end
 
+init_undefined_players()
 set_global_player()
-
--- Remove players from metadata and players arrays when they are gone
--- local function clean_metadata()
---   for p_name, _ in pairs(players) do
---     if not h.table_contains(manager, p_name) then
---       players[p_name] = nil
---     end
---   end
---   for p_name, _ in pairs(metadata) do
---     if not h.table_contains(manager, p_name) then
---       metadata[p_name] = nil
---     end
---   end
--- end
 
 -- Fetch art if not cached and load it
 local function fetch_art_image(cache_dir, trim, pm)
@@ -176,7 +161,7 @@ local function track_notification(pm)
       end
     end
   end
-  if not (p_name == "global") and b.mpris_notifications and pm.player.available then
+  if b.mpris_notifications and pm.player.available then
     awesome.emit_signal("ui::control::notification::mpris")
   end
 end
@@ -231,6 +216,9 @@ local function get_metadata(p_name, p)
     art_image_handler(p_name, pm)
     -- Don't send a notification on AWM startup (old_sig will be nil only then)
     if old_sig ~= nil then
+      -- Temporarily set the global player to the player that just changed media so it can show in notifications
+      players["global"] = players[p_name]
+      metadata["global"] = metadata[p_name]
       track_notification(pm)
     end
   end
@@ -241,7 +229,7 @@ local function metadata_fetch(player)
     get_metadata(string.lower(player.player_name), player)
   else
     for p_name, p in pairs(players) do
-      if not (p_name == "global") then
+      if p_name ~= "global" then
         get_metadata(p_name, p)
       end
     end
@@ -256,15 +244,14 @@ local mpris_timer = gears.timer({
   autostart = true,
   callback = function(self)
     init_undefined_players()
-    -- clean_metadata()
-    set_global_player()
     metadata_fetch()
+    set_global_player()
     -- Speed up the poll if media is currently playing
     local cur_timeout = self.timeout
     if metadata["global"].player.status == "PLAYING" then
       self.timeout = 1
     else
-      self.timeout = 5
+      self.timeout = 3
     end
     if cur_timeout ~= self.timeout then
       self:again()
@@ -284,8 +271,9 @@ local function mpris_call_wrapper(callback, override)
       callback(pm, p)
     end
   else
-    local pm = metadata[override]
-    local p = players[override]
+    local p_name = string.lower(override)
+    local pm = metadata[p_name]
+    local p = players[p_name]
     callback(pm, p)
   end
   mpris_timer:start()
@@ -379,6 +367,8 @@ awesome.connect_signal("signal::mpris::update", function()
   end)
 end)
 
+-- Each control can have an override, either for a specific player or for all
+-- Just pass the player name for a specific player or "%all%" to target every player
 awesome.connect_signal("signal::mpris::shuffle", function(override)
   shuffler(override)
 end)
