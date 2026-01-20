@@ -51,7 +51,7 @@ in
           config = {
             enable = true;
             json = {
-              application = inputs.lemonake.packages.${system}.wlx-overlay-s-git;
+              application = inputs.lemonake.packages.${system}.wayvr;
               bitrate = 100000000;
               encoders = [{
                 encoder = "nvenc";
@@ -66,12 +66,6 @@ in
           };
         };
       };
-
-      # WiVRn 25.8 introduced transient services instead of a separate application service
-      # and since we currently don't have a way to set the PATH, we can't expose other programs to it.
-      # This means that my watch shell commands do not and cannnot work until we can expose PATH.
-      # # Wlx-overlay-s config has some stuff that needs it
-      # systemd.user.services.wivrn.serviceConfig.ProtectProc = lib.mkForce "default";
     })
     (mkIf cfg.streaming.enable {
       services.sunshine = {

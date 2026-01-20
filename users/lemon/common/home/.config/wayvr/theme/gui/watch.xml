@@ -1,3 +1,6 @@
+<!-- Very much not complete. Only a simple status watch until I recreate the previous more featured watch -->
+<!-- Custom source labels don't show in uidev so there are placeholder label examples for testing -->
+<!-- Also, we can get system status information through an FIFO pipe with an independent program to create and update said pipe. No need for shell commands (unless you want to execute something from within VR) -->
 <layout>
   <elements>
     <rectangle width="400" color="#222222" border="3.0" border_color="#444444" round="12">
