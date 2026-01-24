@@ -84,9 +84,11 @@ theme.useless_gap = dpi(6)
 theme.margins = 4
 
 -- Signal
--- List of players to track into the mpris signal. Highest priority player is the "global" signal, priority decreases further
+-- List of players to track into the mpris signal. Highest priority player is the "global" signal, priority decreases further. Names should be lowercased
 -- %all% bypasses this for controls
-theme.mpris_players = { "Feishin" }
+theme.mpris_players = { "feishin" }
+-- Only allow players in theme.mpris_players to be initialized
+theme.strict_players = true
 -- The directory to "cache" album art. Defaults to a /tmp directory. If not in /tmp, the cache won't get cleaned
 theme.mpris_art_cache_dir = h.join_path(os.getenv("HOME"), "/.cache/passivelemon/lemonix/media/")
 -- Enable notifications for song changes from the mpris signal

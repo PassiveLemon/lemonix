@@ -6,6 +6,8 @@ local h = require("helpers")
 
 local mpris = require("lgi").Playerctl
 
+-- Playerctl docs: https://lazka.github.io/pgi-docs/Playerctl-2.0/classes.html
+
 -- metadata = {
 --   ["player"] = {
 --     media = { (art_url) (title) (artist) (album) (length) (art_image) }
@@ -51,15 +53,17 @@ local function init_player_default(p_name, p)
   end
 end
 
--- Init all currently existing players
-local function init_undefined_players()
+-- Init players and cleanup metadata
+local function init_players()
   local p_list = { }
   for _, p_namex in ipairs(manager.player_names) do
     local p = mpris.Player.new_from_name(p_namex)
     local p_name = string.lower(p.player_name)
-    manager:manage_player(p)
-    p_list[p_name] = true
-    init_player_default(p_name, p)
+    if h.table_contains(b.mpris_players, p_name) or (not b.strict_players) then
+      manager:manage_player(p)
+      p_list[p_name] = true
+      init_player_default(p_name, p)
+    end
   end
   -- Remove metadata for no longer existing players
   for p_name, _ in pairs(players) do
@@ -72,9 +76,7 @@ end
 
 -- Set the global player to the current player by order of priority in b.mpris_players
 local function set_global_player()
-  local p_list = b.mpris_players
-  for _, p_namex in ipairs(p_list) do
-    local p_name = string.lower(p_namex)
+  for _, p_name in ipairs(b.mpris_players) do
     if players[p_name] then
       players["global"] = players[p_name]
       metadata["global"] = metadata[p_name]
@@ -83,7 +85,7 @@ local function set_global_player()
   end
 end
 
-init_undefined_players()
+init_players()
 set_global_player()
 
 -- Fetch art if not cached and load it
@@ -243,7 +245,7 @@ local mpris_timer = gears.timer({
   timeout = 1,
   autostart = true,
   callback = function(self)
-    init_undefined_players()
+    init_players()
     metadata_fetch()
     set_global_player()
     -- Speed up the poll if media is currently playing
