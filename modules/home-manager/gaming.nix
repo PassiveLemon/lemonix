@@ -38,6 +38,7 @@ in
     })
     (mkIf cfg.vr.enable {
       home.packages = with pkgs; [
+        inputs.lemonake.packages.${system}.wayvr
         bs-manager
       ];
 

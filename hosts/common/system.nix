@@ -87,6 +87,14 @@
     enable = true;
   };
 
+  documentation = {
+    enable = false;
+    man.enable = false;
+    info.enable = false;
+    doc.enable = false;
+    dev.enable = false;
+  };
+
   # Experimental
   boot.tmp.useTmpfs = true;
   boot.tmp.cleanOnBoot = true;
