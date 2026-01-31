@@ -56,10 +56,11 @@ end
 -- Init players and cleanup metadata
 local function init_players()
   local p_list = { }
+  -- Not the same player name type
   for _, p_namex in ipairs(manager.player_names) do
     local p = mpris.Player.new_from_name(p_namex)
     local p_name = string.lower(p.player_name)
-    if h.table_contains(b.mpris_players, p_name) or (not b.strict_players) then
+    if h.table_contains(b.mpris_players, p_name) or (not b.mpris_strict_players) then
       manager:manage_player(p)
       p_list[p_name] = true
       init_player_default(p_name, p)
@@ -89,27 +90,26 @@ init_players()
 set_global_player()
 
 -- Fetch art if not cached and load it
-local function fetch_art_image(cache_dir, trim, pm)
-  local art_cache_dir = b.mpris_art_cache_dir
+local function fetch_art_image(cache, trim, pm)
+  local art_cache = b.mpris_art_cache_dir
   -- Set a fallback directory if user does not define one
-  if not art_cache_dir then
-    art_cache_dir = "/tmp/passivelemon/lemonix/media/"
+  if not art_cache then
+    art_cache = "/tmp/passivelemon/lemonix/media/"
   end
-  if not cache_dir then
-    local art_path = h.join_path(art_cache_dir, trim)
-    if h.is_file(art_path) then
-      pm.media.art_image = gears.surface.load_uncached(art_path)
-    else
-      awful.spawn.easy_async_with_shell("curl -Lso " .. art_path .. ' "' .. pm.media.art_url .. '"', function()
-        pm.media.art_image = gears.surface.load_uncached(art_path)
-      end)
-    end
+  -- If the client has an accessible cache, use that. Otherwise, use our own
+  local art_load_path = art_cache
+  if cache then
+    art_load_path = h.join_path(cache, trim)
   else
-    local player_art_path = h.join_path(cache_dir, trim)
-    if h.is_file(player_art_path) then
-      pm.media.art_image = gears.surface.load_uncached(player_art_path)
+    art_load_path = h.join_path(art_cache, trim)
+    if not h.is_file(art_load_path) then
+      awful.spawn.easy_async("curl -Lso " .. art_load_path .. ' "' .. pm.media.art_url .. '"', function()
+        pm.media.art_image = gears.surface.load_silently(art_load_path)
+      end)
+      return
     end
   end
+  pm.media.art_image = gears.surface.load_silently(art_load_path)
 end
 
 -- art_image_player_lookup = {
@@ -133,33 +133,29 @@ local art_image_player_lookup = {
   },
 }
 
--- We normalize the album name and use that as the cache name for the album art, that way it's only downloaded once per album, which makes caching more efficient. In case the normalization results in a bad filename, we use a backup string
+-- We normalize the artist and album name and use that as the cache name for the art, that way it's only downloaded once per album (Unless there's multiple artists), which makes caching more efficient. In case the normalization results in a bad filename, we use a backup string
 local function art_image_handler(p_name, pm)
   local p_lookup = art_image_player_lookup[p_name]
-  local trim = ""
-  local cache = nil
   if p_lookup then
-    cache = p_lookup.cache
-    local album_string = pm.media.album:gsub("%W", "")
-    if album_string == "" or not album_string then
+    local cache = p_lookup.cache
+    local trim = pm.media.artist:gsub("%W", "") .. pm.media.album:gsub("%W", "")
+    if trim == "" or not trim then
       trim = pm.media.art_url:match(p_lookup.backup)
-    else
-      trim = album_string
     end
     fetch_art_image(cache, trim, pm)
   end
 end
 
--- If the art isn't already cached then the notification will have the art of the previous media
 local function track_notification(pm)
   local p_name = pm.player.name
-  -- Don't show a notification if the music player is visible
-  for s in screen do
-    for _, c in ipairs(s.clients) do
-      local c_instance = string.lower(c.instance or "")
-      local c_class = string.lower(c.class or "")
-      if (c_instance == p_name) or (c_class == p_name) then
-        return
+  if b.mpris_smart_notifications then
+    for s in screen do
+      for _, c in ipairs(s.clients) do
+        local c_instance = string.lower(c.instance or "")
+        local c_class = string.lower(c.class or "")
+        if (c_instance == p_name) or (c_class == p_name) then
+          return
+        end
       end
     end
   end
@@ -212,7 +208,6 @@ local function get_metadata(p_name, p)
   local new_sig = get_metadata_sig(pm)
 
   -- Fetch art image and send notification when the media metadata changes
-  -- Compare the previously stored metadata signature to the newly fetched metadata
   if (old_sig ~= new_sig) then
     sig_cache[p_name] = new_sig
     art_image_handler(p_name, pm)
@@ -226,6 +221,7 @@ local function get_metadata(p_name, p)
   end
 end
 
+-- A player can be passed to get only that players metadata. Useful for next/previous controls
 local function metadata_fetch(player)
   if player then
     get_metadata(string.lower(player.player_name), player)
@@ -310,9 +306,9 @@ end
 
 local function play_pauser(option, override)
   mpris_call_wrapper(function(_, p)
-    if option == "play" then
+    if option then
       p:play()
-    elseif option == "pause" then
+    else
       p:pause()
     end
   end, override)
@@ -382,11 +378,11 @@ end)
 awesome.connect_signal("signal::mpris::toggle", function(override)
   toggler(override)
 end)
-awesome.connect_signal("signal::mpris::pause", function(override)
-  play_pauser("pause", override)
-end)
 awesome.connect_signal("signal::mpris::play", function(override)
-  play_pauser("play", override)
+  play_pauser(true, override)
+end)
+awesome.connect_signal("signal::mpris::pause", function(override)
+  play_pauser(false, override)
 end)
 
 awesome.connect_signal("signal::mpris::next", function(override)

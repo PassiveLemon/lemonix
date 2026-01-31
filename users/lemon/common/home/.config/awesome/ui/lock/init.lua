@@ -16,16 +16,16 @@ local function auth(password)
   return pam.auth_current_user(password)
 end
 
-local clients = client.get()
-
 local function unlock()
   awesome.emit_signal("ui::lock::state", false)
   awful.spawn.with_shell("pamixer -u")
   awful.spawn.with_shell("xset s off -dpms")
 
   -- Unhide all clients
-  for _, c in ipairs(clients) do
-    c.hidden = false
+  for s in screen do
+    for _, c in ipairs(s.hidden_clients) do
+      c.hidden = false
+    end
   end
 end
 
@@ -36,9 +36,10 @@ local function lock()
   awful.spawn.with_shell("xset s on +dpms")
 
   -- Hide all clients and unset focus
-  clients = client.get()
-  for _, c in ipairs(clients) do
-    c.hidden = true
+  for s in screen do
+    for _, c in ipairs(s.clients) do
+      c.hidden = true
+    end
   end
   client.focus = nil
 
