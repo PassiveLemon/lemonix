@@ -28,7 +28,9 @@
       loupe flameshot papers gimp scrot
       mpv #kdePackages.kdenlive
       # Miscellaneous
-      picom ente-auth localsend xclicker kdePackages.kruler
+      picom ente-auth localsend xclicker
+      # School
+      R scilab-bin
     ];
     username = "lemon";
     homeDirectory = "/home/lemon";

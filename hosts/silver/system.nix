@@ -9,8 +9,9 @@
       grub.enable = false;
       systemd-boot.enable = true;
     };
-    blacklistedKernelModules = [ "nouveau" "nova_core" ];
+    kernelPackages = pkgs.linuxPackages_zen;
     kernelModules = [ "iwlwifi" "kvm-amd" ];
+    blacklistedKernelModules = [ "nouveau" "nova_core" ];
   };
 
   networking = {
@@ -113,6 +114,7 @@
   systemd = {
     tmpfiles.rules = [
       "Z /data 777 root root - -"
+      "Z /data/HDD2TBEXT4/SteamLibrary 775 lemon users - -"
     ];
   };
 

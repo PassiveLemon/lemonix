@@ -1,4 +1,4 @@
-{ inputs, system, pkgs, ... }: {
+{ inputs, system, lib, pkgs, ... }: {
   imports = [
     ../common/home.nix
     ./modules/customization.nix
@@ -6,8 +6,7 @@
 
   home = {
     packages = with pkgs; [
-      #easytag #github.com/NixOS/nixpkgs/issues/476039
-      zenity
+      easytag zenity cemu-ti
       inputs.lemonake.packages.${system}.nimpad
       inputs.lemonake.packages.${system}.tilp2
       inputs.lemonake.packages.${system}.webfisher
@@ -44,8 +43,11 @@
       };
     };
   };
-
   xdg = {
+    desktopEntries."CEmu" = {
+      name = "CEmu";
+      exec = "${lib.getExe pkgs.cemu-ti}";
+    };
     configFile = {
       "awesome/config/user.lua" = {
         source = ./home/.config/awesome/config/user.lua;
