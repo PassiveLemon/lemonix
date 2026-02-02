@@ -37,7 +37,7 @@ command.add(nil, {
     elseif PLATFORM == "Linux" or PLATFORM == "Mac OS X" then
       os.execute(plugins.exterm.executable .. " &")
     else
-      core.error("Exterm: Platform not supported")  
+      core.error("Exterm: Platform not supported")
     end
   end
 })
@@ -50,7 +50,7 @@ command.add("core.docview!", {
     elseif PLATFORM == "Linux" or PLATFORM == "Mac OS X" then
       os.execute("cd " .. working .. "; " .. plugins.exterm.executable .. " &")
     else
-      core.error("Exterm: Platform not supported")  
+      core.error("Exterm: Platform not supported")
     end
   end
 })
