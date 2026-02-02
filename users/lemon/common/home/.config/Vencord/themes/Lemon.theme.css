@@ -58,6 +58,10 @@
       }
     }
   }
+  /* Hide Nitro trial banner */
+  .notice__29487 {
+    display: none;
+  }
   /* Reduce height of scroller spacer to reduce unnecessary space */
   .scrollerSpacer__36d07 {
     height: 38px !important;
