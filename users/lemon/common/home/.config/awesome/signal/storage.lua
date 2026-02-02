@@ -51,6 +51,7 @@ end
 storage()
 
 -- luacheck: ignore 211
+---@diagnostic disable-next-line: unused-local
 local storage_timer = gears.timer({
   timeout = 60,
   autostart = true,

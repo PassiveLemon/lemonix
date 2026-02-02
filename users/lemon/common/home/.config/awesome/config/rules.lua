@@ -206,7 +206,7 @@ end)
 
 local function activate_under_pointer()
   local c = mouse.current_client
-  if not (c == nil) then
+  if c ~= nil then
     c:activate({ context = "mouse_enter", raise = false })
   end
 end

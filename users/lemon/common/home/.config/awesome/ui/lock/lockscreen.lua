@@ -5,7 +5,6 @@ local gears = require("gears")
 local b = require("beautiful")
 local wibox = require("wibox")
 
-local h = require("helpers")
 local user = require("config.user")
 
 local dpi = b.xresources.apply_dpi

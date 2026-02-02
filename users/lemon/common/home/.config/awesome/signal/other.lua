@@ -20,6 +20,7 @@ end
 uptime()
 
 -- luacheck: ignore 211
+---@diagnostic disable-next-line: unused-local
 local uptime_timer = gears.timer({
   timeout = 15,
   autostart = true,

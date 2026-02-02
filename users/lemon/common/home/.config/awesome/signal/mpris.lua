@@ -97,18 +97,18 @@ local function fetch_art_image(cache, trim, pm)
     art_cache = "/tmp/passivelemon/lemonix/media/"
   end
   -- If the client has an accessible cache, use that. Otherwise, use our own
-  local art_load_path = art_cache
-  if cache then
-    art_load_path = h.join_path(cache, trim)
-  else
+  local art_load_path = h.join_path(cache, trim)
+  if not cache then
     art_load_path = h.join_path(art_cache, trim)
     if not h.is_file(art_load_path) then
       awful.spawn.easy_async("curl -Lso " .. art_load_path .. ' "' .. pm.media.art_url .. '"', function()
+        ---@diagnostic disable-next-line: param-type-mismatch
         pm.media.art_image = gears.surface.load_silently(art_load_path)
       end)
       return
     end
   end
+  ---@diagnostic disable-next-line: param-type-mismatch
   pm.media.art_image = gears.surface.load_silently(art_load_path)
 end
 
@@ -142,10 +142,14 @@ local function art_image_handler(p_name, pm)
     if trim == "" or not trim then
       trim = pm.media.art_url:match(p_lookup.backup)
     end
-    fetch_art_image(cache, trim, pm)
+    -- Async image fetching
+    gears.timer.start_new(0, function()
+      fetch_art_image(cache, trim, pm)
+    end)
   end
 end
 
+-- The notification may include the previous art image and then update to the new one. This happens due to the way the art images are loaded and can't really be avoided without potentially blocking the event loop
 local function track_notification(pm)
   local p_name = pm.player.name
   if b.mpris_smart_notifications then

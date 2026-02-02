@@ -57,6 +57,7 @@ end
 network()
 
 -- luacheck: ignore 211
+---@diagnostic disable-next-line: unused-local
 local total_timer = gears.timer({
   timeout = 60,
   autostart = true,

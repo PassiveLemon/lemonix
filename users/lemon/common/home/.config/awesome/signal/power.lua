@@ -47,6 +47,7 @@ end
 power()
 
 -- luacheck: ignore 211
+---@diagnostic disable-next-line: unused-local
 local power_timer = gears.timer({
   timeout = 5,
   autostart = true,

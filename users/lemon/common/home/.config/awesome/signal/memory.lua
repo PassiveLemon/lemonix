@@ -28,6 +28,7 @@ end
 memory()
 
 -- luacheck: ignore 211
+---@diagnostic disable-next-line: unused-local
 local memory_timer = gears.timer({
   timeout = 5,
   autostart = true,

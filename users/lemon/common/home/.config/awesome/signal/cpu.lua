@@ -46,6 +46,7 @@ end
 cpu()
 
 -- luacheck: ignore 211
+---@diagnostic disable-next-line: unused-local
 local cpu_timer = gears.timer({
   timeout = 2,
   autostart = true,

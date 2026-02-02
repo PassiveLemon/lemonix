@@ -26,6 +26,7 @@ end
 gpu()
 
 -- luacheck: ignore 211
+---@diagnostic disable-next-line: unused-local
 local gpu_timer = gears.timer({
   timeout = 2,
   autostart = true,
