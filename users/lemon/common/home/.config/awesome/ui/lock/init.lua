@@ -2,6 +2,9 @@
 
 require("ui.lock.lockscreen")
 
+require("signal.volume")
+require("signal.display")
+
 local awful = require("awful")
 
 local h = require("helpers")
@@ -18,8 +21,8 @@ end
 
 local function unlock()
   awesome.emit_signal("ui::lock::state", false)
-  awful.spawn.with_shell("pamixer -u")
-  awful.spawn.with_shell("xset s off -dpms")
+  awesome.emit_signal("signal::peripheral::volume::unmute", true)
+  awesome.emit_signal("signal::peripheral::display::powersave::disable")
 
   -- Unhide all clients
   for s in screen do
@@ -32,8 +35,8 @@ end
 local function lock()
   awesome.emit_signal("ui::lock::state", true)
   awesome.emit_signal("signal::mpris::pause", "%all%")
-  awful.spawn.with_shell("pamixer -m")
-  awful.spawn.with_shell("xset s on +dpms")
+  awesome.emit_signal("signal::peripheral::volume::mute", true)
+  awesome.emit_signal("signal::peripheral::display::powersave::enable")
 
   -- Hide all clients and unset focus
   for s in screen do

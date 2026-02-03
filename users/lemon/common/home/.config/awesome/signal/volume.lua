@@ -1,7 +1,8 @@
 local awful = require("awful")
 local gears = require("gears")
 
-local value, mute
+-- The silent variable allows for managing mute without showing the notification. Only really used for the lockscreen
+local value, mute, silent
 
 local function emit()
   awesome.emit_signal("signal::peripheral::volume::value", value, mute)
@@ -34,7 +35,7 @@ local function volume_timer_wrapper(callback)
   volume_timer:stop()
   callback()
   emit()
-  awesome.emit_signal("ui::control::notification::volume")
+  awesome.emit_signal("ui::control::notification::volume", silent)
   volume_timer:start()
 end
 
@@ -63,24 +64,36 @@ awesome.connect_signal("signal::peripheral::volume::step", function(step)
   end)
 end)
 
-awesome.connect_signal("signal::peripheral::volume::mute::toggle", function()
+awesome.connect_signal("signal::peripheral::volume::mute::toggle", function(sil)
   volume_timer_wrapper(function()
     awful.spawn("pamixer -t")
     mute = not mute
+    if sil then
+      silent = true
+    end
   end)
+  silent = false
 end)
 
-awesome.connect_signal("signal::peripheral::volume::mute", function()
+awesome.connect_signal("signal::peripheral::volume::mute", function(sil)
   volume_timer_wrapper(function()
     awful.spawn("pamixer -m")
     mute = true
+    if sil then
+      silent = true
+    end
   end)
+  silent = false
 end)
 
-awesome.connect_signal("signal::peripheral::volume::unmute", function()
+awesome.connect_signal("signal::peripheral::volume::unmute", function(sil)
   volume_timer_wrapper(function()
     awful.spawn("pamixer -u")
     mute = false
+    if sil then
+      silent = true
+    end
   end)
+  silent = false
 end)
 
