@@ -79,11 +79,13 @@
       "Z /data/docker/lemocker/titanium 770 docker docker-management - -"
 
       "Z /data/Media 770 docker docker-management - -"
+      "Z /data/Media/Comics/Manga 770 1000 docker-management - -"
 
+      "Z /data/docker/Volumes/Media/KamiYomu 770 1000 docker-management - -"
       "z /data/docker/Volumes/Networking/Traefik/acme.json 600 docker docker-management - -"
-      "Z /data/docker/Volumes/Streaming/Invidious/postgresdata 770 999 999 - -"
+      "Z /data/docker/Volumes/Streaming/Invidious/postgresdata 770 999 docker-management - -"
       "Z /data/docker/Volumes/Utilities/Yamtrack/cache 770 999 docker-management - -"
-      "Z /data/docker/Volumes/Utilities/LiveSync 770 5984 5984 - -"
+      "Z /data/docker/Volumes/Utilities/LiveSync 770 5984 docker-management - -"
     ];
   };
 }
