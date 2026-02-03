@@ -3,8 +3,8 @@ local gears = require("gears")
 
 local caps_cache
 
-local function emit(caps)
-  awesome.emit_signal("signal::peripheral::caps::state", caps)
+local function emit()
+  awesome.emit_signal("signal::peripheral::caps::state", caps_cache)
 end
 
 local function caps_query()
@@ -15,7 +15,7 @@ local function caps_query()
     else
       caps_cache = false
     end
-    emit(caps_cache)
+    emit()
   end)
 end
 
@@ -32,7 +32,7 @@ local caps_query_timer = gears.timer({
 -- Nifty function to just make the caps signals much more responsive due to delays with detecting caps lock
 local function caps()
   caps_cache = not caps_cache
-  emit(caps_cache)
+  emit()
 end
 
 awesome.connect_signal("signal::peripheral::caps::update", function()

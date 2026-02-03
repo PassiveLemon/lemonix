@@ -101,7 +101,7 @@ awful.keyboard.append_global_keybindings({
   awful.key({ }, "XF86MonBrightnessDown", function() awesome.emit_signal("signal::peripheral::brightness::step", -3) end,
   { description = "|| decrease brightness", group = "control" }),
 
-  awful.key({ }, "XF86AudioMute", function() awesome.emit_signal("signal::peripheral::volume::mute") end,
+  awful.key({ }, "XF86AudioMute", function() awesome.emit_signal("signal::peripheral::volume::mute::toggle") end,
   { description = "|| toggle mute", group = "control" }),
 
   awful.key({ }, "XF86AudioRaiseVolume", function() awesome.emit_signal("signal::peripheral::volume::step", 3) end,

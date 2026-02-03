@@ -3,11 +3,11 @@ local gears = require("gears")
 
 local h = require("helpers")
 
-local function emit(value)
+local value, max
+
+local function emit()
   awesome.emit_signal("signal::peripheral::brightness::value", value)
 end
-
-local max, value
 
 local function brightness()
   awful.spawn.easy_async("brightnessctl get", function(cur_stdout)
@@ -15,7 +15,6 @@ local function brightness()
     awful.spawn.easy_async("brightnessctl max", function(max_stdout)
       max = max_stdout:gsub("\n", "")
       value = h.round(((cur / max) * 100), 0)
-      emit(value)
     end)
   end)
 end
@@ -27,12 +26,14 @@ local brightness_timer = gears.timer({
   autostart = true,
   callback = function()
     brightness()
+    emit()
   end,
 })
 
 local function brightness_timer_wrapper(callback)
   brightness_timer:stop()
   callback()
+  emit()
   awesome.emit_signal("ui::control::notification::brightness")
   brightness_timer:start()
 end
@@ -52,7 +53,7 @@ end)
 awesome.connect_signal("signal::peripheral::brightness", function(brightness_new)
   brightness_timer_wrapper(function()
     awful.spawn("brightnessctl set " .. normalize_from_awm(brightness_new))
-    emit(brightness_new)
+    value = brightness_new
   end)
 end)
 
@@ -65,7 +66,6 @@ awesome.connect_signal("signal::peripheral::brightness::step", function(step)
       value = to_value
     end
     awful.spawn("brightnessctl set " .. normalize_from_awm(value))
-    emit(value)
   end)
 end)
 

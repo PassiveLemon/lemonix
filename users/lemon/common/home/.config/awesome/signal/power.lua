@@ -35,11 +35,14 @@ local function power()
   emit(ac, perc, time)
 
   -- Manage device battery
-  if not ac and perc <= 10 and system_battery_good then
+  if (perc > 10) and not system_battery_good then
+    system_battery_good = true
+  end
+  if not ac and (perc <= 10) and system_battery_good then
     naughty.notify({ title = "System battery low (10%)" })
     system_battery_good = false
   end
-  if not ac and perc <= 5 then
+  if not ac and (perc <= 5) then
     awful.spawn("systemctl suspend")
   end
 end

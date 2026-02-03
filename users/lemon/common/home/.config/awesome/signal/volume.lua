@@ -1,21 +1,21 @@
 local awful = require("awful")
 local gears = require("gears")
 
-local function emit(value)
-  awesome.emit_signal("signal::peripheral::volume::value", value)
-end
+local value, mute
 
-local value
+local function emit()
+  awesome.emit_signal("signal::peripheral::volume::value", value, mute)
+end
 
 local function volume()
   awful.spawn.easy_async("pamixer --get-volume-human", function(value_stdout)
-    value = value_stdout:gsub("\n", ""):gsub("%%", "")
-    if value == "muted" then
-      value = -1
+    local valuex = value_stdout:gsub("\n", ""):gsub("%%", "")
+    if valuex == "muted" then
+      mute = true
     else
+      mute = false
       value = tonumber(value) or 50
     end
-    emit(value)
   end)
 end
 
@@ -26,12 +26,14 @@ local volume_timer = gears.timer({
   autostart = true,
   callback = function()
     volume()
+    emit()
   end,
 })
 
 local function volume_timer_wrapper(callback)
   volume_timer:stop()
   callback()
+  emit()
   awesome.emit_signal("ui::control::notification::volume")
   volume_timer:start()
 end
@@ -45,7 +47,7 @@ end)
 awesome.connect_signal("signal::peripheral::volume", function(volume_new)
   volume_timer_wrapper(function()
     awful.spawn("pamixer --set-volume " .. volume_new)
-    emit(volume_new)
+    value = volume_new
   end)
 end)
 
@@ -58,15 +60,27 @@ awesome.connect_signal("signal::peripheral::volume::step", function(step)
       value = to_value
     end
     awful.spawn("pamixer --set-volume " .. value)
-    emit(value)
+  end)
+end)
+
+awesome.connect_signal("signal::peripheral::volume::mute::toggle", function()
+  volume_timer_wrapper(function()
+    awful.spawn("pamixer -t")
+    mute = not mute
   end)
 end)
 
 awesome.connect_signal("signal::peripheral::volume::mute", function()
   volume_timer_wrapper(function()
-    awful.spawn("pamixer -t", function()
-      volume()
-    end)
+    awful.spawn("pamixer -m")
+    mute = true
+  end)
+end)
+
+awesome.connect_signal("signal::peripheral::volume::unmute", function()
+  volume_timer_wrapper(function()
+    awful.spawn("pamixer -u")
+    mute = false
   end)
 end)
 

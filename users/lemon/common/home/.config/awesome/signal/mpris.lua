@@ -236,7 +236,6 @@ local function metadata_fetch(player)
       end
     end
   end
-  emit()
 end
 
 metadata_fetch()
@@ -248,6 +247,7 @@ local mpris_timer = gears.timer({
     init_players()
     metadata_fetch()
     set_global_player()
+    emit()
     -- Speed up the poll if media is currently playing
     local cur_timeout = self.timeout
     if metadata["global"].player.status == "PLAYING" then
@@ -278,6 +278,7 @@ local function mpris_call_wrapper(callback, override)
     local p = players[p_name]
     callback(pm, p)
   end
+  emit()
   mpris_timer:start()
 end
 
@@ -285,7 +286,6 @@ local function shuffler(override)
   mpris_call_wrapper(function(pm, p)
     pm.player.shuffle = not pm.player.shuffle
     p:set_shuffle(pm.player.shuffle)
-    emit()
   end, override)
 end
 
@@ -304,7 +304,6 @@ local function toggler(override)
       pm.player.status = "PLAYING"
     end
     p:play_pause()
-    emit()
   end, override)
 end
 
@@ -335,7 +334,6 @@ local function looper(override)
       pm.player.loop = "NONE"
     end
     p:set_loop_status(pm.player.loop)
-    emit()
   end, override)
 end
 
@@ -350,7 +348,6 @@ local function volumer(volume_new, override)
     volume_new = h.round((volume_new / 100), 3)
     p:set_volume(volume_new)
     pm.player.volume = volume_new
-    emit()
   end, override)
 end
 
@@ -359,7 +356,6 @@ local function volume_stepper(volume_new, override)
     volume_new = (p.volume + h.round((volume_new / 100), 3))
     p:set_volume(volume_new)
     pm.player.volume = volume_new
-    emit()
   end, override)
 end
 

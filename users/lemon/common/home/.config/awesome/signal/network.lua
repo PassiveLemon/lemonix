@@ -3,7 +3,6 @@ local gears = require("gears")
 
 local networkmanager = require("lgi").NM
 
-
 -- network_stats_dict
 --               |read                                                                     |write
 -- interface = { (bytes) (packets) (errs) (drop) (fifo) (frame) (compressed) (multicast) (bytes) (packets) (errs) (drop) (fifo) (colls) (carrier) (compressed) }

@@ -9,6 +9,8 @@ local widgets = require("ui.popup.widgets")
 
 local dpi = b.xresources.apply_dpi
 
+local startup = false
+
 awful.screen.connect_for_each_screen(function(s)
   local power_popup = h.timed_popup({
     -- screen position, main popup width, useless gaps
@@ -116,19 +118,24 @@ awful.screen.connect_for_each_screen(function(s)
   client.connect_signal("request::activate", function() popup_positioner() end)
 
   local function show_control(force)
-    popup_positioner()
-    if main.screen.index == awful.screen.focused().index then
-      if force == true then
-        main:toggle(true)
-      elseif force == false then
-        main:toggle(false)
+    -- Dummy variable to stop the control center from showing on start
+    if startup then
+      popup_positioner()
+      if main.screen.index == awful.screen.focused().index then
+        if force == true then
+          main:toggle(true)
+        elseif force == false then
+          main:toggle(false)
+        else
+          main:toggle()
+        end
       else
-        main:toggle()
+        main:toggle(false)
       end
+      main:again()
     else
-      main:toggle(false)
+      startup = true
     end
-    main:again()
   end
 
   awesome.connect_signal("ui::control::toggle", function(force)

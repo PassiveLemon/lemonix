@@ -38,7 +38,7 @@ utility.volume_icon = h.button({
 })
 utility.volume_icon:buttons({
   awful.button({ }, 1, function()
-    awesome.emit_signal("signal::peripheral::volume::mute")
+    awesome.emit_signal("signal::peripheral::volume::mute::toggle")
   end),
   awful.button({ }, 4, function()
     awesome.emit_signal("signal::peripheral::volume::step", 3)
@@ -47,32 +47,20 @@ utility.volume_icon:buttons({
     awesome.emit_signal("signal::peripheral::volume::step", -3)
   end)
 })
-utility.volume_text = h.text({
-  margins = {
-    top = 0,
-    right = 0,
-    bottom = 0,
-    left = 0,
-  },
-  halign = "left",
-})
-awesome.connect_signal("signal::peripheral::volume::value", function(value)
-  if value == -1 then
+
+awesome.connect_signal("signal::peripheral::volume::value", function(value, mute)
+  if mute then
     utility.volume_icon:get_children_by_id("textbox")[1].text = "󰝟"
     utility.volume_icon:get_children_by_id("textbox")[1].font = b.sysfont(dpi(17))
-    -- utility.volume_text:get_children_by_id("textbox")[1].text = "Muted"
   elseif value < 33 then
     utility.volume_icon:get_children_by_id("textbox")[1].text = "󰕿"
     utility.volume_icon:get_children_by_id("textbox")[1].font = b.sysfont(dpi(9))
-    -- utility.volume_text:get_children_by_id("textbox")[1].text = tostring(value)
   elseif value < 67 then
     utility.volume_icon:get_children_by_id("textbox")[1].text = "󰖀"
     utility.volume_icon:get_children_by_id("textbox")[1].font = b.sysfont(dpi(13))
-    -- utility.volume_text:get_children_by_id("textbox")[1].text = tostring(value)
   else
     utility.volume_icon:get_children_by_id("textbox")[1].text = "󰕾"
     utility.volume_icon:get_children_by_id("textbox")[1].font = b.sysfont(dpi(15))
-    -- utility.volume_text:get_children_by_id("textbox")[1].text = tostring(value)
   end
 end)
 
