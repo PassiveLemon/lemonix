@@ -173,6 +173,7 @@ awful.screen.connect_for_each_screen(function(s)
                 format = "%-I:%M %p",
                 halign = "center",
                 valign = "center",
+                refresh = 3,
               },
               {
                 widget = wibox.widget.textclock,
@@ -180,6 +181,7 @@ awful.screen.connect_for_each_screen(function(s)
                 format = "%a %b %-d",
                 halign = "center",
                 valign = "center",
+                refresh = 3,
               },
             },
           },
