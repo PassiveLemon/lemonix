@@ -26,7 +26,7 @@
       pwvucontrol easyeffects helvum
       # Image/Video
       loupe flameshot papers gimp scrot
-      mpv #kdePackages.kdenlive
+      mpv kdePackages.kdenlive
       # Miscellaneous
       picom ente-auth localsend xclicker
       # School
