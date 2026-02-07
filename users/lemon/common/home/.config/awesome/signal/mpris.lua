@@ -173,7 +173,7 @@ end
 -- The notification may include the previous art image and then update to the new one. This happens due to the way the art images are loaded and can't really be avoided without potentially blocking the event loop
 local function track_notification(pm)
   local p_name = pm.player.name
-  if b.mpris_smart_notifications then
+  if b.mpris_notifs_no_client then
     for s in screen do
       for _, c in ipairs(s.clients) do
         local c_instance = string.lower(c.instance or "")
@@ -184,7 +184,7 @@ local function track_notification(pm)
       end
     end
   end
-  if b.mpris_notifications and pm.player.available then
+  if b.mpris_notifs and pm.player.available then
     awesome.emit_signal("ui::control::notification::mpris")
   end
 end
