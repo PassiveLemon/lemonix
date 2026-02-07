@@ -103,6 +103,7 @@ local function metadata_updater(pm)
     position_slider.visible = false
     title_text:get_children_by_id("textbox")[1].text = "No media found"
   else
+    art_image_box:get_children_by_id("imagebox")[1].image = pm.media.art_image
     title_text:get_children_by_id("textbox")[1].text = pm.media.title
     if pm.media.artist == "" then
       artist_text.visible = false
@@ -252,7 +253,6 @@ awesome.connect_signal("signal::mpris::metadata", function(metadata)
   local pm = metadata["global"]
   if pm and pm.player.available then
     music.control.visible = true
-    art_image_box:get_children_by_id("imagebox")[1].image = pm.media.art_image
     metadata_updater(pm)
     toggle_updater(pm)
     position_updater(pm)

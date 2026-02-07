@@ -92,9 +92,11 @@ theme.mpris_strict_players = true
 -- The directory to "cache" album art. Defaults to a /tmp directory. If not in /tmp, the cache won't get cleaned
 theme.mpris_art_cache_dir = h.join_path(os.getenv("HOME"), "/.cache/passivelemon/lemonix/media/")
 -- Enable notifications for song changes from the mpris signal
-theme.mpris_notifications = true
+theme.mpris_notifs = true
 -- Don't show the notification if the player client triggering it is visible
-theme.mpris_smart_notifications = true
+theme.mpris_notifs_no_client = true
+-- Don't show the notification when the focused client is fullscreened
+theme.mpris_notifs_no_fullscreen = true
 
 --
 -- Wallpaper & icons

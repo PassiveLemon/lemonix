@@ -9,7 +9,7 @@ local mpris = require("lgi").Playerctl
 -- Playerctl docs: https://lazka.github.io/pgi-docs/Playerctl-2.0/classes.html
 
 -- metadata = {
---   ["player"] = {
+--   ["(player)"] = {
 --     media = { (art_url) (title) (artist) (album) (length) (art_image) }
 --     player = { (available) (name) (shuffle) (status) (loop) (position) (volume) }
 --   }
@@ -17,9 +17,20 @@ local mpris = require("lgi").Playerctl
 local metadata = { }
 
 -- players = {
---   ["player"] = (mpris.Player)
+--   ["(player)"] = (mpris.Player)
 -- }
 local players = { }
+local managed_players = { }
+
+-- art_cache = {
+--   ["(trim)"] = (art_load_path)
+-- }
+local art_cache = { }
+
+-- sig_cache = {
+--   ["(player)"] = (sig)
+-- }
+local sig_cache = { }
 
 local manager = mpris.PlayerManager.new()
 
@@ -55,22 +66,30 @@ end
 
 -- Init players and cleanup metadata
 local function init_players()
-  local p_list = { }
-  -- Not the same player name type
-  for _, p_namex in ipairs(manager.player_names) do
-    local p = mpris.Player.new_from_name(p_namex)
-    local p_name = string.lower(p.player_name)
-    if h.table_contains(b.mpris_players, p_name) or (not b.mpris_strict_players) then
+  local active = { }
+  for _, mp_name in ipairs(manager.player_names) do
+    local p_id = string.lower(mp_name.name)
+    active[p_id] = true
+
+    local p = managed_players[p_id]
+    if not p then
+      p = mpris.Player.new_from_name(mp_name)
+      managed_players[p_id] = p
       manager:manage_player(p)
-      p_list[p_name] = true
-      init_player_default(p_name, p)
+
+      local p_name = string.lower(p.player_name)
+      if h.table_contains(b.mpris_players, p_name) or (not b.mpris_strict_players) then
+        init_player_default(p_name, p)
+      end
     end
   end
   -- Remove metadata for no longer existing players
-  for p_name, _ in pairs(players) do
-    if p_name ~= "global" and not p_list[p_name] then
-      players[p_name] = nil
-      metadata[p_name] = nil
+  for p_id, _ in pairs(managed_players) do
+    if not active[p_id] then
+      players[p_id] = nil
+      managed_players[p_id] = nil
+      metadata[p_id] = nil
+      sig_cache[p_id] = nil
     end
   end
 end
@@ -91,29 +110,34 @@ set_global_player()
 
 -- Fetch art if not cached and load it
 local function fetch_art_image(cache, trim, pm)
-  local art_cache = b.mpris_art_cache_dir
+  local disk_cache_dir = b.mpris_art_cache_dir
   -- Set a fallback directory if user does not define one
-  if not art_cache then
-    art_cache = "/tmp/passivelemon/lemonix/media/"
+  if not disk_cache_dir then
+    disk_cache_dir = "/tmp/passivelemon/lemonix/media/"
   end
   -- If the client has an accessible cache, use that. Otherwise, use our own
   local art_load_path = h.join_path(cache, trim)
   if not cache then
-    art_load_path = h.join_path(art_cache, trim)
+    art_load_path = h.join_path(disk_cache_dir, trim)
     if not h.is_file(art_load_path) then
-      awful.spawn.easy_async("curl -Lso " .. art_load_path .. ' "' .. pm.media.art_url .. '"', function()
+      awful.spawn.easy_async("curl -Lso " .. disk_cache_dir .. ' "' .. pm.media.art_url .. '"', function()
         ---@diagnostic disable-next-line: param-type-mismatch
         pm.media.art_image = gears.surface.load_silently(art_load_path)
       end)
       return
     end
   end
-  ---@diagnostic disable-next-line: param-type-mismatch
-  pm.media.art_image = gears.surface.load_silently(art_load_path)
+  local art_cache_load = art_cache[trim]
+  if not art_cache_load then
+    ---@diagnostic disable-next-line: param-type-mismatch
+    art_cache[trim] = gears.surface.load_silently(art_load_path)
+    art_cache_load = art_cache[trim]
+  end
+  pm.media.art_image = art_cache_load
 end
 
 -- art_image_player_lookup = {
---   ["player"] = {
+--   ["(player)"] = {
 --     (cache) -- Location of the players art cache if we can determine the name of the file based on the art_url
 --     (trim) -- The part of art_url to use to find the art image cache. It's also used as the file name for our own caching if we cant use the players cache or the album string is bad
 --   }
@@ -142,10 +166,7 @@ local function art_image_handler(p_name, pm)
     if trim == "" or not trim then
       trim = pm.media.art_url:match(p_lookup.backup)
     end
-    -- Async image fetching
-    gears.timer.start_new(0, function()
-      fetch_art_image(cache, trim, pm)
-    end)
+    fetch_art_image(cache, trim, pm)
   end
 end
 
@@ -183,11 +204,6 @@ local function get_metadata_sig(pm)
     return ""
   end
 end
-
--- sig_cache = {
---   ["player"] = (sig)
--- }
-local sig_cache = { }
 
 local function get_metadata(p_name, p)
   local pm = metadata[p_name]
