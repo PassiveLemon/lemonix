@@ -279,22 +279,24 @@ local mpris_timer = gears.timer({
 
 local function mpris_call_wrapper(callback, override)
   mpris_timer:stop()
-  if not override then
-    local pm = metadata["global"]
-    local p = players["global"]
-    callback(pm, p)
-  elseif override:gmatch("%%all%%") then
-    for p_name, p in pairs(players) do
-      local pm = metadata[p_name]
-      callback(pm, p)
+  local pm = metadata["global"]
+  local p = players["global"]
+  if override then
+    if override:gmatch("%%all%%") then
+      for p_name, px in pairs(players) do
+        pm = metadata[p_name]
+        p = px
+      end
+    else
+      local p_name = string.lower(override)
+      pm = metadata[p_name]
+      p = players[p_name]
     end
-  else
-    local p_name = string.lower(override)
-    local pm = metadata[p_name]
-    local p = players[p_name]
-    callback(pm, p)
   end
-  emit()
+  if p and pm then
+    callback(pm, p)
+    emit()
+  end
   mpris_timer:start()
 end
 
