@@ -88,8 +88,8 @@
         frameless = true;
         disableMinSize = true;
         themeLinks = [
-          "https://mwittrien.github.io/BetterDiscordAddons/Themes/DiscordRecolor/DiscordRecolor.css"
-          "https://mairiosipla.github.io/unshittify-discord/RoundIconsSource.theme.css"
+          "https://raw.githubusercontent.com/mwittrien/BetterDiscordAddons/refs/heads/master/Themes/DiscordRecolor/DiscordRecolor.css"
+          "https://raw.githubusercontent.com/MaiRiosIPla/unshittify-discord/refs/heads/main/RoundIconsSource.theme.css"
           "https://raw.githubusercontent.com/PassiveLemon/lemonix/refs/heads/master/users/lemon/common/home/.config/Vencord/themes/Lemon.theme.css"
           "https://raw.githubusercontent.com/PassiveLemon/lemonix/refs/heads/master/users/lemon/common/home/.config/Vencord/themes/LemonTweaks.theme.css"
         ];

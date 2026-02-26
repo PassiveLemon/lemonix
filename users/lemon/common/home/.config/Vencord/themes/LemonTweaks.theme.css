@@ -41,6 +41,15 @@ Honestly with the amount of stuff that needs to be modified to fix BDRecolor and
       }
     }
   }
+  .shop__6db1d,
+  .homeWrapper__0920e,
+  .container__955a3,
+  .container__133bf {
+    border-top: none;
+  }
+  .backForwardButtons__63abb {
+    display: none;
+  }
   /* Active Now */
   .nowPlayingColumn__133bf .itemCard__7e549 {
     /* Fix colors and add effects */
