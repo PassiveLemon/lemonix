@@ -28,7 +28,7 @@
       loupe flameshot papers gimp scrot
       mpv kdePackages.kdenlive
       # Miscellaneous
-      picom ente-auth localsend xclicker
+      picom ente-auth localsend xclicker drawy
       # School
       R scilab-bin
     ];

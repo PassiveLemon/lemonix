@@ -1,4 +1,4 @@
-{ inputs, system, lib, pkgs, ... }: {
+{ inputs, system, pkgs, ... }: {
   imports = [
     inputs.lemonake.homeModules.somewm
   ];
@@ -18,15 +18,7 @@
     enable = true;
     windowManager.awesome = {
       enable = true;
-      package = (inputs.nixpkgs-f2k.packages.${system}.awesome-luajit-git.overrideAttrs (prevAttrs: {
-        GI_TYPELIB_PATH = let
-          mkTypeLibPath = pkg: "${pkg}/lib/girepository-1.0";
-          extraGITypeLibPaths = lib.forEach (with pkgs; [
-            networkmanager upower playerctl
-          ]) mkTypeLibPath;
-        in
-        lib.concatStringsSep ":" (extraGITypeLibPaths ++ [ (mkTypeLibPath pkgs.pango.out) ]);
-      }));
+      package = inputs.lemonake.packages.${system}.awesome-luajit-git;
       luaModules = with pkgs; [
         luajitPackages.luafilesystem
       ];

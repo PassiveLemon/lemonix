@@ -20,10 +20,6 @@
       # url = "path:/home/lemon/Documents/GitHub/nix-xl";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-    nixpkgs-f2k = {
-      url = "github:moni-dz/nixpkgs-f2k";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
     lanzaboote = {
       url = "github:nix-community/lanzaboote/v1.0.0";
       inputs.nixpkgs.follows = "nixpkgs";
