@@ -98,6 +98,21 @@ theme.mpris_notifs_no_client = true
 -- Don't show the notification when the focused client is fullscreened
 theme.mpris_notifs_no_fullscreen = true
 
+-- Shadows (SomeWM)
+theme.shadow_enabled = true
+theme.shadow_radius = 11
+theme.shadow_offset_x = 7
+theme.shadow_offset_y = 7
+theme.shadow_opacity = 0.75
+theme.shadow_color = "#000000"
+
+theme.shadow_drawin_enabled = true
+theme.shadow_drawin_radius = 11
+theme.shadow_drawin_offset_x = 7
+theme.shadow_drawin_offset_y = 7
+theme.shadow_drawin_opacity = 0.75
+theme.shadow_drawin_color = "#000000"
+
 --
 -- Wallpaper & icons
 --

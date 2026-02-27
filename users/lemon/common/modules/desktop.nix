@@ -18,54 +18,29 @@
     enable = true;
     windowManager.awesome = {
       enable = true;
-      package = inputs.lemonake.packages.${system}.awesome-luajit-git.override {
-        extraLuaModules = with pkgs.luajitPackages; [
-          luafilesystem
-        ];
-        extraSearchPaths = [
-          inputs.lemonake.packages.${system}.lua-pam-luajit-git
-        ];
-      };
+      package = inputs.lemonake.packages.${system}.awesome-luajit-git;
+      luaModules = with pkgs; [
+        luajitPackages.luafilesystem
+      ];
     };
   };
 
   wayland = {
-    windowManager.somewm = {
-      enable = true;
-      package = inputs.lemonake.packages.${system}.somewm-git.override {
+    windowManager.somewm = let
+      somewm = (inputs.lemonake.packages.${system}.somewm-git.override {
         extraLuaModules = with pkgs.luajitPackages; [
           luafilesystem
         ];
         extraSearchPaths = [
           inputs.lemonake.packages.${system}.lua-pam-luajit-git
         ];
-      };
-    };
-  };
-
-  services = {
-    picom = {
+        extraGITypeLibPaths = with pkgs; [
+          networkmanager upower playerctl
+        ];
+      });
+    in {
       enable = true;
-      extraArgs = [ "--config ${../home/.config/picom/picom.conf}" ];
-    };
-    snixembed.enable = true;
-    trayscale.enable = true;
-    network-manager-applet.enable = true;
-    flameshot = {
-      enable = true;
-      settings = {
-        General = {
-          disabledTrayIcon = true;
-          showStartupLaunchMessage = false;
-          showDesktopNotification = false;
-          filenamePattern = "%Y-%m-%d_%H-%M-%S_%b-%d";
-          saveAsFileExtension = "png";
-          savePath = "/home/lemon/Pictures/Flameshot";
-          # https://github.com/NixOS/nixpkgs/pull/507424
-          captureActiveMonitor = true;
-          useX11LegacyScreenshot = true;
-        };
-      };
+      package = somewm;
     };
   };
 

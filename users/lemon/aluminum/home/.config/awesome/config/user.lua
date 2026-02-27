@@ -1,5 +1,4 @@
 local awful = require("awful")
-local gears = require("gears")
 
 local user = { }
 
@@ -38,20 +37,18 @@ user.power = {
   restart = true,
 }
 
-user.signal = {
-  default_volume = 0,
-  default_brightness = 50,
-}
+awful.screen.connect_for_each_screen(function(s)
+  s.scale = 1.5
+end)
 
 awful.spawn.with_shell("autorandr -l Default")
 awful.spawn.with_shell("pidof -q xss-lock || xss-lock awesome-client 'awesome.emit_signal(\"ui::lock::toggle\")' &")
-
-client.connect_signal("mouse::enter", function(c)
-  if (c.instance == "steamwebhelper") or (c.class == "steam") then
-    c.maximize = true
-    c.maximize = false
-  end
-end)
+-- awful.spawn.with_shell("pidof -q fusuma || fusuma -d") -- I pretty much forget it exists anyways, but I don't want to completely remove it yet
+awful.spawn.with_shell("pidof -q picom || picom --realtime -b")
+awful.spawn.with_shell("pidof -q snixembed || snixembed --fork")
+awful.spawn.with_shell("pidof -q nm-applet || nm-applet &")
+awful.spawn.with_shell("pidof -q trayscale || trayscale --gapplication-service")
+awful.spawn.with_shell("pidof -q flameshot || flameshot &")
 
 return user
 
