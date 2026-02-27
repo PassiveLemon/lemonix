@@ -1,7 +1,7 @@
 { pkgs, ... }: {
   environment = {
     systemPackages = with pkgs; [
-      xss-lock uwsm
+      wlr-randr uwsm
       networkmanagerapplet trayscale
       resources baobab
       gparted qdiskinfo
@@ -16,30 +16,6 @@
   };
 
   services = {
-    xserver = {
-      enable = true;
-      excludePackages = [ pkgs.xterm ];
-      displayManager = {
-        startx.enable = true;
-      };
-    };
-    libinput = {
-      enable = true;
-      mouse = {
-        middleEmulation = false;
-        accelProfile = "flat";
-        accelSpeed = "-0.5";
-      };
-      touchpad = {
-        buttonMapping = "1 1 3 4 5 6 7";
-        middleEmulation = false;
-        accelProfile = "flat";
-        naturalScrolling = true;
-        additionalOptions = ''
-          Option "ScrollPixelDistance" "50"
-        '';
-      };
-    };
     pipewire = {
       enable = true;
       alsa.enable = true;

@@ -9,12 +9,7 @@ in {
     inputs.nix-xl.homeModules.nix-xl
   ];
 
-  services = {
-    autorandr.enable = true;
-  };
-
   programs = {
-    autorandr.enable = true;
     home-manager.enable = true;
     obs-studio.enable = true;
     lite-xl = {
