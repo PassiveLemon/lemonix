@@ -96,35 +96,29 @@ local position_slider = h.slider({
 })
 
 local function metadata_updater(pm)
-  if pm.media.art_url and pm.media.art_image then
-    art_image_box:get_children_by_id("imagebox")[1].image = pm.media.art_image
-  end
-  if pm.media.title then
-    title_text:get_children_by_id("textbox")[1].text = pm.media.title
-  else
-    title_text:get_children_by_id("textbox")[1].text = "No media found"
+  if pm.player.title == "" then
+    art_image_box.visible = false
     artist_text.visible = false
     album_text.visible = false
     position_slider.visible = false
-  end
-  if pm.media.artist then
-    artist_text.visible = true
-    artist_text:get_children_by_id("textbox")[1].text = "By " .. pm.media.artist
+    title_text:get_children_by_id("textbox")[1].text = "No media found"
   else
-    artist_text.visible = false
-  end
-  if pm.media.album then
-    album_text.visible = true
+    art_image_box:get_children_by_id("imagebox")[1].image = pm.media.art_image
+    title_text:get_children_by_id("textbox")[1].text = pm.media.title
+    if pm.media.artist == "" then
+      artist_text.visible = false
+    else
+      artist_text.visible = true
+      artist_text:get_children_by_id("textbox")[1].text = "By " .. pm.media.artist
+    end
     album_text:get_children_by_id("textbox")[1].text = "On " .. pm.media.album
-  else
-    album_text.visible = false
   end
 end
 
 local function toggle_updater(pm)
   if pm.player.status == "PLAYING" then
     toggle_button:get_children_by_id("textbox")[1].text = "󰏤"
-  else
+  elseif pm.player.status == "PAUSED" then
     toggle_button:get_children_by_id("textbox")[1].text = "󰐊"
   end
 end

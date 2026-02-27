@@ -1,9 +1,12 @@
 local awful = require("awful")
 local gears = require("gears")
+local b = require("beautiful")
 local ruled = require("ruled")
 
 local h = require("helpers")
 local lfs = require("lfs")
+
+local dpi = b.xresources.apply_dpi
 
 --
 -- Rules
@@ -22,6 +25,10 @@ ruled.client.connect_signal("request::rules", function()
       size_hints_honor = false,
       honor_workarea = true,
     },
+    -- Go to the end of the stack instead
+    callback = function(c)
+      c:to_secondary_section()
+    end,
   })
 
   -- Floating clients
@@ -48,6 +55,7 @@ ruled.client.connect_signal("request::rules", function()
     properties = {
       fullscreen = true,
       maximized = true,
+      shadow = false,
     },
   })
 
@@ -68,20 +76,23 @@ ruled.client.connect_signal("request::rules", function()
     },
     properties = {
       floating = true,
+      shadow = {
+        opacity = 0.65,
+      }
     },
   })
 end)
 
-awesome.register_xproperty("STEAM_GAME", "number")
-client.connect_signal("request::manage", function(c)
-  -- Fullscreen all steam games with an exclusion check
-  local cclass_exclude = { "steam", "zenity" }
-  local cclass = string.lower(c.class or "")
-  local csteam = c:get_xproperty("STEAM_GAME")
-  if csteam and not h.table_contains(cclass_exclude, cclass) then
-    c.fullscreen = true
-    c:activate()
-  end
+-- awesome.register_xproperty("STEAM_GAME", "number")
+client.connect_signal("manage", function(c)
+  -- -- Fullscreen all steam games with an exclusion check
+  -- local cclass_exclude = { "steam", "zenity" }
+  -- local cclass = string.lower(c.class or "")
+  -- local csteam = c:get_xproperty("STEAM_GAME")
+  -- if csteam and not h.table_contains(cclass_exclude, cclass) then
+  --   c.fullscreen = true
+  --   c:activate()
+  -- end
   -- The jank section
   -- Sober will have a transparent bar the height of the wibar at the bottom. I guess this triggers it to draw?
   if (c.instance == "sober") or (c.class == "org.vinegarhq.Sober") then
@@ -161,8 +172,8 @@ local function wibar_layer(c)
   end
 end
 
-client.connect_signal("request::geometry", function(c) wibar_layer(c) end)
 client.connect_signal("manage", function(c) wibar_layer(c) end)
+client.connect_signal("property::geometry", function(c) wibar_layer(c) end)
 client.connect_signal("request::activate", function(c)
   if c.fullscreen then
     wibar_layer(c)
@@ -179,9 +190,9 @@ tag.connect_signal("request::default_layouts", function()
   })
 end)
 
-client.connect_signal("request::manage", function(c)
-  if not awesome.startup then awful.client.setslave(c) end
-end)
+-- client.connect_signal("request::manage", function(c)
+--   if not awesome.startup then awful.client.setslave(c) end
+-- end)
 
 --
 -- Sloppy focus
@@ -200,53 +211,33 @@ local function activate_under_pointer()
   end
 end
 
--- The mouse::enter signal doesn't emit in the following cases, so we time an activation right after to mostly seamlessly focus
+-- the mouse::enter signal doesn't emit in the following cases, so we time an activation right after to mostly seamlessly activate context
 local focus_timer = gears.timer({
   autostart = true,
-  timeout = 0.15,
+  timeout = 0.2,
   single_shot = true,
   callback = function()
     activate_under_pointer()
   end
 })
 
--- Across workspace change
+-- Across workspace changes
 tag.connect_signal("property::selected", function(t)
   if t.selected then
     focus_timer:again()
   end
 end)
 
--- After closing client
+-- After closing clients
 client.connect_signal("request::unmanage", function()
   focus_timer:again()
 end)
 
--- After minimizing client
-client.connect_signal("property::minimized", function(c)
-  if c.minimized then
-    focus_timer:again()
-  end
-end)
-
--- After moving client across tags
+-- After moving clients across workspaces
 client.connect_signal("property::tags", function(c)
   -- Floating clients can get stuck behind tiled clients if the check happens while the cursor is not over the new floating client
   if not c.floating then
     focus_timer:again()
   end
 end)
-
---
--- Other
---
-
--- Cleanup serverauth files
--- These persist if X crashes and can pile up if not removed
-local homedir = h.join_path(os.getenv("HOME"))
-for item in lfs.dir(homedir) do
-  if item:match("%.serverauth%.%d+") then
-    awful.spawn("rm " .. h.join_path(homedir, item))
-  end
-end
 

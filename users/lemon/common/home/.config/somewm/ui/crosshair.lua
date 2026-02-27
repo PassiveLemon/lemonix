@@ -198,4 +198,3 @@ awesome.connect_signal("ui::crosshair::toggle", function(number)
   end
 end)
 
-

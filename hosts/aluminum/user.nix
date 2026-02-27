@@ -17,17 +17,9 @@
       HandleLidSwitchExternalPower = "suspend-then-hibernate";
       HandleLidSwitchDocked = "suspend-then-hibernate";
     };
-    xserver.displayManager.importedVariables = [
-      "GDK_SCALE"
-      "GDK_DPI_SCALE"
-      "QT_AUTO_SCREEN_SCALE_FACTOR"
-      "QT_ENABLE_HIGHDPI_SCALING"
-      "STEAM_FORCE_DESKTOPUI_SCALING"
-    ];
   };
 
   environment.variables = {
-    XCURSOR_SIZE = "32";
     GDK_SCALE = "1";
     GDK_DPI_SCALE = "1";
     QT_AUTO_SCREEN_SCALE_FACTOR = "1";
