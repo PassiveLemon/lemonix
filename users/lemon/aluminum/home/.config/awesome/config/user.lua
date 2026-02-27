@@ -37,6 +37,10 @@ user.power = {
   restart = true,
 }
 
+awful.screen.connect_for_each_screen(function(s)
+  s.scale = 1.5
+end)
+
 awful.spawn.with_shell("autorandr -l Default")
 awful.spawn.with_shell("pidof -q xss-lock || xss-lock awesome-client 'awesome.emit_signal(\"ui::lock::toggle\")' &")
 -- awful.spawn.with_shell("pidof -q fusuma || fusuma -d") -- I pretty much forget it exists anyways, but I don't want to completely remove it yet

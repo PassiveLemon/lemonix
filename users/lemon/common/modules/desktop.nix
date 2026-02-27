@@ -26,10 +26,6 @@
   };
 
   wayland = {
-    # Current issues with AWM config on SomeWM:
-    # Lockscreen does not work at all, unsure if the call to lua-pam works, but it also does not go away when unlock() is called. Will need to test if it's the signals causing problems or wayland not liking the idea of a popup for a lockscreen
-    # Generally noticable delay when switching tags
-    # # Not sure how much of that is an issue with SomeWM vs Nvidia + a user with zero Wayland experience
     windowManager.somewm = let
       somewm = (inputs.lemonake.packages.${system}.somewm-git.override {
         extraLuaModules = with pkgs.luajitPackages; [
