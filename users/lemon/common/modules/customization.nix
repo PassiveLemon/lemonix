@@ -12,7 +12,6 @@
       name = "volantes_cursors";
       package = pkgs.volantes-cursors;
       gtk.enable = true;
-      x11.enable = true;
       size = lib.mkDefault 16;
     };
   };

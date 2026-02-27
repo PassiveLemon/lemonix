@@ -1,28 +1,17 @@
 { pkgs, ... }: {
+  environment.sessionVariables = {
+    XDG_CONFIG_HOME = "$HOME/.config";
+    XDG_DATA_HOME = "$HOME/.local/share";
+    XDG_STATE_HOME = "$HOME/.local/state";
+    XDG_CACHE_HOME = "$HOME/.cache";
+  };
+
   services = {
-    xserver = {
+    pipewire = {
       enable = true;
-      excludePackages = [ pkgs.xterm ];
-      displayManager.startx.enable = true;
+      alsa.enable = true;
+      pulse.enable = true;
     };
-    libinput = {
-      enable = true;
-      mouse = {
-        middleEmulation = false;
-        accelProfile = "flat";
-        accelSpeed = "-0.5";
-      };
-      touchpad = {
-        buttonMapping = "1 1 3 4 5 6 7";
-        middleEmulation = false;
-        accelProfile = "flat";
-        naturalScrolling = true;
-        additionalOptions = ''
-          Option "ScrollPixelDistance" "50"
-        '';
-      };
-    };
-    pipewire.enable = true;
     printing.enable = true;
     gnome.gnome-keyring.enable = true;
     flatpak.enable = true;

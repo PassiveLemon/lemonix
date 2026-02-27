@@ -25,12 +25,8 @@ in {
     celluloid kdePackages.kdenlive
   ];
 
-  services = {
-    autorandr.enable = true;
-  };
-
   programs = {
-    autorandr.enable = true;
+    home-manager.enable = true;
     obs-studio.enable = true;
     fish = {
       enable = true;

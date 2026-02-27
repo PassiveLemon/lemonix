@@ -9,7 +9,6 @@ local awful = require("awful")
 
 local h = require("helpers")
 
-local pam = require("liblua_pam") -- https://github.com/RMTT/lua-pam/
 local lfs = require("lfs")
 
 --
@@ -23,7 +22,7 @@ end
 local function unlock()
   awesome.emit_signal("ui::lock::state", false)
   awesome.emit_signal("signal::peripheral::volume::unmute", true)
-  awesome.emit_signal("signal::peripheral::display::powersave::disable")
+  -- awesome.emit_signal("signal::peripheral::display::powersave::disable")
 
   -- Unhide all clients
   for s in screen do
@@ -37,10 +36,11 @@ local function lock()
   awesome.emit_signal("ui::lock::state", true)
   awesome.emit_signal("signal::mpris::pause", "%all%")
   awesome.emit_signal("signal::peripheral::volume::mute", true)
-  awesome.emit_signal("signal::peripheral::display::powersave::enable")
+  -- awesome.emit_signal("signal::peripheral::display::powersave::enable")
 
   -- Hide all clients and unset focus
   for s in screen do
+    s.wibar.ontop = false
     for _, c in ipairs(s.clients) do
       c.hidden = true
     end

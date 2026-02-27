@@ -46,7 +46,6 @@ theme.yellow   = "#eac56f"
 theme.green    = "#93cb6b"
 theme.cyan     = "#53d2e0"
 theme.blue     = "#61b8ff"
-theme.bluel    = "#85c6ff"
 theme.magenta  = "#cd61ec"
 
 -- Links
@@ -99,6 +98,21 @@ theme.mpris_notifs_no_client = true
 -- Don't show the notification when the focused client is fullscreened
 theme.mpris_notifs_no_fullscreen = true
 
+-- Shadows
+theme.shadow_enabled = true
+theme.shadow_radius = 11
+theme.shadow_offset_x = 5
+theme.shadow_offset_y = 5
+theme.shadow_opacity = 0.6
+theme.shadow_color = "#000000"
+
+theme.shadow_drawin_enabled = true
+theme.shadow_drawin_radius = 11
+theme.shadow_drawin_offset_x = 5
+theme.shadow_drawin_offset_y = 5
+theme.shadow_drawin_opacity = 0.6
+theme.shadow_drawin_color = "#000000"
+
 --
 -- Wallpaper & icons
 --
@@ -113,6 +127,9 @@ end)
 
 theme.wallpaper = h.join_path(os.getenv("HOME"), "/.wallpaper-image")
 theme.lockscreen = h.join_path(os.getenv("HOME"), "/.lockscreen-image")
+if not h.is_file(theme.lockscreen) then
+  awful.spawn.with_shell("convert " .. theme.wallpaper .. " -filter Gaussian -blur 0x6 -fill 222222c1 -colorize 50% " .. theme.lockscreen)
+end
 
 screen.connect_signal("request::wallpaper", function(s)
   awful.wallpaper({
@@ -124,6 +141,11 @@ screen.connect_signal("request::wallpaper", function(s)
       tiled = false,
       {
         widget = wibox.widget.imagebox,
+        -- Breaks awm
+        -- image = gears.surface.crop_surface({
+        --   surface = gears.surface.load_uncached(theme.wallpaper),
+        --   ratio = s.geometry.width/s.geometry.height,
+        -- }),
         image = theme.wallpaper,
         upscale = true,
         downscale = true,
