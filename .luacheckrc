@@ -17,6 +17,10 @@ globals = {
   "tag",
   "wibox",
 
+  -- SomeWM
+  output
+  somewm
+
   -- Lite-XL
   "process",
   "renderer",

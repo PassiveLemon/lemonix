@@ -3,44 +3,32 @@
     inputs.lemonake.homeModules.somewm
   ];
 
-  xsession = {
-    enable = true;
-    windowManager.awesome = {
+  wayland = {
+    # windowManager.somewm = {
+    #   enable = true;
+    #   package = inputs.lemonake.packages.${system}.somewm-git;
+    #   systemd.useService = true;
+    #   extraGITypeLibPaths = with pkgs.astal; [
+    #     brightness wireplumber
+    #   ];
+    #   extraLuaModules = with pkgs.luajitPackages; [
+    #     luafilesystem
+    #   ];
+    # };
+    windowManager.somewm = {
       enable = true;
-      package = inputs.lemonake.packages.${system}.awesome-luajit-git.override {
+      package = inputs.lemonake.packages.${system}.somewm-git.override {
         extraGITypeLibPaths = with pkgs.astal; [
           brightness wireplumber
         ];
         extraLuaModules = with pkgs.luajitPackages; [
           luafilesystem
         ];
-        extraSearchPaths = [
-          inputs.lemonake.packages.${system}.lua-pam-luajit-git
-        ];
-      };
-    };
-  };
-
-  wayland = {
-    windowManager.somewm = {
-      enable = true;
-      package = inputs.lemonake.packages.${system}.somewm-git.override {
-        extraLuaModules = with pkgs.luajitPackages; [
-          luafilesystem
-        ];
-        extraSearchPaths = [
-          inputs.lemonake.packages.${system}.lua-pam-luajit-git
-        ];
       };
     };
   };
 
   services = {
-    picom = {
-      enable = true;
-      extraArgs = [ "--config ${../home/.config/picom/picom.conf}" ];
-    };
-    snixembed.enable = true;
     trayscale.enable = true;
     network-manager-applet.enable = true;
     flameshot = {
@@ -56,19 +44,6 @@
           captureActiveMonitor = true;
           useX11LegacyScreenshot = true;
         };
-      };
-    };
-  };
-
-  xdg = {
-    enable = true;
-    configFile = {
-      "awesome/libraries/bling" = {
-        source = inputs.awesomewm-bling;
-        recursive = true;
-      };
-      "awesome/liblua_pam.so" = {
-        source = "${inputs.lemonake.packages.${system}.lua-pam-luajit-git}/lib/lua/5.1/liblua_pam.so";
       };
     };
   };
