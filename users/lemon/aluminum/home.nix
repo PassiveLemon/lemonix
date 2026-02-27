@@ -1,4 +1,4 @@
-{ pkgs, ... }: {
+{ lib, pkgs, ... }: {
   imports = [
     ../common/home.nix
     ./modules/customization.nix
@@ -17,6 +17,8 @@
     pointerCursor.size = 32;
     stateVersion = "26.05"; # Don't change unless you know what you are doing
   };
+
+  wayland.windowManager.somewm.enable = lib.mkForce true;
 
   programs = {
     autorandr.profiles = {

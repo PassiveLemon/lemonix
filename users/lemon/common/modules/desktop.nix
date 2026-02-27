@@ -19,28 +19,23 @@
     windowManager.awesome = {
       enable = true;
       package = inputs.lemonake.packages.${system}.awesome-luajit-git;
-      luaModules = with pkgs; [
-        luajitPackages.luafilesystem
+      luaModules = with pkgs.luajitPackages; [
+        luafilesystem
       ];
     };
   };
 
   wayland = {
-    windowManager.somewm = let
-      somewm = (inputs.lemonake.packages.${system}.somewm-git.override {
-        extraLuaModules = with pkgs.luajitPackages; [
-          luafilesystem
-        ];
-        extraSearchPaths = [
-          inputs.lemonake.packages.${system}.lua-pam-luajit-git
-        ];
-        extraGITypeLibPaths = with pkgs; [
-          networkmanager upower playerctl
-        ];
-      });
-    in {
-      enable = true;
-      package = somewm;
+    windowManager.somewm = {
+      enable = false;
+      package = inputs.lemonake.packages.${system}.somewm-git;
+      systemd.useService = true;
+      extraLuaModules = with pkgs.luajitPackages; [
+        luafilesystem
+      ];
+      extraSearchPaths = [
+        inputs.lemonake.packages.${system}.lua-pam-luajit-git
+      ];
     };
   };
 
@@ -62,6 +57,9 @@
           filenamePattern = "%Y-%m-%d_%H-%M-%S_%b-%d";
           saveAsFileExtension = "png";
           savePath = "/home/lemon/Pictures/Flameshot";
+          # https://github.com/NixOS/nixpkgs/pull/507424
+          captureActiveMonitor = true;
+          useX11LegacyScreenshot = true;
         };
       };
     };
