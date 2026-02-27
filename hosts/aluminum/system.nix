@@ -52,7 +52,7 @@
         home = "/home/lemon";
         hashedPassword = "$6$cVhBvZ0RiacmsWNS$4vT6O9R9Bo62kXCQVBSsqVtbpiNbwuI6Eb4fE.2.EVYGuoNEjy16ZWwZfHom6JQSOau20K92U3sZjbPo07XSa.";
         extraGroups = [
-          "wheel" "networkmanager" "video" "audio" "storage" "input"
+          "wheel" "networkmanager" "video" "audio" "storage" "input" "librepods"
         ];
         isNormalUser = true;
         openssh.authorizedKeys.keys = [

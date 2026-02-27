@@ -2,6 +2,7 @@
   inputs = {
     nixos-old.url = "github:nixos/nixpkgs/nixos-24.05";
     nixos.url = "github:nixos/nixpkgs/nixos-25.11";
+    # nixos.url = "path:/home/lemon/Documents/GitHub/nixpkgs";
     nixpkgs.url = "github:nixos/nixpkgs/nixpkgs-unstable";
     master.url = "github:nixos/nixpkgs";
     nixos-hardware.url = "github:nixos/nixos-hardware";
@@ -31,6 +32,9 @@
     nixcord = {
       url = "github:kaylorben/nixcord";
       inputs.nixpkgs.follows = "nixpkgs";
+    };
+    nixpkgs-librepods = {
+      url = "github:Cameo007/nixpkgs/add-librepods";
     };
 
     # Submodules

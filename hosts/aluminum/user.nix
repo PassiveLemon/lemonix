@@ -1,8 +1,19 @@
-{ ... }: {
+{ pkgs, ... }: {
   imports = [
     ../common/user.nix
     ../../modules/nixos/bluetooth.nix
+    ../../modules/librepods.nix
   ];
+
+  environment = {
+    systemPackages = [
+      (pkgs.callPackage ../../pkgs/librepods.nix { })
+    ];
+  };
+
+  programs.librepods = {
+    enable = true;
+  };
 
   location.provider = "geoclue2";
   services = {
