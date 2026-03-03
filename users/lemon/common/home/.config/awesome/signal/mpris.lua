@@ -120,7 +120,7 @@ local function fetch_art_image(cache, trim, pm)
   if not cache then
     art_load_path = h.join_path(disk_cache_dir, trim)
     if not h.is_file(art_load_path) then
-      awful.spawn.easy_async("curl -Lso " .. disk_cache_dir .. ' "' .. pm.media.art_url .. '"', function()
+      awful.spawn.easy_async("curl -Lso " .. art_load_path .. ' "' .. pm.media.art_url .. '"', function()
         ---@diagnostic disable-next-line: param-type-mismatch
         pm.media.art_image = gears.surface.load_silently(art_load_path)
       end)
