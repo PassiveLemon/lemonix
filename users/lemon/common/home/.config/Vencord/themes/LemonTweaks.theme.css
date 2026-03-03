@@ -108,7 +108,7 @@ Honestly with the amount of stuff that needs to be modified to fix BDRecolor and
     margin: 2px 4px 4px 0px;
   }
   /* Sidebar */
-  .divider__908e2 {
+  .divider__908e2:not(.isUnread__908e2) {
     border-top: thin solid var(--app-frame-border);
   }
   .sectionDivider__629e4 {
