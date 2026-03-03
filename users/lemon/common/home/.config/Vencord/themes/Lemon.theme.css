@@ -30,7 +30,7 @@
 	--button-secondary-background: rgb(var(--backgroundaccent)) !important;
   --button-secondary-background-hover: rgb(var(--backgroundaccent)) !important;
   --background-modifier-selected: rgb(var(--backgroundaccent)) !important;
-  --border-subtle: rgba(60, 60, 60, 1) !important;
+  --border-subtle: rgba(var(--app-frame-border)); !important;
 }
 
 .visual-refresh {
@@ -40,9 +40,10 @@
   }
   .chatContent_f75fb0 {
     .form_f75fb0 {
+      /* Align chat bar */
       display: flex;
       flex-direction: column;
-      padding: 0px 4px 4px 4px !important;
+      padding: 0px 4px 4px 7px !important;
       /* Chat bar */
       .channelTextArea_f75fb0 {
         margin: 0px 4px 4px 0px;

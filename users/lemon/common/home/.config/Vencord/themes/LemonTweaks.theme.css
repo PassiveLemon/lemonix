@@ -22,6 +22,22 @@ Honestly with the amount of stuff that needs to be modified to fix BDRecolor and
 
 .visual-refresh {
   /* === Client Front === */
+  /* Chat area */
+  .message__5126c {
+    /* Round message borders and line the left up with the chat bar */
+    border-radius: var(--radius-sm);
+    margin-left: 7px;
+  }
+  .itemsContainer_ef3116 { }
+  .itemsContainer_ef3116::after {
+    /* Add shadow top top of server scroll bar */
+    content: "";
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    box-shadow: 1px 5px 10px rgb(var(--backgroundsecondary)) inset;
+    pointer-events: none;
+  }
   /* Friends */
   .peopleColumn__133bf {
     .inner_a45028 {
@@ -91,6 +107,25 @@ Honestly with the amount of stuff that needs to be modified to fix BDRecolor and
     height: 24px;
     margin: 2px 4px 4px 0px;
   }
+  /* Sidebar */
+  .divider__908e2 {
+    border-top: thin solid var(--app-frame-border);
+  }
+  .sectionDivider__629e4 {
+    background-color: var(--app-frame-border);
+  }
+  .sidebarList__5e434 {
+    border-right: 1px solid var(--app-frame-border);
+  }
+  .container_c8ffbb {
+    border-inline-start: 1px solid var(--app-frame-border);
+  }
+  .scroller__629e4 {
+    margin-inline-end: 0px;
+    margin-right: 0px !important;
+    padding-bottom: 8px;
+    padding-inline-end: 0px !important;
+  }
   /* Account widget */
   .container__37e49
     .avatarWrapper__37e49 {
@@ -104,7 +139,7 @@ Honestly with the amount of stuff that needs to be modified to fix BDRecolor and
       }
       &[aria-expanded=true] {
         background-color: rgba(var(--backgroundaccent), 1);
-        border-color: var(--brand-500) !important;
+        border-color: var(--input-border-active) !important;
       }
     }
     .button__67645 {
@@ -143,7 +178,7 @@ Honestly with the amount of stuff that needs to be modified to fix BDRecolor and
       }
       &[aria-expanded=true] {
         background-color: rgba(var(--backgroundaccent), 1);
-        border-color: var(--brand-500) !important;
+        border-color: var(--input-border-active) !important;
       }
     }
     .channelTextArea__74017 {
@@ -212,7 +247,7 @@ Honestly with the amount of stuff that needs to be modified to fix BDRecolor and
     }
     &.selected__270d7 {
       background-color: rgba(var(--backgroundaccent), 1);
-      border-color: var(--brand-400);
+      border-color: var(--input-border-active);
     }
   }
   /* Reactions */
@@ -227,7 +262,7 @@ Honestly with the amount of stuff that needs to be modified to fix BDRecolor and
     }
     &.reactionMe__23977,
     &.active__23977 {
-      border-color: var(--brand-500) !important;
+      border-color: var(--input-border-active) !important;
     }
   }
   /* === Client Settings === */
@@ -252,7 +287,7 @@ Honestly with the amount of stuff that needs to be modified to fix BDRecolor and
       border-color: var(--input-border-default);
     }
     &:focus-within {
-      border-color: var(--brand-500) !important;
+      border-color: var(--input-border-active) !important;
     }
     .bioTextArea__6a919 {
       background-color: rgb(var(--backgroundsecondary));
@@ -349,7 +384,7 @@ Honestly with the amount of stuff that needs to be modified to fix BDRecolor and
       }
       &:focus {
         background-color: rgb(var(--backgroundsecondary)) !important;
-        outline-color: var(--brand-500) !important;
+        outline-color: var(--input-border-active) !important;
       }
     }
   }
@@ -458,7 +493,7 @@ Honestly with the amount of stuff that needs to be modified to fix BDRecolor and
   }
   .container_fea832 .input_fea832 {
     /* Fix colors */
-    border-color: var(--brand-500) !important;
+    border-color: var(--input-border-active) !important;
   }
   /* Boost award cards */
   /* Change card style to be more consistent */
@@ -479,17 +514,18 @@ Honestly with the amount of stuff that needs to be modified to fix BDRecolor and
   }
   /* === General === */
   /* Search boxes */
+  .searchBar_c322aa,
   .searchBar__97492,
   .container_fea832,
   .container_a45028 {
     /* Change search boxes to be more consistent */
-    border: 1px solid var(--border-subtle);
+    border: 1px solid var(--input-border-default) !important;
     transition: border-color .2s ease-in-out;
     &:hover {
-      border-color: var(--input-border-default) !important;
+      border-color: var(--input-border-hover) !important;
     }
     &:focus-within {
-      border-color: var(--brand-500) !important;
+      border-color: var(--input-border-active) !important;
     }
     .inner_fea832,
     .inner_a45028 {
@@ -498,13 +534,8 @@ Honestly with the amount of stuff that needs to be modified to fix BDRecolor and
   }
   /* Text input */
   /* Change text boxes to be more consistent */
-  .inputWrapper__0f084 {
-    background-color: rgb(var(--backgroundsecondary));
-    border-radius: var(--radius-sm);
-    &:hover {
-      border-color: var(--input-border-default);
-    }
-  }
+  .wrapper__72c38,
+  .inputWrapper__0f084,
   .inputDefault__0f084 {
     background-color: rgb(var(--backgroundsecondary));
     border: 1px solid var(--border-subtle);
@@ -521,7 +552,7 @@ Honestly with the amount of stuff that needs to be modified to fix BDRecolor and
   .input__0f084 {
     transition: border-color .2s ease-in-out;
     &:focus {
-      border-color: var(--brand-500) !important;
+      border-color: var(--input-border-active) !important;
     }
   }
   /* Select menus */
@@ -532,13 +563,13 @@ Honestly with the amount of stuff that needs to be modified to fix BDRecolor and
     border-radius: var(--radius-sm);
     transition: border-color .2s ease-in-out;
     &.open__3f413 {
-      border-color: var(--brand-500) !important;
+      border-color: var(--input-border-active) !important;
     }
     &:hover {
       border-color: var(--input-border-default);
     }
   }
-  .popout__3f413 {
+  .popout_a16aea {
     background-color: rgb(var(--backgroundsecondary));
   }
   .option__3f413 {
