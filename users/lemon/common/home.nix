@@ -30,7 +30,7 @@
       # Miscellaneous
       picom ente-auth localsend xclicker drawy
       # School
-      R scilab-bin
+      R scilab-bin ltspice
     ];
     username = "lemon";
     homeDirectory = "/home/lemon";
