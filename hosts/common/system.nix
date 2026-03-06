@@ -66,6 +66,7 @@
   security = {
     sudo.execWheelOnly = true;
     rtkit.enable = true;
+    polkit.enable = true;
   };
 
   systemd = {
