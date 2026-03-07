@@ -23,7 +23,7 @@
       obsidian onlyoffice-desktopeditors onlyoffice-documentserver drawio
       # Audio
       feishin
-      pwvucontrol easyeffects helvum
+      pwvucontrol easyeffects crosspipe
       # Image/Video
       loupe flameshot papers gimp scrot
       mpv kdePackages.kdenlive
