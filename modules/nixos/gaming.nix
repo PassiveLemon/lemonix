@@ -14,12 +14,8 @@ in
   };
 
   imports = [
-    inputs.lemonake.nixosModules.wivrn
     inputs.lemonake.nixosModules.autoadb
   ];
-
-  # Importing my own WiVRn module so we disable the offical to avoid conflicts
-  disabledModules = [ "services/video/wivrn.nix" ];
 
   config = mkIf cfg.enable (mkMerge [
     (mkIf cfg.desktop.enable { })
