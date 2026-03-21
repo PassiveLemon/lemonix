@@ -28,8 +28,9 @@
       };
     };
     enableIPv6 = false;
-    nameservers = [ "1.1.1.1" "9.9.9.9" ];
+    nameservers = [ "192.168.1.11" "1.1.1.1" "9.9.9.9" ];
   };
+  
 
   users = {
     users = {
@@ -83,27 +84,14 @@
 
   hardware = {
     uinput.enable = true;
-    nvidia = let
-      nvidia-package = config.boot.kernelPackages.nvidiaPackages.mkDriver {
-        version = "580.95.05";
-        sha256_64bit = "sha256-hJ7w746EK5gGss3p8RwTA9VPGpp2lGfk5dlhsv4Rgqc=";
-        openSha256 = "sha256-RFwDGQOi9jVngVONCOB5m/IYKZIeGEle7h0+0yGnBEI=";
-        settingsSha256 = "sha256-F2wmUEaRrpR1Vz0TQSwVK4Fv13f3J9NJLtBe4UP2f14=";
+    nvidia = {
+      # Pin to good version: https://github.com/yshui/picom/issues/1488 and https://github.com/NixOS/nixpkgs/issues/467814
+      package = config.boot.kernelPackages.nvidiaPackages.mkDriver {
+        version = "595.45.04";
+        sha256_64bit = "sha256-zUllSSRsuio7dSkcbBTuxF+dN12d6jEPE0WgGvVOj14=";
+        openSha256 = "sha256-uqNfImwTKhK8gncUdP1TPp0D6Gog4MSeIJMZQiJWDoE=";
+        settingsSha256 = "sha256-Y45pryyM+6ZTJyRaRF3LMKaiIWxB5gF5gGEEcQVr9nA=";
         usePersistenced = false;
-      };
-    in {
-      # https://github.com/yshui/picom/issues/1488 and https://github.com/NixOS/nixpkgs/issues/467814
-      # package = config.boot.kernelPackages.nvidiaPackages.stable;
-      package = nvidia-package // {
-        open = nvidia-package.overrideAttrs (prevAttrs: {
-          patches = (prevAttrs.patches or [ ]) ++ [
-            (pkgs.fetchpatch {
-              name = "get_dev_pagemap.patch";
-              url = "https://github.com/NVIDIA/open-gpu-kernel-modules/commit/3e230516034d29e84ca023fe95e284af5cd5a065.patch";
-              hash = "sha256-BhL4mtuY5W+eLofwhHVnZnVf0msDj7XBxskZi8e6/k8=";
-            })
-          ];
-        });
       };
       open = true;
       modesetting.enable = true;

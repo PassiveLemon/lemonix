@@ -19,8 +19,8 @@
           "autoinsert" "autowrap" "bracketmatch" "colorpicker" "colorpreview"
           "eofnewline" "ephemeral_tabs" "editorconfig" "evergreen"
           "extend_selection_line" "force_syntax" "gitdiff_highlight" "gitstatus"
-          "indentguide" "lfautoinsert" "lintplus" "litemark" "lsp" "lsp_snippets" "open_ext"
-          "openfilelocation" "selectionhighlight" "terminal" "treeview-extender"
+          "indentguide" "ipc" "lfautoinsert" "lintplus" "litemark" "lsp" "lsp_snippets"
+          "open_ext" "openfilelocation" "selectionhighlight" "terminal" "treeview-extender"
         ];
         customEnableList = {
           "exterm" = ../home/.config/lite-xl/plugins/exterm.lua;
@@ -121,7 +121,6 @@
           };
           noBlockedMessages.enable = true;
           noReplyMention.enable = true;
-          normalizeMessageLinks.enable = true;
           roleColorEverywhere.enable = true;
           shikiCodeblocks = {
             enable = true;

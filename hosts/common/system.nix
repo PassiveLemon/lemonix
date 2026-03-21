@@ -1,4 +1,4 @@
-{ outputs, lib, pkgs, ... }: {
+{ outputs, config, lib, pkgs, ... }: {
   boot = {
     loader = {
       efi.canTouchEfiVariables = true;
@@ -26,6 +26,7 @@
     networkmanager.enable = true;
     firewall.enable = true;
     usePredictableInterfaceNames = true;
+    networkmanager.insertNameservers = config.networking.nameservers;
   };
 
   users = {
