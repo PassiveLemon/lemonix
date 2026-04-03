@@ -47,6 +47,7 @@
 
   gtk = {
     enable = true;
+    colorScheme = "dark";
     theme = {
       name = "Matcha-dark-aliz";
       package = pkgs.matcha-gtk-theme;
@@ -65,7 +66,18 @@
       package = pkgs.fira;
       size = 10;
     };
+    gtk2 = {
+      theme = config.gtk.theme;
+      iconTheme = config.gtk.iconTheme;
+      cursorTheme = config.gtk.cursorTheme;
+      font = config.gtk.font;
+    };
     gtk3 = {
+      theme = config.gtk.theme;
+      iconTheme = config.gtk.iconTheme;
+      cursorTheme = config.gtk.cursorTheme;
+      font = config.gtk.font;
+      colorScheme = config.gtk.colorScheme;
       extraConfig = {
         gtk-toolbar-style = "GTK_TOOLBAR_BOTH";
         gtk-toolbar-icon-size = "GTK_ICON_SIZE_LARGE_TOOLBAR";
@@ -85,6 +97,13 @@
         "file:///home/lemon/Downloads"
         "file:///home/lemon/Shared"
       ];
+    };
+    gtk4 = {
+      theme = config.gtk.theme;
+      iconTheme = config.gtk.iconTheme;
+      cursorTheme = config.gtk.cursorTheme;
+      font = config.gtk.font;
+      colorScheme = config.gtk.colorScheme;
     };
   };
 

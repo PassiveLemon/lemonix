@@ -32,7 +32,6 @@ in
           enable = true;
           package = inputs.lemonake.packages.${system}.wivrn.override { cudaSupport = true; };
           openFirewall = false;
-          defaultRuntime = true;
           autoStart = true;
           highPriority = true;
           monadoEnvironment = {
