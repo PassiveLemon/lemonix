@@ -18,6 +18,7 @@
     hostName = "silver";
     interfaces = {
       "eno1" = {
+        name = "eno1";
         ipv4 = {
           addresses = [{
             address = "192.168.1.10";
@@ -28,7 +29,7 @@
       };
     };
     enableIPv6 = false;
-    nameservers = [ "192.168.1.0" "1.1.1.1" "9.9.9.9" ];
+    nameservers = [ "192.168.1.1" "1.1.1.1" "9.9.9.9" ];
   };
   
 

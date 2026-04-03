@@ -57,6 +57,7 @@
     hostName = "titanium";
     interfaces = {
       "enp6s0" = {
+        name = "enp6s0";
         ipv4 = {
           addresses = [{
             address = "192.168.1.11";
@@ -67,7 +68,7 @@
       };
     };
     enableIPv6 = false;
-    nameservers = [ "192.168.1.0" "1.1.1.1" "9.9.9.9" ];
+    nameservers = [ "192.168.1.1" "1.1.1.1" "9.9.9.9" ];
   };
 
   users = {

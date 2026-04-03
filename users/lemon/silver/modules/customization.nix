@@ -6,7 +6,7 @@
         "file:///data/BACKUPDRIVE"
         "file:///home/lemon/.steam/steam/steamapps"
         "sftp://lemon@titanium/data"
-        "sftp://lemon@192.168.1.0"
+        "sftp://lemon@192.168.1.1"
       ];
     };
   };
