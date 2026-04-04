@@ -3,7 +3,8 @@ local gears = require("gears")
 
 local h = require("helpers")
 
-local value, max
+local value = 0
+local max = 100
 
 local function emit()
   awesome.emit_signal("signal::peripheral::brightness::value", value)
@@ -14,7 +15,7 @@ local function brightness()
     local cur = cur_stdout:gsub("\n", "")
     awful.spawn.easy_async("brightnessctl max", function(max_stdout)
       max = max_stdout:gsub("\n", "")
-      value = h.round(((cur / max) * 100), 0)
+      value = h.round(((cur / max) * 100), 0) or 0
     end)
   end)
 end
@@ -62,6 +63,8 @@ awesome.connect_signal("signal::peripheral::brightness::step", function(step)
     local to_value = value + (step or 0)
     if to_value > 100 then
       value = 100
+    elseif to_value < 0 then
+      value = 0
     else
       value = to_value
     end

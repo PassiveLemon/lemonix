@@ -36,16 +36,6 @@ brightness.icon = h.button({
   no_color = true,
 })
 brightness.icon:buttons({
-  awful.button({ }, 1, function()
-    awesome.emit_signal("signal::peripheral::brightness::update")
-    awful.spawn.easy_async("systemctl is-active --quiet --user clight", function(_, _, _, code)
-      if code == 0 then
-        awful.spawn("systemctl --user stop clight")
-      else
-        awful.spawn("systemctl --user restart clight")
-      end
-    end)
-  end),
   awful.button({ }, 4, function()
     awesome.emit_signal("signal::peripheral::brightness::step", 3)
   end),
@@ -64,13 +54,6 @@ brightness.text = h.text({
 })
 awesome.connect_signal("signal::peripheral::brightness::value", function(value)
   brightness.text:get_children_by_id("textbox")[1].text = value .. "%"
-  awful.spawn.easy_async("systemctl is-active --quiet --user clight", function(_, _, _, code)
-    if code == 0 then
-      brightness.icon:get_children_by_id("textbox")[1].text = "󰌵"
-    else
-      brightness.icon:get_children_by_id("textbox")[1].text = "󱠂"
-    end
-  end)
 end)
 
 brightness.pill = h.margin({

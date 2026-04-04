@@ -1,7 +1,7 @@
 local awful = require("awful")
 local gears = require("gears")
 
-local caps_cache
+local caps_cache = false
 
 local function emit()
   awesome.emit_signal("signal::peripheral::caps::state", caps_cache)
