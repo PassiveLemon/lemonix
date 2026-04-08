@@ -65,16 +65,6 @@ awful.screen.connect_for_each_screen(function(s)
   -- Control
   --
 
-  widgets.power.button:connect_signal("button::press", function(_, _, _, button)
-    if button == 1 then
-      if power_popup.screen.index == awful.screen.focused().index then
-        power_popup:toggle()
-      else
-        power_popup:toggle(false)
-      end
-    end
-  end)
-
   widgets.power.button:buttons({
     awful.button({ }, 1, function()
       if power_popup.screen.index == awful.screen.focused().index then
@@ -116,6 +106,7 @@ awful.screen.connect_for_each_screen(function(s)
   client.connect_signal("request::activate", function() popup_positioner() end)
 
   local function show_control(force)
+    main:stop()
     popup_positioner()
     if main.screen.index == awful.screen.focused().index then
       if force == true then
