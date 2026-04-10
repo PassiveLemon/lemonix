@@ -117,7 +117,7 @@
   systemd = {
     units."mdmonitor.service".enable = true;
     tmpfiles.rules = [
-      "Z /data 777 root root - -"
+      "z /data 775 root root - -"
       "Z /data/lemonix 770 lemon users - -"
     ];
   };
