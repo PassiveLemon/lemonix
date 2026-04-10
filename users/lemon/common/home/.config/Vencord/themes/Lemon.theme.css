@@ -51,8 +51,8 @@
         .buttons__74017 {
           flex-direction: row-reverse;
           div[aria-label="Send a gift"],
-          .expression-picker-chat-input-button:has(div[class*="stickerButton"]),
-          div[class^="channelAppLauncher_"] {
+          .expression-picker-chat-input-button .stickerButton__74017,
+          .app-launcher-entrypoint {
             display: none !important;
           }
         }
