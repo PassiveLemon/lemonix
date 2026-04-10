@@ -13,9 +13,9 @@ local dpi = b.xresources.apply_dpi
 
 -- TODO: This is turning into a mess. Try to refactor the widget wrappers
 
-local helpers = { }
+local h = { }
 
-function helpers.margin(widget_pass, conf_in)
+function h.margin(widget_pass, conf_in)
   local conf = conf_in or { }
   local margin = wibox.widget({
     id = "margin",
@@ -31,9 +31,9 @@ function helpers.margin(widget_pass, conf_in)
   return margin
 end
 
-function helpers.background(widget_pass, conf_in)
+function h.background(widget_pass, conf_in)
   local conf = conf_in or { }
-  local background = helpers.margin({
+  local background = h.margin({
     id = "background",
     widget = wibox.container.background,
     forced_width = conf.x,
@@ -47,9 +47,9 @@ function helpers.background(widget_pass, conf_in)
   return background
 end
 
-function helpers.text(conf_in)
+function h.text(conf_in)
   local conf = conf_in or { }
-  local text = helpers.background({
+  local text = h.background({
     -- Allow use of either text or image. Kind of pointless to make 2 separate ones.
     layout = wibox.layout.stack,
     {
@@ -83,9 +83,9 @@ local button_default = {
   button_press = function() end,
 }
 
-function helpers.button(conf_in)
+function h.button(conf_in)
   local conf = gears.table.join(button_default, (conf_in or { }))
-  local button = helpers.text(conf)
+  local button = h.text(conf)
   local button_id = button:get_children_by_id("background")[1]
   button:buttons({
     awful.button({ }, 1, function()
@@ -116,9 +116,9 @@ local timed_default = {
   timer_callback = function() end,
 }
 
-function helpers.timed_button(conf_in, time)
+function h.timed_button(conf_in, time)
   local conf = gears.table.join(button_default, (conf_in or { }))
-  local button = helpers.text(conf)
+  local button = h.text(conf)
   local button_id = button:get_children_by_id("background")[1]
   button.toggle = false
   local timer = gears.timer({
@@ -167,9 +167,9 @@ local slider_default = {
   mouse_leave = function() end,
 }
 
-function helpers.slider(conf_in)
+function h.slider(conf_in)
   local conf = gears.table.join(slider_default, (conf_in or { }))
-  local slider = helpers.background({
+  local slider = h.background({
     id = "slider",
     widget = wibox.widget.slider,
     minimum = conf.min or 0,
@@ -210,7 +210,7 @@ local widget_default = {
 }
 
 -- Widget with a toggle lock
-function helpers.widget(conf_in)
+function h.widget(conf_in)
   local conf = gears.table.join(widget_default, (conf_in or { }))
   local widget = conf_in
   widget.visible = true
@@ -259,9 +259,9 @@ function helpers.widget(conf_in)
 end
 
 -- Widget with a life-time
-function helpers.timed_widget(conf_in, time, start_on_visible)
+function h.timed_widget(conf_in, time, start_on_visible)
   local conf = gears.table.join(timed_default, (conf_in or { }))
-  local widget = helpers.widget(conf_in)
+  local widget = h.widget(conf_in)
   widget.visible = false
   local timer = gears.timer({
     timeout = time or 3,
@@ -302,7 +302,7 @@ function helpers.timed_widget(conf_in, time, start_on_visible)
 end
 
 -- Popup with a toggle lock
-function helpers.popup(conf_in)
+function h.popup(conf_in)
   local conf = gears.table.join(widget_default, (conf_in or { }))
   local popup = awful.popup(conf)
   popup.visible = false
@@ -351,9 +351,9 @@ function helpers.popup(conf_in)
 end
 
 -- Popup with a life-time
-function helpers.timed_popup(conf_in, time, start_on_visible)
+function h.timed_popup(conf_in, time, start_on_visible)
   local conf = gears.table.join(timed_default, (conf_in or { }))
-  local popup = helpers.popup(conf)
+  local popup = h.popup(conf)
   popup.visible = false
   local timer = gears.timer({
     timeout = time or 3,
@@ -398,20 +398,20 @@ function helpers.timed_popup(conf_in, time, start_on_visible)
   return popup
 end
 
-function helpers.round(number, place)
+function h.round(number, place)
   local decimal = (10 ^ place)
   return (math.floor((number * decimal) + (0.5 / decimal)) / decimal)
 end
 
-function helpers.is_file(file)
+function h.is_file(file)
   return gears.filesystem.file_readable(file)
 end
 
-function helpers.is_dir(dir)
+function h.is_dir(dir)
   return gears.filesystem.is_dir(dir)
 end
 
-function helpers.table_contains(table, value)
+function h.table_contains(table, value)
   for _, v in ipairs(table) do
     if v == value then
       return true
@@ -420,14 +420,14 @@ function helpers.table_contains(table, value)
   return false
 end
 
-function helpers.table_dump(table)
+function h.table_dump(table)
   if type(table) == "table" then
     local s = "{ "
     for k, v in pairs(table) do
       if type(k) ~= "number" then
         k = '"' .. k .. '"'
       end
-      s = s .. "[" .. k .. "] = " .. helpers.table_dump(v) .. ","
+      s = s .. "[" .. k .. "] = " .. h.table_dump(v) .. ", "
     end
     return s .. "} "
   else
@@ -435,7 +435,7 @@ function helpers.table_dump(table)
   end
 end
 
-function helpers.join_path(...)
+function h.join_path(...)
   if not ... then return nil end
   local norm_paths = { }
   -- Normalize the input paths to ensure consistent results:
@@ -460,22 +460,22 @@ end
 
 -- Some test cases
 -- -- Plain -> "home/user/documents/file.txt"
--- print(helpers.join_path("home", "user", "documents", "file.txt"))
+-- print(h.join_path("home", "user", "documents", "file.txt"))
 -- -- Root leading slash -> "/home/user/documents/file.txt"
--- print(helpers.join_path("/home", "user", "documents", "file.txt"))
+-- print(h.join_path("/home", "user", "documents", "file.txt"))
 -- -- Trailing/leading slashes -> "home/user/documents/file.txt"
--- print(helpers.join_path("home", "user/", "/documents", "/file.txt/"))
+-- print(h.join_path("home", "user/", "/documents", "/file.txt/"))
 -- -- Excessive slashes -> "/home/user/documents/file.txt"
--- print(helpers.join_path("//home////", "user///", "/documents", "file.txt"))
+-- print(h.join_path("//home////", "user///", "/documents", "file.txt"))
 -- -- Spaces -> "home/user/documents/my file.txt"
--- print(helpers.join_path("home", "user", "documents", "my file.txt"))
+-- print(h.join_path("home", "user", "documents", "my file.txt"))
 -- -- Relatives -> "home/user/pictures/../documents/file.txt"
--- print(helpers.join_path("home", "user", "pictures", "..", "documents", "file.txt"))
+-- print(h.join_path("home", "user", "pictures", "..", "documents", "file.txt"))
 -- -- Bad inputs -> "home/user/documents/file.txt"
 -- -- If there's no valid strings, returns empty string
--- print(helpers.join_path("", "home", true, "user", nil, "documents", 1, "file.txt"))
+-- print(h.join_path("", "home", true, "user", nil, "documents", 1, "file.txt"))
 -- -- No inputs -> nil
--- print(helpers.join_path())
+-- print(h.join_path())
 
-return helpers
+return h
 
