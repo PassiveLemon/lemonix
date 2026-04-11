@@ -5,6 +5,8 @@ local fs = require("fs")
 -- Nix helpers
 --
 
+-- TODO: Make a program for these
+
 -- General helper functions
 local function find_in_table(table, value)
   for i, v in ipairs(table) do
@@ -14,15 +16,11 @@ local function find_in_table(table, value)
   end
 end
 
-local function concat_string(str, new)
-  str = str .. new
-end
-
 -- Nix command helper functions
-local function help_check(args, subcommand)
+local function help_check(args, subcmd)
   local arg1 = tostring(args[1] or "")
   if (arg1 == "--help") or (arg1 == "-h") then
-    hilbish.run("nix " .. subcommand .. " --help")
+    hilbish.run("nix " .. subcmd .. " --help")
     return 0
   end
 end
@@ -32,18 +30,18 @@ local function build_args(args)
   for k, _ in pairs(args) do
     local arg = tostring(args[k] or "")
     if string.find(arg, "#") then
-      concat_string(args_str, arg)
+      args_str = args_str .. arg
     else
-      concat_string(args_str, " .#" .. arg)
+      args_str = args_str .. " .#" .. arg
     end
-    concat_string(args_str, " ")
+    args_str = args_str .. " "
   end
   return args_str
 end
 
-local function simple_arg(args, subcommand)
-  if (#args > 1) and subcommand then
-    hilbish.run("echo 'Too many arguments: " .. subcommand .. "'")
+local function simple_arg(args, subcmd)
+  if (#args > 1) and subcmd then
+    hilbish.run("echo 'Too many arguments: " .. subcmd .. "'")
     return 1
   end
   local arg1 = tostring(args[1] or "")
@@ -134,44 +132,4 @@ commander.register("nsp", function(args)
     return 1
   end
 end)
-
--- Well it works, but the point of this was to be faster than nh in terms of eval time but it's so much slower.
--- commander.register("nos", function()
---   print("Building NixOS configuration...")
---   local code1 = hilbish.run("sudo -v")
---   -- TODO: Somehow hide the debug outputs
---   if code1 == 0 then
---     local code2 = hilbish.run("sudo nixos-rebuild switch --flake ~/Documents/GitHub/lemonix#" .. hilbish.host .. " --log-format internal-json -v |& grep -v '^debug: nixos_rebuild' |& nom --json")
---     if code2 == 0 then
---       -- After building, determine the current and new profile to diff
---       local profiles = fs.readdir("/nix/var/nix/profiles/")
---       local code3, new_path = hilbish.run("realpath /nix/var/nix/profiles/system", false)
---       local new_path_clean = new_path:match("%s*(%S+)%s*")
---       local current_path, current_profile
---       for _, profile in ipairs(profiles) do
---         -- Find the new system-xxx-link path
---         if profile:find("%d+") then
---           local code4, test_path = hilbish.run("realpath /nix/var/nix/profiles/" .. profile, false)
---           local test_path_clean = test_path:match("%s*(%S+)%s*")
---           if code4 == 0 and test_path_clean == new_path_clean then
---             current_path = test_path_clean
---             current_profile = profile:match("%s*system%-(%S+)%-link%s*")
---             break
---           end
---         end
---       end
---       -- Diff the old profile with the new profile
---       local code5, previous_profile = hilbish.run("realpath /nix/var/nix/profiles/system-" .. (tonumber(current_profile) - 1) .. "-link", false)
---       local previous_profile_clean = previous_profile:match("%s*(%S+)%s*")
---       if code3 == 0 and code5 == 0 then
---         print("Comparing diff...")
---         hilbish.run("dix " .. previous_profile_clean .. " " .. current_path)
---       else
---         print("Failed to determine current and/or latest profiles.")
---       end
---     end
---   else
---     print("Failed to elevate priviledges.")
---   end
--- end)
 

@@ -2,7 +2,6 @@ require("nix")
 
 local promptua = require("promptua")
 
-
 hilbish.opts.greeting = false
 hilbish.opts.motd = false
 hilbish.opts.tips = false
