@@ -37,9 +37,16 @@ user.power = {
   restart = true,
 }
 
+
 awful.screen.connect_for_each_screen(function(s)
   s.scale = 1.5
 end)
+
+user.signal = {
+  default_volume = 0,
+  default_brightness = 50,
+}
+
 
 awful.spawn.with_shell("autorandr -l Default")
 awful.spawn.with_shell("pidof -q xss-lock || xss-lock awesome-client 'awesome.emit_signal(\"ui::lock::toggle\")' &")
