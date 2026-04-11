@@ -2,8 +2,9 @@ local awful = require("awful")
 local gears = require("gears")
 
 local h = require("helpers")
+local user = require("config.user")
 
-local value = 0
+local value = user.signal.default_brightness
 local max = 100
 
 local function emit()

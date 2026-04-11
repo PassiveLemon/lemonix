@@ -37,6 +37,11 @@ user.power = {
   restart = true,
 }
 
+user.signal = {
+  default_volume = 0,
+  default_brightness = 50,
+}
+
 awful.spawn.with_shell("autorandr -l Default")
 awful.spawn.with_shell("pidof -q xss-lock || xss-lock awesome-client 'awesome.emit_signal(\"ui::lock::toggle\")' &")
 -- awful.spawn.with_shell("pidof -q fusuma || fusuma -d") -- I pretty much forget it exists anyways, but I don't want to completely remove it yet

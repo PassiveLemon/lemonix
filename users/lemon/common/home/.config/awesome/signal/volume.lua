@@ -1,8 +1,10 @@
 local awful = require("awful")
 local gears = require("gears")
 
+local user = require("config.user")
+
 -- The silent variable allows for managing mute without showing the notification. Only really used for the lockscreen
-local value = 0
+local value = user.signal.default_volume
 local mute = false
 local silent = false
 
