@@ -11,26 +11,36 @@
       # Terminal
       tym hilbish comma fend
       nh eza bat trashy pamixer imagemagick
-      # nix-output-monitor dix
       # File/storage management
-      pcmanfm xarchiver gparted filezilla
-      ffmpegthumbnailer
+      pcmanfm xarchiver localsend filezilla
+      gparted ffmpegthumbnailer
       # Development
       github-desktop
       shellcheck luajitPackages.luacheck python312Packages.flake8
       nil nimlsp pyright lua-language-server bash-language-server dockerfile-language-server yaml-language-server
       # Office
-      obsidian onlyoffice-desktopeditors onlyoffice-documentserver drawio
+      obsidian drawio
+      onlyoffice-desktopeditors onlyoffice-documentserver
       # Audio
+      pwvucontrol crosspipe
       feishin
-      pwvucontrol easyeffects crosspipe
+      # Easyeffects crashes on versions 8.1.2+: https://github.com/wwmm/easyeffects/issues/4978
+      (easyeffects.overrideAttrs {
+        version = "8.1.1";
+        src = fetchFromGitHub {
+          owner = "wwmm";
+          repo = "easyeffects";
+          tag = "v8.1.1";
+          hash = "sha256-+CH7AoAX4fdjtwnVjWWLB7IKTD3cunbBjVlurrHJgGU=";
+        };
+      })
       # Image/Video
-      loupe flameshot papers gimp scrot
+      loupe flameshot papers gimp drawy
       mpv kdePackages.kdenlive
       # Miscellaneous
-      picom ente-auth localsend xclicker drawy
+      ente-auth xclicker
       # School
-      R scilab-bin ltspice
+      scilab-bin ltspice
     ];
     username = "lemon";
     homeDirectory = "/home/lemon";

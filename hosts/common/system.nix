@@ -35,10 +35,9 @@
 
   environment = {
     systemPackages = with pkgs; [
-      nano unzip unrar p7zip zip curl wget git gvfs psmisc
-      htop iotop sysstat netcat dig lm_sensors smartmontools neofetch
-      networkmanager ethtool stress
-      sbctl
+      nano p7zip git curl dig networkmanager
+      htop iotop lm_sensors smartmontools neofetch
+      stress sbctl
     ];
     shells = with pkgs; [ bashInteractive ];
   };
