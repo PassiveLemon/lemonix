@@ -22,7 +22,6 @@ power.lock_button = h.button({
   font = b.sysfont(dpi(12)),
   button_press = function()
     awesome.emit_signal('ui::lock::toggle')
-    awesome.emit_signal("signal::mpris::pause", "%all%")
   end
 })
 

@@ -7,7 +7,7 @@
   home = {
     packages = with pkgs; [
       brightnessctl
-      fusuma
+      fusuma librepods
     ];
     file = {
       ".bash_profile" = {

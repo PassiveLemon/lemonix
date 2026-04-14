@@ -348,11 +348,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1775363255,
-        "narHash": "sha256-wLv3fOv7PPeQVf117sLryB+W8Va4zddfWjhy0IIIi8g=",
+        "lastModified": 1776196167,
+        "narHash": "sha256-yEPzUTggMC10+kG5eSGn5Zt7lBlM2tBuA2L9WVUuV5g=",
         "owner": "passivelemon",
         "repo": "nix-xl",
-        "rev": "ca26a575eca38074e56017ba9dd5b0ce01beb285",
+        "rev": "ff64b511fdf02c7be418740d76334129691c2aa6",
         "type": "github"
       },
       "original": {

@@ -36,7 +36,10 @@
         };
         evergreen.enableList = [ "html" "lua" ];
         # formatter.enableList = [ "black" "ruff" ];
-        # lsp.enableList = [ "lua" "yaml" ];
+        lsp = {
+          enableList = [ "bashls" "dockerls" "nillsp" "nimlsp" "pyright" "sumneko_lua" "yamlls" ];
+          addPackages = true;
+        };
       };
       libraries.enableList = [ "font_symbols_nerdfont_mono_regular" "tree_sitter" "widget" ];
       fonts = {

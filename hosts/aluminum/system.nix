@@ -21,11 +21,6 @@
       "clocksource=tsc"
       "hpet=disable"
     ];
-    blacklistedKernelModules = [
-      # Only have solid state so no need for the accelerometer
-      "amd_sfh"
-      "amd_sfh_hid"
-    ];
     plymouth.enable = true;
     consoleLogLevel = 0;
     initrd.verbose = false;
@@ -34,7 +29,7 @@
   networking = {
     hostName = "aluminum";
     enableIPv6 = false;
-    nameservers = [ "1.1.1.1" "9.9.9.9" ];
+    nameservers = [ "100.64.0.104" "1.1.1.1" "9.9.9.9" ];
     networkmanager.wifi.powersave = true;
   };
 

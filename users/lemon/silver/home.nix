@@ -6,10 +6,24 @@
 
   home = {
     packages = with pkgs; [
-      easytag zenity cemu-ti
-      inputs.lemonake.packages.${system}.nimpad
+      # Audio
+      easytag
+      # Easyeffects crashes on versions 8.1.1+: https://github.com/wwmm/easyeffects/issues/4978
+      (easyeffects.overrideAttrs {
+        version = "8.1.0";
+        src = fetchFromGitHub {
+          owner = "wwmm";
+          repo = "easyeffects";
+          tag = "v8.1.0";
+          hash = "sha256-rBCAcjZNapsZqXQnjtlPlnOQHI62mcHq6K3dJhW8Uis=";
+        };
+      })
+      # Calculator
+      cemu-ti
       inputs.lemonake.packages.${system}.tilp2
-      inputs.lemonake.packages.${system}.webfisher
+      # Miscellaneous
+      xclicker zenity ente-auth filezilla
+      inputs.lemonake.packages.${system}.nimpad
     ];
     stateVersion = "23.05"; # Don't change unless you know what you are doing
   };
