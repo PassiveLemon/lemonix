@@ -44,6 +44,29 @@
     };
   };
 
+  services = {
+    picom = {
+      enable = true;
+      extraArgs = [ "--config ${../home/.config/picom/picom.conf}" ];
+    };
+    snixembed.enable = true;
+    trayscale.enable = true;
+    network-manager-applet.enable = true;
+    flameshot = {
+      enable = true;
+      settings = {
+        General = {
+          disabledTrayIcon = true;
+          showStartupLaunchMessage = false;
+          showDesktopNotification = false;
+          filenamePattern = "%Y-%m-%d_%H-%M-%S_%b-%d";
+          saveAsFileExtension = "png";
+          savePath = "/home/lemon/Pictures/Flameshot";
+        };
+      };
+    };
+  };
+
   xdg = {
     enable = true;
     configFile = {
