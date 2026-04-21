@@ -1,7 +1,7 @@
 { pkgs, ... }: {
   environment = {
     systemPackages = with pkgs; [
-      picom xss-lock gtk3 snixembed
+      xss-lock gtk3
       networkmanagerapplet trayscale
       resources baobab
       uwsm

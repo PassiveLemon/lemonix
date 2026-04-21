@@ -8,16 +8,6 @@
     packages = with pkgs; [
       # Audio
       easytag
-      # Easyeffects crashes on versions 8.1.1+: https://github.com/wwmm/easyeffects/issues/4978
-      (easyeffects.overrideAttrs {
-        version = "8.1.0";
-        src = fetchFromGitHub {
-          owner = "wwmm";
-          repo = "easyeffects";
-          tag = "v8.1.0";
-          hash = "sha256-rBCAcjZNapsZqXQnjtlPlnOQHI62mcHq6K3dJhW8Uis=";
-        };
-      })
       # Calculator
       cemu-ti
       inputs.lemonake.packages.${system}.tilp2
@@ -54,6 +44,15 @@
           dpi = 96;
           gamma = "1.0:0.92:0.92";
         };
+      };
+    };
+  };
+  services = {
+    easyeffects = {
+      enable = true;
+      package = pkgs.easyeffects.override {
+        # https://github.com/NixOS/nixpkgs/pull/511820
+        speexdsp = pkgs.speexdsp.override { withFftw3 = false; };
       };
     };
   };
