@@ -25,7 +25,7 @@
       loupe flameshot papers gimp drawy
       mpv kdePackages.kdenlive
       # School
-      scilab-bin ltspice
+      ltspice digital scilab-bin
     ];
     username = "lemon";
     homeDirectory = "/home/lemon";

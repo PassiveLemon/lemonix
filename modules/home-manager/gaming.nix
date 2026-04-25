@@ -44,6 +44,10 @@ in
 
       # WiVRn manages OpenXR and OpenVR runtimes
 
+      systemd.user.tmpfiles.rules = [
+        "L /home/lemon/Pictures/VRChat - - - - /home/lemon/.steam/steam/steamapps/compatdata/438100/pfx/drive_c/users/steamuser/Pictures/VRChat"
+      ];
+
       xdg = {
         dataFile = {
           "Steam/compatibilitytools.d/proton-ge-rtsp" = {
