@@ -56,11 +56,10 @@
   };
 
   systemd = {
-    services.stack-up = {
-      description = "Docker stack upper";
+    services.compose-up = {
+      description = "docker compose up";
       serviceConfig = {
         Type = "oneshot";
-        RemainAfterExit = true;
         ExecStart = "-${pkgs.docker}/bin/docker compose -f /home/lemon/Documents/GitHub/lemocker/silver/docker-compose.yml up -d";
         Restart = "on-failure";
         RestartSec = 15;
