@@ -117,7 +117,7 @@
   nix = {
     settings = {
       cores = 4;
-      max-jobs = 2;
+      max-jobs = 3;
       extra-substituters = [
         "https://cache.nixos-cuda.org"
       ];

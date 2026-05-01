@@ -48,7 +48,7 @@
         BORG_RELOCATED_REPO_ACCESS_IS_OK = "yes";
       };
       compression = "auto,zstd";
-      startAt = "daily";
+      startAt = "*-*-* 04:00:00";
       prune.keep = {
         within = "1d";
         daily = 7;
