@@ -27,8 +27,8 @@ local function interface_stats_table(interface_stats)
 end
 
 local adapter_pattern_lookup = {
-  "enp.(d*)s.(d*)",
-  "wlp.(d*)s.(d*)"
+  "^enp%d+s%d+$",
+  "^wlp%d+s%d+$",
 }
 
 local function network()

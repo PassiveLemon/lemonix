@@ -65,15 +65,16 @@ awful.screen.connect_for_each_screen(function(s)
   -- Control
   --
 
-  widgets.power.button:buttons({
-    awful.button({ }, 1, function()
+  -- We need to use a signal because otherwise a the button() table causes only one screen to work
+  widgets.power.button:connect_signal("button::press", function(_, _, _, button)
+    if button == 1 then
       if power_popup.screen.index == awful.screen.focused().index then
         power_popup:toggle()
       else
         power_popup:toggle(false)
       end
-    end)
-  })
+    end
+  end)
 
   power_popup:connect_signal("property::visible", function(w)
     if w.visible then

@@ -10,6 +10,7 @@ local awful = require("awful")
 local h = require("helpers")
 
 local pam = require("liblua_pam") -- https://github.com/RMTT/lua-pam/
+local lfs = require("lfs")
 
 --
 -- Lockscreen function
@@ -122,8 +123,15 @@ end)
 
 -- Don't require auth if login handoff from the .bash_profile script is present
 local auth_file = h.join_path(os.getenv("HOME"), "/.cache/passivelemon/loginauth")
+local lxl_ipc = h.join_path(os.getenv("HOME"), "/.config/lite-xl/ipc")
 if h.is_file(auth_file) then
   os.remove(tostring(auth_file))
+  -- The Lite-XL IPC plugin can prevent LXL from starting if an ipc.lua "socket" is left, which happens when LXL is SIGKILL'd. That usually only happens when the userspace doesn't shutdown properly and/or the computer powers off so we only want the sockets to be removed on startup in that event.
+  for ipc in lfs.dir(lxl_ipc) do
+    if ipc:match("^%d+%.lua$") then
+      os.remove(h.join_path(lxl_ipc, ipc))
+    end
+  end
 else
   lock()
 end

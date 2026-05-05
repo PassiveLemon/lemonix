@@ -16,7 +16,9 @@ in
   config = mkIf cfg.enable (mkMerge [
     (mkIf cfg.desktop.enable {
       home.packages = with pkgs; [
-        steam heroic (bottles.override { removeWarningPopup = true; })
+        # https://github.com/NixOS/nixpkgs/issues/514113
+        # I could override openldap, but I hardly use bottles anyways
+        steam heroic # (bottles.override { removeWarningPopup = true; })
         r2modman limo
         inputs.lemonake.packages.${system}.gdlauncher-carbon
         ludusavi

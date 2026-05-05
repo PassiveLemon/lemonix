@@ -15,7 +15,7 @@
       };
     };
     pointerCursor.size = 32;
-    stateVersion = "25.05"; # Don't change unless you know what you are doing
+    stateVersion = "26.05"; # Don't change unless you know what you are doing
   };
 
   programs = {

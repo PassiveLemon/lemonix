@@ -21,8 +21,8 @@ end
 
 local storage_pattern_lookup = {
   -- I only care about the first partition on each drive
-  ["nvme.(d*)n.(d*)"] = "p1",
-  ["sd.(l*)"] = "1"
+  ["^nvme%d+n%d+$"] = "p1",
+  ["^sd%l+$"] = "1"
 }
 
 local function storage()
@@ -32,8 +32,8 @@ local function storage()
   for device in lfs.dir("/sys/block") do
     for pattern, part in pairs(storage_pattern_lookup) do
       if device:match(pattern) then
-        local device_path = h.join_path("/dev/", device)
-        awful.spawn.easy_async_with_shell("df " .. device_path .. part .. " | grep '/dev'", function(device_stats_raw, _, _, code)
+        local device_path = h.join_path("/dev/", (device .. part))
+        awful.spawn.easy_async_with_shell("df " .. device_path .. " | grep '/dev'", function(device_stats_raw, _, _, code)
           if code == 0 then
             local device_stats = device_stats_raw:gsub("\n", "")
             storage_stats_dict[device] = device_stats_table(device_stats)

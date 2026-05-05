@@ -18,10 +18,11 @@ ruled.client.connect_signal("request::rules", function()
     id = "global",
     rule = { },
     properties = {
+      screen = awful.screen.preferred,
       focus = awful.client.focus.filter,
       raise = true,
-      screen = awful.screen.preferred,
       size_hints_honor = false,
+      honor_workarea = true,
     },
   })
 
@@ -36,7 +37,6 @@ ruled.client.connect_signal("request::rules", function()
     },
     properties = {
       floating = true,
-      raise = true,
       placement = awful.placement.centered+awful.placement.no_offscreen,
     },
   })
@@ -51,7 +51,6 @@ ruled.client.connect_signal("request::rules", function()
     properties = {
       fullscreen = true,
       maximized = true,
-      raise = true,
     },
   })
 
@@ -72,7 +71,6 @@ ruled.client.connect_signal("request::rules", function()
     },
     properties = {
       floating = true,
-      raise = true,
       placement = awful.placement.centered+awful.placement.no_offscreen,
     },
   })
@@ -86,7 +84,6 @@ ruled.client.connect_signal("request::rules", function()
     },
     properties = {
       floating = true,
-      raise = true,
       placement = awful.placement.left+awful.placement.no_offscreen,
       width = awful.screen.focused().geometry.width,
       height = dpi(75),
@@ -104,13 +101,25 @@ client.connect_signal("request::manage", function(c)
   local csteam = c:get_xproperty("STEAM_GAME")
   if csteam and not h.table_contains(cclass_exclude, cclass) then
     c.fullscreen = true
-    c:raise()
+    c:activate()
   end
-
-  -- Some jank because otherwise Sober will have a transparent bar the height of the wibar at the bottom. I guess re-fullscreening updates it to draw?
+  -- The jank section
+  -- Sober will have a transparent bar the height of the wibar at the bottom. I guess re-fullscreening updates it to draw?
   if (c.instance == "sober") or (c.class == "org.vinegarhq.Sober") then
     c.fullscreen = false
     c.fullscreen = true
+  end
+  -- When loupe is started from a file manager, it doesn't follow the AWM placement
+  if (c.instance == "loupe") or (c.class == "loupe") then
+    c.minimized = true
+    c.hidden = true
+    gears.timer.start_new(0.15, function()
+      awful.placement.under_mouse(c)
+      c.hidden = false
+      awful.placement.centered(c)
+      c:activate()
+      c.minimized = false
+    end)
   end
 end)
 

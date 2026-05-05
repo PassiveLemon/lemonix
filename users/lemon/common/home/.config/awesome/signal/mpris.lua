@@ -164,7 +164,8 @@ local function art_image_handler(p_name, pm)
     local cache = p_lookup.cache
     local trim = pm.media.artist:gsub("%W", "") .. pm.media.album:gsub("%W", "")
     if trim == "" or not trim then
-      trim = pm.media.art_url:match(p_lookup.backup)
+      -- If the media doesn't have a title or album name, why bother with the art
+      return
     end
     fetch_art_image(cache, trim, pm)
   end
@@ -282,7 +283,7 @@ local function mpris_call_wrapper(callback, override)
   local pm = metadata["global"]
   local p = players["global"]
   if override then
-    if override:gmatch("%%all%%") then
+    if override:match("%%all%%") then
       for p_name, px in pairs(players) do
         pm = metadata[p_name]
         p = px

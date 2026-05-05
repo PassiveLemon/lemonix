@@ -16,7 +16,7 @@ local function gpu()
       emit("ERR")
       return
     end
-    for number in nvidia_smi_raw:gmatch("%d+") do
+    for number in (nvidia_smi_raw:gmatch("%d+")) do
       table.insert(nvidia_smi_table, tonumber(number))
     end
     emit(nvidia_smi_table)

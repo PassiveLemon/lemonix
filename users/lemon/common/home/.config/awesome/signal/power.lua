@@ -17,7 +17,7 @@ end
 local function get_device(target)
   for _, device in ipairs(devices) do
     local device_path = h.join_path("/org/freedesktop/UPower/devices/", target)
-    if device:get_object_path() == (device_path) then
+    if device:get_object_path() == device_path then
       return device
     end
   end

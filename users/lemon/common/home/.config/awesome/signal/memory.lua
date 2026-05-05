@@ -18,7 +18,7 @@ local function memory()
   local free_mem_table = { }
   awful.spawn.easy_async_with_shell("free -m | grep 'Mem:'", function(free_stdout)
     local free = free_stdout:gsub("\n", "")
-    for number in free:gmatch("%d+") do
+    for number in (free:gmatch("%d+")) do
       table.insert(free_mem_table, normalize(number))
     end
     emit(free_mem_table)
