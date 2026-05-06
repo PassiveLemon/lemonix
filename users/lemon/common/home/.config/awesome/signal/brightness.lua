@@ -16,7 +16,7 @@ local function brightness()
     local cur = cur_stdout:gsub("\n", "")
     awful.spawn.easy_async("brightnessctl max", function(max_stdout)
       max = max_stdout:gsub("\n", "")
-      value = h.round(((cur / max) * 100), 0) or 0
+      value = h.round(h.convert(cur, 0, 100, 0, 65535), 0) or 0
     end)
   end)
 end
@@ -40,12 +40,6 @@ local function brightness_timer_wrapper(callback)
   brightness_timer:start()
 end
 
-local function normalize_from_awm(num)
-  -- Brightnessctl returns a max of 65535 so we can just divide that by 100 and multiply by the new brightness (which is a slider from 0 - 100)
-  -- I would like a solution that doesn't rely on the magic number but it's not very important
-  return (num * 655.35)
-end
-
 awesome.connect_signal("signal::peripheral::brightness::update", function()
   brightness_timer_wrapper(function()
     brightness()
@@ -54,7 +48,7 @@ end)
 
 awesome.connect_signal("signal::peripheral::brightness", function(brightness_new)
   brightness_timer_wrapper(function()
-    awful.spawn("brightnessctl set " .. normalize_from_awm(brightness_new))
+    awful.spawn("brightnessctl set " .. h.convert(brightness_new, 0, 100, 0, 65535))
     value = brightness_new
   end)
 end)
@@ -62,14 +56,8 @@ end)
 awesome.connect_signal("signal::peripheral::brightness::step", function(step)
   brightness_timer_wrapper(function()
     local to_value = value + (step or 0)
-    if to_value > 100 then
-      value = 100
-    elseif to_value < 0 then
-      value = 0
-    else
-      value = to_value
-    end
-    awful.spawn("brightnessctl set " .. normalize_from_awm(value))
+    value = h.clamp(to_value, 0, 100)
+    awful.spawn("brightnessctl set " .. h.convert(value, 0, 100, 0, 65535))
   end)
 end)
 

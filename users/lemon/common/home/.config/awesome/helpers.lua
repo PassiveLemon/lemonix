@@ -403,6 +403,38 @@ function h.round(number, place)
   return (math.floor((number * decimal) + (0.5 / decimal)) / decimal)
 end
 
+function h.clamp(number, bottom, top)
+  -- Return the clamped value and a boolean for whether it was clamped or not
+  if number > top then
+    return top, true
+  elseif number < bottom then
+    return bottom, true
+  end
+  return number, false
+end
+
+-- I can't really think of a better name for what this does because it does it in a weird way i guess
+function h.convert(number, ibottom, itop, obottom, otop)
+  local _, i_clamped = h.clamp(number, ibottom, itop)
+  -- Don't divide by zero
+  if ibottom == 0 then
+    itop = 1
+  end
+  if obottom == 0 then
+    obottom = 1
+  end
+  local i_ratio = (itop / ibottom)
+  local o_ratio = (otop / obottom)
+  -- Determine which way to lerp depending on which range the number is part of
+  if not i_clamped then
+    local scale = number / i_ratio
+    return (scale * otop)
+  else
+    local scale = number / o_ratio
+    return (scale * itop)
+  end
+end
+
 function h.is_file(file)
   return gears.filesystem.file_readable(file)
 end

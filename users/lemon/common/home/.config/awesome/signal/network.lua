@@ -37,13 +37,11 @@ local function network()
   for _, device in ipairs(devices) do
     for _, pattern in ipairs(adapter_pattern_lookup) do
       local interface = device:get_iface()
-      if interface:match(pattern) then
-        if device:get_state() == "ACTIVATED" then
-          awful.spawn.easy_async_with_shell("cat /proc/net/dev | grep " .. interface, function(interface_stats_stdout)
-            local interface_stats = interface_stats_stdout:gsub("\n", ""):gsub(interface .. ":", "")
-            network_stats_dict[interface] = interface_stats_table(interface_stats)
-          end)
-        end
+      if interface:match(pattern) and (device:get_state() == "ACTIVATED") then
+        awful.spawn.easy_async_with_shell("cat /proc/net/dev | grep " .. interface, function(interface_stats_stdout)
+          local interface_stats = interface_stats_stdout:gsub("\n", ""):gsub(interface .. ":", "")
+          network_stats_dict[interface] = interface_stats_table(interface_stats)
+        end)
         break
       end
     end

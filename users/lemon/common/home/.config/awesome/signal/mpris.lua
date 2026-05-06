@@ -94,12 +94,30 @@ local function init_players()
   end
 end
 
+-- Check if a player client is visible
+local function check_for_client(p_name)
+  for s in screen do
+    for _, c in ipairs(s.clients) do
+      local c_instance = string.lower(c.instance or "")
+      local c_class = string.lower(c.class or "")
+      if (c_instance == p_name) or (c_class == p_name) then
+        return true
+      end
+    end
+  end
+  return false
+end
+
 -- Set the global player to the current player by order of priority in b.mpris_players
 local function set_global_player()
   for _, p_name in ipairs(b.mpris_players) do
-    if players[p_name] then
-      players["global"] = players[p_name]
-      metadata["global"] = metadata[p_name]
+    local p = players[p_name]
+    local pm = metadata[p_name]
+    -- Set the first visible mpris player as the global player
+    -- Check for visibility or position change. If the player client is visible, set it to global. If the player is firefox, make sure the position has changed so closed videos don't affect the global player
+    if (p and pm and ((p_name ~= "firefox") or ((p_name == "firefox") and (pm.player.position ~= pm.player.old_position)))) then
+      players["global"] = p
+      metadata["global"] = pm
       return
     end
   end
@@ -174,18 +192,7 @@ end
 -- The notification may include the previous art image and then update to the new one. This happens due to the way the art images are loaded and can't really be avoided without potentially blocking the event loop
 local function track_notification(pm)
   local p_name = pm.player.name
-  if b.mpris_notifs_no_client then
-    for s in screen do
-      for _, c in ipairs(s.clients) do
-        local c_instance = string.lower(c.instance or "")
-        local c_class = string.lower(c.class or "")
-        if (c_instance == p_name) or (c_class == p_name) then
-          return
-        end
-      end
-    end
-  end
-  if b.mpris_notifs and pm.player.available then
+  if b.mpris_notifs and (not (b.mpris_notifs_no_client and check_for_client(p_name))) then
     awesome.emit_signal("ui::control::notification::mpris")
   end
 end
@@ -218,16 +225,16 @@ local function get_metadata(p_name, p)
   pm.media.length = p:print_metadata_prop("mpris:length") or "1"
 
   -- Player metadata
-  pm.player.available = true
+  pm.player.available = p.can_control
   pm.player.name = p_name or ""
   pm.player.shuffle = p.shuffle or false
   pm.player.status = p.playback_status or "STOPPED"
   pm.player.loop = p.loop_status or "NONE"
-  pm.player.position = p.position or "1"
-  pm.player.volume = p.volume or "1"
+  pm.player.old_position = pm.player.position or 1 -- Track previous position so we can determine if the media is playing
+  pm.player.position = p.position or 1
+  pm.player.volume = p.volume or 1
 
   local new_sig = get_metadata_sig(pm)
-
   -- Fetch art image and send notification when the media metadata changes
   if (old_sig ~= new_sig) then
     sig_cache[p_name] = new_sig

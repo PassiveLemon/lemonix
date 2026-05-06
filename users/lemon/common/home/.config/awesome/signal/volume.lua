@@ -1,6 +1,7 @@
 local awful = require("awful")
 local gears = require("gears")
 
+local h = require("helpers")
 local user = require("config.user")
 
 -- The silent variable allows for managing mute without showing the notification. Only really used for the lockscreen
@@ -59,13 +60,7 @@ end)
 awesome.connect_signal("signal::peripheral::volume::step", function(step)
   volume_timer_wrapper(function()
     local to_value = value + (step or 0)
-    if to_value > 100 then
-      value = 100
-    elseif to_value < 0 then
-      value = 0
-    else
-      value = to_value
-    end
+    value = h.clamp(to_value, 0, 100)
     awful.spawn("pamixer --set-volume " .. value)
   end)
 end)
