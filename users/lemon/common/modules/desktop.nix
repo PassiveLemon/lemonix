@@ -62,6 +62,9 @@
           filenamePattern = "%Y-%m-%d_%H-%M-%S_%b-%d";
           saveAsFileExtension = "png";
           savePath = "/home/lemon/Pictures/Flameshot";
+          # https://github.com/NixOS/nixpkgs/pull/507424
+          captureActiveMonitor = true;
+          useX11LegacyScreenshot = true;
         };
       };
     };

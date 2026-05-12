@@ -1,13 +1,15 @@
 let
-  # Normal users should have a passphrase
+  # Root does not have any authorized keys so normal users should have a passphrase
   # ssh-keygen
 
   # Get this from /etc/ssh/ssh_host_ed25519_key.pub (services.openssh.hostKeys)
   # Make sure the root user is also using these keys
+  # Hosts
   aluminum = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIB/5WTbUE/YjK0EqTLGJwlE4/qA5EJB8Ey/w2o09FGtV";
   silver = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIPbedW5DDGCzGpbym2f0Ex+efnyfzFfHRPAhDFY9ZI5K";
   titanium = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIGCBA9bX/zAfV04lQXGPPL+f24qD+MrX7zDt+odiE0pI";
 
+  # Users
   borg = {
     silver = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIOH57JnHLmW6Al34ksW1zb0TJq7IY9mZLN7kBiFR0dYi";
     titanium = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIGt7EoDxKbFzXMXVV+RF422Tt9dBS7gKIgWMLxWncax9";

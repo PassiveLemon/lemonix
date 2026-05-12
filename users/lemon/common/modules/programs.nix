@@ -1,4 +1,4 @@
-{ inputs, ... }: {
+{ inputs, pkgs, ... }: {
   imports = [
     inputs.nixcord.homeModules.nixcord
     inputs.nix-xl.homeModules.nix-xl
@@ -14,6 +14,16 @@
     obs-studio.enable = true;
     lite-xl = {
       enable = true;
+      # https://github.com/lite-xl/lite-xl/issues/2209
+      package = pkgs.lite-xl.override {
+        freetype = pkgs.freetype.overrideAttrs (finalAttrs: prevAttrs: {
+          version = "2.14.1";
+          src = pkgs.fetchurl {
+            url = "mirror://savannah/freetype/freetype-${finalAttrs.version}.tar.xz";
+            hash = "sha256-MkJ+jEcawJWFMhKjeu+BbGC0IFLU2eSCMLqzvfKTbMw=";
+          };
+        });
+      };
       plugins = {
         enableList = [
           "autoinsert" "autowrap" "bracketmatch" "colorpicker" "colorpreview"
