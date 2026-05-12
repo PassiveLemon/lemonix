@@ -1,4 +1,5 @@
 local awful = require("awful")
+local gears = require("gears")
 
 local user = { }
 
@@ -44,7 +45,13 @@ user.signal = {
 
 awful.spawn.with_shell("autorandr -l Default")
 awful.spawn.with_shell("pidof -q xss-lock || xss-lock awesome-client 'awesome.emit_signal(\"ui::lock::toggle\")' &")
--- awful.spawn.with_shell("pidof -q fusuma || fusuma -d") -- I pretty much forget it exists anyways, but I don't want to completely remove it yet
+
+client.connect_signal("mouse::enter", function(c)
+  if (c.instance == "steamwebhelper") or (c.class == "steam") then
+    c.maximize = true
+    c.maximize = false
+  end
+end)
 
 return user
 

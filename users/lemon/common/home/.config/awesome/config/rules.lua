@@ -149,7 +149,7 @@ local function screen_collision(c, s)
   local c_r = c.x + c.width
   local s_l = s.geometry.x
   local s_r = s.geometry.x + s.geometry.width
-  return c_l < s_r and c_r > s_l
+  return (c_l < s_r) and (c_r > s_l)
 end
 
 local function wibar_layer(c)
@@ -217,6 +217,7 @@ local function activate_under_pointer()
   local c = mouse.current_client
   if c ~= nil then
     c:activate({ context = "mouse_enter", raise = false })
+    c:emit_signal("mouse::enter")
   end
 end
 

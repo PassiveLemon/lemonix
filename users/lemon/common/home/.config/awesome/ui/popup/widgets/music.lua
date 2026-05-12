@@ -124,12 +124,12 @@ local function toggle_updater(pm)
 end
 
 local function position_updater(pm)
-  if (pm.player.position == "") or (pm.media.length == "") then
-    position_slider.visible = false
-  else
+  if pm.player.position and pm.media.length then
     position_slider.visible = true
     position_slider:get_children_by_id("slider")[1]._private.value = h.round(((pm.player.position / pm.media.length) * 100), 3)
     position_slider:emit_signal("widget::redraw_needed")
+  else
+    position_slider.visible = false
   end
 end
 

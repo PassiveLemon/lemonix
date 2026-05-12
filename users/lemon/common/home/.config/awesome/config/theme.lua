@@ -86,7 +86,7 @@ theme.margins = 4
 -- Signal
 -- List of players to track into the mpris signal. Highest priority active player is the "global" player, priority decreases with each entry. Names should be lowercased
 -- %all% bypasses this for controls
-theme.mpris_players = { "feishin" }
+theme.mpris_players = { "firefox", "feishin" }
 -- Only allow players in theme.mpris_players to be initialized
 theme.mpris_strict_players = true
 -- The directory to "cache" album art. Defaults to a /tmp directory. If not in /tmp, the cache won't get cleaned
