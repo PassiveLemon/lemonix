@@ -2,6 +2,7 @@ local awful = require("awful")
 local gears = require("gears")
 local b = require("beautiful")
 local wibox = require("wibox")
+local naughty = require("naughty")
 
 local click_to_hide = require("modules.click_to_hide")
 
@@ -14,6 +15,10 @@ local dpi = b.xresources.apply_dpi
 -- TODO: This is turning into a mess. Try to refactor the widget wrappers
 
 local h = { }
+
+function h.debug(title, body)
+  naughty.notify({ title = tostring(title) or "", text = tostring(body) or "" })
+end
 
 function h.margin(widget_pass, conf_in)
   local conf = conf_in or { }
