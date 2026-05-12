@@ -413,24 +413,24 @@ function h.clamp(number, bottom, top)
   return number, false
 end
 
--- I can't really think of a better name for what this does because it does it in a weird way i guess
-function h.convert(number, ibottom, itop, obottom, otop)
+-- Scale a number from one to another, so a 50 in a 0-100 scale becomes 32767.5 in a 0-65535 scale. Plugging in that same new value should return the initial value
+function h.scale(number, ibottom, itop, obottom, otop)
   local _, i_clamped = h.clamp(number, ibottom, itop)
   -- Don't divide by zero
   if ibottom == 0 then
-    itop = 1
+    ibottom = 1
   end
   if obottom == 0 then
     obottom = 1
   end
-  local i_ratio = (itop / ibottom)
-  local o_ratio = (otop / obottom)
-  -- Determine which way to lerp depending on which range the number is part of
+  -- Determine which way to scale depending on which range the number is part of
   if not i_clamped then
-    local scale = number / i_ratio
+    -- New scale in a 0-1 unit scale
+    local scale = number / itop
+    -- Multiply onto target scale
     return (scale * otop)
   else
-    local scale = number / o_ratio
+    local scale = number / otop
     return (scale * itop)
   end
 end

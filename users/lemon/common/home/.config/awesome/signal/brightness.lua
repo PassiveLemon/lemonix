@@ -5,7 +5,6 @@ local h = require("helpers")
 local user = require("config.user")
 
 local value = user.signal.default_brightness
-local max = 100
 
 local function emit()
   awesome.emit_signal("signal::peripheral::brightness::value", value)
@@ -13,11 +12,8 @@ end
 
 local function brightness()
   awful.spawn.easy_async("brightnessctl get", function(cur_stdout)
-    local cur = cur_stdout:gsub("\n", "")
-    awful.spawn.easy_async("brightnessctl max", function(max_stdout)
-      max = max_stdout:gsub("\n", "")
-      value = h.round(h.convert(cur, 0, 100, 0, 65535), 0) or 0
-    end)
+  local cur = cur_stdout:gsub("\n", "")
+    value = h.round(h.scale(tonumber(cur), 0, 100, 0, 65535), 0) or 0
   end)
 end
 
@@ -48,8 +44,8 @@ end)
 
 awesome.connect_signal("signal::peripheral::brightness", function(brightness_new)
   brightness_timer_wrapper(function()
-    awful.spawn("brightnessctl set " .. h.convert(brightness_new, 0, 100, 0, 65535))
     value = brightness_new
+    awful.spawn("brightnessctl set " .. h.scale(brightness_new, 0, 100, 0, 65535))
   end)
 end)
 
@@ -57,7 +53,7 @@ awesome.connect_signal("signal::peripheral::brightness::step", function(step)
   brightness_timer_wrapper(function()
     local to_value = value + (step or 0)
     value = h.clamp(to_value, 0, 100)
-    awful.spawn("brightnessctl set " .. h.convert(value, 0, 100, 0, 65535))
+    awful.spawn("brightnessctl set " .. h.scale(value, 0, 100, 0, 65535))
   end)
 end)
 
