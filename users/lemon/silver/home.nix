@@ -47,15 +47,11 @@
       };
     };
   };
+
   services = {
-    easyeffects = {
-      enable = true;
-      package = pkgs.easyeffects.override {
-        # https://github.com/NixOS/nixpkgs/pull/511820
-        speexdsp = pkgs.speexdsp.override { withFftw3 = false; };
-      };
-    };
+    easyeffects.enable = true;
   };
+
   xdg = {
     desktopEntries."CEmu" = {
       name = "CEmu";
