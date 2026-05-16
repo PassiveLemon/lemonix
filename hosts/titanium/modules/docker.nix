@@ -80,7 +80,6 @@
       "Z /data/Media 770 docker docker-management - -"
       "Z /data/Media/Comics/Manga 770 1000 docker-management - -"
 
-      "Z /data/docker/volumes/library/Jellystat/db 770 999 docker-management - -"
       "Z /data/docker/volumes/discovery/KamiYomu 770 1000 docker-management - -"
       "z /data/docker/volumes/networking/Traefik/acme.json 600 docker docker-management - -"
       "Z /data/docker/volumes/streaming/Invidious/postgresdata 770 999 docker-management - -"

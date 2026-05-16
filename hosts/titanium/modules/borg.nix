@@ -65,7 +65,7 @@
   systemd = {
     tmpfiles.rules = [
       "Z /data/BorgBackups 750 borg borg-management - -"
-      "Z /data/BorgMount 750 borg borg-management - -"
+      "z /data/BorgMount 750 borg borg-management - -"
     ];
     services.borgbackup-job-docker-local = {
       serviceConfig = {

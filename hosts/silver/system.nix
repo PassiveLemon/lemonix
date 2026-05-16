@@ -104,9 +104,7 @@
     tmpfiles.rules = [
       "z /data 775 root root - -"
       "z /data/HDD2TBEXT4 775 root users - -"
-      "Z /data/BACKUPDRIVE 770 root borg-management - -"
-
-      "Z /data/HDD2TBEXT4/SteamLibrary 770 lemon users - -"
+      "z /data/BACKUPDRIVE 770 root borg-management - -"
     ];
   };
 
