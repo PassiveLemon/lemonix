@@ -35,7 +35,7 @@
 
   environment = {
     systemPackages = with pkgs; [
-      nano p7zip git curl dig networkmanager
+      nano git curl dig networkmanager p7zip unrar unzip
       htop iotop lm_sensors smartmontools neofetch
       stress sbctl
     ];
