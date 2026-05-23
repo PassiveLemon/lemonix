@@ -16,9 +16,7 @@ in
   config = mkIf cfg.enable (mkMerge [
     (mkIf cfg.desktop.enable {
       home.packages = with pkgs; [
-        # https://github.com/NixOS/nixpkgs/issues/514113
-        # I could override openldap, but I hardly use bottles anyways
-        steam heroic # (bottles.override { removeWarningPopup = true; })
+        steam heroic (bottles.override { removeWarningPopup = true; })
         r2modman limo
         inputs.lemonake.packages.${system}.gdlauncher-carbon
         ludusavi
@@ -37,6 +35,14 @@ in
           "x-scheme-handler/nxm" = "limo.desktop";
         };
       };
+      # https://github.com/NixOS/nixpkgs/issues/514113
+      nixpkgs.overlays = [
+        (_: prev: {
+          openldap = prev.openldap.overrideAttrs {
+            doCheck = false;
+          };
+        })
+      ];
     })
     (mkIf cfg.vr.enable {
       home.packages = with pkgs; [
