@@ -35,14 +35,6 @@ in
           "x-scheme-handler/nxm" = "limo.desktop";
         };
       };
-      # https://github.com/NixOS/nixpkgs/issues/514113
-      nixpkgs.overlays = [
-        (_: prev: {
-          openldap = prev.openldap.overrideAttrs {
-            doCheck = false;
-          };
-        })
-      ];
     })
     (mkIf cfg.vr.enable {
       home.packages = with pkgs; [

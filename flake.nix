@@ -1,13 +1,12 @@
 {
   inputs = {
-    nixos-old.url = "github:nixos/nixpkgs/nixos-24.05";
-    nixos.url = "github:nixos/nixpkgs/nixos-25.11";
-    nixpkgs.url = "github:nixos/nixpkgs/nixpkgs-unstable";
+    nixos.url = "github:nixos/nixpkgs/nixos-26.05";
+    nixpkgs.url = "github:nixos/nixpkgs/release-26.05";
     master.url = "github:nixos/nixpkgs";
     nixos-hardware.url = "github:nixos/nixos-hardware";
 
     home-manager = {
-      url = "github:nix-community/home-manager";
+      url = "github:nix-community/home-manager/release-26.05";
       inputs.nixpkgs.follows = "nixpkgs";
     };
     lemonake = {

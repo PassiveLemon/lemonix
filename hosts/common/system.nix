@@ -36,7 +36,7 @@
   environment = {
     systemPackages = with pkgs; [
       nano git curl dig networkmanager p7zip unrar unzip
-      htop iotop lm_sensors smartmontools neofetch
+      htop iotop lm_sensors smartmontools fastfetch
       stress sbctl
     ];
     shells = with pkgs; [ bashInteractive ];
@@ -70,8 +70,7 @@
   };
 
   systemd = {
-    # https://github.com/NixOS/nixpkgs/issues/469102
-    enableStrictShellChecks = false;
+    enableStrictShellChecks = true;
     oomd = {
       enable = true;
       enableRootSlice = true;

@@ -1,4 +1,4 @@
-{ config, pkgs, ... }: {
+{ pkgs, ... }: {
   imports = [
     ./hardware-configuration.nix
     ../common/system.nix
@@ -86,14 +86,6 @@
   hardware = {
     uinput.enable = true;
     nvidia = {
-      # Pin to good version: https://github.com/yshui/picom/issues/1488 and https://github.com/NixOS/nixpkgs/issues/467814
-      package = config.boot.kernelPackages.nvidiaPackages.mkDriver {
-        version = "595.45.04";
-        sha256_64bit = "sha256-zUllSSRsuio7dSkcbBTuxF+dN12d6jEPE0WgGvVOj14=";
-        openSha256 = "sha256-uqNfImwTKhK8gncUdP1TPp0D6Gog4MSeIJMZQiJWDoE=";
-        settingsSha256 = "sha256-Y45pryyM+6ZTJyRaRF3LMKaiIWxB5gF5gGEEcQVr9nA=";
-        usePersistenced = false;
-      };
       open = true;
       modesetting.enable = true;
       powerManagement.enable = true;
