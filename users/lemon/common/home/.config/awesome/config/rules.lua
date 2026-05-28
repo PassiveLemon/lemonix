@@ -13,13 +13,14 @@ local dpi = b.xresources.apply_dpi
 --
 
 ruled.client.connect_signal("request::rules", function()
-  -- All clients.
+  -- All clients
   ruled.client.append_rule({
     id = "global",
     rule = { },
     properties = {
       screen = awful.screen.preferred,
       focus = awful.client.focus.filter,
+      placement = awful.placement.centered+awful.placement.no_offscreen,
       raise = true,
       size_hints_honor = false,
       honor_workarea = true,
@@ -37,7 +38,6 @@ ruled.client.connect_signal("request::rules", function()
     },
     properties = {
       floating = true,
-      placement = awful.placement.centered+awful.placement.no_offscreen,
     },
   })
 
@@ -66,29 +66,11 @@ ruled.client.connect_signal("request::rules", function()
       class    = "steam",
     },
     except = {
-      -- The exact match is necessary. Otherwise, the "Steam Settings" window name would be excepted
+      -- The exact match is necessary, otherwise the "Steam Settings" window name would be accepted
       name = "^Steam$",
     },
     properties = {
       floating = true,
-      placement = awful.placement.centered+awful.placement.no_offscreen,
-    },
-  })
-
-  -- Float, remove border, and widen kruler to screen width
-  ruled.client.append_rule({
-    id = "kruler",
-    rule = {
-      instance = "kruler",
-      class    = "kruler",
-    },
-    properties = {
-      floating = true,
-      placement = awful.placement.left+awful.placement.no_offscreen,
-      width = awful.screen.focused().geometry.width,
-      height = dpi(75),
-      shape = gears.shape.rectangle,
-      border_width = dpi(0),
     },
   })
 end)
@@ -104,13 +86,13 @@ client.connect_signal("request::manage", function(c)
     c:activate()
   end
   -- The jank section
-  -- Sober will have a transparent bar the height of the wibar at the bottom. I guess re-fullscreening updates it to draw?
+  -- Sober will have a transparent bar the height of the wibar at the bottom. I guess this triggers it to draw?
   if (c.instance == "sober") or (c.class == "org.vinegarhq.Sober") then
     c.fullscreen = false
     c.fullscreen = true
   end
-  -- When loupe is started from a file manager, it doesn't follow the AWM placement
-  if (c.instance == "loupe") or (c.class == "loupe") then
+  -- Some floating clients dont spawn centered for whatever reason
+  if c.floating then
     c.minimized = true
     c.hidden = true
     gears.timer.start_new(0.15, function()
@@ -127,7 +109,7 @@ end)
 -- Fullscreening and wibar
 --
 
--- Actually fullscreen newly managed clients
+-- Actually fullscreen new clients
 client.connect_signal("request::manage", function(c)
   local s = awful.screen.focused()
   if c.fullscreen then
