@@ -19,8 +19,8 @@
     windowManager.awesome = {
       enable = true;
       package = inputs.lemonake.packages.${system}.awesome-luajit-git;
-      luaModules = with pkgs; [
-        luajitPackages.luafilesystem
+      luaModules = with pkgs.luajitPackages; [
+        luafilesystem
       ];
     };
   };
@@ -33,9 +33,6 @@
         ];
         extraSearchPaths = [
           inputs.lemonake.packages.${system}.lua-pam-luajit-git
-        ];
-        extraGITypeLibPaths = with pkgs; [
-          networkmanager upower playerctl
         ];
       });
     in {
