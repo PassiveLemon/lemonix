@@ -274,7 +274,7 @@ local mpris_timer = gears.timer({
     emit()
     -- Speed up the poll if media is currently playing
     local cur_timeout = self.timeout
-    if metadata["global"].player.status == "PLAYING" then
+    if metadata["global"] and (metadata["global"].player.status == "PLAYING") then
       self.timeout = 1
     else
       self.timeout = 3

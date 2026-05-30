@@ -216,20 +216,20 @@ local focus_timer = gears.timer({
 -- Across workspace changes
 tag.connect_signal("property::selected", function(t)
   if t.selected then
-    focus_timer:start()
+    focus_timer:again()
   end
 end)
 
 -- After closing clients
 client.connect_signal("request::unmanage", function()
-  focus_timer:start()
+  focus_timer:again()
 end)
 
 -- After moving clients across workspaces
 client.connect_signal("property::tags", function(c)
   -- Floating clients can get stuck behind tiled clients if the check happens while the cursor is not over the new floating client
   if not c.floating then
-    focus_timer:start()
+    focus_timer:again()
   end
 end)
 

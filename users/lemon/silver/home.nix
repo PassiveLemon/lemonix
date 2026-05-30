@@ -14,6 +14,7 @@
       # Miscellaneous
       xclicker zenity ente-auth filezilla
       inputs.lemonake.packages.${system}.nimpad
+      inputs.lemonake.packages.${system}.awmtt-git
     ];
     stateVersion = "26.05"; # Don't change unless you know what you are doing
   };
