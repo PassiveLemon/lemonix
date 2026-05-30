@@ -18,26 +18,28 @@
     enable = true;
     windowManager.awesome = {
       enable = true;
-      package = inputs.lemonake.packages.${system}.awesome-luajit-git;
-      luaModules = with pkgs.luajitPackages; [
-        luafilesystem
-      ];
-    };
-  };
-
-  wayland = {
-    windowManager.somewm = let
-      somewm = (inputs.lemonake.packages.${system}.somewm-git.override {
+      package = inputs.lemonake.packages.${system}.awesome-luajit-git.override {
         extraLuaModules = with pkgs.luajitPackages; [
           luafilesystem
         ];
         extraSearchPaths = [
           inputs.lemonake.packages.${system}.lua-pam-luajit-git
         ];
-      });
-    in {
+      };
+    };
+  };
+
+  wayland = {
+    windowManager.somewm = {
       enable = true;
-      package = somewm;
+      package = inputs.lemonake.packages.${system}.somewm-git.override {
+        extraLuaModules = with pkgs.luajitPackages; [
+          luafilesystem
+        ];
+        extraSearchPaths = [
+          inputs.lemonake.packages.${system}.lua-pam-luajit-git
+        ];
+      };
     };
   };
 
