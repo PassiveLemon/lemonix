@@ -27,15 +27,15 @@
 
   wayland = {
     windowManager.somewm = {
-      enable = false;
-      package = inputs.lemonake.packages.${system}.somewm-git;
-      systemd.useService = true;
-      extraLuaModules = with pkgs.luajitPackages; [
-        luafilesystem
-      ];
-      extraSearchPaths = [
-        inputs.lemonake.packages.${system}.lua-pam-luajit-git
-      ];
+      enable = true;
+      package = inputs.lemonake.packages.${system}.somewm-git.override {
+        extraLuaModules = with pkgs.luajitPackages; [
+          luafilesystem
+        ];
+        extraSearchPaths = [
+          inputs.lemonake.packages.${system}.lua-pam-luajit-git
+        ];
+      };
     };
   };
 
