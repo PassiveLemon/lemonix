@@ -18,5 +18,5 @@ fi
 uwsm start default && uwsm finalize
 
 # If AWM crashes or is killed, we kill the user to prevent unauthorized access.
-# pkill -KILL -u lemon
+pkill -KILL -u lemon
 
