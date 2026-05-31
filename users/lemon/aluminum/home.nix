@@ -72,11 +72,11 @@
       "awesome/config/user.lua" = {
         source = ./home/.config/awesome/config/user.lua;
       };
-      "awesome/ui/init.lua" = {
-        source = ./home/.config/awesome/ui/init.lua;
-      };
       "lite-xl/user.lua" = {
         source = ./home/.config/lite-xl/user.lua;
+      };
+      "somewm/config/user.lua" = {
+        source = ./home/.config/somewm/config/user.lua;
       };
     };
   };

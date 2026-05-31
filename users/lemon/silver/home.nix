@@ -78,7 +78,7 @@
       "awesome/config/user.lua" = {
         source = ./home/.config/awesome/config/user.lua;
       };
-      "awesome/ui/init.lua" = {
+      "awesome/ui/init.lua" = lib.mkForce {
         source = ./home/.config/awesome/ui/init.lua;
       };
       "awesome/ui/resource.lua" = {
@@ -89,6 +89,9 @@
       };
       "lite-xl/user.lua" = {
         source = ./home/.config/lite-xl/user.lua;
+      };
+      "somewm/config/user.lua" = {
+        source = ./home/.config/somewm/config/user.lua;
       };
     };
   };

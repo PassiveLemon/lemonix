@@ -1,4 +1,5 @@
 local awful = require("awful")
+local gears = require("gears")
 
 local user = { }
 
@@ -8,6 +9,10 @@ user.editor = os.getenv("EDITOR") or "nano"
 user.visual_editor = "lite-xl"
 user.editor_cmd = user.terminal .. " -- " .. user.editor
 user.super = "Mod4" -- Windows key
+
+awful.input.tap_to_click = 1
+awful.input.natural_scrolling = 1
+awful.input.accel_speed = 0.3
 
 user.bar = {
   battery = true,
@@ -42,9 +47,19 @@ user.signal = {
   default_brightness = 50,
 }
 
-awful.spawn.with_shell("autorandr -l Default")
-awful.spawn.with_shell("pidof -q xss-lock || xss-lock awesome-client 'awesome.emit_signal(\"ui::lock::toggle\")' &")
--- awful.spawn.with_shell("pidof -q fusuma || fusuma -d") -- I pretty much forget it exists anyways, but I don't want to completely remove it yet
+-- awful.spawn.with_shell("autorandr -l Default")
+-- awful.spawn.with_shell("pidof -q xss-lock || xss-lock awesome-client 'awesome.emit_signal(\"ui::lock::toggle\")' &")
+
+awful.screen.connect_for_each_screen(function(s)
+  s.scale = 1.5
+end)
+
+client.connect_signal("mouse::enter", function(c)
+  if (c.instance == "steamwebhelper") or (c.class == "steam") then
+    c.maximize = true
+    c.maximize = false
+  end
+end)
 
 return user
 

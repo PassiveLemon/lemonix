@@ -75,6 +75,13 @@
       "awesome/liblua_pam.so" = {
         source = "${inputs.lemonake.packages.${system}.lua-pam-luajit-git}/lib/lua/5.1/liblua_pam.so";
       };
+      "somewm/libraries/bling" = {
+        source = inputs.awesomewm-bling;
+        recursive = true;
+      };
+      "somewm/liblua_pam.so" = {
+        source = "${inputs.lemonake.packages.${system}.lua-pam-luajit-git}/lib/lua/5.1/liblua_pam.so";
+      };
     };
   };
 }

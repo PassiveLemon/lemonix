@@ -1,10 +1,10 @@
 { pkgs, ... }: {
   environment = {
     systemPackages = with pkgs; [
+      wlr-randr uwsm
       xss-lock gtk3
       networkmanagerapplet trayscale
       resources baobab
-      uwsm
     ];
   };
 

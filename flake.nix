@@ -10,8 +10,8 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
     lemonake = {
-      url = "github:passivelemon/lemonake";
-      # url = "path:/home/lemon/Documents/GitHub/lemonake";
+      # url = "github:passivelemon/lemonake";
+      url = "path:/home/lemon/Documents/GitHub/lemonake";
       inputs.nixpkgs.follows = "nixpkgs";
     };
     nix-xl = {

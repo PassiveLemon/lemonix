@@ -313,17 +313,14 @@
         "nvfetcher": "nvfetcher"
       },
       "locked": {
-        "lastModified": 1780420876,
-        "narHash": "sha256-5y6x0VuzJYX7US42W8aGDNeH26z8WNaa+jUICM2URTc=",
-        "owner": "passivelemon",
-        "repo": "lemonake",
-        "rev": "4db886e612640e9d946c5e6697fcce4bf05a6c92",
-        "type": "github"
+        "lastModified": 1780421159,
+        "narHash": "sha256-++3Vqh67Nig2JnLktwKwO2RMQA+a+5eyocqsV4tJawY=",
+        "path": "/home/lemon/Documents/GitHub/lemonake",
+        "type": "path"
       },
       "original": {
-        "owner": "passivelemon",
-        "repo": "lemonake",
-        "type": "github"
+        "path": "/home/lemon/Documents/GitHub/lemonake",
+        "type": "path"
       }
     },
     "master": {
