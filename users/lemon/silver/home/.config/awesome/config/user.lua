@@ -45,7 +45,6 @@ user.signal = {
 
 awful.spawn.with_shell("autorandr -l Default")
 awful.spawn.with_shell("pidof -q xss-lock || xss-lock awesome-client 'awesome.emit_signal(\"ui::lock::toggle\")' &")
-awful.spawn.with_shell("pidof -q nimpad || nimpad -p=/dev/serial/by-id/usb-Arduino_LLC_Arduino_Micro_HIDLD-if00 &")
 
 return user
 

@@ -53,6 +53,22 @@
     easyeffects.enable = true;
   };
 
+  systemd = {
+    user.services.nimpad =  {
+      Unit = {
+        Description = "Nimpad";
+        Wants = [ "graphical-session-pre.target" ];
+        After = [ "graphical-session-pre.target" ];
+      };
+      Install.WantedBy = [ "graphical-session.target" ];
+      Service = {
+        ExecStart = "${lib.getExe inputs.lemonake.packages.${system}.nimpad} -p=/dev/serial/by-id/usb-Arduino_LLC_Arduino_Micro_HIDLD-if00";
+        Restart = "on-failure";
+        RestartSec = 5;
+      };
+    };
+  };
+
   xdg = {
     desktopEntries."CEmu" = {
       name = "CEmu";
