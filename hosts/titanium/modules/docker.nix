@@ -55,8 +55,9 @@
   services = {
     cron.systemCronJobs = [
       # As recommended in https://docs.invidious.io/installation/#highly-recommended
-      "0 2 * * * root docker restart invidious invidious-db invidious-companion"
-      "0 3 * * 6 root /data/Media/Music/rsgain.sh"
+      "0 2 * * *  docker  docker restart invidious invidious-db invidious-companion"
+      "0 3 * * 2  docker  /data/Media/Music/rsgain.sh"
+      "0 3 * * 4  docker  rm -r /data/Media/Music/Soulseek/* && mkdir /data/Media/Music/Soulseek/Incomplete"
     ];
   };
 
