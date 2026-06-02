@@ -48,12 +48,12 @@
     inherit (self) outputs;
     # Not the ideal place to define system but all my machines are the same arch so it works
     system = "x86_64-linux";
-    specialArgs = {
-      inherit self inputs outputs system;
-    };
+    specialArgs = { inherit self inputs outputs system; };
     extraSpecialArgs = specialArgs;
   in
   {
+    overlays = import ./overlays { inherit inputs outputs; };
+
     nixosConfigurations = {
       # Desktop
       "silver" = inputs.nixos.lib.nixosSystem {
@@ -114,20 +114,6 @@
           ./users/lemon/aluminum/default.nix
           ./users/lemon/aluminum/home.nix
         ];
-      };
-    };
-
-    overlays = import ./overlays { inherit inputs outputs; };
-
-    packages.x86_64-linux = let
-      pkgs = import inputs.nixpkgs { system = "x86_64-linux"; };
-    in
-    {
-      rd-titanium = pkgs.writeShellApplication {
-        name = "update";
-        text = ''
-          nixos-rebuild switch --flake .#titanium --target-host root@titanium
-        '';
       };
     };
   };
