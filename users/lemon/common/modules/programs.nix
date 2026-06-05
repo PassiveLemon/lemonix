@@ -135,10 +135,7 @@
           noBlockedMessages.enable = true;
           noReplyMention.enable = true;
           roleColorEverywhere.enable = true;
-          shikiCodeblocks = {
-            enable = true;
-            customTheme = "https://raw.githubusercontent.com/PassiveLemon/lemonix/master/users/lemon/common/home/.vscode/extensions/lemon-color-theme/themes/lemon-color-theme.json";
-          };
+          shikiCodeblocks.enable = true;
           showConnections.enable = true;
           validReply.enable = true;
           viewIcons.enable = true;

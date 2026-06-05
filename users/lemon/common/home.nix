@@ -38,10 +38,6 @@
         source = ./home/.local;
         recursive = true;
       };
-      ".vscode/" = {
-        source = ./home/.vscode;
-        recursive = true;
-      };
       "Documents/" = {
         source = ./home/Documents;
         recursive = true;
