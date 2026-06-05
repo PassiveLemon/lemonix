@@ -32,7 +32,9 @@
   };
 
   systemd = {
-    sleep.extraConfig = "HibernateDelaySec=1.5h";
+    sleep.settings.Sleep = {
+      HibernateDelaySec = "1.5h";
+    };
   };
 }
 
