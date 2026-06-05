@@ -24,6 +24,7 @@
           };
         });
       };
+      fonts.enable = true;
       plugins = {
         enableList = [
           "autoinsert" "autowrap" "bracketmatch" "colorpicker" "colorpreview"
@@ -37,25 +38,18 @@
           "nerdicons" = ../home/.config/lite-xl/plugins/nerdicons.lua;
         };
         languages = {
-          enableList = [ "diff" "env" "ignore" "go" "json" "nim" "sh" "toml" "zig" ]; 
+          enableList = [ "diff" "env" "lua" "ignore" "go" "html" "json" "nim" "sh" "toml" "zig" ]; 
           customEnableList = {
             "containerfile" = ../home/.config/lite-xl/plugins/languages/language_containerfile.lua;
             "nix" = ../home/.config/lite-xl/plugins/languages/language_nix.lua;
             "yaml" = ../home/.config/lite-xl/plugins/languages/language_yaml.lua;
           };
         };
-        evergreen.enableList = [ "html" "lua" ];
-        # formatter.enableList = [ "black" "ruff" ];
+        evergreen.copyLanguages.enable = true;
         lsp = {
           enableList = [ "bashls" "dockerls" "nillsp" "nimlsp" "pyright" "sumneko_lua" "yamlls" ];
           addPackages = true;
         };
-      };
-      libraries.enableList = [ "font_symbols_nerdfont_mono_regular" "tree_sitter" "widget" ];
-      fonts = {
-        font = "FiraCodeNerdFont-Retina";
-        # customFont = { name = "FiraCodeNerdFont-Retina"; value = pkgs.nerd-fonts.fira-code + "/share/fonts/truetype/NerdFonts/FiraCode/FiraCodeNerdFont-Retina.ttf"; };
-        codeFont = "FiraCodeNerdFontMono-Retina";
       };
     };
     firefox = {
