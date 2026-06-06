@@ -30,6 +30,8 @@ in
       authKeyFile = config.age.secrets.tailscaleAuthKey.path;
       extraUpFlags = [
         "--accept-routes"
+      ];
+      extraSetFlags = [
         "--operator=lemon"
       ];
     };
