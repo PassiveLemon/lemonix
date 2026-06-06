@@ -313,11 +313,11 @@
         "nvfetcher": "nvfetcher"
       },
       "locked": {
-        "lastModified": 1780554449,
-        "narHash": "sha256-24sA2Uufw+r6rq/ukL+Q5w++cyFtpnI64q3rJRbWfy4=",
+        "lastModified": 1780677645,
+        "narHash": "sha256-GEFNRWvq7fckzUxyI/oGMMdWrU+IWfAPKqWet4gOaFk=",
         "owner": "passivelemon",
         "repo": "lemonake",
-        "rev": "213eaea9d74de044c802b9b87dd28fecbff1129c",
+        "rev": "15d599226c3ee359cbafc505ca54a52528a3602b",
         "type": "github"
       },
       "original": {
@@ -349,11 +349,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1780625399,
-        "narHash": "sha256-FCfdSdwCffCt1H8ZL1PJ41OkVHpYz2OqjjNUXCIDp+U=",
+        "lastModified": 1780691399,
+        "narHash": "sha256-g3QB/g1koiysn3XZKEOhjv2zxPMpcr6N2AadcmfK5WY=",
         "owner": "passivelemon",
         "repo": "nix-xl",
-        "rev": "568a649f57259f5e056bbd6f1c7843f2934fa506",
+        "rev": "f921470ba550aa1687ec4310561dd7f957477bb5",
         "type": "github"
       },
       "original": {
