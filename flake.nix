@@ -1,5 +1,6 @@
 {
   inputs = {
+    nixos-old.url = "github:nixos/nixpkgs/nixos-25.11";
     nixos.url = "github:nixos/nixpkgs/nixos-26.05";
     nixpkgs.url = "github:nixos/nixpkgs/release-26.05";
     master.url = "github:nixos/nixpkgs";
@@ -52,7 +53,7 @@
     extraSpecialArgs = specialArgs;
   in
   {
-    overlays = import ./overlays { inherit inputs outputs; };
+    overlays = import ./overlays { inherit inputs system; };
 
     nixosConfigurations = {
       # Desktop

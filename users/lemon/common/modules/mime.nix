@@ -2,7 +2,6 @@
 let
   inherit (lib) genAttrs mergeAttrsList;
   genMimeApps = app: types: (genAttrs types (name: app));
-    
 in
 {
   xdg = {
@@ -50,14 +49,16 @@ in
           "video/webm"
           "video/x-matroska"
         ])
+        (genMimeApps "org.lite_xl.lite_xl.desktop" [
+          "application/octet-stream"
+          "text/plain"
+        ])
         {
-          "application/octet-stream" = "org.lite_xl.lite_xl.desktop";
           "application/pdf" = "org.gnome.Papers.desktop";
           "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" = "onlyoffice-desktopeditors.desktop";
           "application/vnd.openxmlformats-officedocument.wordprocessingml.document" = "onlyoffice-desktopeditors.desktop";
           "application/zip" = "xarchiver.desktop";
           "inode/directory" = "pcmanfm.desktop";
-          "text/plain" = "org.lite_xl.lite_xl.desktop";
         }
       ];
     };

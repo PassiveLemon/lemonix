@@ -313,11 +313,11 @@
         "nvfetcher": "nvfetcher"
       },
       "locked": {
-        "lastModified": 1780677645,
-        "narHash": "sha256-GEFNRWvq7fckzUxyI/oGMMdWrU+IWfAPKqWet4gOaFk=",
+        "lastModified": 1781383094,
+        "narHash": "sha256-ubduLpvrXepbsIaoSMA86X4gXrCwvxs7HnzF1C/M+RA=",
         "owner": "passivelemon",
         "repo": "lemonake",
-        "rev": "15d599226c3ee359cbafc505ca54a52528a3602b",
+        "rev": "86d6e1f22aab9a63cc7940bfbd4a77e4d0b779a2",
         "type": "github"
       },
       "original": {
@@ -419,6 +419,22 @@
         "type": "github"
       }
     },
+    "nixos-old": {
+      "locked": {
+        "lastModified": 1780952837,
+        "narHash": "sha256-Fwd1+spDtQ0hDyBwme6ufG3n4mY0UrjjFdYHv+G/Hds=",
+        "owner": "nixos",
+        "repo": "nixpkgs",
+        "rev": "e820eb4a444b46a19b2e03e8dfd2359439ff30fe",
+        "type": "github"
+      },
+      "original": {
+        "owner": "nixos",
+        "ref": "nixos-25.11",
+        "repo": "nixpkgs",
+        "type": "github"
+      }
+    },
     "nixpkgs": {
       "locked": {
         "lastModified": 1765472234,
@@ -512,6 +528,7 @@
       "original": {
         "owner": "Red-M",
         "repo": "nvfetcher",
+        "rev": "a84b3ce67f1d7acd85b3aa2b9967ab91ed6e7a71",
         "type": "github"
       }
     },
@@ -551,6 +568,7 @@
         "nixcord": "nixcord",
         "nixos": "nixos",
         "nixos-hardware": "nixos-hardware",
+        "nixos-old": "nixos-old",
         "nixpkgs": "nixpkgs_3"
       }
     },
