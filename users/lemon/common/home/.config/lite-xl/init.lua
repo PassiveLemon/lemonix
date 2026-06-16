@@ -29,6 +29,7 @@ config.ignore_files = {
 
 config.message_timeout = 2
 
+-- Someday these will actually do something...
 config.plugins.treeview = {
   highlight_focused_file = true,
   expand_dirs_to_focused_file = true,
@@ -42,7 +43,10 @@ config.plugins.exterm = {
   keymap_working = "ctrl+shift+space",
 }
 
-config.plugins.evergreen.warnFallbackColors = false
+config.plugins.evergreen = {
+  warnFallbackColors = false,
+  maxParseTime = 10000
+}
 
 -- Disable stonks
 core.status_view:get_item("doc:lines").get_item = function()
@@ -52,12 +56,6 @@ end
 
 lintplus.load({ "luacheck", "python", "shellcheck" })
 
-lspconfig.bashls.setup()
-lspconfig.dockerls.setup()
-lspconfig.nillsp.setup()
-lspconfig.nimlsp.setup()
-lspconfig.pyright.setup()
-lspconfig.yamlls.setup()
 lspconfig.sumneko_lua.setup({
   name = "lua-language-server",
   language = "lua",

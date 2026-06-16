@@ -27,11 +27,12 @@
       fonts.enable = true;
       plugins = {
         enableList = [
+          # Nerdicons is here just for dep res
           "autoinsert" "autowrap" "bracketmatch" "colorpicker" "colorpreview"
           "eofnewline" "ephemeral_tabs" "editorconfig" "extend_selection_line"
           "force_syntax" "gitdiff_highlight" "gitstatus" "indentguide" "ipc"
-          "lfautoinsert" "lintplus" "litemark" "nerdicons" "open_ext" # Nerdicons is here just for dep res
-          "openfilelocation" "selectionhighlight" "terminal" "treeview-extender"
+          "lfautoinsert" "litemark" "nerdicons" "open_ext" "openfilelocation"
+          "selectionhighlight" "terminal" "treeview-extender"
         ];
         customEnableList = {
           "exterm" = ../home/.config/lite-xl/plugins/exterm.lua;
