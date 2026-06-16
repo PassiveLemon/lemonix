@@ -10,7 +10,7 @@
       easytag
       # Calculator
       cemu-ti
-      inputs.lemonake.packages.${system}.tilp2
+      inputs.lemonake.packages.${system}.tilp2-git
       # Miscellaneous
       xclicker zenity ente-auth filezilla
       inputs.lemonake.packages.${system}.nimpad

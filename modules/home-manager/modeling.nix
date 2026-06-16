@@ -34,7 +34,7 @@ in
       home.packages = with pkgs; [
         blender
         unityhub
-        #inputs.lemonake.packages.${system}.alcom-tag # Build fails and it doesn't look like an easy override fix
+        inputs.lemonake.packages.${system}.alcom-tag
       ];
 
       xdg.mimeApps.defaultApplications = {
