@@ -225,11 +225,11 @@
     "hilbish-promptua": {
       "flake": false,
       "locked": {
-        "lastModified": 1747511341,
-        "narHash": "sha256-m4V4jUgqkYt7OrBcPdsPtKi5WegM1k2mnOtZ3v01yi8=",
+        "lastModified": 1781972231,
+        "narHash": "sha256-N7A0zofPT0Lxd4VHL3n2Ib8Wk1p7Ji4TIZaWKtnoaEk=",
         "owner": "passivelemon",
         "repo": "promptua",
-        "rev": "5607c3fb5162f99d639a166f2a22147dccb12df9",
+        "rev": "13b52ed8d26d61950096ced361fdb206385a4d62",
         "type": "github"
       },
       "original": {
@@ -313,11 +313,11 @@
         "nvfetcher": "nvfetcher"
       },
       "locked": {
-        "lastModified": 1781456899,
-        "narHash": "sha256-9bv/zNQ/j8t2rhvfbpxx9TmD7YIGqkyZLFHsSu6laiM=",
+        "lastModified": 1782009565,
+        "narHash": "sha256-RcXAonrVok8VGELD7GcGCD/PAZHOJ0TknnzwSZXuabY=",
         "owner": "passivelemon",
         "repo": "lemonake",
-        "rev": "2f69a4e2f1fa15c84c163434a2d4a792e6192c5e",
+        "rev": "822d6cc0eb19e54e1ed86df9fe18494a9b60e054",
         "type": "github"
       },
       "original": {

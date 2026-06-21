@@ -4,7 +4,6 @@ local promptua = require("promptua")
 
 hilbish.opts.greeting = false
 hilbish.opts.motd = false
-hilbish.opts.tips = false
 
 promptua.setConfig({
   prompt = {
@@ -44,6 +43,12 @@ promptua.setTheme({
 	{
     provider = "command.execTimeBool",
     separator = "┃ ",
+    format    = "@style@icon@info",
+  },
+  {
+    provider  = "git.dirty",
+    icon      = "*",
+    style     = "red",
     format    = "@style@icon@info",
   },
 	{

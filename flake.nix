@@ -36,10 +36,12 @@
     # Submodules
     awesomewm-bling = {
       url = "github:passivelemon/bling";
+      # url = "path:/home/lemon/Documents/GitHub/bling";
       flake = false;
     };
     hilbish-promptua = {
       url = "github:passivelemon/promptua";
+      # url = "path:/home/lemon/Documents/GitHub/Promptua";
       flake = false;
     };
   };
