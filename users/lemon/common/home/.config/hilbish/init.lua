@@ -1,9 +1,12 @@
+require("completions")
 require("nix")
 
 local promptua = require("promptua")
 
 hilbish.opts.greeting = false
 hilbish.opts.motd = false
+
+hilbish.runner.setCurrent = "hybridRev"
 
 promptua.setConfig({
   prompt = {
@@ -78,6 +81,12 @@ hilbish.alias("ls", "eza -lgF --group-directories-first")
 hilbish.alias("cat", "bat --theme=Lemon")
 hilbish.alias("cdr", "cd $(git rev-parse --show-toplevel)")
 hilbish.alias("rmx", "trash")
+
+-- Nix
+hilbish.alias("nos", "nh os switch ~/Documents/GitHub/lemonix")
+hilbish.alias("nhs", "nh home switch ~/Documents/GitHub/lemonix")
+hilbish.alias("npr", "nixpkgs-review rev --print-result HEAD")
+hilbish.alias("cma", "comma")
 
 -- Docker
 hilbish.alias("dc", "docker compose")

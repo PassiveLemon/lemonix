@@ -5,8 +5,6 @@ local fs = require("fs")
 -- Nix helpers
 --
 
--- TODO: Make a program for these
-
 -- General helper functions
 local function find_in_table(table, value)
   for i, v in ipairs(table) do
@@ -51,12 +49,6 @@ local function simple_arg(args, subcmd)
   end
   return args_str
 end
-
--- Nix related aliases
-hilbish.alias("nos", "nh os switch ~/Documents/GitHub/lemonix")
-hilbish.alias("nhs", "nh home switch ~/Documents/GitHub/lemonix")
-hilbish.alias("npr", "nixpkgs-review rev --print-result HEAD")
-hilbish.alias("cma", "comma")
 
 -- Nix build
 commander.register("nb", function(args)
