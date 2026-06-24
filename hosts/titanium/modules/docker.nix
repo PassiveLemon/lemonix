@@ -1,4 +1,10 @@
 { pkgs, ... }: {
+  environment = {
+    systemPackages = with pkgs; [
+      beets rsgain
+    ];
+  };
+
   networking = {
     firewall.extraCommands = ''
       iptables -N DOCKER-USER || true

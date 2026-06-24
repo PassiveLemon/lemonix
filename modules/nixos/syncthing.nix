@@ -30,11 +30,16 @@ in
           "aluminum-windows" = { id = "RGKBMKP-GU5OK3Q-2NTYZSU-ZDQMU2Q-XV6ABUO-TIIEBYL-J5TQJNB-D43QPA5"; };
           "silver" = { id = "RJUPLXU-KS7PLLI-6OTXT22-W26HMRO-RXMFJ5G-2KU6FEM-G54HQ4D-LXWRBA4"; };
           "titanium" = { id = "KLKITZ4-4XUG2V3-PPBS2QI-O3XNTZX-LVGXDFY-ME2FONR-O4C7RHB-BDQJNQ7"; };
+          "neodymium" = { id = "36NEIOZ-PRLI7IC-SQT5HXB-O5PLGEW-BYGVPK7-YLXKD3F-YI72PZ3-ZOQJ3AF"; }; # Photo backup with Synctrain
         };
         folders = {
           "Shared" = {
             path = "/home/lemon/Shared";
             devices = [ "aluminum" "aluminum-windows" "silver" "titanium" ];
+          };
+          "Phone" = {
+            path = "/home/lemon/Pictures/Phone";
+            devices = [ "silver" "titanium" "neodymium" ];
           };
         };
       };

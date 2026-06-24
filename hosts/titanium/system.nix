@@ -69,6 +69,10 @@
     };
     enableIPv6 = false;
     nameservers = [ "192.168.1.1" "1.1.1.1" "9.9.9.9" ];
+    firewall = {
+      allowedTCPPorts = [ 8384 ];
+      allowedUDPPorts = [ 8384 ];
+    };
   };
 
   users = {
@@ -111,6 +115,10 @@
         ];
       };
     };
+  };
+
+  services = {
+    syncthing.guiAddress = "0.0.0.0:8384";
   };
 
   systemd = {

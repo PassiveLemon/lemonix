@@ -36,6 +36,7 @@
     docker = (repo: {
       inherit repo;
       paths = [
+        "/home/lemon/Pictures/Phone"
         "/data/docker"
         "/data/Media/Music"
       ];
