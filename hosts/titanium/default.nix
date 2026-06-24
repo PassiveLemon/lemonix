@@ -1,12 +1,14 @@
-{ ... }: {
+{ inputs, ... }: {
   imports = [
+    # Doesn't currently have a GPU but one may be added in the future for transcoding and whatnot
+    inputs.nixos-hardware.nixosModules.common-cpu-amd-pstate
+    inputs.nixos-hardware.nixosModules.common-pc-ssd
     ./modules/docker.nix
     ./modules/borg.nix
   ];
 
   lemonix = {
     system = {
-      server.enable = true;
       headless.enable = true;
     };
     agenix.enable = true;

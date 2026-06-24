@@ -62,9 +62,6 @@
       "silver" = inputs.nixos.lib.nixosSystem {
         inherit system specialArgs;
         modules = [
-          inputs.nixos-hardware.nixosModules.common-cpu-amd-pstate
-          inputs.nixos-hardware.nixosModules.common-gpu-nvidia-nonprime
-          inputs.nixos-hardware.nixosModules.common-pc-ssd
           ./hosts/common/default.nix
           ./hosts/silver/default.nix
           ./hosts/silver/system.nix
@@ -75,10 +72,6 @@
       "aluminum" = inputs.nixos.lib.nixosSystem {
         inherit system specialArgs;
         modules = [
-          inputs.nixos-hardware.nixosModules.common-cpu-amd-pstate
-          inputs.nixos-hardware.nixosModules.common-cpu-amd-raphael-igpu
-          inputs.nixos-hardware.nixosModules.common-pc-laptop-ssd
-          inputs.nixos-hardware.nixosModules.framework-13-7040-amd
           ./hosts/common/default.nix
           ./hosts/aluminum/default.nix
           ./hosts/aluminum/system.nix
@@ -89,9 +82,6 @@
       "titanium" = inputs.nixos.lib.nixosSystem {
         inherit system specialArgs;
         modules = [
-          # Doesn't currently have a GPU but one may be added in the future for transcoding and whatnot
-          inputs.nixos-hardware.nixosModules.common-cpu-amd-pstate
-          inputs.nixos-hardware.nixosModules.common-pc-ssd
           ./hosts/common/default.nix
           ./hosts/titanium/default.nix
           ./hosts/titanium/system.nix

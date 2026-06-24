@@ -1,13 +1,13 @@
-{ ... }: {
+{ inputs, ... }: {
   imports = [
+    inputs.nixos-hardware.nixosModules.common-cpu-amd-pstate
+    inputs.nixos-hardware.nixosModules.common-gpu-nvidia-nonprime
+    inputs.nixos-hardware.nixosModules.common-pc-ssd
     ./modules/docker.nix
     ./modules/borg.nix
   ];
 
   lemonix = {
-    system = {
-      server.enable = true;
-    };
     agenix.enable = true;
     lanzaboote.enable = false;
     bluetooth.enable = true;
