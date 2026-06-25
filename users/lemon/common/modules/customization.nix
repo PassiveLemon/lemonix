@@ -23,11 +23,12 @@
   dconf = {
     enable = true;
     settings = {
-      "org/gtk/gtk4/settings/file-chooser" = {
-        sort-directories-first = true;
-        show-hidden = true;
-        show-size-column = true;
-        show-type-column = true;
+      "org/gnome/desktop/interface" = {
+        color-scheme = "prefer-dark";
+      };
+      "org/gnome/desktop/sound" = {
+        event-sounds = false;
+        input-feedback-sounds = false;
       };
       "org/gtk/settings/file-chooser" = {
         sort-directories-first = true;
@@ -35,12 +36,11 @@
         show-size-column = true;
         show-type-column = true;
       };
-      "org/gnome/desktop/interface" = {
-        color-scheme = "prefer-dark";
-      };
-      "org/gnome/desktop/sound" = {
-        event-sounds = false;
-        input-feedback-sounds = false;
+      "org/gtk/gtk4/settings/file-chooser" = {
+        sort-directories-first = true;
+        show-hidden = true;
+        show-size-column = true;
+        show-type-column = true;
       };
     };
   };
@@ -79,17 +79,17 @@
       font = config.gtk.font;
       colorScheme = config.gtk.colorScheme;
       extraConfig = {
-        gtk-toolbar-style = "GTK_TOOLBAR_BOTH";
-        gtk-toolbar-icon-size = "GTK_ICON_SIZE_LARGE_TOOLBAR";
         gtk-button-images = 1;
-        gtk-menu-images = 1;
         gtk-enable-event-sounds = 0;
         gtk-enable-input-feedback-sounds = 0;
+        gtk-menu-images = 1;
+        gtk-titlebar-double-click = "none";
+        gtk-toolbar-icon-size = "GTK_ICON_SIZE_LARGE_TOOLBAR";
+        gtk-toolbar-style = "GTK_TOOLBAR_BOTH";
         gtk-xft-antialias = 1;
         gtk-xft-hinting = 1;
         gtk-xft-hintstyle = "hintslight";
         gtk-xft-rgba = "rgb";
-        gtk-modules = "gail:atk-bridge";
       };
       bookmarks = [
         "file:///home/lemon/.local/share/Trash"

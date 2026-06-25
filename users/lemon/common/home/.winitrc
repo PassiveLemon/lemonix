@@ -6,7 +6,7 @@ export XDG_SESSION_DESKTOP=somewm
 export QT_QPA_PLATFORM=wayland
 
 if [ -z "$DBUS_SESSION_BUS_ADDRESS" ]; then
-    eval "$(dbus-launch --exit-with-session --sh-syntax)"
+  eval "$(dbus-launch --exit-with-session --sh-syntax)"
 fi
 
 systemctl --user import-environment DISPLAY WAYLAND_DISPLAY

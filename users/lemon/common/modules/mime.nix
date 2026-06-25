@@ -31,7 +31,7 @@ in
           "image/svg+xml"
           "image/webp"
         ])
-        (genMimeApps "mpv.desktop" [
+        (genMimeApps "io.github.celluloid_player.Celluloid.desktop" [
           "audio/flac"
           "audio/matroska"
           "audio/mpeg"
@@ -66,8 +66,32 @@ in
       "mimeapps.list".force = true;
     };
     desktopEntries = {
+      "tym-daemon" = {
+        name = "tym(daemon)";
+        noDisplay = true;
+      };
       "pcmanfm-desktop-pref" = {
         name = "Desktop Preferences";
+        noDisplay = true;
+      };
+      "PrusaGcodeviewer" = {
+        name = "Prusa GCode viewer";
+        noDisplay = true;
+      };
+      "scilab-cli" = {
+        name = "Scilab CLI";
+        noDisplay = true;
+      };
+      "scilab-adv-cli" = {
+        name = "Scilab advanced CLI";
+        noDisplay = true;
+      };
+      "scinotes" = {
+        name = "Scinotes";
+        noDisplay = true;
+      };
+      "xcos" = {
+        name = "Xcos";
         noDisplay = true;
       };
     };

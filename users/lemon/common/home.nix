@@ -1,4 +1,4 @@
-{ inputs, outputs, pkgs, ... }: {
+{ inputs, outputs, system, pkgs, ... }: {
   imports = [
     ./modules/customization.nix
     ./modules/desktop.nix
@@ -9,7 +9,8 @@
   home = {
     packages = with pkgs; [
       # Terminal
-      tym hilbish comma fend
+      inputs.lemonake.packages.${system}.hilbish-git
+      tym comma fend
       nh eza bat trashy pamixer imagemagick
       # File/storage
       pcmanfm xarchiver localsend
@@ -23,7 +24,7 @@
       feishin
       # Image/Video
       loupe flameshot papers gimp drawy
-      mpv kdePackages.kdenlive
+      celluloid kdePackages.kdenlive
       # School
       ltspice digital scilab-bin
     ];

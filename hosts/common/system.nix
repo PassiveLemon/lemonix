@@ -23,10 +23,12 @@
   i18n.defaultLocale = "en_US.UTF-8";
 
   networking = {
-    networkmanager.enable = true;
+    networkmanager = {
+      enable = true;
+      insertNameservers = config.networking.nameservers;
+    };
     firewall.enable = true;
     usePredictableInterfaceNames = true;
-    networkmanager.insertNameservers = config.networking.nameservers;
   };
 
   users = {
