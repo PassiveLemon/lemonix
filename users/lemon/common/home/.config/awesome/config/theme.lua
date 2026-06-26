@@ -112,9 +112,6 @@ end)
 
 theme.wallpaper = h.join_path(os.getenv("HOME"), "/.wallpaper-image")
 theme.lockscreen = h.join_path(os.getenv("HOME"), "/.lockscreen-image")
-if not h.is_file(theme.lockscreen) then
-  awful.spawn.with_shell("convert " .. theme.wallpaper .. " -filter Gaussian -blur 0x6 -fill 222222c1 -colorize 50% " .. theme.lockscreen)
-end
 
 screen.connect_signal("request::wallpaper", function(s)
   awful.wallpaper({
@@ -126,11 +123,6 @@ screen.connect_signal("request::wallpaper", function(s)
       tiled = false,
       {
         widget = wibox.widget.imagebox,
-        -- Breaks awm
-        -- image = gears.surface.crop_surface({
-        --   surface = gears.surface.load_uncached(theme.wallpaper),
-        --   ratio = s.geometry.width/s.geometry.height,
-        -- }),
         image = theme.wallpaper,
         upscale = true,
         downscale = true,

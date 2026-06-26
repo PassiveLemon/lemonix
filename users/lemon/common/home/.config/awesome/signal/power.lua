@@ -2,6 +2,7 @@ local gears = require("gears")
 local naughty = require("naughty")
 
 local h = require("helpers")
+
 local upower = require("lgi").require("UPowerGlib")
 
 local function emit(ac, perc, time)

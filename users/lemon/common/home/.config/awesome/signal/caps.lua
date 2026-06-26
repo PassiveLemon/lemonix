@@ -1,19 +1,20 @@
 local awful = require("awful")
 local gears = require("gears")
 
-local caps_cache = false
+-- State
+local caps_state = false
 
 local function emit()
-  awesome.emit_signal("signal::peripheral::caps::state", caps_cache)
+  awesome.emit_signal("signal::peripheral::caps::state", caps_state)
 end
 
 local function caps_query()
   awful.spawn.easy_async_with_shell("xset q | grep Caps | awk '{print $4}'", function(caps_stdout)
     local caps = caps_stdout:gsub("\n", "")
     if caps == "on" then
-      caps_cache = true
+      caps_state = true
     else
-      caps_cache = false
+      caps_state = false
     end
     emit()
   end)
@@ -31,7 +32,7 @@ local caps_query_timer = gears.timer({
 
 -- Nifty function to just make the caps signals much more responsive due to delays with detecting caps lock
 local function caps()
-  caps_cache = not caps_cache
+  caps_state = not caps_state
   emit()
 end
 

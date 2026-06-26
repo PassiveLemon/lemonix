@@ -5,6 +5,7 @@
       networkmanagerapplet trayscale
       resources baobab
       uwsm
+      ffmpegthumbnailer # https://github.com/NixOS/nixpkgs/pull/509742
     ];
   };
 

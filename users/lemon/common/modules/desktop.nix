@@ -19,6 +19,9 @@
     windowManager.awesome = {
       enable = true;
       package = inputs.lemonake.packages.${system}.awesome-luajit-git.override {
+        extraGITypeLibPaths = with pkgs.astal; [
+          wireplumber
+        ];
         extraLuaModules = with pkgs.luajitPackages; [
           luafilesystem
         ];
