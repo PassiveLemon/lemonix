@@ -21,6 +21,7 @@
       package = inputs.lemonake.packages.${system}.awesome-luajit-git.override {
         extraGITypeLibPaths = with pkgs.astal; [
           wireplumber
+          inputs.passivelemon-nixpkgs.legacyPackages.${system}.astal.brightness # https://github.com/NixOS/nixpkgs/pull/535870
         ];
         extraLuaModules = with pkgs.luajitPackages; [
           luafilesystem

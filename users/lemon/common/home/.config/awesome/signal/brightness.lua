@@ -1,9 +1,12 @@
-local awful = require("awful")
 local gears = require("gears")
 
 local h = require("helpers")
 local user = require("config.user")
 
+local ast_brightness = require("lgi").require("AstalBrightness")
+local b_screen = ast_brightness.get_default().screen
+
+-- State
 local value = user.signal.default_brightness
 
 local function emit()
@@ -11,10 +14,8 @@ local function emit()
 end
 
 local function brightness()
-  awful.spawn.easy_async("brightnessctl get", function(cur_stdout)
-  local cur = cur_stdout:gsub("\n", "")
-    value = h.round(h.scale(tonumber(cur), 0, 100, 0, 65535), 0) or 0
-  end)
+  local valuex = b_screen.brightness or value
+  value = h.round((valuex * 100), 0)
 end
 
 brightness()
@@ -44,16 +45,15 @@ end)
 
 awesome.connect_signal("signal::peripheral::brightness", function(brightness_new)
   brightness_timer_wrapper(function()
-    value = brightness_new
-    awful.spawn("brightnessctl set " .. h.scale(brightness_new, 0, 100, 0, 65535))
+    value = h.clamp(brightness_new, 0, 100)
+    b_screen:set_brightness(value / 100)
   end)
 end)
 
 awesome.connect_signal("signal::peripheral::brightness::step", function(step)
   brightness_timer_wrapper(function()
-    local to_value = value + (step or 0)
-    value = h.clamp(to_value, 0, 100)
-    awful.spawn("brightnessctl set " .. h.scale(value, 0, 100, 0, 65535))
+    value = h.clamp((value + step), 0, 100)
+    b_screen:set_brightness(value / 100)
   end)
 end)
 
