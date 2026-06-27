@@ -223,6 +223,7 @@ awful.screen.connect_for_each_screen(function(s)
 
   awesome.connect_signal("ui::lock::state", function(force)
     main.visible = force or false
+    s.wibar.visible = not main.visible
   end)
 end)
 
