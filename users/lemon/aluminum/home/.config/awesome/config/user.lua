@@ -1,5 +1,4 @@
 local awful = require("awful")
-local gears = require("gears")
 
 local user = { }
 
@@ -46,10 +45,11 @@ user.signal = {
 awful.spawn.with_shell("autorandr -l Default")
 awful.spawn.with_shell("pidof -q xss-lock || xss-lock awesome-client 'awesome.emit_signal(\"ui::lock::toggle\")' &")
 
+-- https://github.com/ValveSoftware/steam-for-linux/issues/10806
 client.connect_signal("mouse::enter", function(c)
   if (c.instance == "steamwebhelper") or (c.class == "steam") then
-    c.maximize = true
-    c.maximize = false
+    c.maximized = true
+    c.maximized = false
   end
 end)
 
