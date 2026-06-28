@@ -1,6 +1,7 @@
 { ... }: {
   imports = [
-    ../../modules/nixos/default.nix
+    ../../modules/nixos
+    ../../overlays
   ];
 }
 

@@ -1,4 +1,4 @@
-{ inputs, outputs, system, pkgs, ... }: {
+{ inputs, system, pkgs, ... }: {
   imports = [
     ./modules/customization.nix
     ./modules/desktop.nix
@@ -60,11 +60,7 @@
       allowUnfree = true;
       allowUnfreePredicate = (_: true);
     };
-    overlays = [
-      outputs.overlays.packages
-    ];
   };
-
   news.display = "silent";
   manual.manpages.enable = false;
 }

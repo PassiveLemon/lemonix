@@ -1,4 +1,5 @@
-{ inputs, system, ... }: {
+{ inputs, system, ... }:
+let
   packages = final: prev: {
     # Overlay use of a package on the nixos-(stable) branch. Mainly used for the system part of the setup.
     stable = import inputs.nixos { inherit system; };
@@ -8,6 +9,13 @@
     master = import inputs.master { inherit system; };
     # Overlay use of a package on the previous release.
     old = import inputs.nixos-old { inherit system; };
+  };
+in
+{
+  nixpkgs = {
+    overlays = [
+      packages
+    ];
   };
 }
 
