@@ -4,6 +4,10 @@
     ../../modules/nixos/bluetooth.nix
   ];
 
+  programs = {
+    librepods.enable = true;
+  };
+
   location.provider = "geoclue2";
   services = {
     logind.settings.Login = {
