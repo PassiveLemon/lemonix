@@ -11,11 +11,10 @@
       # Terminal
       inputs.lemonake.packages.${system}.hilbish-git
       tym comma fend
-      nh eza bat trashy pamixer imagemagick
+      nh eza bat trashy
       # File/storage
       pcmanfm xarchiver localsend
       gparted
-      ffmpegthumbnailer # https://github.com/NixOS/nixpkgs/pull/509742
       # Office/Development
       obsidian drawio github-desktop
       onlyoffice-desktopeditors onlyoffice-documentserver

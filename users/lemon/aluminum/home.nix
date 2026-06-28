@@ -6,7 +6,6 @@
 
   home = {
     packages = with pkgs; [
-      brightnessctl
       fusuma librepods
     ];
     file = {

@@ -32,6 +32,10 @@
       url = "github:kaylorben/nixcord";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    passivelemon-nixpkgs = {
+      url = "github:passivelemon/nixpkgs/astal-brightness";
+      # url = "path:/home/lemon/Documents/GitHub/nixpkgs";
+    };
 
     # Submodules
     awesomewm-bling = {

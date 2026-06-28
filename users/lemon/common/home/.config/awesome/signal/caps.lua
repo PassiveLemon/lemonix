@@ -1,22 +1,22 @@
-local awful = require("awful")
 local gears = require("gears")
 
-local caps_cache = false
+local gdk = require("lgi").require("Gdk") -- AWM is built with gtk3
+local display = gdk.Display.get_default()
+local keymap = gdk.Keymap.get_for_display(display)
+
+-- State
+local caps_state = false
 
 local function emit()
-  awesome.emit_signal("signal::peripheral::caps::state", caps_cache)
+  awesome.emit_signal("signal::peripheral::caps::state", caps_state)
 end
 
 local function caps_query()
-  awful.spawn.easy_async_with_shell("xset q | grep Caps | awk '{print $4}'", function(caps_stdout)
-    local caps = caps_stdout:gsub("\n", "")
-    if caps == "on" then
-      caps_cache = true
-    else
-      caps_cache = false
-    end
-    emit()
-  end)
+  local new_state = keymap:get_caps_lock_state()
+  if caps_state ~= new_state then
+    caps_state = new_state
+  end
+  emit()
 end
 
 caps_query()
@@ -29,9 +29,9 @@ local caps_query_timer = gears.timer({
   end,
 })
 
--- Nifty function to just make the caps signals much more responsive due to delays with detecting caps lock
+-- The detected caps lock state does not update immediately so we cache our switched state
 local function caps()
-  caps_cache = not caps_cache
+  caps_state = not caps_state
   emit()
 end
 

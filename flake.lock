@@ -532,6 +532,22 @@
         "type": "github"
       }
     },
+    "passivelemon-nixpkgs": {
+      "locked": {
+        "lastModified": 1782518850,
+        "narHash": "sha256-DEJTTx8SmXb60hwuuZxx9Ww5lRc+1lB7g1SiLtcfDC0=",
+        "owner": "passivelemon",
+        "repo": "nixpkgs",
+        "rev": "f3f810ffa4caa751847539ae71accc03bb78daa9",
+        "type": "github"
+      },
+      "original": {
+        "owner": "passivelemon",
+        "ref": "astal-brightness",
+        "repo": "nixpkgs",
+        "type": "github"
+      }
+    },
     "pre-commit": {
       "inputs": {
         "flake-compat": "flake-compat",
@@ -569,7 +585,8 @@
         "nixos": "nixos",
         "nixos-hardware": "nixos-hardware",
         "nixos-old": "nixos-old",
-        "nixpkgs": "nixpkgs_3"
+        "nixpkgs": "nixpkgs_3",
+        "passivelemon-nixpkgs": "passivelemon-nixpkgs"
       }
     },
     "rust-overlay": {
