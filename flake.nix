@@ -46,68 +46,44 @@
     };
   };
 
-  outputs = { self, ... } @ inputs:
-  let
+  outputs = { self, ... } @ inputs: let
     inherit (self) outputs;
-    # Not the ideal place to define system but all my machines are the same arch so it works
-    system = "x86_64-linux";
-    specialArgs = { inherit self inputs outputs system; };
-    extraSpecialArgs = specialArgs;
-  in
-  {
-    overlays = import ./overlays { inherit inputs system; };
 
-    nixosConfigurations = {
-      # Desktop
-      "silver" = inputs.nixos.lib.nixosSystem {
-        inherit system specialArgs;
-        modules = [
-          ./hosts/common/default.nix
-          ./hosts/silver/default.nix
-          ./hosts/silver/system.nix
-          ./hosts/silver/user.nix
-        ];
-      };
-      # Framework Laptop
-      "aluminum" = inputs.nixos.lib.nixosSystem {
-        inherit system specialArgs;
-        modules = [
-          ./hosts/common/default.nix
-          ./hosts/aluminum/default.nix
-          ./hosts/aluminum/system.nix
-          ./hosts/aluminum/user.nix
-        ];
-      };
-      # Homeserver
-      "titanium" = inputs.nixos.lib.nixosSystem {
-        inherit system specialArgs;
-        modules = [
-          ./hosts/common/default.nix
-          ./hosts/titanium/default.nix
-          ./hosts/titanium/system.nix
-        ];
-      };
+    mkNixOS = name: system: inputs.nixos.lib.nixosSystem {
+      system = system;
+      specialArgs = { inherit self inputs outputs system; };
+      modules = [
+        ./hosts/common/default.nix
+        ./hosts/${name}/default.nix
+        ./hosts/${name}/system.nix
+        ./hosts/${name}/user.nix
+      ];
     };
 
+    mkHome = name: host: let
+      # Use the system from the host, but without having to use home-manager as a NixOS module
+      system = self.nixosConfigurations.${host}.pkgs.stdenv.hostPlatform.system;
+    in inputs.home-manager.lib.homeManagerConfiguration {
+      extraSpecialArgs = { inherit self inputs outputs system; };
+      pkgs = import inputs.nixpkgs { inherit system; };
+      modules = [
+        ./users/${name}/common/default.nix
+        ./users/${name}/${host}/default.nix
+        ./users/${name}/${host}/home.nix
+      ];
+    };
+  in {
+    nixosConfigurations = {
+      # Desktop
+      "silver" = mkNixOS "silver" "x86_64-linux";
+      # Framework Laptop
+      "aluminum" = mkNixOS "aluminum" "x86_64-linux";
+      # Homeserver
+      "titanium" = mkNixOS "titanium" "x86_64-linux";
+    };
     homeConfigurations = {
-      "lemon@silver" = inputs.home-manager.lib.homeManagerConfiguration {
-        inherit extraSpecialArgs;
-        pkgs = import inputs.nixpkgs { inherit system; };
-        modules = [
-          ./users/lemon/common/default.nix
-          ./users/lemon/silver/default.nix
-          ./users/lemon/silver/home.nix
-        ];
-      };
-      "lemon@aluminum" = inputs.home-manager.lib.homeManagerConfiguration {
-        inherit extraSpecialArgs;
-        pkgs = import inputs.nixpkgs { inherit system; };
-        modules = [
-          ./users/lemon/common/default.nix
-          ./users/lemon/aluminum/default.nix
-          ./users/lemon/aluminum/home.nix
-        ];
-      };
+      "lemon@silver" = mkHome "lemon" "silver";
+      "lemon@aluminum" = mkHome "lemon" "aluminum";
     };
   };
 }
