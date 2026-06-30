@@ -5,6 +5,7 @@
     inputs.nixos-hardware.nixosModules.common-pc-ssd
     ./modules/docker.nix
     ./modules/borg.nix
+    ./modules/serve.nix
   ];
 
   lemonix = {
