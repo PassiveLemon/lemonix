@@ -1,31 +1,32 @@
 std = "min"
 
-ignore = { "631" }
-
-read_globals = {
-  -- AWM
-  "awesome",
-  "awful",
-  "gears",
-  "naughty",
-  "tag",
-  "wibox",
+ignore = {
+  "631", -- Line too long
 }
 
 globals = {
   -- AWM
-  "screen",
-  "mouse",
-  "root",
+  "awesome",
+  "awful",
   "client",
+  "gears",
+  "mouse",
+  "naughty",
+  "root",
+  "screen",
+  "tag",
+  "wibox",
 
   -- Lite-XL
+  "process",
   "renderer",
+  "system",
+  "PATHSEP",
+  "PLATFORM",
   "SCALE",
   "USERDIR",
-  "PLATFORM",
 
   -- Hilbish
-  "hilbish"
+  "hilbish",
 }
 

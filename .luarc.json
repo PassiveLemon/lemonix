@@ -4,22 +4,23 @@
     // AWM
     "awesome",
     "awful",
+    "client",
     "gears",
+    "mouse",
     "naughty",
+    "root",
+    "screen",
     "tag",
     "wibox",
-    "screen",
-    "mouse",
-    "root",
-    "client",
 
     // Lite-XL
+    "process",
     "renderer",
     "system",
+    "PATHSEP",
+    "PLATFORM",
     "SCALE",
     "USERDIR",
-    "PLATFORM",
-    "PATHSEP",
 
     // Hilbish
     "hilbish"
