@@ -96,6 +96,7 @@
     };
     nixcord = {
       enable = true;
+      discord.vencord.enable = true;
       config = {
         frameless = true;
         disableMinSize = true;
@@ -111,7 +112,7 @@
             anonymiseByDefault = true;
           };
           betterRoleContext.enable = true;
-          ClearURLs.enable = true;
+          clearUrls.enable = true;
           crashHandler.enable = true;
           fakeNitro.enable = true;
           fixSpotifyEmbeds.enable = true;
