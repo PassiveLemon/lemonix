@@ -127,6 +127,7 @@ merge_tables(default_patterns, {
 -- Issues:
 -- 1. Any module arg that does not have a comma before/after will not be colored
 -- 2. When inheriting something like inherit (prevAttrs.cargoDeps) name;, we include the period in the match which messes with the color.
+-- 3. When using variables inline in a path (./users/${name}/${host}/default.nix), the ${} causes the highlighting to break
 
 syntax.add({
   name = "Nix",

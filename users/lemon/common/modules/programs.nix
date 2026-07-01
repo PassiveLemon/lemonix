@@ -27,7 +27,6 @@
       fonts.enable = true;
       plugins = {
         enableList = [
-          # Nerdicons is here just for dep res
           "autoinsert" "autowrap" "bracketmatch" "colorpicker" "colorpreview"
           "eofnewline" "ephemeral_tabs" "editorconfig" "extend_selection_line"
           "force_syntax" "gitdiff_highlight" "gitstatus" "indentguide" "ipc"
@@ -39,7 +38,7 @@
           "nerdicons" = ../home/.config/lite-xl/plugins/nerdicons.lua;
         };
         languages = {
-          enableList = [ "diff" "env" "lua" "ignore" "go" "html" "json" "nim" "sh" "toml" "zig" ]; 
+          enableList = [ "diff" "env" "lua" "go" "html" "json" "nim" "python" "sh" "toml" ]; 
           customEnableList = {
             "containerfile" = ../home/.config/lite-xl/plugins/languages/language_containerfile.lua;
             "nix" = ../home/.config/lite-xl/plugins/languages/language_nix.lua;
@@ -48,8 +47,13 @@
         };
         evergreen.copyLanguages.enable = true;
         lsp = {
-          enableList = [ "bashls" "dockerls" "nillsp" "nimlsp" "pyright" "sumneko_lua" "yamlls" ];
+          enableList = [ "bash_ls" "dockerfile_ls_nodejs" "nil_ls" "nimlsp" "pyright" "lua_ls" "yaml_ls" ];
           addPackages = true;
+        };
+        lintplus = {
+          enableList = [ "luacheck" "shellcheck" ];
+          addPackages = true;
+          copyLanguages.enable = true;
         };
       };
     };

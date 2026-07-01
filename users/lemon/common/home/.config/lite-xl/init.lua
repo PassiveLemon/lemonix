@@ -6,7 +6,6 @@ local keymap = require("core.keymap")
 local style = require("core.style")
 local docview = require("core.docview")
 
-local lintplus = require("plugins.lintplus")
 local lspconfig = require("plugins.lsp.config")
 
 core.reload_module("colors.lemon")
@@ -54,9 +53,7 @@ core.status_view:get_item("doc:lines").get_item = function()
   return { style.text, #dv.doc.lines, " lines" }
 end
 
-lintplus.load({ "luacheck", "python", "shellcheck" })
-
-lspconfig.sumneko_lua.setup({
+lspconfig.lua_ls.setup({
   name = "lua-language-server",
   language = "lua",
   file_patterns = { "%.lua$" },
