@@ -25,14 +25,13 @@
     };
   };
 
-  # binarycache.passivelemon.com:NM3ZERLgd7ag9kcwMoQYszeBTUp+OMmUSGDN5lwWO6I=
-  services.nix-serve = {
-    enable = true;
-    openFirewall = true;
-    secretKeyFile = config.age.secrets.nixServeKey.path;
-  };
-
   services = {
+    # binarycache.passivelemon.com:NM3ZERLgd7ag9kcwMoQYszeBTUp+OMmUSGDN5lwWO6I=
+    nix-serve = {
+      enable = true;
+      openFirewall = true;
+      secretKeyFile = config.age.secrets.nixServeKey.path;
+    };
     cron.systemCronJobs = [
       "0 4 * * *  root  nix flake update --flake /data/lemonix ; nixos-rebuild build --flake /data/lemonix#silver ; nixos-rebuild build --flake /data/lemonix#aluminum"
     ];
