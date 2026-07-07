@@ -37,8 +37,9 @@
 
   environment = {
     systemPackages = with pkgs; [
-      nano git curl dig networkmanager p7zip unrar unzip
-      htop iotop lm_sensors smartmontools fastfetch
+      nano htop networkmanager
+      fastfetch smartmontools lm_sensors
+      git curl dig p7zip unrar unzip
       stress sbctl
     ];
     shells = with pkgs; [ bashInteractive ];
@@ -58,7 +59,6 @@
         "-g" "--avoid" "'^(X|.awesome-wrappe|pipewire|tym|lite-xl)$'"
       ];
     };
-    dbus.implementation = "broker";
     irqbalance.enable = true;
     gvfs.enable = true;
     devmon.enable = true;

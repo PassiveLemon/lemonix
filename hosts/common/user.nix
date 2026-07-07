@@ -1,10 +1,10 @@
 { pkgs, ... }: {
   environment = {
     systemPackages = with pkgs; [
-      xss-lock gtk3
+      xss-lock uwsm
       networkmanagerapplet trayscale
       resources baobab
-      uwsm
+      gparted qdiskinfo
       ffmpegthumbnailer # https://github.com/NixOS/nixpkgs/pull/509742
     ];
   };
