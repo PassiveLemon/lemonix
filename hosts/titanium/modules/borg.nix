@@ -59,7 +59,7 @@
     });
   in {
     "docker-local" = docker "ssh://borg@127.0.0.1/data/BorgBackups/titanium";
-    "docker-onsite" = docker "ssh://borg@silver/data/BACKUPDRIVE/BorgBackups/titanium";
+    "docker-onsite" = docker "ssh://borg@silver/data/HDDSEAGATE/BorgBackups/titanium";
     "docker-remote" = docker "ssh://u412758@u412758.your-storagebox.de:23/home/BorgBackups/titanium";
   };
 

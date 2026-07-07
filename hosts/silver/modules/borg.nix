@@ -54,7 +54,8 @@
     });
     docker = (repo: base [
       "/home/docker"
-      "/data/BACKUPDRIVE/ManualBackups"
+      "/data/NVMESABRENT/Media"
+      "/data/HDDSEAGATE/ManualBackups"
     ] [] repo);
     lemon = (repo: base [
       "/home/lemon/Documents"
@@ -69,22 +70,21 @@
       "/home/lemon/.config/r2modmanPlus-local/*/cache"
       "/home/lemon/.local/share/Trash"
       "/home/lemon/.local/share/Steam/steamapps"
-      "/home/lemon/.local/share/Steam/compatibilitytools.d"
     ] repo);
   in {
-    "lemon-local" = lemon "ssh://borg@127.0.0.1/data/BACKUPDRIVE/BorgBackups/silver";
+    "lemon-local" = lemon "ssh://borg@127.0.0.1/data/HDDSEAGATE/BorgBackups/silver";
     "lemon-onsite" = lemon "ssh://borg@titanium/data/BorgBackups/silver";
     "lemon-remote" = lemon "ssh://u412758@u412758.your-storagebox.de:23/home/BorgBackups/silver";
 
-    "docker-local" = docker "ssh://borg@127.0.0.1/data/BACKUPDRIVE/BorgBackups/silver";
+    "docker-local" = docker "ssh://borg@127.0.0.1/data/HDDSEAGATE/BorgBackups/silver";
     "docker-onsite" = docker "ssh://borg@titanium/data/BorgBackups/silver";
     "docker-remote" = docker "ssh://u412758@u412758.your-storagebox.de:23/home/BorgBackups/silver";
   };
 
   systemd = {
     tmpfiles.rules = [
-      "Z /data/BACKUPDRIVE/BorgBackups 750 borg borg-management - -"
-      "z /data/BACKUPDRIVE/BorgMount 750 borg borg-management - -"
+      "Z /data/HDDSEAGATE/BorgBackups 750 borg borg-management - -"
+      "z /data/HDDSEAGATE/BorgMount 750 borg borg-management - -"
     ];
     services.borgbackup-job-docker-onsite = {
       serviceConfig = {

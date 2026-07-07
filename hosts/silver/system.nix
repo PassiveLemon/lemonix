@@ -95,8 +95,9 @@
   systemd = {
     tmpfiles.rules = [
       "z /data 775 root root - -"
-      "z /data/HDD2TBEXT4 775 root users - -"
-      "z /data/BACKUPDRIVE 770 root borg-management - -"
+      "z /data/NVMESABRENT 775 root users - -"
+      "z /data/HDDSEAGATE 775 root users - -"
+      "z /data/HDDTOSHIBA 770 root borg-management - -"
     ];
   };
 
@@ -127,14 +128,20 @@
       fsType = "ext4";
       options = [ "noatime" ];
     };
+    # 1 TB Sabrent Rocket Q
+    "/data/NVMESABRENT" = {
+      device = "/dev/disk/by-uuid/1c5e52ab-6be5-41c1-a4b6-92198e47e572";
+      fsType = "ext4";
+      options = [ "noatime" ];
+    };
     # 2 TB Seagate Barracuda
-    "/data/HDD2TBEXT4" = {
+    "/data/HDDSEAGATE" = {
       device = "/dev/disk/by-uuid/c532ca53-130a-46c6-9e06-3aee4fd8b6e2";
       fsType = "ext4";
       options = [ "noatime" ];
     };
     # 1 TB Toshiba
-    "/data/BACKUPDRIVE" = {
+    "/data/HDDTOSHIBA" = {
       device = "/dev/disk/by-uuid/76946991-d872-4936-82f2-298225ea010b";
       fsType = "ext4";
       options = [ "noatime" ];

@@ -2,8 +2,8 @@
   gtk = {
     gtk3 = {
       bookmarks = [
-        "file:///data/HDD2TBEXT4"
-        "file:///data/BACKUPDRIVE"
+        "file:///data/NVMESABRENT"
+        "file:///data/HDDSEAGATE"
         "file:///home/lemon/.steam/steam/steamapps"
         "sftp://lemon@192.168.1.11/data"
         "sftp://lemon@192.168.1.1"
