@@ -6,20 +6,24 @@
   };
 
   networking = {
-    firewall.extraCommands = ''
-      iptables -N DOCKER-USER || true
-      iptables -F DOCKER-USER
+    firewall = {
+      allowedTCPPorts = [ 2049 ];
+      allowedUDPPorts = [ 2049 ];
+      extraCommands = ''
+        iptables -N DOCKER-USER || true
+        iptables -F DOCKER-USER
 
-      # Allow established connections
-      iptables -A DOCKER-USER -i wlp5s0 -m state --state RELATED,ESTABLISHED -j ACCEPT
+        # Allow established connections
+        iptables -A DOCKER-USER -i wlp5s0 -m state --state RELATED,ESTABLISHED -j ACCEPT
 
-      # Allow from trusted IP ranges
-      iptables -A DOCKER-USER -s 100.64.0.0/24 -j ACCEPT
-      iptables -A DOCKER-USER -s 192.168.1.0/24 -j ACCEPT
+        # Allow from trusted IP ranges
+        iptables -A DOCKER-USER -s 100.64.0.0/24 -j ACCEPT
+        iptables -A DOCKER-USER -s 192.168.1.0/24 -j ACCEPT
 
-      # Drop everything else
-      iptables -A DOCKER-USER -i wlp5s0 -j DROP
-    '';
+        # Drop everything else
+        iptables -A DOCKER-USER -i wlp5s0 -j DROP
+      '';
+    };
   };
 
   users = {
@@ -32,11 +36,34 @@
       "docker" = {
         uid = 1102;
         description = "Docker";
-        home = "/var/empty";
+        home = "/home/docker";
         hashedPassword = "!";
         extraGroups = [ "docker-management" ];
         isNormalUser = true;
       };
+    };
+  };
+
+  services = {
+    cron.systemCronJobs = [
+      # As recommended in https://docs.invidious.io/installation/#highly-recommended
+      "0 2 * * *  docker  docker restart invidious invidious-db invidious-companion"
+      "0 3 * * 2  docker  /data/Media/Music/rsgain.sh"
+      "0 3 * * 4  docker  rm -r /data/Media/Music/Soulseek/* && mkdir /data/Media/Music/Soulseek/Incomplete"
+    ];
+    nfs.server = {
+      enable = true;
+      exports = ''
+        /export/data 192.168.1.10(rw,sync)
+      '';
+    };
+  };
+
+  fileSystems = {
+    "/export/data" = {
+      device = "/data";
+      fsType = "none";
+      options = [ "bind" ];
     };
   };
 
@@ -56,15 +83,6 @@
         ];
       };
     };
-  };
-
-  services = {
-    cron.systemCronJobs = [
-      # As recommended in https://docs.invidious.io/installation/#highly-recommended
-      "0 2 * * *  docker  docker restart invidious invidious-db invidious-companion"
-      "0 3 * * 2  docker  /data/Media/Music/rsgain.sh"
-      "0 3 * * 4  docker  rm -r /data/Media/Music/Soulseek/* && mkdir /data/Media/Music/Soulseek/Incomplete"
-    ];
   };
 
   systemd = {

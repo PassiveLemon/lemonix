@@ -26,11 +26,21 @@
       "docker" = {
         uid = 1102;
         description = "Docker";
-        home = "/var/empty";
+        home = "/home/docker";
         hashedPassword = "!";
         extraGroups = [ "docker-management" ];
         isNormalUser = true;
       };
+    };
+  };
+
+  boot.supportedFilesystems = [ "nfs" ];
+
+  fileSystems = {
+    "/mnt/titanium" = {
+      device = "192.168.1.11:/export/data";
+      fsType = "nfs4";
+      options = [ "noauto" "x-systemd.automount" "x-systemd.idle-timeout=600" ];
     };
   };
 

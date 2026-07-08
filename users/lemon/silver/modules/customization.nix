@@ -5,7 +5,7 @@
         "file:///data/NVMESABRENT"
         "file:///data/HDDSEAGATE"
         "file:///home/lemon/.steam/steam/steamapps"
-        "sftp://lemon@192.168.1.11/data"
+        "file:///mnt/titanium"
         "sftp://lemon@192.168.1.1"
       ];
     };
