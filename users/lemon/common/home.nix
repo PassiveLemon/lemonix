@@ -1,4 +1,4 @@
-{ inputs, system, pkgs, ... }: {
+{ inputs, pkgs, ... }: {
   imports = [
     ./modules/customization.nix
     ./modules/desktop.nix
@@ -10,7 +10,7 @@
     packages = with pkgs; [
       # Terminal
       tym
-      inputs.lemonake.packages.${system}.hilbish-git
+      lemonake.hilbish-git
       nh eza bat comma fend trashy
       # File/storage
       pcmanfm xarchiver localsend

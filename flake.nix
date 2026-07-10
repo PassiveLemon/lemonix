@@ -1,15 +1,15 @@
 {
   inputs = {
-    nixos-old.url = "github:nixos/nixpkgs/nixos-25.11";
     nixos.url = "github:nixos/nixpkgs/nixos-26.05";
-    nixpkgs.url = "github:nixos/nixpkgs/release-26.05";
-    master.url = "github:nixos/nixpkgs";
+    nixpkgs.url = "github:nixos/nixpkgs/nixpkgs-unstable";
+    master.url = "github:nixos/nixpkgs/master";
     nixos-hardware.url = "github:nixos/nixos-hardware";
 
     home-manager = {
-      url = "github:nix-community/home-manager/release-26.05";
+      url = "github:nix-community/home-manager/master";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+
     lemonake = {
       url = "github:passivelemon/lemonake";
       # url = "path:/home/lemon/Documents/GitHub/lemonake";
@@ -20,21 +20,18 @@
       # url = "path:/home/lemon/Documents/GitHub/nix-xl";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-    lanzaboote = {
-      url = "github:nix-community/lanzaboote/v1.0.0";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
-    agenix = {
-      url = "github:ryantm/agenix";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
     nixcord = {
       url = "github:kaylorben/nixcord";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-    passivelemon-nixpkgs = {
-      url = "github:passivelemon/nixpkgs/astal-brightness";
-      # url = "path:/home/lemon/Documents/GitHub/nixpkgs";
+
+    agenix = {
+      url = "github:ryantm/agenix";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+    lanzaboote = {
+      url = "github:nix-community/lanzaboote/v1.0.0";
+      inputs.nixpkgs.follows = "nixpkgs";
     };
 
     # Submodules

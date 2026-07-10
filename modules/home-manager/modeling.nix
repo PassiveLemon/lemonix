@@ -1,4 +1,4 @@
-{ inputs, system, config, lib, pkgs, ... }:
+{ config, lib, pkgs, ... }:
 let
   inherit (lib) mkIf mkEnableOption mkMerge;
   cfg = config.lemonix.modeling;
@@ -34,7 +34,7 @@ in
       home.packages = with pkgs; [
         blender
         unityhub
-        inputs.lemonake.packages.${system}.alcom-tag
+        lemonake.alcom-tag
       ];
 
       xdg.mimeApps.defaultApplications = {

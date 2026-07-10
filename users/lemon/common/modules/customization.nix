@@ -8,6 +8,7 @@
       nerd-fonts.fira-mono
     ];
     pointerCursor = {
+      enable = true;
       name = "volantes_cursors";
       package = pkgs.volantes-cursors;
       gtk.enable = true;

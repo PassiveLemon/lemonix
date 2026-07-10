@@ -1,4 +1,4 @@
-{ inputs, system, config, lib, ... }:
+{ inputs, config, lib, pkgs, ... }:
 let
   inherit (lib) mkIf mkEnableOption mkMerge;
   cfg = config.lemonix.gaming;
@@ -30,7 +30,7 @@ in
         };
         wivrn = {
           enable = true;
-          package = inputs.lemonake.packages.${system}.wivrn.override { cudaSupport = true; };
+          package = pkgs.lemonake.wivrn.override { cudaSupport = true; };
           openFirewall = false;
           autoStart = true;
           highPriority = true;
@@ -46,7 +46,7 @@ in
           config = {
             enable = true;
             json = {
-              application = inputs.lemonake.packages.${system}.wayvr;
+              application = pkgs.lemonake.wayvr;
               bitrate = 100000000;
               encoders = [{
                 encoder = "nvenc";
@@ -61,6 +61,7 @@ in
           };
         };
       };
+      environment.sessionVariables.OXR_RECENTER_STAGE = "1";
     })
     (mkIf cfg.streaming.enable {
       services.sunshine = {

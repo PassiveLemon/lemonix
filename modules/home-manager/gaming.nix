@@ -1,4 +1,4 @@
-{ inputs, system, config, lib, pkgs, ... }:
+{ config, lib, pkgs, ... }:
 let
   inherit (lib) mkIf mkEnableOption mkMerge;
   cfg = config.lemonix.gaming;
@@ -18,7 +18,7 @@ in
       home.packages = with pkgs; [
         steam heroic (bottles.override { removeWarningPopup = true; })
         r2modman limo
-        inputs.lemonake.packages.${system}.gdlauncher-carbon
+        lemonake.gdlauncher-carbon
         ludusavi
       ];
 
@@ -38,7 +38,7 @@ in
     })
     (mkIf cfg.vr.enable {
       home.packages = with pkgs; [
-        inputs.lemonake.packages.${system}.wayvr
+        lemonake.wayvr
         bs-manager
       ];
 
@@ -51,7 +51,7 @@ in
       xdg = {
         dataFile = {
           "Steam/compatibilitytools.d/proton-ge-rtsp" = {
-            source = "${inputs.lemonake.packages.${system}.proton-ge-rtsp.steamcompattool}";
+            source = "${pkgs.lemonake.proton-ge-rtsp.steamcompattool}";
             recursive = true;
           };
         };

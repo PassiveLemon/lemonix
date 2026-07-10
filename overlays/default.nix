@@ -1,15 +1,20 @@
-{ inputs, system, ... }:
+{ inputs, system, lib, ... }:
+# Automatically create a package namespace for each input, if it outputs any
 let
-  packages = final: prev: {
-    # Overlay use of a package on the nixos-(stable) branch. Mainly used for the system part of the setup.
-    stable = import inputs.nixos { inherit system; };
-    # Overlay use of a package on the nixpkgs-unstable branch. Mainly used for the user part of the setup.
-    unstable = import inputs.nixpkgs { inherit system; };
-    # Overlay use of a package on the master branch. Only used for packages that are not yet in the unstable or stable branch.
-    master = import inputs.master { inherit system; };
-    # Overlay use of a package on the previous release.
-    old = import inputs.nixos-old { inherit system; };
-  };
+  inherit (lib) filterAttrs attrNames genAttrs;
+
+  hasPackages = input: (input ? "packages") && (input.packages ? ${system});
+  hasLegacyPackages = input: (input ? "legacyPackages") && (input.legacyPackages ? ${system});
+  hasAnyPackages = input: (hasPackages input) || (hasLegacyPackages input);
+
+  getPackages = input:
+    if hasPackages input
+    then input.packages.${system}
+    else input.legacyPackages.${system};
+
+  packages = final: prev:
+    let filtered = filterAttrs (_: input: hasAnyPackages input) inputs;
+    in genAttrs (attrNames filtered) (name: getPackages inputs.${name});
 in
 {
   nixpkgs = {
