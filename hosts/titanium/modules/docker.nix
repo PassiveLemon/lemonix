@@ -2,6 +2,7 @@
   environment = {
     systemPackages = with pkgs; [
       beets rsgain
+      outsource.outsource
     ];
   };
 
@@ -87,6 +88,7 @@
     };
     tmpfiles.rules = [
       "Z /data/docker 770 docker docker-management - -"
+      "Z /data/docker/lemocker/titanium/streaming/outsource 700 docker docker-management - -"
 
       "Z /data/Media 770 docker docker-management - -"
       "Z /data/Media/Comics/Manga 770 1000 docker-management - -"
