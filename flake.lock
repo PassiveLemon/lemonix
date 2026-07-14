@@ -182,27 +182,6 @@
         "type": "github"
       }
     },
-    "flake-parts_4": {
-      "inputs": {
-        "nixpkgs-lib": [
-          "outsource",
-          "nixpkgs"
-        ]
-      },
-      "locked": {
-        "lastModified": 1782949081,
-        "narHash": "sha256-vp6Y/Grm98ESt6ceOkWiHWyZRDV3J1RID4w+6NWK9yA=",
-        "owner": "hercules-ci",
-        "repo": "flake-parts",
-        "rev": "17c9d6cdfc60c64f4ee8d306f9bc0b4ccb51481e",
-        "type": "github"
-      },
-      "original": {
-        "owner": "hercules-ci",
-        "repo": "flake-parts",
-        "type": "github"
-      }
-    },
     "flake-utils": {
       "inputs": {
         "systems": "systems_2"
@@ -334,11 +313,11 @@
         "nvfetcher": "nvfetcher"
       },
       "locked": {
-        "lastModified": 1783722033,
-        "narHash": "sha256-WDC6GuJD2DB7cVKG54LvmNf6ma1989MCxko2q1vQEBs=",
+        "lastModified": 1784060024,
+        "narHash": "sha256-jcAxLs00vlt7Wc1z8U+mqPTgYRDo2lldjI3O+6D9trw=",
         "owner": "passivelemon",
         "repo": "lemonake",
-        "rev": "fa6314133d472c4680d8e87b786d9960eb363b5a",
+        "rev": "49bca471ed8a834c0b5fa29d3b5c464758e2777c",
         "type": "github"
       },
       "original": {
@@ -538,27 +517,6 @@
         "type": "github"
       }
     },
-    "outsource": {
-      "inputs": {
-        "flake-parts": "flake-parts_4",
-        "nixpkgs": [
-          "nixpkgs"
-        ]
-      },
-      "locked": {
-        "lastModified": 1783912155,
-        "narHash": "sha256-CV+hgwgIIyrLdjIC41SplrShWXL2y9Qdt/oeHI1Jmbk=",
-        "owner": "passivelemon",
-        "repo": "outsource",
-        "rev": "ca359b193e1cfcd38f6d23cdcadfa3e4fc4b61fe",
-        "type": "github"
-      },
-      "original": {
-        "owner": "passivelemon",
-        "repo": "outsource",
-        "type": "github"
-      }
-    },
     "pre-commit": {
       "inputs": {
         "flake-compat": "flake-compat",
@@ -595,8 +553,7 @@
         "nixcord": "nixcord",
         "nixos": "nixos",
         "nixos-hardware": "nixos-hardware",
-        "nixpkgs": "nixpkgs_3",
-        "outsource": "outsource"
+        "nixpkgs": "nixpkgs_3"
       }
     },
     "rust-overlay": {

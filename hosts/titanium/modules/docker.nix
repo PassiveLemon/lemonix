@@ -2,7 +2,7 @@
   environment = {
     systemPackages = with pkgs; [
       beets rsgain
-      outsource.outsource
+      lemonake.outsource
     ];
   };
 

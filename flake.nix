@@ -34,13 +34,6 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    # Until i put it in lemonake
-    outsource = {
-      url = "github:passivelemon/outsource";
-      # url = "path:/home/lemon/Documents/GitHub/outsource";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
-
     # Submodules
     awesomewm-bling = {
       url = "github:passivelemon/bling";
