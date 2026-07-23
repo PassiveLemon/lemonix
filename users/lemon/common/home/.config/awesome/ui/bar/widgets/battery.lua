@@ -66,9 +66,10 @@ local battery_icons_lookup = {
   [0] = "󰁺",
 }
 awesome.connect_signal("signal::power", function(ac, perc, time)
-  battery.text:get_children_by_id("textbox")[1].text = perc .. "%"
+  local new_perc = h.round(perc, 0)
+  battery.text:get_children_by_id("textbox")[1].text = new_perc .. "%"
   if not ac then
-    battery.icon:get_children_by_id("textbox")[1].text = battery_icons_lookup[math.floor(perc / 10)]
+    battery.icon:get_children_by_id("textbox")[1].text = battery_icons_lookup[math.floor(new_perc / 10)]
     battery.etr.visible = true
     local _etr = h.round((time / 3600), 1)
     if _etr > 1 then

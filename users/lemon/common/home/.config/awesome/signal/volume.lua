@@ -1,5 +1,3 @@
-local gears = require("gears")
-
 local h = require("helpers")
 local user = require("config.user")
 
@@ -7,44 +5,28 @@ local ast_Wp = require("lgi").require("AstalWp")
 local speaker = ast_Wp.get_default().audio.default_speaker
 
 -- State
-local value = user.signal.default_volume
-local mute = false
-local silent = false -- Allows for managing mute without showing the notification. Only really used for the lockscreen
+local value = h.round(((speaker.volume or (user.signal.default_volume / 100)) * 100), 0)
+local mute = speaker.mute or false
 
 local function emit()
   awesome.emit_signal("signal::peripheral::volume::value", value, mute)
 end
 
-local function volume()
-  local valuex = speaker.volume or value
-  value = h.round((valuex * 100), 0)
-  mute = speaker.mute
+speaker.on_notify["volume"] = function(self)
+  value = h.round((self.volume * 100), 0)
+  emit()
 end
 
-volume()
+speaker.on_notify["mute"] = function(self)
+  mute = self.mute
+  emit()
+end
 
-local volume_timer = gears.timer({
-  timeout = 5,
-  autostart = true,
-  callback = function()
-    volume()
-    emit()
-  end,
-})
-
-local function volume_timer_wrapper(callback)
-  volume_timer:stop()
+local function volume_timer_wrapper(callback, silent)
   callback()
   emit()
   awesome.emit_signal("ui::control::notification::volume", silent)
-  volume_timer:start()
 end
-
-awesome.connect_signal("signal::peripheral::volume::update", function()
-  volume_timer_wrapper(function()
-    volume()
-  end)
-end)
 
 awesome.connect_signal("signal::peripheral::volume", function(volume_new)
   volume_timer_wrapper(function()
@@ -60,30 +42,21 @@ awesome.connect_signal("signal::peripheral::volume::step", function(step)
   end)
 end)
 
-awesome.connect_signal("signal::peripheral::volume::mute::toggle", function(sil)
+awesome.connect_signal("signal::peripheral::volume::mute::toggle", function(silent)
   volume_timer_wrapper(function()
-    mute = not mute
-    silent = sil
-    speaker:set_mute(mute)
-  end)
-  silent = false
+    speaker:set_mute(not mute)
+  end, silent)
 end)
 
-awesome.connect_signal("signal::peripheral::volume::mute", function(sil)
+awesome.connect_signal("signal::peripheral::volume::mute", function(silent)
   volume_timer_wrapper(function()
-    mute = true
-    silent = sil
     speaker:set_mute(true)
-  end)
-  silent = false
+  end, silent)
 end)
 
-awesome.connect_signal("signal::peripheral::volume::unmute", function(sil)
+awesome.connect_signal("signal::peripheral::volume::unmute", function(silent)
   volume_timer_wrapper(function()
-    mute = false
-    silent = sil
     speaker:set_mute(false)
-  end)
-  silent = false
+  end, silent)
 end)
 
