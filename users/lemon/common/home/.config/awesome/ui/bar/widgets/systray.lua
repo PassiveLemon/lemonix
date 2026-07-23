@@ -26,7 +26,8 @@ local sep = h.text({
   text = " ",
 })
 
-systray.pill_systray = h.timed_widget(h.margin({
+systray.pill_systray = h.widget({
+  start_on_visible = true,
   widget = wibox.container.place,
   valign = "center",
   halign = "center",
@@ -47,15 +48,7 @@ systray.pill_systray = h.timed_widget(h.margin({
       sep,
     },
   },
-},
-{
-  margins = {
-    top = 0,
-    right = dpi(2),
-    bottom = 0,
-    left = dpi(2),
-  },
-}), 3, true)
+})
 
 systray.pill_nixos = h.button({
   margins = {

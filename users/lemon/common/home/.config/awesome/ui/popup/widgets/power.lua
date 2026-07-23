@@ -25,7 +25,8 @@ power.lock_button = h.button({
   end
 })
 
-power.suspend_button = h.timed_button({
+power.suspend_button = h.button({
+  wait_time = 1,
   x = dpi(32),
   y = dpi(32),
   shape = gears.shape.circle,
@@ -34,9 +35,10 @@ power.suspend_button = h.timed_button({
   button_press = function()
     awful.spawn("systemctl suspend")
   end
-}, 1)
+})
 
-power.hibernate_button = h.timed_button({
+power.hibernate_button = h.button({
+  wait_time = 2,
   x = dpi(32),
   y = dpi(32),
   shape = gears.shape.circle,
@@ -45,9 +47,10 @@ power.hibernate_button = h.timed_button({
   button_press = function()
     awful.spawn("systemctl hibernate")
   end
-}, 2)
+})
 
-power.poweroff_button = h.timed_button({
+power.poweroff_button = h.button({
+  wait_time = 3,
   x = dpi(32),
   y = dpi(32),
   shape = gears.shape.circle,
@@ -56,9 +59,10 @@ power.poweroff_button = h.timed_button({
   button_press = function()
     awful.spawn("systemctl poweroff")
   end
-}, 3)
+})
 
-power.restart_button = h.timed_button({
+power.restart_button = h.button({
+  wait_time = 3,
   x = dpi(32),
   y = dpi(32),
   shape = gears.shape.circle,
@@ -67,7 +71,7 @@ power.restart_button = h.timed_button({
   button_press = function()
     awful.spawn("systemctl reboot")
   end
-}, 5)
+})
 
 power.button = h.button({
   x = dpi(32),

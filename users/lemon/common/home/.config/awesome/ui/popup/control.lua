@@ -10,7 +10,8 @@ local widgets = require("ui.popup.widgets")
 local dpi = b.xresources.apply_dpi
 
 awful.screen.connect_for_each_screen(function(s)
-  local power_popup = h.timed_popup({
+  local power_popup = h.popup({
+    life_time = 2,
     -- screen position, main popup width, useless gaps
     x = (dpi(s.geometry.x + 353) + (b.useless_gap * 2)),
     -- wibar height, useless gaps
@@ -31,9 +32,10 @@ awful.screen.connect_for_each_screen(function(s)
     {
       bg = b.bg_primary,
     })
-  }, 2)
+  })
 
-  local main = h.timed_popup({
+  local main = h.popup({
+    life_time = 2,
     -- screen position, useless gaps
     x = (dpi(s.geometry.x) + (b.useless_gap * 2)),
     -- wibar height, useless gaps
@@ -57,7 +59,7 @@ awful.screen.connect_for_each_screen(function(s)
     toggle_off = function(self)
       self.cc_control = false
     end,
-  }, 2)
+  })
   -- cc_control is a custom value for when the control center is in "control" mode (aka showing all widgets)
   main.cc_control = false
 
