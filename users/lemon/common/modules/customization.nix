@@ -49,10 +49,11 @@
   gtk = {
     enable = true;
     colorScheme = "dark";
-    theme = {
-      name = "Matcha-dark-aliz";
-      package = pkgs.matcha-gtk-theme;
-    };
+    # Removed... Need to find a substitute or make my own
+    # theme = {
+    #   name = "Matcha-dark-aliz";
+    #   package = pkgs.matcha-gtk-theme;
+    # };
     iconTheme = {
       name = "Papirus";
       package = pkgs.papirus-icon-theme;

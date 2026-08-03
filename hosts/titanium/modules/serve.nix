@@ -26,7 +26,7 @@
   };
 
   services = {
-    # binarycache.passivelemon.com:NM3ZERLgd7ag9kcwMoQYszeBTUp+OMmUSGDN5lwWO6I=
+    # Pub: NM3ZERLgd7ag9kcwMoQYszeBTUp+OMmUSGDN5lwWO6I=
     nix-serve = {
       enable = true;
       openFirewall = true;
