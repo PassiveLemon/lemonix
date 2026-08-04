@@ -49,11 +49,11 @@
   gtk = {
     enable = true;
     colorScheme = "dark";
-    # Removed... Need to find a substitute or make my own
-    # theme = {
-    #   name = "Matcha-dark-aliz";
-    #   package = pkgs.matcha-gtk-theme;
-    # };
+    theme = {
+      name = "Matcha-dark-aliz";
+      # https://github.com/NixOS/nixpkgs/pull/549019
+      package = pkgs.callPackage ../../../../pkgs/matcha-gtk-theme.nix { };
+    };
     iconTheme = {
       name = "Papirus";
       package = pkgs.papirus-icon-theme;
