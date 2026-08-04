@@ -203,29 +203,36 @@ local function activate_under_pointer()
   end
 end
 
--- the mouse::enter signal doesn't emit in the following cases, so we time an activation right after to mostly seamlessly activate context
+-- The mouse::enter signal doesn't emit in the following cases, so we time an activation right after to mostly seamlessly focus
 local focus_timer = gears.timer({
   autostart = true,
-  timeout = 0.2,
+  timeout = 0.15,
   single_shot = true,
   callback = function()
     activate_under_pointer()
   end
 })
 
--- Across workspace changes
+-- Across workspace change
 tag.connect_signal("property::selected", function(t)
   if t.selected then
     focus_timer:again()
   end
 end)
 
--- After closing clients
+-- After closing client
 client.connect_signal("request::unmanage", function()
   focus_timer:again()
 end)
 
--- After moving clients across workspaces
+-- After minimizing client
+client.connect_signal("property::minimized", function(c)
+  if c.minimized then
+    focus_timer:again()
+  end
+end)
+
+-- After moving client across tags
 client.connect_signal("property::tags", function(c)
   -- Floating clients can get stuck behind tiled clients if the check happens while the cursor is not over the new floating client
   if not c.floating then
