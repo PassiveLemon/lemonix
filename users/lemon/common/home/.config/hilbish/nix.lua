@@ -1,5 +1,4 @@
 local commander = require("commander")
-local fs = require("fs")
 
 --
 -- Nix helpers
@@ -39,7 +38,7 @@ end
 
 local function simple_arg(args, subcmd)
   if (#args > 1) and subcmd then
-    hilbish.run("echo 'Too many arguments: " .. subcmd .. "'")
+    print("Too many arguments: " .. subcmd)
     return 1
   end
   local arg1 = tostring(args[1] or "")
@@ -110,17 +109,17 @@ commander.register("nsp", function(args)
   local url = args[2]
 
   if #args < 2 then
-    hilbish.run("echo 'Not enough arguments: nsp (hash-type) (url)'")
+    print("Not enough arguments: nsp (hash-type) (url)")
     return 1
   elseif #args > 2 then
-    hilbish.run("echo 'Too many arguments: nsp (hash-type) (url)'")
+    print("Too many arguments: nsp (hash-type) (url)")
     return 1
   end
   if find_in_table(types, type) then
     hilbish.run("nix store prefetch-file --hash-type " .. type .. " " .. url)
     return 0
   else
-    hilbish.run("echo 'Unrecognized hash-type: '" .. type)
+    print("Unrecognized hash-type: " .. type)
     return 1
   end
 end)
