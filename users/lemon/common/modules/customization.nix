@@ -51,8 +51,7 @@
     colorScheme = "dark";
     theme = {
       name = "Matcha-dark-aliz";
-      # https://github.com/NixOS/nixpkgs/pull/549019
-      package = pkgs.callPackage ../../../../pkgs/matcha-gtk-theme.nix { };
+      package = pkgs.matcha-gtk-theme;
     };
     iconTheme = {
       name = "Papirus";
@@ -67,12 +66,6 @@
       name = "Fira Sans Medium";
       package = pkgs.fira;
       size = 10;
-    };
-    gtk2 = {
-      theme = config.gtk.theme;
-      iconTheme = config.gtk.iconTheme;
-      cursorTheme = config.gtk.cursorTheme;
-      font = config.gtk.font;
     };
     gtk3 = {
       theme = config.gtk.theme;
