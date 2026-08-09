@@ -1,9 +1,7 @@
 { inputs, ... }: {
   imports = [
-    inputs.nixos-hardware.nixosModules.common-cpu-amd-pstate
-    inputs.nixos-hardware.nixosModules.common-cpu-amd-raphael-igpu
-    inputs.nixos-hardware.nixosModules.common-pc-laptop-ssd
     inputs.nixos-hardware.nixosModules.framework-13-7040-amd
+    inputs.nixos-hardware.nixosModules.common-pc-laptop-ssd
   ];
   lemonix = {
     system = {

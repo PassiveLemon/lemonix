@@ -7,6 +7,12 @@
       gparted qdiskinfo
       ffmpegthumbnailer # https://github.com/NixOS/nixpkgs/pull/509742
     ];
+    sessionVariables = {
+      XDG_CONFIG_HOME = "$HOME/.config";
+      XDG_DATA_HOME = "$HOME/.local/share";
+      XDG_STATE_HOME = "$HOME/.local/state";
+      XDG_CACHE_HOME = "$HOME/.cache";
+    };
   };
 
   services = {
@@ -36,12 +42,8 @@
     };
     pipewire = {
       enable = true;
+      alsa.enable = true;
       pulse.enable = true;
-      jack.enable = true;
-      alsa = {
-        enable = true;
-        support32Bit = true;
-      };
     };
     printing.enable = true;
     avahi = {
@@ -56,13 +58,6 @@
   programs = {
     dconf.enable = true;
     seahorse.enable = true;
-  };
-
-  environment.sessionVariables = {
-    XDG_CONFIG_HOME = "$HOME/.config";
-    XDG_DATA_HOME = "$HOME/.local/share";
-    XDG_STATE_HOME = "$HOME/.local/state";
-    XDG_CACHE_HOME = "$HOME/.cache";
   };
 
   hardware = {

@@ -1,4 +1,9 @@
-{ inputs, pkgs, ... }: {
+{ inputs, lib, pkgs, ... }:
+let
+  inherit (lib) genAttrs genAttrs' nameValuePair mergeAttrsList;
+  genBoolAttrs = bool: list: genAttrs list (name: bool);
+  genBoolAttrs' = cb: bool: list: genAttrs' list (name: nameValuePair name (cb bool));
+in {
   imports = [
     inputs.nixcord.homeModules.nixcord
     inputs.nix-xl.homeModules.nix-xl
@@ -67,31 +72,43 @@
           privateDefault = "ddg";
           order = [ "ddg" ];
           force = true;
-          engines = {
-            "amazon".metaData.hidden = true;
-            "bing".metaData.hidden = true;
-            "ddg".metaData.hidden = false;
-            "ebay".metaData.hidden = true;
-            "google".metaData.hidden = true;
-            "perplexity".metaData.hidden = true;
-            "wikipedia".metaData.hidden = true;
-          };
+          engines = mergeAttrsList [
+            (genBoolAttrs' (b: { metaData.hidden = b; }) true [
+              "amazon"
+              "amazon.com"
+              "bing"
+              "ebay"
+              "google"
+              "perplexity"
+              "wikipedia"
+            ])
+            { "ddg".metaData.hidden = false; }
+          ];
         };
-        settings = {
-          "accessibility.typeaheadfind.enablesound" = false;
-          "gfx.webrender.all" = true;
-          "gfx.webrender.compositor" = true;
-          "media.ffmpeg.vaapi.enabled" = true;
-          "layers.acceleration.force-enabled" = true;
-          "toolkit.telemetry.enabled" = false;
-          "datareporting.healthreport.uploadEnabled" = false;
-          "browser.newtabpage.activity-stream.feeds.telemetry" = false;
-        };
-      };
-      policies = {
-        "DisablePocket" = true;
-        "DisableTelemetry" = true;
-        "HardwareAcceleration" = true;
+        # https://firefox-admin-docs.mozilla.org/reference/policies/
+        settings = mergeAttrsList [
+          (genBoolAttrs true [
+            "gfx.webrender.all"
+            "gfx.webrender.compositor"
+            "layers.acceleration.force-enabled"
+            "media.ffmpeg.vaapi.enabled"
+          ])
+          (genBoolAttrs false [
+            "accessibility.typeaheadfind.enablesound"
+            "browser.newtabpage.activity-stream.feeds.telemetry"
+            "browser.tabs.groups.enabled"
+            "browser.tabs.splitView.enabled"
+            "datareporting.healthreport.uploadEnabled"
+            "extensions.pocket.enabled"
+            "layers.acceleration.disabled"
+            "sidebar.verticalTabs"
+            "signon.rememberSignons"
+            "toolkit.telemetry.enabled"
+          ])
+          {
+            "sidebar.visibility" = "hide-sidebar";
+          }
+        ];
       };
     };
     nixcord = {
@@ -106,42 +123,45 @@
           "https://raw.githubusercontent.com/PassiveLemon/lemonix/refs/heads/master/users/lemon/common/home/.config/Vencord/themes/Lemon.theme.css"
           "https://raw.githubusercontent.com/PassiveLemon/lemonix/refs/heads/master/users/lemon/common/home/.config/Vencord/themes/LemonTweaks.theme.css"
         ];
-        plugins = {
-          anonymiseFileNames = {
-            enable = true;
-            anonymiseByDefault = true;
-          };
-          betterRoleContext.enable = true;
-          clearUrls.enable = true;
-          crashHandler.enable = true;
-          fakeNitro.enable = true;
-          fixSpotifyEmbeds.enable = true;
-          fixYoutubeEmbeds.enable = true;
-          imageZoom = {
-            enable = true;
-            saveZoomValues = false;
-            size = 800.0;
-          };
-          messageClickActions = {
-            enable = true;
-            requireModifier = true;
-          };
-          messageLinkEmbeds.enable = true;
-          messageLogger = {
-            enable = true;
-            ignoreBots = true;
-            ignoreSelf = true;
-          };
-          noBlockedMessages.enable = true;
-          noReplyMention.enable = true;
-          roleColorEverywhere.enable = true;
-          shikiCodeblocks.enable = true;
-          showConnections.enable = true;
-          validReply.enable = true;
-          viewIcons.enable = true;
-          voiceMessages.enable = true;
-          youtubeAdblock.enable = true;
-        };
+        plugins = mergeAttrsList [
+          (genBoolAttrs' (b: { enable = b; }) true [
+            "betterRoleContext"
+            "clearUrls"
+            "crashHandler"
+            "fakeNitro"
+            "fixSpotifyEmbeds"
+            "messageLinkEmbeds"
+            "noBlockedMessages"
+            "noReplyMention"
+            "roleColorEverywhere"
+            "shikiCodeblocks"
+            "showConnections"
+            "validReply"
+            "viewIcons"
+            "voiceMessages"
+            "youtubeAdblock"
+          ])
+          {
+            anonymiseFileNames = {
+              enable = true;
+              anonymiseByDefault = true;
+            };
+            imageZoom = {
+              enable = true;
+              saveZoomValues = false;
+              size = 800.0;
+            };
+            messageClickActions = {
+              enable = true;
+              requireModifier = true;
+            };
+            messageLogger = {
+              enable = true;
+              ignoreBots = true;
+              ignoreSelf = true;
+            };
+          }
+        ];
       };
     };
   };
