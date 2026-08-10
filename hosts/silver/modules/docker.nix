@@ -62,18 +62,20 @@
   };
 
   systemd = {
-    services.compose-up = {
-      description = "docker compose up";
-      serviceConfig = {
-        Type = "oneshot";
-        ExecStart = "-${pkgs.docker}/bin/docker compose -f /home/lemon/Documents/GitHub/lemocker/silver/docker-compose.yml up -d";
-        Restart = "on-failure";
-        RestartSec = 15;
+    user.services = {
+      docker-deploy = {
+        description = "docker-deploy";
+        serviceConfig = {
+          Type = "oneshot";
+          ExecStart = "-${pkgs.nix}/bin/nix run /home/lemon/Documents/GitHub/lemocker#deploy-silver";
+          Restart = "on-failure";
+          RestartSec = 15;
+        };
+        startLimitBurst = 5;
+        wantedBy = [ "multi-user.target" ];
+        after = [ "docker.service" "network-online.target" ];
+        wants = [ "network-online.target" ];
       };
-      startLimitBurst = 5;
-      wantedBy = [ "multi-user.target" ];
-      after = [ "docker.service" "network-online.target" ];
-      wants = [ "network-online.target" ];
     };
     tmpfiles.rules = [
       "Z /home/docker 770 docker docker-management - -"
