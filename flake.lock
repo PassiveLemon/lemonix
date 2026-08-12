@@ -328,6 +328,27 @@
         "type": "github"
       }
     },
+    "nix-obsidian": {
+      "inputs": {
+        "nixpkgs": [
+          "nixpkgs"
+        ],
+        "treefmt-nix": "treefmt-nix"
+      },
+      "locked": {
+        "lastModified": 1786427241,
+        "narHash": "sha256-yzYmms5+L4aUQL9im6ljOiTY6QjZXPoMF5YmRfXEEdA=",
+        "owner": "karaolidis",
+        "repo": "nix-obsidian-extensions",
+        "rev": "d49c74e44c71573dac371dd20b1a276adf089dfd",
+        "type": "github"
+      },
+      "original": {
+        "owner": "karaolidis",
+        "repo": "nix-obsidian-extensions",
+        "type": "github"
+      }
+    },
     "nix-xl": {
       "inputs": {
         "flake-parts": "flake-parts_2",
@@ -356,7 +377,7 @@
           "nixpkgs"
         ],
         "nixpkgs-nixcord": "nixpkgs-nixcord",
-        "treefmt-nix": "treefmt-nix"
+        "treefmt-nix": "treefmt-nix_2"
       },
       "locked": {
         "lastModified": 1786251505,
@@ -535,6 +556,7 @@
         "lanzaboote": "lanzaboote",
         "lemonake": "lemonake",
         "master": "master",
+        "nix-obsidian": "nix-obsidian",
         "nix-xl": "nix-xl",
         "nixcord": "nixcord",
         "nixos": "nixos",
@@ -594,6 +616,27 @@
       }
     },
     "treefmt-nix": {
+      "inputs": {
+        "nixpkgs": [
+          "nix-obsidian",
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "lastModified": 1785360170,
+        "narHash": "sha256-XE1lKgQ3eIO3E7zWryqcRsax+mYXod/5RHBn4YaR9YE=",
+        "owner": "numtide",
+        "repo": "treefmt-nix",
+        "rev": "d1187f8bc71fb8aab02395869ec3f5c1920f75c0",
+        "type": "github"
+      },
+      "original": {
+        "owner": "numtide",
+        "repo": "treefmt-nix",
+        "type": "github"
+      }
+    },
+    "treefmt-nix_2": {
       "inputs": {
         "nixpkgs": [
           "nixcord",

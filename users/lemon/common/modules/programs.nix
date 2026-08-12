@@ -164,6 +164,32 @@ in {
         ];
       };
     };
+    obsidian = {
+      enable = true;
+      vaults."Lemon" = {
+        enable = true;
+        target = "Documents/Obsidian/Lemon";
+        settings = {
+          appearance = {
+            accentColor = "#61b8ff";
+            baseFontSize = 16;
+            cssTheme = "Lemon";
+          };
+          corePlugins = [
+            "canvas"
+            "file-explorer"
+            "outgoing-link"
+            "word-count"
+          ];
+          communityPlugins = with pkgs.nix-obsidian.obsidianPlugins; [
+            meld-encrypt
+            obsidian-kanban
+            obsidian-latex-suite
+            obsidian-livesync
+          ];
+        };
+      };
+    };
   };
 }
 

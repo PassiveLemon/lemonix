@@ -15,7 +15,7 @@
       # File/storage
       pcmanfm xarchiver localsend
       # Office/Development
-      obsidian drawio github-desktop
+      drawio github-desktop
       onlyoffice-desktopeditors onlyoffice-documentserver
       # Audio
       pwvucontrol crosspipe
