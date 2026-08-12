@@ -46,6 +46,7 @@ theme.yellow   = "#eac56f"
 theme.green    = "#93cb6b"
 theme.cyan     = "#53d2e0"
 theme.blue     = "#61b8ff"
+theme.bluel    = "#85c6ff"
 theme.magenta  = "#cd61ec"
 
 -- Links

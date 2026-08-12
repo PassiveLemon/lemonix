@@ -17,7 +17,7 @@ return {
   color_3  = "#eac56f",
   color_11 = "#eac56f",
   color_4  = "#61b8ff",
-  color_12 = "#61b8ff",
+  color_12 = "#85c6ff",
   color_5  = "#cd61ec",
   color_13 = "#cd61ec",
   color_6  = "#53d2e0",

@@ -1,6 +1,5 @@
 local tym = require("tym")
 
--- set by table
 tym.set_config({
   shell = os.getenv("HOME") .. "/.local/state/nix/profile/bin/hilbish",
   silent = true,
@@ -15,3 +14,4 @@ tym.set_config({
   cursor_shape = "block",
   font = "FiraCode Nerd Font Mono Ret 10",
 })
+

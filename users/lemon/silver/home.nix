@@ -75,20 +75,9 @@
       exec = "${lib.getExe pkgs.cemu-ti}";
     };
     configFile = {
-      "awesome/config/user.lua" = {
-        source = ./home/.config/awesome/config/user.lua;
-      };
-      "awesome/ui/init.lua" = {
-        source = ./home/.config/awesome/ui/init.lua;
-      };
-      "awesome/ui/resource.lua" = {
-        source = ./home/.config/awesome/ui/resource.lua;
-      };
-      "awesome/ui/crosshair.lua" = {
-        source = ./home/.config/awesome/ui/crosshair.lua;
-      };
-      "lite-xl/user.lua" = {
-        source = ./home/.config/lite-xl/user.lua;
+      "." = {
+        source = ./home/.config;
+        recursive = true;
       };
     };
   };

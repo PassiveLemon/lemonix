@@ -24,6 +24,7 @@ style.yellow   = { common.color("#eac56f") }
 style.green    = { common.color("#93cb6b") }
 style.cyan     = { common.color("#53d2e0") }
 style.blue     = { common.color("#61b8ff") }
+style.bluel		= { common.color("#85c6ff") }
 style.magenta  = { common.color("#cd61ec") }
 
 -- UI
@@ -34,8 +35,8 @@ style.text      = style.fg1
 style.caret     = style.fg1
 style.accent    = style.link
 style.dim       = style.fg1
-style.divider   = style.bg1
-style.selection = { common.color("#575757b8") }
+style.divider   = style.bg3
+style.selection = { common.color("#444444") }
 style.link      = style.blue
 style.line_number    = style.fg1
 style.line_number2   = style.fg2

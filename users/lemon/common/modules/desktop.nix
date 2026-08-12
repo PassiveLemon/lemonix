@@ -3,17 +3,6 @@
     inputs.lemonake.homeModules.somewm
   ];
 
-  home = {
-    file = {
-      ".winitrc" = {
-        source = ../home/.winitrc;
-      };
-      ".xinitrc" = {
-        source = ../home/.xinitrc;
-      };
-    };
-  };
-
   xsession = {
     enable = true;
     windowManager.awesome = {

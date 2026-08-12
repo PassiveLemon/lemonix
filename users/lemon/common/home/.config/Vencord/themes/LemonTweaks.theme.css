@@ -127,18 +127,19 @@ Honestly with the amount of stuff that needs to be modified to fix BDRecolor and
     padding-inline-end: 0px !important;
   }
   /* Account widget */
-  .container__37e49
-    .avatarWrapper__37e49 {
+  .container__37e49 {
+    border-color: var(--backgroundaccent);
+    .accountPopoutButtonWrapper__37e49 {
       /* Add button effects */
       background-color: rgb(var(--backgroundprimary));
       border: 1px solid transparent;
       transition: background-color .2s ease-in-out, border-color .2s ease;
       &:hover {
-        background-color: rgba(var(--backgroundaccent), 1);
+        background-color: rgb(var(--backgroundaccent), 1);
         border-color: var(--border-subtle)
       }
       &[aria-expanded=true] {
-        background-color: rgba(var(--backgroundaccent), 1);
+        background-color: rgb(var(--backgroundaccent), 1);
         border-color: var(--input-border-active) !important;
       }
     }
@@ -148,7 +149,7 @@ Honestly with the amount of stuff that needs to be modified to fix BDRecolor and
       border: 0px solid var(--border-subtle) !important;
       transition: background-color .2s ease-in-out, border-color .2s ease;
       &:hover {
-        background-color: rgba(var(--backgroundaccent), 1) !important;
+        background-color: rgb(var(--backgroundaccent), 1) !important;
         border: 1px solid var(--border-subtle) !important;
       }
     }

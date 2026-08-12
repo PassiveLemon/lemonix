@@ -23,52 +23,66 @@ svg * {
 	stroke-linejoin: miter;
 }
 
-.workspace-tab-header.is-active::before, .workspace-tab-header.is-active::after {
-	display: none;
-}
-
-.menu {
-	padding: var(--size-2-1);
-}
-
-.menu-item {
-	padding: var(--size-4-1) var(--size-4-2);
-}
-
-.menu-separator {
-	margin: var(--size-2-1) calc(var(--size-2-1) * -1);
-}
-
 .theme-dark {
-  --background-primary: #222222;
-  --background-secondary: #272727;
-	--text-normal: #dcdcdc;
-	--text-accent: #dcdcdc;
-	--text-selection: #444444;
-	--icon-color: #aaaaaa;
-	--icon-color-hover: #dcdcdc;
-	--icon-color-active: #dcdcdc;
-	--icon-color-focused: #dcdcdc;
-	--scrollbar-bg: #79797966;
-	--scrollbar-thumb-bg: #646464b3;
-	--scrollbar-active-thumb-bg: #bfbfbf66;
-	--divider-color: #343434;
-	--indentation-guide-color: #383838;
+	--bg0: #222222;
+	--bg1: #292929;
+	--bg2: #323232;
+	--bg3: #363636;
 
+	--fg0: #8c8c8c;
+	--fg1: #aaaaaa;
+	--fg2: #dcdcdc;
+	--fg3: #ffffff;
+	
 	--color-red: #f05d6b;
-	--color-orange: #f8932f;
 	--color-yellow: #eac56f;
 	--color-green: #93cb6b;
 	--color-cyan: #53d2e0;
 	--color-blue: #61b8ff;
+	--color-bluel: #85c6ff;
 	--color-purple: #cd61ec;
 	--color-pink: #f46faf;
 
-	--titlebar-background-focused: #222222;
-	--titlebar-background: #222222;
-	--titlebar-text-color: #aaaaaa;
-	--titlebar-text-color-focused: #dcdcdc;
-	--ribbon-background: #222222;
-	--status-bar-background: #272727;
-	--status-bar-text-color: #aaaaaa;
+  --background-primary: var(--bg0);
+  --background-primary-alt: var(--bg1);
+  --background-secondary: var(--bg1);
+  --background-secondary-alt: var(--bg2);
+
+	--text-normal: var(--fg1);
+	--text-accent: var(--fg2);
+	--text-on-accent: var(--fg2);
+	--text-on-accent-inverted: var(--fg2);
+	--text-selection: #444444;
+
+	--icon-color: var(--text-normal);
+	--icon-color-hover: var(--text-accent);
+	--icon-color-active: var(--text-accent);
+	--icon-color-focused: var(--text-accent);
+
+	--link-color: var(--color-blue);
+	--link-color-hover: var(--color-bluel);
+	--link-unresolved-color: var(--color-blue);
+	--link-unresolved-color-hover: var(--color-bluel);
+	--link-external-color: var(--color-blue);
+	--link-external-color-hover: var(--color-bluel);
+
+	--scrollbar-bg: #00000000;
+	--scrollbar-thumb-bg: #646464b3;
+	--scrollbar-active-thumb-bg: #bfbfbf66;
+
+	--nav-background-color-hover: var(--bg2);
+
+	--divider-color: var(--bg3);
+	--indentation-guide-color: var(--bg3);
+
+	--titlebar-background: var(--background-secondary);
+	--titlebar-background-focused: var(--background-secondary);
+	--titlebar-text-color: var(--text-normal);
+	--titlebar-text-color-focused: var(--text-normal);
+
+	--ribbon-background: var(--background-secondary);
+
+	--status-bar-background: var(--background-secondary);
+	--status-bar-text-color: var(--text-normal);
 }
+

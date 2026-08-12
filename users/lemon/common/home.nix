@@ -1,4 +1,4 @@
-{ inputs, pkgs, ... }: {
+{ inputs, lib, pkgs, ... }: {
   imports = [
     ./modules/customization.nix
     ./modules/desktop.nix
@@ -28,19 +28,10 @@
     ];
     username = "lemon";
     homeDirectory = "/home/lemon";
-    file = {
-      ".config/" = {
-        source = ./home/.config;
-        recursive = true;
-      };
-      ".local/" = {
-        source = ./home/.local;
-        recursive = true;
-      };
-      "Documents/" = {
-        source = ./home/Documents;
-        recursive = true;
-      };
+    # Link everything in common/home to the users home
+    file."." = lib.mkForce {
+      source = ./home;
+      recursive = true;
     };
   };
 
