@@ -42,7 +42,7 @@ user.signal = {
   default_brightness = 50,
 }
 
-awful.spawn.with_shell("autorandr -l Default")
+awful.spawn("autorandr -l Default")
 awful.spawn.with_shell("pidof -q xss-lock || xss-lock awesome-client 'awesome.emit_signal(\"ui::lock::toggle\")' &")
 
 -- https://github.com/ValveSoftware/steam-for-linux/issues/10806

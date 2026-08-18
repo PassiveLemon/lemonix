@@ -1,12 +1,9 @@
 local awful = require("awful")
 local gears = require("gears")
-local b = require("beautiful")
 local ruled = require("ruled")
 
 local h = require("helpers")
 local lfs = require("lfs")
-
-local dpi = b.xresources.apply_dpi
 
 --
 -- Rules
@@ -249,7 +246,7 @@ end)
 local homedir = h.join_path(os.getenv("HOME"))
 for item in lfs.dir(homedir) do
   if item:match("%.serverauth%.%d+") then
-    awful.spawn.with_shell("rm " .. h.join_path(homedir, item))
+    awful.spawn("rm " .. h.join_path(homedir, item))
   end
 end
 
