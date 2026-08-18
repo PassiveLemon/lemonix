@@ -17,21 +17,21 @@ function device:on_brightness_changed()
   emit()
 end
 
-local function brightness_timer_wrapper(callback)
+local function brightness_call_wrapper(callback)
   callback()
   emit()
   awesome.emit_signal("ui::control::notification::brightness")
 end
 
 awesome.connect_signal("signal::peripheral::brightness", function(brightness_new)
-  brightness_timer_wrapper(function()
+  brightness_call_wrapper(function()
     value = h.clamp(brightness_new, 0, 100)
     b_screen:set_brightness(value / 100)
   end)
 end)
 
 awesome.connect_signal("signal::peripheral::brightness::step", function(step)
-  brightness_timer_wrapper(function()
+  brightness_call_wrapper(function()
     value = h.clamp((value + step), 0, 100)
     b_screen:set_brightness(value / 100)
   end)
