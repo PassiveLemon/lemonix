@@ -1,6 +1,8 @@
 local awful = require("awful")
 
 require("signal.wivrn")
+require("ui.resource")
+require("ui.crosshair")
 
 local user = { }
 
