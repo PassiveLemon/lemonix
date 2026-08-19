@@ -1,4 +1,5 @@
 local awful = require("awful")
+local gears = require("gears")
 local naughty = require("naughty")
 
 local upower = require("lgi").require("UPowerGlib")
@@ -16,9 +17,9 @@ local line = get_device(upower.DeviceKind.LINE_POWER)
 local bat = get_device(upower.DeviceKind.BATTERY)
 
 -- State
-local ac = line.online
-local perc = bat.percentage
-local time = bat.time_to_empty
+local ac = line.online or false
+local perc = bat.percentage or 50
+local time = bat.time_to_empty or 3600
 
 local function emit()
   awesome.emit_signal("signal::power", ac, perc, time)
@@ -42,17 +43,19 @@ local function power_manage()
   end
 end
 
-line.on_notify["online"] = function(self)
-  ac = self.online
-  emit()
-end
-
-bat.on_notify["percentage"] = function(self)
-  perc = self.percentage
-  time = self.time_to_empty
-  emit()
-  if not ac then
-    power_manage()
+gears.timer.start_new(0, function()
+  line.on_notify["online"] = function(self)
+    ac = self.online
+    emit()
   end
-end
+  bat.on_notify["percentage"] = function(self)
+    perc = self.percentage
+    time = self.time_to_empty
+    emit()
+    if not ac then
+      power_manage()
+    end
+  end
+  emit()
+end)
 

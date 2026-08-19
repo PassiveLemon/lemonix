@@ -117,7 +117,7 @@ local function art_image_handler(p_name, pm)
     local trim = pm.media.artist:gsub("%W", "") .. pm.media.album:gsub("%W", "")
     fetch_art_image(nil, trim, pm)
   else
-    local cache = p_lookup.cache
+    local cache = p_lookup.cache or ""
     local trim = cache:match(p_lookup.pattern)
     fetch_art_image(cache, trim, pm)
   end
@@ -244,12 +244,6 @@ local function manage_player(mp_name)
   return p_name, p
 end
 
--- Manage new players
-function manager:on_name_appeared(mp_name)
-  local p_name, p = manage_player(mp_name)
-  post_manage(p_name, p)
-end
-
 -- Manage existing players
 local function init_manage()
   for _, mp_name in ipairs(manager.player_names) do
@@ -258,17 +252,24 @@ local function init_manage()
   end
 end
 
-init_manage()
-
--- Remove cache for no longer existing players
-function manager:on_name_vanished(mp_name)
-  local p_name = string.lower(mp_name.name)
-  players[p_name] = nil
-  metadata[p_name] = nil
-  if #players == 0 then
-    mpris_timer:stop()
+gears.timer.start_new(0, function()
+  -- Manage new players
+  function manager:on_name_appeared(mp_name)
+    local p_name, p = manage_player(mp_name)
+    post_manage(p_name, p)
   end
-end
+  -- Remove cache for no longer existing players
+  function manager:on_name_vanished(mp_name)
+    local p_name = string.lower(mp_name.name)
+    players[p_name] = nil
+    metadata[p_name] = nil
+    if #players == 0 then
+      mpris_timer:stop()
+    end
+  end
+  init_manage()
+  emit()
+end)
 
 local function mpris_call_wrapper(callback, override)
   mpris_timer:stop()

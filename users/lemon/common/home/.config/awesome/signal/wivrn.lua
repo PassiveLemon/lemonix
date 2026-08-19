@@ -1,4 +1,5 @@
 local awful = require("awful")
+local gears = require("gears")
 
 local ast_Wp = require("lgi").require("AstalWp")
 local wp = ast_Wp.get_default()
@@ -33,28 +34,30 @@ local function wivrn_disconnected()
   awful.spawn("systemctl --user restart easyeffects")
 end
 
-function wp:on_node_added(node)
-  local id = node.id
-  local name = node.name
-  if name == "wivrn.sink" then
-    cached_speaker = audio.default_speaker
-    local speaker = audio:get_speaker(id)
-    speaker:set_is_default(true)
-    wivrn_connected()
-  elseif name == "wivrn.source" then
-    cached_microphone = audio.default_microphone
-    local microphone = audio:get_microphone(id)
-    microphone:set_is_default(true)
+gears.timer.start_new(0, function()
+  function wp:on_node_added(node)
+    local id = node.id
+    local name = node.name
+    if name == "wivrn.sink" then
+      cached_speaker = audio.default_speaker
+      local speaker = audio:get_speaker(id)
+      speaker:set_is_default(true)
+      wivrn_connected()
+    elseif name == "wivrn.source" then
+      cached_microphone = audio.default_microphone
+      local microphone = audio:get_microphone(id)
+      microphone:set_is_default(true)
+    end
   end
-end
 
-function wp:on_node_removed(node)
-  local name = node.name
-  if name == "wivrn.sink" then
-    cached_speaker:set_is_default(true)
-    wivrn_disconnected()
-  elseif name == "wivrn.source" then
-    cached_microphone:set_is_default(true)
+  function wp:on_node_removed(node)
+    local name = node.name
+    if name == "wivrn.sink" then
+      cached_speaker:set_is_default(true)
+      wivrn_disconnected()
+    elseif name == "wivrn.source" then
+      cached_microphone:set_is_default(true)
+    end
   end
-end
+end)
 

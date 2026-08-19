@@ -1,3 +1,5 @@
+local gears = require("gears")
+
 local h = require("helpers")
 local user = require("config.user")
 
@@ -12,15 +14,17 @@ local function emit()
   awesome.emit_signal("signal::peripheral::volume::value", value, mute)
 end
 
-speaker.on_notify["volume"] = function(self)
-  value = h.round((self.volume * 100), 0)
+gears.timer.start_new(0, function()
+  speaker.on_notify["volume"] = function(self)
+    value = h.round((self.volume * 100), 0)
+    emit()
+  end
+  speaker.on_notify["mute"] = function(self)
+    mute = self.mute
+    emit()
+  end
   emit()
-end
-
-speaker.on_notify["mute"] = function(self)
-  mute = self.mute
-  emit()
-end
+end)
 
 local function volume_call_wrapper(callback, silent)
   callback()

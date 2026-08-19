@@ -1,3 +1,5 @@
+local gears = require("gears")
+
 local h = require("helpers")
 local user = require("config.user")
 
@@ -12,10 +14,13 @@ local function emit()
   awesome.emit_signal("signal::peripheral::brightness::value", value)
 end
 
-function device:on_brightness_changed()
-  value = h.round((b_screen.brightness * 100), 0)
+gears.timer.start_new(0, function()
+  function device:on_brightness_changed()
+    value = h.round((b_screen.brightness * 100), 0)
+    emit()
+  end
   emit()
-end
+end)
 
 local function brightness_call_wrapper(callback)
   callback()
