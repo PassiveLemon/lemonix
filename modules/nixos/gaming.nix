@@ -35,10 +35,6 @@ in
           autoStart = true;
           highPriority = true;
           monadoEnvironment = {
-            XRT_LOG = "warning";
-            XRT_COMPOSITOR_LOG = "warning";
-            XRT_PRINT_OPTIONS = "off";
-            PROBER_LOG = "warning";
             IPC_EXIT_WHEN_IDLE = "on";
             IPC_EXIT_WHEN_IDLE_DELAY_MS = "900000"; # 15 minutes
           };
@@ -48,14 +44,6 @@ in
             json = {
               application = pkgs.lemonake.wayvr;
               bitrate = 100000000;
-              encoders = [{
-                encoder = "nvenc";
-                codec = "h264";
-                width = 1.0;
-                height = 1.0;
-                offset_x = 0;
-                offset_y = 0;
-              }];
               tcp_only = true;
             };
           };
