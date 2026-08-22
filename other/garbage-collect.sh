@@ -3,8 +3,8 @@
 nix store gc
 nix store optimise
 
-docker image prune --all -y
-docker system prune --all -y
-docker buildx prune --all -y
-docker builder prune --all -y
+docker image prune -af
+docker system prune -af
+docker buildx prune -af
+docker builder prune -af
 
