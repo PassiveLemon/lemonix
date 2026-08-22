@@ -1,4 +1,4 @@
-{ config, ... }: {
+{ config, pkgs, ... }: {
   users = {
     groups = {
       "nix-serve" = {
@@ -32,8 +32,13 @@
       openFirewall = true;
       secretKeyFile = config.age.secrets.nixServeKey.path;
     };
-    cron.systemCronJobs = [
-      "0 4 * * *  root  nix flake update --flake /data/lemonix ; nixos-rebuild build --flake /data/lemonix#silver ; nixos-rebuild build --flake /data/lemonix#aluminum"
+    cron.systemCronJobs = let
+      flake = "--flake /data/lemonix";
+      nixos = host: "nixos-rebuild build ${flake}#${host}";
+      home = userhost: "${pkgs.home-manager.home-manager}/bin/home-manager build ${flake}#${userhost}";
+    in [
+      "0 4 * * *  root  nix flake update ${flake} ; ${nixos "aluminum"} ; ${nixos "silver"} ; ${nixos "titanium"}"
+      "0 5 * * *  lemon  ${home "lemon@aluminum"} ; ${home "lemon@silver"}"
     ];
   };
 }
