@@ -44,6 +44,7 @@ in
             json = {
               application = pkgs.lemonake.wayvr;
               bitrate = 100000000;
+              # openvr-compat-path = "${pkgs.lemonake.vapor-git}/lib/VapoR";
               tcp_only = true;
             };
           };
