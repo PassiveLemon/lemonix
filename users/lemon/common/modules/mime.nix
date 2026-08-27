@@ -74,26 +74,6 @@ in
         name = "Desktop Preferences";
         noDisplay = true;
       };
-      "PrusaGcodeviewer" = {
-        name = "Prusa GCode viewer";
-        noDisplay = true;
-      };
-      "scilab-cli" = {
-        name = "Scilab CLI";
-        noDisplay = true;
-      };
-      "scilab-adv-cli" = {
-        name = "Scilab advanced CLI";
-        noDisplay = true;
-      };
-      "scinotes" = {
-        name = "Scinotes";
-        noDisplay = true;
-      };
-      "xcos" = {
-        name = "Xcos";
-        noDisplay = true;
-      };
     };
   };
 }

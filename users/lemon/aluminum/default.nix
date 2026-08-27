@@ -1,14 +1,13 @@
 { ... }: {
   lemonix = {
-    development.enable = true;
     gaming = {
       enable = true;
       desktop.enable = true;
       streaming.enable = true;
     };
-    modeling = {
+    development = {
       enable = true;
-      cad.enable = true;
+      circuits.enable = true;
       printing.enable = true;
     };
   };
