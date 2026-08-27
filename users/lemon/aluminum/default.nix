@@ -1,5 +1,6 @@
 { ... }: {
   lemonix = {
+    development.enable = true;
     gaming = {
       enable = true;
       desktop.enable = true;

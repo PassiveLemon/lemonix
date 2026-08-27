@@ -16,6 +16,7 @@ in
   };
 
   imports = [
+    ./development.nix
     ./gaming.nix
     ./modeling.nix
   ];
