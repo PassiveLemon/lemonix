@@ -1,4 +1,5 @@
 local awful = require("awful")
+local gears = require("gears")
 local b = require("beautiful")
 local wibox = require("wibox")
 
@@ -12,9 +13,9 @@ local dpi = b.xresources.apply_dpi
 awful.screen.connect_for_each_screen(function(s)
   local power_popup = h.timed_popup({
     -- screen position, main popup width, useless gaps
-    x = (dpi(s.geometry.x + 353) + (b.useless_gap * 2)),
+    x = (dpi(s.geometry.x + 353 - 3) + (b.useless_gap * 2)),
     -- wibar height, useless gaps
-    y = (s.wibar.height + (b.useless_gap * 2)),
+    y = (s.wibar.height - 3 + (b.useless_gap * 2)),
     screen = s,
     bg = b.bg_primary,
     fg = b.fg_primary,
@@ -23,6 +24,7 @@ awful.screen.connect_for_each_screen(function(s)
     ontop = true,
     visible = false,
     type = "popup_menu",
+    shape = gears.shape.rounded_rect;
     hide_on_click_anywhere = true,
     widget = h.background({
       layout = wibox.layout.fixed.vertical,
@@ -35,9 +37,9 @@ awful.screen.connect_for_each_screen(function(s)
 
   local main = h.timed_popup({
     -- screen position, useless gaps
-    x = (dpi(s.geometry.x) + (b.useless_gap * 2)),
+    x = (dpi(s.geometry.x - 3) + (b.useless_gap * 2)),
     -- wibar height, useless gaps
-    y = (s.wibar.height + (b.useless_gap * 2)),
+    y = (s.wibar.height - 3 + (b.useless_gap * 2)),
     screen = s,
     bg = b.bg_primary,
     fg = b.fg_primary,
@@ -46,6 +48,7 @@ awful.screen.connect_for_each_screen(function(s)
     ontop = true,
     visible = false,
     type = "popup_menu",
+    shape = gears.shape.rounded_rect;
     -- widget property is dynamically set, this is just a simple default
     widget = widgets.power.button,
     mouse_enter = function()
@@ -96,9 +99,9 @@ awful.screen.connect_for_each_screen(function(s)
   -- When the wibar is visible, move the control center below it
   local function popup_positioner()
     if (not s.wibar.ontop) and client.focus and client.focus.fullscreen and (client.focus.screen == awful.screen.focused()) then
-      main.y = (b.useless_gap * 2)
+      main.y = (b.useless_gap * 2) - dpi(3)
     else
-      main.y = (s.wibar.height + (b.useless_gap * 2))
+      main.y = (s.wibar.height + (b.useless_gap * 2)) - dpi(3)
     end
   end
 

@@ -19,7 +19,7 @@ ruled.client.connect_signal("request::rules", function()
       size_hints_honor = false,
       honor_workarea = true,
     },
-    -- Go to the end of the stack instead
+    -- Go to the end of the stack
     callback = function(c)
       c:to_secondary_section()
     end,
@@ -29,13 +29,14 @@ ruled.client.connect_signal("request::rules", function()
   ruled.client.append_rule({
     id = "floating",
     rule_any = {
-      instance = { "xarchiver", "loupe", "papers", "nm-connection-editor", ".blueman-manager-wrapped", "lxappearance", "zenity" }, -- somewm:ignore Lxappearance
-      class    = { "Xarchiver", "loupe", "papers", "Nm-connection-editor", ".blueman-manager-wrapped", "Lxappearance", "zenity" }, -- somewm:ignore Lxappearance
+      instance = { "xarchiver", "loupe", "papers", "nm-connection-editor", ".blueman-manager-wrapped", "zenity" },
+      class    = { "Xarchiver", "loupe", "papers", "Nm-connection-editor", ".blueman-manager-wrapped", "zenity" },
       name     = { "Confirm File Replacing", "Copying files" },
       role     = { "pop-up", "GtkFileChooserDialog" },
     },
     properties = {
       floating = true,
+      ontop = true,
     },
   })
 
@@ -70,9 +71,7 @@ ruled.client.connect_signal("request::rules", function()
     },
     properties = {
       floating = true,
-      shadow = {
-        opacity = 0.65,
-      }
+      ontop = true,
     },
   })
 end)
@@ -111,11 +110,10 @@ end)
 -- Fullscreening and wibar
 --
 
--- Actually fullscreen new clients
+-- Spawn the client on top of the entire screen, not just under the bar
 client.connect_signal("request::manage", function(c)
   local s = awful.screen.focused()
   if c.fullscreen then
-    -- Spawn the client on top of the entire screen, not just under the bar
     c.x, c.y = s.geometry.x, s.geometry.y
   end
 end)
@@ -131,8 +129,9 @@ tag.connect_signal("request::default_layouts", function()
 end)
 
 -- Rescue untagged clients after restart
-client.connect_signal("request::manage", function(c)
-  if #c:tags() == 0 then
+client.connect_signal("request::manage", function(c, context)
+  if context == "restart" then
+    c:move_to_screen(1)
     c:move_to_tag("1")
   end
 end)
@@ -148,13 +147,13 @@ end)
 
 local function activate_under_pointer()
   local c = mouse.current_client
-  if c ~= nil then
+  if c then
     c:activate({ context = "mouse_enter", raise = false })
     c:emit_signal("mouse::enter")
   end
 end
 
--- the mouse::enter signal doesn't emit in the following cases, so we time an activation right after to mostly seamlessly activate context
+-- The mouse::enter signal doesn't emit in the following cases, so we time an activation right after to mostly seamlessly activate context
 local focus_timer = gears.timer({
   autostart = true,
   timeout = 0.2,
