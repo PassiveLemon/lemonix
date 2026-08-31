@@ -108,10 +108,6 @@ local art_image_player_lookup = {
 
 local function art_image_handler(p_name, pm)
   local p_lookup = art_image_player_lookup[p_name]
-  if not p_lookup then
-    pm.media.art_image = nil
-    return
-  end
   if p_lookup == true then
     -- Normalize the artist and album name and use that as the cache name for the art, that way it's only downloaded once per album (Unless there's multiple artists), which makes caching more efficient
     local trim = pm.media.artist:gsub("%W", "") .. pm.media.album:gsub("%W", "")
