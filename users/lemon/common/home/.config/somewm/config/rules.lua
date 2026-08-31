@@ -35,8 +35,8 @@ ruled.client.connect_signal("request::rules", function()
   ruled.client.append_rule({
     id = "floating",
     rule_any = {
-      instance = { "xarchiver", "loupe", "papers", "nm-connection-editor", ".blueman-manager-wrapped", "lxappearance", "zenity" },
-      class    = { "Xarchiver", "loupe", "papers", "Nm-connection-editor", ".blueman-manager-wrapped", "Lxappearance", "zenity" },
+      instance = { "xarchiver", "loupe", "papers", "nm-connection-editor", ".blueman-manager-wrapped", "lxappearance", "zenity" }, -- somewm:ignore Lxappearance
+      class    = { "Xarchiver", "loupe", "papers", "Nm-connection-editor", ".blueman-manager-wrapped", "Lxappearance", "zenity" }, -- somewm:ignore Lxappearance
       name     = { "Confirm File Replacing", "Copying files" },
       role     = { "pop-up", "GtkFileChooserDialog" },
     },
@@ -84,7 +84,7 @@ ruled.client.connect_signal("request::rules", function()
 end)
 
 -- awesome.register_xproperty("STEAM_GAME", "number")
-client.connect_signal("manage", function(c)
+client.connect_signal("request::manage", function(c)
   -- -- Fullscreen all steam games with an exclusion check
   -- local cclass_exclude = { "steam", "zenity" }
   -- local cclass = string.lower(c.class or "")
@@ -126,59 +126,59 @@ client.connect_signal("request::manage", function(c)
   end
 end)
 
-local function hide_wibar(s, force)
-  if s.wibar then
-    s.wibar.ontop = not force
-  end
-end
+-- local function hide_wibar(s, force)
+--   if s.wibar then
+--     s.wibar.ontop = not force
+--   end
+-- end
 
--- Check if a client overlaps screen geometry
-local function screen_collision(c, s)
-  -- Only implemented for horizontal bars
-  local c_l = c.x
-  local c_r = c.x + c.width
-  local s_l = s.geometry.x
-  local s_r = s.geometry.x + s.geometry.width
-  return (c_l < s_r) and (c_r > s_l)
-end
+-- -- Check if a client overlaps screen geometry
+-- local function screen_collision(c, s)
+--   -- Only implemented for horizontal bars
+--   local c_l = c.x
+--   local c_r = c.x + c.width
+--   local s_l = s.geometry.x
+--   local s_r = s.geometry.x + s.geometry.width
+--   return (c_l < s_r) and (c_r > s_l)
+-- end
 
-local function wibar_layer(c)
-  if c and not c.minimized then
-    -- First check all screens for potential collision
-    local screens = { [c.screen] = true }
-    for s in screen do
-      screens[s] = screen_collision(c, s)
-    end
-    for s, overlap in pairs(screens) do
-      local hide = false
-      -- If the client overlaps the screen and is not fullscreened, show the wibar
-      -- If not, iterate over all clients and see if there is a fullscreened client
-      if overlap then
-        if c.fullscreen then
-          hide = true
-        else
-          hide = false
-        end
-      else
-        for _, c_visible in ipairs(s.clients) do
-          if c_visible.fullscreen then
-            hide = true
-            break
-          end
-        end
-      end
-      hide_wibar(s, hide)
-    end
-  end
-end
+-- local function wibar_layer(c)
+--   if c and not c.minimized then
+--     -- First check all screens for potential collision
+--     local screens = { [c.screen] = true }
+--     for s in screen do
+--       screens[s] = screen_collision(c, s)
+--     end
+--     for s, overlap in pairs(screens) do
+--       local hide = false
+--       -- If the client overlaps the screen and is not fullscreened, show the wibar
+--       -- If not, iterate over all clients and see if there is a fullscreened client
+--       if overlap then
+--         if c.fullscreen then
+--           hide = true
+--         else
+--           hide = false
+--         end
+--       else
+--         for _, c_visible in ipairs(s.clients) do
+--           if c_visible.fullscreen then
+--             hide = true
+--             break
+--           end
+--         end
+--       end
+--       hide_wibar(s, hide)
+--     end
+--   end
+-- end
 
-client.connect_signal("manage", function(c) wibar_layer(c) end)
-client.connect_signal("property::geometry", function(c) wibar_layer(c) end)
-client.connect_signal("request::activate", function(c)
-  if c.fullscreen then
-    wibar_layer(c)
-  end
-end)
+-- client.connect_signal("manage", function(c) wibar_layer(c) end)
+-- client.connect_signal("property::geometry", function(c) wibar_layer(c) end)
+-- client.connect_signal("request::activate", function(c)
+--   if c.fullscreen then
+--     wibar_layer(c)
+--   end
+-- end)
 
 --
 -- Layout
@@ -189,10 +189,6 @@ tag.connect_signal("request::default_layouts", function()
     awful.layout.suit.spiral.dwindle,
   })
 end)
-
--- client.connect_signal("request::manage", function(c)
---   if not awesome.startup then awful.client.setslave(c) end
--- end)
 
 --
 -- Sloppy focus

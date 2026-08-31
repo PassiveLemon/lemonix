@@ -120,7 +120,7 @@ awful.keyboard.append_global_keybindings({
   { description = "|| next media", group = "control" }),
 
   -- Utility
-  awful.key({ }, "Print", function() awful.spawn("flameshot gui") end,
+  awful.key({ }, "Print", function() awful.spawn("flameshot gui") end, -- somewm:ignore Flameshot
   { description = "|| flameshot", group = "utility" }),
 
   awful.key({
