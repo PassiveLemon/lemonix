@@ -14,7 +14,7 @@ local function emit()
   awesome.emit_signal("signal::peripheral::volume::value", value, mute)
 end
 
-gears.timer.start_new(0, function()
+gears.timer.delayed_call(function()
   speaker.on_notify["volume"] = function(self)
     value = h.round((self.volume * 100), 0)
     emit()

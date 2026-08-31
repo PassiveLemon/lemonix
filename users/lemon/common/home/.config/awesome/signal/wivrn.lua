@@ -34,7 +34,7 @@ local function wivrn_disconnected()
   awful.spawn("systemctl --user restart easyeffects")
 end
 
-gears.timer.start_new(0, function()
+gears.timer.delayed_call(function()
   function wp:on_node_added(node)
     local id = node.id
     local name = node.name

@@ -252,7 +252,7 @@ local function init_manage()
   end
 end
 
-gears.timer.start_new(0, function()
+gears.timer.delayed_call(function()
   -- Manage new players
   function manager:on_name_appeared(mp_name)
     local p_name, p = manage_player(mp_name)

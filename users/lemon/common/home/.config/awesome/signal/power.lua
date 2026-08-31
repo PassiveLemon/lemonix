@@ -43,7 +43,7 @@ local function power_manage()
   end
 end
 
-gears.timer.start_new(0, function()
+gears.timer.delayed_call(function()
   line.on_notify["online"] = function(self)
     ac = self.online
     emit()

@@ -11,7 +11,7 @@ local function emit()
   awesome.emit_signal("signal::peripheral::caps::state", caps_state)
 end
 
-gears.timer.start_new(0, function()
+gears.timer.delayed_call(function()
   function keymap:on_state_changed()
     local new_state = keymap:get_caps_lock_state()
     if caps_state ~= new_state then

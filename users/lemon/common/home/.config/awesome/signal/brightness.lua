@@ -14,7 +14,7 @@ local function emit()
   awesome.emit_signal("signal::peripheral::brightness::value", value)
 end
 
-gears.timer.start_new(0, function()
+gears.timer.delayed_call(function()
   function device:on_brightness_changed()
     value = h.round((b_screen.brightness * 100), 0)
     emit()
