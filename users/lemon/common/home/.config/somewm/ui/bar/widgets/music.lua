@@ -26,6 +26,7 @@ music.pill = h.button({
   y = dpi(24),
   shape = gears.shape.circle,
   text = "󰎈",
+  font = b.sysfont(dpi(14)),
   button_press = function()
     awesome.emit_signal("ui::control::toggle")
   end
