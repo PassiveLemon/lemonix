@@ -12,13 +12,7 @@ local cached_microphone = audio.default_microphone
 local function focus_steam()
   for _, c in ipairs(client.get()) do
     if c.class == "steam" and c.name:match("^Steam$") then
-      local s = c.screen
-      local t = c.first_tag
-      if s and t then
-        awful.screen.focus(s)
-        t:view_only()
-      end
-      break
+      c:jump_to()
     end
   end
 end

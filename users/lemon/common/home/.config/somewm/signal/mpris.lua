@@ -58,63 +58,44 @@ end
 
 -- Fetch art and/or load it
 local function fetch_art_image(cache, trim, pm)
-  local disk_cache_dir = b.mpris_art_cache_dir
-  -- Set a fallback directory if user does not define one
-  if not disk_cache_dir then
-    disk_cache_dir = "/tmp/passivelemon/lemonix/media/"
-  end
-  -- Use the players disk cache if possible
-  local art_load_path = h.join_path(cache, trim)
-  if not cache then
-    art_load_path = h.join_path(disk_cache_dir, trim)
+  local disk_cache_dir = b.mpris_art_cache_dir or "/tmp/somewm/mpris/"
+  local art_load_path = h.join_path(cache, trim) or ""
+  if not cache and not h.is_file(art_load_path) then
+    art_load_path = h.join_path(disk_cache_dir, trim) or ""
     -- Download the art if it's not cached on disk
-    if not h.is_file(art_load_path) then
-      awful.spawn.easy_async("curl -Lso " .. art_load_path .. ' "' .. pm.media.art_url .. '"', function()
-        -- Explicitly covert to jpg
-        awful.spawn.easy_async_with_shell("magick " .. art_load_path .. " " .. art_load_path .. ".jpg && mv -f " .. art_load_path .. ".jpg " .. art_load_path , function()
-          ---@diagnostic disable-next-line: param-type-mismatch
-          pm.media.art_image = gears.surface.load_silently(art_load_path)
-        end)
+    awful.spawn.easy_async("curl -Lso " .. art_load_path .. ' "' .. pm.media.art_url .. '"', function()
+      -- Explicitly covert to jpg
+      awful.spawn.easy_async_with_shell("magick " .. art_load_path .. " " .. art_load_path .. ".jpg && mv -f " .. art_load_path .. ".jpg " .. art_load_path , function()
+        ---@diagnostic disable-next-line: param-type-mismatch
+        pm.media.art_image = gears.surface.load_silently(art_load_path)
       end)
-      return
-    end
+    end)
+    return
   end
   -- Cache art if it's not already, then load it
-  local art_cache_load = art_cache[trim]
-  if not art_cache_load then
+  if not art_cache[art_load_path] then
     ---@diagnostic disable-next-line: param-type-mismatch
-    art_cache[trim] = gears.surface.load_silently(art_load_path)
-    art_cache_load = art_cache[trim]
+    art_cache[art_load_path] = gears.surface.load_silently(art_load_path)
   end
-  pm.media.art_image = art_load_path
+  pm.media.art_image = art_cache[trim]
 end
 
--- art_image_player_lookup = {
+-- b.mpris_player_art_lookup = {
 --   ["(player)"] = {
 --     (cache) -- Location of the players art cache if we can determine the name of the file based on the art_url
 --     (pattern) -- The part of art_url to use to find the art image cache. It's also used as the file name for our own caching if we cant use the players cache or the album string is bad
+--     disable -- Whether to disable art image fetching
 --   }
 -- }
--- If set to false, then art will not be fetched for the player
-local art_image_player_lookup = {
-  ["feishin"] = true,
-  ["firefox"] = false,
-  ["tauon"] = {
-    cache = h.join_path(os.getenv("HOME"), "/.cache/TauonMusicBox/export/"),
-    pattern = "/(.*)",
-  },
-  ["spotify"] = true,
-}
 
 local function art_image_handler(p_name, pm)
-  local p_lookup = art_image_player_lookup[p_name]
-  if p_lookup == true then
-    -- Normalize the artist and album name and use that as the cache name for the art, that way it's only downloaded once per album (Unless there's multiple artists), which makes caching more efficient
+  local p_lookup = b.mpris_player_art_lookup[p_name]
+  if p_lookup and pm.media.art_url and not p_lookup.disable then
+    local cache = p_lookup.cache
     local trim = pm.media.artist:gsub("%W", "") .. pm.media.album:gsub("%W", "")
-    fetch_art_image(nil, trim, pm)
-  else
-    local cache = p_lookup.cache or ""
-    local trim = cache:match(p_lookup.pattern)
+    if cache then
+      trim = pm.media.art_url:match(p_lookup.pattern or "")
+    end
     fetch_art_image(cache, trim, pm)
   end
 end
@@ -142,9 +123,10 @@ local function set_global_player()
     -- Handle firefox differently, only show if media is playing. This allows media control, but won't let it take complete control
     if p and pm and ((pm.player.status == "PLAYING") or (p_name ~= "firefox")) then
       -- Pause the current global player before switching
-      if p_g and (p_g ~= p) then
-        p_g:pause()
-      end
+      -- Disabled because this is really buggy on SomeWM
+      -- if p_g and (p_g ~= p) then
+      --   p_g:pause()
+      -- end
       players["global"] = p
       metadata["global"] = pm
       break
@@ -231,7 +213,7 @@ local function manage_player(mp_name)
   local p_name = string.lower(mp_name.name)
   local p = mpris.Player.new_from_name(mp_name)
   manager:manage_player(p)
-  if #players == 0 then
+  if not next(players) then
     mpris_timer:start()
   end
   if h.table_contains(b.mpris_players, p_name) or (not b.mpris_strict_players) then

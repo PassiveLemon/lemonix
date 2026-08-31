@@ -1,4 +1,5 @@
 local awful = require("awful")
+local naughty = require("naughty")
 
 local user = require("config.user")
 
@@ -9,52 +10,51 @@ local user = require("config.user")
 local super = user.super
 
 awful.keyboard.append_global_keybindings({
-  awful.key({ super, "Control" }, "r", awesome.restart,
-  { description = "|| reload awesome", group = "awesome" }),
+  awful.key({ super, "Control" }, "r", function() awesome.restart() end,
+  { description = "reload awesome", group = "awesome" }),
 
   -- Launcher
   awful.key({ super }, "Return", function() awful.spawn(user.terminal) end,
-  { description = "|| open a terminal", group = "launcher" }),
+  { description = "open a terminal", group = "launcher" }),
 
   awful.key({ super }, "space", function() awful.spawn("tofi-drun") end,
-  { description = "run app launcher", group = "launcher" }),
 
   awful.key({ super }, "c", function() awesome.emit_signal("ui::control::toggle") end,
-  { description = "|| run control panel", group = "launcher" }),
+  { description = "run control panel", group = "launcher" }),
 
   awful.key({ super }, "x", function() awesome.emit_signal("ui::control::clear") end,
-  { description = "|| clear control panel", group = "launcher" }),
+  { description = "clear control panel", group = "launcher" }),
 
   awful.key({ super }, "z", function() awesome.emit_signal("ui::resource::toggle") end,
-  { description = "|| run resource monitor", group = "launcher" }),
+  { description = "run resource monitor", group = "launcher" }),
 
   awful.key({ super }, "l", function() awesome.emit_signal('ui::lock::toggle') end,
-  { description = "|| lock display", group = "launcher" }),
+  { description = "lock display", group = "launcher" }),
 
   -- Control
   awful.key({ }, "XF86MonBrightnessUp", function() awesome.emit_signal("signal::peripheral::brightness::step", 3) end,
-  { description = "|| increase brightness", group = "control" }),
+  { description = "increase brightness", group = "control" }),
 
   awful.key({ }, "XF86MonBrightnessDown", function() awesome.emit_signal("signal::peripheral::brightness::step", -3) end,
-  { description = "|| decrease brightness", group = "control" }),
+  { description = "decrease brightness", group = "control" }),
 
   awful.key({ }, "XF86AudioMute", function() awesome.emit_signal("signal::peripheral::volume::mute::toggle") end,
-  { description = "|| toggle mute", group = "control" }),
+  { description = "toggle mute", group = "control" }),
 
   awful.key({ }, "XF86AudioRaiseVolume", function() awesome.emit_signal("signal::peripheral::volume::step", 3) end,
-  { description = "|| increase volume", group = "control" }),
+  { description = "increase volume", group = "control" }),
 
   awful.key({ }, "XF86AudioLowerVolume", function() awesome.emit_signal("signal::peripheral::volume::step", -3) end,
-  { description = "|| decrease volume", group = "control" }),
+  { description = "decrease volume", group = "control" }),
 
   awful.key({ }, "XF86AudioPrev", function() awesome.emit_signal("signal::mpris::previous") end,
-  { description = "|| previous media", group = "control" }),
+  { description = "previous media", group = "control" }),
 
   awful.key({ }, "XF86AudioPlay", function() awesome.emit_signal("signal::mpris::toggle") end,
-  { description = "|| toggle play", group = "control" }),
+  { description = "toggle play", group = "control" }),
 
   awful.key({ }, "XF86AudioNext", function() awesome.emit_signal("signal::mpris::next") end,
-  { description = "|| next media", group = "control" }),
+  { description = "next media", group = "control" }),
 
   -- Utility
   awful.key({ }, "Print", function()
@@ -62,17 +62,23 @@ awful.keyboard.append_global_keybindings({
       interactive = true,
       file_path = "/home/lemon/Pictures/Screenshot"
     })
-    ss:accept()
+    ss:refresh()
+    ss:connect_signal("file::saved", function(_, path)
+      naughty.notification({
+        title = "Screenshot saved",
+        message = path,
+      })
+    end)
   end,
   { description = "screenshot", group = "utility" }),
 
   awful.key({
     modifiers   = { super, "Mod1" },
     keygroup    = "numrow",
-    description = "|| enable crosshair",
+    description = "enable crosshair",
     group       = "utility",
-    on_press    = function(index)
-      awesome.emit_signal("ui::crosshair::toggle", index)
+    on_press    = function(i)
+      awesome.emit_signal("ui::crosshair::toggle", i)
     end,
   }),
 
@@ -80,13 +86,13 @@ awful.keyboard.append_global_keybindings({
   awful.key({
     modifiers   = { super },
     keygroup    = "numrow",
-    description = "|| switch to tag",
+    description = "switch to tag",
     group       = "tag",
-    on_press    = function(index)
-      local screen = awful.screen.focused()
-      local tag = screen.tags[index]
-      if tag then
-        tag:view_only()
+    on_press    = function(i)
+      local s = awful.screen.focused()
+      local t = s.tags[i]
+      if t then
+        t:view_only()
       end
     end,
   }),
@@ -94,13 +100,14 @@ awful.keyboard.append_global_keybindings({
   awful.key({
     modifiers = { super, "Shift" },
     keygroup    = "numrow",
-    description = "|| move focused client to tag",
+    description = "move focused client to tag",
     group       = "tag",
-    on_press    = function(index)
-      if client.focus then
-        local tag = client.focus.screen.tags[index]
-        if tag then
-          client.focus:move_to_tag(tag)
+    on_press    = function(i)
+      local c = client.focus
+      if c then
+        local t = c.screen.tags[i]
+        if t then
+          c:move_to_tag(t)
         end
       end
     end,
@@ -109,48 +116,51 @@ awful.keyboard.append_global_keybindings({
   awful.key({
     modifiers   = { super, "Control" },
     keygroup    = "numrow",
-    description = "|| toggle tag",
+    description = "toggle tag",
     group       = "tag",
-    on_press    = function(index)
-      local screen = awful.screen.focused()
-      local tag = screen.tags[index]
-      if tag then
-        awful.tag.viewtoggle(tag)
+    on_press    = function(i)
+      local s = awful.screen.focused()
+      local t = s.tags[i]
+      if t then
+        awful.tag.viewtoggle(t)
       end
     end,
   }),
 
   -- Misc
   awful.key({ }, "Caps_Lock", function() awesome.emit_signal("signal::peripheral::caps::update") end,
-  { description = "|| caps lock", group = "misc" }),
+  { description = "caps lock", group = "misc" }),
 
   -- Client
   awful.keyboard.append_client_keybindings({
     awful.key({ super }, "Escape", function(c) c:kill() end,
-    { description = "|| close", group = "client" }),
+    { description = "close", group = "client" }),
 
-    awful.key({ super }, "Tab",  function() client.focus = nil end,
-    { description = "|| unfocus", group = "client" }),
+    awful.key({ super }, "Tab", function(c) c.focus = nil end,
+    { description = "unfocus", group = "client" }),
 
-    awful.key({ super }, "f",  awful.client.floating.toggle,
-    { description = "|| toggle floating", group = "client" }),
+    awful.key({ super }, "f", function(c)
+      c.floating = not c.floating
+      c:raise()
+    end,
+    { description = "toggle floating", group = "client" }),
 
     awful.key({ super }, "n", function(c) c.minimized = true end,
-    { description = "|| minimize", group = "client" }),
+    { description = "minimize", group = "client" }),
 
     awful.key({ super }, "m",
       function(c)
         c.fullscreen = not c.fullscreen
         c:raise()
       end,
-    { description = "|| toggle fullscreen", group = "client" }),
+    { description = "toggle fullscreen", group = "client" }),
 
     awful.key({ super, "Control" }, "m",
-      function (c)
+      function(c)
         c.maximized = not c.maximized
         c:raise()
       end,
-    { description = "|| toggle maximized", group = "client"}),
+    { description = "toggle maximized", group = "client"}),
   }),
 })
 
