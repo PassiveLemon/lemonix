@@ -190,6 +190,13 @@ tag.connect_signal("request::default_layouts", function()
   })
 end)
 
+-- Rescue untagged clients after restart
+client.connect_signal("request::manage", function(c)
+  if #c:tags() == 0 then
+    c:move_to_tag("1")
+  end
+end)
+
 --
 -- Sloppy focus
 --
