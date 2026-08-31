@@ -102,6 +102,8 @@
     };
   };
 
+  powerManagement.powertop.enable = true;
+
   systemd = {
     services.wifi-reset = {
       description = "Fix WiFi after hibernation";
