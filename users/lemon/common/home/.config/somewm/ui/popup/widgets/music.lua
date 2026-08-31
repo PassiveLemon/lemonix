@@ -103,15 +103,21 @@ local function metadata_updater(pm)
     position_slider.visible = false
     title_text:get_children_by_id("textbox")[1].text = "No media found"
   else
-    art_image_box:get_children_by_id("imagebox")[1].image = pm.media.art_image
-    title_text:get_children_by_id("textbox")[1].text = pm.media.title
+    if pm.media.art_image then
+      art_image_box:get_children_by_id("imagebox")[1].image = pm.media.art_image
+    end
+    if pm.media.title then
+      title_text:get_children_by_id("textbox")[1].text = pm.media.title
+    end
     if pm.media.artist == "" then
       artist_text.visible = false
-    else
+    elseif pm.media.artist then
       artist_text.visible = true
       artist_text:get_children_by_id("textbox")[1].text = "By " .. pm.media.artist
     end
-    album_text:get_children_by_id("textbox")[1].text = "On " .. pm.media.album
+    if pm.media.album then
+      album_text:get_children_by_id("textbox")[1].text = "On " .. pm.media.album
+    end
   end
 end
 

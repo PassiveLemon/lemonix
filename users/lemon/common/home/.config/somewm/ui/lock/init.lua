@@ -122,7 +122,7 @@ awesome.connect_signal("ui::lock::toggle", function()
 end)
 
 -- Don't require auth if login handoff from the .bash_profile script is present
-local auth_file = h.join_path(os.getenv("HOME"), "/.cache/passivelemon/loginauth")
+local auth_file = h.join_path(os.getenv("HOME"), "/.cache/somewm/loginauth")
 local lxl_ipc = h.join_path(os.getenv("HOME"), "/.config/lite-xl/ipc")
 if h.is_file(auth_file) then
   os.remove(tostring(auth_file))
