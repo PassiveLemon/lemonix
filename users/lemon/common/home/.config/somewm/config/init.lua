@@ -6,6 +6,3 @@ require("config.keybindings")
 require("config.notifications")
 require("config.rules")
 
-local awful = require("awful")
-awful.screen.set_auto_dpi_enabled(true)
-

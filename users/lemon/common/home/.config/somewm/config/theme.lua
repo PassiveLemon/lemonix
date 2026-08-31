@@ -11,6 +11,8 @@ local dpi = b.xresources.apply_dpi
 -- Theme
 --
 
+awful.screen.set_auto_dpi_enabled(true)
+
 local theme = { }
 
 -- Font
@@ -113,6 +115,12 @@ theme.shadow_drawin_offset_y = 5
 theme.shadow_drawin_opacity = 0.6
 theme.shadow_drawin_color = "#000000"
 
+-- Animations
+local layout_anim = require("somewm.layout_animation")
+layout_anim.enabled = true
+layout_anim.duration = 0.08
+layout_anim.easing = "ease-out-cubic"
+
 --
 -- Wallpaper & icons
 --
@@ -141,11 +149,6 @@ screen.connect_signal("request::wallpaper", function(s)
       tiled = false,
       {
         widget = wibox.widget.imagebox,
-        -- Breaks awm
-        -- image = gears.surface.crop_surface({
-        --   surface = gears.surface.load_uncached(theme.wallpaper),
-        --   ratio = s.geometry.width/s.geometry.height,
-        -- }),
         image = theme.wallpaper,
         upscale = true,
         downscale = true,
