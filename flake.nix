@@ -39,9 +39,15 @@
     };
 
     # Submodules
+<<<<<<< HEAD
     awesomewm-bling = {
       url = "github:passivelemon/bling";
       # url = "path:/home/lemon/Documents/GitHub/bling";
+=======
+    hilbish-promptua = {
+      url = "github:passivelemon/promptua";
+      # url = "path:/home/lemon/Documents/GitHub/Promptua";
+>>>>>>> 57c81a85 (fix: replace bling with tofi and flameshot with awful.screenshot)
       flake = false;
     };
   };
