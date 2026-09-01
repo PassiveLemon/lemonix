@@ -1,5 +1,3 @@
-require("signal.brightness")
-
 local awful = require("awful")
 local gears = require("gears")
 local b = require("beautiful")
@@ -8,6 +6,10 @@ local wibox = require("wibox")
 local h = require("helpers")
 
 local dpi = b.xresources.apply_dpi
+
+gears.timer.delayed_call(function()
+  require("signal.brightness")
+end)
 
 --
 -- Brightness
