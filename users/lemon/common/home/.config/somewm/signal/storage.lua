@@ -4,11 +4,11 @@ local gears = require("gears")
 local h = require("helpers")
 local lfs = require("lfs")
 
--- storage_stats_dict
+-- storage_stats_table
 -- device = { (filesystem) (1k-blocks) (used) (available) (use%) (mounted on) }
 
-local function emit(storage_stats_dict)
-  awesome.emit_signal("signal::resource::storage::data", storage_stats_dict)
+local function emit(storage_stats_table)
+  awesome.emit_signal("signal::resource::storage::data", storage_stats_table)
 end
 
 local function device_stats_table(device_stats)
@@ -26,7 +26,7 @@ local storage_pattern_lookup = {
 }
 
 local function storage()
-  local storage_stats_dict = { }
+  local storage_stats_table = { }
   -- We iterate over each storage device in /sys/block and filter them by a pattern
   -- Then iterate over the matches, get a table of the first partition stats, and then add that key value pair to a table for use elsewhere
   for device in lfs.dir("/sys/block") do
@@ -36,15 +36,15 @@ local function storage()
         awful.spawn.easy_async_with_shell("df " .. device_path .. " | grep '/dev'", function(device_stats_raw, _, _, code)
           if code == 0 then
             local device_stats = device_stats_raw:gsub("\n", "")
-            storage_stats_dict[device] = device_stats_table(device_stats)
+            storage_stats_table[device] = device_stats_table(device_stats)
           end
         end)
         break
       end
     end
   end
-  awful.spawn.easy_async("sleep 5", function()
-    emit(storage_stats_dict)
+  awful.spawn.easy_async("sleep 2", function()
+    emit(storage_stats_table)
   end)
 end
 
