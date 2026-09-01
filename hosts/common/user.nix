@@ -1,12 +1,5 @@
 { pkgs, ... }: {
   environment = {
-    systemPackages = with pkgs; [
-      wlr-randr uwsm
-      networkmanagerapplet trayscale
-      resources baobab
-      gparted qdiskinfo
-      ffmpegthumbnailer # https://github.com/NixOS/nixpkgs/pull/509742
-    ];
     sessionVariables = {
       XDG_CONFIG_HOME = "$HOME/.config";
       XDG_DATA_HOME = "$HOME/.local/share";
