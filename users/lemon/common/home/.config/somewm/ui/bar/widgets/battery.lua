@@ -1,6 +1,3 @@
---require("signal.battery")
-require("signal.power")
-
 local gears = require("gears")
 local b = require("beautiful")
 local wibox = require("wibox")
@@ -8,6 +5,11 @@ local wibox = require("wibox")
 local h = require("helpers")
 
 local dpi = b.xresources.apply_dpi
+
+gears.timer.delayed_call(function()
+  --require("signal.battery")
+  require("signal.power")
+end)
 
 --
 -- Battery

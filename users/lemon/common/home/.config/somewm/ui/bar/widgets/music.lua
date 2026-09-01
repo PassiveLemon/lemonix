@@ -1,11 +1,13 @@
-require("signal.mpris")
-
 local gears = require("gears")
 local b = require("beautiful")
 
 local h = require("helpers")
 
 local dpi = b.xresources.apply_dpi
+
+gears.timer.delayed_call(function()
+  require("signal.mpris")
+end)
 
 --
 -- Music
