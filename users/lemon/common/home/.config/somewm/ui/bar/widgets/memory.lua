@@ -46,7 +46,7 @@ memory.text = h.text({
   halign = "left",
 })
 awesome.connect_signal("signal::resource::memory::data", function(free_mem_table)
-  memory.text:get_children_by_id("textbox")[1].text = h.round(((free_mem_table[2] / free_mem_table[1]) * 100), 0) .. "%"
+  memory.text:get_children_by_id("textbox")[1].text = h.round(((free_mem_table["Mem"][2] / free_mem_table["Mem"][1]) * 100), 0) .. "%"
 end)
 
 memory.pill = h.margin({
