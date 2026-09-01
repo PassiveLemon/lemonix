@@ -104,7 +104,7 @@ user.signal = {
 --   end
 -- end)
 
-awful.spawn.with_shell("wlr-randr --output DP-2 --mode 1920x1080@143.854996Hz --pos 0,0 --output DP-1 --mode 1920x1080@143.854996Hz --pos 1920,0")
+awful.spawn("wlr-randr --output DP-2 --mode 1920x1080@143.854996Hz --pos 0,0 --output DP-1 --mode 1920x1080@143.854996Hz --pos 1920,0")
 
 return user
 
