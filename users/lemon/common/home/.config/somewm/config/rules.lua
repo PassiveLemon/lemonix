@@ -1,12 +1,6 @@
 local awful = require("awful")
 local gears = require("gears")
-local b = require("beautiful")
 local ruled = require("ruled")
-
-local h = require("helpers")
-local lfs = require("lfs")
-
-local dpi = b.xresources.apply_dpi
 
 --
 -- Rules
@@ -125,60 +119,6 @@ client.connect_signal("request::manage", function(c)
     c.x, c.y = s.geometry.x, s.geometry.y
   end
 end)
-
--- local function hide_wibar(s, force)
---   if s.wibar then
---     s.wibar.ontop = not force
---   end
--- end
-
--- -- Check if a client overlaps screen geometry
--- local function screen_collision(c, s)
---   -- Only implemented for horizontal bars
---   local c_l = c.x
---   local c_r = c.x + c.width
---   local s_l = s.geometry.x
---   local s_r = s.geometry.x + s.geometry.width
---   return (c_l < s_r) and (c_r > s_l)
--- end
-
--- local function wibar_layer(c)
---   if c and not c.minimized then
---     -- First check all screens for potential collision
---     local screens = { [c.screen] = true }
---     for s in screen do
---       screens[s] = screen_collision(c, s)
---     end
---     for s, overlap in pairs(screens) do
---       local hide = false
---       -- If the client overlaps the screen and is not fullscreened, show the wibar
---       -- If not, iterate over all clients and see if there is a fullscreened client
---       if overlap then
---         if c.fullscreen then
---           hide = true
---         else
---           hide = false
---         end
---       else
---         for _, c_visible in ipairs(s.clients) do
---           if c_visible.fullscreen then
---             hide = true
---             break
---           end
---         end
---       end
---       hide_wibar(s, hide)
---     end
---   end
--- end
-
--- client.connect_signal("manage", function(c) wibar_layer(c) end)
--- client.connect_signal("property::geometry", function(c) wibar_layer(c) end)
--- client.connect_signal("request::activate", function(c)
---   if c.fullscreen then
---     wibar_layer(c)
---   end
--- end)
 
 --
 -- Layout
