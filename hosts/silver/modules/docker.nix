@@ -67,7 +67,8 @@
         description = "docker-deploy";
         serviceConfig = {
           Type = "oneshot";
-          ExecStart = "-${pkgs.nix}/bin/nix run /home/lemon/Documents/GitHub/lemocker#deploy-silver";
+          WorkingDirectory = "/home/lemon/Documents/GitHub/lemocker";
+          ExecStart = "-${pkgs.nix}/bin/nix run .#deploy-silver";
           Restart = "on-failure";
           RestartSec = 15;
         };

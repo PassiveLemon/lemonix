@@ -78,7 +78,8 @@
         description = "docker-deploy";
         serviceConfig = {
           Type = "oneshot";
-          ExecStart = "-${pkgs.nix}/bin/nix run /data/docker/lemocker#deploy-titanium";
+          WorkingDirectory = "/data/docker/lemocker";
+          ExecStart = "-${pkgs.nix}/bin/nix run .#deploy-titanium";
           Restart = "on-failure";
           RestartSec = 15;
         };
