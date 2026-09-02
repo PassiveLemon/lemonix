@@ -1,6 +1,14 @@
 {
   "$schema": "https://raw.githubusercontent.com/LuaLS/vscode-lua/master/setting/schema.json",
-  "Lua.diagnostics.globals": [
+  "workspace.ignoreDir": [
+    "**/.git",
+    "**/result",
+
+    "**/.arduino",
+    "**/.pio",
+    "**/nixpkgs"
+  ],
+  "diagnostics.globals": [
     // AWM
     "awesome",
     "awful",
@@ -12,6 +20,10 @@
     "screen",
     "tag",
     "wibox",
+
+    // SomeWM
+    "output",
+    "somewm",
 
     // Lite-XL
     "process",
@@ -25,13 +37,13 @@
     // Hilbish
     "hilbish"
   ],
-  "Lua.diagnostics.unusedLocalExclude": [
+  "diagnostics.unusedLocalExclude": [
     "_"
   ],
-  "Lua.diagnostics.disable": [
+  "diagnostics.disable": [
     "redundant-parameter"
   ],
-  "Lua.format.defaultConfig": {
+  "format.defaultConfig": {
     "indent_style": "space",
     "indent_size": "2"
   }
