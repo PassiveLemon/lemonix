@@ -117,10 +117,9 @@ in {
       config = {
         frameless = true;
         disableMinSize = true;
-        enabledThemes = [
-          "Lemon.theme" "LemonTweaks.theme"
-        ];
         themeLinks = [
+          "https://raw.githubusercontent.com/PassiveLemon/lemonix/refs/heads/master/users/lemon/common/home/.config/Vencord/themes/Lemon.css"
+          "https://raw.githubusercontent.com/PassiveLemon/lemonix/refs/heads/master/users/lemon/common/home/.config/Vencord/themes/LemonTweaks.css"
           "https://raw.githubusercontent.com/mwittrien/BetterDiscordAddons/refs/heads/master/Themes/DiscordRecolor/DiscordRecolor.css"
           "https://raw.githubusercontent.com/MaiRiosIPla/unshittify-discord/refs/heads/main/RoundIconsSource.theme.css"
         ];
