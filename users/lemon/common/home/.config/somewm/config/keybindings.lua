@@ -28,7 +28,7 @@ awful.keyboard.append_global_keybindings({
   awful.key({ super }, "z", function() awesome.emit_signal("ui::resource::toggle") end,
   { description = "run resource monitor", group = "launcher" }),
 
-  awful.key({ super }, "l", function() awesome.emit_signal('ui::lock::toggle') end,
+  awful.key({ super }, "l", function() awesome.lock() end,
   { description = "lock display", group = "launcher" }),
 
   -- Control
