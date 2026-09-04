@@ -5,6 +5,7 @@ local promptua = require("promptua")
 
 hilbish.opts.greeting = false
 hilbish.opts.motd = false
+hilbish.opts.hinter = false
 
 hilbish.runner.setCurrent = "hybridRev"
 
