@@ -47,12 +47,9 @@
       liveRestore = false;
       autoPrune = {
         enable = true;
-        dates = "weekly";
-      };
-      daemon.settings = {
-        hosts = [
-          "unix:///var/run/docker.sock"
-        ];
+        dates = "Mon 02:00";
+        flags = [ "--all" ];
+        allVolumes.enable = true; # Everything is stored through a host mount
       };
     };
   };
@@ -63,12 +60,12 @@
 
   systemd = {
     user.services = {
-      docker-deploy = {
+      "docker-deploy" = {
         description = "docker-deploy";
         serviceConfig = {
           Type = "oneshot";
-          WorkingDirectory = "/home/lemon/Documents/GitHub/lemocker";
-          ExecStart = "-${pkgs.nix}/bin/nix run .#deploy-silver";
+          WorkingDirectory = "/home/lemon/Documents/GitHub/lemocker/silver";
+          ExecStart = "-${pkgs.docker}/bin/docker compose up -d";
           Restart = "on-failure";
           RestartSec = 15;
         };
