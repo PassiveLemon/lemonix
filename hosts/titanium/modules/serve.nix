@@ -1,4 +1,4 @@
-{ config, pkgs, ... }: {
+{ config, lib, pkgs, ... }: {
   users = {
     groups = {
       "nix-serve" = {
@@ -32,14 +32,66 @@
       openFirewall = true;
       secretKeyFile = config.age.secrets.nixServeKey.path;
     };
-    cron.systemCronJobs = let
+  };
+  systemd = {
+    user.services = let
+      inherit (lib) listToAttrs map mergeAttrsList;
+      nixosConfigs = [
+        "aluminum"
+        "silver"
+        "titanium"
+      ];
+      homeConfigs = [
+        "lemon@aluminum"
+        "lemon@silver"
+      ];
       flake = "--flake /data/lemonix";
-      nixos = host: "nixos-rebuild build ${flake}#${host}";
-      home = userhost: "${pkgs.home-manager.home-manager}/bin/home-manager build ${flake}#${userhost}";
-    in [
-      "0 4 * * *  root  nix flake update ${flake} ; ${nixos "aluminum"} ; ${nixos "silver"} ; ${nixos "titanium"}"
-      "0 5 * * *  lemon  ${home "lemon@aluminum"} ; ${home "lemon@silver"}"
+      mkNixOSJob = host: {
+        description = "build-${host}";
+        serviceConfig = {
+          Type = "oneshot";
+          WorkingDirectory = "/data/lemonix";
+          ExecStart = "${pkgs.nixos-rebuild-ng}/bin/nixos-rebuild build ${flake}#${host}";
+        };
+        after = [ "flake-update.service" ];
+        requires = [ "flake-update.service" ];
+      };
+      mkHomeJob = userhost: {
+        description = "build-${userhost}";
+        serviceConfig = {
+          Type = "oneshot";
+          WorkingDirectory = "/data/lemonix";
+          ExecStart = "${pkgs.home-manager.home-manager}/bin/home-manager build ${flake}#${userhost}";
+        };
+        path = [ pkgs.nix ];
+        after = [ "flake-update.service" ];
+        requires = [ "flake-update.service" ];
+      };
+      mkJobs = mkJob: configs:
+        listToAttrs (map (name: {
+          name = "build-${name}";
+          value = mkJob name;
+        }) configs);
+    in mergeAttrsList [
+      (mkJobs mkNixOSJob nixosConfigs)
+      (mkJobs mkHomeJob homeConfigs)
+      {
+        "flake-update" = {
+          description = "flake-update";
+          serviceConfig = {
+            Type = "oneshot";
+            WorkingDirectory = "/data/lemonix";
+            ExecStart = "${pkgs.nix}/bin/nix flake update ${flake}";
+          };
+          path = [ pkgs.git ];
+          wants = map (build: "build-" + build + ".service") (nixosConfigs ++ homeConfigs);
+        };
+      }
     ];
+    timers."flake-update" = {
+      wantedBy = [ "timers.target" ];
+      timerConfig.OnCalendar = "04:00";
+    };
   };
 }
 
