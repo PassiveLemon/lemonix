@@ -13,7 +13,13 @@ local dpi = b.xresources.apply_dpi
 -- Lockscreen visual
 --
 
--- This is purely a visual additive to the lock process, it does not handle any security measures
+local lock_wb = wibox({
+  visible = false,
+  ontop = true,
+  type = "desktop",
+})
+
+awesome.set_lock_surface(lock_wb)
 
 local function get_random()
   return math.random(0, 628) / 100
@@ -64,7 +70,7 @@ awful.screen.connect_for_each_screen(function(s)
     end,
   })
 
-  awesome.connect_signal("ui::lock::keypress", function(key, input, auth)
+  awesome.connect_signal("ui::lock::keypress", function(key, input)
     if #key == 1 then
       circle:get_children_by_id("arcchart")[1].colors = { b.green }
       circle:get_children_by_id("arcchart")[1].value = 20
@@ -81,17 +87,15 @@ awful.screen.connect_for_each_screen(function(s)
       circle:get_children_by_id("arcchart")[1].colors = { b.magenta }
       circle:get_children_by_id("arcchart")[1].value = 100
     elseif key == "Return" then
-      if auth == nil then
-        circle:get_children_by_id("arcchart")[1].colors = { b.magenta }
-        circle:get_children_by_id("arcchart")[1].value = 100
-      elseif auth then
-        circle:get_children_by_id("arcchart")[1].colors = { b.green }
-        circle:get_children_by_id("arcchart")[1].value = 100
-      elseif not auth then
-        circle:get_children_by_id("arcchart")[1].colors = { b.red }
-        circle:get_children_by_id("arcchart")[1].value = 100
-      end
+      circle:get_children_by_id("arcchart")[1].colors = { b.magenta }
+      circle:get_children_by_id("arcchart")[1].value = 100
     end
+    reset_timer:again()
+  end)
+
+  awesome.connect_signal("lock::auth_failed", function()
+    circle:get_children_by_id("arcchart")[1].colors = { b.red }
+    circle:get_children_by_id("arcchart")[1].value = 100
     reset_timer:again()
   end)
 
@@ -219,10 +223,14 @@ awful.screen.connect_for_each_screen(function(s)
       },
     },
   })
-  awful.placement.centered(main)
+  awesome.add_lock_cover(main)
+end)
 
-  awesome.connect_signal("ui::lock::state", function(force)
-    main.visible = force or false
-  end)
+awesome.connect_signal("lock::activate", function()
+  lock_wb.visible = true
+end)
+
+awesome.connect_signal("lock::deactivate", function()
+  lock_wb.visible = false
 end)
 

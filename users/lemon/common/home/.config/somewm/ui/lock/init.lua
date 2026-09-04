@@ -2,9 +2,6 @@
 
 require("ui.lock.lockscreen")
 
-require("signal.volume")
-require("signal.display")
-
 local awful = require("awful")
 
 local h = require("helpers")
@@ -15,42 +12,9 @@ local lfs = require("lfs")
 -- Lockscreen function
 --
 
-local function auth(password)
-  return pam.auth_current_user(password)
-end
-
-local function unlock()
-  awesome.emit_signal("ui::lock::state", false)
-  awesome.emit_signal("signal::peripheral::volume::unmute", true)
-  -- awesome.emit_signal("signal::peripheral::display::powersave::disable")
-
-  -- Unhide all clients
-  for s in screen do
-    for _, c in ipairs(s.hidden_clients) do
-      c.hidden = false
-    end
-  end
-end
-
-local function lock()
-  awesome.emit_signal("ui::lock::state", true)
-  awesome.emit_signal("signal::mpris::pause", "%all%")
-  awesome.emit_signal("signal::peripheral::volume::mute", true)
-  -- awesome.emit_signal("signal::peripheral::display::powersave::enable")
-
-  -- Hide all clients and unset focus
-  for s in screen do
-    s.wibar.ontop = false
-    for _, c in ipairs(s.clients) do
-      c.hidden = true
-    end
-  end
-  client.focus = nil
-
-  -- Setup keygrabber
+awesome.connect_signal("lock::activate", function()
   local input = ""
-  local input_count = 0
-  local grabber = awful.keygrabber({
+  awful.keygrabber({
     auto_start = true,
     stop_event = "release",
     mask_event_callback = true,
@@ -63,62 +27,24 @@ local function lock()
         end
       }
     },
-    keypressed_callback = function(_, _, key)
+    keypressed_callback = function(self, _, key)
       if #key == 1 then
-        if input_count < 32 then
-          awesome.emit_signal("ui::lock::keypress", key, input_count, nil)
-          if input == nil then
-            input = key
-          end
-          input = input .. key
-          input_count = input_count + 1
-        elseif input_count > 33 then
-          -- Doesn't actually enter escape, we just use this so we can show colors
-          awesome.emit_signal("ui::lock::keypress", "Escape", 0, nil)
-          input = ""
-          input_count = 0
-        else
-          awesome.emit_signal("ui::lock::keypress", "BackSpace", 0, nil)
-        end
+        input = (input or "") .. key
       elseif key == "BackSpace" then
-        awesome.emit_signal("ui::lock::keypress", key, input_count, nil)
         input = input:sub(1, -2)
-        if input_count > 0 then
-          input_count = input_count - 1
-        end
       elseif key == "Escape" then
-        awesome.emit_signal("ui::lock::keypress", key, 0, nil)
         input = ""
-        input_count = 0
       elseif key == "Return" then
-        awesome.emit_signal("ui::lock::keypress", key, 0, nil)
+        input = ""
+        awesome.authenticate(input)
+        awesome.unlock()
+        self:stop()
       elseif key == "Caps_Lock" then
         awesome.emit_signal("signal::peripheral::caps::update")
       end
-    end,
-    keyreleased_callback = function(self, _, key)
-      if key == "Return" then
-        if auth(input) then
-          awesome.emit_signal("ui::lock::keypress", key, input_count, true)
-          awesome.emit_signal("ui::lock::state", false)
-          input = ""
-          input_count = 0
-          self:stop()
-          unlock()
-        else
-          awesome.emit_signal("ui::lock::keypress", key, input_count, false)
-          awesome.emit_signal("ui::lock::state", true)
-          input = ""
-          input_count = 0
-        end
-      end
+      awesome.emit_signal("ui::lock::keypress", key, #input)
     end
   })
-  grabber:start()
-end
-
-awesome.connect_signal("ui::lock::toggle", function()
-  lock()
 end)
 
 -- Don't require auth if login handoff from the .bash_profile script is present
@@ -133,6 +59,6 @@ if h.is_file(auth_file) then
     end
   end
 else
-  lock()
+  awesome.lock()
 end
 
