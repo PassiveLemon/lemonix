@@ -47,12 +47,9 @@
       liveRestore = false;
       autoPrune = {
         enable = true;
-        dates = "weekly";
-      };
-      daemon.settings = {
-        hosts = [
-          "unix:///var/run/docker.sock"
-        ];
+        dates = "Mon 02:00";
+        flags = [ "--all" ];
+        allVolumes.enable = true; # Everything is stored through a host mount
       };
     };
   };
@@ -63,7 +60,7 @@
 
   systemd = {
     user.services = {
-      docker-deploy = {
+      "docker-deploy" = {
         description = "docker-deploy";
         serviceConfig = {
           Type = "oneshot";

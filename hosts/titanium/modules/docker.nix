@@ -32,12 +32,6 @@
   };
 
   services = {
-    cron.systemCronJobs = [
-      # As recommended in https://docs.invidious.io/installation/#highly-recommended
-      "0 3 * * *  docker  docker restart invidious invidious-db invidious-companion"
-      "0 3 * * 1  docker  /data/Media/Music/rsgain.sh"
-      "0 3 * * 2  docker  rm -r /data/Media/Music/Soulseek/* && mkdir /data/Media/Music/Soulseek/Incomplete"
-    ];
     nfs.server = {
       enable = true;
       exports = ''
@@ -61,7 +55,9 @@
       liveRestore = false;
       autoPrune = {
         enable = true;
-        dates = "weekly";
+        dates = "Mon 02:00";
+        flags = [ "--all" ];
+        allVolumes.enable = true; # Everything is stored through a host mount
       };
       daemon.settings = {
         hosts = [
@@ -73,8 +69,36 @@
   };
 
   systemd = {
+    services = {
+      "cleanup-soulseek" = {
+        description = "cleanup-soulseek";
+        serviceConfig = {
+          Type = "oneshot";
+          WorkingDirectory = "/data/Media/Music/Soulseek/";
+          ExecStart = "rm ./*";
+          ExecStartPost = "mkdir /data/Media/Music/Soulseek/Incomplete";
+        };
+      };
+      "restart-invidious" = {
+        # As recommended in https://docs.invidious.io/installation/#highly-recommended
+        description = "restart-invidious";
+        serviceConfig = {
+          Type = "oneshot";
+          ExecStart = "${pkgs.docker}/bin/docker restart invidious invidious-db invidious-companion";
+        };
+      };
+      "rsgain" = {
+        description = "rsgain";
+        serviceConfig = {
+          Type = "oneshot";
+          WorkingDirectory = "/data/Media/Music/";
+          ExecStart = "/data/Media/Music/rsgain.sh";
+        };
+        path = with pkgs; [ bash rsgain ];
+      };
+    };
     user.services = {
-      docker-deploy = {
+      "docker-deploy" = {
         description = "docker-deploy";
         serviceConfig = {
           Type = "oneshot";
@@ -89,9 +113,22 @@
         wants = [ "network-online.target" ];
       };
     };
+    timers = {
+      "cleanup-soulseek" = {
+        wantedBy = [ "timers.target" ];
+        timerConfig.OnCalendar = "Mon 02:00";
+      };
+      "restart-invidious" = {
+        wantedBy = [ "timers.target" ];
+        timerConfig.OnCalendar = "03:00";
+      };
+      "rsgain" = {
+        wantedBy = [ "timers.target" ];
+        timerConfig.OnCalendar = "Mon 03:00";
+      };
+    };
     tmpfiles.rules = [
       "Z /data/docker 770 docker docker-management - -"
-      "Z /data/docker/lemocker/titanium/streaming/outsource 700 docker docker-management - -"
 
       "Z /data/Media 770 docker docker-management - -"
       "Z /data/Media/Comics/Manga 770 1000 docker-management - -"
