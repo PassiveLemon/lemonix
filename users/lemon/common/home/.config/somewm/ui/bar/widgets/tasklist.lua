@@ -2,6 +2,9 @@ local awful = require("awful")
 local gears = require("gears")
 local b = require("beautiful")
 local wibox = require("wibox")
+local menubar = require("menubar")
+
+local gtk = require("lgi").require("Gtk")
 
 local h = require("helpers")
 
@@ -10,6 +13,27 @@ local dpi = b.xresources.apply_dpi
 --
 -- Tasklist
 --
+
+local custom = gtk.IconTheme.new()
+custom:set_custom_theme(b.icons)
+
+local hicolor = gtk.IconTheme.new()
+hicolor:set_custom_theme("hicolor")
+
+local function get_icon(c)
+  if not c.class then return nil end
+  local class = c.class:lower()
+  -- Reverse-DNS classes are common: try "com.mitchellh.ghostty", then "ghostty"
+  for _, name in ipairs({ class, class:match("([^.]+)$") }) do
+    for _, theme in ipairs({ custom, hicolor }) do
+      local info = theme:lookup_icon(name, 64, 0)
+      if info and info:get_filename() then
+        return info:get_filename()
+      end
+    end
+  end
+  return menubar.utils.lookup_icon_uncached(class)
+end
 
 local tasklist = { }
 
@@ -52,7 +76,14 @@ function tasklist.tasklist(s)
         },
       },
       create_callback = function(self, c)
-        self:get_children_by_id("imagebox")[1].image = c.theme_icon
+        local icon = get_icon(c)
+        if icon then
+          self:get_children_by_id("imagebox")[1].image = gears.surface.load_uncached(icon)
+          -- Sloppy focus on hover
+          self:get_children_by_id("imagebox")[1]:connect_signal("mouse::enter", function()
+            c:activate({ context = "mouse_enter", raise = false })
+          end)
+        end
       end,
     },
   })

@@ -1,7 +1,6 @@
 local awful = require("awful")
 local b = require("beautiful")
 local wibox = require("wibox")
-local menubar_utils = require("menubar.utils")
 
 local h = require("helpers")
 
@@ -127,16 +126,20 @@ layout_anim.duration = 0.08
 layout_anim.easing = "ease-out-cubic"
 
 --
--- Wallpaper & icons
+-- Layout
 --
 
-theme.icon_theme = "Papirus"
+theme.layout = awful.layout.suit.spiral.dwindle
 
-client.connect_signal("property::class", function(c)
-  if c.class then
-    c.theme_icon = menubar_utils.lookup_icon(string.lower(c.class)) or c.icon
-  end
-end)
+--
+-- Icons
+--
+
+theme.icons = "Papirus"
+
+--
+-- Wallpaper
+--
 
 theme.wallpaper = h.join_path(os.getenv("HOME"), "/.wallpaper-image")
 theme.lockscreen = h.join_path(os.getenv("HOME"), "/.lockscreen-image")
