@@ -1,4 +1,4 @@
-{ config, lib, pkgs, ... }: {
+{ lib, pkgs, ... }: {
   boot = {
     loader = {
       efi.canTouchEfiVariables = true;
@@ -23,10 +23,7 @@
   i18n.defaultLocale = "en_US.UTF-8";
 
   networking = {
-    networkmanager = {
-      enable = true;
-      insertNameservers = config.networking.nameservers;
-    };
+    networkmanager.enable = true;
     firewall.enable = true;
     usePredictableInterfaceNames = true;
   };

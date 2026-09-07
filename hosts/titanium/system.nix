@@ -55,21 +55,29 @@
 
   networking = {
     hostName = "titanium";
-    interfaces = {
-      "enp6s0" = {
-        name = "enp6s0";
-        ipv4 = {
-          addresses = [{
-            address = "192.168.1.11";
-            prefixLength = 24;
-          }];
+    enableIPv6 = false;
+    networkmanager = {
+      ensureProfiles.profiles = {
+        "enp6s0" = {
+          connection = {
+            id = "enp6s0";
+            type = "ethernet";
+            interface-name = "enp6s0";
+          };
+          ipv4 = {
+            method = "manual";
+            address1 = "192.168.1.11/24";
+            dns = "192.168.1.1;";
+            dns-search = "~.;~passivelemon.net;~passivelemon.com;";
+          };
+          ipv6 = {
+            method = "disabled";
+          };
         };
-        useDHCP = false;
       };
     };
-    enableIPv6 = false;
-    nameservers = [ "192.168.1.1" "1.1.1.1" "9.9.9.9" ];
     firewall = {
+      # Syncthing UI
       allowedTCPPorts = [ 8384 ];
       allowedUDPPorts = [ 8384 ];
     };
