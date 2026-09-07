@@ -1,10 +1,9 @@
 local awful = require("awful")
 
-local systemctl = "systemctl --user start "
 awful.spawn("systemctl --user import-environment WAYLAND_DISPLAY")
 awful.spawn("dbus-update-activation-environment --systemd WAYLAND_DISPLAY")
 awful.spawn("xhost +SI:localuser:root") -- Allow root programs to access display
-awful.spawn(systemctl .. "nixos-fake-graphical-session.target")
+awful.spawn("systemctl --user start nixos-fake-graphical-session.target")
 
 awesome.set_idle_timeout("dpms", 180, function() awesome.dpms_off() end)
 awesome.set_idle_timeout("lock", 300, function() awesome.lock() end)

@@ -1,5 +1,6 @@
 local awful = require("awful")
 local gears = require("gears")
+local b = require("beautiful")
 local ruled = require("ruled")
 
 --
@@ -13,24 +14,18 @@ ruled.client.connect_signal("request::rules", function()
     rule = { },
     properties = {
       screen = awful.screen.preferred,
-      focus = awful.client.focus.filter,
       placement = awful.placement.centered+awful.placement.no_offscreen,
       raise = true,
       size_hints_honor = false,
       honor_workarea = true,
     },
-    -- Go to the end of the stack
-    callback = function(c)
-      c:to_secondary_section()
-    end,
   })
 
   -- Floating clients
   ruled.client.append_rule({
     id = "floating",
     rule_any = {
-      instance = { "xarchiver", "loupe", "papers", "nm-connection-editor", ".blueman-manager-wrapped", "zenity" },
-      class    = { "Xarchiver", "loupe", "papers", "Nm-connection-editor", ".blueman-manager-wrapped", "zenity" },
+      class    = { "xarchiver", "org.gnome.Loupe", "org.gnome.Papers", "nm-connection-editor", ".blueman-manager-wrapped", "zenity" },
       name     = { "Confirm File Replacing", "Copying files" },
       role     = { "pop-up", "GtkFileChooserDialog" },
     },
@@ -62,8 +57,7 @@ ruled.client.connect_signal("request::rules", function()
   ruled.client.append_rule({
     id = "steam",
     rule = {
-      instance = "steamwebhelper",
-      class    = "steam",
+      class = "steam",
     },
     except = {
       -- The exact match is necessary, otherwise the "Steam Settings" window name would be accepted
@@ -92,18 +86,6 @@ client.connect_signal("request::manage", function(c)
     c.fullscreen = false
     c.fullscreen = true
   end
-  -- Some floating clients dont spawn centered for whatever reason
-  if c.floating then
-    c.minimized = true
-    c.hidden = true
-    gears.timer.start_new(0.15, function()
-      awful.placement.under_mouse(c)
-      c.hidden = false
-      awful.placement.centered(c)
-      c:activate()
-      c.minimized = false
-    end)
-  end
 end)
 
 --
@@ -122,17 +104,18 @@ end)
 -- Layout
 --
 
-tag.connect_signal("request::default_layouts", function()
-  awful.layout.append_default_layouts({
-    awful.layout.suit.spiral.dwindle,
-  })
+awful.screen.connect_for_each_screen(function(s)
+  awful.tag({ "1", "2", "3", "4" }, s, b.layout)
 end)
 
--- Rescue untagged clients after restart
+tag.connect_signal("request::default_layouts", function()
+  awful.layout.append_default_layouts({ b.layout })
+end)
+
+-- Go to end of the stack
 client.connect_signal("request::manage", function(c, context)
-  if context == "restart" then
-    c:move_to_screen(1)
-    c:move_to_tag("1")
+  if context == "new" then
+    c:to_secondary_section()
   end
 end)
 
