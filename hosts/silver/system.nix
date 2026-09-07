@@ -16,20 +16,27 @@
 
   networking = {
     hostName = "silver";
-    interfaces = {
-      "eno1" = {
-        name = "eno1";
-        ipv4 = {
-          addresses = [{
-            address = "192.168.1.10";
-            prefixLength = 24;
-          }];
+    enableIPv6 = false;
+    networkmanager = {
+      ensureProfiles.profiles = {
+        "eno1" = {
+          connection = {
+            id = "eno1";
+            type = "ethernet";
+            interface-name = "eno1";
+          };
+          ipv4 = {
+            method = "manual";
+            address1 = "192.168.1.10/24";
+            dns = "192.168.1.1;";
+            dns-search = "~.;~passivelemon.net;~passivelemon.com;";
+          };
+          ipv6 = {
+            method = "disabled";
+          };
         };
-        useDHCP = false;
       };
     };
-    enableIPv6 = false;
-    nameservers = [ "192.168.1.1" "1.1.1.1" "9.9.9.9" ];
   };
   
 

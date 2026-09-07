@@ -29,7 +29,6 @@
   networking = {
     hostName = "aluminum";
     enableIPv6 = false;
-    nameservers = [ "100.64.0.104" "1.1.1.1" "9.9.9.9" ];
     networkmanager.wifi.powersave = true;
   };
 
