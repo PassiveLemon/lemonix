@@ -25,9 +25,9 @@
     windowManager.somewm = {
       enable = true;
       package = inputs.lemonake.packages.${system}.somewm-git.override {
-        extraGITypeLibPaths = with pkgs.astal; [
+        extraGITypeLibPaths = (with pkgs.astal; [
           brightness wireplumber
-        ];
+        ]) ++ (with pkgs; [ gtk3 ]);
         extraLuaModules = with pkgs.luajitPackages; [
           luafilesystem
         ];
