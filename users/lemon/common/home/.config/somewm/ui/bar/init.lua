@@ -10,9 +10,7 @@ local dpi = b.xresources.apply_dpi
 -- Wibar
 --
 
-screen.connect_signal("request::desktop_decoration", function(s)
-  awful.tag({ "1", "2", "3", "4" }, s, awful.layout.layouts[1])
-
+awful.screen.connect_for_each_screen(function(s)
   s.wibar = awful.wibar({
     width = s.geometry.width,
     height = dpi(32),
