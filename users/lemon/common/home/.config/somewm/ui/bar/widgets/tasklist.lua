@@ -76,6 +76,10 @@ function tasklist.tasklist(s)
         },
       },
       create_callback = function(self, c)
+        if c.icon then
+          self:get_children_by_id("imagebox")[1].image = gears.surface.load_uncached(c.icon)
+          return
+        end
         local icon = get_icon(c)
         if icon then
           self:get_children_by_id("imagebox")[1].image = gears.surface.load_uncached(icon)

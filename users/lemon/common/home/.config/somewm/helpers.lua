@@ -448,6 +448,14 @@ function h.is_dir(dir)
   return gears.filesystem.is_dir(dir)
 end
 
+function h.read_file(file)
+  local f = io.open(file, "r")
+  if not f then return nil end
+  local content = f:read("*l")
+  f:close()
+  return content
+end
+
 function h.table_contains(table, value)
   for _, v in ipairs(table) do
     if v == value then
@@ -513,6 +521,12 @@ end
 -- print(h.join_path("", "home", true, "user", nil, "documents", 1, "file.txt"))
 -- -- No inputs -> nil
 -- print(h.join_path())
+
+function h.for_s(callback)
+  for s in screen do
+    callback(s)
+  end
+end
 
 return h
 

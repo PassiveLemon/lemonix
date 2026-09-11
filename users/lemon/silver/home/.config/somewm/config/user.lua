@@ -1,4 +1,5 @@
 local awful = require("awful")
+local gears = require("gears")
 
 require("signal.wivrn")
 require("ui.crosshair")
@@ -75,9 +76,8 @@ user.signal = {
 --   },
 -- }
 
--- screen.connect_signal("added", function(s)
---   local o = s.output
---   require("naughty").notification({ title = o.name })
+-- local function outputter(o)
+--   print(o.name)
 --   if o.name == "DP-1" then
 --     o.mode = {
 --       width = 1920,
@@ -102,9 +102,17 @@ user.signal = {
 --     }
 --     o.adaptive_sync = true
 --   end
--- end)
+-- end
 
-awful.spawn("wlr-randr --output DP-2 --mode 1920x1080@143.854996Hz --pos 0,0 --output DP-1 --mode 1920x1080@143.854996Hz --pos 1920,0")
+-- outputter(output.get_by_name("DP-2"))
+-- outputter(output.get_by_name("DP-1"))
+
+gears.timer.delayed_call(function()
+  awful.spawn("wlr-randr --output DP-2 --mode 1920x1080@143.854996Hz --pos 0,0 --output DP-1 --mode 1920x1080@143.854996Hz --pos 1920,0")
+end)
+
+awesome.set_idle_timeout("dpms", 300, function() awesome.dpms_off() end)
+awesome.set_idle_timeout("lock", 600, function() awesome.lock() end)
 
 return user
 
