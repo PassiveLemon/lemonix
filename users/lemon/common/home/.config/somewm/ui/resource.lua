@@ -196,7 +196,7 @@ awesome.connect_signal("signal::miscellaneous::uptime", function(uptime_days, up
 end)
 
 awful.screen.connect_for_each_screen(function(s)
-  local main = awful.popup({
+  s.resource_popup = awful.popup({
     placement = awful.placement.centered,
     border_width = dpi(3),
     border_color = b.border_color_active,
@@ -275,15 +275,16 @@ awful.screen.connect_for_each_screen(function(s)
       },
     },
   })
+  click_to_hide.popup(s.resource_popup, nil, true)
+end)
 
-  awesome.connect_signal("ui::resource::toggle", function()
-    if main.screen.index == awful.screen.focused().index then
-      main.visible = not main.visible
+awesome.connect_signal("ui::resource::toggle", function()
+  h.for_s(function(s)
+    if s == awful.screen.focused() then
+      s.resource_popup.visible = not s.resource_popup.visible
     else
-      main.visible = false
+      s.resource_popup.visible = false
     end
   end)
-
-  click_to_hide.popup(main, nil, true)
 end)
 

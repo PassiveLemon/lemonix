@@ -69,14 +69,6 @@ power.restart_button = h.timed_button({
   end
 }, 5)
 
-power.button = h.button({
-  x = dpi(32),
-  y = dpi(32),
-  shape = gears.shape.circle,
-  text = "󰐥",
-  font = b.sysfont(dpi(15)),
-})
-
 local power_menu_order = {
   "lock",
   "suspend",

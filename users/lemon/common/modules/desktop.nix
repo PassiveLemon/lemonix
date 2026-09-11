@@ -68,7 +68,7 @@
 
   services = {
     trayscale.enable = true;
-    network-manager-applet.enable = true;
+    # network-manager-applet.enable = true;
   };
 }
 

@@ -186,15 +186,15 @@ local function crosshair3()
   crosshair3_left_pop.screen = screen.primary
 end
 
-awesome.connect_signal("ui::crosshair::toggle", function(number)
-  if number == 1 then
-    crosshair1()
-  end
-  if number == 2 then
-    crosshair2()
-  end
-  if number == 3 then
-    crosshair3()
-  end
-end)
+-- awesome.connect_signal("ui::crosshair::toggle", function(number)
+--   if number == 1 then
+--     crosshair1()
+--   end
+--   if number == 2 then
+--     crosshair2()
+--   end
+--   if number == 3 then
+--     crosshair3()
+--   end
+-- end)
 
