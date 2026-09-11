@@ -1,8 +1,8 @@
 { config, lib, pkgs, ... }: {
   home = {
     packages = with pkgs; [
-      lxappearance
       shared-mime-info
+      noto-fonts
       nerd-fonts.symbols-only
       nerd-fonts.fira-code
       nerd-fonts.fira-mono
