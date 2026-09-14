@@ -16,10 +16,5 @@ fi
 systemctl --user start nixos-fake-graphical-session.target
 
 autorandr -l Default
-awesome
-
-systemctl --user stop nixos-fake-graphical-session.target
-
-# If AWM crashes or is killed, we kill the user to prevent unauthorized access.
-pkill -KILL -u lemon
+exec awesome
 

@@ -8,11 +8,6 @@
     packages = with pkgs; [
       librepods
     ];
-    file = {
-      ".bash_profile" = {
-        source = ./home/.bash_profile;
-      };
-    };
     pointerCursor.size = 32;
     stateVersion = "26.05"; # Don't change unless you know what you are doing
   };
