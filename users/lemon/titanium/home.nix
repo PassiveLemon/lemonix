@@ -7,6 +7,10 @@
   home = {
     username = "lemon";
     homeDirectory = "/home/lemon";
+    file.".bash_profile" = {
+      source = ../common/home/.bash_profile;
+      recursive = true;
+    };
     stateVersion = "26.11"; # Don't change unless you know what you are doing
   };
 
