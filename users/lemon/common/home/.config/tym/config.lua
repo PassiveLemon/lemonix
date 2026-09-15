@@ -1,7 +1,7 @@
 local tym = require("tym")
 
 tym.set_config({
-  shell = os.getenv("HOME") .. "/.local/state/nix/profile/bin/hilbish",
+  shell = os.getenv("HOME") .. "/.local/state/nix/profile/bin/fish",
   silent = true,
   padding_top = 8,
   padding_right = 8,
