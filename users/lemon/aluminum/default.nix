@@ -1,4 +1,9 @@
 { ... }: {
+  imports = [
+    ../common
+    ./home.nix
+  ];
+
   lemonix = {
     gaming = {
       enable = true;

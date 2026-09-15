@@ -1,5 +1,6 @@
-{ inputs, lib, pkgs, ... }: {
+{ inputs, lib, ... }: {
   imports = [
+    ./modules/cmdline.nix
     ./modules/customization.nix
     ./modules/desktop.nix
     ./modules/mime.nix
@@ -7,23 +8,6 @@
   ];
 
   home = {
-    packages = with pkgs; [
-      # Terminal
-      tym
-      lemonake.hilbish-git
-      nh eza bat comma fend
-      # File/storage
-      pcmanfm xarchiver localsend
-      # Office/Development
-      drawio
-      onlyoffice-desktopeditors onlyoffice-documentserver
-      # Audio
-      pwvucontrol crosspipe
-      feishin
-      # Image/Video
-      loupe flameshot papers gimp drawy
-      celluloid kdePackages.kdenlive
-    ];
     username = "lemon";
     homeDirectory = "/home/lemon";
     # Link everything in common/home to the users home

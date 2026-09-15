@@ -57,12 +57,7 @@
     mkNixOS = name: system: inputs.nixos.lib.nixosSystem {
       system = system;
       specialArgs = { inherit self inputs outputs system; };
-      modules = [
-        ./hosts/common/default.nix
-        ./hosts/${name}/default.nix
-        ./hosts/${name}/system.nix
-        ./hosts/${name}/user.nix
-      ];
+      modules = [ ./hosts/${name}/default.nix ];
     };
 
     mkHome = name: host: let
@@ -71,24 +66,21 @@
     in inputs.home-manager.lib.homeManagerConfiguration {
       extraSpecialArgs = { inherit self inputs outputs system; };
       pkgs = import inputs.nixpkgs { inherit system; };
-      modules = [
-        ./users/${name}/common/default.nix
-        ./users/${name}/${host}/default.nix
-        ./users/${name}/${host}/home.nix
-      ];
+      modules = [ ./users/${name}/${host}/default.nix ];
     };
   in {
     nixosConfigurations = {
-      # Desktop
-      "silver" = mkNixOS "silver" "x86_64-linux";
       # Framework Laptop
       "aluminum" = mkNixOS "aluminum" "x86_64-linux";
+      # Desktop
+      "silver" = mkNixOS "silver" "x86_64-linux";
       # Homeserver
       "titanium" = mkNixOS "titanium" "x86_64-linux";
     };
     homeConfigurations = {
-      "lemon@silver" = mkHome "lemon" "silver";
       "lemon@aluminum" = mkHome "lemon" "aluminum";
+      "lemon@silver" = mkHome "lemon" "silver";
+      "lemon@titanium" = mkHome "lemon" "titanium";
     };
   };
 }
