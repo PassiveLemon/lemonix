@@ -11,7 +11,7 @@
       # Terminal
       tym
       lemonake.hilbish-git
-      nh eza bat comma fend trashy
+      nh eza bat comma fend
       # File/storage
       pcmanfm xarchiver localsend
       # Office/Development
