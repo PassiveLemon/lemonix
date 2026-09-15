@@ -7,10 +7,6 @@ require("ui.crosshair")
 local user = { }
 
 user.terminal = "tym"
-user.browser = "firefox"
-user.editor = os.getenv("EDITOR") or "nano"
-user.visual_editor = "lite-xl"
-user.editor_cmd = user.terminal .. " -- " .. user.editor
 user.super = "Mod4" -- Windows key
 
 user.bar = {

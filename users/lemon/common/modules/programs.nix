@@ -31,10 +31,9 @@ in {
       '';
       shellAliases = {
         # Core
+        t = "tym";
         ls = "eza -lgF --group-directories-first";
-        cat = "bat --theme=Lemon";
-        cdr = "cd $(git rev-parse --show-toplevel)";
-        rmx = "trash";
+        bat = "bat --theme=Lemon";
         # Nix
         nos = "nh os switch ~/Documents/GitHub/lemonix";
         nhs = "nh home switch ~/Documents/GitHub/lemonix";
@@ -46,17 +45,37 @@ in {
         npr = "nixpkgs-review rev --print-result HEAD";
         cma = "comma";
         # Git
-        g = "git";
-        gc = "git commit";
+        cdr = "cd $(git rev-parse --show-toplevel)";
+        g = "git status";
+        gl = "git log --reverse";
+        ga = "git add";
+        gc = "git commit -S";
+        gs = "git stash";
         gp = "git push";
-        gr = "git restore";
-        
+        grb = "git rebase";
+        grs = "git reset";
         # Other
         dc = "docker compose";
       };
       plugins = [
         { name = "hydro"; src = pkgs.fishPlugins.hydro.src; }
       ];
+    };
+    git = {
+      enable = true;
+      signing = {
+        format = "ssh";
+        key = "~/.ssh/id_ed25519.pub";
+        signByDefault = true;
+      };
+      settings = {
+        core.pager = "less +G";
+        url."ssh://git@github.com/".insteadOf = "https://github.com/";
+      };
+    };
+    gh = {
+      enable = true;
+      settings.git_protocol = "ssh";
     };
     lite-xl = {
       enable = true;
