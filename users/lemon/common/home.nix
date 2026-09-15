@@ -1,4 +1,4 @@
-{ inputs, lib, ... }: {
+{ lib, ... }: {
   imports = [
     ./modules/cmdline.nix
     ./modules/customization.nix
@@ -17,20 +17,11 @@
     };
   };
 
-  xdg = {
-    enable = true;
-    dataFile = {
-      "hilbish/libs/promptua" = {
-        source = inputs.hilbish-promptua;
-      };
-    };
-  };
+  xdg.enable = true;
 
-  nixpkgs = {
-    config = {
-      allowUnfree = true;
-      allowUnfreePredicate = (_: true);
-    };
+  nixpkgs.config = {
+    allowUnfree = true;
+    allowUnfreePredicate = (_: true);
   };
   news.display = "silent";
   manual.manpages.enable = false;

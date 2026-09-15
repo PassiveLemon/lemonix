@@ -17,9 +17,7 @@
     };
   };
 
-  fonts = {
-    fontconfig.enable = true;
-  };
+  fonts.fontconfig.enable = true;
 
   dconf = {
     enable = true;
@@ -107,16 +105,14 @@
     platformTheme.name = "gtk3";
   };
 
-  xdg = {
-    portal = {
-      enable = true;
-      config.common.default = [ "gtk" ];
-      extraPortals = with pkgs; [
-        gnome-keyring
-        xdg-desktop-portal-gtk
-        xdg-desktop-portal-wlr
-      ];
-    };
+  xdg.portal = {
+    enable = true;
+    config.common.default = [ "gtk" ];
+    extraPortals = with pkgs; [
+      gnome-keyring
+      xdg-desktop-portal-gtk
+      xdg-desktop-portal-wlr
+    ];
   };
 }
 

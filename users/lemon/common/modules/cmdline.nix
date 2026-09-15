@@ -1,4 +1,4 @@
-{ pkgs, ... }: {
+{ config, lib, pkgs, ... }: {
   home.packages = with pkgs; [
     tym
     nh eza bat comma fend
@@ -6,6 +6,7 @@
 
   programs = {
     home-manager.enable = true;
+    nh.flake = lib.mkDefault "~/Documents/GitHub/lemonix";
     fish = {
       enable = true;
       interactiveShellInit = ''
@@ -24,8 +25,8 @@
         ls = "eza -lgF --group-directories-first";
         bat = "bat --theme=Lemon";
         # Nix
-        nos = "nh os switch ~/Documents/GitHub/lemonix";
-        nhs = "nh home switch ~/Documents/GitHub/lemonix";
+        nos = "nh os switch ${config.programs.nh.flake}";
+        nhs = "nh home switch ${config.programs.nh.flake}";
         nb = "nix build";
         nd = "nix develop";
         nr = "nix run";
