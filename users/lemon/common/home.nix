@@ -10,7 +10,6 @@
     packages = with pkgs; [
       # Terminal
       tym
-      lemonake.hilbish-git
       nh eza bat comma fend trashy
       # File/storage
       pcmanfm xarchiver localsend

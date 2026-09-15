@@ -17,6 +17,41 @@ in {
     autorandr.enable = true;
     home-manager.enable = true;
     obs-studio.enable = true;
+    fish = {
+      enable = true;
+      interactiveShellInit = ''
+        set fish_greeting
+
+        set hydro_symbol_prompt ">"
+        set hydro_color_pwd 61b8ff
+        set hydro_color_git f05d6b
+        set hydro_color_error f05d6b
+        set hydro_color_prompt 93cb6b
+        set hydro_color_duration cd61ec
+      '';
+      shellAliases = {
+        # Core
+        ls = "eza -lgF --group-directories-first";
+        cat = "bat --theme=Lemon";
+        cdr = "cd $(git rev-parse --show-toplevel)";
+        rmx = "trash";
+        # Nix
+        nos = "nh os switch ~/Documents/GitHub/lemonix";
+        nhs = "nh home switch ~/Documents/GitHub/lemonix";
+        nb = "nix build";
+        nd = "nix develop";
+        nr = "nix run";
+        ns = "nix shell";
+        nfu = "nix flake update";
+        npr = "nixpkgs-review rev --print-result HEAD";
+        cma = "comma";
+        # Other
+        dc = "docker compose";
+      };
+      plugins = [
+        { name = "hydro"; src = pkgs.fishPlugins.hydro.src; }
+      ];
+    };
     lite-xl = {
       enable = true;
       # https://github.com/lite-xl/lite-xl/issues/2209
