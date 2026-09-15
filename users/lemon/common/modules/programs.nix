@@ -12,7 +12,7 @@ in {
   home.packages = with pkgs; [
     # Data/Transfer
     pcmanfm xarchiver
-    localsend
+    filezilla localsend
     # Office/Development
     onlyoffice-desktopeditors
     onlyoffice-documentserver

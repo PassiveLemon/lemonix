@@ -14,9 +14,14 @@
     stateVersion = "26.11"; # Don't change unless you know what you are doing
   };
 
-  xdg.configFile."." = {
-    source = ../common/home/.config;
-    recursive = true;
+  programs.nh.flake = "/data/lemonix";
+
+  xdg = {
+    enable = true;
+    configFile."." = {
+      source = ../common/home/.config;
+      recursive = true;
+    };
   };
 
   news.display = "silent";
