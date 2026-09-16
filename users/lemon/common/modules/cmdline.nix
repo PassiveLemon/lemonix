@@ -13,6 +13,7 @@
         set fish_greeting
 
         set hydro_symbol_prompt ">"
+        set hydro_symbol_git_dirty "*"
         set hydro_color_pwd 61b8ff
         set hydro_color_git f05d6b
         set hydro_color_error f05d6b
