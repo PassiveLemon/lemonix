@@ -12,6 +12,13 @@
       interactiveShellInit = ''
         set fish_greeting
 
+        set fish_color_quote green
+        set fish_color_valid_path --underline blue
+        set fish_color_error --bold red
+        set fish_color_redirection cyan
+        set fish_color_param aaaaaa
+        set fish_color_option aaaaaa
+
         set hydro_symbol_prompt ">"
         set hydro_symbol_git_dirty "*"
         set hydro_color_pwd 61b8ff
