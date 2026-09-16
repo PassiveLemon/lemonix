@@ -1,4 +1,4 @@
-{ inputs, system, pkgs, ... }: {
+{ inputs, pkgs, ... }: {
   imports = [
     inputs.lemonake.homeModules.somewm
   ];
@@ -7,7 +7,7 @@
     enable = true;
     windowManager.awesome = {
       enable = true;
-      package = inputs.lemonake.packages.${system}.awesome-luajit-git.override {
+      package = pkgs.lemonake.awesome-luajit-git.override {
         extraGITypeLibPaths = with pkgs.astal; [
           brightness wireplumber
         ];
@@ -15,7 +15,7 @@
           luafilesystem
         ];
         extraSearchPaths = [
-          inputs.lemonake.packages.${system}.lua-pam-luajit-git
+          pkgs.lemonake.lua-pam-luajit-git
         ];
       };
     };
@@ -24,12 +24,12 @@
   wayland = {
     windowManager.somewm = {
       enable = true;
-      package = inputs.lemonake.packages.${system}.somewm-git.override {
+      package = pkgs.lemonake.somewm-git.override {
         extraLuaModules = with pkgs.luajitPackages; [
           luafilesystem
         ];
         extraSearchPaths = [
-          inputs.lemonake.packages.${system}.lua-pam-luajit-git
+          pkgs.lemonake.lua-pam-luajit-git
         ];
       };
     };
@@ -68,7 +68,7 @@
         recursive = true;
       };
       "awesome/liblua_pam.so" = {
-        source = "${inputs.lemonake.packages.${system}.lua-pam-luajit-git}/lib/lua/5.1/liblua_pam.so";
+        source = "${pkgs.lemonake.lua-pam-luajit-git}/lib/lua/5.1/liblua_pam.so";
       };
     };
   };
