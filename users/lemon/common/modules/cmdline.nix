@@ -60,6 +60,11 @@
       };
       settings = {
         core.pager = "less +G";
+        user = {
+          name = "PassiveLemon";
+          email = "lemonl3mn@protonmail.com";
+        };
+        init.defaultBranch = "master";
         url."ssh://git@github.com/".insteadOf = "https://github.com/";
       };
     };
