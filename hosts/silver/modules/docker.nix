@@ -17,10 +17,7 @@
         description = "Docker";
         home = "/home/docker";
         hashedPassword = "!";
-        extraGroups = [
-          "video" "render"
-          "docker-management"
-        ];
+        extraGroups = [ "docker-management" ];
         isNormalUser = true;
         openssh.authorizedKeys.keys = [
           "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAINQ7D6y618TGPHBbKGP0YJJxjdFLSaJ4aBdsEIs6z0Fl docker@silver"
@@ -29,8 +26,6 @@
       };
     };
   };
-
-  boot.supportedFilesystems = [ "nfs" ];
 
   fileSystems = {
     "/mnt/titanium" = {

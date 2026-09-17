@@ -12,6 +12,7 @@
     kernelPackages = pkgs.linuxPackages_zen;
     kernelModules = [ "iwlwifi" "kvm-amd" ];
     blacklistedKernelModules = [ "nouveau" "nova_core" ];
+    supportedFilesystems = [ "nfs" ];
   };
 
   networking = {
@@ -59,9 +60,9 @@
         home = "/home/lemon";
         hashedPassword = "$6$J7q0.RZ88OJiQRkq$mQx2d32YHf6IXqZNMSv.o/sslQMgBAGIKID2aL6tLpN6XFpXp2Fda5p1Yi78H/cXOolBPIuXEQPzxhmKp5qWc0";
         extraGroups = [
-          "wheel" "networkmanager" "video" "audio" "storage" "input" "uinput" "dialout"
-          "docker" "kvm" "libvirtd"
+          "wheel" "docker"
           "docker-management" "borg-management"
+          "input" "uinput" "dialout" # Libevdev, Serial
         ];
         isNormalUser = true;
         openssh.authorizedKeys.keys = [
