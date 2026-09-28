@@ -32,37 +32,33 @@
     networkmanager.wifi.powersave = true;
   };
 
-  users = {
-    users = {
-      "root" = {
-        home = "/root";
-        hashedPassword = "!";
-        # The first key is just the users public key for easy reference.
-        openssh.authorizedKeys.keys = [ ];
-      };
-      "lemon" = {
-        uid = 1100;
-        description = "Lemon";
-        home = "/home/lemon";
-        hashedPassword = "$6$cVhBvZ0RiacmsWNS$4vT6O9R9Bo62kXCQVBSsqVtbpiNbwuI6Eb4fE.2.EVYGuoNEjy16ZWwZfHom6JQSOau20K92U3sZjbPo07XSa.";
-        extraGroups = [
-          "wheel"
-          "librepods"
-        ];
-        isNormalUser = true;
-        openssh.authorizedKeys.keys = [
-          "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIFXRE/wC3EAMvJiRIpWv/Rl1+UfwmxF0p8M+YpUkelmU lemon@aluminum"
-        ];
-      };
+  users.users = {
+    "root" = {
+      home = "/root";
+      hashedPassword = "!";
+      # The first key is just the users public key for easy reference.
+      openssh.authorizedKeys.keys = [ ];
+    };
+    "lemon" = {
+      uid = 1100;
+      description = "Lemon";
+      home = "/home/lemon";
+      hashedPassword = "$6$cVhBvZ0RiacmsWNS$4vT6O9R9Bo62kXCQVBSsqVtbpiNbwuI6Eb4fE.2.EVYGuoNEjy16ZWwZfHom6JQSOau20K92U3sZjbPo07XSa.";
+      extraGroups = [
+        "wheel"
+        "librepods"
+      ];
+      isNormalUser = true;
+      openssh.authorizedKeys.keys = [
+        "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIFXRE/wC3EAMvJiRIpWv/Rl1+UfwmxF0p8M+YpUkelmU lemon@aluminum"
+      ];
     };
   };
 
-  environment = {
-    systemPackages = with pkgs; [
-      nvtopPackages.amd
-      powertop
-    ];
-  };
+  environment.systemPackages = with pkgs; [
+    nvtopPackages.amd
+    powertop
+  ];
 
   services = {
     fwupd.enable = true;
@@ -119,11 +115,9 @@
     };
   };
 
-  nix = {
-    settings = {
-      cores = 4;
-      max-jobs = 2;
-    };
+  nix.settings = {
+    cores = 4;
+    max-jobs = 2;
   };
 
   # Drives

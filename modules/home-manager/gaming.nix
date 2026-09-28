@@ -18,7 +18,7 @@ in
       home.packages = with pkgs; [
         steam heroic (bottles.override { removeWarningPopup = true; })
         r2modman limo
-        lemonake.gdlauncher-carbon
+        lemonake.gdlauncher
         ludusavi
       ];
 

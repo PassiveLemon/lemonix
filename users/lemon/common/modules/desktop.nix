@@ -1,7 +1,13 @@
 { inputs, pkgs, ... }: {
-  imports = [
-    inputs.lemonake.homeModules.somewm
-  ];
+  home = {
+    packages = with pkgs; [
+      xss-lock
+      networkmanagerapplet trayscale
+      resources baobab
+      gparted qdiskinfo
+      ffmpegthumbnailer # https://github.com/NixOS/nixpkgs/pull/509742
+    ];
+  };
 
   xsession = {
     enable = true;
@@ -11,20 +17,6 @@
         extraGITypeLibPaths = with pkgs.astal; [
           brightness wireplumber
         ];
-        extraLuaModules = with pkgs.luajitPackages; [
-          luafilesystem
-        ];
-        extraSearchPaths = [
-          pkgs.lemonake.lua-pam-luajit-git
-        ];
-      };
-    };
-  };
-
-  wayland = {
-    windowManager.somewm = {
-      enable = true;
-      package = pkgs.lemonake.somewm-git.override {
         extraLuaModules = with pkgs.luajitPackages; [
           luafilesystem
         ];

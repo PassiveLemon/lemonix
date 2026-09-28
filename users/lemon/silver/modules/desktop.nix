@@ -56,7 +56,7 @@
       };
       Install.WantedBy = [ "graphical-session.target" ];
       Service = {
-        ExecStart = "${lib.getExe pkgs.lemonake.nimpad} -p=/dev/serial/by-id/usb-Arduino_LLC_Arduino_Micro_HIDLD-if00";
+        ExecStart = "${lib.getExe pkgs.lemonake.nimpad} -p=/dev/serial/by-id/usb-Arduino_LLC_Arduino_Micro-if00";
         Restart = "on-failure";
         RestartSec = 5;
       };

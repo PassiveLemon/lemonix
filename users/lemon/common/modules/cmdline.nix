@@ -67,6 +67,7 @@
         signByDefault = true;
       };
       settings = {
+        advice.addIgnoredFile = false;
         core.pager = "less +G";
         user = {
           name = "PassiveLemon";

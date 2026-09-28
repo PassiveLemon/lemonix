@@ -1,4 +1,4 @@
-{ pkgs, ... }: {
+{ config, pkgs, ... }: {
   imports = [
     ./hardware-configuration.nix
     ../common/system.nix
@@ -18,83 +18,81 @@
   networking = {
     hostName = "silver";
     enableIPv6 = false;
-    networkmanager = {
-      ensureProfiles.profiles = {
-        "eno1" = {
-          connection = {
-            id = "eno1";
-            type = "ethernet";
-            interface-name = "eno1";
-          };
-          ipv4 = {
-            method = "manual";
-            address1 = "192.168.1.10/24";
-            dns = "192.168.1.1;";
-            dns-search = "~.;~passivelemon.net;~passivelemon.com;";
-          };
-          ipv6 = {
-            method = "disabled";
-          };
+    networkmanager.ensureProfiles.profiles = {
+      "eno1" = {
+        connection = {
+          id = "eno1";
+          type = "ethernet";
+          interface-name = "eno1";
+        };
+        ipv4 = {
+          method = "manual";
+          address1 = "192.168.1.10/24";
+          dns = "192.168.1.1;";
+          dns-search = "~.;~passivelemon.net;~passivelemon.com;";
+        };
+        ipv6 = {
+          method = "disabled";
         };
       };
     };
   };
   
 
-  users = {
-    users = {
-      "root" = {
-        home = "/root";
-        hashedPassword = "!";
-        extraGroups = [
-          "docker-management" "borg-management"
-        ];
-        # The first key is just the users public key for easy reference.
-        openssh.authorizedKeys.keys = [
-          "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIPbedW5DDGCzGpbym2f0Ex+efnyfzFfHRPAhDFY9ZI5K root@silver"
-        ];
-      };
-      "lemon" = {
-        uid = 1100;
-        description = "Lemon";
-        home = "/home/lemon";
-        hashedPassword = "$6$J7q0.RZ88OJiQRkq$mQx2d32YHf6IXqZNMSv.o/sslQMgBAGIKID2aL6tLpN6XFpXp2Fda5p1Yi78H/cXOolBPIuXEQPzxhmKp5qWc0";
-        extraGroups = [
-          "wheel" "docker"
-          "docker-management" "borg-management"
-          "input" "uinput" "dialout" # Libevdev, Serial
-        ];
-        isNormalUser = true;
-        openssh.authorizedKeys.keys = [
-          "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIDHteP0JhNBJOlom+X8PY8s0FXPdUY4VcV6PgPPzXIKi lemon@silver"
-          "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIFXRE/wC3EAMvJiRIpWv/Rl1+UfwmxF0p8M+YpUkelmU lemon@aluminum"
-        ];
-      };
-      "monitor" = {
-        uid = 1101;
-        description = "Monitor";
-        home = "/home/monitor";
-        hashedPassword = "$6$0XNvp3iEh8YJqrVr$43U1A.yN9kdw4CZJ9YpJYuEzyUzLYbOWIIDpK54bJdlhaXMl5P0Y3eicO/MEZSKBGQpTfzlFDVQFesIRKHLXN0";
-        isNormalUser = true;
-        openssh.authorizedKeys.keys = [ "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAII7MCTB+V/YSqbRZIWlAsh5uPAfBToG3Pg8JsYgnIKg2 monitor@silver" ];
-      };
+  users.users = {
+    "root" = {
+      home = "/root";
+      hashedPassword = "!";
+      extraGroups = [
+        "docker-management" "borg-management"
+      ];
+      # The first key is just the users public key for easy reference.
+      openssh.authorizedKeys.keys = [
+        "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIPbedW5DDGCzGpbym2f0Ex+efnyfzFfHRPAhDFY9ZI5K root@silver"
+      ];
+    };
+    "lemon" = {
+      uid = 1100;
+      description = "Lemon";
+      home = "/home/lemon";
+      hashedPassword = "$6$J7q0.RZ88OJiQRkq$mQx2d32YHf6IXqZNMSv.o/sslQMgBAGIKID2aL6tLpN6XFpXp2Fda5p1Yi78H/cXOolBPIuXEQPzxhmKp5qWc0";
+      extraGroups = [
+        "wheel" "docker"
+        "docker-management" "borg-management"
+        "uinput" "dialout" # Libevdev, Serial
+      ];
+      isNormalUser = true;
+      openssh.authorizedKeys.keys = [
+        "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIDHteP0JhNBJOlom+X8PY8s0FXPdUY4VcV6PgPPzXIKi lemon@silver"
+        "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIFXRE/wC3EAMvJiRIpWv/Rl1+UfwmxF0p8M+YpUkelmU lemon@aluminum"
+      ];
+    };
+    "monitor" = {
+      uid = 1101;
+      description = "Monitor";
+      home = "/home/monitor";
+      hashedPassword = "$6$0XNvp3iEh8YJqrVr$43U1A.yN9kdw4CZJ9YpJYuEzyUzLYbOWIIDpK54bJdlhaXMl5P0Y3eicO/MEZSKBGQpTfzlFDVQFesIRKHLXN0";
+      isNormalUser = true;
+      openssh.authorizedKeys.keys = [ "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAII7MCTB+V/YSqbRZIWlAsh5uPAfBToG3Pg8JsYgnIKg2 monitor@silver" ];
     };
   };
 
-  environment = {
-    systemPackages = with pkgs; [
-      nvtopPackages.nvidia
-    ];
-  };
-
-  virtualisation = {
-    libvirtd.enable = true;
-  };
+  environment.systemPackages = with pkgs; [
+    nvtopPackages.nvidia
+  ];
 
   hardware = {
     uinput.enable = true;
     nvidia = {
       open = true;
+      package = config.boot.kernelPackages.nvidiaPackages.mkDriver {
+        version = "595.91.07";
+        sha256_64bit = "sha256-yiPIjdJLB6GRZE4eEc+3vN11NzBXSa9A+YABiwleYxM=";
+        sha256_aarch64 = "sha256-fqkN7ONFXtTeXyu2mQxorrk362Epxq3bz88hhKYQzwQ=";
+        openSha256 = "sha256-OB8Epd+qn/WywxsPiFpxEOAzlJqb6I1SyRoV3a8l71k=";
+        settingsSha256 = "sha256-QzT8Cw1luuZGP9DUje3HN/0ngiayqHURj+bqPsxlJ5w=";
+        persistencedSha256 = "sha256-3JQBaNmkwxvCXv9q8aHKas6VZM/JjLsuilC2t7ET0u0=";
+      };
       modesetting.enable = true;
       powerManagement.enable = true;
     };
@@ -109,21 +107,17 @@
     ];
   };
 
-  nixpkgs = {
-    config.cudaSupport = true;
-  };
+  nixpkgs.config.cudaSupport = true;
 
-  nix = {
-    settings = {
-      cores = 4;
-      max-jobs = 3;
-      extra-substituters = [
-        "https://cache.nixos-cuda.org"
-      ];
-      extra-trusted-public-keys = [
-        "cache.nixos-cuda.org:74DUi4Ye579gUqzH4ziL9IyiJBlDpMRn9MBN8oNan9M="
-      ];
-    };
+  nix.settings = {
+    cores = 4;
+    max-jobs = 3;
+    extra-substituters = [
+      "https://cache.nixos-cuda.org"
+    ];
+    extra-trusted-public-keys = [
+      "cache.nixos-cuda.org:74DUi4Ye579gUqzH4ziL9IyiJBlDpMRn9MBN8oNan9M="
+    ];
   };
 
   # Drives

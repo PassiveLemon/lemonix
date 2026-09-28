@@ -1,9 +1,7 @@
 { pkgs, ... }: {
-  environment = {
-    systemPackages = with pkgs; [
-      jellyfin-ffmpeg
-    ];
-  };
+  environment.systemPackages = with pkgs; [
+    jellyfin-ffmpeg
+  ];
 
   users = {
     groups = {
@@ -35,23 +33,19 @@
     };
   };
 
-  virtualisation = {
-    docker = {
+  virtualisation.docker = {
+    enable = true;
+    enableOnBoot = true;
+    liveRestore = false;
+    autoPrune = {
       enable = true;
-      enableOnBoot = true;
-      liveRestore = false;
-      autoPrune = {
-        enable = true;
-        dates = "Mon 02:00";
-        flags = [ "--all" ];
-        allVolumes.enable = true; # Everything is stored through a host mount
-      };
+      dates = "Mon 02:00";
+      flags = [ "--all" ];
+      allVolumes.enable = true; # Everything is stored through a host mount
     };
   };
 
-  hardware = {
-    nvidia-container-toolkit.enable = true;
-  };
+  hardware.nvidia-container-toolkit.enable = true;
 
   systemd = {
     user.services = {
