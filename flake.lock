@@ -287,11 +287,11 @@
         "nvfetcher": "nvfetcher"
       },
       "locked": {
-        "lastModified": 1790206283,
-        "narHash": "sha256-tulA998m+vs3ZWY/5yoAilSyTASP/7KaDjCyVfNMo4g=",
+        "lastModified": 1790753875,
+        "narHash": "sha256-/CRBfvKh6eLJcFx3DjVsm9z5RHzqOTxMcL8P/Fx2s/Y=",
         "owner": "passivelemon",
         "repo": "lemonake",
-        "rev": "ec5d905c6fa43e0957503832dc1ba25ab3feb6de",
+        "rev": "79407dddb07ca25e5a02f49b5e9832c221ff55f8",
         "type": "github"
       },
       "original": {
