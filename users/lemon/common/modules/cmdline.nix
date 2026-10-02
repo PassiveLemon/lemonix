@@ -46,12 +46,11 @@
         cdr = "cd $(git rev-parse --show-toplevel)";
         g = "git status";
         gl = "git log --reverse";
-        ga = "git add";
         gc = "git commit -S";
-        gs = "git stash";
-        gp = "git push";
+        gch = "git checkout";
         grb = "git rebase";
         grs = "git reset";
+        gcp = "git cherry-pick";
         # Other
         dc = "docker compose";
       };
@@ -73,7 +72,7 @@
           name = "PassiveLemon";
           email = "lemonl3mn@protonmail.com";
         };
-        init.defaultBranch = "master";
+        init.defaultBranch = "main";
         url."ssh://git@github.com/".insteadOf = "https://github.com/";
       };
     };
