@@ -51,10 +51,10 @@ in {
           "eofnewline" "ephemeral_tabs" "editorconfig" "extend_selection_line"
           "force_syntax" "gitdiff_highlight" "gitstatus" "indentguide" "ipc"
           "lfautoinsert" "litemark" "nerdicons" "open_ext" "openfilelocation"
-          "selectionhighlight" "terminal" "treeview-extender"
+          "selectionhighlight" "treeview-extender"
         ];
         customEnableList = {
-          "exterm" = ../home/.config/lite-xl/plugins/exterm.lua;
+          "lemon" = ../home/.config/lite-xl/plugins/lemon.lua;
           "nerdicons" = ../home/.config/lite-xl/plugins/nerdicons.lua;
         };
         languages = {
@@ -66,15 +66,16 @@ in {
           };
         };
         evergreen.copyLanguages.enable = true;
-        lsp = {
-          enableList = [ "bash_ls" "dockerfile_ls_nodejs" "nil_ls" "nimlsp" "pyright" "lua_ls" "yaml_ls" ];
-          addPackages = true;
-        };
-        lintplus = {
-          enableList = [ "luacheck" "shellcheck" ];
-          addPackages = true;
-          copyLanguages.enable = true;
-        };
+        # Crashes Lite-XL when opening command search?
+        # lsp = {
+        #   enableList = [ "bash_ls" "dockerfile_ls_nodejs" "nil_ls" "nimlsp" "pyright" "lua_ls" "yaml_ls" ];
+        #   addPackages = true;
+        # };
+        # lintplus = {
+        #   enableList = [ "luacheck" "shellcheck" ];
+        #   addPackages = true;
+        #   copyLanguages.enable = true;
+        # };
       };
     };
     firefox = {
