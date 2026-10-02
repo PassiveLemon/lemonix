@@ -81,6 +81,35 @@ command.add("core.docview!", {
     local working = dv.doc.filename
     change_project(working)
   end,
+  ["lemon:open-repo-as-project"] = function()
+    local proc = process.start({ "git", "rev-parse", "--show-toplevel" })
+    if proc then
+      -- Ensure that the process exited properly
+      local code
+      while true do
+        local exit = proc:wait(100)
+        if type(exit) == "number" then
+          code = exit
+          break
+        end
+      end
+      local repo = proc:read_stdout()
+      if code == 0 then
+        change_project(repo)
+      else
+        core.warn("[lemon] Not in Git repository")
+      end
+    else
+      core.error("[lemon] Failed to execute 'git rev-parse --show-toplevel'")
+    end
+  end,
+
+  -- ["lemon:push-project"] = function()
+  --   change_project(path)
+  -- end,
+  -- ["lemon:pop-project"] = function()
+  --   change_project(path)
+  -- end,
 })
 
 ---@diagnostic disable-next-line: param-type-mismatch
