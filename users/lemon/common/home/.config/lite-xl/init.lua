@@ -6,18 +6,20 @@ local keymap = require("core.keymap")
 local style = require("core.style")
 local docview = require("core.docview")
 
-local lspconfig = require("plugins.lsp.config")
-
 core.reload_module("colors.lemon")
 
 style.font = renderer.font.load(USERDIR .. "/fonts/FiraCodeNerdFont-Retina.ttf", 14 * SCALE)
 style.code_font = renderer.font.load(USERDIR .. "/fonts/FiraCodeNerdFontMono-Retina.ttf", 14 * SCALE)
 
 keymap.add({
-	["ctrl+shift+r"] = "core:restart",
-	["ctrl+shift+c"] = "core:find-command",
-	["ctrl+shift+t"] = "terminal:toggle-drawer",
-	["ctrl+shift+x"] = "open-file-location:open-file-location",
+  ["ctrl+k"] = "doc:delete-lines",
+  ["ctrl+shift+r"] = "core:restart",
+  ["ctrl+shift+c"] = "core:find-command",
+  ["ctrl+shift+x"] = "open-file-location:open-file-location",
+  ["ctrl+shift+space"] = "lemon:open-working-in-terminal",
+  ["ctrl+shift+o"] = "lemon:open-working-as-project",
+  ["ctrl+shift+p"] = "lemon:open-repo-as-project",
+  ["ctrl+shift+l"] = "lemon:open-default-as-project",
 })
 
 config.ignore_files = {
@@ -36,12 +38,6 @@ config.plugins.treeview = {
   animate_scroll_to_focused_file = true,
 }
 
-config.plugins.exterm = {
-  executable = "tym",
-  keymap_project = "ctrl+shift+p",
-  keymap_working = "ctrl+shift+space",
-}
-
 config.plugins.evergreen = {
   warnFallbackColors = false,
   maxParseTime = 10000
@@ -51,15 +47,6 @@ config.plugins.evergreen = {
 core.status_view:get_item("doc:lines").get_item = function()
   local dv = core.active_view
   return { style.text, #dv.doc.lines, " lines" }
-end
-
--- Open GitHub project dir by default
-local default_path = os.getenv("HOME") .. "/Documents/GitHub"
-if not core.switched_to_default_dir then
-  core.switched_to_default_dir = true
-  if core.project_dir ~= default_path then
-    core.open_folder_project(default_path)
-  end
 end
 
 -- Put the save asterisk before the name

@@ -17,8 +17,7 @@ in
     (mkIf cfg.desktop.enable {
       home.packages = with pkgs; [
         steam heroic (bottles.override { removeWarningPopup = true; })
-        r2modman limo
-        lemonake.gdlauncher
+        gale limo lemonake.gdlauncher
         ludusavi
       ];
 

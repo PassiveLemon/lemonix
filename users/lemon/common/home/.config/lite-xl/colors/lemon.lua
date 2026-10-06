@@ -1,7 +1,6 @@
 local style = require("core.style")
 local common = require("core.common")
 
--- Custom color theme
 -- Mono
 style.bg0      = { common.color("#222222") }
 style.bg1      = { common.color("#292929") }
@@ -33,7 +32,7 @@ style.background2 = style.bg1
 style.background3 = style.bg2
 style.text      = style.fg1
 style.caret     = style.fg1
-style.accent    = style.link
+style.accent    = style.bluel
 style.dim       = style.fg1
 style.divider   = style.bg3
 style.selection = { common.color("#444444") }
@@ -131,11 +130,12 @@ style.syntax = {
 }
 
 -- Lint+
-style.lint = { }
-style.lint.info = style.modified
-style.lint.hint = style.good
-style.lint.warning = style.warn
-style.lint.error = style.error
+style.lint = {
+  ["info"] = style.modified,
+  ["hint"] = style.good,
+  ["warning"] = style.warn,
+  ["error"] = style.error,
+}
 
 -- Gitdiff Highlight
 style.gitdiff_addition = style.good
