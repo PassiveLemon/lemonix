@@ -33,6 +33,13 @@ in
           "x-scheme-handler/ror2mm" = "r2modman.desktop";
           "x-scheme-handler/nxm" = "limo.desktop";
         };
+        desktopEntries = {
+          "Gale" = { # https://github.com/tauri-apps/tauri/issues/9394
+            name = "Gale";
+            icon = "gale";
+            exec = "env WEBKIT_DISABLE_DMABUF_RENDERER=1 WEBKIT_DISABLE_COMPOSITING_MODR=1 gale";
+          };
+        };
       };
     })
     (mkIf cfg.vr.enable {

@@ -1,10 +1,5 @@
-{ pkgs, ... }: {
-  home = {
-    packages = with pkgs; [
-      librepods
-    ];
-    pointerCursor.size = 32;
-  };
+{ ... }: {
+  home.pointerCursor.size = 32;
 
   programs = {
     autorandr.profiles = {

@@ -23,6 +23,10 @@ in {
     # Image/Video
     loupe flameshot papers drawy gimp
     celluloid kdePackages.kdenlive
+    # Calculator
+    lemonake.tilp2-git cemu-ti
+    # Miscellaneous
+    xclicker zenity
   ];
 
   services = {
@@ -203,6 +207,19 @@ in {
             obsidian-livesync
           ];
         };
+      };
+    };
+  };
+
+  xdg = {
+    desktopEntries ={
+      "TILP" = {
+        name = "TILP";
+        exec = "${lib.getExe pkgs.lemonake.tilp2-git}";
+      };
+      "CEmu" = {
+        name = "CEmu";
+        exec = "${lib.getExe pkgs.cemu-ti}";
       };
     };
   };

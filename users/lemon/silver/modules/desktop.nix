@@ -1,18 +1,4 @@
 { lib, pkgs, ... }: {
-  home = {
-    packages = with pkgs; [
-      # Audio
-      easytag
-      # Calculator
-      cemu-ti
-      lemonake.tilp2-git
-      # Miscellaneous
-      xclicker zenity ente-auth
-      lemonake.nimpad
-      lemonake.awmtt-git
-    ];
-  };
-
   programs = {
     obs-studio.package = pkgs.obs-studio.override { cudaSupport = true; };
     autorandr.profiles."Default" = {
@@ -60,13 +46,6 @@
         Restart = "on-failure";
         RestartSec = 5;
       };
-    };
-  };
-
-  xdg = {
-    desktopEntries."CEmu" = {
-      name = "CEmu";
-      exec = "${lib.getExe pkgs.cemu-ti}";
     };
   };
 }

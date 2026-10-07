@@ -1,6 +1,6 @@
 { pkgs, ... }: {
   environment.systemPackages = with pkgs; [
-    jellyfin-ffmpeg
+    easytag jellyfin-ffmpeg
   ];
 
   users = {
