@@ -71,7 +71,7 @@ end
 
 command.add("core.docview!", {
   ["lemon:open-working-in-terminal"] = function(dv)
-    local working = common.dirname(dv.doc.abs_filename)
+    local working = dv.doc.abs_filename
     open_terminal(working)
   end,
   ["lemon:open-working-as-project"] = function(dv)

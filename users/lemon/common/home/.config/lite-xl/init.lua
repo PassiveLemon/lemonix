@@ -11,16 +11,19 @@ core.reload_module("colors.lemon")
 style.font = renderer.font.load(USERDIR .. "/fonts/FiraCodeNerdFont-Retina.ttf", 14 * SCALE)
 style.code_font = renderer.font.load(USERDIR .. "/fonts/FiraCodeNerdFontMono-Retina.ttf", 14 * SCALE)
 
-keymap.add({
-  ["ctrl+k"] = "doc:delete-lines",
-  ["ctrl+shift+r"] = "core:restart",
-  ["ctrl+shift+c"] = "core:find-command",
-  ["ctrl+shift+x"] = "open-file-location:open-file-location",
-  ["ctrl+shift+space"] = "lemon:open-working-in-terminal",
-  ["ctrl+shift+o"] = "lemon:open-working-as-project",
-  ["ctrl+shift+p"] = "lemon:open-repo-as-project",
-  ["ctrl+shift+l"] = "lemon:open-default-as-project",
-})
+-- Defer the keymap to more reliably override
+core.add_thread(function()
+  keymap.add({
+    ["ctrl+k"] = "doc:delete-lines",
+    ["ctrl+shift+r"] = "core:restart",
+    ["ctrl+shift+c"] = "core:find-command",
+    ["ctrl+shift+x"] = "open-file-location:open-file-location",
+    ["ctrl+shift+space"] = "lemon:open-working-in-terminal",
+    ["ctrl+shift+o"] = "lemon:open-working-as-project",
+    ["ctrl+shift+p"] = "lemon:open-repo-as-project",
+    ["ctrl+shift+l"] = "lemon:open-default-as-project",
+  })
+end)
 
 config.ignore_files = {
   "^%.git/", "^%.hg/",
