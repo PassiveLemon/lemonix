@@ -1,7 +1,9 @@
 { config, lib, pkgs, ... }:
 let
-  inherit (lib) mkIf mkEnableOption mkMerge;
+  inherit (lib) mkIf mkEnableOption mkMerge readFile;
   cfg = config.lemonix.gaming;
+
+  galeScript = pkgs.writeScriptBin "gale.sh" (readFile ./gale.sh);
 in
 {
   options = {
@@ -17,9 +19,9 @@ in
     (mkIf cfg.desktop.enable {
       home.packages = with pkgs; [
         steam heroic (bottles.override { removeWarningPopup = true; })
-        r2modman limo
-        lemonake.gdlauncher-carbon
+        gale limo lemonake.gdlauncher flightcore
         ludusavi
+        galeScript
       ];
 
       xdg = {
@@ -31,8 +33,19 @@ in
         };
         mimeApps.defaultApplications = {
           "x-scheme-handler/gdlauncher" = "gdlauncher.desktop";
-          "x-scheme-handler/ror2mm" = "r2modman.desktop";
           "x-scheme-handler/nxm" = "limo.desktop";
+        };
+        desktopEntries = {
+          "Gale" = { # https://github.com/tauri-apps/tauri/issues/9394
+            name = "Gale";
+            icon = "gale";
+            exec = "env WEBKIT_DISABLE_DMABUF_RENDERER=1 WEBKIT_DISABLE_COMPOSITING_MODR=1 gale";
+          };
+          "FlightCore" = { # https://github.com/tauri-apps/tauri/issues/9394
+            name = "FlightCore";
+            icon = "flightcore";
+            exec = "env WEBKIT_DISABLE_DMABUF_RENDERER=1 WEBKIT_DISABLE_COMPOSITING_MODR=1 flightcore";
+          };
         };
       };
     })

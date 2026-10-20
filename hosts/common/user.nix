@@ -1,27 +1,9 @@
 { pkgs, ... }: {
-  environment = {
-    systemPackages = with pkgs; [
-      xss-lock uwsm
-      networkmanagerapplet trayscale
-      resources baobab
-      gparted qdiskinfo
-      ffmpegthumbnailer # https://github.com/NixOS/nixpkgs/pull/509742
-    ];
-    sessionVariables = {
-      XDG_CONFIG_HOME = "$HOME/.config";
-      XDG_DATA_HOME = "$HOME/.local/share";
-      XDG_STATE_HOME = "$HOME/.local/state";
-      XDG_CACHE_HOME = "$HOME/.cache";
-    };
-  };
-
   services = {
     xserver = {
       enable = true;
       excludePackages = [ pkgs.xterm ];
-      displayManager = {
-        startx.enable = true;
-      };
+      displayManager.startx.enable = true;
     };
     libinput = {
       enable = true;
@@ -40,17 +22,8 @@
         '';
       };
     };
-    pipewire = {
-      enable = true;
-      alsa.enable = true;
-      pulse.enable = true;
-    };
+    pipewire.enable = true;
     printing.enable = true;
-    avahi = {
-      enable = true;
-      nssmdns4 = true;
-      openFirewall = true;
-    };
     gnome.gnome-keyring.enable = true;
     flatpak.enable = true;
   };
@@ -60,27 +33,23 @@
     seahorse.enable = true;
   };
 
-  hardware = {
-    graphics = {
-      enable = true;
-      enable32Bit = true;
-      extraPackages = with pkgs; [
-        libvdpau-va-gl
-      ];
-    };
+  hardware.graphics = {
+    enable = true;
+    enable32Bit = true;
+    extraPackages = with pkgs; [
+      libvdpau-va-gl
+    ];
   };
 
-  xdg = {
-    portal = {
-      enable = true;
-      wlr.enable = true;
-      config.common.default = [ "gtk" ];
-      extraPortals = with pkgs; [
-        gnome-keyring
-        xdg-desktop-portal-gtk
-        xdg-desktop-portal-wlr
-      ];
-    };
+  xdg.portal = {
+    enable = true;
+    wlr.enable = true;
+    config.common.default = [ "gtk" ];
+    extraPortals = with pkgs; [
+      gnome-keyring
+      xdg-desktop-portal-gtk
+      xdg-desktop-portal-wlr
+    ];
   };
 }
 

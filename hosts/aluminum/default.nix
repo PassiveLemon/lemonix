@@ -6,6 +6,7 @@
     ./system.nix
     ./user.nix
   ];
+
   lemonix = {
     system = {
       mobile.enable = true;

@@ -1,9 +1,7 @@
 { pkgs, ... }: {
-  environment = {
-    systemPackages = with pkgs; [
-      jellyfin-ffmpeg
-    ];
-  };
+  environment.systemPackages = with pkgs; [
+    easytag jellyfin-ffmpeg
+  ];
 
   users = {
     groups = {
@@ -17,10 +15,7 @@
         description = "Docker";
         home = "/home/docker";
         hashedPassword = "!";
-        extraGroups = [
-          "video" "render"
-          "docker-management"
-        ];
+        extraGroups = [ "docker-management" ];
         isNormalUser = true;
         openssh.authorizedKeys.keys = [
           "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAINQ7D6y618TGPHBbKGP0YJJxjdFLSaJ4aBdsEIs6z0Fl docker@silver"
@@ -30,8 +25,6 @@
     };
   };
 
-  boot.supportedFilesystems = [ "nfs" ];
-
   fileSystems = {
     "/mnt/titanium" = {
       device = "192.168.1.11:/export/data";
@@ -40,23 +33,19 @@
     };
   };
 
-  virtualisation = {
-    docker = {
+  virtualisation.docker = {
+    enable = true;
+    enableOnBoot = true;
+    liveRestore = false;
+    autoPrune = {
       enable = true;
-      enableOnBoot = true;
-      liveRestore = false;
-      autoPrune = {
-        enable = true;
-        dates = "Mon 02:00";
-        flags = [ "--all" ];
-        allVolumes.enable = true; # Everything is stored through a host mount
-      };
+      dates = "Mon 02:00";
+      flags = [ "--all" "--filter=until=7d" ];
+      allVolumes.enable = true; # Everything is stored through a host mount
     };
   };
 
-  hardware = {
-    nvidia-container-toolkit.enable = true;
-  };
+  hardware.nvidia-container-toolkit.enable = true;
 
   systemd = {
     user.services = {

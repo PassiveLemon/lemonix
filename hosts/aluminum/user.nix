@@ -4,11 +4,8 @@
     ../../modules/nixos/bluetooth.nix
   ];
 
-  programs = {
-    librepods.enable = true;
-  };
+  programs.librepods.enable = true;
 
-  location.provider = "geoclue2";
   services = {
     logind.settings.Login = {
       HandlePowerKey = "suspend-then-hibernate";
@@ -35,10 +32,8 @@
     STEAM_FORCE_DESKTOPUI_SCALING = "1.5";
   };
 
-  systemd = {
-    sleep.settings.Sleep = {
-      HibernateDelaySec = "1.5h";
-    };
+  systemd.sleep.settings.Sleep = {
+    HibernateDelaySec = "1.5h";
   };
 }
 

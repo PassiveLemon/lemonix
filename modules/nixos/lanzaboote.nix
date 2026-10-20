@@ -1,4 +1,4 @@
-{ inputs, config, lib, ... }:
+{ inputs, config, lib, pkgs, ... }:
 let
   inherit (lib) mkIf mkEnableOption mkForce;
   cfg = config.lemonix.lanzaboote;
@@ -15,6 +15,8 @@ in
   ];
 
   config = mkIf cfg.enable {
+    environment.systemPackages = [ pkgs.sbctl ];
+
     boot = {
       loader = {
         systemd-boot.enable = mkForce false;

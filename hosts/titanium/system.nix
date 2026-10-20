@@ -102,8 +102,7 @@
         home = "/home/lemon";
         hashedPassword = "$6$rf1mpzpAbaL7ml1o$sRfhuqilsLdrxqmXLHobwnPfBFYlc4usBJE5ZfcOrv1duaTs5k6uGa9Hgc/Wb4uKSpWPDCiWgIVl7OyW2k7bd1";
         extraGroups = [
-          "wheel" "networkmanager" "storage" "input"
-          "docker" "kvm" "libvirtd"
+          "wheel" "docker"
           "docker-management" "borg-management"
         ];
         isNormalUser = true;
@@ -125,9 +124,7 @@
     };
   };
 
-  services = {
-    syncthing.guiAddress = "0.0.0.0:8384";
-  };
+  services.syncthing.guiAddress = "0.0.0.0:8384";
 
   systemd = {
     units."mdmonitor.service".enable = true;
@@ -137,23 +134,17 @@
     ];
   };
 
-  virtualisation = {
-    libvirtd.enable = true;
-  };
-
-  nix = {
-    settings = {
-      cores = 2;
-      max-jobs = 4;
-      extra-substituters = [
-        "https://cache.nixos-cuda.org"
-        "https://binarycache.passivelemon.com?priority=1"
-      ];
-      extra-trusted-public-keys = [
-        "cache.nixos-cuda.org:74DUi4Ye579gUqzH4ziL9IyiJBlDpMRn9MBN8oNan9M="
-        "binarycache.passivelemon.com:NM3ZERLgd7ag9kcwMoQYszeBTUp+OMmUSGDN5lwWO6I="
-      ];
-    };
+  nix.settings = {
+    cores = 2;
+    max-jobs = 4;
+    extra-substituters = [
+      "https://cache.nixos-cuda.org"
+      "https://binarycache.passivelemon.com?priority=1"
+    ];
+    extra-trusted-public-keys = [
+      "cache.nixos-cuda.org:74DUi4Ye579gUqzH4ziL9IyiJBlDpMRn9MBN8oNan9M="
+      "binarycache.passivelemon.com:NM3ZERLgd7ag9kcwMoQYszeBTUp+OMmUSGDN5lwWO6I="
+    ];
   };
 
   # Drives

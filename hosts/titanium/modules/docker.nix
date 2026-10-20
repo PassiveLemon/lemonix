@@ -1,17 +1,13 @@
 { pkgs, ... }: {
-  environment = {
-    systemPackages = with pkgs; [
-      beets rsgain
-      lemonake.outsource jellyfin-ffmpeg
-    ];
-  };
+  environment.systemPackages = with pkgs; [
+    beets rsgain yt-dlp
+    lemonake.outsource jellyfin-ffmpeg
+  ];
 
-  networking = {
-    firewall = {
-      # NFS
-      allowedTCPPorts = [ 2049 ];
-      allowedUDPPorts = [ 2049 ];
-    };
+  networking.firewall = {
+    # NFS
+    allowedTCPPorts = [ 2049 ];
+    allowedUDPPorts = [ 2049 ];
   };
 
   users = {
@@ -52,55 +48,19 @@
     };
   };
 
-  virtualisation = {
-    docker = {
+  virtualisation.docker = {
+    enable = true;
+    enableOnBoot = true;
+    liveRestore = false;
+    autoPrune = {
       enable = true;
-      enableOnBoot = true;
-      liveRestore = false;
-      autoPrune = {
-        enable = true;
-        dates = "Mon 02:00";
-        flags = [ "--all" ];
-        allVolumes.enable = true; # Everything is stored through a host mount
-      };
-      daemon.settings = {
-        hosts = [
-          "unix:///var/run/docker.sock"
-          "tcp://localhost:2375"
-        ];
-      };
+      dates = "Mon 02:00";
+      flags = [ "--all" "--filter=until=7d" ];
+      allVolumes.enable = true; # Everything is stored through a host mount
     };
   };
 
   systemd = {
-    services = {
-      "cleanup-soulseek" = {
-        description = "cleanup-soulseek";
-        serviceConfig = {
-          Type = "oneshot";
-          WorkingDirectory = "/data/Media/Music/Soulseek/";
-          ExecStart = "rm ./*";
-          ExecStartPost = "mkdir /data/Media/Music/Soulseek/Incomplete";
-        };
-      };
-      "restart-invidious" = {
-        # As recommended in https://docs.invidious.io/installation/#highly-recommended
-        description = "restart-invidious";
-        serviceConfig = {
-          Type = "oneshot";
-          ExecStart = "${pkgs.docker}/bin/docker restart invidious invidious-db invidious-companion";
-        };
-      };
-      "rsgain" = {
-        description = "rsgain";
-        serviceConfig = {
-          Type = "oneshot";
-          WorkingDirectory = "/data/Media/Music/";
-          ExecStart = "/data/Media/Music/rsgain.sh";
-        };
-        path = with pkgs; [ bash rsgain ];
-      };
-    };
     user.services = {
       "docker-deploy" = {
         description = "docker-deploy";
@@ -116,19 +76,34 @@
         after = [ "docker.service" "network-online.target" ];
         wants = [ "network-online.target" ];
       };
-    };
-    timers = {
-      "cleanup-soulseek" = {
-        wantedBy = [ "timers.target" ];
-        timerConfig.OnCalendar = "Mon 02:00";
-      };
       "restart-invidious" = {
-        wantedBy = [ "timers.target" ];
-        timerConfig.OnCalendar = "03:00";
+        # As recommended in https://docs.invidious.io/installation/#highly-recommended
+        description = "restart-invidious";
+        serviceConfig = {
+          Type = "oneshot";
+          ExecStart = "${pkgs.docker}/bin/docker restart invidious invidious-db invidious-companion";
+        };
+        startAt = "03:00";
       };
       "rsgain" = {
-        wantedBy = [ "timers.target" ];
-        timerConfig.OnCalendar = "Mon 03:00";
+        description = "rsgain";
+        serviceConfig = {
+          Type = "oneshot";
+          WorkingDirectory = "/data/Media/Music/";
+          ExecStart = "/data/Media/Music/rsgain.sh";
+        };
+        path = with pkgs; [ bash rsgain ];
+        startAt = "Mon 03:00";
+      };
+      "cleanup-soulseek" = {
+        description = "cleanup-soulseek";
+        serviceConfig = {
+          Type = "oneshot";
+          WorkingDirectory = "/data/Media/Music/Soulseek/";
+          ExecStart = "rm ./*";
+          ExecStartPost = "mkdir /data/Media/Music/Soulseek/Incomplete";
+        };
+        startAt = "Mon 02:00";
       };
     };
     tmpfiles.rules = [

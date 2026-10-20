@@ -1,18 +1,4 @@
 { lib, pkgs, ... }: {
-  home = {
-    packages = with pkgs; [
-      # Audio
-      easytag
-      # Calculator
-      cemu-ti
-      lemonake.tilp2-git
-      # Miscellaneous
-      xclicker zenity ente-auth
-      lemonake.nimpad
-      lemonake.awmtt-git
-    ];
-  };
-
   programs = {
     obs-studio.package = pkgs.obs-studio.override { cudaSupport = true; };
     autorandr.profiles."Default" = {
@@ -56,17 +42,10 @@
       };
       Install.WantedBy = [ "graphical-session.target" ];
       Service = {
-        ExecStart = "${lib.getExe pkgs.lemonake.nimpad} -p=/dev/serial/by-id/usb-Arduino_LLC_Arduino_Micro_HIDLD-if00";
+        ExecStart = "${lib.getExe pkgs.lemonake.nimpad} -p=/dev/serial/by-id/usb-Arduino_LLC_Arduino_Micro-if00";
         Restart = "on-failure";
         RestartSec = 5;
       };
-    };
-  };
-
-  xdg = {
-    desktopEntries."CEmu" = {
-      name = "CEmu";
-      exec = "${lib.getExe pkgs.cemu-ti}";
     };
   };
 }

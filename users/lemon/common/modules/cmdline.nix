@@ -12,7 +12,15 @@
       interactiveShellInit = ''
         set fish_greeting
 
+        set fish_color_quote green
+        set fish_color_valid_path --underline blue
+        set fish_color_error --bold red
+        set fish_color_redirection cyan
+        set fish_color_param aaaaaa
+        set fish_color_option aaaaaa
+
         set hydro_symbol_prompt ">"
+        set hydro_symbol_git_dirty "*"
         set hydro_color_pwd 61b8ff
         set hydro_color_git f05d6b
         set hydro_color_error f05d6b
@@ -38,12 +46,11 @@
         cdr = "cd $(git rev-parse --show-toplevel)";
         g = "git status";
         gl = "git log --reverse";
-        ga = "git add";
         gc = "git commit -S";
-        gs = "git stash";
-        gp = "git push";
+        gch = "git checkout";
         grb = "git rebase";
         grs = "git reset";
+        gcp = "git cherry-pick";
         # Other
         dc = "docker compose";
       };
@@ -59,12 +66,13 @@
         signByDefault = true;
       };
       settings = {
+        advice.addIgnoredFile = false;
         core.pager = "less +G";
         user = {
           name = "PassiveLemon";
           email = "lemonl3mn@protonmail.com";
         };
-        init.defaultBranch = "master";
+        init.defaultBranch = "main";
         url."ssh://git@github.com/".insteadOf = "https://github.com/";
       };
     };

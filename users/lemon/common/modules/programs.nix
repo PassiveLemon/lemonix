@@ -23,6 +23,10 @@ in {
     # Image/Video
     loupe flameshot papers drawy gimp
     celluloid kdePackages.kdenlive
+    # Calculator
+    lemonake.tilp2-git cemu-ti
+    # Miscellaneous
+    xclicker zenity
   ];
 
   services = {
@@ -51,10 +55,10 @@ in {
           "eofnewline" "ephemeral_tabs" "editorconfig" "extend_selection_line"
           "force_syntax" "gitdiff_highlight" "gitstatus" "indentguide" "ipc"
           "lfautoinsert" "litemark" "nerdicons" "open_ext" "openfilelocation"
-          "selectionhighlight" "terminal" "treeview-extender"
+          "selectionhighlight" "treeview-extender"
         ];
         customEnableList = {
-          "exterm" = ../home/.config/lite-xl/plugins/exterm.lua;
+          "lemon" = ../home/.config/lite-xl/plugins/lemon.lua;
           "nerdicons" = ../home/.config/lite-xl/plugins/nerdicons.lua;
         };
         languages = {
@@ -203,6 +207,19 @@ in {
             obsidian-livesync
           ];
         };
+      };
+    };
+  };
+
+  xdg = {
+    desktopEntries ={
+      "TILP" = {
+        name = "TILP";
+        exec = "${lib.getExe pkgs.lemonake.tilp2-git}";
+      };
+      "CEmu" = {
+        name = "CEmu";
+        exec = "${lib.getExe pkgs.cemu-ti}";
       };
     };
   };

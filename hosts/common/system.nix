@@ -17,9 +17,7 @@
     kernelPackages = lib.mkDefault pkgs.linuxPackages_latest;
   };
 
-  time = {
-    timeZone = "America/New_York";
-  };
+  time.timeZone = "America/New_York";
   i18n.defaultLocale = "en_US.UTF-8";
 
   networking = {
@@ -28,17 +26,19 @@
     usePredictableInterfaceNames = true;
   };
 
-  users = {
-    mutableUsers = false;
-  };
+  users.mutableUsers = false;
 
   environment = {
     systemPackages = with pkgs; [
-      nano htop networkmanager
-      fastfetch smartmontools lm_sensors
       git curl dig p7zip unrar unzip
-      stress sbctl
+      nano htop fastfetch smartmontools
     ];
+    sessionVariables = {
+      XDG_CONFIG_HOME = "$HOME/.config";
+      XDG_DATA_HOME = "$HOME/.local/share";
+      XDG_STATE_HOME = "$HOME/.local/state";
+      XDG_CACHE_HOME = "$HOME/.cache";
+    };
     shells = with pkgs; [ bashInteractive ];
   };
 
@@ -83,9 +83,7 @@
     };
   };
 
-  powerManagement = {
-    enable = true;
-  };
+  powerManagement.enable = true;
 
   documentation = {
     enable = false;
@@ -135,11 +133,9 @@
     };
   };
 
-  nixpkgs = {
-    config = {
-      allowUnfree = true;
-      allowUnfreePredicate = (_: true);
-    };
+  nixpkgs.config = {
+    allowUnfree = true;
+    allowUnfreePredicate = (_: true);
   };
 }
 

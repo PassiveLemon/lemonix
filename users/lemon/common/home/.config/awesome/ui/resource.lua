@@ -101,11 +101,23 @@ local cache_use_perc = h.text({
   bg = b.bg_primary,
   halign = "left",
 })
+local swap_use = h.text({
+  margins = { top = 0, right = 0, bottom = 0, left = 0 },
+  bg = b.bg_primary,
+  halign = "left",
+})
+local swap_use_perc = h.text({
+  margins = { top = 0, right = 0, bottom = 0, left = 0 },
+  bg = b.bg_primary,
+  halign = "left",
+})
 awesome.connect_signal("signal::resource::memory::data", function(free_mem_table)
-	mem_use:get_children_by_id("textbox")[1].text = "Used: " .. free_mem_table[2] .. "/" .. free_mem_table[1] .. " GB"
-  mem_use_perc:get_children_by_id("textbox")[1].text = h.round(((free_mem_table[2] / free_mem_table[1]) * 100), 0) .. "%"
-  cache_use:get_children_by_id("textbox")[1].text = "Cache: " .. free_mem_table[6] .. "/" .. free_mem_table[1] .. " GB"
-  cache_use_perc:get_children_by_id("textbox")[1].text = h.round(((free_mem_table[6] / free_mem_table[1]) * 100), 0) .. "%"
+	mem_use:get_children_by_id("textbox")[1].text = "Used: " .. free_mem_table["Mem"][2] .. "/" .. free_mem_table["Mem"][1] .. " GB"
+  mem_use_perc:get_children_by_id("textbox")[1].text = h.round(((free_mem_table["Mem"][2] / free_mem_table["Mem"][1]) * 100), 0) .. "%"
+  cache_use:get_children_by_id("textbox")[1].text = "Cache: " .. free_mem_table["Mem"][5] .. "/" .. free_mem_table["Mem"][1] .. " GB"
+  cache_use_perc:get_children_by_id("textbox")[1].text = h.round(((free_mem_table["Mem"][5] / free_mem_table["Mem"][1]) * 100), 0) .. "%"
+	swap_use:get_children_by_id("textbox")[1].text = "Swap: " .. free_mem_table["Swap"][2] .. "/" .. free_mem_table["Swap"][1] .. " GB"
+  swap_use_perc:get_children_by_id("textbox")[1].text = h.round(((free_mem_table["Swap"][2] / free_mem_table["Swap"][1]) * 100), 0) .. "%"
 end)
 
 local strg_text = h.text({
@@ -236,6 +248,12 @@ awful.screen.connect_for_each_screen(function(s)
             cache_use,
             space,
             cache_use_perc,
+          },
+          {
+            layout = wibox.layout.fixed.horizontal,
+            swap_use,
+            space,
+            swap_use_perc,
           },
           space,
           strg_text,

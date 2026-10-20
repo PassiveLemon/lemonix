@@ -15,9 +15,7 @@ in
   ];
 
   config = mkIf cfg.enable {
-    environment.systemPackages = [
-      pkgs.agenix.default
-    ];
+    environment.systemPackages = [ pkgs.agenix.default ];
     lemonix.ssh.enable = true;
   };
 }
