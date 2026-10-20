@@ -40,7 +40,7 @@
     autoPrune = {
       enable = true;
       dates = "Mon 02:00";
-      flags = [ "--all" ];
+      flags = [ "--all" "--filter=until=7d" ];
       allVolumes.enable = true; # Everything is stored through a host mount
     };
   };
