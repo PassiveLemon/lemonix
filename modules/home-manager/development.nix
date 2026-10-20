@@ -16,11 +16,8 @@ in
   config = mkIf cfg.enable (mkMerge [
     (mkIf cfg.circuits.enable {
       home.packages = with pkgs; [
-        ltspice
-        # qucs-s xyce # Try out
-        # ngspice # Integrates with kicad?
+        ltspice # qucs-s xyce ngspice # Try out
         # scilab-bin
-        # Kicad packaging is kind of a mess so it's going to stay disabled until I need it
         # (kicad-small.override { stable = true; })
       ];
 
@@ -70,7 +67,7 @@ in
       home.packages = with pkgs; [
         blender
         unityhub
-        lemonake.alcom-tag
+        alcom
       ];
 
       xdg = {
