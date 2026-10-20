@@ -18,7 +18,6 @@
       enable = true;
       desktop.enable = true;
       vr.enable = true;
-      streaming.enable = true;
     };
     ssh = {
       enable = true;

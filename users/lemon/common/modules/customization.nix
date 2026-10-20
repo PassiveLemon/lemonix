@@ -24,6 +24,7 @@
     settings = {
       "org/gnome/desktop/interface" = {
         color-scheme = "prefer-dark";
+        icon-theme = config.gtk.iconTheme.name;
       };
       "org/gnome/desktop/sound" = {
         event-sounds = false;
