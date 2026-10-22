@@ -27,5 +27,6 @@ in
   "discordWebhook.age".publicKeys = [ titanium ] ++ [ lemon.titanium ];
   "nixServeKey.age".publicKeys = [ titanium ] ++ [ lemon.titanium ];
   "tailscaleAuthKey.age".publicKeys = [ aluminum silver titanium ] ++ [ lemon.aluminum lemon.silver lemon.titanium ];
+  "traefikCFToken.env.age".publicKeys = [ titanium ] ++ [ lemon.titanium ];
 }
 

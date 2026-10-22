@@ -4,13 +4,11 @@
     ../common/system.nix
   ];
 
-  age.secrets = {
-    discordWebhook = {
-      file = ../../secrets/discordWebhook.age;
-      mode = "600";
-      owner = "root";
-      group = "root";
-    };
+  age.secrets.discordWebhook = {
+    file = ../../secrets/discordWebhook.age;
+    mode = "600";
+    owner = "root";
+    group = "root";
   };
 
   boot = {
@@ -83,44 +81,40 @@
     };
   };
 
-  users = {
-    users = {
-      "root" = {
-        home = "/root";
-        hashedPassword = "!";
-        extraGroups = [
-          "docker-management" "borg-management"
-        ];
-        # The first key is just the users public key for easy reference.
-        openssh.authorizedKeys.keys = [
-          "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIGCBA9bX/zAfV04lQXGPPL+f24qD+MrX7zDt+odiE0pI root@titanium"
-        ];
-      };
-      "lemon" = {
-        uid = 1100;
-        description = "Lemon";
-        home = "/home/lemon";
-        hashedPassword = "$6$rf1mpzpAbaL7ml1o$sRfhuqilsLdrxqmXLHobwnPfBFYlc4usBJE5ZfcOrv1duaTs5k6uGa9Hgc/Wb4uKSpWPDCiWgIVl7OyW2k7bd1";
-        extraGroups = [
-          "wheel" "docker"
-          "docker-management" "borg-management"
-        ];
-        isNormalUser = true;
-        openssh.authorizedKeys.keys = [
-          "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAINxpX0Uf3Bf1lSSCxvX+oTRsHD1tkBPWYzYFjSRqZ/MK lemon@titanium"
-          "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIDHteP0JhNBJOlom+X8PY8s0FXPdUY4VcV6PgPPzXIKi lemon@silver"
-        ];
-      };
-      "monitor" = {
-        uid = 1101;
-        description = "Monitor";
-        home = "/home/monitor";
-        hashedPassword = "$6$8UYgx2knIzubEIcf$mPKCPdVJ0w5IU/hzNuz8kt0liDPOjxqZgE/DC4s6zY1biKeV3maGJo2jixjAfnkvYOXAWqgLe4N61h91cybSw/";
-        isNormalUser = true;
-        openssh.authorizedKeys.keys = [
-          "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIA2BjYf5UkUCNgSo/z/7/lqCKtaenbeaFHI1GGdkj/ry monitor@titanium"
-        ];
-      };
+  users.users = {
+    "root" = {
+      home = "/root";
+      hashedPassword = "!";
+      extraGroups = [
+        "docker-management" "borg-management"
+      ];
+      # The first key is just the users public key for easy reference.
+      openssh.authorizedKeys.keys = [
+        "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIGCBA9bX/zAfV04lQXGPPL+f24qD+MrX7zDt+odiE0pI root@titanium"
+      ];
+    };
+    "lemon" = {
+      uid = 1100;
+      home = "/home/lemon";
+      hashedPassword = "$6$rf1mpzpAbaL7ml1o$sRfhuqilsLdrxqmXLHobwnPfBFYlc4usBJE5ZfcOrv1duaTs5k6uGa9Hgc/Wb4uKSpWPDCiWgIVl7OyW2k7bd1";
+      extraGroups = [
+        "wheel" "docker"
+        "docker-management" "borg-management"
+      ];
+      isNormalUser = true;
+      openssh.authorizedKeys.keys = [
+        "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAINxpX0Uf3Bf1lSSCxvX+oTRsHD1tkBPWYzYFjSRqZ/MK lemon@titanium"
+        "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIDHteP0JhNBJOlom+X8PY8s0FXPdUY4VcV6PgPPzXIKi lemon@silver"
+      ];
+    };
+    "monitor" = {
+      uid = 1101;
+      home = "/home/monitor";
+      hashedPassword = "$6$8UYgx2knIzubEIcf$mPKCPdVJ0w5IU/hzNuz8kt0liDPOjxqZgE/DC4s6zY1biKeV3maGJo2jixjAfnkvYOXAWqgLe4N61h91cybSw/";
+      isNormalUser = true;
+      openssh.authorizedKeys.keys = [
+        "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIA2BjYf5UkUCNgSo/z/7/lqCKtaenbeaFHI1GGdkj/ry monitor@titanium"
+      ];
     };
   };
 

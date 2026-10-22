@@ -9,6 +9,7 @@
     ./modules/docker.nix
     ./modules/borg.nix
     ./modules/serve.nix
+    ./modules/traefik
   ];
 
   lemonix = {

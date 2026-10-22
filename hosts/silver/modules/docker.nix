@@ -4,33 +4,24 @@
   ];
 
   users = {
-    groups = {
-      "docker-management" = {
-        gid = 1202;
-      };
-    };
-    users = {
-      "docker" = {
-        uid = 1102;
-        description = "Docker";
-        home = "/home/docker";
-        hashedPassword = "!";
-        extraGroups = [ "docker-management" ];
-        isNormalUser = true;
-        openssh.authorizedKeys.keys = [
-          "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAINQ7D6y618TGPHBbKGP0YJJxjdFLSaJ4aBdsEIs6z0Fl docker@silver"
-          "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAINQ7D6y618TGPHBbKGP0YJJxjdFLSaJ4aBdsEIs6z0Fl docker@titanium"
-        ];
-      };
+    groups."docker-management".gid = 1202;
+    users."docker" = {
+      uid = 1102;
+      home = "/home/docker";
+      hashedPassword = "!";
+      extraGroups = [ "docker-management" ];
+      isNormalUser = true;
+      openssh.authorizedKeys.keys = [
+        "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAINQ7D6y618TGPHBbKGP0YJJxjdFLSaJ4aBdsEIs6z0Fl docker@silver"
+        "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAINQ7D6y618TGPHBbKGP0YJJxjdFLSaJ4aBdsEIs6z0Fl docker@titanium"
+      ];
     };
   };
 
-  fileSystems = {
-    "/mnt/titanium" = {
-      device = "192.168.1.11:/export/data";
-      fsType = "nfs4";
-      options = [ "noauto" "x-systemd.automount" "x-systemd.idle-timeout=600" ];
-    };
+  fileSystems."/mnt/titanium" = {
+    device = "192.168.1.11:/export/data";
+    fsType = "nfs4";
+    options = [ "noauto" "x-systemd.automount" "x-systemd.idle-timeout=600" ];
   };
 
   virtualisation.docker = {
@@ -55,13 +46,11 @@
           Type = "oneshot";
           WorkingDirectory = "/home/lemon/Documents/GitHub/lemocker/silver";
           ExecStart = "-${pkgs.docker}/bin/docker compose up -d";
-          Restart = "on-failure";
-          RestartSec = 15;
+          RemainAfterExit = true;
         };
-        startLimitBurst = 5;
         wantedBy = [ "multi-user.target" ];
-        after = [ "docker.service" "network-online.target" ];
-        wants = [ "network-online.target" ];
+        after = [ "docker.service" ];
+        wants = [ "docker.service" ];
       };
     };
     tmpfiles.rules = [

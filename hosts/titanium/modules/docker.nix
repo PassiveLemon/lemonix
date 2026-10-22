@@ -11,41 +11,30 @@
   };
 
   users = {
-    groups = {
-      "docker-management" = {
-        gid = 1202;
-      };
-    };
-    users = {
-      "docker" = {
-        uid = 1102;
-        description = "Docker";
-        home = "/home/docker";
-        hashedPassword = "!";
-        extraGroups = [ "docker-management" ];
-        isNormalUser = true;
-        openssh.authorizedKeys.keys = [
-          "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAINQ7D6y618TGPHBbKGP0YJJxjdFLSaJ4aBdsEIs6z0Fl docker@titanium"
-        ];
-      };
+    groups."docker-management".gid = 1202;
+    users."docker" = {
+      uid = 1102;
+      home = "/home/docker";
+      hashedPassword = "!";
+      extraGroups = [ "docker-management" ];
+      isNormalUser = true;
+      openssh.authorizedKeys.keys = [
+        "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAINQ7D6y618TGPHBbKGP0YJJxjdFLSaJ4aBdsEIs6z0Fl docker@titanium"
+      ];
     };
   };
 
-  services = {
-    nfs.server = {
-      enable = true;
-      exports = ''
-        /export/data 192.168.1.10(rw,sync)
-      '';
-    };
+  services.nfs.server = {
+    enable = true;
+    exports = ''
+      /export/data 192.168.1.10(rw,sync)
+    '';
   };
 
-  fileSystems = {
-    "/export/data" = {
-      device = "/data";
-      fsType = "none";
-      options = [ "bind" ];
-    };
+  fileSystems."/export/data" = {
+    device = "/data";
+    fsType = "none";
+    options = [ "bind" ];
   };
 
   virtualisation.docker = {
@@ -68,13 +57,11 @@
           Type = "oneshot";
           WorkingDirectory = "/data/docker/lemocker";
           ExecStart = "-${pkgs.docker}/bin/docker compose up -d";
-          Restart = "on-failure";
-          RestartSec = 15;
+          RemainAfterExit = true;
         };
-        startLimitBurst = 5;
         wantedBy = [ "multi-user.target" ];
-        after = [ "docker.service" "network-online.target" ];
-        wants = [ "network-online.target" ];
+        after = [ "docker.service" ];
+        wants = [ "docker.service" ];
       };
       "restart-invidious" = {
         # As recommended in https://docs.invidious.io/installation/#highly-recommended

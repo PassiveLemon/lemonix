@@ -1,35 +1,26 @@
 { config, pkgs, ... }: {
   users = {
-    groups = {
-      "borg-management" = {
-        gid = 1203;
-      };
-    };
-    users = {
-      "borg" = {
-        uid = 1103;
-        description = "Borg";
-        home = "/home/borg";
-        hashedPassword = "$6$ZfEb26naaa.Sx5XE$EuCvgHvdXN68flpvEh0hfeqSbAZUzf7Q5zGjiGXuxk8owgePS8OK477LA740Gm1iOabOBSZa4CZP3fL3JgG.I0";
-        extraGroups = [ "borg-management" "docker-management" ];
-        isNormalUser = true;
-        openssh.authorizedKeys.keys = [
-          "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIOH57JnHLmW6Al34ksW1zb0TJq7IY9mZLN7kBiFR0dYi borg@silver"
-          "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIPbedW5DDGCzGpbym2f0Ex+efnyfzFfHRPAhDFY9ZI5K root@silver"
-          "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIGt7EoDxKbFzXMXVV+RF422Tt9dBS7gKIgWMLxWncax9 borg@titanium"
-          "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIGCBA9bX/zAfV04lQXGPPL+f24qD+MrX7zDt+odiE0pI root@titanium"
-        ];
-      };
+    groups."borg-management".gid = 1203;
+    users."borg" = {
+      uid = 1103;
+      home = "/home/borg";
+      hashedPassword = "$6$ZfEb26naaa.Sx5XE$EuCvgHvdXN68flpvEh0hfeqSbAZUzf7Q5zGjiGXuxk8owgePS8OK477LA740Gm1iOabOBSZa4CZP3fL3JgG.I0";
+      extraGroups = [ "borg-management" "docker-management" ];
+      isNormalUser = true;
+      openssh.authorizedKeys.keys = [
+        "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIOH57JnHLmW6Al34ksW1zb0TJq7IY9mZLN7kBiFR0dYi borg@silver"
+        "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIPbedW5DDGCzGpbym2f0Ex+efnyfzFfHRPAhDFY9ZI5K root@silver"
+        "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIGt7EoDxKbFzXMXVV+RF422Tt9dBS7gKIgWMLxWncax9 borg@titanium"
+        "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIGCBA9bX/zAfV04lQXGPPL+f24qD+MrX7zDt+odiE0pI root@titanium"
+      ];
     };
   };
 
-  age.secrets = {
-    borgBackupPass = {
-      file = ../../../secrets/borgBackupPass.age;
-      mode = "600";
-      owner = "borg";
-      group = "borg-management";
-    };
+  age.secrets.borgBackupPass = {
+    file = ../../../secrets/borgBackupPass.age;
+    mode = "600";
+    owner = "borg";
+    group = "borg-management";
   };
 
   services.borgbackup.jobs = let
@@ -62,12 +53,13 @@
       "/home/lemon/Music"
       "/home/lemon/Pictures"
       "/home/lemon/Shared"
-      "/home/lemon/Standalone"
       "/home/lemon/Videos"
       "/home/lemon/.config"
       "/home/lemon/.local/share"
     ] [
+      "/home/lemon/Documents/Unity/Installs"
       "/home/lemon/.config/r2modmanPlus-local/*/cache"
+      "/home/lemon/.local/share/com.kesomannen.gale/*/profiles/*/BepInEx/plugins"
       "/home/lemon/.local/share/Trash"
       "/home/lemon/.local/share/Steam/steamapps"
     ] repo);

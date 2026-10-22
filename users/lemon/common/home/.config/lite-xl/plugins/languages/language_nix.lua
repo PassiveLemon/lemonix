@@ -65,6 +65,7 @@ merge_tables(default_patterns, {
     symbols = { },
   }},
   --                      v We need this to handle escapements, but in return, it grabs our semi-colon
+  -- Also does not handle double quote escapement (\${})
   { pattern = { "''", "''[^%$]" }, type = "string", syntax = {
     patterns = string_interpolation,
     symbols = { },

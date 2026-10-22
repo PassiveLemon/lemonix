@@ -53,7 +53,6 @@
     };
     "lemon" = {
       uid = 1100;
-      description = "Lemon";
       home = "/home/lemon";
       hashedPassword = "$6$J7q0.RZ88OJiQRkq$mQx2d32YHf6IXqZNMSv.o/sslQMgBAGIKID2aL6tLpN6XFpXp2Fda5p1Yi78H/cXOolBPIuXEQPzxhmKp5qWc0";
       extraGroups = [
@@ -69,7 +68,6 @@
     };
     "monitor" = {
       uid = 1101;
-      description = "Monitor";
       home = "/home/monitor";
       hashedPassword = "$6$0XNvp3iEh8YJqrVr$43U1A.yN9kdw4CZJ9YpJYuEzyUzLYbOWIIDpK54bJdlhaXMl5P0Y3eicO/MEZSKBGQpTfzlFDVQFesIRKHLXN0";
       isNormalUser = true;
