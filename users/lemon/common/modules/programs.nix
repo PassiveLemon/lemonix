@@ -12,7 +12,7 @@ in {
   home.packages = with pkgs; [
     # Data/Transfer
     pcmanfm xarchiver
-    filezilla localsend
+    localsend #filezilla # Segmentation fault signal terminated program cc1plus
     # Office/Development
     onlyoffice-desktopeditors
     onlyoffice-documentserver

@@ -14,6 +14,7 @@
     windowManager.awesome = {
       enable = true;
       package = pkgs.lemonake.awesome-luajit-git.override {
+        # pkgs.astal exposed by flake overlay. It was removed from Nixpkgs
         extraGITypeLibPaths = with pkgs.astal; [
           brightness wireplumber
         ];
