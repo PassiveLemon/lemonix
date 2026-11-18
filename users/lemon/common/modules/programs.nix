@@ -62,7 +62,7 @@ in {
           "nerdicons" = ../home/.config/lite-xl/plugins/nerdicons.lua;
         };
         languages = {
-          enableList = [ "diff" "env" "lua" "go" "html" "json" "nim" "python" "sh" "toml" ]; 
+          enableList = [ "c" "diff" "env" "lua" "go" "html" "json" "nim" "python" "sh" "toml" ]; 
           customEnableList = {
             "containerfile" = ../home/.config/lite-xl/plugins/languages/language_containerfile.lua;
             "nix" = ../home/.config/lite-xl/plugins/languages/language_nix.lua;
@@ -71,7 +71,7 @@ in {
         };
         evergreen.copyLanguages.enable = true;
         lsp = {
-          enableList = [ "bash_ls" "dockerfile_ls_nodejs" "nil_ls" "nimlsp" "pyright" "lua_ls" "yaml_ls" ];
+          enableList = [ "bash_ls" "clangd" "dockerfile_ls_nodejs" "nil_ls" "nimlsp" "pyright" "lua_ls" "yaml_ls" ];
           addPackages = true;
         };
         lintplus = {

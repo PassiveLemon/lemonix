@@ -36,7 +36,7 @@
     };
   };
 
-  hardware.nvidia-container-toolkit.enable = true;
+  hardware.nvidia-container-toolkit.enable = false;
 
   systemd = {
     user.services = {
@@ -45,12 +45,12 @@
         serviceConfig = {
           Type = "oneshot";
           WorkingDirectory = "/home/lemon/Documents/GitHub/lemocker/silver";
-          ExecStart = "-${pkgs.docker}/bin/docker compose up -d";
+          ExecStart = "${pkgs.docker}/bin/docker compose up -d";
           RemainAfterExit = true;
         };
         wantedBy = [ "multi-user.target" ];
+        requires = [ "docker.service" ];
         after = [ "docker.service" ];
-        wants = [ "docker.service" ];
       };
     };
     tmpfiles.rules = [

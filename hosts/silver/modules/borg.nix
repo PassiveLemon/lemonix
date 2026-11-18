@@ -58,7 +58,6 @@
       "/home/lemon/.local/share"
     ] [
       "/home/lemon/Documents/Unity/Installs"
-      "/home/lemon/.config/r2modmanPlus-local/*/cache"
       "/home/lemon/.local/share/com.kesomannen.gale/*/profiles/*/BepInEx/plugins"
       "/home/lemon/.local/share/Trash"
       "/home/lemon/.local/share/Steam/steamapps"

@@ -7,7 +7,7 @@
   networking.firewall = {
     # NFS
     allowedTCPPorts = [ 2049 ];
-    allowedUDPPorts = [ 2049 ];
+    allowedUDPPorts = [ 2049 2456 2457 2468 ];
   };
 
   users = {
@@ -55,13 +55,13 @@
         description = "docker-deploy";
         serviceConfig = {
           Type = "oneshot";
-          WorkingDirectory = "/data/docker/lemocker";
-          ExecStart = "-${pkgs.docker}/bin/docker compose up -d";
+          WorkingDirectory = "/data/docker/lemocker/titanium";
+          ExecStart = "${pkgs.docker}/bin/docker compose up -d";
           RemainAfterExit = true;
         };
         wantedBy = [ "multi-user.target" ];
+        requires = [ "docker.service" ];
         after = [ "docker.service" ];
-        wants = [ "docker.service" ];
       };
       "restart-invidious" = {
         # As recommended in https://docs.invidious.io/installation/#highly-recommended
