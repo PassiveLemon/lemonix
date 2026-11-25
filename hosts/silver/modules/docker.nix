@@ -36,7 +36,7 @@
     };
   };
 
-  hardware.nvidia-container-toolkit.enable = false;
+  hardware.nvidia-container-toolkit.enable = true;
 
   systemd = {
     user.services = {

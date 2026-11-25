@@ -6,10 +6,7 @@ shift
 PROFILEPATH="${HOME}/.local/share/com.kesomannen.gale/${GAME}/profiles"
 PROFILES=$(find "$PROFILEPATH" -mindepth 1 -maxdepth 1 -type d -printf "%f\n" | grep -v "^Default$" | sort -u)
 
-PROFILEARRAY=(
-  "Vanilla"
-  "Default"
-)
+PROFILEARRAY=("Vanilla")
 
 while IFS= read -r profile; do
   PROFILEARRAY+=("$profile")
