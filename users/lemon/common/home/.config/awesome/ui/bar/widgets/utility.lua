@@ -51,16 +51,16 @@ utility.volume_icon:buttons({
 awesome.connect_signal("signal::peripheral::volume::value", function(value, mute)
   if mute then
     utility.volume_icon:get_children_by_id("textbox")[1].text = "󰝟"
-    utility.volume_icon:get_children_by_id("textbox")[1].font = b.sysfont(dpi(17))
+    utility.volume_icon:get_children_by_id("textbox")[1].font = b.sysfont(17)
   elseif value < 33 then
     utility.volume_icon:get_children_by_id("textbox")[1].text = "󰕿"
-    utility.volume_icon:get_children_by_id("textbox")[1].font = b.sysfont(dpi(9))
+    utility.volume_icon:get_children_by_id("textbox")[1].font = b.sysfont(9)
   elseif value < 67 then
     utility.volume_icon:get_children_by_id("textbox")[1].text = "󰖀"
-    utility.volume_icon:get_children_by_id("textbox")[1].font = b.sysfont(dpi(13))
+    utility.volume_icon:get_children_by_id("textbox")[1].font = b.sysfont(13)
   else
     utility.volume_icon:get_children_by_id("textbox")[1].text = "󰕾"
-    utility.volume_icon:get_children_by_id("textbox")[1].font = b.sysfont(dpi(15))
+    utility.volume_icon:get_children_by_id("textbox")[1].font = b.sysfont(15)
   end
 end)
 

@@ -101,7 +101,7 @@ awful.screen.connect_for_each_screen(function(s)
     markup = " ",
     valign = "center",
     halign = "center",
-    font = b.sysfont(dpi(14)),
+    font = b.sysfont(14),
   })
   awesome.connect_signal("signal::peripheral::caps::state", function(caps)
     if caps then
@@ -117,7 +117,7 @@ awful.screen.connect_for_each_screen(function(s)
     valign = "center",
     halign = "center",
     markup = "󰁹",
-    font = b.sysfont(dpi(18)),
+    font = b.sysfont(18),
   })
 
   if not user.bar.battery then
@@ -169,7 +169,7 @@ awful.screen.connect_for_each_screen(function(s)
               spacing = dpi(5),
               {
                 widget = wibox.widget.textclock,
-                font = b.sysfont(dpi(120)),
+                font = b.sysfont(120),
                 format = "%-I:%M %p",
                 halign = "center",
                 valign = "center",
@@ -177,7 +177,7 @@ awful.screen.connect_for_each_screen(function(s)
               },
               {
                 widget = wibox.widget.textclock,
-                font = b.sysfont(dpi(28)),
+                font = b.sysfont(28),
                 format = "%a %b %-d",
                 halign = "center",
                 valign = "center",

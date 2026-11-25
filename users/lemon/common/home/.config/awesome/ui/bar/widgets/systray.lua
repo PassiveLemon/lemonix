@@ -68,7 +68,7 @@ systray.pill_nixos = h.button({
   y = dpi(24),
   shape = gears.shape.circle,
   text = "",
-  font = b.sysfont(dpi(16)),
+  font = b.sysfont(16),
   button_press = function()
     systray.pill_systray.screen = awful.screen.focused()
     systray.pill_systray:toggle()

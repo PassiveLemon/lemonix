@@ -68,16 +68,16 @@ volume_slider:buttons({
 awesome.connect_signal("signal::peripheral::volume::value", function(value, mute)
   if mute then
     volume_icon:get_children_by_id("textbox")[1].text = "󰝟"
-    volume_icon:get_children_by_id("textbox")[1].font = b.sysfont(dpi(17))
+    volume_icon:get_children_by_id("textbox")[1].font = b.sysfont(17)
   elseif value < 33 then
     volume_icon:get_children_by_id("textbox")[1].text = "󰕿"
-    volume_icon:get_children_by_id("textbox")[1].font = b.sysfont(dpi(9))
+    volume_icon:get_children_by_id("textbox")[1].font = b.sysfont(9)
   elseif value < 67 then
     volume_icon:get_children_by_id("textbox")[1].text = "󰖀"
-    volume_icon:get_children_by_id("textbox")[1].font = b.sysfont(dpi(13))
+    volume_icon:get_children_by_id("textbox")[1].font = b.sysfont(13)
   else
     volume_icon:get_children_by_id("textbox")[1].text = "󰕾"
-    volume_icon:get_children_by_id("textbox")[1].font = b.sysfont(dpi(15))
+    volume_icon:get_children_by_id("textbox")[1].font = b.sysfont(15)
   end
   if value >= 0 then
     volume_slider:get_children_by_id("slider")[1]._private.value = value

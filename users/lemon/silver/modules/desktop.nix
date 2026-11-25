@@ -1,4 +1,4 @@
-{ lib, pkgs, ... }: {
+{ config, lib, pkgs, ... }: {
   programs = {
     obs-studio.package = pkgs.obs-studio.override { cudaSupport = true; };
     autorandr.profiles."Default" = {
@@ -27,6 +27,7 @@
         };
       };
     };
+    rofi.settings.dpi = config.programs.autorandr.profiles."Default".config."DP-0".dpi;
   };
 
   services = {

@@ -32,7 +32,7 @@ memory.icon = h.text({
     left = 0,
   },
   text = "",
-  font = b.sysfont(dpi(15)),
+  font = b.sysfont(15),
 })
 memory.text = h.text({
   margins = {

@@ -57,7 +57,7 @@ local prev_button = h.button({
   y = dpi(50),
   shape = gears.shape.rounded_rect,
   text = "󰒮",
-  font = b.sysfont(dpi(18)),
+  font = b.sysfont(18),
   button_press = function()
     awesome.emit_signal("signal::mpris::previous")
   end
@@ -68,7 +68,7 @@ local toggle_button = h.button({
   y = dpi(50),
   shape = gears.shape.rounded_rect,
   text = "󰐊",
-  font = b.sysfont(dpi(17)),
+  font = b.sysfont(17),
   button_press = function()
     awesome.emit_signal("signal::mpris::toggle")
   end
@@ -79,7 +79,7 @@ local next_button = h.button({
   y = dpi(50),
   shape = gears.shape.rounded_rect,
   text = "󰒭",
-  font = b.sysfont(dpi(18)),
+  font = b.sysfont(18),
   button_press = function()
     awesome.emit_signal("signal::mpris::next")
   end
@@ -147,7 +147,7 @@ local volume_icon = h.button({
     left = 0,
   },
   text = "󰖀",
-  font = b.sysfont(dpi(12)),
+  font = b.sysfont(12),
   no_color = true,
 })
 

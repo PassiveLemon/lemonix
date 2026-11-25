@@ -27,7 +27,7 @@ local brightness_icon = h.text({
   x = dpi(18),
   y = dpi(15),
   text = "",
-  font = b.sysfont(dpi(14)),
+  font = b.sysfont(14),
 })
 brightness_icon:buttons({
   awful.button({ }, 4, function()

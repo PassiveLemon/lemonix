@@ -64,7 +64,7 @@ function h.text(conf_in)
       forced_height = conf.y,
       markup = conf.markup,
       text = conf.text,
-      font = conf.font or b.sysfont(dpi(10)),
+      font = conf.font or b.sysfont(10),
       halign = conf.halign or "center",
       valign = conf.valign or "center",
     },

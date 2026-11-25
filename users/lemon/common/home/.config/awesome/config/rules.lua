@@ -59,8 +59,8 @@ ruled.client.connect_signal("request::rules", function()
   ruled.client.append_rule({
     id = "steam",
     rule = {
-      instance = "steamwebhelper",
-      class    = "steam",
+      instance = { "steamwebhelper" },
+      class    = { "steam" },
     },
     except = {
       -- The exact match is necessary, otherwise the "Steam Settings" window name would be accepted

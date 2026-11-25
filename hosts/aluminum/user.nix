@@ -14,22 +14,15 @@
       HandleLidSwitchExternalPower = "suspend-then-hibernate";
       HandleLidSwitchDocked = "suspend-then-hibernate";
     };
-    xserver.displayManager.importedVariables = [
-      "GDK_SCALE"
-      "GDK_DPI_SCALE"
-      "QT_AUTO_SCREEN_SCALE_FACTOR"
-      "QT_ENABLE_HIGHDPI_SCALING"
-      "STEAM_FORCE_DESKTOPUI_SCALING"
-    ];
   };
 
   environment.variables = {
-    XCURSOR_SIZE = "32";
-    GDK_SCALE = "1";
-    GDK_DPI_SCALE = "1";
-    QT_AUTO_SCREEN_SCALE_FACTOR = "1";
-    QT_ENABLE_HIGHDPI_SCALING = "1";
-    STEAM_FORCE_DESKTOPUI_SCALING = "1.5";
+    XCURSOR_SIZE = "48";
+    GDK_SCALE = "2";
+    GDK_DPI_SCALE = "0.5";
+    QT_AUTO_SCREEN_SCALE_FACTOR = "0";
+    QT_SCALE_FACTOR = "2";
+    STEAM_FORCE_DESKTOPUI_SCALING = "2";
   };
 
   systemd.sleep.settings.Sleep = {

@@ -33,7 +33,7 @@ battery.icon = h.text({
     left = 0,
   },
   text = "󰁹",
-  font = b.sysfont(dpi(10)),
+  font = b.sysfont(10),
 })
 battery.text = h.text({
   margins = {

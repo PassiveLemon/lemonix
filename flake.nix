@@ -41,13 +41,6 @@
       url = "github:nix-community/lanzaboote/v1.0.0";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-
-    # Submodules
-    awesomewm-bling = {
-      url = "github:passivelemon/bling";
-      # url = "path:/home/lemon/Documents/GitHub/bling";
-      flake = false;
-    };
   };
 
   outputs = { self, ... } @ inputs: let

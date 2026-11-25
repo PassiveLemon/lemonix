@@ -16,6 +16,7 @@
         buttonMapping = "1 1 3 4 5 6 7";
         middleEmulation = false;
         accelProfile = "flat";
+        accelSpeed = "0.3";
         naturalScrolling = true;
         additionalOptions = ''
           Option "ScrollPixelDistance" "50"

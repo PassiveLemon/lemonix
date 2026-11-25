@@ -1,4 +1,4 @@
-{ inputs, pkgs, ... }: {
+{ pkgs, ... }: {
   home = {
     packages = with pkgs; [
       xss-lock
@@ -28,6 +28,21 @@
     };
   };
 
+  programs.rofi = {
+    enable = true;
+    theme = ../home/.config/rofi/theme.rasi;
+    settings = {
+      modes = [ "drun" "ssh" ];
+      show-icons = true;
+      drun-display-format = "{name}";
+      terminal = "tym";
+      ssh-command = "{terminal} {ssh-client} {host} [-p {port}]";
+      "drun,ssh" = {
+        display-name = "> ";
+      };
+    };
+  };
+
   services = {
     picom = {
       enable = true;
@@ -49,19 +64,6 @@
           captureActiveMonitor = true;
           useX11LegacyScreenshot = true;
         };
-      };
-    };
-  };
-
-  xdg = {
-    enable = true;
-    configFile = {
-      "awesome/libraries/bling" = {
-        source = inputs.awesomewm-bling;
-        recursive = true;
-      };
-      "awesome/liblua_pam.so" = {
-        source = "${pkgs.lemonake.lua-pam-luajit-git}/lib/lua/5.1/liblua_pam.so";
       };
     };
   };

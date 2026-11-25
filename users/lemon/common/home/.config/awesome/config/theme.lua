@@ -15,14 +15,14 @@ local theme = { }
 
 -- Font
 function theme.sysfont(size)
-  return "FiraCode Nerd Font Mono Ret" .. " " .. size
+  return "FiraCode Nerd Font Mono Ret " .. size
 end
 function theme.cusfont(font, size)
   return font .. " " .. size
 end
-theme.font          = theme.sysfont(dpi(10))
-theme.taglist_font  = theme.sysfont(dpi(10))
-theme.tasklist_font = theme.sysfont(dpi(10))
+theme.font          = theme.sysfont(10)
+theme.taglist_font  = theme.sysfont(10)
+theme.tasklist_font = theme.sysfont(10)
 
 -- Mono
 theme.bg0      = "#222222"

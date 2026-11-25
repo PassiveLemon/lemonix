@@ -19,7 +19,7 @@ power.lock_button = h.button({
   y = dpi(32),
   shape = gears.shape.circle,
   text = "",
-  font = b.sysfont(dpi(12)),
+  font = b.sysfont(12),
   button_press = function()
     awesome.emit_signal('ui::lock::toggle')
   end
@@ -30,7 +30,7 @@ power.suspend_button = h.timed_button({
   y = dpi(32),
   shape = gears.shape.circle,
   text = "",
-  font = b.sysfont(dpi(14)),
+  font = b.sysfont(14),
   button_press = function()
     awful.spawn("systemctl suspend")
   end
@@ -41,7 +41,7 @@ power.hibernate_button = h.timed_button({
   y = dpi(32),
   shape = gears.shape.circle,
   text = "",
-  font = b.sysfont(dpi(16)),
+  font = b.sysfont(16),
   button_press = function()
     awful.spawn("systemctl hibernate")
   end
@@ -52,7 +52,7 @@ power.poweroff_button = h.timed_button({
   y = dpi(32),
   shape = gears.shape.circle,
   text = "󰐥",
-  font = b.sysfont(dpi(15)),
+  font = b.sysfont(15),
   button_press = function()
     awful.spawn("systemctl poweroff")
   end
@@ -63,7 +63,7 @@ power.restart_button = h.timed_button({
   y = dpi(32),
   shape = gears.shape.circle,
   text = "󰑓",
-  font = b.sysfont(dpi(18)),
+  font = b.sysfont(18),
   button_press = function()
     awful.spawn("systemctl reboot")
   end
@@ -74,7 +74,7 @@ power.button = h.button({
   y = dpi(32),
   shape = gears.shape.circle,
   text = "󰐥",
-  font = b.sysfont(dpi(15)),
+  font = b.sysfont(15),
 })
 
 local power_menu_order = {

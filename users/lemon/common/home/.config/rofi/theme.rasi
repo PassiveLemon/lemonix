@@ -1,0 +1,49 @@
+* {
+	background: #222222;
+	foreground: #aaaaaa;
+	bordercolor: #40454f;
+	separatorcolor: #aaaaaa;
+
+	normal-background: #292929;
+	normal-foreground: #aaaaaa;
+	selected-normal-background: #323232;
+	selected-normal-foreground: #ffffff;
+}
+
+* {
+  background-color: transparent;
+  text-color: @foreground;
+}
+#window {
+  background-color: @background;
+  border: 3px;
+  border-color: @bordercolor;
+  border-radius: 12px;
+  width: 20%;
+  height: 48%;
+  padding: 4px;
+}
+#mainbox {
+  padding: 4px;
+}
+#listview {
+  padding: 4px 0px 0px 0px;
+  spacing: 4px;
+}
+#element {
+  padding: 4px 8px 4px 8px;
+  border-radius: 50%;
+}
+#element .normal.normal {
+  text-color: @normal-foreground;
+  background-color: @normal-background;
+}
+#element .selected.normal {
+  text-color: @selected-normal-foreground;
+  background-color: @selected-normal-background;
+}
+#element .alternate.normal {
+  text-color: @normal-foreground;
+  background-color: @normal-background;
+}
+

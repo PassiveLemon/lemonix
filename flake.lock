@@ -40,22 +40,6 @@
         "type": "github"
       }
     },
-    "awesomewm-bling": {
-      "flake": false,
-      "locked": {
-        "lastModified": 1766345310,
-        "narHash": "sha256-MRMdMqBOJF2im75pKIC6L3XT7tW/PqXrBnOjtfFLpds=",
-        "owner": "passivelemon",
-        "repo": "bling",
-        "rev": "d8ffcb22199cbcd3b84836d05c4b6b1b6bd341b8",
-        "type": "github"
-      },
-      "original": {
-        "owner": "passivelemon",
-        "repo": "bling",
-        "type": "github"
-      }
-    },
     "crane": {
       "locked": {
         "lastModified": 1765145449,
@@ -532,7 +516,6 @@
       "inputs": {
         "agenix": "agenix",
         "astal": "astal",
-        "awesomewm-bling": "awesomewm-bling",
         "home-manager": "home-manager",
         "lanzaboote": "lanzaboote",
         "lemonake": "lemonake",
