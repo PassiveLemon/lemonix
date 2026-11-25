@@ -33,6 +33,7 @@
     theme = ../home/.config/rofi/theme.rasi;
     settings = {
       modes = [ "drun" "ssh" ];
+      font = "FiraCode Nerd Font Mono Ret 10";
       show-icons = true;
       drun-display-format = "{name}";
       terminal = "tym";

@@ -16,22 +16,22 @@
 }
 #window {
   background-color: @background;
-  border: 3px;
+  border: 0.375ch;
   border-color: @bordercolor;
-  border-radius: 12px;
+  border-radius: 1.5ch;
   width: 20%;
   height: 48%;
-  padding: 4px;
+  padding: 0.5ch;
 }
 #mainbox {
-  padding: 4px;
+  padding: 0.5ch;
 }
 #listview {
-  padding: 4px 0px 0px 0px;
-  spacing: 4px;
+  padding: 0.5ch 0px 0px 0px;
+  spacing: 0.5ch;
 }
 #element {
-  padding: 4px 8px 4px 8px;
+  padding: 0.5ch 1ch 0.5ch 1ch;
   border-radius: 50%;
 }
 #element .normal.normal {

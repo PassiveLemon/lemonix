@@ -21,6 +21,6 @@
     rofi.settings.dpi = config.programs.autorandr.profiles."Default".config."eDP-1".dpi;
   };
 
-  services.picom.extraArgs = [ "corner-radius" "24" ];
+  services.picom.extraArgs = [ "--corner-radius" "24" ];
 }
 
