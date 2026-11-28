@@ -158,7 +158,6 @@ in {
             "validReply"
             "viewIcons"
             "voiceMessages"
-            "youtubeAdblock"
           ])
           {
             anonymiseFileNames = {
@@ -193,6 +192,7 @@ in {
             accentColor = "#61b8ff";
             baseFontSize = 16;
             cssTheme = "Lemon";
+            theme = "obsidian";
           };
           corePlugins = [
             "canvas"

@@ -30,7 +30,7 @@ in
         };
         wivrn = {
           enable = true;
-          package = pkgs.lemonake.wivrn.override { cudaSupport = true; };
+          package = pkgs.nixpkgs-xr.wivrn.override { cudaSupport = true; };
           openFirewall = false;
           autoStart = true;
           highPriority = true;
@@ -42,8 +42,8 @@ in
           config = {
             enable = true;
             json = {
-              application = pkgs.lemonake.wayvr;
-              # openvr-compat-path = "${pkgs.lemonake.vapor-git}/lib/VapoR";
+              application = pkgs.nixpkgs-xr.wayvr;
+              # openvr-compat-path = "${pkgs.nixpkgs-xr.vapor}/lib/VapoR";
             };
           };
         };

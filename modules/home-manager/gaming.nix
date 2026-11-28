@@ -19,7 +19,7 @@ in
     (mkIf cfg.desktop.enable {
       home.packages = with pkgs; [
         steam heroic (bottles.override { removeWarningPopup = true; })
-        gale limo lemonake.gdlauncher flightcore
+        gale limo gdlauncher-carbon flightcore
         ludusavi
         galeScript
       ];
@@ -51,7 +51,6 @@ in
     })
     (mkIf cfg.vr.enable {
       home.packages = with pkgs; [
-        lemonake.wayvr
         bs-manager
       ];
 
@@ -64,7 +63,7 @@ in
       xdg = {
         dataFile = {
           "Steam/compatibilitytools.d/proton-ge-rtsp" = {
-            source = "${pkgs.lemonake.proton-ge-rtsp.steamcompattool}";
+            source = "${pkgs.nixpkgs-xr.proton-ge-rtsp-bin.steamcompattool}";
             recursive = true;
           };
         };
